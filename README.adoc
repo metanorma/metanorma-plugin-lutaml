@@ -38,7 +38,7 @@ diagram MyView {
 
 And lutaml2text macro block:
 
-[source,java]
+[source,adoc]
 -----
 [lutaml2text,example.lutaml,my_context]
 ----
@@ -60,7 +60,7 @@ And lutaml2text macro block:
 
 Will produce this output:
 
-[source,java]
+[source,adoc]
 -----
 = my diagram
 
