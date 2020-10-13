@@ -1,0 +1,78 @@
+= metanorma-plugin-lutaml
+
+== Functionality
+
+Metanorma plugin that allows you to access lutaml objects from a Metanorma document
+
+=== Installation
+
+[source,console]
+----
+$ gem install metanorma-plugin-lutaml
+----
+
+=== Usage
+
+Given `example.lutaml` file with the content:
+
+[source,java]
+----
+diagram MyView {
+  title "my diagram"
+
+  class AddressClassProfile {
+    addressClassProfile
+  }
+  class AttributeProfile {
+    attributeProfile
+  }
+
+  association BidirectionalAsscoiation {
+    owner_type aggregation
+    member_type direct
+    owner AddressClassProfile#addressClassProfile
+    member AttributeProfile#attributeProfile [0..*]
+  }
+}
+----
+
+And lutaml2text macro block:
+
+[source,java]
+-----
+[lutaml2text,example.lutaml,my_context]
+----
+
+= {{ my_context.title }}
+
+== Classes
+{% for klass in my_context.classes %}
+  === {{klass.name}}
+{% endfor %}
+
+== Associations
+{% for association in my_context.associations %}
+  === {{association.name}}
+  {{association.owner_end}} -> {{association.member_end}}
+{% endfor %}
+----
+-----
+
+Will produce this output:
+
+[source,java]
+-----
+= my diagram
+
+== Classes
+=== AddressClassProfile
+=== AttributeProfile
+
+== Associations
+=== BidirectionalAsscoiation
+AddressClassProfile -> AttributeProfile
+-----
+
+== Documentation
+
+See http://metanorma.com[]
