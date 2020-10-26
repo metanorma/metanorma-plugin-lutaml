@@ -5,7 +5,7 @@ require "metanorma-plugin-lutaml"
 # Register datastruct blocks as first preprocessors in line in order
 # to test properly with metanorma-standoc
 Asciidoctor::Extensions.register do
-  preprocessor Metanorma::Plugin::Lutaml::Lutaml2TextPreprocessor
+  preprocessor Metanorma::Plugin::Lutaml::LutamlPreprocessor
 end
 
 require "metanorma-standoc"
@@ -62,4 +62,8 @@ def metanorma_process(input)
   Metanorma::Input::Asciidoc
     .new
     .process(input, "test.adoc", :standoc)
+end
+
+def fixtures_path(path)
+  File.join(File.expand_path("./fixtures", __dir__), path)
 end

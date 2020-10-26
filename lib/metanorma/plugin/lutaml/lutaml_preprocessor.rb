@@ -3,32 +3,13 @@
 require "liquid"
 require "asciidoctor"
 require "asciidoctor/reader"
-require "lutaml/uml"
-require "lutaml/uml/parsers/dsl"
-
-::Lutaml::Uml::Document.class_eval do
-  def to_liquid
-    serialize_to_hash(self)
-  end
-
-  def serialize_to_hash(object)
-    object.instance_variables.each_with_object({}) do |var, res|
-      variable = object.instance_variable_get(var)
-      if variable.is_a?(Array)
-        res[var.to_s.gsub("@", '')] = variable.map { |n| serialize_to_hash(n) }
-      else
-        res[var.to_s.gsub("@", '')] = variable
-      end
-    end
-  end
-end
+require "lutaml"
 
 module Metanorma
   module Plugin
     module Lutaml
       # Class for processing Lutaml files
-      class Lutaml2TextPreprocessor <
-        Asciidoctor::Extensions::Preprocessor
+      class LutamlPreprocessor < Asciidoctor::Extensions::Preprocessor
 
         def process(document, reader)
           input_lines = reader.readlines.to_enum
@@ -38,7 +19,7 @@ module Metanorma
         protected
 
         def content_from_file(document, file_path)
-          ::Lutaml::Uml::Parsers::Dsl
+          ::Lutaml::Parser
             .parse(File.new(relative_file_path(document, file_path),
                             encoding: "UTF-8"))
         end
@@ -64,7 +45,7 @@ module Metanorma
 
         def process_text_blocks(document, input_lines)
           line = input_lines.next
-          block_match = line.match(/^\[lutaml2text,(.+?),(.+?)\]/)
+          block_match = line.match(/^\[lutaml,(.+?),(.+?)\]/)
           return [line] if block_match.nil?
 
           end_mark = input_lines.next
@@ -75,9 +56,8 @@ module Metanorma
                          block_match)
         end
 
-        def collect_internal_block_lines(document, input_lines, end_mark)
+        def collect_internal_block_lines(_document, input_lines, end_mark)
           current_block = []
-          nested_marks = []
           while (block_line = input_lines.next) != end_mark
             current_block.push(block_line)
           end
@@ -92,7 +72,7 @@ module Metanorma
                               context_name: block_match[2])
         rescue StandardError => e
           document.logger
-            .warn("Failed to parse lutaml2text \
+            .warn("Failed to parse lutaml \
               block: #{e.message}")
           []
         end
@@ -113,7 +93,10 @@ module Metanorma
         def render_liquid_string(template_string:, context_items:,
                                  context_name:)
           liquid_template = Liquid::Template.parse(template_string)
-          rendered_string = liquid_template.render(context_name => context_items,strict_variables: true,error_mode: :warn)
+          rendered_string = liquid_template
+            .render(context_name => context_items,
+                    strict_variables: true,
+                    error_mode: :warn)
           [rendered_string, liquid_template.errors]
         end
 

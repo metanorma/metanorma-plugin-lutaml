@@ -13,47 +13,47 @@ $ gem install metanorma-plugin-lutaml
 
 === Usage
 
-Given `example.lutaml` file with the content:
+Given `example.exp` file with the content:
 
 [source,java]
 ----
-diagram MyView {
-  title "my diagram"
+SCHEMA test_schema 'test';
 
-  class AddressClassProfile {
-    addressClassProfile
-  }
-  class AttributeProfile {
-    attributeProfile
-  }
+(* Need select elements for measure_value *)
+ REFERENCE FROM measure_schema
+   (measure_value);
 
-  association BidirectionalAsscoiation {
-    owner_type aggregation
-    member_type direct
-    owner AddressClassProfile#addressClassProfile
-    member AttributeProfile#attributeProfile [0..*]
-  }
-}
+  TYPE my_type1 = EXTENSIBLE SELECT;
+  END_TYPE;
+
+  TYPE my_type2 = EXTENSIBLE ENUMERATION;
+  END_TYPE;
+
+  TYPE my_type3 = EXTENSIBLE ENUMERATION;
+  END_TYPE;
+
+  TYPE my_type4 = EXTENSIBLE ENUMERATION;
+  END_TYPE;
+
+  TYPE my_type5 = EXTENSIBLE ENUMERATION;
+  END_TYPE;
+END_SCHEMA;
 ----
 
-And lutaml2text macro block:
+And lutaml macro block:
 
 [source,adoc]
 -----
-[lutaml2text,example.lutaml,my_context]
+[lutaml,example.exp,my_context]
 ----
 
-= {{ my_context.title }}
+{% for schema in my_context.schemas %}
+== {{schema.id}}
 
-== Classes
-{% for klass in my_context.classes %}
-  === {{klass.name}}
+{% for entity in schema.entities %}
+=== {{entity.id}}
 {% endfor %}
 
-== Associations
-{% for association in my_context.associations %}
-  === {{association.name}}
-  {{association.owner_end}} -> {{association.member_end}}
 {% endfor %}
 ----
 -----
@@ -62,15 +62,13 @@ Will produce this output:
 
 [source,adoc]
 -----
-= my diagram
+== test_schema
 
-== Classes
-=== AddressClassProfile
-=== AttributeProfile
-
-== Associations
-=== BidirectionalAsscoiation
-AddressClassProfile -> AttributeProfile
+=== my_type1
+=== my_type2
+=== my_type3
+=== my_type4
+=== my_type5
 -----
 
 == Documentation

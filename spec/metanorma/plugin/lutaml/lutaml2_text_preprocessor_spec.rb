@@ -1,42 +1,10 @@
 require "spec_helper"
-require "metanorma/plugin/lutaml/lutaml2_text_preprocessor"
 
-RSpec.describe Metanorma::Plugin::Lutaml::Lutaml2TextPreprocessor do
+RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
   describe "#process" do
-    let(:example_file) { "example.lutaml" }
-
-    before do
-      File.open(example_file, "w") do |n|
-        n.puts(example_content)
-      end
-    end
-
-    after do
-      FileUtils.rm_rf(example_file)
-    end
+    let(:example_file) { fixtures_path("test.exp") }
 
     context "Array of hashes" do
-      let(:example_content) do
-        <<~TEXT
-          diagram MyView {
-            title "my diagram"
-
-            class AddressClassProfile {
-              addressClassProfile
-            }
-            class AttributeProfile {
-              attributeProfile
-            }
-
-            association BidirectionalAsscoiation {
-              owner_type aggregation
-              member_type direct
-              owner AddressClassProfile#addressClassProfile
-              member AttributeProfile#attributeProfile [0..*]
-            }
-          }
-        TEXT
-      end
       let(:input) do
         <<~TEXT
           = Document title
@@ -47,18 +15,19 @@ RSpec.describe Metanorma::Plugin::Lutaml::Lutaml2TextPreprocessor do
           :no-isobib:
           :imagesdir: spec/assets
 
-          [lutaml2text,#{example_file},my_context]
+          [lutaml,#{example_file},my_context]
           ----
 
-          = {{ my_context.title }}
+          {% for schema in my_context.schemas %}
+          == {{schema.id}}
 
-          {% for klass in my_context.classes %}
-            == {{klass.name}}
+          {% for entity in schema.entities %}
+          === {{entity.id}}
+          supertypes -> {{entity.supertypes.id}}
+          explicit -> {{entity.explicit.first.id}}
+
           {% endfor %}
 
-          {% for association in my_context.associations %}
-            == {{association.name}}
-            {{association.owner_end}} -> {{association.member_end}}
           {% endfor %}
           ----
         TEXT
@@ -67,23 +36,40 @@ RSpec.describe Metanorma::Plugin::Lutaml::Lutaml2TextPreprocessor do
         <<~TEXT
           #{BLANK_HDR}
           <sections>
-            <clause id="_" inline-header="false" obligation="normative">
-              <title>my diagram</title>
-              <figure id="_">
-                <pre id="_">== AddressClassProfile</pre>
-              </figure>
-              <figure id="_">
-                <pre id="_">== AttributeProfile</pre>
-              </figure>
-              <figure id="_">
-                <pre id="_">== BidirectionalAsscoiation
-          AddressClassProfile -&gt; AttributeProfile</pre>
-              </figure>
-            </clause>
+          <clause id="_" inline-header="false" obligation="normative"><title>annotated_3d_model_data_quality_criteria_schema</title>
+          <clause id="_" inline-header="false" obligation="normative">
+          <title>a3m_data_quality_criteria_representation</title>
+          <p id="_">supertypes →
+          explicit → </p>
+          </clause>
+          <clause id="_" inline-header="false" obligation="normative">
+          <title>a3m_data_quality_criterion</title>
+          <p id="_">supertypes →
+          explicit → assessment_specification</p>
+          </clause>
+          <clause id="_" inline-header="false" obligation="normative">
+          <title>a3m_data_quality_criterion_specific_applied_value</title>
+          <p id="_">supertypes →
+          explicit → criterion_to_assign_the_value</p>
+          </clause>
+          <clause id="_" inline-header="false" obligation="normative">
+          <title>a3m_data_quality_target_accuracy_association</title>
+          <p id="_">supertypes →
+          explicit → id</p>
+          </clause>
+          <clause id="_" inline-header="false" obligation="normative">
+          <title>a3m_detailed_report_request</title>
+          <p id="_">supertypes →
+          explicit → value_type_requested</p>
+          </clause>
+          <clause id="_" inline-header="false" obligation="normative">
+          <title>a3m_summary_report_request_with_representative_value</title>
+          <p id="_">supertypes →
+          explicit → value_type_requested</p>
+          </clause></clause>
           </sections>
           </standard-document>
-          </body>
-          </html>
+          </body></html>
         TEXT
       end
 
