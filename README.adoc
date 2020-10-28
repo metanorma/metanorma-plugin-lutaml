@@ -15,7 +15,7 @@ $ gem install metanorma-plugin-lutaml
 
 Given `example.exp` file with the content:
 
-[source,java]
+[source,exp]
 ----
 SCHEMA test_schema 'test';
 
@@ -40,7 +40,7 @@ SCHEMA test_schema 'test';
 END_SCHEMA;
 ----
 
-And lutaml macro block:
+And the `lutaml` macro block:
 
 [source,adoc]
 -----
@@ -73,4 +73,4 @@ Will produce this output:
 
 == Documentation
 
-See http://metanorma.com[]
+See https://www.metanorma.com.

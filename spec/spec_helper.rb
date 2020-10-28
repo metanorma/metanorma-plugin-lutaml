@@ -2,7 +2,7 @@ require "bundler/setup"
 require "asciidoctor"
 require "metanorma-plugin-lutaml"
 
-# Register datastruct blocks as first preprocessors in line in order
+# Register lutaml blocks as first preprocessors in line in order
 # to test properly with metanorma-standoc
 Asciidoctor::Extensions.register do
   preprocessor Metanorma::Plugin::Lutaml::LutamlPreprocessor
