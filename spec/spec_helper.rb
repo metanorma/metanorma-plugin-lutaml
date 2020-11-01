@@ -33,18 +33,23 @@ end
 BLANK_HDR = <<~"HDR".freeze
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
   <?xml version="1.0" encoding="UTF-8"?><html><body>
-  <standard-document xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="1.6.1">
+  <standard-document xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="#{Metanorma::Standoc::VERSION}">
   <bibdata type="standard">
   <title language="en" format="text/plain">Document title</title>
-    <language>en</language>
-    <script>Latn</script>
-    <status><stage>published</stage></status>
-    <copyright>
-      <from>#{Time.new.year}</from>
-    </copyright>
-    <ext>
-    <doctype>article</doctype>
-    </ext>
+
+
+
+  <language>en</language>
+  <script>Latn</script>
+  <status>
+  <stage>published</stage>
+  </status>
+  <copyright>
+  <from>#{Time.new.year}</from>
+  </copyright>
+  <ext>
+  <doctype>article</doctype>
+  </ext>
   </bibdata>
 HDR
 
