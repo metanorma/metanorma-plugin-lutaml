@@ -1,5 +1,7 @@
 = metanorma-plugin-lutaml
 
+image:https://github.com/metanorma/metanorma-plugin-lutaml/workflows/rake/badge.svg["Build Status", link="https://github.com/metanorma/metanorma-plugin-lutaml/actions?workflow=rake"]
+
 == Functionality
 
 Metanorma plugin that allows you to access lutaml objects from a Metanorma document
