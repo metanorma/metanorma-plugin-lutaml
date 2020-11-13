@@ -6,6 +6,7 @@ require "metanorma-plugin-lutaml"
 # to test properly with metanorma-standoc
 Asciidoctor::Extensions.register do
   preprocessor Metanorma::Plugin::Lutaml::LutamlPreprocessor
+  block Metanorma::Plugin::Lutaml::LutamlDiagramBlock, :lutaml_diagram
 end
 
 require "metanorma-standoc"
@@ -33,7 +34,7 @@ end
 BLANK_HDR = <<~"HDR".freeze
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
   <?xml version="1.0" encoding="UTF-8"?><html><body>
-  <standard-document xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="1.6.1">
+  <standard-document xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="1.6.2">
   <bibdata type="standard">
   <title language="en" format="text/plain">Document title</title>
     <language>en</language>
@@ -66,4 +67,8 @@ end
 
 def fixtures_path(path)
   File.join(File.expand_path("./fixtures", __dir__), path)
+end
+
+def strip_src(xml)
+  xml.gsub(/\ssrc="[^"]+"/, ' src="_"')
 end

@@ -4,6 +4,7 @@ require "liquid"
 require "asciidoctor"
 require "asciidoctor/reader"
 require "lutaml"
+require "metanorma/plugin/lutaml/utils"
 
 module Metanorma
   module Plugin
@@ -20,7 +21,7 @@ module Metanorma
 
         def content_from_file(document, file_path)
           ::Lutaml::Parser
-            .parse(File.new(relative_file_path(document, file_path),
+            .parse(File.new(Utils.relative_file_path(document, file_path),
                             encoding: "UTF-8"))
         end
 
@@ -32,15 +33,6 @@ module Metanorma
             result.push(*process_text_blocks(document, input_lines))
           end
           result
-        end
-
-        def relative_file_path(document, file_path)
-          docfile_directory = File.dirname(
-            document.attributes["docfile"] || "."
-          )
-          document
-            .path_resolver
-            .system_path(file_path, docfile_directory)
         end
 
         def process_text_blocks(document, input_lines)
