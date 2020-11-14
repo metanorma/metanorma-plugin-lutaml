@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "liquid"
   spec.add_dependency "lutaml", "~> 0.3.0"
-  spec.add_dependency "lutaml-uml", "~> 0.2.0"
+  # spec.add_dependency "lutaml-uml", "~> 0.2.0"
   spec.add_dependency "metanorma"
   spec.add_dependency "relaton-cli"
 
