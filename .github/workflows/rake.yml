@@ -41,6 +41,19 @@ jobs:
       - name: Update gems
         run: bundle install --jobs 4 --retry 3
 
+      - name: Install Grpahviz Ubuntu
+        if: matrix.os == 'ubuntu-latest'
+        run: apt-get install graphviz
+
+      - name: Install Grpahviz macOS
+        if: matrix.os == 'macos-latest'
+        run: brew install graphviz
+
+      - name: Install Grpahviz Windows
+        if: matrix.os == 'windows-latest'
+        run: |
+          cinst -y graphviz
+
       - name: Run specs
         run: bundle exec rake
 
