@@ -54,6 +54,11 @@ jobs:
         run: |
           cinst -y graphviz
 
+      - name: create gvpr alias
+        if: matrix.os == 'windows-latest'
+        run: |
+          new-alias gvpr dot.exe
+
       - name: Run specs
         run: bundle exec rake
 
