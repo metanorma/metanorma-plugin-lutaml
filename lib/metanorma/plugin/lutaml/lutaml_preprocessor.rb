@@ -73,31 +73,13 @@ module Metanorma
                                 context_items:,
                                 context_name:,
                                 document:)
-          render_result, errors = render_liquid_string(
+          render_result, errors = Utils.render_liquid_string(
             template_string: context_lines.join("\n"),
             context_items: context_items,
             context_name: context_name
           )
-          notify_render_errors(document, errors)
+          Utils.notify_render_errors(document, errors)
           render_result.split("\n")
-        end
-
-        def render_liquid_string(template_string:, context_items:,
-                                 context_name:)
-          liquid_template = Liquid::Template.parse(template_string)
-          rendered_string = liquid_template
-            .render(context_name => context_items,
-                    strict_variables: true,
-                    error_mode: :warn)
-          [rendered_string, liquid_template.errors]
-        end
-
-        def notify_render_errors(document, errors)
-          errors.each do |error_obj|
-            document
-              .logger
-              .warn("Liquid render error: #{error_obj.message}")
-          end
         end
       end
     end

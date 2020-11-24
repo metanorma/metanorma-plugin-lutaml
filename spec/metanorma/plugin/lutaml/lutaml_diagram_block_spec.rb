@@ -14,37 +14,14 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDiagramBlock do
           :imagesdir: spec/assets
 
           [lutaml_diagram]
-          ----
+          ....
           diagram MyView {
+            fontname "Arial"
             title "my diagram"
-
-            class AddressClassProfile {
-              addressClassProfile
-            }
-            class AttributeProfile {
-              attributeProfile
-            }
-
-            association BidirectionalAsscoiation {
-              owner_type aggregation
-              member_type direct
-              owner AddressClassProfile#addressClassProfile
-              member AttributeProfile#attributeProfile [0..*]
-            }
-
-            association DirectAsscoiation {
-              member_type direct
-              owner AddressClassProfile
-              member AttributeProfile#attributeProfile
-            }
-
-            association ReverseAsscoiation {
-              owner_type aggregation
-              owner AddressClassProfile#addressClassProfile
-              member AttributeProfile
-            }
+            caption "my diagram"
+            class Foo {}
           }
-          ----
+          ....
         TEXT
       end
       let(:output) do
@@ -52,6 +29,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDiagramBlock do
           #{BLANK_HDR}
           <sections>
           <figure id="_">
+          <name>my diagram</name>
           <image src="_" id="_" mimetype="image/png" height="auto" width="auto"></image>
           </figure>
           </sections>
