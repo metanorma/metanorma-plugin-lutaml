@@ -51,13 +51,17 @@ jobs:
 
       - name: Install Grpahviz Windows
         if: matrix.os == 'windows-latest'
-        run: |
-          cinst -y graphviz
+        uses: nick-invision/retry@v1
+        with:
+          polling_interval_seconds: 5
+          timeout_minutes: 5
+          max_attempts: 3
+          command: choco install --no-progress graphviz --version 2.38.0.20190211
 
-      - name: create gvpr alias
+      - name: Check dot command
         if: matrix.os == 'windows-latest'
         run: |
-          new-alias gvpr dot.exe
+          dot -?
 
       - name: Run specs
         run: bundle exec rake

@@ -13,7 +13,7 @@ Metanorma plugin that allows you to access lutaml objects from a Metanorma docum
 $ gem install metanorma-plugin-lutaml
 ----
 
-=== Usage
+=== Usage, `lutaml` macro
 
 Given `example.exp` file with the content:
 
@@ -71,6 +71,82 @@ Will produce this output:
 === my_type3
 === my_type4
 === my_type5
+-----
+
+This macro also supports `.lutaml` files.
+
+=== Usage, `lutaml_datamodel_attributes_table` macro
+
+This macro allows to quickly render datamodel attributes/values tables. Given `example.lutaml` file with the content:
+
+[source,java]
+----
+diagram MyView {
+  title "my diagram"
+
+  enum AddressClassProfile {
+    imlicistAttributeProfile: CharacterString [0..1] {
+      definition
+        this is multiline with `ascidoc`
+      end definition
+    }
+  }
+
+  class AttributeProfile {
+    +addressClassProfile: CharacterString [0..1]
+    imlicistAttributeProfile: CharacterString [0..1] {
+      definition this is attribute definition
+    }
+  }
+}
+----
+
+And the `lutaml_datamodel_attributes_table` macro:
+
+[source,adoc]
+-----
+[lutaml_datamodel_attributes_table, example.lutaml, AttributeProfile]
+-----
+
+Will produce this output:
+
+[source,adoc]
+-----
+=== AttributeProfile
+
+
+.AttributeProfile attributes
+|===
+|Name |Definition |Mandatory/ Optional/ Conditional |Max Occur |Data Type
+
+|addressClassProfile |TODO: enum 's definition |M |1 | `CharacterString`
+
+|imlicistAttributeProfile |this is attribute definition with multiply lines |M |1 | `CharacterString`
+
+|===
+-----
+
+In case of "enumeration"(AddressClassProfile) entity:
+
+[source,adoc]
+-----
+[lutaml_datamodel_attributes_table, example.lutaml, AddressClassProfile]
+-----
+
+Will produce this output:
+
+[source,adoc]
+-----
+=== AddressClassProfile
+
+
+.AddressClassProfile values
+|===
+|Name |Definition
+
+|imlicistAttributeProfile |this is multiline with `ascidoc`
+
+|===
 -----
 
 == Documentation

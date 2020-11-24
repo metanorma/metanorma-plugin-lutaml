@@ -11,8 +11,10 @@ module Metanorma
   module Plugin
     module Lutaml
       class LutamlDiagramBlock < Asciidoctor::Extensions::BlockProcessor
-        enable_dsl
-        on_context :listing
+        use_dsl
+        named :lutaml_diagram
+        on_context :literal
+        parse_content_as :raw
 
         def abort(parent, reader, attrs, msg)
           warn(msg)
@@ -24,9 +26,11 @@ module Metanorma
         end
 
         def process(parent, reader, attrs)
-          filename = generate_file(parent, reader)
+          uml_document = ::Lutaml::Uml::Parsers::Dsl.parse(lutaml_temp(reader))
+          filename = generate_file(parent, reader, uml_document)
           through_attrs = generate_attrs(attrs)
           through_attrs["target"] = filename
+          through_attrs["title"] = uml_document.caption
           create_image_block(parent, through_attrs)
         rescue => e
           abort(parent, reader, attrs, e.message)
@@ -34,21 +38,24 @@ module Metanorma
 
         private
 
-        # if no :imagesdir: leave image file in lutaml
-        def generate_file(parent, reader)
-          lutaml_temp = Tempfile.new(['lutaml', '.lutaml'])
-          lutaml_temp.puts(reader.read)
-          lutaml_temp.rewind
+        def lutaml_temp(reader)
+          temp_file = Tempfile.new(['lutaml', '.lutaml'])
+          temp_file.puts(reader.read)
+          temp_file.rewind
+          temp_file
+        end
 
-          uml_document = ::Lutaml::Uml::Parsers::Dsl.parse(lutaml_temp)
+        # if no :imagesdir: leave image file in lutaml
+        def generate_file(parent, reader, uml_document)
           formatter = ::Lutaml::Uml::Formatter::Graphviz.new
           formatter.type = :png
 
-          imagesdir = parent.document.attr('imagesdir').to_s
-          result_path = Utils
-                          .relative_file_path(
-                            parent.document,
-                            File.join(imagesdir, 'lutaml'))
+          imagesdir = if parent.document.attr('imagesdir')
+                        File.join(parent.document.attr('imagesdir'), 'lutaml')
+                      else
+                        'lutaml'
+                      end
+          result_path = Utils.relative_file_path(parent.document, imagesdir)
           result_pathname = Pathname.new(result_path)
           result_pathname.mkpath
           File.writable?(result_pathname) or raise "Destination path #{result_path} not writable for Lutaml!"
