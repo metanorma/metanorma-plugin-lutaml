@@ -15,7 +15,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :no-isobib:
           :imagesdir: spec/assets
 
-          [lutaml_datamodel_attributes_table,#{example_file},AttributeProfile]
+          [lutaml_uml_attributes_table,#{example_file},AttributeProfile]
 
         TEXT
       end
@@ -82,7 +82,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :no-isobib:
           :imagesdir: spec/assets
 
-          [lutaml_datamodel_attributes_table,#{example_file},AddressClassProfile]
+          [lutaml_uml_attributes_table,#{example_file},AddressClassProfile]
 
         TEXT
       end

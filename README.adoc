@@ -75,7 +75,7 @@ Will produce this output:
 
 This macro also supports `.lutaml` files.
 
-=== Usage, `lutaml_datamodel_attributes_table` macro
+=== Usage, `lutaml_uml_attributes_table` macro
 
 This macro allows to quickly render datamodel attributes/values tables. Given `example.lutaml` file with the content:
 
@@ -101,11 +101,11 @@ diagram MyView {
 }
 ----
 
-And the `lutaml_datamodel_attributes_table` macro:
+And the `lutaml_uml_attributes_table` macro:
 
 [source,adoc]
 -----
-[lutaml_datamodel_attributes_table, example.lutaml, AttributeProfile]
+[lutaml_uml_attributes_table, example.lutaml, AttributeProfile]
 -----
 
 Will produce this output:
@@ -130,7 +130,7 @@ In case of "enumeration"(AddressClassProfile) entity:
 
 [source,adoc]
 -----
-[lutaml_datamodel_attributes_table, example.lutaml, AddressClassProfile]
+[lutaml_uml_attributes_table, example.lutaml, AddressClassProfile]
 -----
 
 Will produce this output:

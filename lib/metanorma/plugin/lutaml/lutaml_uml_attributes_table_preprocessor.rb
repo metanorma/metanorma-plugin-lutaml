@@ -11,10 +11,10 @@ module Metanorma
   module Plugin
     module Lutaml
       #  Macro for quick rendering of datamodel attributes/values table
-      #  @example [lutaml_datamodel_attributes_table,path/to/lutaml,EntityName]
-      class LutamlDatamodelAttributesTablePreprocessor < Asciidoctor::Extensions::Preprocessor
+      #  @example [lutaml_uml_attributes_table,path/to/lutaml,EntityName]
+      class LutamlUmlAttributesTablePreprocessor < Asciidoctor::Extensions::Preprocessor
         MARCO_REGEXP =
-          /\[lutaml_datamodel_attributes_table,([^,]+),?(.+)?,([^,]+),?(.+)?\]/
+          /\[lutaml_uml_attributes_table,([^,]+),?(.+)?,([^,]+),?(.+)?\]/
         # search document for block `datamodel_attributes_table`
         #  read include derectives that goes after that in block and transform
         #  into yaml2text blocks

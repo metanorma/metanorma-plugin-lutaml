@@ -6,7 +6,7 @@ require "metanorma-plugin-lutaml"
 # to test properly with metanorma-standoc
 Asciidoctor::Extensions.register do
   preprocessor Metanorma::Plugin::Lutaml::LutamlPreprocessor
-  preprocessor Metanorma::Plugin::Lutaml::LutamlDatamodelAttributesTablePreprocessor
+  preprocessor Metanorma::Plugin::Lutaml::LutamlUmlAttributesTablePreprocessor
   block Metanorma::Plugin::Lutaml::LutamlDiagramBlock, :lutaml_diagram
 end
 
