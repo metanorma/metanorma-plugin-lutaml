@@ -38,15 +38,20 @@ BLANK_HDR = <<~"HDR".freeze
   <standard-document xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="#{Metanorma::Standoc::VERSION}">
   <bibdata type="standard">
   <title language="en" format="text/plain">Document title</title>
-    <language>en</language>
-    <script>Latn</script>
-    <status><stage>published</stage></status>
-    <copyright>
-      <from>#{Time.new.year}</from>
-    </copyright>
-    <ext>
-    <doctype>article</doctype>
-    </ext>
+
+
+
+  <language>en</language>
+  <script>Latn</script>
+  <status>
+  <stage>published</stage>
+  </status>
+  <copyright>
+  <from>#{Time.new.year}</from>
+  </copyright>
+  <ext>
+  <doctype>article</doctype>
+  </ext>
   </bibdata>
 HDR
 
