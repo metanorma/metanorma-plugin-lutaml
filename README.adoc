@@ -60,6 +60,14 @@ And the `lutaml` macro block:
 ----
 -----
 
+Where:
+
+* content within the block is called the "`template`";
+
+* `{example.exp}` is the location of the exp schema file that contains data to be loaded. Location of the file is computed relative to the source directory that `[lutaml]` is used (e.g., if `[lutaml,example.exp,my_context]` is invoked in an `.adoc` file located at `/foo/bar/doc.adoc`, the data file is expected to be found at `/foo/bar/example.exp`);
+
+* `{my_context}` is the name where the EXPRESS Repository read from the .exp file can be accessed with. Context object is a serialized  Expressir::Model::Repository object with all variable names available. See https://github.com/lutaml/expressir[Expressir] docs for reference. `{my_context}` has `schemas` method to access Expressir https://github.com/lutaml/expressir/blob/master/lib/expressir/model/schema.rb[schemas]
+
 Will produce this output:
 
 [source,adoc]
