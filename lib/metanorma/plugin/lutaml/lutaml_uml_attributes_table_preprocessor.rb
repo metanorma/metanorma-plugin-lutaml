@@ -86,7 +86,7 @@ module Metanorma
           |Name |Definition |Mandatory/ Optional/ Conditional |Max Occur |Data Type
 
           {% for item in definition.attributes %}
-          |{{ item.name }} |{% if item.definition %}{{ item.definition }}{% else %}TODO: enum {{ key }}'s definition{% endif %} |{% if item.cardinality.min == 0 %}O{% else %}M{% endif %} |{% if item.cardinality.max == "*" %}N{% else %}1{% endif %} |{% if item.origin %}<<{{ item.origin }}>>{% endif %} `{{ item.type }}`
+          |{{ item.name }} |{% if item.definition %}{{ item.definition }}{% else %}TODO: enum {{ key }}'s definition{% endif %} |{% if item.cardinality.min == "0" %}O{% else %}M{% endif %} |{% if item.cardinality.max == "*" %}N{% else %}1{% endif %} |{% if item.origin %}<<{{ item.origin }}>>{% endif %} `{{ item.type }}`
           {% endfor %}
           |===
           {% endif %}
