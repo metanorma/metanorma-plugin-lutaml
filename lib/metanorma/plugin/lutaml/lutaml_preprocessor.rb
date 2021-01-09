@@ -5,12 +5,14 @@ require "asciidoctor"
 require "asciidoctor/reader"
 require "lutaml"
 require "metanorma/plugin/lutaml/utils"
+require "metanorma/plugin/lutaml/express_remarks_decorator"
 
 module Metanorma
   module Plugin
     module Lutaml
       # Class for processing Lutaml files
       class LutamlPreprocessor < Asciidoctor::Extensions::Preprocessor
+        REMARKS_ATTRIBUTE = "remarks".freeze
 
         def process(document, reader)
           input_lines = reader.readlines.to_enum
@@ -37,15 +39,15 @@ module Metanorma
 
         def process_text_blocks(document, input_lines)
           line = input_lines.next
-          block_match = line.match(/^\[lutaml,(.+?),(.+?)\]/)
+          block_match = line.match(/^\[lutaml,([^,]+)?,?([^,]+)?,?([^,]+)?\]/)
           return [line] if block_match.nil?
 
           end_mark = input_lines.next
-          parse_template(document,
-                         collect_internal_block_lines(document,
-                                                      input_lines,
-                                                      end_mark),
-                         block_match)
+          parse_template(
+            document,
+            collect_internal_block_lines(document, input_lines, end_mark),
+            block_match
+          )
         end
 
         def collect_internal_block_lines(_document, input_lines, end_mark)
@@ -57,7 +59,9 @@ module Metanorma
         end
 
         def parse_template(document, current_block, block_match)
-          context_items = content_from_file(document, block_match[1])
+          context_items = content_from_file(document, block_match[1]).to_liquid
+          context_items = decorate_context_items(context_items,
+                                                 parse_options(block_match[3]))
           parse_context_block(document: document,
                               context_lines: current_block,
                               context_items: context_items,
@@ -67,6 +71,36 @@ module Metanorma
             .warn("Failed to parse lutaml \
               block: #{e.message}")
           []
+        end
+
+        def parse_options(options_string)
+          options_string
+            .to_s
+            .scan(/(.+?)=(\s?[^\s]+)/)
+            .map { |elem| elem.map(&:strip) }
+            .to_h
+        end
+
+        def decorate_context_items(context_items, options)
+          return context_items if !context_items.is_a?(Hash)
+
+          context_items
+            .map do |(key, val)|
+              if val.is_a?(Hash)
+                [key, decorate_context_items(val, options)]
+              elsif key == REMARKS_ATTRIBUTE
+                [key,
+                 val&.map do |remark|
+                   Metanorma::Plugin::Lutaml::ExpressRemarksDecorator
+                     .call(remark, options)
+                 end]
+              elsif val.is_a?(Array)
+                [key, val.map { |n| decorate_context_items(n, options) }]
+              else
+                [key, val]
+              end
+            end
+            .to_h
         end
 
         def parse_context_block(context_lines:,

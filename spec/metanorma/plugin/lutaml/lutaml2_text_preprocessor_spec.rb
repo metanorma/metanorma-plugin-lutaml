@@ -78,5 +78,87 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           .to(be_equivalent_to(output))
       end
     end
+
+    context "when additional options passed" do
+      let(:input) do
+        <<~TEXT
+          = Document title
+          Author
+          :docfile: test.adoc
+          :nodoc:
+          :novalid:
+          :no-isobib:
+          :imagesdir: spec/assets
+
+          [lutaml,#{example_file},my_context, leveloffset=+2]
+          ----
+
+          {% for schema in my_context.schemas %}
+          == {{schema.id}}
+
+          {% for remark in schema.remarks %}
+          {{ remark }}
+          {% endfor %}
+
+          {% endfor %}
+          ----
+
+
+          [lutaml,#{example_file},my_context, leveloffset=-1]
+          ----
+
+          {% for schema in my_context.schemas %}
+          == {{schema.id}}
+
+          {% for remark in schema.remarks %}
+          {{ remark }}
+          {% endfor %}
+
+          {% endfor %}
+          ----
+        TEXT
+      end
+      let(:output) do
+        <<~TEXT
+          #{BLANK_HDR}
+          <sections>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>annotated_3d_model_data_quality_criteria_schema</title>
+              <p id="_">$Id: test.exp,v 1.3 2020/07/30 05:18:54 ftanaka Exp $
+                ISO 10303 TC184/SC4/WG12 N10658</p>
+              <clause id="_" inline-header="false" obligation="normative">
+                <title>EXPRESS Source:</title>
+                <p id="_">ISO 10303-59 ed3 Quality of product shape data — Annotated 3d model data quality criteria
+                  schema</p>
+                <p id="_">The following permission notice and disclaimer shall be included in all copies of this EXPRESS
+                  schema (“the Schema”),
+                  and derivations of the Schema:</p>
+                <p id="_">Need select eleemnts for measure_value</p>
+              </clause>
+            </clause>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>annotated_3d_model_data_quality_criteria_schema</title>
+              <p id="_">$Id: test.exp,v 1.3 2020/07/30 05:18:54 ftanaka Exp $
+                ISO 10303 TC184/SC4/WG12 N10658</p>
+              <figure id="_">
+                <pre id="_"> EXPRESS Source:
+          ISO 10303-59 ed3 Quality of product shape data - Annotated 3d model data quality criteria schema</pre>
+              </figure>
+              <p id="_">The following permission notice and disclaimer shall be included in all copies of this EXPRESS
+                schema (“the Schema”),
+                and derivations of the Schema:</p>
+              <p id="_">Need select eleemnts for measure_value</p>
+            </clause>
+          </sections>
+          </standard-document>
+          </body></html>
+        TEXT
+      end
+
+      it "correctly renders input" do
+        expect(xml_string_conent(metanorma_process(input)))
+          .to(be_equivalent_to(output))
+      end
+    end
   end
 end
