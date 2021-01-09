@@ -160,5 +160,60 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           .to(be_equivalent_to(output))
       end
     end
+
+    context "when relative paths exists in doc" do
+      let(:example_file) { fixtures_path("test_relative_includes.exp").gsub(FileUtils.pwd, '')[1..-1] }
+      let(:input) do
+        <<~TEXT
+          = Document title
+          Author
+          :docfile: test.adoc
+          :nodoc:
+          :novalid:
+          :no-isobib:
+          :imagesdir: spec/assets
+
+          [lutaml,#{example_file},my_context]
+          ----
+          {% for schema in my_context.schemas %}
+          == {{schema.id}}
+
+          {% for remark in schema.remarks %}
+          {{ remark }}
+          {% endfor %}
+
+          {% endfor %}
+          ----
+        TEXT
+      end
+      let(:doc_path) { File.dirname(example_file) }
+      let(:output) do
+        <<~TEXT
+          #{BLANK_HDR}
+          <sections>
+            <clause id="_" inline-header="false" obligation="normative"><title>annotated_3d_model_data_quality_criteria_schema</title>
+            <p id="_">Mine text</p>
+            <p id="_">
+            <link target="#{doc_path}/downloads/report.pdf">Get Report
+            </p>
+            <p id="_">
+            <link target="http://test.com/include1.csv">
+            </p>
+
+
+            <p id="_">include::#{doc_path}/include1.csv[]</p>
+            <p id="_">include::#{doc_path}/test/include1.csv[]</p>
+            <p id="_">include::http://test.com/include1.csv[]</p></clause>
+          </sections>
+          </standard-document>
+          </body></html>
+        TEXT
+      end
+
+      it "correctly renders input" do
+        expect(xml_string_conent(metanorma_process(input)))
+          .to(be_equivalent_to(output))
+      end
+    end
   end
 end

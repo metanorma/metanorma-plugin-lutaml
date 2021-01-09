@@ -59,9 +59,7 @@ module Metanorma
         end
 
         def parse_template(document, current_block, block_match)
-          context_items = content_from_file(document, block_match[1]).to_liquid
-          context_items = decorate_context_items(context_items,
-                                                 parse_options(block_match[3]))
+          context_items = decorated_context_items(document, block_match)
           parse_context_block(document: document,
                               context_lines: current_block,
                               context_items: context_items,
@@ -71,6 +69,13 @@ module Metanorma
             .warn("Failed to parse lutaml \
               block: #{e.message}")
           []
+        end
+
+        def decorated_context_items(document, block_match)
+          context_items = content_from_file(document, block_match[1]).to_liquid
+          options = parse_options(block_match[3])
+            .merge("relative_path_prefix" => File.dirname(block_match[1]))
+          decorate_context_items(context_items, options)
         end
 
         def parse_options(options_string)
