@@ -1,7 +1,0 @@
-./test.err errors
-
-
-== Metanorma XML Syntax
-
-(XML Line 000015:13): element "copyright" incomplete; missing required element "owner"
-(XML Line 000017:27): character content of element "doctype" invalid; must be equal to "document"

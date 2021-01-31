@@ -1,3 +1,4 @@
 Gemfile.lock
 .rspec_status
 spec/assets/lutaml
+test.err
