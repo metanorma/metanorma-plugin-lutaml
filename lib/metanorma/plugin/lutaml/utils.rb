@@ -31,6 +31,43 @@ module Metanorma
               .warn("Liquid render error: #{error_obj.message}")
           end
         end
+
+        def process_express_index(folder, name, idxs, document)
+          idxs[name] = []
+          Dir["#{Utils.relative_file_path(document, folder)}/*"].each do |path|
+            next if [".", ".."].include?(path)
+
+            begin
+              idxs[name]
+                .push(::Lutaml::Parser.parse(File.new(path, encoding: "UTF-8")))
+            rescue StandardError => e
+              document.logger.warn("Failed to load #{path}: #{e.message}")
+            end
+          end
+        end
+
+        def parse_document_express_indexes(document, input_lines)
+          express_indexes = {}
+          loop do
+            line = input_lines.next
+            break if line.length.zero?
+
+            _, name, folder = line.match(/^:lutaml-express-index:(.+?);(.+?)$/)&.to_a
+            if folder && name
+              process_express_index(
+                folder.strip.gsub(";", ""),
+                name.strip,
+                express_indexes,
+                document
+              )
+            end
+          end
+          express_indexes
+        rescue StopIteration
+          express_indexes
+        ensure
+          input_lines.rewind
+        end
       end
     end
   end

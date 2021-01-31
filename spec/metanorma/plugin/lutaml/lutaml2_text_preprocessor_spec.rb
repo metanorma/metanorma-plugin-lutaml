@@ -78,5 +78,112 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           .to(be_equivalent_to(output))
       end
     end
+
+    context "when lutaml-express-index keyword used" do
+      let(:input) do
+        <<~TEXT
+          = Document title
+          Author
+          :docfile: test.adoc
+          :nodoc:
+          :novalid:
+          :no-isobib:
+          :imagesdir: spec/assets
+          :lutaml-express-index: first-express-set; #{fixtures_path('expressir_index_1')};
+          :lutaml-express-index: second-express-set; #{fixtures_path('expressir_index_2')};
+
+          [lutaml,first-express-set,my_context]
+          ----
+          {% for schema in my_context.schemas %}
+          == {{schema.id}}
+          {% endfor %}
+          ----
+
+          [lutaml,second-express-set,my_context]
+          ----
+          {% for schema in my_context.schemas %}
+          == {{schema.id}}
+          {% endfor %}
+          ----
+        TEXT
+      end
+      let(:output) do
+        <<~TEXT
+          #{BLANK_HDR}
+          <sections>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>Activity_method_assignment_mim</title>
+            </clause>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>Activity_method_assignment_arm</title>
+            </clause>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>Activity_method_characterized_arm</title>
+            </clause>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>Activity_method_characterized_mim</title>
+            </clause>
+          </sections>
+          </standard-document>
+          </body></html>
+        TEXT
+      end
+
+      it "correctly renders input" do
+        expect(xml_string_conent(metanorma_process(input)))
+          .to(be_equivalent_to(output))
+      end
+    end
+
+    context "when multiply files supplied to macro" do
+      let(:express_files_list) do
+        [
+          fixtures_path("test.exp"),
+          fixtures_path("expressir_index_1/arm.exp"),
+          fixtures_path("expressir_index_2/mim.exp"),
+        ]
+      end
+      let(:input) do
+        <<~TEXT
+          = Document title
+          Author
+          :docfile: test.adoc
+          :nodoc:
+          :novalid:
+          :no-isobib:
+          :imagesdir: spec/assets
+
+          [lutaml, #{express_files_list.join('; ')}, my_context]
+          ----
+          {% for schema in my_context.schemas %}
+          == {{schema.id}}
+          {% endfor %}
+          ----
+        TEXT
+      end
+      let(:output) do
+        <<~TEXT
+          #{BLANK_HDR}
+            <sections>
+              <clause id="_" inline-header="false" obligation="normative">
+                <title>annotated_3d_model_data_quality_criteria_schema</title>
+              </clause>
+              <clause id="_" inline-header="false" obligation="normative">
+                <title>Activity_method_assignment_arm</title>
+              </clause>
+              <clause id="_" inline-header="false" obligation="normative">
+                <title>Activity_method_characterized_mim</title>
+              </clause>
+            </sections>
+          </standard-document>
+          </body></html>
+        TEXT
+      end
+
+      it "correctly renders input" do
+        expect(xml_string_conent(metanorma_process(input)))
+          .to(be_equivalent_to(output))
+      end
+    end
   end
 end
