@@ -45,12 +45,12 @@ module Metanorma
 
         def parse_marco(lutaml_path, entity_name, document)
           lutaml_document = lutaml_document_from_file(document, lutaml_path)
-                              .serialized_document
-          entities = [lutaml_document['classes'], lutaml_document['enums']]
-                      .compact
-                      .flatten
-          entity_definition = entities.find do |klass|
-            klass['name'] == entity_name.strip
+            .serialized_document
+          entities = [lutaml_document["classes"], lutaml_document["enums"]]
+            .compact
+            .flatten
+          entity_definition = entities.detect do |klass|
+            klass["name"] == entity_name.strip
           end
           model_representation(entity_definition, document)
         end
@@ -59,12 +59,13 @@ module Metanorma
           render_result, errors = Utils.render_liquid_string(
             template_string: table_template,
             context_items: entity_definition,
-            context_name: 'definition'
+            context_name: "definition"
           )
           Utils.notify_render_errors(document, errors)
           render_result.split("\n")
         end
 
+        # rubocop:disable Layout/IndentHeredoc
         def table_template
           <<~TEMPLATE
           === {{ definition.name }}
@@ -94,6 +95,7 @@ module Metanorma
 
           TEMPLATE
         end
+        # rubocop:enable Layout/IndentHeredoc
       end
     end
   end

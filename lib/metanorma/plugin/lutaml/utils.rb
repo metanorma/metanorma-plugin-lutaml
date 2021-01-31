@@ -39,7 +39,7 @@ module Metanorma
 
             begin
               idxs[name]
-                .push(::Lutaml::Parser.parse(File.new(path, encoding: "UTF-8")))
+                .push(::Lutaml::Parser.parse(File.new(path, encoding: "UTF-8")).to_liquid)
             rescue StandardError => e
               document.logger.warn("Failed to load #{path}: #{e.message}")
             end

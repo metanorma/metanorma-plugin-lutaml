@@ -22,7 +22,8 @@ module Metanorma
           create_listing_block(
             parent,
             reader.source,
-            attrs.reject { |k, v| k == 1 })
+            attrs.reject { |k, _v| k == 1 }
+          )
         end
 
         def process(parent, reader, attrs)
@@ -32,35 +33,35 @@ module Metanorma
           through_attrs["target"] = filename
           through_attrs["title"] = uml_document.caption
           create_image_block(parent, through_attrs)
-        rescue => e
+        rescue StandardError => e
           abort(parent, reader, attrs, e.message)
         end
 
         private
 
         def lutaml_temp(reader)
-          temp_file = Tempfile.new(['lutaml', '.lutaml'])
+          temp_file = Tempfile.new(["lutaml", ".lutaml"])
           temp_file.puts(reader.read)
           temp_file.rewind
           temp_file
         end
 
         # if no :imagesdir: leave image file in lutaml
-        def generate_file(parent, reader, uml_document)
+        def generate_file(parent, _reader, uml_document)
           formatter = ::Lutaml::Uml::Formatter::Graphviz.new
           formatter.type = :png
 
-          imagesdir = if parent.document.attr('imagesdir')
-                        File.join(parent.document.attr('imagesdir'), 'lutaml')
+          imagesdir = if parent.document.attr("imagesdir")
+                        File.join(parent.document.attr("imagesdir"), "lutaml")
                       else
-                        'lutaml'
+                        "lutaml"
                       end
           result_path = Utils.relative_file_path(parent.document, imagesdir)
           result_pathname = Pathname.new(result_path)
           result_pathname.mkpath
-          File.writable?(result_pathname) or raise "Destination path #{result_path} not writable for Lutaml!"
+          File.writable?(result_pathname) || raise("Destination path #{result_path} not writable for Lutaml!")
 
-          outfile = Tempfile.new(['lutaml', '.png'])
+          outfile = Tempfile.new(["lutaml", ".png"])
           outfile.binmode
           outfile.puts(formatter.format(uml_document))
 
@@ -74,11 +75,11 @@ module Metanorma
         end
 
         def generate_attrs(attrs)
-          through_attrs = %w(id align float title role width height alt).
-            inject({}) do |memo, key|
-            memo[key] = attrs[key] if attrs.has_key? key
-            memo
-          end
+          %w(id align float title role width height alt)
+            .reduce({}) do |memo, key|
+              memo[key] = attrs[key] if attrs.has_key? key
+              memo
+            end
         end
       end
     end
