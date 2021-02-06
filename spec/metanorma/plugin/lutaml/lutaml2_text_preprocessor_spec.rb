@@ -218,6 +218,66 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
       end
     end
 
+    context "when svgmap anchors are used" do
+      let(:example_file) { fixtures_path("test_relative_includes_svgmap.exp").gsub(FileUtils.pwd, '')[1..-1] }
+      let(:input) do
+        <<~TEXT
+          = Document title
+          Author
+          :docfile: test.adoc
+          :nodoc:
+          :novalid:
+          :no-isobib:
+          :imagesdir: spec/assets
+
+          [lutaml,#{example_file},my_context]
+          ----
+          {% for schema in my_context.schemas %}
+          == {{schema.id}}
+
+          {% for remark in schema.remarks %}
+          {{ remark }}
+          {% endfor %}
+           {% endfor %}
+          ----
+        TEXT
+      end
+      let(:doc_path) { File.dirname(example_file) }
+      let(:output) do
+        <<~TEXT
+          #{BLANK_HDR}
+          <sections>
+            <clause id="_" inline-header="false" obligation="normative"><title>annotated_3d_model_data_quality_criteria_schema</title>
+            <p id="_">Mine text</p>
+            <example id="_"><figure id="_">
+            <image src="spec/assets/spec/fixtures/measure_schemaexpg5.svg" id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
+            </figure>
+            <ul id="_">
+            <li>
+            <p id="_"><xref target="express_measure_schema">measure_schema</xref>;spec/fixtures/../../resources/measure_schema/measure_schema.xml</p>
+            </li>
+            <li>
+            <p id="_"><xref target="express_measure_schemaexpg4">measure_schemaexpg4</xref>;spec/fixtures/./measure_schemaexpg4.xml</p>
+            </li>
+            <li>
+            <p id="_"><xref target="express_measure_schema">measure_schema</xref>;spec/fixtures/../../resources/measure_schema/measure_schema.xml</p>
+            </li>
+            </ul></example>
+            <figure id="_">
+            <pre id="_"></pre>
+            </figure></clause>
+          </sections>
+          </standard-document>
+          </body></html>
+        TEXT
+      end
+
+      it "correctly renders input" do
+        expect(xml_string_conent(metanorma_process(input)))
+          .to(be_equivalent_to(output))
+      end
+    end
+
 
     context "when lutaml-express-index keyword used" do
       let(:input) do

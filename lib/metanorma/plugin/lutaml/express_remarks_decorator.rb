@@ -2,7 +2,7 @@ module Metanorma
   module Plugin
     module Lutaml
       class ExpressRemarksDecorator
-        RELATIVE_PREFIX_MACRO_REGEXP = /(link|image|video|audio|include)(:+)(?![^\/:]+:\/\/|[A-Z]:\/|\/)([^:\[]+)(\[.*\])/.freeze
+        RELATIVE_PREFIX_MACRO_REGEXP = /^(\* <<express.+?>>;|link|image|video|audio|include)(:+)?(?![^\/:]+:\/\/|[A-Z]:\/|\/)([^:\[]+)(\[.*\])?$/.freeze
 
         attr_reader :remark, :options
 
@@ -44,7 +44,7 @@ module Metanorma
 
         def prefix_relative_paths(line, path_prefix)
           line.gsub(RELATIVE_PREFIX_MACRO_REGEXP) do |_match|
-            prefixed_path = File.join(path_prefix, $3)
+            prefixed_path = File.join(path_prefix, $3.strip)
             "#{$1}#{$2}#{prefixed_path}#{$4}"
           end
         end
