@@ -1,20 +1,18 @@
 (*"annotated_3d_model_data_quality_criteria_schema"
-$Id: test.exp,v 1.3 2020/07/30 05:18:54 ftanaka Exp $
-ISO 10303 TC184/SC4/WG12 N10658
+Mine text
 
-= EXPRESS Source:
-ISO 10303-59 ed3 Quality of product shape data - Annotated 3d model data quality criteria schema
+[.svgmap]
+====
+image::measure_schemaexpg5.svg[]
 
-The following permission notice and disclaimer shall be included in all copies of this EXPRESS schema ("the Schema"),
-and derivations of the Schema:
+* <<express:measure_schema,measure_schema>>; ../../resources/measure_schema/measure_schema.xml
+* <<express:measure_schemaexpg4,measure_schemaexpg4>>; ./measure_schemaexpg4.xml
+* <<express:measure_schema,measure_schema>>; ../../resources/measure_schema/measure_schema.xml
+====
 
 *)
 
 SCHEMA annotated_3d_model_data_quality_criteria_schema '{iso standard 10303 part(59) version(3) object(1) annotated_3d_model_data_quality_criteria_schema(6)}';
-
-(*"annotated_3d_model_data_quality_criteria_schema"
-Need select eleemnts for measure_value
-*)
  REFERENCE FROM measure_schema
    (measure_value);
 

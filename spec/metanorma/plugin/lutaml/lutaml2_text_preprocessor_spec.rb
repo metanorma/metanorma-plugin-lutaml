@@ -78,5 +78,326 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           .to(be_equivalent_to(output))
       end
     end
+
+    context "when additional options passed" do
+      let(:input) do
+        <<~TEXT
+          = Document title
+          Author
+          :docfile: test.adoc
+          :nodoc:
+          :novalid:
+          :no-isobib:
+          :imagesdir: spec/assets
+          [lutaml,#{example_file},my_context, leveloffset=+2]
+          ----
+
+          {% for schema in my_context.schemas %}
+          == {{schema.id}}
+
+          {% for remark in schema.remarks %}
+          {{ remark }}
+          {% endfor %}
+
+          {% endfor %}
+          ----
+
+
+          [lutaml,#{example_file},my_context, leveloffset=-1]
+          ----
+
+          {% for schema in my_context.schemas %}
+          == {{schema.id}}
+
+          {% for remark in schema.remarks %}
+          {{ remark }}
+          {% endfor %}
+          {% endfor %}
+          ----
+        TEXT
+      end
+
+      let(:output) do
+        <<~TEXT
+          #{BLANK_HDR}
+          <sections>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>annotated_3d_model_data_quality_criteria_schema</title>
+                <p id="_">$Id: test.exp,v 1.3 2020/07/30 05:18:54 ftanaka Exp $
+                  ISO 10303 TC184/SC4/WG12 N10658</p>
+                <clause id="_" inline-header="false" obligation="normative">
+                  <title>EXPRESS Source:</title>
+                  <p id="_">ISO 10303-59 ed3 Quality of product shape data — Annotated 3d model data quality criteria
+                    schema</p>
+                  <p id="_">The following permission notice and disclaimer shall be included in all copies of this EXPRESS
+                    schema (“the Schema”),
+                    and derivations of the Schema:</p>
+                  <p id="_">Need select eleemnts for measure_value</p>
+                </clause>
+              </clause>
+              <clause id="_" inline-header="false" obligation="normative">
+                <title>annotated_3d_model_data_quality_criteria_schema</title>
+                <p id="_">$Id: test.exp,v 1.3 2020/07/30 05:18:54 ftanaka Exp $
+                  ISO 10303 TC184/SC4/WG12 N10658</p>
+                <figure id="_">
+                  <pre id="_"> EXPRESS Source:
+            ISO 10303-59 ed3 Quality of product shape data - Annotated 3d model data quality criteria schema</pre>
+                </figure>
+                <p id="_">The following permission notice and disclaimer shall be included in all copies of this EXPRESS
+                  schema (“the Schema”),
+                  and derivations of the Schema:</p>
+                <p id="_">Need select eleemnts for measure_value</p>
+            </clause>
+          </sections>
+          </standard-document>
+          </body></html>
+        TEXT
+      end
+
+      it "correctly renders input" do
+        expect(xml_string_conent(metanorma_process(input)))
+          .to(be_equivalent_to(output))
+      end
+    end
+
+    context "when relative paths exists in doc" do
+      let(:example_file) { fixtures_path("test_relative_includes.exp").gsub(FileUtils.pwd, '')[1..-1] }
+      let(:input) do
+        <<~TEXT
+          = Document title
+          Author
+          :docfile: test.adoc
+          :nodoc:
+          :novalid:
+          :no-isobib:
+          :imagesdir: spec/assets
+
+          [lutaml,#{example_file},my_context]
+          ----
+          {% for schema in my_context.schemas %}
+          == {{schema.id}}
+
+          {% for remark in schema.remarks %}
+          {{ remark }}
+          {% endfor %}
+           {% endfor %}
+          ----
+        TEXT
+      end
+      let(:doc_path) { File.dirname(example_file) }
+      let(:output) do
+        <<~TEXT
+          #{BLANK_HDR}
+          <sections>
+            <clause id="_" inline-header="false" obligation="normative"><title>annotated_3d_model_data_quality_criteria_schema</title>
+            <p id="_">Mine text</p>
+            <p id="_">
+            <link target="#{doc_path}/downloads/report.pdf">Get Report
+            </p>
+            <p id="_">
+            <link target="http://test.com/include1.csv">
+            </p>
+
+
+            <p id="_">include::#{doc_path}/include1.csv[]</p>
+            <p id="_">include::#{doc_path}/test/include1.csv[]</p>
+            <p id="_">include::http://test.com/include1.csv[]</p>
+            <figure id="_">
+              <pre id="_"></pre>
+            </figure>
+            </clause>
+          </sections>
+          </standard-document>
+          </body></html>
+        TEXT
+      end
+
+      it "correctly renders input" do
+        expect(xml_string_conent(metanorma_process(input)))
+          .to(be_equivalent_to(output))
+      end
+    end
+
+    context "when svgmap anchors are used" do
+      let(:example_file) { fixtures_path("test_relative_includes_svgmap.exp").gsub(FileUtils.pwd, '')[1..-1] }
+      let(:input) do
+        <<~TEXT
+          = Document title
+          Author
+          :docfile: test.adoc
+          :nodoc:
+          :novalid:
+          :no-isobib:
+          :imagesdir: spec/assets
+
+          [lutaml,#{example_file},my_context]
+          ----
+          {% for schema in my_context.schemas %}
+          == {{schema.id}}
+
+          {% for remark in schema.remarks %}
+          {{ remark }}
+          {% endfor %}
+           {% endfor %}
+          ----
+        TEXT
+      end
+      let(:doc_path) { File.dirname(example_file) }
+      let(:output) do
+        <<~TEXT
+          #{BLANK_HDR}
+          <sections>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>annotated_3d_model_data_quality_criteria_schema</title>
+              <p id="_">Mine text</p>
+              <svgmap id="_">
+                <figure id="_">
+                  <image src="spec/assets/spec/fixtures/measure_schemaexpg5.svg" id="_" mimetype="image/svg+xml"
+                    height="auto" width="auto"></image>
+                </figure>
+                <target href="spec/fixtures/../../resources/measure_schema/measure_schema.xml">
+                  <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
+                </target>
+                <target href="spec/fixtures/./measure_schemaexpg4.xml">
+                  <eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>
+                </target>
+                <target href="spec/fixtures/../../resources/measure_schema/measure_schema.xml">
+                  <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
+                </target>
+              </svgmap>
+              <figure id="_">
+                <pre id="_"></pre>
+              </figure>
+            </clause>
+          </sections>
+          <bibliography>
+            <references hidden="true" normative="false">
+              <bibitem id="express_measure_schema" type="internal">
+                <docidentifier type="repository">express/measure_schema</docidentifier>
+              </bibitem>
+              <bibitem id="express_measure_schemaexpg4" type="internal">
+                <docidentifier type="repository">express/measure_schemaexpg4</docidentifier>
+              </bibitem>
+            </references>
+          </bibliography>
+          </standard-document>
+          </body>
+          </html>
+        TEXT
+      end
+
+      it "correctly renders input" do
+        expect(xml_string_conent(metanorma_process(input)))
+          .to(be_equivalent_to(output))
+      end
+    end
+
+
+    context "when lutaml-express-index keyword used" do
+      let(:input) do
+        <<~TEXT
+          = Document title
+          Author
+          :docfile: test.adoc
+          :nodoc:
+          :novalid:
+          :no-isobib:
+          :imagesdir: spec/assets
+          :lutaml-express-index: first-express-set; #{fixtures_path('expressir_index_1')};
+          :lutaml-express-index: second-express-set; #{fixtures_path('expressir_index_2')};
+
+          [lutaml,first-express-set,my_context]
+          ----
+          {% for schema in my_context.schemas %}
+          == {{schema.id}}
+          {% endfor %}
+          ----
+
+          [lutaml,second-express-set,my_context]
+          ----
+          {% for schema in my_context.schemas %}
+          == {{schema.id}}
+          {% endfor %}
+          ----
+        TEXT
+      end
+      let(:output) do
+        <<~TEXT
+          #{BLANK_HDR}
+          <sections>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>Activity_method_assignment_mim</title>
+            </clause>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>Activity_method_assignment_arm</title>
+            </clause>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>Activity_method_characterized_arm</title>
+            </clause>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>Activity_method_characterized_mim</title>
+            </clause>
+          </sections>
+          </standard-document>
+          </body></html>
+        TEXT
+      end
+
+      it "correctly renders input" do
+        expect(xml_string_conent(metanorma_process(input)))
+          .to(be_equivalent_to(output))
+      end
+    end
+
+    context "when multiply files supplied to macro" do
+      let(:express_files_list) do
+        [
+          fixtures_path("test.exp"),
+          fixtures_path("expressir_index_1/arm.exp"),
+          fixtures_path("expressir_index_2/mim.exp"),
+        ]
+      end
+      let(:input) do
+        <<~TEXT
+          = Document title
+          Author
+          :docfile: test.adoc
+          :nodoc:
+          :novalid:
+          :no-isobib:
+          :imagesdir: spec/assets
+
+          [lutaml, #{express_files_list.join('; ')}, my_context]
+          ----
+          {% for schema in my_context.schemas %}
+          == {{schema.id}}
+          {% endfor %}
+          ----
+        TEXT
+      end
+      let(:output) do
+        <<~TEXT
+          #{BLANK_HDR}
+            <sections>
+              <clause id="_" inline-header="false" obligation="normative">
+                <title>annotated_3d_model_data_quality_criteria_schema</title>
+              </clause>
+              <clause id="_" inline-header="false" obligation="normative">
+                <title>Activity_method_assignment_arm</title>
+              </clause>
+              <clause id="_" inline-header="false" obligation="normative">
+                <title>Activity_method_characterized_mim</title>
+              </clause>
+            </sections>
+          </standard-document>
+          </body></html>
+        TEXT
+      end
+
+      it "correctly renders input" do
+        expect(xml_string_conent(metanorma_process(input)))
+          .to(be_equivalent_to(output))
+      end
+    end
   end
 end
