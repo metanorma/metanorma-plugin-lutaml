@@ -40,7 +40,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           <tr>
           <td valign="top" align="left">addressClassProfile</td>
           <td valign="top" align="left">TODO: enum ‘s definition</td>
-          <td valign="top" align="left">O</td>
+          <td valign="top" align="left">M</td>
           <td valign="top" align="left">1</td>
           <td valign="top" align="left">
           <tt>CharacterString</tt>
@@ -50,7 +50,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           <td valign="top" align="left">imlicistAttributeProfile</td>
           <td valign="top" align="left">this is attribute definition
           with multiply lines</td>
-          <td valign="top" align="left">O</td>
+          <td valign="top" align="left">M</td>
           <td valign="top" align="left">1</td>
           <td valign="top" align="left">
           <tt>CharacterString</tt>
