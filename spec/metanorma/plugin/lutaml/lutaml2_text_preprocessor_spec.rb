@@ -247,28 +247,42 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         <<~TEXT
           #{BLANK_HDR}
           <sections>
-            <clause id="_" inline-header="false" obligation="normative"><title>annotated_3d_model_data_quality_criteria_schema</title>
-            <p id="_">Mine text</p>
-            <example id="_"><figure id="_">
-            <image src="spec/assets/spec/fixtures/measure_schemaexpg5.svg" id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
-            </figure>
-            <ul id="_">
-            <li>
-            <p id="_"><xref target="express_measure_schema">measure_schema</xref>;spec/fixtures/../../resources/measure_schema/measure_schema.xml</p>
-            </li>
-            <li>
-            <p id="_"><xref target="express_measure_schemaexpg4">measure_schemaexpg4</xref>;spec/fixtures/./measure_schemaexpg4.xml</p>
-            </li>
-            <li>
-            <p id="_"><xref target="express_measure_schema">measure_schema</xref>;spec/fixtures/../../resources/measure_schema/measure_schema.xml</p>
-            </li>
-            </ul></example>
-            <figure id="_">
-            <pre id="_"></pre>
-            </figure></clause>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>annotated_3d_model_data_quality_criteria_schema</title>
+              <p id="_">Mine text</p>
+              <svgmap id="_">
+                <figure id="_">
+                  <image src="spec/assets/spec/fixtures/measure_schemaexpg5.svg" id="_" mimetype="image/svg+xml"
+                    height="auto" width="auto"></image>
+                </figure>
+                <target href="spec/fixtures/../../resources/measure_schema/measure_schema.xml">
+                  <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
+                </target>
+                <target href="spec/fixtures/./measure_schemaexpg4.xml">
+                  <eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>
+                </target>
+                <target href="spec/fixtures/../../resources/measure_schema/measure_schema.xml">
+                  <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
+                </target>
+              </svgmap>
+              <figure id="_">
+                <pre id="_"></pre>
+              </figure>
+            </clause>
           </sections>
+          <bibliography>
+            <references hidden="true" normative="false">
+              <bibitem id="express_measure_schema" type="internal">
+                <docidentifier type="repository">express/measure_schema</docidentifier>
+              </bibitem>
+              <bibitem id="express_measure_schemaexpg4" type="internal">
+                <docidentifier type="repository">express/measure_schemaexpg4</docidentifier>
+              </bibitem>
+            </references>
+          </bibliography>
           </standard-document>
-          </body></html>
+          </body>
+          </html>
         TEXT
       end
 
