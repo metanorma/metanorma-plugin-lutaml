@@ -192,15 +192,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             <clause id="_" inline-header="false" obligation="normative"><title>annotated_3d_model_data_quality_criteria_schema</title>
             <p id="_">Mine text</p>
             <p id="_">
-            <link target="#{doc_path}/downloads/report.pdf">Get Report
+            <link target="#{fixtures_path('/downloads/report.pdf')}">Get Report
             </p>
             <p id="_">
             <link target="http://test.com/include1.csv">
             </p>
 
 
-            <p id="_">include::#{doc_path}/include1.csv[]</p>
-            <p id="_">include::#{doc_path}/test/include1.csv[]</p>
+            <p id="_">include::#{fixtures_path('/include1.csv')}[]</p>
+            <p id="_">include::#{fixtures_path('test/include1.csv')}[]</p>
             <p id="_">include::http://test.com/include1.csv[]</p>
             <figure id="_">
               <pre id="_"></pre>
@@ -252,16 +252,16 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               <p id="_">Mine text</p>
               <svgmap id="_">
                 <figure id="_">
-                  <image src="spec/assets/spec/fixtures/measure_schemaexpg5.svg" id="_" mimetype="image/svg+xml"
+                  <image src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" id="_" mimetype="image/svg+xml"
                     height="auto" width="auto"></image>
                 </figure>
-                <target href="spec/fixtures/../../resources/measure_schema/measure_schema.xml">
+                <target href="#{File.expand_path(fixtures_path('../../resources/measure_schema/measure_schema.xml'))}">
                   <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
                 </target>
-                <target href="spec/fixtures/./measure_schemaexpg4.xml">
+                <target href="#{File.expand_path(fixtures_path('./measure_schemaexpg4.xml'))}">
                   <eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>
                 </target>
-                <target href="spec/fixtures/../../resources/measure_schema/measure_schema.xml">
+                <target href="#{File.expand_path(fixtures_path('../../resources/measure_schema/measure_schema.xml'))}">
                   <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
                 </target>
               </svgmap>
@@ -282,6 +282,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           </bibliography>
           </standard-document>
           </body>
+
           </html>
         TEXT
       end
@@ -400,19 +401,19 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               <svgmap id="_">
                 <figure id="_">
                   <image
-                    src="#{fixtures_path('measure_schemaexpg5.svg')}"
+                    src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}"
                     id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
                 </figure>
                 <target
-                  href="#{fixtures_path('../../resources/measure_schema/measure_schema.xml')}">
+                  href="#{File.expand_path(fixtures_path('../../resources/measure_schema/measure_schema.xml'))}">
                   <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
                 </target>
                 <target
-                  href="#{fixtures_path('./measure_schemaexpg4.xml')}">
+                  href="#{File.expand_path(fixtures_path('./measure_schemaexpg4.xml'))}">
                   <eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>
                 </target>
                 <target
-                  href="#{fixtures_path('../../resources/measure_schema/measure_schema.xml')}">
+                  href="#{File.expand_path(fixtures_path('../../resources/measure_schema/measure_schema.xml'))}">
                   <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
                 </target>
               </svgmap>
@@ -426,19 +427,19 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               <svgmap id="_">
                 <figure id="_">
                   <image
-                    src="#{fixtures_path('expressir_index_1/measure_schemaexpg5.svg')}"
+                    src="#{File.expand_path(fixtures_path('expressir_index_1/measure_schemaexpg5.svg'))}"
                     id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
                 </figure>
                 <target
-                  href="#{fixtures_path('expressir_index_1/../../resources/measure_schema/measure_schema.xml')}">
+                  href="#{File.expand_path(fixtures_path('expressir_index_1/../../resources/measure_schema/measure_schema.xml'))}">
                   <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
                 </target>
                 <target
-                  href="#{fixtures_path('expressir_index_1/./measure_schemaexpg4.xml')}">
+                  href="#{File.expand_path(fixtures_path('expressir_index_1/./measure_schemaexpg4.xml'))}">
                   <eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>
                 </target>
                 <target
-                  href="#{fixtures_path('expressir_index_1/../../resources/measure_schema/measure_schema.xml')}">
+                  href="#{File.expand_path(fixtures_path('expressir_index_1/../../resources/measure_schema/measure_schema.xml'))}">
                   <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
                 </target>
               </svgmap>

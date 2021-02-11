@@ -78,7 +78,7 @@ module Metanorma
             else
               res.push(content_from_file(document, path)
                         .to_liquid
-                        .merge('relative_path_prefix' => File.dirname(path)))
+                        .merge('relative_path_prefix' => Utils.relative_file_path(document, File.dirname(path))))
             end
           end
         end

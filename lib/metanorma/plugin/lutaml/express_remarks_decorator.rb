@@ -45,7 +45,11 @@ module Metanorma
         def prefix_relative_paths(line, path_prefix)
           line.gsub(RELATIVE_PREFIX_MACRO_REGEXP) do |_match|
             prefixed_path = File.join(path_prefix, $3.strip)
-            "#{$1}#{$2}#{prefixed_path}#{$4}"
+            # When we are dealing with arelative path of a template: ../path/to/file we need to transform it into
+            # the absolute one because `image::` macro wont understand it other way
+            prefixed_path = File.absolute_path(prefixed_path) if prefixed_path.start_with?('../')
+            full_path = File.expand_path(prefixed_path)
+            "#{$1}#{$2}#{full_path}#{$4}"
           end
         end
 
