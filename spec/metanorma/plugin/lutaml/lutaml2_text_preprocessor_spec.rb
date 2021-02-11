@@ -400,19 +400,19 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               <svgmap id="_">
                 <figure id="_">
                   <image
-                    src="/Users/mitaraskin/Work/Personal/Metanorma/metanorma-plugin-lutaml/spec/fixtures/measure_schemaexpg5.svg"
+                    src="#{fixtures_path('measure_schemaexpg5.svg')}"
                     id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
                 </figure>
                 <target
-                  href="/Users/mitaraskin/Work/Personal/Metanorma/metanorma-plugin-lutaml/spec/fixtures/../../resources/measure_schema/measure_schema.xml">
+                  href="#{fixtures_path('../../resources/measure_schema/measure_schema.xml')}">
                   <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
                 </target>
                 <target
-                  href="/Users/mitaraskin/Work/Personal/Metanorma/metanorma-plugin-lutaml/spec/fixtures/./measure_schemaexpg4.xml">
+                  href="#{fixtures_path('./measure_schemaexpg4.xml')}">
                   <eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>
                 </target>
                 <target
-                  href="/Users/mitaraskin/Work/Personal/Metanorma/metanorma-plugin-lutaml/spec/fixtures/../../resources/measure_schema/measure_schema.xml">
+                  href="#{fixtures_path('../../resources/measure_schema/measure_schema.xml')}">
                   <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
                 </target>
               </svgmap>
@@ -426,19 +426,19 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               <svgmap id="_">
                 <figure id="_">
                   <image
-                    src="/Users/mitaraskin/Work/Personal/Metanorma/metanorma-plugin-lutaml/spec/fixtures/expressir_index_1/measure_schemaexpg5.svg"
+                    src="#{fixtures_path('expressir_index_1/measure_schemaexpg5.svg')}"
                     id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
                 </figure>
                 <target
-                  href="/Users/mitaraskin/Work/Personal/Metanorma/metanorma-plugin-lutaml/spec/fixtures/expressir_index_1/../../resources/measure_schema/measure_schema.xml">
+                  href="#{fixtures_path('expressir_index_1/../../resources/measure_schema/measure_schema.xml')}">
                   <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
                 </target>
                 <target
-                  href="/Users/mitaraskin/Work/Personal/Metanorma/metanorma-plugin-lutaml/spec/fixtures/expressir_index_1/./measure_schemaexpg4.xml">
+                  href="#{fixtures_path('expressir_index_1/./measure_schemaexpg4.xml')}">
                   <eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>
                 </target>
                 <target
-                  href="/Users/mitaraskin/Work/Personal/Metanorma/metanorma-plugin-lutaml/spec/fixtures/expressir_index_1/../../resources/measure_schema/measure_schema.xml">
+                  href="#{fixtures_path('expressir_index_1/../../resources/measure_schema/measure_schema.xml')}">
                   <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
                 </target>
               </svgmap>
