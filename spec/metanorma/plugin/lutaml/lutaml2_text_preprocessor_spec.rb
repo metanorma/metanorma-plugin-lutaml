@@ -326,6 +326,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           #{BLANK_HDR}
           <sections>
             <clause id="_" inline-header="false" obligation="normative">
+              <title>Activity_method_assignment_arm</title>
+            </clause>
+            <clause id="_" inline-header="false" obligation="normative">
               <title>Activity_method_assignment_mim</title>
             </clause>
             <clause id="_" inline-header="false" obligation="normative">
@@ -352,8 +355,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
     context "when multiply files supplied to macro" do
       let(:express_files_list) do
         [
-          fixtures_path("test.exp"),
-          fixtures_path("expressir_index_1/arm.exp"),
+          fixtures_path("test_relative_includes_svgmap.exp"),
+          fixtures_path("expressir_index_1/arm_svgmap.exp"),
           fixtures_path("expressir_index_2/mim.exp"),
         ]
       end
@@ -371,6 +374,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           ----
           {% for schema in my_context.schemas %}
           == {{schema.id}}
+
+          {% for schema in my_context.schemas %}
+          == {{schema.id}}
+
+          {% for remark in schema.remarks %}
+          {{ remark }}
+          {% endfor %}
+          {% endfor %}
+
           {% endfor %}
           ----
         TEXT
@@ -378,19 +390,80 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
       let(:output) do
         <<~TEXT
           #{BLANK_HDR}
-            <sections>
-              <clause id="_" inline-header="false" obligation="normative">
-                <title>annotated_3d_model_data_quality_criteria_schema</title>
-              </clause>
-              <clause id="_" inline-header="false" obligation="normative">
-                <title>Activity_method_assignment_arm</title>
-              </clause>
-              <clause id="_" inline-header="false" obligation="normative">
-                <title>Activity_method_characterized_mim</title>
-              </clause>
-            </sections>
+          <sections>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>annotated_3d_model_data_quality_criteria_schema</title>
+            </clause>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>annotated_3d_model_data_quality_criteria_schema</title>
+              <p id="_">Mine text</p>
+              <svgmap id="_">
+                <figure id="_">
+                  <image
+                    src="/Users/mitaraskin/Work/Personal/Metanorma/metanorma-plugin-lutaml/spec/fixtures/measure_schemaexpg5.svg"
+                    id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
+                </figure>
+                <target
+                  href="/Users/mitaraskin/Work/Personal/Metanorma/metanorma-plugin-lutaml/spec/fixtures/../../resources/measure_schema/measure_schema.xml">
+                  <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
+                </target>
+                <target
+                  href="/Users/mitaraskin/Work/Personal/Metanorma/metanorma-plugin-lutaml/spec/fixtures/./measure_schemaexpg4.xml">
+                  <eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>
+                </target>
+                <target
+                  href="/Users/mitaraskin/Work/Personal/Metanorma/metanorma-plugin-lutaml/spec/fixtures/../../resources/measure_schema/measure_schema.xml">
+                  <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
+                </target>
+              </svgmap>
+            </clause>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>Activity_method_assignment_arm</title>
+            </clause>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>Activity_method_assignment_arm</title>
+              <p id="_">Mine text</p>
+              <svgmap id="_">
+                <figure id="_">
+                  <image
+                    src="/Users/mitaraskin/Work/Personal/Metanorma/metanorma-plugin-lutaml/spec/fixtures/expressir_index_1/measure_schemaexpg5.svg"
+                    id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
+                </figure>
+                <target
+                  href="/Users/mitaraskin/Work/Personal/Metanorma/metanorma-plugin-lutaml/spec/fixtures/expressir_index_1/../../resources/measure_schema/measure_schema.xml">
+                  <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
+                </target>
+                <target
+                  href="/Users/mitaraskin/Work/Personal/Metanorma/metanorma-plugin-lutaml/spec/fixtures/expressir_index_1/./measure_schemaexpg4.xml">
+                  <eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>
+                </target>
+                <target
+                  href="/Users/mitaraskin/Work/Personal/Metanorma/metanorma-plugin-lutaml/spec/fixtures/expressir_index_1/../../resources/measure_schema/measure_schema.xml">
+                  <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
+                </target>
+              </svgmap>
+            </clause>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>Activity_method_characterized_mim</title>
+            </clause>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>Activity_method_characterized_mim</title>
+            </clause>
+          </sections>
+          <bibliography>
+            <references hidden="true" normative="false">
+              <bibitem id="express_measure_schema" type="internal">
+                <docidentifier type="repository">express/measure_schema</docidentifier>
+              </bibitem>
+              <bibitem id="express_measure_schemaexpg4" type="internal">
+                <docidentifier type="repository">express/measure_schemaexpg4</docidentifier>
+              </bibitem>
+            </references>
+          </bibliography>
           </standard-document>
-          </body></html>
+          </body>
+
+          </html>
         TEXT
       end
 
