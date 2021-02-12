@@ -76,19 +76,21 @@ module Metanorma
             if express_indexes[path]
               res.push(*express_indexes[path])
             else
-              res.push(content_from_file(document, path).to_liquid)
+              res.push(content_from_file(document, path)
+                        .to_liquid
+                        .merge('relative_path_prefix' => Utils.relative_file_path(document, File.dirname(path))))
             end
           end
         end
 
         def parse_template(document, current_block, block_match, express_indexes)
           options = parse_options(block_match[3])
-                      .merge("relative_path_prefix" => File.dirname(block_match[1]))
           contexts_items(block_match, document, express_indexes)
             .map do |context_items|
               parse_context_block(document: document,
                                   context_lines: current_block,
-                                  context_items: decorate_context_items(context_items, options),
+                                  context_items: decorate_context_items(context_items,
+                                                    options.merge('relative_path_prefix' => context_items['relative_path_prefix'])),
                                   context_name: block_match[2].strip)
             end.flatten
         rescue StandardError => e
