@@ -116,21 +116,21 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             <sections><clause id="_" inline-header="false" obligation="normative"><title>annotated_3d_model_data_quality_criteria_schema</title>
             <p id="_">Mine text</p>
             <svgmap id="_"><figure id="_">
-            <image src="/Users/mitaraskin/Work/Personal/Metanorma/metanorma-plugin-lutaml/spec/fixtures/measure_schemaexpg5.svg" id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
-            </figure><target href="/Users/mitaraskin/Work/Personal/Metanorma/metanorma-plugin-lutaml/resources/measure_schema/measure_schema.xml"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref></target><target href="/Users/mitaraskin/Work/Personal/Metanorma/metanorma-plugin-lutaml/spec/fixtures/measure_schemaexpg4.xml"><eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref></target><target href="/Users/mitaraskin/Work/Personal/Metanorma/metanorma-plugin-lutaml/resources/measure_schema/measure_schema.xml"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref></target></svgmap></clause>
+            <image src="#{File.expand_path(fixtures_path("measure_schemaexpg5.svg"))}" id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
+            </figure><target href="#{File.expand_path(fixtures_path("../../resources/measure_schema/measure_schema.xml"))}"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref></target><target href="#{File.expand_path(fixtures_path("measure_schemaexpg4.xml"))}"><eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref></target><target href="#{File.expand_path(fixtures_path("../../resources/measure_schema/measure_schema.xml"))}"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref></target></svgmap></clause>
             <clause id="_" inline-header="false" obligation="normative"><title>annotated_3d_model_data_quality_criteria_schema</title>
             <p id="_">Mine text</p>
             <p id="_">===
-            image::/Users/mitaraskin/Work/Personal/Metanorma/metanorma-plugin-lutaml/spec/fixtures/measure_schemaexpg5.svg[]</p>
+            image::#{File.expand_path(fixtures_path("measure_schemaexpg5.svg"))}[]</p>
             <ul id="_">
             <li>
-            <p id="_"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>;/Users/mitaraskin/Work/Personal/Metanorma/metanorma-plugin-lutaml/resources/measure_schema/measure_schema.xml</p>
+            <p id="_"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>;#{File.expand_path(fixtures_path("../../resources/measure_schema/measure_schema.xml"))}</p>
             </li>
             <li>
-            <p id="_"><eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>;/Users/mitaraskin/Work/Personal/Metanorma/metanorma-plugin-lutaml/spec/fixtures/measure_schemaexpg4.xml</p>
+            <p id="_"><eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>;#{File.expand_path(fixtures_path("measure_schemaexpg4.xml"))}</p>
             </li>
             <li>
-            <p id="_"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>;/Users/mitaraskin/Work/Personal/Metanorma/metanorma-plugin-lutaml/resources/measure_schema/measure_schema.xml
+            <p id="_"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>;#{File.expand_path(fixtures_path("../../resources/measure_schema/measure_schema.xml"))}
             ===</p>
             </li>
             </ul></clause></sections>
