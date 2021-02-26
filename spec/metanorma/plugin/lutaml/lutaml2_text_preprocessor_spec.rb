@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
   describe "#process" do
-    let(:example_file) { fixtures_path("test.exp") }
+    let(:example_file) { fixtures_path("test_relative_includes_svgmap.exp") }
 
     context "Array of hashes" do
       let(:input) do
@@ -18,15 +18,12 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           [lutaml,#{example_file},my_context]
           ----
 
-          {% for schema in my_context.schemas %}
-          == {{schema.id}}
+          == {{my_context.id}}
 
-          {% for entity in schema.entities %}
+          {% for entity in my_context.entities %}
           === {{entity.id}}
           supertypes -> {{entity.supertypes.id}}
           explicit -> {{entity.explicit.first.id}}
-
-          {% endfor %}
 
           {% endfor %}
           ----
@@ -89,29 +86,25 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :novalid:
           :no-isobib:
           :imagesdir: spec/assets
-          [lutaml,#{example_file},my_context, leveloffset=+2]
+          [lutaml,#{example_file},schema, leveloffset=+2]
           ----
 
-          {% for schema in my_context.schemas %}
           == {{schema.id}}
 
           {% for remark in schema.remarks %}
           {{ remark }}
           {% endfor %}
 
-          {% endfor %}
           ----
 
 
-          [lutaml,#{example_file},my_context, leveloffset=-1]
+          [lutaml,#{example_file},schema, leveloffset=-1]
           ----
 
-          {% for schema in my_context.schemas %}
           == {{schema.id}}
 
           {% for remark in schema.remarks %}
           {{ remark }}
-          {% endfor %}
           {% endfor %}
           ----
         TEXT
@@ -120,36 +113,34 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
       let(:output) do
         <<~TEXT
           #{BLANK_HDR}
-          <sections>
-            <clause id="_" inline-header="false" obligation="normative">
-              <title>annotated_3d_model_data_quality_criteria_schema</title>
-                <p id="_">$Id: test.exp,v 1.3 2020/07/30 05:18:54 ftanaka Exp $
-                  ISO 10303 TC184/SC4/WG12 N10658</p>
-                <clause id="_" inline-header="false" obligation="normative">
-                  <title>EXPRESS Source:</title>
-                  <p id="_">ISO 10303-59 ed3 Quality of product shape data — Annotated 3d model data quality criteria
-                    schema</p>
-                  <p id="_">The following permission notice and disclaimer shall be included in all copies of this EXPRESS
-                    schema (“the Schema”),
-                    and derivations of the Schema:</p>
-                  <p id="_">Need select eleemnts for measure_value</p>
-                </clause>
-              </clause>
-              <clause id="_" inline-header="false" obligation="normative">
-                <title>annotated_3d_model_data_quality_criteria_schema</title>
-                <p id="_">$Id: test.exp,v 1.3 2020/07/30 05:18:54 ftanaka Exp $
-                  ISO 10303 TC184/SC4/WG12 N10658</p>
-                <figure id="_">
-                  <pre id="_"> EXPRESS Source:
-            ISO 10303-59 ed3 Quality of product shape data - Annotated 3d model data quality criteria schema</pre>
-                </figure>
-                <p id="_">The following permission notice and disclaimer shall be included in all copies of this EXPRESS
-                  schema (“the Schema”),
-                  and derivations of the Schema:</p>
-                <p id="_">Need select eleemnts for measure_value</p>
-            </clause>
-          </sections>
-          </standard-document>
+            <sections><clause id="_" inline-header="false" obligation="normative"><title>annotated_3d_model_data_quality_criteria_schema</title>
+            <p id="_">Mine text</p>
+            <svgmap id="_"><figure id="_">
+            <image src="#{File.expand_path(fixtures_path("measure_schemaexpg5.svg"))}" id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
+            </figure><target href="#{File.expand_path(fixtures_path("../../resources/measure_schema/measure_schema.xml"))}"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref></target><target href="#{File.expand_path(fixtures_path("measure_schemaexpg4.xml"))}"><eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref></target><target href="#{File.expand_path(fixtures_path("../../resources/measure_schema/measure_schema.xml"))}"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref></target></svgmap></clause>
+            <clause id="_" inline-header="false" obligation="normative"><title>annotated_3d_model_data_quality_criteria_schema</title>
+            <p id="_">Mine text</p>
+            <p id="_">===
+            image::#{File.expand_path(fixtures_path("measure_schemaexpg5.svg"))}[]</p>
+            <ul id="_">
+            <li>
+            <p id="_"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>;#{File.expand_path(fixtures_path("../../resources/measure_schema/measure_schema.xml"))}</p>
+            </li>
+            <li>
+            <p id="_"><eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>;#{File.expand_path(fixtures_path("measure_schemaexpg4.xml"))}</p>
+            </li>
+            <li>
+            <p id="_"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>;#{File.expand_path(fixtures_path("../../resources/measure_schema/measure_schema.xml"))}
+            ===</p>
+            </li>
+            </ul></clause></sections>
+            <bibliography><references hidden="true" normative="false"><bibitem id="express_measure_schema" type="internal">
+            <docidentifier type="repository">express/measure_schema</docidentifier>
+            </bibitem>
+            <bibitem id="express_measure_schemaexpg4" type="internal">
+            <docidentifier type="repository">express/measure_schemaexpg4</docidentifier>
+            </bibitem>
+            </references></bibliography></standard-document>
           </body></html>
         TEXT
       end
@@ -172,15 +163,13 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :no-isobib:
           :imagesdir: spec/assets
 
-          [lutaml,#{example_file},my_context]
+          [lutaml,#{example_file},schema]
           ----
-          {% for schema in my_context.schemas %}
           == {{schema.id}}
 
           {% for remark in schema.remarks %}
           {{ remark }}
           {% endfor %}
-           {% endfor %}
           ----
         TEXT
       end
@@ -202,9 +191,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             <p id="_">include::#{fixtures_path('/include1.csv')}[]</p>
             <p id="_">include::#{fixtures_path('test/include1.csv')}[]</p>
             <p id="_">include::http://test.com/include1.csv[]</p>
-            <figure id="_">
-              <pre id="_"></pre>
-            </figure>
             </clause>
           </sections>
           </standard-document>
@@ -230,15 +216,13 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :no-isobib:
           :imagesdir: spec/assets
 
-          [lutaml,#{example_file},my_context]
+          [lutaml,#{example_file},schema]
           ----
-          {% for schema in my_context.schemas %}
           == {{schema.id}}
 
           {% for remark in schema.remarks %}
           {{ remark }}
           {% endfor %}
-           {% endfor %}
           ----
         TEXT
       end
@@ -265,9 +249,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                   <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
                 </target>
               </svgmap>
-              <figure id="_">
-                <pre id="_"></pre>
-              </figure>
             </clause>
           </sections>
           <bibliography>
@@ -307,18 +288,14 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :lutaml-express-index: first-express-set; #{fixtures_path('expressir_index_1')};
           :lutaml-express-index: second-express-set; #{fixtures_path('expressir_index_2')};
 
-          [lutaml,first-express-set,my_context]
+          [lutaml,first-express-set,schema]
           ----
-          {% for schema in my_context.schemas %}
           == {{schema.id}}
-          {% endfor %}
           ----
 
-          [lutaml,second-express-set,my_context]
+          [lutaml,second-express-set,schema]
           ----
-          {% for schema in my_context.schemas %}
           == {{schema.id}}
-          {% endfor %}
           ----
         TEXT
       end
@@ -371,19 +348,12 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :no-isobib:
           :imagesdir: spec/assets
 
-          [lutaml, #{express_files_list.join('; ')}, my_context]
+          [lutaml, #{express_files_list.join('; ')}, schema]
           ----
-          {% for schema in my_context.schemas %}
-          == {{schema.id}}
-
-          {% for schema in my_context.schemas %}
           == {{schema.id}}
 
           {% for remark in schema.remarks %}
           {{ remark }}
-          {% endfor %}
-          {% endfor %}
-
           {% endfor %}
           ----
         TEXT
@@ -392,9 +362,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         <<~TEXT
           #{BLANK_HDR}
           <sections>
-            <clause id="_" inline-header="false" obligation="normative">
-              <title>annotated_3d_model_data_quality_criteria_schema</title>
-            </clause>
             <clause id="_" inline-header="false" obligation="normative">
               <title>annotated_3d_model_data_quality_criteria_schema</title>
               <p id="_">Mine text</p>
@@ -420,9 +387,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             </clause>
             <clause id="_" inline-header="false" obligation="normative">
               <title>Activity_method_assignment_arm</title>
-            </clause>
-            <clause id="_" inline-header="false" obligation="normative">
-              <title>Activity_method_assignment_arm</title>
               <p id="_">Mine text</p>
               <svgmap id="_">
                 <figure id="_">
@@ -443,9 +407,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                   <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
                 </target>
               </svgmap>
-            </clause>
-            <clause id="_" inline-header="false" obligation="normative">
-              <title>Activity_method_characterized_mim</title>
             </clause>
             <clause id="_" inline-header="false" obligation="normative">
               <title>Activity_method_characterized_mim</title>
