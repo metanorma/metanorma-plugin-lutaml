@@ -38,9 +38,10 @@ module Metanorma
             next if [".", ".."].include?(path)
 
             begin
+              parsed = ::Lutaml::Parser.parse(File.new(path, encoding: "UTF-8"))
+              parsed = parsed.map { |n| n.to_liquid.map { |j| j.merge('relative_path_prefix' => Utils.relative_file_path(document, File.dirname(j['file']))) } }.flatten
               idxs[name]
-                .push(::Lutaml::Parser.parse(File.new(path, encoding: "UTF-8")).to_liquid)
-                .merge("relative_path_prefix" => folder)
+                .push(*parsed)
             rescue StandardError => e
               document.logger.warn("Failed to load #{path}: #{e.message}")
             end

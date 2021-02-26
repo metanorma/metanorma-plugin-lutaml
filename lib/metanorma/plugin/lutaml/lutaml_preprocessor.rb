@@ -27,10 +27,11 @@ module Metanorma
 
         protected
 
-        def content_from_file(document, file_path)
-          ::Lutaml::Parser
-            .parse(File.new(Utils.relative_file_path(document, file_path),
-                            encoding: "UTF-8"))
+        def content_from_files(document, file_paths)
+          file_list = file_paths.map do |file_path|
+            File.new(Utils.relative_file_path(document, file_path), encoding: "UTF-8")
+          end
+          ::Lutaml::Parser.parse(file_list)
         end
 
         private
@@ -72,30 +73,38 @@ module Metanorma
 
         def contexts_items(block_match, document, express_indexes)
           contexts_names = block_match[1].split(";").map(&:strip)
-          contexts_names.each_with_object([]) do |path, res|
+          file_paths = []
+          result = contexts_names.each_with_object([]) do |path, res|
             if express_indexes[path]
               res.push(*express_indexes[path])
             else
-              res.push(content_from_file(document, path)
-                        .to_liquid
-                        .merge('relative_path_prefix' => Utils.relative_file_path(document, File.dirname(path))))
+              file_paths.push(path)
             end
           end
+          if !file_paths.empty?
+            from_files = content_from_files(document, file_paths)
+                          .map do |n|
+                            n.to_liquid.map { |j| j.merge('relative_path_prefix' => Utils.relative_file_path(document, File.dirname(j['file']))) }
+                          end
+                          .flatten
+            result += from_files
+          end
+          result
         end
 
         def parse_template(document, current_block, block_match, express_indexes)
           options = parse_options(block_match[3])
           contexts_items(block_match, document, express_indexes)
-            .map do |context_items|
+            .map do |items|
+              opts = options.merge('relative_path_prefix' => items['relative_path_prefix'])
               parse_context_block(document: document,
                                   context_lines: current_block,
-                                  context_items: decorate_context_items(context_items,
-                                                    options.merge('relative_path_prefix' => context_items['relative_path_prefix'])),
+                                  context_items: decorate_context_items(items, opts),
                                   context_name: block_match[2].strip)
             end.flatten
-        rescue StandardError => e
-          document.logger.warn("Failed to parse lutaml block: #{e.message}")
-          []
+        # rescue StandardError => e
+        #   document.logger.warn("Failed to parse lutaml block: #{e.message}")
+        #   []
         end
 
         def parse_options(options_string)

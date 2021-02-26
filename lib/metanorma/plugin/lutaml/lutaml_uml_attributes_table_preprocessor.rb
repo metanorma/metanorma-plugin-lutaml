@@ -29,6 +29,7 @@ module Metanorma
           ::Lutaml::Parser
             .parse(File.new(Utils.relative_file_path(document, file_path),
                             encoding: "UTF-8"))
+            .first
         end
 
         def processed_lines(document, input_lines)
