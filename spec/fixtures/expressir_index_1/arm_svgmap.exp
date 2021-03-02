@@ -5,9 +5,9 @@ Mine text
 ====
 image::measure_schemaexpg5.svg[]
 
-* <<express:measure_schema,measure_schema>>; ../../resources/measure_schema/measure_schema.xml
-* <<express:measure_schemaexpg4,measure_schemaexpg4>>; ./measure_schemaexpg4.xml
-* <<express:measure_schema,measure_schema>>; ../../resources/measure_schema/measure_schema.xml
+* <<express:measure_schema,measure_schema>>; 1
+* <<express:measure_schemaexpg4,measure_schemaexpg4>>; 2
+* <<express:measure_schema,measure_schema>>; 3
 ====
 
 *)

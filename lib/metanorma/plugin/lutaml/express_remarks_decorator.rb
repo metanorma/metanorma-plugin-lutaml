@@ -2,7 +2,7 @@ module Metanorma
   module Plugin
     module Lutaml
       class ExpressRemarksDecorator
-        RELATIVE_PREFIX_MACRO_REGEXP = /^(\* <<express.+?>>;|link|image|video|audio|include)(:+)?(?![^\/:]+:\/\/|[A-Z]:\/|\/)([^:\[]+)(\[.*\])?$/.freeze
+        RELATIVE_PREFIX_MACRO_REGEXP = /^(link|image|video|audio|include)(:+)?(?![^\/:]+:\/\/|[A-Z]:\/|\/)([^:\[]+)(\[.*\])?$/.freeze
 
         attr_reader :remark, :options
 
