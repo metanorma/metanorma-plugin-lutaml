@@ -117,20 +117,20 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             <p id="_">Mine text</p>
             <svgmap id="_"><figure id="_">
             <image src="#{File.expand_path(fixtures_path("measure_schemaexpg5.svg"))}" id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
-            </figure><target href="#{File.expand_path(fixtures_path("../../resources/measure_schema/measure_schema.xml"))}"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref></target><target href="#{File.expand_path(fixtures_path("measure_schemaexpg4.xml"))}"><eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref></target><target href="#{File.expand_path(fixtures_path("../../resources/measure_schema/measure_schema.xml"))}"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref></target></svgmap></clause>
+            </figure><target href="1"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref></target><target href="2"><eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref></target><target href="3"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref></target></svgmap></clause>
             <clause id="_" inline-header="false" obligation="normative"><title>annotated_3d_model_data_quality_criteria_schema</title>
             <p id="_">Mine text</p>
             <p id="_">===
             image::#{File.expand_path(fixtures_path("measure_schemaexpg5.svg"))}[]</p>
             <ul id="_">
             <li>
-            <p id="_"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>;#{File.expand_path(fixtures_path("../../resources/measure_schema/measure_schema.xml"))}</p>
+            <p id="_"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>; 1</p>
             </li>
             <li>
-            <p id="_"><eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>;#{File.expand_path(fixtures_path("measure_schemaexpg4.xml"))}</p>
+            <p id="_"><eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>; 2</p>
             </li>
             <li>
-            <p id="_"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>;#{File.expand_path(fixtures_path("../../resources/measure_schema/measure_schema.xml"))}
+            <p id="_"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>; 3
             ===</p>
             </li>
             </ul></clause></sections>
@@ -239,28 +239,25 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                   <image src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" id="_" mimetype="image/svg+xml"
                     height="auto" width="auto"></image>
                 </figure>
-                <target href="#{File.expand_path(fixtures_path('../../resources/measure_schema/measure_schema.xml'))}">
+                <target href="1">
                   <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
                 </target>
-                <target href="#{File.expand_path(fixtures_path('./measure_schemaexpg4.xml'))}">
+                <target href="2">
                   <eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>
                 </target>
-                <target href="#{File.expand_path(fixtures_path('../../resources/measure_schema/measure_schema.xml'))}">
+                <target href="3">
                   <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
                 </target>
               </svgmap>
             </clause>
           </sections>
-          <bibliography>
-            <references hidden="true" normative="false">
-              <bibitem id="express_measure_schema" type="internal">
-                <docidentifier type="repository">express/measure_schema</docidentifier>
-              </bibitem>
-              <bibitem id="express_measure_schemaexpg4" type="internal">
-                <docidentifier type="repository">express/measure_schemaexpg4</docidentifier>
-              </bibitem>
-            </references>
-          </bibliography>
+          <bibliography><references hidden="true" normative="false"><bibitem id="express_measure_schema" type="internal">
+          <docidentifier type="repository">express/measure_schema</docidentifier>
+          </bibitem>
+          <bibitem id="express_measure_schemaexpg4" type="internal">
+          <docidentifier type="repository">express/measure_schemaexpg4</docidentifier>
+          </bibitem>
+          </references></bibliography>
           </standard-document>
           </body>
 
@@ -372,15 +369,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                     id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
                 </figure>
                 <target
-                  href="#{File.expand_path(fixtures_path('../../resources/measure_schema/measure_schema.xml'))}">
+                  href="1">
                   <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
                 </target>
                 <target
-                  href="#{File.expand_path(fixtures_path('./measure_schemaexpg4.xml'))}">
+                  href="2">
                   <eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>
                 </target>
                 <target
-                  href="#{File.expand_path(fixtures_path('../../resources/measure_schema/measure_schema.xml'))}">
+                  href="3">
                   <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
                 </target>
               </svgmap>
@@ -395,15 +392,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                     id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
                 </figure>
                 <target
-                  href="#{File.expand_path(fixtures_path('expressir_index_1/../../resources/measure_schema/measure_schema.xml'))}">
+                  href="1">
                   <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
                 </target>
                 <target
-                  href="#{File.expand_path(fixtures_path('expressir_index_1/./measure_schemaexpg4.xml'))}">
+                  href="2">
                   <eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>
                 </target>
                 <target
-                  href="#{File.expand_path(fixtures_path('expressir_index_1/../../resources/measure_schema/measure_schema.xml'))}">
+                  href="3">
                   <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
                 </target>
               </svgmap>
@@ -412,16 +409,13 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               <title>Activity_method_characterized_mim</title>
             </clause>
           </sections>
-          <bibliography>
-            <references hidden="true" normative="false">
-              <bibitem id="express_measure_schema" type="internal">
-                <docidentifier type="repository">express/measure_schema</docidentifier>
-              </bibitem>
-              <bibitem id="express_measure_schemaexpg4" type="internal">
-                <docidentifier type="repository">express/measure_schemaexpg4</docidentifier>
-              </bibitem>
-            </references>
-          </bibliography>
+          <bibliography><references hidden="true" normative="false"><bibitem id="express_measure_schema" type="internal">
+          <docidentifier type="repository">express/measure_schema</docidentifier>
+          </bibitem>
+          <bibitem id="express_measure_schemaexpg4" type="internal">
+          <docidentifier type="repository">express/measure_schemaexpg4</docidentifier>
+          </bibitem>
+          </references></bibliography>
           </standard-document>
           </body>
 
