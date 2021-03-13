@@ -272,7 +272,77 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
     end
 
 
-    context "when lutaml-express-index keyword used" do
+    context "when lutaml-express-index keyword used with folder path" do
+      let(:cache_file_path) { fixtures_path('express_temp_cache.yaml') }
+      let(:input) do
+        <<~TEXT
+          = Document title
+          Author
+          :docfile: test.adoc
+          :nodoc:
+          :novalid:
+          :no-isobib:
+          :imagesdir: spec/assets
+          :lutaml-express-index: first-express-set; #{fixtures_path('expressir_index_1')};
+          :lutaml-express-index: second-express-set; #{fixtures_path('expressir_index_2')}; cache=#{cache_file_path}
+
+          [lutaml,first-express-set,schema]
+          ----
+          == {{schema.id}}
+          ----
+
+          [lutaml,second-express-set,schema]
+          ----
+          == {{schema.id}}
+          ----
+        TEXT
+      end
+      let(:output) do
+        <<~TEXT
+          #{BLANK_HDR}
+          <sections>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>Activity_method_assignment_arm</title>
+            </clause>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>Activity_method_assignment_mim</title>
+            </clause>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>Activity_method_assignment_arm</title>
+            </clause>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>Activity_method_characterized_arm</title>
+            </clause>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>Activity_method_characterized_mim</title>
+            </clause>
+          </sections>
+          </standard-document>
+          </body></html>
+        TEXT
+      end
+
+      around do |example|
+        FileUtils.rm_rf(cache_file_path)
+        example.run
+        FileUtils.rm_rf(cache_file_path)
+      end
+
+      it "correctly renders input" do
+        expect(xml_string_conent(metanorma_process(input)))
+          .to(be_equivalent_to(output))
+      end
+
+      it "creates a valid cache file for supplied path" do
+        expect { metanorma_process(input) }
+          .to(change { File.file?(cache_file_path) }.from(false).to(true))
+        expect(::Lutaml::Parser.parse(File.new(cache_file_path),
+                Lutaml::Parser::EXPRESS_CACHE_PARSE_TYPE).map {|n| n.to_liquid.map { |j| j["id"] }})
+              .to(eq([["Activity_method_characterized_arm", "Activity_method_characterized_mim"]]))
+      end
+    end
+
+    context "when lutaml-express-index keyword used with folder path and cache" do
       let(:input) do
         <<~TEXT
           = Document title
