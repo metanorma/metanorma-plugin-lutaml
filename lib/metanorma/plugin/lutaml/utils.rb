@@ -44,10 +44,11 @@ module Metanorma
 
           full_path = Utils.relative_file_path(document, path)
           wrapper = express_from_path(document, full_path).first
-          express_write_cache(cache_full_path, wrapper.original_document) if cache_full_path
+          express_write_cache(cache_full_path, wrapper.original_document) if cache_full_path && !File.file?(cache_full_path)
           wrapper
-        # rescue StandardError => e
-        #   document.logger.warn("Failed to load #{full_path}: #{e.message}")
+        rescue StandardError => e
+          document.logger.warn("Failed to load #{full_path}: #{e.message}")
+          nil
         rescue Expressir::ExpressExp::CacheLoadError
           process_express_index(path, cache_path, document, true)
         end
@@ -85,7 +86,8 @@ module Metanorma
         def express_from_index(document, path)
           schemas_paths = YAML
                             .safe_load(File.read(path))
-                            .map {|(_, schema_values)| schema_values[:path] }
+                            .fetch('schemas')
+                            .map {|(_, schema_values)| schema_values['path'] }
           files_to_load = schemas_paths.map do |path|
             File.new(Utils.relative_file_path(document, path), encoding: "UTF-8")
           end
@@ -104,7 +106,9 @@ module Metanorma
               path = match[:index_path]
               cache = match[:cache_path]
               repositories = process_express_index(path.strip, cache, document)
-              express_indexes[name.strip] = express_decorate_wrapper(repositories, document)
+              if repositories
+                express_indexes[name.strip] = express_decorate_wrapper(repositories, document)
+              end
             end
           end
           express_indexes

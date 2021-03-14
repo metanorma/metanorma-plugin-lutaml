@@ -202,6 +202,61 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         expect(xml_string_conent(metanorma_process(input)))
           .to(be_equivalent_to(output))
       end
+
+      context "when loaded from a cache file" do
+        let(:cache_path) do
+          fixtures_path('expressir_realtive_paths/test_relative_includes_cache.yaml')
+        end
+        let(:input) do
+          <<~TEXT
+            = Document title
+            Author
+            :docfile: test.adoc
+            :nodoc:
+            :novalid:
+            :no-isobib:
+            :imagesdir: spec/assets
+            :lutaml-express-index: express_index; #{fixtures_path('none_existing_path')}; cache=#{cache_path}
+
+            [lutaml,express_index,schema]
+            ----
+            == {{schema.id}}
+
+            {% for remark in schema.remarks %}
+            {{ remark }}
+            {% endfor %}
+            ----
+          TEXT
+        end
+        let(:output) do
+          <<~TEXT
+            #{BLANK_HDR}
+            <sections>
+              <clause id="_" inline-header="false" obligation="normative"><title>annotated_3d_model_data_quality_criteria_schema</title>
+              <p id="_">Mine text</p>
+              <p id="_">
+              <link target="#{fixtures_path('/expressir_realtive_paths/downloads/report.pdf')}">Get Report
+              </p>
+              <p id="_">
+              <link target="http://test.com/include1.csv">
+              </p>
+
+
+              <p id="_">include::#{fixtures_path('/expressir_realtive_paths/include1.csv')}[]</p>
+              <p id="_">include::#{fixtures_path('expressir_realtive_paths/test/include1.csv')}[]</p>
+              <p id="_">include::http://test.com/include1.csv[]</p>
+              </clause>
+            </sections>
+            </standard-document>
+            </body></html>
+          TEXT
+        end
+
+        it "correctly renders input" do
+          expect(xml_string_conent(metanorma_process(input)))
+            .to(be_equivalent_to(output))
+        end
+      end
     end
 
     context "when svgmap anchors are used" do
@@ -271,7 +326,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
       end
     end
 
-
     context "when lutaml-express-index keyword used with folder path" do
       let(:cache_file_path) { fixtures_path('express_temp_cache.yaml') }
       let(:input) do
@@ -340,9 +394,111 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 Lutaml::Parser::EXPRESS_CACHE_PARSE_TYPE).map {|n| n.to_liquid.map { |j| j["id"] }})
               .to(eq([["Activity_method_characterized_arm", "Activity_method_characterized_mim"]]))
       end
+
+      context "when the cache file exists and index folder is not" do
+        let(:input) do
+          <<~TEXT
+            = Document title
+            Author
+            :docfile: test.adoc
+            :nodoc:
+            :novalid:
+            :no-isobib:
+            :imagesdir: spec/assets
+            :lutaml-express-index: express-set; #{fixtures_path('none_existing_path')}; cache=#{fixtures_path('lutaml_exp_index_cache.yaml')}
+
+            [lutaml,express-set,schema]
+            ----
+            == {{schema.id}}
+            ----
+          TEXT
+        end
+        let(:output) do
+          <<~TEXT
+            #{BLANK_HDR}
+            <sections>
+              <clause id="_" inline-header="false" obligation="normative">
+                <title>Activity_method_assignment_arm</title>
+              </clause>
+              <clause id="_" inline-header="false" obligation="normative">
+                <title>Activity_method_assignment_mim</title>
+              </clause>
+              <clause id="_" inline-header="false" obligation="normative">
+                <title>Activity_method_characterized_arm</title>
+              </clause>
+              <clause id="_" inline-header="false" obligation="normative">
+                <title>Activity_method_characterized_mim</title>
+              </clause>
+            </sections>
+            </standard-document>
+            </body>
+
+            </html>
+          TEXT
+        end
+
+        it "correctly renders input from cache" do
+          expect(xml_string_conent(metanorma_process(input)))
+            .to(be_equivalent_to(output))
+        end
+      end
+
+      # TODO test expressir cache invalidation after the new expressir release
+      xcontext "when the cache file is corrupted" do
+        let(:cache_path_original) { fixtures_path('lutaml_exp_corrupted_cache_original.yaml') }
+        let(:cache_path) { fixtures_path('lutaml_exp_corrupted_cache.yaml') }
+        let(:input) do
+          <<~TEXT
+            = Document title
+            Author
+            :docfile: test.adoc
+            :nodoc:
+            :novalid:
+            :no-isobib:
+            :imagesdir: spec/assets
+            :lutaml-express-index: express-set; #{fixtures_path('expressir_realtive_paths')}; cache=#{cache_path}
+
+            [lutaml,express-set,schema]
+            ----
+            == {{schema.id}}
+            ----
+          TEXT
+        end
+        let(:output) do
+          <<~TEXT
+            #{BLANK_HDR}
+            <sections>
+            </sections>
+            </standard-document>
+            </body>
+
+            </html>
+          TEXT
+        end
+
+        around do |example|
+          FileUtils.cp(cache_path_original, cache_path)
+          example.run
+          FileUtils.rm_rf(cache_path)
+        end
+
+        it "fallbacks to the original folder and renders from it" do
+          expect(xml_string_conent(metanorma_process(input)))
+            .to(be_equivalent_to(output))
+        end
+
+        it "recreates the cache file with the correct data" do
+          expect { xml_string_conent(metanorma_process(input)) }
+            .to(change do
+              wraper = Utils.express_from_cache(path) rescue nil
+              wraper&.to_liquid&.length
+            end.from(nil).to(1))
+        end
+      end
     end
 
-    context "when lutaml-express-index keyword used with folder path and cache" do
+    context "when lutaml-express-index keyword used with yaml index file" do
+      let(:cache_file_path) { fixtures_path('lutaml_exp_index_cache.yaml') }
       let(:input) do
         <<~TEXT
           = Document title
@@ -352,8 +508,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :novalid:
           :no-isobib:
           :imagesdir: spec/assets
-          :lutaml-express-index: first-express-set; #{fixtures_path('expressir_index_1')};
-          :lutaml-express-index: second-express-set; #{fixtures_path('expressir_index_2')};
+          :lutaml-express-index: first-express-set; #{fixtures_path('lutaml_exp_index.yaml')}; cache=#{cache_file_path}
+          :lutaml-express-index: second-express-set; #{fixtures_path('lutaml_exp_index_2.yaml')};
 
           [lutaml,first-express-set,schema]
           ----
@@ -377,21 +533,23 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               <title>Activity_method_assignment_mim</title>
             </clause>
             <clause id="_" inline-header="false" obligation="normative">
-              <title>Activity_method_assignment_arm</title>
-            </clause>
-            <clause id="_" inline-header="false" obligation="normative">
               <title>Activity_method_characterized_arm</title>
             </clause>
             <clause id="_" inline-header="false" obligation="normative">
               <title>Activity_method_characterized_mim</title>
             </clause>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>Activity_method_assignment_arm</title>
+            </clause>
           </sections>
           </standard-document>
-          </body></html>
+          </body>
+
+          </html>
         TEXT
       end
 
-      it "correctly renders input" do
+      it "correctly renders input from cached index and supplied file" do
         expect(xml_string_conent(metanorma_process(input)))
           .to(be_equivalent_to(output))
       end
