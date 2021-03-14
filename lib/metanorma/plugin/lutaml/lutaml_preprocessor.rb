@@ -102,9 +102,9 @@ module Metanorma
                                   context_items: decorate_context_items(items, opts),
                                   context_name: block_match[2].strip)
             end.flatten
-        # rescue StandardError => e
-        #   document.logger.warn("Failed to parse lutaml block: #{e.message}")
-        #   []
+        rescue StandardError => e
+          document.logger.warn("Failed to parse lutaml block: #{e.message}")
+          []
         end
 
         def parse_options(options_string)
