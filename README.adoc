@@ -49,14 +49,12 @@ And the `lutaml` macro block:
 [lutaml,example.exp,my_context]
 ----
 
-{% for schema in my_context.schemas %}
 == {{schema.id}}
 
 {% for entity in schema.entities %}
 === {{entity.id}}
 {% endfor %}
 
-{% endfor %}
 ----
 -----
 
@@ -66,7 +64,7 @@ Where:
 
 * `{example.exp}` is the location of the exp schema file that contains data to be loaded. Location of the file is computed relative to the source directory that `[lutaml]` is used (e.g., if `[lutaml,example.exp,my_context]` is invoked in an `.adoc` file located at `/foo/bar/doc.adoc`, the data file is expected to be found at `/foo/bar/example.exp`);
 
-* `{my_context}` is the name where the EXPRESS Repository read from the .exp file can be accessed with. Context object is a serialized  Expressir::Model::Repository object with all variable names available. See https://github.com/lutaml/expressir[Expressir] docs for reference. `{my_context}` has `schemas` method to access Expressir https://github.com/lutaml/expressir/blob/master/lib/expressir/model/schema.rb[schemas]
+* `{my_context}` is the name where the EXPRESS Repository read from the .exp file can be accessed with. Context object is a serialized  https://github.com/lutaml/expressir/blob/master/lib/expressir/model/schema.rb[Expressir::Model::Schema] object with all variable names available. See https://github.com/lutaml/expressir[Expressir] docs for reference.
 
 Will produce this output:
 
@@ -82,6 +80,36 @@ Will produce this output:
 -----
 
 This macro also supports `.lutaml` files.
+
+Instead of using the direct path to the file one can use `lutaml-express-index` document attribute to supply directory with express files or yaml index file to parse as well as the cache file location. The syntax is as follows:
+
+[source,adoc]
+-----
+:lutaml-express-index: my_custom_name; dir_or_index_path[; cache=cache_path]
+-----
+
+Where:
+
+* `my_custom_name` - is name of the parsed express files context for the later use with lutaml macro
+
+* `dir_or_index_path` - location of directory with express files or path to yaml index file to parse
+
+* `cache_path` - optional, location of the expressir cache file to use
+
+Example of real usage:
+
+[source,adoc]
+-----
+= Document title
+Author
+:lutaml-express-index: my_custom_name; /path/to/express_files; cache=/path/to/cache_file.yaml
+
+[lutaml,my_custom_name,my_context]
+----
+== {{schema.id}}
+----
+-----
+
 
 === Usage, `lutaml_uml_attributes_table` macro
 
