@@ -18,13 +18,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           [lutaml,#{example_file},my_context]
           ----
 
-          == {{my_context.id}}
+          {% for schema in my_context.schemas %}
+          == {{schema.id}}
 
-          {% for entity in my_context.entities %}
+          {% for entity in schema.entities %}
           === {{entity.id}}
           supertypes -> {{entity.supertypes.id}}
           explicit -> {{entity.explicit.first.id}}
 
+          {% endfor %}
           {% endfor %}
           ----
         TEXT
@@ -86,25 +88,29 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :novalid:
           :no-isobib:
           :imagesdir: spec/assets
-          [lutaml,#{example_file},schema, leveloffset=+2]
+          [lutaml,#{example_file},my_context, leveloffset=+2]
           ----
 
+          {% for schema in my_context.schemas %}
           == {{schema.id}}
 
           {% for remark in schema.remarks %}
           {{ remark }}
           {% endfor %}
+          {% endfor %}
 
           ----
 
 
-          [lutaml,#{example_file},schema, leveloffset=-1]
+          [lutaml,#{example_file},my_context, leveloffset=-1]
           ----
 
+          {% for schema in my_context.schemas %}
           == {{schema.id}}
 
           {% for remark in schema.remarks %}
           {{ remark }}
+          {% endfor %}
           {% endfor %}
           ----
         TEXT
@@ -152,7 +158,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
     end
 
     context "when relative paths exists in doc" do
-      let(:example_file) { fixtures_path("test_relative_includes.exp").gsub(FileUtils.pwd, '')[1..-1] }
+      let(:example_file) { fixtures_path("test_relative_includes.exp") }
       let(:input) do
         <<~TEXT
           = Document title
@@ -163,12 +169,14 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :no-isobib:
           :imagesdir: spec/assets
 
-          [lutaml,#{example_file},schema]
+          [lutaml,#{example_file},my_context]
           ----
+          {% for schema in my_context.schemas %}
           == {{schema.id}}
 
           {% for remark in schema.remarks %}
           {{ remark }}
+          {% endfor %}
           {% endfor %}
           ----
         TEXT
@@ -216,14 +224,16 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             :novalid:
             :no-isobib:
             :imagesdir: spec/assets
-            :lutaml-express-index: express_index; #{fixtures_path('none_existing_path')}; cache=#{cache_path}
+            :lutaml-express-index: express_index; #{fixtures_path('expressir_realtive_paths')}; cache=#{cache_path}
 
-            [lutaml,express_index,schema]
+            [lutaml,express_index,my_context]
             ----
+            {% for schema in my_context.schemas %}
             == {{schema.id}}
 
             {% for remark in schema.remarks %}
             {{ remark }}
+            {% endfor %}
             {% endfor %}
             ----
           TEXT
@@ -260,7 +270,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
     end
 
     context "when svgmap anchors are used" do
-      let(:example_file) { fixtures_path("test_relative_includes_svgmap.exp").gsub(FileUtils.pwd, '')[1..-1] }
+      let(:example_file) { fixtures_path("test_relative_includes_svgmap.exp") }
       let(:input) do
         <<~TEXT
           = Document title
@@ -271,12 +281,14 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :no-isobib:
           :imagesdir: spec/assets
 
-          [lutaml,#{example_file},schema]
+          [lutaml,#{example_file},my_context]
           ----
+          {% for schema in my_context.schemas %}
           == {{schema.id}}
 
           {% for remark in schema.remarks %}
           {{ remark }}
+          {% endfor %}
           {% endfor %}
           ----
         TEXT
@@ -340,14 +352,18 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :lutaml-express-index: first-express-set; #{fixtures_path('expressir_index_1')};
           :lutaml-express-index: second-express-set; #{fixtures_path('expressir_index_2')}; cache=#{cache_file_path}
 
-          [lutaml,first-express-set,schema]
+          [lutaml,first-express-set,my_context]
           ----
+          {% for schema in my_context.schemas %}
           == {{schema.id}}
+          {% endfor %}
           ----
 
-          [lutaml,second-express-set,schema]
+          [lutaml,second-express-set,my_context]
           ----
+          {% for schema in my_context.schemas %}
           == {{schema.id}}
+          {% endfor %}
           ----
         TEXT
       end
@@ -390,9 +406,13 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
       it "creates a valid cache file for supplied path" do
         expect { metanorma_process(input) }
           .to(change { File.file?(cache_file_path) }.from(false).to(true))
-        expect(::Lutaml::Parser.parse(File.new(cache_file_path),
-                Lutaml::Parser::EXPRESS_CACHE_PARSE_TYPE).map {|n| n.to_liquid.map { |j| j["id"] }})
-              .to(eq([["Activity_method_characterized_arm", "Activity_method_characterized_mim"]]))
+        expect(::Lutaml::Parser
+                .parse(File.new(cache_file_path),
+                        Lutaml::Parser::EXPRESS_CACHE_PARSE_TYPE)
+                .to_liquid["schemas"]
+                .map {|n| n["id"] }
+                .sort)
+              .to(eq(["Activity_method_characterized_arm", "Activity_method_characterized_mim"]))
       end
 
       context "when the cache file exists and index folder is not" do
@@ -407,9 +427,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             :imagesdir: spec/assets
             :lutaml-express-index: express-set; #{fixtures_path('none_existing_path')}; cache=#{fixtures_path('lutaml_exp_index_cache.yaml')}
 
-            [lutaml,express-set,schema]
+            [lutaml,express-set,my_context]
             ----
+            {% for schema in my_context.schemas %}
             == {{schema.id}}
+            {% endfor %}
             ----
           TEXT
         end
@@ -458,9 +480,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             :imagesdir: spec/assets
             :lutaml-express-index: express-set; #{fixtures_path('expressir_realtive_paths')}; cache=#{cache_path}
 
-            [lutaml,express-set,schema]
+            [lutaml,express-set,my_context]
             ----
+            {% for schema in my_context.schemas %}
             == {{schema.id}}
+            {% endfor %}
             ----
           TEXT
         end
@@ -511,14 +535,18 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :lutaml-express-index: first-express-set; #{fixtures_path('lutaml_exp_index.yaml')}; cache=#{cache_file_path}
           :lutaml-express-index: second-express-set; #{fixtures_path('lutaml_exp_index_2.yaml')};
 
-          [lutaml,first-express-set,schema]
+          [lutaml,first-express-set,my_context]
           ----
+          {% for schema in my_context.schemas %}
           == {{schema.id}}
+          {% endfor %}
           ----
 
-          [lutaml,second-express-set,schema]
+          [lutaml,second-express-set,my_context]
           ----
+          {% for schema in my_context.schemas %}
           == {{schema.id}}
+          {% endfor %}
           ----
         TEXT
       end
@@ -573,12 +601,14 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :no-isobib:
           :imagesdir: spec/assets
 
-          [lutaml, #{express_files_list.join('; ')}, schema]
+          [lutaml, #{express_files_list.join('; ')}, my_context]
           ----
+          {% for schema in my_context.schemas %}
           == {{schema.id}}
 
           {% for remark in schema.remarks %}
           {{ remark }}
+          {% endfor %}
           {% endfor %}
           ----
         TEXT

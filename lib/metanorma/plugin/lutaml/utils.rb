@@ -39,12 +39,14 @@ module Metanorma
         def process_express_index(path, cache_path, document, force_read = false)
           cache_full_path = Utils.relative_file_path(document, cache_path) if cache_path
           if !force_read && cache_full_path && File.file?(cache_full_path)
-            return express_from_cache(cache_full_path).first
+            return express_from_cache(cache_full_path)
           end
 
           full_path = Utils.relative_file_path(document, path)
-          wrapper = express_from_path(document, full_path).first
-          express_write_cache(cache_full_path, wrapper.original_document) if cache_full_path && !File.file?(cache_full_path)
+          wrapper = express_from_path(document, full_path)
+          if cache_full_path && !File.file?(cache_full_path)
+            express_write_cache(cache_full_path, wrapper.original_document, document)
+          end
           wrapper
         rescue StandardError => e
           document.logger.warn("Failed to load #{full_path}: #{e.message}")
@@ -58,8 +60,11 @@ module Metanorma
             .parse(File.new(path), ::Lutaml::Parser::EXPRESS_CACHE_PARSE_TYPE)
         end
 
-        def express_write_cache(path, repository)
-          Expressir::ExpressExp::Cache.to_file(path, repository)
+        def express_write_cache(path, repository, document)
+          Expressir::ExpressExp::Cache
+            .to_file(path,
+              repository,
+              root_path: relative_file_path(document, ''))
         end
 
         def express_from_path(document, path)
@@ -76,11 +81,11 @@ module Metanorma
         end
 
         def express_decorate_wrapper(wrapper, document)
-          wrapper
-            .to_liquid
-            .map do |j|
-              j.merge('relative_path_prefix' => Utils.relative_file_path(document, File.dirname(j['file'])))
-            end
+          serialized = wrapper.to_liquid
+          serialized['schemas'] = serialized['schemas'].map do |j|
+            j.merge('relative_path_prefix' => Utils.relative_file_path(document, File.dirname(j['file'])))
+          end
+          serialized
         end
 
         def express_from_index(document, path)
