@@ -48,9 +48,9 @@ module Metanorma
             express_write_cache(cache_full_path, wrapper.original_document, document)
           end
           wrapper
-        rescue StandardError => e
-          document.logger.warn("Failed to load #{full_path}: #{e.message}")
-          nil
+        # rescue StandardError => e
+        #   document.logger.warn("Failed to load #{full_path}: #{e.message}")
+        #   nil
         rescue Expressir::ExpressExp::CacheLoadError
           process_express_index(path, cache_path, document, true)
         end
