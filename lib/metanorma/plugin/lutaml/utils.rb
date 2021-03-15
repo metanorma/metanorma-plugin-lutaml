@@ -61,7 +61,7 @@ module Metanorma
         end
 
         def express_write_cache(path, repository, document)
-          root_path = Pathname.new(puts(relative_file_path(document, '')))
+          root_path = Pathname.new(relative_file_path(document, ''))
           Expressir::ExpressExp::Cache
             .to_file(path,
               repository,
