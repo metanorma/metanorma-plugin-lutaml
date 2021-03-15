@@ -387,9 +387,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
       end
 
       around do |example|
-        FileUtils.rm_rf(cache_file_path)
+        FileUtils.remove_file(cache_file_path, true)
         example.run
-        FileUtils.rm_rf(cache_file_path)
+        FileUtils.remove_file(cache_file_path, true)
       end
 
       it "correctly renders input" do
