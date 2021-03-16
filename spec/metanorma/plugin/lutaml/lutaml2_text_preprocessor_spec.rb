@@ -541,6 +541,13 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           == {{schema.id}}
           {% endfor %}
           ----
+
+          [lutaml,third-express-set,my_context]
+          ----
+          {% for schema in my_context.schemas %}
+          == {{schema.id}}
+          {% endfor %}
+          ----
         TEXT
       end
       let(:output) do
@@ -562,6 +569,12 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             <clause id="_" inline-header="false" obligation="normative">
               <title>Activity_method_assignment_arm</title>
             </clause>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>annotated_3d_model_data_quality_criteria_schema</title>
+            </clause>
+            <clause id="_" inline-header="false" obligation="normative">
+              <title>annotated_3d_model_data_quality_criteria_schema</title>
+            </clause>
           </sections>
           </standard-document>
           </body>
@@ -573,7 +586,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
       around do |example|
         FileUtils.remove_file(index_file_root_path, true)
         file = File.new(index_file_root_path, 'w')
-        file.puts(File.read(fixtures_path('lutaml_exp_index_root_path.yaml')) % { root: fixtures_path('') })
+        file.puts(File.read(fixtures_path('lutaml_exp_index_root_path_template.yaml')) % { root_path: fixtures_path('') })
         file.close
         example.run
         FileUtils.remove_file(index_file_root_path, true)

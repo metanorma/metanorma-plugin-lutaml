@@ -91,7 +91,7 @@ module Metanorma
 
         def express_from_index(document, path)
           yaml_content = YAML.safe_load(File.read(path))
-          root_path = yaml_content['root']
+          root_path = yaml_content['path']
           schemas_paths = yaml_content
                             .fetch('schemas')
                             .map do |(schema_name, schema_values)|
