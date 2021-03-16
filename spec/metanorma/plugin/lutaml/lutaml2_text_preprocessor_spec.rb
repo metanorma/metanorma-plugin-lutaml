@@ -13,6 +13,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :nodoc:
           :novalid:
           :no-isobib:
+          :imagesdir: spec/assets
 
           [lutaml,#{example_file},my_context]
           ----
@@ -86,6 +87,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :nodoc:
           :novalid:
           :no-isobib:
+          :imagesdir: spec/assets
+
           [lutaml,#{example_file},my_context, leveloffset=+2]
           ----
 
@@ -165,6 +168,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :nodoc:
           :novalid:
           :no-isobib:
+          :imagesdir: spec/assets
 
           [lutaml,#{example_file},my_context]
           ----
@@ -220,6 +224,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             :nodoc:
             :novalid:
             :no-isobib:
+            :imagesdir: spec/assets
             :lutaml-express-index: express_index; #{fixtures_path('expressir_realtive_paths')}; cache=#{cache_path}
 
             [lutaml,express_index,my_context]
@@ -275,6 +280,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :nodoc:
           :novalid:
           :no-isobib:
+          :imagesdir: spec/assets
 
           [lutaml,#{example_file},my_context]
           ----
@@ -343,6 +349,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :nodoc:
           :novalid:
           :no-isobib:
+          :imagesdir: spec/assets
           :lutaml-express-index: first-express-set; #{fixtures_path('expressir_index_1')};
           :lutaml-express-index: second-express-set; #{fixtures_path('expressir_index_2')}; cache=#{cache_file_path}
 
@@ -418,6 +425,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             :nodoc:
             :novalid:
             :no-isobib:
+            :imagesdir: spec/assets
             :lutaml-express-index: express-set; #{fixtures_path('none_existing_path')}; cache=#{fixtures_path('lutaml_exp_index_cache.yaml')}
 
             [lutaml,express-set,my_context]
@@ -470,6 +478,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             :nodoc:
             :novalid:
             :no-isobib:
+            :imagesdir: spec/assets
             :lutaml-express-index: express-set; #{fixtures_path('expressir_realtive_paths')}; cache=#{cache_path}
 
             [lutaml,express-set,my_context]
@@ -523,6 +532,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :nodoc:
           :novalid:
           :no-isobib:
+          :imagesdir: spec/assets
           :lutaml-express-index: first-express-set; #{fixtures_path('lutaml_exp_index.yaml')}; cache=#{cache_file_path}
           :lutaml-express-index: second-express-set; #{fixtures_path('lutaml_exp_index_2.yaml')};
 
