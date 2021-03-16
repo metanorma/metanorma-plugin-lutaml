@@ -38,8 +38,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDiagramBlock do
         TEXT
       end
 
-      # TODO: fix dot install inside GHA
-      xit "correctly renders input" do
+      it "correctly renders input" do
         expect(strip_src(xml_string_conent(metanorma_process(input))))
           .to(be_equivalent_to(output))
       end

@@ -334,7 +334,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
     end
 
     context "when lutaml-express-index keyword used with folder path" do
-      let(:cache_file_path) { fixtures_path('express_temp_cache.yaml') }
+      let(:cache_file_path) { fixtures_path("express_temp_cache_#{SecureRandom.uuid}.yaml") }
       let(:input) do
         <<~TEXT
           = Document title
