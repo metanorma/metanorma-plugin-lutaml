@@ -89,6 +89,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :no-isobib:
           :imagesdir: spec/assets
 
+          image::#{File.expand_path(fixtures_path("measure_schemaexpg5.svg"))}[]
+
           [lutaml,#{example_file},my_context, leveloffset=+2]
           ----
 
