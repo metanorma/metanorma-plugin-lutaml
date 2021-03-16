@@ -590,6 +590,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :nodoc:
           :novalid:
           :no-isobib:
+          :imagesdir: spec/assets
 
           [lutaml, #{express_files_list.join('; ')}, my_context]
           ----
