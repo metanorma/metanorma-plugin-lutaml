@@ -76,18 +76,17 @@ module Metanorma
           file_paths = []
           result = contexts_names.each_with_object([]) do |path, res|
             if express_indexes[path]
-              res.push(*express_indexes[path])
+              res.push(express_indexes[path])
             else
               file_paths.push(path)
             end
           end
           if !file_paths.empty?
-            from_files = content_from_files(document, file_paths)
-                          .map do |n|
-                            n.to_liquid.map { |j| j.merge('relative_path_prefix' => Utils.relative_file_path(document, File.dirname(j['file']))) }
-                          end
-                          .flatten
-            result += from_files
+            from_files = content_from_files(document, file_paths).to_liquid
+            from_files['schemas'] = from_files['schemas'].map do |n|
+              n.merge('relative_path_prefix' => Utils.relative_file_path(document, File.dirname(n['file'])))
+            end
+            result.push(from_files)
           end
           result
         end
@@ -96,10 +95,15 @@ module Metanorma
           options = parse_options(block_match[3])
           contexts_items(block_match, document, express_indexes)
             .map do |items|
-              opts = options.merge('relative_path_prefix' => items['relative_path_prefix'])
+              if items['schemas']
+                items['schemas'] = items['schemas'].map do |j|
+                  opts = options.merge('relative_path_prefix' => j['relative_path_prefix'])
+                  decorate_context_items(j, opts)
+                end
+              end
               parse_context_block(document: document,
                                   context_lines: current_block,
-                                  context_items: decorate_context_items(items, opts),
+                                  context_items: items,
                                   context_name: block_match[2].strip)
             end.flatten
         rescue StandardError => e

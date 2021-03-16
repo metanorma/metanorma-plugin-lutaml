@@ -1,0 +1,15 @@
+---
+schemas:
+  root: %{root}
+  test_relative_includes_svgmap:
+    diagrams:
+      - action_schema/action_schemaexpg1.svg
+      - action_schema/action_schemaexpg2.svg
+  test_relative_includes:
+    diagrams:
+      - action_schema/action_schemaexpg1.svg
+      - action_schema/action_schemaexpg2.svg
+  test:
+    diagrams:
+      - action_schema/action_schemaexpg1.svg
+      - action_schema/action_schemaexpg2.svg

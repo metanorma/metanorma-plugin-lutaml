@@ -83,6 +83,36 @@ Will produce this output:
 
 This macro also supports `.lutaml` files.
 
+Instead of using the direct path to the file one can use `lutaml-express-index` document attribute to supply directory with express files or yaml index file to parse as well as the cache file location. The syntax is as follows:
+
+[source,adoc]
+-----
+:lutaml-express-index: my_custom_name; dir_or_index_path[; cache=cache_path]
+-----
+
+Where:
+
+* `my_custom_name` - is name of the parsed express files context for the later use with lutaml macro
+
+* `dir_or_index_path` - location of directory with express files or path to yaml index file to parse
+
+* `cache_path` - optional, location of the expressir cache file to use
+
+Example of real usage:
+
+[source,adoc]
+-----
+= Document title
+Author
+:lutaml-express-index: my_custom_name; /path/to/express_files; cache=/path/to/cache_file.yaml
+[lutaml,my_custom_name,my_context]
+----
+{% for schema in my_context.schemas %}
+== {{schema.id}}
+{% endfor %}
+----
+-----
+
 === Usage, `lutaml_uml_attributes_table` macro
 
 This macro allows to quickly render datamodel attributes/values tables. Given `example.lutaml` file with the content:
