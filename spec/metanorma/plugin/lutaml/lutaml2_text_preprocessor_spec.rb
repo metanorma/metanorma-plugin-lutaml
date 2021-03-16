@@ -515,6 +515,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
     context "when lutaml-express-index keyword used with yaml index file" do
       let(:cache_file_path) { fixtures_path('lutaml_exp_index_cache.yaml') }
+      let(:index_file_root_path) { fixtures_path('lutaml_exp_index_root_path.yaml') }
       let(:input) do
         <<~TEXT
           = Document title
@@ -525,6 +526,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :no-isobib:
           :lutaml-express-index: first-express-set; #{fixtures_path('lutaml_exp_index.yaml')}; cache=#{cache_file_path}
           :lutaml-express-index: second-express-set; #{fixtures_path('lutaml_exp_index_2.yaml')};
+          :lutaml-express-index: third-express-set; #{index_file_root_path};
 
           [lutaml,first-express-set,my_context]
           ----
@@ -566,6 +568,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
           </html>
         TEXT
+      end
+
+      around do |example|
+        FileUtils.remove_file(index_file_root_path, true)
+        file = File.new(index_file_root_path, 'w')
+        file.puts(File.read(fixtures_path('lutaml_exp_index_root_path.yaml')) % { root: fixtures_path('') })
+        file.close
+        example.run
+        FileUtils.remove_file(index_file_root_path, true)
       end
 
       it "correctly renders input from cached index and supplied file" do
