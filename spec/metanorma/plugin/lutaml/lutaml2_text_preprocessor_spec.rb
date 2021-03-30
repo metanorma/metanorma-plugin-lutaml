@@ -119,7 +119,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           #{BLANK_HDR}
             <sections><clause id="_" inline-header="false" obligation="normative"><title>annotated_3d_model_data_quality_criteria_schema</title>
             <p id="_">Mine text</p>
-            <svgmap id="_"><figure id="_">
+            <svgmap><figure id="_">
             <image src="#{File.expand_path(fixtures_path("measure_schemaexpg5.svg"))}" id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
             </figure><target href="1"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref></target><target href="2"><eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref></target><target href="3"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref></target></svgmap></clause>
             <clause id="_" inline-header="false" obligation="normative"><title>annotated_3d_model_data_quality_criteria_schema</title>
@@ -239,15 +239,13 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             #{BLANK_HDR}
             <sections>
               <clause id="_" inline-header="false" obligation="normative"><title>annotated_3d_model_data_quality_criteria_schema</title>
-              <p id="_">Mine text</p>
+              <p id="_">My text</p>
               <p id="_">
               <link target="#{fixtures_path('/expressir_realtive_paths/downloads/report.pdf')}">Get Report
               </p>
               <p id="_">
               <link target="http://test.com/include1.csv">
               </p>
-
-
               <p id="_">include::#{fixtures_path('/expressir_realtive_paths/include1.csv')}[]</p>
               <p id="_">include::#{fixtures_path('expressir_realtive_paths/test/include1.csv')}[]</p>
               <p id="_">include::http://test.com/include1.csv[]</p>
@@ -296,7 +294,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             <clause id="_" inline-header="false" obligation="normative">
               <title>annotated_3d_model_data_quality_criteria_schema</title>
               <p id="_">Mine text</p>
-              <svgmap id="_">
+              <svgmap>
                 <figure id="_">
                   <image src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" id="_" mimetype="image/svg+xml"
                     height="auto" width="auto"></image>
@@ -410,6 +408,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
       end
 
       context "when the cache file exists and index folder is not" do
+        let(:cache_path) { fixtures_path('lutaml_exp_index_cache.yaml') }
         let(:input) do
           <<~TEXT
             = Document title
@@ -418,7 +417,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             :nodoc:
             :novalid:
             :no-isobib:
-            :lutaml-express-index: express-set; #{fixtures_path('none_existing_path')}; cache=#{fixtures_path('lutaml_exp_index_cache.yaml')}
+            :lutaml-express-index: express-set; #{fixtures_path('none_existing_path')}; cache=#{cache_path}
 
             [lutaml,express-set,my_context]
             ----
@@ -433,16 +432,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             #{BLANK_HDR}
             <sections>
               <clause id="_" inline-header="false" obligation="normative">
-                <title>Activity_method_assignment_arm</title>
-              </clause>
-              <clause id="_" inline-header="false" obligation="normative">
-                <title>Activity_method_assignment_mim</title>
-              </clause>
-              <clause id="_" inline-header="false" obligation="normative">
-                <title>Activity_method_characterized_arm</title>
-              </clause>
-              <clause id="_" inline-header="false" obligation="normative">
-                <title>Activity_method_characterized_mim</title>
+                <title>annotated_3d_model_data_quality_criteria_schema</title>
               </clause>
             </sections>
             </standard-document>
@@ -452,6 +442,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           TEXT
         end
 
+        before do
+          repository = Expressir::ExpressExp::Parser.from_files([File.new(fixtures_path("test.exp"))])
+          Expressir::ExpressExp::Cache.to_file(cache_path, repository)
+        end
+
+        after do
+          FileUtils.rm_rf(cache_path)
+        end
+
         it "correctly renders input from cache" do
           expect(xml_string_conent(metanorma_process(input)))
             .to(be_equivalent_to(output))
@@ -459,8 +458,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
       end
 
       # TODO test expressir cache invalidation after the new expressir release
-      xcontext "when the cache file is corrupted" do
-        let(:cache_path_original) { fixtures_path('lutaml_exp_corrupted_cache_original.yaml') }
+      context "when the cache file is corrupted" do
+        let(:cache_path_original) { fixtures_path('lutaml_exp_old_cache_original.yaml') }
         let(:cache_path) { fixtures_path('lutaml_exp_corrupted_cache.yaml') }
         let(:input) do
           <<~TEXT
@@ -484,6 +483,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           <<~TEXT
             #{BLANK_HDR}
             <sections>
+              <clause id="_" inline-header="false" obligation="normative">
+                <title>annotated_3d_model_data_quality_criteria_schema</title>
+              </clause>
             </sections>
             </standard-document>
             </body>
@@ -506,15 +508,14 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         it "recreates the cache file with the correct data" do
           expect { xml_string_conent(metanorma_process(input)) }
             .to(change do
-              wraper = Utils.express_from_cache(path) rescue nil
+              wraper = Metanorma::Plugin::Lutaml::Utils.express_from_cache(cache_path) rescue nil
               wraper&.to_liquid&.length
-            end.from(nil).to(1))
+            end.from(nil).to(2))
         end
       end
     end
 
     context "when lutaml-express-index keyword used with yaml index file" do
-      let(:cache_file_path) { fixtures_path('lutaml_exp_index_cache.yaml') }
       let(:index_file_root_path) { fixtures_path('lutaml_exp_index_root_path.yaml') }
       let(:input) do
         <<~TEXT
@@ -524,7 +525,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :nodoc:
           :novalid:
           :no-isobib:
-          :lutaml-express-index: first-express-set; #{fixtures_path('lutaml_exp_index.yaml')}; cache=#{cache_file_path}
+          :lutaml-express-index: first-express-set; #{fixtures_path('lutaml_exp_index.yaml')}
           :lutaml-express-index: second-express-set; #{fixtures_path('lutaml_exp_index_2.yaml')};
           :lutaml-express-index: third-express-set; #{index_file_root_path};
 
@@ -634,7 +635,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             <clause id="_" inline-header="false" obligation="normative">
               <title>annotated_3d_model_data_quality_criteria_schema</title>
               <p id="_">Mine text</p>
-              <svgmap id="_">
+              <svgmap>
                 <figure id="_">
                   <image
                     src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}"
@@ -657,7 +658,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             <clause id="_" inline-header="false" obligation="normative">
               <title>Activity_method_assignment_arm</title>
               <p id="_">Mine text</p>
-              <svgmap id="_">
+              <svgmap>
                 <figure id="_">
                   <image
                     src="#{File.expand_path(fixtures_path('expressir_index_1/measure_schemaexpg5.svg'))}"

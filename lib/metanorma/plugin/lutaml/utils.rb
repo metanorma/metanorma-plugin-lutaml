@@ -49,6 +49,7 @@ module Metanorma
           end
           wrapper
         rescue Expressir::ExpressExp::CacheLoadError
+          FileUtils.rm_rf(cache_full_path)
           process_express_index(path, cache_path, document, true)
         rescue StandardError => e
           document.logger.warn("Failed to load #{full_path}: #{e.message}")
