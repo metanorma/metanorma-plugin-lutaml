@@ -48,11 +48,12 @@ module Metanorma
             express_write_cache(cache_full_path, wrapper.original_document, document)
           end
           wrapper
+        rescue Expressir::ExpressExp::CacheLoadError
+          FileUtils.rm_rf(cache_full_path)
+          process_express_index(path, cache_path, document, true)
         rescue StandardError => e
           document.logger.warn("Failed to load #{full_path}: #{e.message}")
           nil
-        rescue Expressir::ExpressExp::CacheLoadError
-          process_express_index(path, cache_path, document, true)
         end
 
         def express_from_cache(path)

@@ -82,11 +82,17 @@ module Metanorma
             end
           end
           if !file_paths.empty?
-            from_files = content_from_files(document, file_paths).to_liquid
-            from_files['schemas'] = from_files['schemas'].map do |n|
-              n.merge('relative_path_prefix' => Utils.relative_file_path(document, File.dirname(n['file'])))
+            from_files = content_from_files(document, file_paths)
+            # TODO: decide how to handle expressir multiply file parse as one object and lutaml
+            if from_files.is_a?(Array)
+              result.push(*from_files.map(&:to_liquid))
+            else
+              from_files = from_files.to_liquid
+              from_files['schemas'] = from_files['schemas'].map do |n|
+                n.merge('relative_path_prefix' => Utils.relative_file_path(document, File.dirname(n['file'])))
+              end
+              result.push(from_files)
             end
-            result.push(from_files)
           end
           result
         end
