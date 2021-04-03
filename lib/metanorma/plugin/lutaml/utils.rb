@@ -1,4 +1,7 @@
 require "expressir/express_exp/cache"
+require "metanorma/plugin/lutaml/liquid/custom_filters"
+
+::Liquid::Template.register_filter(Metanorma::Plugin::Lutaml::Liquid::CustomFilters)
 
 module Metanorma
   module Plugin
@@ -20,9 +23,9 @@ module Metanorma
 
         def render_liquid_string(template_string:, context_items:,
                                  context_name:, document:)
-          liquid_template = Liquid::Template.parse(template_string)
+          liquid_template = ::Liquid::Template.parse(template_string)
           # Allow includes for the template
-          liquid_template.registers[:file_system] = Liquid::LocalFileSystem.new(Utils.relative_file_path(document, ''))
+          liquid_template.registers[:file_system] = ::Liquid::LocalFileSystem.new(Utils.relative_file_path(document, ""))
           rendered_string = liquid_template
             .render(context_name => context_items,
                     strict_variables: true,
@@ -64,11 +67,11 @@ module Metanorma
         end
 
         def express_write_cache(path, repository, document)
-          root_path = Pathname.new(relative_file_path(document, ''))
+          root_path = Pathname.new(relative_file_path(document, ""))
           Expressir::ExpressExp::Cache
             .to_file(path,
-              repository,
-              root_path: root_path)
+                     repository,
+                     root_path: root_path)
         end
 
         def express_from_path(document, path)
@@ -86,24 +89,24 @@ module Metanorma
 
         def express_decorate_wrapper(wrapper, document)
           serialized = wrapper.to_liquid
-          serialized['schemas'] = serialized['schemas'].map do |j|
-            j.merge('relative_path_prefix' => Utils.relative_file_path(document, File.dirname(j['file'])))
+          serialized["schemas"] = serialized["schemas"].map do |j|
+            j.merge("relative_path_prefix" => Utils.relative_file_path(document, File.dirname(j["file"])))
           end
           serialized
         end
 
         def express_from_index(document, path)
           yaml_content = YAML.safe_load(File.read(path))
-          root_path = yaml_content['path']
+          root_path = yaml_content["path"]
           schemas_paths = yaml_content
-                            .fetch('schemas')
-                            .map do |(schema_name, schema_values)|
-                              if schema_values['path']
-                                schema_values['path']
-                              else
-                                File.join(root_path.to_s, "#{schema_name}.exp")
-                              end
-                            end
+            .fetch("schemas")
+            .map do |(schema_name, schema_values)|
+            if schema_values["path"]
+              schema_values["path"]
+            else
+              File.join(root_path.to_s, "#{schema_name}.exp")
+            end
+          end
           files_to_load = schemas_paths.map do |path|
             File.new(Utils.relative_file_path(document, path), encoding: "UTF-8")
           end

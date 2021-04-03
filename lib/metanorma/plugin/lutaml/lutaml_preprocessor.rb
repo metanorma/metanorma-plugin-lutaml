@@ -88,8 +88,8 @@ module Metanorma
               result.push(*from_files.map(&:to_liquid))
             else
               from_files = from_files.to_liquid
-              from_files['schemas'] = from_files['schemas'].map do |n|
-                n.merge('relative_path_prefix' => Utils.relative_file_path(document, File.dirname(n['file'])))
+              from_files["schemas"] = from_files["schemas"].map do |n|
+                n.merge("relative_path_prefix" => Utils.relative_file_path(document, File.dirname(n["file"])))
               end
               result.push(from_files)
             end
@@ -101,9 +101,9 @@ module Metanorma
           options = parse_options(block_match[3])
           contexts_items(block_match, document, express_indexes)
             .map do |items|
-              if items['schemas']
-                items['schemas'] = items['schemas'].map do |j|
-                  opts = options.merge('relative_path_prefix' => j['relative_path_prefix'])
+              if items["schemas"]
+                items["schemas"] = items["schemas"].map do |j|
+                  opts = options.merge("relative_path_prefix" => j["relative_path_prefix"])
                   decorate_context_items(j, opts)
                 end
               end
@@ -112,9 +112,9 @@ module Metanorma
                                   context_items: items,
                                   context_name: block_match[2].strip)
             end.flatten
-        rescue StandardError => e
-          document.logger.warn("Failed to parse lutaml block: #{e.message}")
-          []
+          # rescue StandardError => e
+          #   document.logger.warn("Failed to parse lutaml block: #{e.message}")
+          #   []
         end
 
         def parse_options(options_string)
