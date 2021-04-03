@@ -19,8 +19,10 @@ module Metanorma
         end
 
         def render_liquid_string(template_string:, context_items:,
-                                 context_name:)
+                                 context_name:, document:)
           liquid_template = Liquid::Template.parse(template_string)
+          # Allow includes for the template
+          liquid_template.registers[:file_system] = Liquid::LocalFileSystem.new(Utils.relative_file_path(document, ''))
           rendered_string = liquid_template
             .render(context_name => context_items,
                     strict_variables: true,

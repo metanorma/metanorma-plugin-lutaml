@@ -154,7 +154,8 @@ module Metanorma
           render_result, errors = Utils.render_liquid_string(
             template_string: context_lines.join("\n"),
             context_items: context_items,
-            context_name: context_name
+            context_name: context_name,
+            document: document
           )
           Utils.notify_render_errors(document, errors)
           render_result.split("\n")
