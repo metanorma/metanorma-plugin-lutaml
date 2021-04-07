@@ -5,7 +5,7 @@ module Metanorma
     module Lutaml
       module Liquid
         module CustomFilters
-          def html2asciidoc(input)
+          def html2adoc(input)
             ReverseAdoc.convert(input)
           end
         end
