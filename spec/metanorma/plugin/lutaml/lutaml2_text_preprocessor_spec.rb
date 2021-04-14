@@ -505,12 +505,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             .to(be_equivalent_to(output))
         end
 
-        it "recreates the cache file with the correct data" do
-          expect { xml_string_conent(metanorma_process(input)) }
-            .to(change do
-              wraper = Metanorma::Plugin::Lutaml::Utils.express_from_cache(cache_path) rescue nil
-              wraper&.to_liquid&.length
-            end.from(nil).to(2))
+        # TODO: metanorma/metanorma-plugin-lutaml#27
+        unless Gem.win_platform?
+          it "recreates the cache file with the correct data" do
+            expect { xml_string_conent(metanorma_process(input)) }
+              .to(change do
+                wraper = Metanorma::Plugin::Lutaml::Utils.express_from_cache(cache_path) rescue nil
+                wraper&.to_liquid&.length
+              end.from(nil).to(2))
+          end
         end
       end
     end
