@@ -60,7 +60,8 @@ module Metanorma
           render_result, errors = Utils.render_liquid_string(
             template_string: table_template,
             context_items: entity_definition,
-            context_name: "definition"
+            context_name: "definition",
+            document: document
           )
           Utils.notify_render_errors(document, errors)
           render_result.split("\n")
