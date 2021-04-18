@@ -443,8 +443,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         end
 
         before do
-          repository = Expressir::ExpressExp::Parser.from_files([File.new(fixtures_path("test.exp"))])
-          Expressir::ExpressExp::Cache.to_file(cache_path, repository)
+          repository = Expressir::Express::Parser.from_files([File.new(fixtures_path("test.exp"))])
+          Expressir::Express::Cache.to_file(cache_path, repository)
         end
 
         after do
