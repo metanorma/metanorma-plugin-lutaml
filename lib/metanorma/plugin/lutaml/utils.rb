@@ -1,4 +1,4 @@
-require "expressir/express_exp/cache"
+require "expressir/express/cache"
 require "metanorma/plugin/lutaml/liquid/custom_filters"
 
 ::Liquid::Template.register_filter(Metanorma::Plugin::Lutaml::Liquid::CustomFilters)
@@ -53,7 +53,7 @@ module Metanorma
             express_write_cache(cache_full_path, wrapper.original_document, document)
           end
           wrapper
-        rescue Expressir::ExpressExp::CacheLoadError
+        rescue Expressir::Error
           FileUtils.rm_rf(cache_full_path)
           process_express_index(path, cache_path, document, true)
         rescue StandardError => e
@@ -68,7 +68,7 @@ module Metanorma
 
         def express_write_cache(path, repository, document)
           root_path = Pathname.new(relative_file_path(document, ""))
-          Expressir::ExpressExp::Cache
+          Expressir::Express::Cache
             .to_file(path,
                      repository,
                      root_path: root_path)
