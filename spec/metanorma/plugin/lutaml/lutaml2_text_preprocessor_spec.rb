@@ -193,10 +193,12 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             </p>
 
 
-            <p id="_">include::#{fixtures_path('/include1.csv')}[]</p>
-            <p id="_">include::#{fixtures_path('test/include1.csv')}[]</p>
-            <p id="_">include::http://test.com/include1.csv[]</p>
-            </clause>
+            <p id="_">header1,header2,header3
+            one,two,three</p>
+            <p id="_">Unresolved directive in &lt;stdin&gt;&#8201;&#8212;&#8201;include::#{fixtures_path('test/include1.csv')}[]</p>
+            <p id="_">
+            <link target="http://test.com/include1.csv">
+            </p></clause>
           </sections>
           </standard-document>
           </body></html>
@@ -246,10 +248,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               <p id="_">
               <link target="http://test.com/include1.csv">
               </p>
-              <p id="_">include::#{fixtures_path('/expressir_realtive_paths/include1.csv')}[]</p>
-              <p id="_">include::#{fixtures_path('expressir_realtive_paths/test/include1.csv')}[]</p>
-              <p id="_">include::http://test.com/include1.csv[]</p>
-              </clause>
+              <p id="_">Unresolved directive in &lt;stdin&gt;&#8201;&#8212;&#8201;include::#{fixtures_path('/expressir_realtive_paths/include1.csv')}[]</p>
+              <p id="_">Unresolved directive in &lt;stdin&gt;&#8201;&#8212;&#8201;include::#{fixtures_path('expressir_realtive_paths/test/include1.csv')}[]</p>
+              <p id="_">
+              <link target="http://test.com/include1.csv">
+              </p></clause>
             </sections>
             </standard-document>
             </body></html>
@@ -695,6 +698,44 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           </standard-document>
           </body>
 
+          </html>
+        TEXT
+      end
+
+      it "correctly renders input" do
+        expect(xml_string_conent(metanorma_process(input)))
+          .to(be_equivalent_to(output))
+      end
+    end
+
+    context "when dynamic include block used" do
+      let(:input) do
+        <<~TEXT
+          = Document title
+          Author
+          :docfile: test.adoc
+          :nodoc:
+          :novalid:
+          :no-isobib:
+
+          [lutaml, #{example_file}, my_context]
+          ----
+          {% assign my_include = "include" %}
+          {{ my_include }}::#{fixtures_path("include_test.adoc")}[]
+          ----
+        TEXT
+      end
+      let(:output) do
+        <<~TEXT
+          #{BLANK_HDR}
+          <sections>
+          <clause id="_" inline-header="false" obligation="normative">
+          <title>Test</title>
+          <p id="_">My content</p>
+          </clause>
+          </sections>
+          </standard-document>
+          </body>
           </html>
         TEXT
       end
