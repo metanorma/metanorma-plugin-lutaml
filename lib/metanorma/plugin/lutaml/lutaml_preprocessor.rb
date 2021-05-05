@@ -21,8 +21,9 @@ module Metanorma
             document,
             input_lines
           )
-          Asciidoctor::Reader
-            .new(processed_lines(document, input_lines, express_indexes))
+          result_content = processed_lines(document, input_lines, express_indexes)
+          result_reader = Asciidoctor::PreprocessorReader.new(document, result_content)
+          result_reader
         end
 
         protected
