@@ -22,10 +22,11 @@ module Metanorma
         end
 
         def render_liquid_string(template_string:, context_items:,
-                                 context_name:, document:)
+                                 context_name:, document:, include_path: nil)
           liquid_template = ::Liquid::Template.parse(template_string)
           # Allow includes for the template
-          liquid_template.registers[:file_system] = ::Liquid::LocalFileSystem.new(Utils.relative_file_path(document, ""))
+          include_path ||= Utils.relative_file_path(document, "")
+          liquid_template.registers[:file_system] = ::Liquid::LocalFileSystem.new(include_path)
           rendered_string = liquid_template
             .render(context_name => context_items,
                     strict_variables: true,
