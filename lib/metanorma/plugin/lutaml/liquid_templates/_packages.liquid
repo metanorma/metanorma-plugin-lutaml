@@ -1,8 +1,13 @@
 = preface
-{{ additional_context.preface }}
+{{ additional_context.before }}
 
 
 {% for package in context.packages %}
+{% assign before_package_key = 'before;' | append: package.name %}
+{% if additional_context[before_package_key] %}
+{{ additional_context[before_package_key] }}
+{% endif %}
+
 {% assign package_name = package.name | downcase | replace: ":", "" | replace: " ", "_" %}
 {% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}{{equalsigns}} {{ package.name }}
 [[rc_{{ package_name }}-model_section]]
@@ -134,7 +139,12 @@ by the following requirement:
 
 Additional information about the {{ package.name }} can be found in the link:http://docs.opengeospatial.org/DRAFTS/20-066.html#ug-model-{{ package_name }}-section[OGC CityGML 3.0 Users Guide]
 
+{% assign after_package_key = 'after;' | append: package.name %}
+{% if additional_context[after_package_key] %}
+{{ additional_context[after_package_key] }}
+{% endif %}
+
 {% endfor %}
 
 = footer
-{{ additional_context.footer }}
+{{ additional_context.after }}
