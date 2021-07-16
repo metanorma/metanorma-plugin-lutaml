@@ -27,7 +27,7 @@ module Metanorma
         end
 
         def process(parent, reader, attrs)
-          uml_document = ::Lutaml::Uml::Parsers::Dsl.parse(lutaml_temp(reader))
+          uml_document = ::Lutaml::Uml::Parsers::Dsl.parse(lutaml_temp(parent.document, reader))
           filename = generate_file(parent, reader, uml_document)
           through_attrs = generate_attrs(attrs)
           through_attrs["target"] = filename
@@ -39,8 +39,8 @@ module Metanorma
 
         private
 
-        def lutaml_temp(reader)
-          temp_file = Tempfile.new(["lutaml", ".lutaml"])
+        def lutaml_temp(document, reader)
+          temp_file = Tempfile.new(["lutaml", ".lutaml"], Utils.relative_file_path(document, ''))
           temp_file.puts(reader.read)
           temp_file.rewind
           temp_file
