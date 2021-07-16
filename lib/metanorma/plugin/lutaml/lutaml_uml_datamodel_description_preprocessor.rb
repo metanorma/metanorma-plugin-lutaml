@@ -95,31 +95,33 @@ module Metanorma
 
         def sort_and_filter_out_packages(all_packages, options)
           result = []
+          # Step one - filter out all skipped packages
           options['packages']
-            .find_all { |entity| entity['skip'] }
+            .find_all { |entity| entity.is_a?(Hash) && entity['skip'] }
             .each do |entity|
+              entity_regexp = config_entity_regexp(entity['skip'])
               all_packages
-                .delete_if {|score| package['name'] =~ config_entity_regexp(entity) }
+                .delete_if {|package| package['name'] =~ entity_regexp }
             end
-
-          options['packages'].each do |entity|
-            if entity.is_a?(String)
-              entity_regexp = %r{^#{Regexp.escape(entity.gsub('*', '.*'))}$}
-              all_packages.each do |package|
-                puts(package['name'])
+          # Step two - select supplied packages by pattern
+          options['packages']
+            .find_all { |entity| entity.is_a?(String) }
+            .each do |entity|
+              entity_regexp = config_entity_regexp(entity)
+              all_packages.each.with_index do |package|
                 if package['name'] =~ entity_regexp
-                  result.push(package) unless used_packages[package['name']]
-                  used_packages[package['name']] = true
+                  result.push(package)
+                  all_packages
+                    .delete_if {|nest_package| nest_package['name'] == package['name'] }
                 end
               end
-            else
             end
-          end
           result
         end
 
         def config_entity_regexp(entity)
-          %r{^#{Regexp.escape(entity.gsub('*', '.*'))}$}
+          additional_sym = '.*' if entity =~ /\*$/
+          %r{^#{Regexp.escape(entity.gsub('*', ''))}#{additional_sym}$}
         end
 
         def model_representation(lutaml_document, document, additional_context, options)
