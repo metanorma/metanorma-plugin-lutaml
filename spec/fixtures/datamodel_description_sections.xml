@@ -1,0 +1,232 @@
+<sections><clause id="_" inline-header="false" obligation="normative"><title>preface</title>
+<p id="_">mine text</p>
+<clause id="_" inline-header="false" obligation="normative"><title>Another</title>
+<clause id="rc_another-model_section" inline-header="false" obligation="normative">
+<title>Another</title>
+</clause>
+<clause id="_" inline-header="false" obligation="normative">
+<title>Requirements</title>
+</clause>
+<clause id="_" inline-header="false" obligation="normative"><title>Class Definitions</title>
+<table id="_">
+<colgroup>
+<col width="25%">
+<col width="75%">
+</colgroup>
+<name>Classes used in Another</name>
+<thead>
+<tr>
+<th valign="top" align="left">Class</th>
+<th valign="top" align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top" align="left">
+<p id="_"><xref target="AbstractAtomicTimeseries-section">AbstractAtomicTimeseries</xref>
+&#171;FeatureType&#187;</p>
+</td>
+<td valign="top" align="left">
+<p id="_">AbstractAtomicTimeseries represents the attributes and relationships that are common to all kinds of atomic timeseries (GenericTimeseries, TabulatedFileTimeseries, StandardFileTimeseries). An atomic timeseries represents time-varying data of a specific data type for a single contiguous time interval.</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_"><xref target="AbstractTimeseries-section">AbstractTimeseries</xref>
+&#171;FeatureType&#187;</p>
+</td>
+<td valign="top" align="left">
+<p id="_">AbstractTimeseries is the abstract superclass representing any type of timeseries data.</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_"><xref target="AuthenticationTypeValue-section">AuthenticationTypeValue</xref>
+&#171;CodeList&#187;</p>
+</td>
+<td valign="top" align="left">
+<p id="_">AuthenticationTypeValue is a code list used to specify the authentication method to be used to access the referenced sensor service. Each value provides enough information such that a software application could determine the required access credentials.</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_"><xref target="CompositeTimeseries-section">CompositeTimeseries</xref>
+&#171;FeatureType&#187;</p>
+</td>
+<td valign="top" align="left">
+<p id="_">A CompositeTimeseries is a (possibly recursive) aggregation of atomic and composite timeseries. The components of a composite timeseries must have non-overlapping time intervals.</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_"><xref target="Dynamizer-section">Dynamizer</xref>
+&#171;FeatureType&#187;</p>
+</td>
+<td valign="top" align="left">
+<p id="_">A Dynamizer is an object that injects timeseries data for an individual attribute of the city object in which it is included. The timeseries data overrides the static value of the referenced city object attribute in order to represent dynamic (time-dependent) variations of its value.</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_"><xref target="GenericTimeseries-section">GenericTimeseries</xref>
+&#171;FeatureType&#187;</p>
+</td>
+<td valign="top" align="left">
+<p id="_">A GenericTimeseries represents time-varying data in the form of embedded time-value-pairs of a specific data type for a single contiguous time interval.</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_"><xref target="SensorConnectionTypeValue-section">SensorConnectionTypeValue</xref>
+&#171;CodeList&#187;</p>
+</td>
+<td valign="top" align="left">
+<p id="_">SensorConnectionTypeValue is a code list used to specify the type of the referenced sensor service. Each value provides enough information such that a software application would be able to identify the API type and version.</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_"><xref target="StandardFileTimeseries-section">StandardFileTimeseries</xref>
+&#171;FeatureType&#187;</p>
+</td>
+<td valign="top" align="left">
+<p id="_">A StandardFileTimeseries represents time-varying data for a single contiguous time interval. The data is provided in an external file referenced in the StandardFileTimeseries. The data within the external file is encoded according to a dedicated format for the representation of timeseries data such as using the OGC TimeseriesML or OGC Observations &amp; Measurements Standard. The data type of the data has to be specified within the external file.</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_"><xref target="StandardFileTypeValue-section">StandardFileTypeValue</xref>
+&#171;CodeList&#187;</p>
+</td>
+<td valign="top" align="left">
+<p id="_">StandardFileTypeValue is a code list used to specify the type of the referenced external timeseries data file. Each value provides information about the standard and version.</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_"><xref target="TabulatedFileTimeseries-section">TabulatedFileTimeseries</xref>
+&#171;FeatureType&#187;</p>
+</td>
+<td valign="top" align="left">
+<p id="_">A TabulatedFileTimeseries represents time-varying data of a specific data type for a single contiguous time interval. The data is provided in an external file referenced in the TabulatedFileTimeseries. The file contains table structured data using an appropriate file format such as comma-separated values (CSV), Microsoft Excel (XLSX) or Google Spreadsheet. The timestamps and the values are given in specific columns of the table. Each row represents a single time-value-pair. A subset of rows can be selected using the idColumn and idValue attributes.</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_"><xref target="TabulatedFileTypeValue-section">TabulatedFileTypeValue</xref>
+&#171;CodeList&#187;</p>
+</td>
+<td valign="top" align="left">
+<p id="_">TabulatedFileTypeValue is a code list used to specify the data format of the referenced external tabulated data file.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="_">
+<colgroup>
+<col width="25%">
+<col width="75%">
+</colgroup>
+<name>Data Types used in Another</name>
+<thead>
+<tr>
+<th valign="top" align="left">Name</th>
+<th valign="top" align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top" align="left">
+<xref target="ADEOfAbstractAtomicTimeseries-section">ADEOfAbstractAtomicTimeseries</xref>
+</td>
+<td valign="top" align="left">ADEOfAbstractAtomicTimeseries acts as a hook to define properties within an ADE that are to be added to AbstractAtomicTimeseries.</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<xref target="ADEOfAbstractTimeseries-section">ADEOfAbstractTimeseries</xref>
+</td>
+<td valign="top" align="left">ADEOfAbstractTimeseries acts as a hook to define properties within an ADE that are to be added to AbstractTimeseries.</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<xref target="ADEOfCompositeTimeseries-section">ADEOfCompositeTimeseries</xref>
+</td>
+<td valign="top" align="left">ADEOfCompositeTimeseries acts as a hook to define properties within an ADE that are to be added to a CompositeTimeseries.</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<xref target="ADEOfDynamizer-section">ADEOfDynamizer</xref>
+</td>
+<td valign="top" align="left">ADEOfDynamizer acts as a hook to define properties within an ADE that are to be added to a Dynamizer.</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<xref target="ADEOfGenericTimeseries-section">ADEOfGenericTimeseries</xref>
+</td>
+<td valign="top" align="left">ADEOfGenericTimeseries acts as a hook to define properties within an ADE that are to be added to a GenericTimeseries.</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<xref target="ADEOfStandardFileTimeseries-section">ADEOfStandardFileTimeseries</xref>
+</td>
+<td valign="top" align="left">ADEOfStandardFileTimeseries acts as a hook to define properties within an ADE that are to be added to a StandardFileTimeseries.</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<xref target="ADEOfTabulatedFileTimeseries-section">ADEOfTabulatedFileTimeseries</xref>
+</td>
+<td valign="top" align="left">ADEOfTabulatedFileTimeseries acts as a hook to define properties within an ADE that are to be added to a TabulatedFileTimeseries.</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<xref target="SensorConnection-section">SensorConnection</xref>
+</td>
+<td valign="top" align="left">A SensorConnection provides all details that are required to retrieve a specific datastream from an external sensor web service. This data type comprises the service type (e.g. OGC SensorThings API, OGC Sensor Observation Services, MQTT, proprietary platforms), the URL of the sensor service, the identifier for the sensor or thing, and its observed property as well as information about the required authentication method.</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<xref target="TimeseriesComponent-section">TimeseriesComponent</xref>
+</td>
+<td valign="top" align="left">TimeseriesComponent represents an element of a CompositeTimeseries.</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<xref target="TimeValuePair-section">TimeValuePair</xref>
+</td>
+<td valign="top" align="left">A TimeValuePair represents a value that is valid for a given timepoint. For each TimeValuePair, only one of the value properties can be used mutually exclusive. Which value property has to be provided depends on the selected value type in the GenericTimeSeries feature, in which the TimeValuePair is included.</td>
+</tr>
+</tbody>
+</table>
+<table id="_">
+<colgroup>
+<col width="25%">
+<col width="75%">
+</colgroup>
+<name>Enumerated Classes used in Another</name>
+<thead>
+<tr>
+<th valign="top" align="left">Name</th>
+<th valign="top" align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top" align="left">
+<p id="_">
+<xref target="TimeseriesTypeValue-section">TimeseriesTypeValue</xref>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">TimeseriesTypeValue enumerates the possible value types for GenericTimeseries and TimeValuePair.</p>
+</td>
+</tr>
+</tbody>
+</table></clause>
+<clause id="_" inline-header="false" obligation="normative">
+<title>Additional Information</title>
+<p id="_">Additional information about the Another can be found in the <link target="http://docs.opengeospatial.org/DRAFTS/20-066.html#ug-model-another-section">OGC CityGML 3.0 Users Guide</p>
+</clause></clause></clause>
+<clause id="_" inline-header="false" obligation="normative">
+<title>footer</title>
+<p id="_">footer text</p>
+</clause></sections>

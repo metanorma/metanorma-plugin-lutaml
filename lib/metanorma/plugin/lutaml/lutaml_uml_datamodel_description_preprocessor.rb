@@ -12,10 +12,15 @@ module Metanorma
     module Lutaml
       #  Macro for quick rendering of datamodel attributes/values table
       #  @example [lutaml_uml_attributes_table,path/to/lutaml,EntityName]
-      class LutamlUmlDatamodelDescriptionPreprocessor < Asciidoctor::Extensions::Preprocessor
+      class LutamlUmlDatamodelDescriptionPreprocessor <
+          Asciidoctor::Extensions::Preprocessor
         MARCO_REGEXP =
-          /\[lutaml_uml_datamodel_description,([^\]]+)]/
-        SUPPORTED_NESTED_MACROSES = %w[preface footer]
+          /\[lutaml_uml_datamodel_description,([^,]+),?(.+)?\]/
+        SUPPORTED_NESTED_MACROSES = %w[preface footer].freeze
+        LIQUID_INCLUDE_PATH = File.join(
+          Gem.loaded_specs["metanorma-plugin-lutaml"].full_gem_path,
+          "lib", "metanorma", "plugin", "lutaml", "liquid_templates"
+        )
         # search document for block `lutaml_uml_datamodel_description`
         #  read include derectives that goes after that in block and transform
         #  into yaml2text blocks
@@ -33,19 +38,19 @@ module Metanorma
             .first
         end
 
+        def parse_yaml_config_file(document, file_path)
+          return {} if file_path.nil?
+
+          relative_file_path = Utils.relative_file_path(document, file_path)
+          YAML.load(File.read(relative_file_path, encoding: "UTF-8"))
+        end
+
         def processed_lines(document, input_lines)
           result = []
           loop do
             result.push(*process_text_blocks(document, input_lines))
           end
           result
-        end
-
-        def lutaml_document_from_file(document, file_path)
-          ::Lutaml::Parser
-            .parse(File.new(Utils.relative_file_path(document, file_path),
-                            encoding: "UTF-8"))
-            .first
         end
 
         def process_text_blocks(document, input_lines)
@@ -56,42 +61,76 @@ module Metanorma
           model_representation(
             lutaml_document_from_file(document, block_match[1]),
             document,
-            collect_additional_context(document, input_lines, input_lines.next))
+            collect_additional_context(input_lines, input_lines.next),
+            parse_yaml_config_file(document, block_match[2]))
         end
 
-        def collect_additional_context(document, input_lines, end_mark)
+        def collect_additional_context(input_lines, end_mark)
           additional_context = {}
           while (block_line = input_lines.next) != end_mark
             nested_match = SUPPORTED_NESTED_MACROSES
-                            .map { |macro| [macro, block_line.match(/\[.#{macro}\]/)] }
-                            .find { |n| !n.last.nil? }
+              .map { |macro| [macro, block_line.match(/\[.#{macro}\]/)] }
+              .detect { |n| !n.last.nil? }
             nested_context_value = []
             if nested_match
               nested_end_mark = input_lines.next
               while (block_line = input_lines.next) != nested_end_mark
                 nested_context_value.push(block_line)
               end
-              additional_context[nested_match.first] = nested_context_value.join("\n")
+              additional_context[nested_match.first] = nested_context_value
+                .join("\n")
             end
           end
           additional_context
         end
 
-        def model_representation(lutaml_document, document, additional_context)
-          liquid_templates_path = File
-                                    .join(
-                                      Gem.loaded_specs['metanorma-plugin-lutaml'].full_gem_path,
-                                      'lib',
-                                      'metanorma',
-                                      'plugin',
-                                      'lutaml',
-                                      'liquid_templates')
+        def create_context_object(lutaml_document, additional_context, options)
+          root_package = lutaml_document.to_liquid['packages'].first
+          all_packages = [root_package, *root_package['children_packages']]
+          {
+            "packages" => sort_and_filter_out_packages(all_packages, options),
+            "additional_context" => additional_context
+          }
+        end
+
+        def sort_and_filter_out_packages(all_packages, options)
+          result = []
+          options['packages']
+            .find_all { |entity| entity['skip'] }
+            .each do |entity|
+              all_packages
+                .delete_if {|score| package['name'] =~ config_entity_regexp(entity) }
+            end
+
+          options['packages'].each do |entity|
+            if entity.is_a?(String)
+              entity_regexp = %r{^#{Regexp.escape(entity.gsub('*', '.*'))}$}
+              all_packages.each do |package|
+                puts(package['name'])
+                if package['name'] =~ entity_regexp
+                  result.push(package) unless used_packages[package['name']]
+                  used_packages[package['name']] = true
+                end
+              end
+            else
+            end
+          end
+          result
+        end
+
+        def config_entity_regexp(entity)
+          %r{^#{Regexp.escape(entity.gsub('*', '.*'))}$}
+        end
+
+        def model_representation(lutaml_document, document, additional_context, options)
           render_result, errors = Utils.render_liquid_string(
             template_string: table_template,
-            context_items: lutaml_document.to_liquid.merge('additional_context' => additional_context),
+            context_items: create_context_object(lutaml_document,
+                              additional_context,
+                              options),
             context_name: "context",
             document: document,
-            include_path: liquid_templates_path
+            include_path: LIQUID_INCLUDE_PATH
           )
           Utils.notify_render_errors(document, errors)
           render_result.split("\n")
