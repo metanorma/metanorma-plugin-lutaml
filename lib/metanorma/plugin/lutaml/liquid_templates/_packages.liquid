@@ -134,10 +134,6 @@ by the following requirement:
 
 Additional information about the {{ package.name }} can be found in the link:http://docs.opengeospatial.org/DRAFTS/20-066.html#ug-model-{{ package_name }}-section[OGC CityGML 3.0 Users Guide]
 
-{% if package.packages.size > 0 %}{% assign nested_depth = depth | plus: 1 %}
-{% include "packages", depth: nested_depth, context: package %}
-{% endif %}
-
 {% endfor %}
 
 = footer
