@@ -17,12 +17,27 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
 
         [lutaml_uml_datamodel_description,#{example_file},#{config_file}]
         --
-        [.preface]
+        [.before]
         ---
         mine text
         ---
 
-        [.footer]
+        [.before, package="Another"]
+        ---
+        text before Another package
+        ---
+
+        [.after, package="Another"]
+        ---
+        text after Another package
+        ---
+
+        [.after, package="CityGML"]
+        ---
+        text after CityGML package
+        ---
+
+        [.after]
         ---
         footer text
         ---

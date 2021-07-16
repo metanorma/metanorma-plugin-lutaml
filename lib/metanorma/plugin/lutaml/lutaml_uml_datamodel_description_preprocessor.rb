@@ -16,7 +16,7 @@ module Metanorma
           Asciidoctor::Extensions::Preprocessor
         MARCO_REGEXP =
           /\[lutaml_uml_datamodel_description,([^,]+),?(.+)?\]/
-        SUPPORTED_NESTED_MACROSES = %w[preface footer].freeze
+        SUPPORTED_NESTED_MACROSES = %w[before after].freeze
         LIQUID_INCLUDE_PATH = File.join(
           Gem.loaded_specs["metanorma-plugin-lutaml"].full_gem_path,
           "lib", "metanorma", "plugin", "lutaml", "liquid_templates"
@@ -69,15 +69,16 @@ module Metanorma
           additional_context = {}
           while (block_line = input_lines.next) != end_mark
             nested_match = SUPPORTED_NESTED_MACROSES
-              .map { |macro| [macro, block_line.match(/\[.#{macro}\]/)] }
+              .map { |macro| [macro, block_line.match(/\[.#{macro}(,\s*package=("|')(?<package>.+?)("|'))?\]/)] }
               .detect { |n| !n.last.nil? }
             nested_context_value = []
             if nested_match
+              macro_keyword = [nested_match.first, nested_match.last['package']].compact.join(";")
               nested_end_mark = input_lines.next
               while (block_line = input_lines.next) != nested_end_mark
                 nested_context_value.push(block_line)
               end
-              additional_context[nested_match.first] = nested_context_value
+              additional_context[macro_keyword] = nested_context_value
                 .join("\n")
             end
           end
