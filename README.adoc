@@ -380,7 +380,9 @@ Where:
 * `packages` - required, root element with the list of strings or objects
 
 * `Package *` - pattern matching, specifies lookup condition for packages to
-render, in this case, equal to the following regular expression: `/^Package.*$/`
+render.
++
+NOTE: In this example, it is equal to the following regular expression: `/^Package.*$/`
 
 * `skip: four` - object with package name to skip
 
