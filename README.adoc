@@ -64,9 +64,19 @@ Where:
 
 * content within the block is called the "`template`";
 
-* `{example.exp}` is the location of the exp schema file that contains data to be loaded. Location of the file is computed relative to the source directory that `[lutaml]` is used (e.g., if `[lutaml,example.exp,my_context]` is invoked in an `.adoc` file located at `/foo/bar/doc.adoc`, the data file is expected to be found at `/foo/bar/example.exp`);
+* `{example.exp}` is the location of the EXPRESS schema file (`*.exp`) that
+contains data to be loaded. Location of the file is computed relative to the
+source directory that `[lutaml]` is used (e.g., if
+`[lutaml,example.exp,my_context]` is invoked in an `.adoc` file located at
+`/foo/bar/doc.adoc`, the data file is expected to be found at
+`/foo/bar/example.exp`);
 
-* `{my_context}` is the name where the EXPRESS Repository read from the .exp file can be accessed with. Context object is a serialized  Expressir::Model::Repository object with all variable names available. See https://github.com/lutaml/expressir[Expressir] docs for reference. `{my_context}` has `schemas` method to access Expressir https://github.com/lutaml/expressir/blob/master/lib/expressir/model/schema.rb[schemas]
+* `{my_context}` is the name where the EXPRESS Repository read from the .exp
+file can be accessed with. Context object is a serialized
+`Expressir::Model::Repository` object with all variable names available. See
+https://github.com/lutaml/expressir[Expressir] docs for reference.
+`{my_context}` has `schemas` method to access Expressir
+https://github.com/lutaml/expressir/blob/master/lib/expressir/model/schema.rb[schemas]
 
 Will produce this output:
 
@@ -83,7 +93,11 @@ Will produce this output:
 
 This macro also supports `.lutaml` files.
 
-Instead of using the direct path to the file one can use `lutaml-express-index` document attribute to supply directory with express files or yaml index file to parse as well as the cache file location. The syntax is as follows:
+Instead of using the direct path to the file one can use `lutaml-express-index`
+document attribute to supply directory with express files or YAML index file to
+parse as well as the cache file location.
+
+The syntax is as follows:
 
 [source,adoc]
 -----
@@ -92,13 +106,15 @@ Instead of using the direct path to the file one can use `lutaml-express-index` 
 
 Where:
 
-* `my_custom_name` - is name of the parsed express files context for the later use with lutaml macro
+* `my_custom_name` - is name of the parsed EXPRESS files context for the later
+use with lutaml macro
 
-* `dir_or_index_path` - location of directory with express files or path to yaml index file to parse
+* `dir_or_index_path` - location of directory with EXPRESS files or path to the
+YAML index file to parse
 
-* `cache_path` - optional, location of the expressir cache file to use
+* `cache_path` - optional, location of the Expressir cache file to use
 
-Example of real usage:
+Example of usage:
 
 [source,adoc]
 -----
@@ -115,7 +131,9 @@ Author
 
 === Usage, `lutaml_uml_attributes_table` macro
 
-This macro allows to quickly render datamodel attributes/values tables. Given `example.lutaml` file with the content:
+This macro allows to quickly render data model attributes/values tables.
+
+Given `example.lutaml` file with the content:
 
 [source,java]
 ----
@@ -189,11 +207,15 @@ Will produce this output:
 
 === Usage, `lutaml_uml_datamodel_description` macro
 
-This macro allows to quickly render datamodel packages and its dependent objects for supplied xmi file.
+This macro allows to quickly render data model packages and its dependent
+objects for supplied XMI file.
 
-Given enterprise architect `example.xmi` file with 2 packages 'Another' and 'CityGML':
+Given an Enterprise Architect `example.xmi` file with 2 packages:
 
-And the `lutaml_uml_datamodel_description` macro:
+* 'Another'
+* 'CityGML'
+
+The `lutaml_uml_datamodel_description` macro can be used:
 
 [source,adoc]
 -----
@@ -202,7 +224,7 @@ And the `lutaml_uml_datamodel_description` macro:
 --
 [.before]
 ---
-mine text
+my text
 ---
 
 [.before, package="Another"]
@@ -230,10 +252,13 @@ footer text
 
 Where:
 
-- `path/to/example.xmi` - required, path to the xmi file to render
-- `[.before]` - macro to add additional text before the rendered output, can be used only once, additional occurrences of macro will overwrite text
-- `[.after]` - macro to add additional text after the rendered output, can be used only once, additional occurrences of macro will overwrite text
-- `[.after, package="Another"]` - macro with text to be inserted before(after in case of `.before` name) the package
+* `path/to/example.xmi` - required, path to the XMI file to render
+
+* `[.before]` - macro to add additional text before the rendered output, can be used only once, additional occurrences of macro will overwrite text
+
+* `[.after]` - macro to add additional text after the rendered output, can be used only once, additional occurrences of macro will overwrite text
+
+* `[.after, package="Another"]` - macro with text to be inserted before(after in case of `.before` name) the package
 
 
 Will produce this output:
@@ -241,7 +266,7 @@ Will produce this output:
 [source,adoc]
 -----
 = preface
-mine text
+my text
 
 text before Another package
 
@@ -333,7 +358,10 @@ footer text
 
 -----
 
-In addition to just supplying xmi file this macro also supports yaml configuration file. The format for it is like this:
+In addition to just supplying XMI file, this macro also supports YAML
+configuration file.
+
+The format for using YAML is this:
 
 [source,yaml]
 -----
@@ -349,9 +377,12 @@ packages:
 
 Where:
 
-- `packages` - required, root element with the list of strings or objects
-- `Package *` - pattern matching, specifies lookup condition for packages to render, in this case, equal to the following regexp: /^Package .*$/
-- `skip: four` - object with package name to skip for
+* `packages` - required, root element with the list of strings or objects
+
+* `Package *` - pattern matching, specifies lookup condition for packages to
+render, in this case, equal to the following regular expression: `/^Package.*$/`
+
+* `skip: four` - object with package name to skip
 
 Usage with macro:
 
@@ -361,8 +392,10 @@ Usage with macro:
 ....
 -----
 
-The macro processor will read supplied yaml file and arrange packages according to the order supplied in the config file, also all packages supplied as `skip` will be skipped during render
+The macro processor will read supplied YAML file and arrange packages according
+to the order supplied in the config file, also all packages supplied as `skip`
+will be skipped during render
 
 == Documentation
 
-See https://www.metanorma.com.
+Please refer to https://www.metanorma.com.
