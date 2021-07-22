@@ -330,9 +330,6 @@ text before Another package
 
 ==== Additional Information
 
-Additional information about the Another can be found in the link:http://docs.opengeospatial.org/DRAFTS/20-066.html#ug-model-another-section[OGC CityGML 3.0 Users Guide]
-
-
 text after Another package
 
 
@@ -346,9 +343,6 @@ text after Another package
 ==== Class Definitions
 
 ==== Additional Information
-
-Additional information about the CityGML can be found in the link:http://docs.opengeospatial.org/DRAFTS/20-066.html#ug-model-citygml-section[OGC CityGML 3.0 Users Guide]
-
 
 text after CityGML package
 
