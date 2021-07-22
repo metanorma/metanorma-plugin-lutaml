@@ -13,7 +13,8 @@
 [[rc_{{ package_name }}-model_section]]
 {{equalsigns}}= {{ package.name }}
 
-{% capture requirement_filename %}requirements/requirements_class_{{ package_name }}{% endcapture %}
+// TODO: Implement macro for CityGml repo
+{% comment %} {% capture requirement_filename %}requirements/requirements_class_{{ package_name }}{% endcapture %}
 {% capture requirement_content %}{% include requirement_filename %}{% endcapture %}
 {% unless requirement_content contains "Liquid error" %}
 {{ requirement_content }}
@@ -53,7 +54,7 @@ by the following requirement:
 
 {{ requirement_ade_use_content }}
 {% endunless %}
-{% endunless %}
+{% endunless %} {% endcomment %}
 
 {{equalsigns}}= Class Definitions
 {% if package.classes.size > 0 %}
