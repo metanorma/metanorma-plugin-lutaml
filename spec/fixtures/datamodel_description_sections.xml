@@ -9,9 +9,6 @@
         <title>Another</title>
       </clause>
       <clause id="_" inline-header="false" obligation="normative">
-        <title>Requirements</title>
-      </clause>
-      <clause id="_" inline-header="false" obligation="normative">
         <title>Class Definitions</title>
         <table id="_">
           <colgroup>
@@ -228,9 +225,6 @@
       </clause>
       <clause id="_" inline-header="false" obligation="normative">
         <title>Additional Information</title>
-        <p id="_">Additional information about the Another can be found in the
-          <link target="http://docs.opengeospatial.org/DRAFTS/20-066.html#ug-model-another-section">OGC CityGML 3.0
-          Users Guide</p>
         <p id="_">text after Another package</p>
       </clause>
     </clause>
@@ -240,16 +234,10 @@
         <title>CityGML</title>
       </clause>
       <clause id="_" inline-header="false" obligation="normative">
-        <title>Requirements</title>
-      </clause>
-      <clause id="_" inline-header="false" obligation="normative">
         <title>Class Definitions</title>
       </clause>
       <clause id="_" inline-header="false" obligation="normative">
         <title>Additional Information</title>
-        <p id="_">Additional information about the CityGML can be found in the
-          <link target="http://docs.opengeospatial.org/DRAFTS/20-066.html#ug-model-citygml-section">OGC CityGML 3.0
-          Users Guide</p>
         <p id="_">text after CityGML package</p>
       </clause>
     </clause>
