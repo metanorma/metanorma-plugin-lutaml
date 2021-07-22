@@ -19,39 +19,6 @@
 {{ requirement_content }}
 {% endunless %}
 
-{% for diagram in package.diagrams %}
-{% capture codelists_image_name %}{{ package.name }} - Code lists{% endcapture %}
-{% capture ade_types_image_name %}{{ package.name }} - ADE Data types{% endcapture %}
-{% if diagram.name == package.name %}
-The UML diagram of the {{ package.name }} module is depicted in
-<<{{ package_name }}-uml>>.
-A detailed discussion of Requirements Class {{ package.name }}
-can be found in the
-link:http://docs.opengeospatial.org/DRAFTS/20-066.html#ug-model-{{ package_name }}-section[CityGML 3.0 Users Guide].
-
-[[{{ package_name }}-uml]]
-.UML diagram of the {{ package.name }} Model.
-
-image::figures/{{ package.name }}.png[align="center"]
-
-{% elsif diagram.name contains ade_types_image_name %}
-The ADE data types provided for the {{ package.name }} module are
-illustrated in <<{{ package_name }}-uml-ade-types>>.
-
-[[{{ package_name }}-uml-ade-types]]
-.ADE classes of the CityGML {{ package.name }} module.
-image::figures/{{ package.name }}-ADE_Datatypes.png[]
-
-{% elsif diagram.name contains codelists_image_name %}
-The Code Lists provided for the {{ package.name }} module are
-illustrated in <<{{ package_name }}-uml-codelists>>.
-
-[[{{ package_name }}-uml-codelists]]
-.Codelists from the CityGML {{ package.name }} module.
-image::figures/{{ package.name }}-Codelists.png[]
-{% endif %}
-{% endfor %}
-
 {% capture boundaries_filename %}boundaries/boundaries_{{ package_name }}{% endcapture %}
 {% capture boundaries_content %}{% include boundaries_filename %}{% endcapture %}
 {% unless boundaries_content contains "Liquid error" %}
@@ -70,8 +37,7 @@ image::figures/{{ package.name }}-Codelists.png[]
 {{equalsigns}}= Requirements
 
 {% unless requirement_classes_content contains "Liquid error" %}
-The following requirement defines the rules governing implementation
-of the CityGML Bridge Module as an Implementation Specification.
+The following requirement defines the rules governing implementation:
 
 {{ requirement_classes_content }}
 {% endunless %}
@@ -135,11 +101,8 @@ by the following requirement:
 |===
 {% endif %}
 
-{{equalsigns}}= Additional Information
-
-Additional information about the {{ package.name }} can be found in the link:http://docs.opengeospatial.org/DRAFTS/20-066.html#ug-model-{{ package_name }}-section[OGC CityGML 3.0 Users Guide]
-
 {% assign after_package_key = 'after;' | append: package.name %}
+{{equalsigns}}= Additional Information
 {% if additional_context[after_package_key] %}
 {{ additional_context[after_package_key] }}
 {% endif %}
