@@ -95,6 +95,8 @@ module Metanorma
         end
 
         def sort_and_filter_out_packages(all_packages, options)
+          return all_packages if options['packages'].nil?
+
           result = []
           # Step one - filter out all skipped packages
           options['packages']
@@ -141,7 +143,7 @@ module Metanorma
 
         def table_template
           <<~LIQUID
-            {% include "packages", depth: 3, context: context, additional_context: context.additional_context %}
+            {% include "packages", depth: 2, context: context, additional_context: context.additional_context %}
           LIQUID
         end
       end
