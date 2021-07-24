@@ -1,114 +1,99 @@
-= preface
-{{ additional_context.before }}
-
-
 {% for package in context.packages %}
-{% assign before_package_key = 'before;' | append: package.name %}
-{% if additional_context[before_package_key] %}
-{{ additional_context[before_package_key] }}
+{% assign is_package_spare = package.name | slice: 0,5 %}
+{% if is_package_spare == 'old: ' %}{% continue %}
+{% elsif is_package_spare == 'Spare' %}{% continue %}
 {% endif %}
-
 {% assign package_name = package.name | downcase | replace: ":", "" | replace: " ", "_" %}
-{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}{{equalsigns}} {{ package.name }}
-[[rc_{{ package_name }}-model_section]]
-{{equalsigns}}= {{ package.name }}
 
-// TODO: Implement macro for CityGml repo
-{% comment %} {% capture requirement_filename %}requirements/requirements_class_{{ package_name }}{% endcapture %}
-{% capture requirement_content %}{% include requirement_filename %}{% endcapture %}
-{% unless requirement_content contains "Liquid error" %}
-{{ requirement_content }}
-{% endunless %}
+{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}{{equalsigns}} {{ package.name }} package
+{{equalsigns}}= {{ package.name }} overview
 
-{% capture boundaries_filename %}boundaries/boundaries_{{ package_name }}{% endcapture %}
-{% capture boundaries_content %}{% include boundaries_filename %}{% endcapture %}
-{% unless boundaries_content contains "Liquid error" %}
-<<{{ package_name }}-boundaries-table>> lists the surfaces that are allowed as thematic surface boundaries of the space classes defined in the {{ package.name }} module:
+// TODO: include blocks by base path
+//{% for diagram in package.diagrams %}
+//[[figure-{{ diagram.xmi_id }}]]
+//.{{ diagram.name }}
+//image::../../xmi-19170-only/Images/{{ diagram.xmi_id }}.png[]
+//
+//{% if diagram.definition %}
+//{{ diagram.definition | html2adoc }}
+//{% endif %}
+//{% endfor %}
 
-{{ boundaries_content }}
-{% endunless %}
+{% if package.packages.size > 0 %}The {{ package.name }} package is organized into
+{{ package.packages.size }} packages{% assign modules_nested_size = 0 %}{% for module in package.packages %}{% assign modules_nested_size = modules_nested_size | plus: module.packages.size %}{% endfor %}{% if modules_nested_size > 0 %} with {{modules_nested_size}} modules{% endif %}:
+{% endif %}
+[arabic]
+{% for module in package.packages %}
+{% if module.packages.length > 0 %}
+. {{ module.name }} package comprises:
+{% for nested_module in module.packages %}
+.. {{nested_module.name}} module
+{% endfor %}
+{% else %}
+. {{ module.name }} package
+{% endif %}
+{% endfor %}
 
-{% capture requirement_classes_filename %}requirements/{{ package_name }}/REQ_{{ package_name }}_Classes{% endcapture %}
-{% capture requirement_classes_content %}{% include requirement_classes_filename %}{% endcapture %}
-{% capture requirement_boundaries_filename %}requirements/{{ package_name }}/REQ_{{ package_name }}_Boundaries{% endcapture %}
-{% capture requirement_boundaries_content %}{% include requirement_boundaries_filename %}{% endcapture %}
-{% capture requirement_ade_use_filename %}requirements/{{ package_name }}/REQ_{{ package_name }}_ADE_Use{% endcapture %}
-{% capture requirement_ade_use_content %}{% include requirement_ade_use_filename %}{% endcapture %}
-{% unless requirement_classes_filename contains "Liquid error" and requirement_boundaries_content contains "Liquid error" and requirement_ade_use_content contains "Liquid error" %}
-{{equalsigns}}= Requirements
-
-{% unless requirement_classes_content contains "Liquid error" %}
-The following requirement defines the rules governing implementation:
-
-{{ requirement_classes_content }}
-{% endunless %}
-{% unless requirement_boundaries_content contains "Liquid error" %}
-The implementation of this Module is further constrained by the
-following spatial boundary requirement:
-
-{{ requirement_boundaries_content }}
-{% endunless %}
-{% unless requirement_ade_use_content contains "Liquid error" %}
-The use of extension capabilities by Bridge elements is constrained
-by the following requirement:
-
-{{ requirement_ade_use_content }}
-{% endunless %}
-{% endunless %} {% endcomment %}
-
-{{equalsigns}}= Class Definitions
 {% if package.classes.size > 0 %}
-.Classes used in {{ package.name }}
-[cols="2a,6a",options="header"]
-|===
-|Class |Description
+
+{{equalsigns}}= Defining tables
+
+[arabic]
+{% for klass in package.classes %}
+{% assign is_klass_spare = klass.name | slice: 0,5 %}
+{% if is_klass_spare == 'old: ' %}{% continue %}
+{% elsif is_klass_spare == 'Spare' %}{% continue %}
+{% endif %}
+{% assign klass_name = klass.name | downcase | replace: ':', '' | replace: ' ', '_' %}
+.<<tab-P-{{ package_name }}-C-{{ klass_name }}>> -- Elements of {{ package.name }}::{{ klass.name }}
+
+{% endfor %}
+{% for enum in package.enums %}
+{% assign is_enum_spare = enum.name | slice: 0,5 %}
+{% if is_enum_spare == 'old: ' %}{% continue %}
+{% elsif is_enum_spare == 'Spare' %}{% continue %}
+{% endif %}
+{% assign enum_name = enum.name | downcase | replace: ':', '' | replace: ' ', '_' %}
+.<<tab-P-{{ package_name }}-E-{{ enum_name }}>> -- Elements of {{ package.name }}::{{ enum.name }}
+
+{% endfor %}
+{% for data_type in package.data_types %}
+{% assign is_data_type_spare = data_type.name | slice: 0,5 %}
+{% if is_data_type_spare == 'old: ' %}{% continue %}
+{% elsif is_data_type_spare == 'Spare' %}{% continue %}
+{% endif %}
+{% assign data_type_name = data_type.name | downcase | replace: ':', '' | replace: ' ', '_' %}
+.<<tab-P-{{ package_name }}-DT-{{ data_type_name }}>> -- Elements of {{ package.name }}::{{ data_type.name }}
+
+{% endfor %}
 
 {% for klass in package.classes %}
-|<<{{ klass.name }}-section,{{ klass.name }}>>
-«{{ klass.stereotype }}»
-|{{ klass.definition }}
-
+{% include "packages_class" %}
 {% endfor %}
-|===
-{% endif %}
-
-{% if package.data_types.size > 0 %}
-.Data Types used in {{ package.name }}
-[cols="2,6",options="header"]
-|===
-|Name |Description
-
-{% for klass in package.data_types %}
-|<<{{ klass.name }}-section,{{ klass.name }}>>
-|{{ klass.definition }}
-
-{% endfor %}
-
-|===
-{% endif %}
-
-{% if package.enums.size > 0 %}
-.Enumerated Classes used in {{ package.name }}
-[cols="2a,6a",options="header"]
-|===
-|Name |Description
 
 {% for klass in package.enums %}
-|<<{{ klass.name }}-section,{{ klass.name }}>>
-|{{ klass.definition }}
-
+{% include "packages_enum" %}
 {% endfor %}
 
-|===
-{% endif %}
-
-{% assign after_package_key = 'after;' | append: package.name %}
-{{equalsigns}}= Additional Information
-{% if additional_context[after_package_key] %}
-{{ additional_context[after_package_key] }}
-{% endif %}
-
+{% for klass in package.data_types %}
+{% include "packages_data_type" %}
 {% endfor %}
 
-= footer
-{{ additional_context.after }}
+// TODO: include blocks by base path
+// {% capture requirement_filename %}requirements/REQ_{{ package_name }}{% endcapture %}
+// {% capture requirement_content %}{% include requirement_filename %}{% endcapture %}
+// {% unless requirement_content contains "Liquid error" %}
+// The following requirements apply:
+// {{ requirement_content }}
+//
+// {% for num in (1..5) %}
+// {% capture nested_requirement_filename %}requirements/REQ_{{ package_name }}_{{num}}{% endcapture %}
+// {% capture nested_requirement_content %}{% include nested_requirement_filename %}{% endcapture %}
+// {% unless nested_requirement_content contains "Liquid error" %}
+// {{ nested_requirement_content }}
+// {% endunless %}
+// {% endfor %}
+// {% endunless %}
+
+{% endif %}
+{% endfor %}

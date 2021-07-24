@@ -3,7 +3,7 @@
 {% elsif is_klass_spare == 'Spare' %}{% continue %}
 {% endif %}
 {% assign klass_name = klass.name | downcase | replace: ':', '' | replace: ' ', '_' %}
-[[tab-P-{{ package_name }}-E-{{ klass_name }}]]
+[[tab-P-{{ package_name }}-C-{{ klass_name }}]]
 .Elements of {{ package.name }}::{{ klass.name }}
 [width="100%",cols="a,a,a,a,a,a,a,a"]
 |===
@@ -44,20 +44,38 @@ h|Abstract: 7+| {{ klass.is_abstract }}
 
 .1+h|Associations: 7+| (none)
 {% endif %}
-{% if klass.values.size > 0 %}
-.{{klass.values.size | plus: 1}}+h|Values:
+{% if klass.attributes.size > 0 %}
+.{{klass.attributes.size | plus: 1}}+h|Public attributes:
 | _Name_
-6+| _Definition_
+2+| _Definition_
+| _Derived_
+| _Obligation_
+| _Maximum occurrence_
+| _Data type_
 
-{% for value in klass.values %}
-| {{value.name}}
-6+| {{ value.definition | html2adoc }}
+{% for attr in klass.attributes %}
+| {{attr.name}}
+2+| {{ attr.definition | html2adoc }}
+| {{ attr.is_derived }}
+| {{attr.cardinality.min}}
+| {{attr.cardinality.max}}
+| {{attr.type}}
 
 {% endfor %}
 {% else %}
-.1+h|Values:
+.1+h|Public attributes:
 7+| (none)
 {% endif %}
 
+{% if klass.constraints.size > 0 %}
+.{{ klass.constraints.size }}+|*Constraints:*
+{% for constr in klass.constraints %}
+7+| `{{ constr.body }}`
+
+{% endfor %}
+{% else %}
+
+h|Constraints: 7+| (none)
+{% endif %}
 
 |===
