@@ -9,6 +9,7 @@ Asciidoctor::Extensions.register do
   # preprocessor Metanorma::Plugin::Lutaml::LutamlUmlAttributesTablePreprocessor
   block Metanorma::Plugin::Lutaml::LutamlDiagramBlock, :lutaml_diagram
   block_macro Metanorma::Plugin::Lutaml::LutamlDiagramBlockMacro, :lutaml_diagram
+  preprocessor Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreprocessor
 end
 
 require "metanorma-standoc"
