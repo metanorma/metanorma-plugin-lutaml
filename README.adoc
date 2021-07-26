@@ -129,6 +129,70 @@ Author
 ----
 -----
 
+=== Usage, `lutaml_diagram` macro
+
+This macro allows to quickly render lutaml file as diagram image.
+Given `example.lutaml` file with the content:
+
+[source,java]
+----
+diagram MyView {
+  title "my diagram"
+
+  enum AddressClassProfile {
+    imlicistAttributeProfile: CharacterString [0..1] {
+      definition
+        this is multiline with `ascidoc`
+      end definition
+    }
+  }
+
+  class AttributeProfile {
+    +addressClassProfile: CharacterString [0..1]
+    imlicistAttributeProfile: CharacterString [0..1] {
+      definition this is attribute definition
+    }
+  }
+}
+----
+
+And the `lutaml_diagram` macro:
+
+[source,adoc]
+-----
+lutaml_diagram::example.lutaml[]
+-----
+
+Will add diagram image to the document
+
+Also one can use `lutaml_diagram` block with embed lutaml code instead of block macro. Example:
+
+[source,java]
+----
+[lutaml_diagram]
+....
+diagram MyView {
+  title "my diagram"
+
+  enum AddressClassProfile {
+    imlicistAttributeProfile: CharacterString [0..1] {
+      definition
+        this is multiline with `ascidoc`
+      end definition
+    }
+  }
+
+  class AttributeProfile {
+    +addressClassProfile: CharacterString [0..1]
+    imlicistAttributeProfile: CharacterString [0..1] {
+      definition this is attribute definition
+    }
+  }
+}
+....
+----
+
+
 === Usage, `lutaml_uml_attributes_table` macro
 
 This macro allows to quickly render data model attributes/values tables.

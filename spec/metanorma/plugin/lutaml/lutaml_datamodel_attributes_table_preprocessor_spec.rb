@@ -39,7 +39,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlAttributesTablePreprocessor d
           <tbody>
           <tr>
           <td valign="top" align="left">addressClassProfile</td>
-          <td valign="top" align="left">TODO: enum ‘s definition</td>
+          <td valign="top" align="left"></td>
           <td valign="top" align="left">O</td>
           <td valign="top" align="left">1</td>
           <td valign="top" align="left">

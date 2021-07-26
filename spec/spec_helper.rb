@@ -5,10 +5,11 @@ require "metanorma-plugin-lutaml"
 # Register lutaml blocks as first preprocessors in line in order
 # to test properly with metanorma-standoc
 Asciidoctor::Extensions.register do
-  preprocessor Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreprocessor
   # preprocessor Metanorma::Plugin::Lutaml::LutamlPreprocessor
   # preprocessor Metanorma::Plugin::Lutaml::LutamlUmlAttributesTablePreprocessor
-  # block Metanorma::Plugin::Lutaml::LutamlDiagramBlock, :lutaml_diagram
+  block Metanorma::Plugin::Lutaml::LutamlDiagramBlock, :lutaml_diagram
+  block_macro Metanorma::Plugin::Lutaml::LutamlDiagramBlockMacro, :lutaml_diagram
+  preprocessor Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreprocessor
 end
 
 require "metanorma-standoc"
