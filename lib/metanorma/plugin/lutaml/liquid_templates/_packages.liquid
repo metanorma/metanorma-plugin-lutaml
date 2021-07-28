@@ -1,4 +1,8 @@
 {% for package in context.packages %}
+{% assign before_package_key = 'before;' | append: package.name %}
+{% if additional_context[before_package_key] %}
+{{ additional_context[before_package_key] }}
+{% endif %}
 {% assign is_package_spare = package.name | slice: 0,5 %}
 {% if is_package_spare == 'old: ' %}{% continue %}
 {% elsif is_package_spare == 'Spare' %}{% continue %}
@@ -95,5 +99,10 @@
 // {% endfor %}
 // {% endunless %}
 
+{% endif %}
+{% assign after_package_key = 'after;' | append: package.name %}
+{{equalsigns}}= Additional Information
+{% if additional_context[after_package_key] %}
+{{ additional_context[after_package_key] }}
 {% endif %}
 {% endfor %}
