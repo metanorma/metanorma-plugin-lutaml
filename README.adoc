@@ -286,16 +286,21 @@ The `lutaml_uml_datamodel_description` macro can be used:
 [lutaml_uml_datamodel_description, path/to/example.xmi]
 --
 [.before]
----
+...
 my text
----
+...
 
 [.diagram_include_block, base_path="requirements/"]
 ...
+Diagram text
+...
+
+[.include_block, package="Another", base_path="spec/fixtures"]
+...
 my text
 ...
 
-[.include_block, package="Another", base_path="requirements/"]
+[.include_block, base_path="spec/fixtures"]
 ...
 my text
 ...
@@ -316,9 +321,9 @@ text after CityGML package
 ...
 
 [.after]
----
+...
 footer text
----
+...
 --
 --
 -----
@@ -333,96 +338,104 @@ Where:
 
 * `[.after, package="Another"]` - macro with text to be inserted before(after in case of `.before` name) the package
 
+* `[.diagram_include_block]` - macro to automatically include diagram images. Attribute `base_path` is a required attribute to supply path prefix where to look for a digram image. The logic is as follows:
+[source,adoc]
+-----
+{% for diagram in package.diagrams %}
+[[figure-{{ diagram.xmi_id }}]]
+.{{ diagram.name }}
+image::{{ image_base_path }}/{{ diagram.xmi_id }}.png[]
+
+{% if diagram.definition %}
+{{ diagram.definition | html2adoc }}
+{% endif %}
+{% endfor %}
+-----
+Eg: script will take package diagrams supplied in xmi file and will try to include `image` with the name equal to diagram' xmi_id attribute plus `.png`. Also one can add any text to the macro text, it will be added as paragraph before each image include.
+
+* `[.diagram_include_block, package="Another"]` - same as above, but diagram will be included only for supplied package name
+
+* `[.include_block, base_path="spec/fixtures"]` - macro to inlude files(adoc/liquid) for each package name. Attribute `base_path` is a required attribute to supply path prefix where to look for file to include. Macro will look for a file called `base_path` + `/` `_package_name`(downcase, replace : -> '', ' ' -> '_') + `.adoc`[`.liquid`], eg for package 'My Package name' and `base_path` eq to `my/path`, macro will look for the following file path: `my/path/_my_package_name.adoc`.
+
+* `[.include_block, package="Another", base_path="spec/fixtures"]` - same as above, but include block will be included only for supplied package name
+
 
 Will produce this output:
 
 [source,adoc]
 -----
-= preface
+my text
+== CityGML package
+=== CityGML overview
+
+Diagram text
+
+[[figure-EAID_ACBB5EE3_3428_40f5_9C7C_E41923419F29]]
+.CityGML Package Diagram
+image::requirements//EAID_ACBB5EE3_3428_40f5_9C7C_E41923419F29.png[]
+
+BuildingFurnitureFunctionValue is a code list that enumerates the different purposes of a BuildingFurniture.
+
+[[figure-EAID_938AE961_1C57_4052_B964_997D1894A58D]]
+.Use of ISO and OASIS standards in CityGML
+image::requirements//EAID_938AE961_1C57_4052_B964_997D1894A58D.png[]
+
+The CityGML package is organized into
+2 packages with 1 modules:
+
+[arabic]
+. Another package
+. CityTML package
+
 my text
 
-text before Another package
+Content for CityGML package
 
-=== Another
+==== Defining tables
 
-[[rc_another-model_section]]
-==== Another
+[arabic]
+.<<tab-P-another-C-abstractatomictimeseries>> -- Elements of Another::AbstractAtomicTimeseries
 
-==== Requirements
-
-==== Class Definitions
-
-.Classes used in Another
-[cols="2a,6a",options="header"]
+[[tab-P-another-C-abstractatomictimeseries]]
+.Elements of Another::AbstractAtomicTimeseries
+[width="100%",cols="a,a,a,a,a,a,a,a"]
 |===
-|Class |Description
-
-
-|<<AbstractAtomicTimeseries-section,AbstractAtomicTimeseries>>
-«»
+h|Name: 7+| AbstractAtomicTimeseries
+h|Definition: 7+|
+h|Stereotype: 7+| interface
+h|Abstract: 7+|
+.1+h|Associations: 7+| (none)
+.4+h|Public attributes:
+| _Name_
+2+| _Definition_
+| _Derived_
+| _Obligation_
+| _Maximum occurrence_
+| _Data type_
+| adeOfAbstractAtomicTimeseries
+2+|
 |
-
-
-|<<AbstractTimeseries-section,AbstractTimeseries>>
-«»
+| C
+| *
+| ADEOfAbstractAtomicTimeseries
+| observationProperty
+2+|
 |
-
-....
-|===
-
-
-
-.Data Types used in Another
-[cols="2,6",options="header"]
-|===
-|Name |Description
-
-
-|<<ADEOfAbstractAtomicTimeseries-section,ADEOfAbstractAtomicTimeseries>>
+| M
+| 1
+| CharacterString
+| uom
+2+|
 |
-
-
-|<<ADEOfAbstractTimeseries-section,ADEOfAbstractTimeseries>>
-|
-
-....
+| C
+| 1
+| CharacterString
+h|Constraints: 7+| (none)
 |===
 
-
-
-.Enumerated Classes used in Another
-[cols="2a,6a",options="header"]
-|===
-|Name |Description
-
-|<<TimeseriesTypeValue-section,TimeseriesTypeValue>>
-|
-
-|===
-
-
-==== Additional Information
-
-text after Another package
-
-
-=== CityGML
-
-[[rc_citygml-model_section]]
-==== CityGML
-
-==== Requirements
-
-==== Class Definitions
-
-==== Additional Information
+=== Additional Information
 
 text after CityGML package
-
-
-= footer
-footer text
-
 -----
 
 In addition to just supplying XMI file, this macro also supports YAML

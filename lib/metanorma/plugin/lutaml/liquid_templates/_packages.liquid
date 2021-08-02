@@ -84,7 +84,6 @@
 {% if additional_context.include_block %}
 {% assign block = additional_context.include_block %}
 {% capture block_filename %}{{ block.base_path }}/{{ package_name }}{% endcapture %}
-{{ block_filename }}
 {% capture block_content %}{% include block_filename %}{% endcapture %}
 {% unless block_content contains "Liquid error" %}
 {% if block.text %}
@@ -98,7 +97,6 @@
 {% assign block = additional_context[include_block_package_key] %}
 {% if block %}
 {% capture block_filename %}{{ block.base_path }}/{{ package_name }}{% endcapture %}
-{{ block_filename }}
 {% capture block_content %}{% include block_filename %}{% endcapture %}
 {% unless block_content contains "Liquid error" %}
 {% if block.text %}
@@ -112,9 +110,6 @@
 {{equalsigns}}= Additional Information
 {% if additional_context[after_package_key] %}
 {{ additional_context[after_package_key].text }}
-{% endif %}
-{% if render_nested_packages %}
-This is render_nested_packages
 {% endif %}
 {% if package.packages.size > 0 and render_nested_packages %}{% assign nested_depth = depth | plus: 1 %}{% include "packages", depth: nested_depth, context: package %}{% endif %}
 {% endfor %}

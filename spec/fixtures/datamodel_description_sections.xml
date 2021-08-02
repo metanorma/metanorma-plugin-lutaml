@@ -1818,11 +1818,9 @@
 </tr>
 </tbody>
 </table>
-<p id="_">spec/fixtures/another</p>
 <p id="_">my text</p></clause></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Test</title>
 <p id="_">My content</p>
-<p id="_">spec/fixtures/another</p>
 <p id="_">my text</p></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Test</title>
 <p id="_">My content</p>
@@ -1851,7 +1849,6 @@
 <p id="_">CityTML package</p>
 </li>
 </ol>
-<p id="_">spec/fixtures/citygml</p>
 <p id="_">my text</p>
 <p id="_">Content for CityGML package</p></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Additional Information</title>

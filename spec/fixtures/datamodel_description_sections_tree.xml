@@ -1,6 +1,35 @@
-<preface><foreword id="_" obligation="informative"><title>Foreword</title>
+<preface><foreword id="_" obligation="informative">
+<title>Foreword</title>
 <p id="_">mine text</p>
-<p id="_">text before Another package</p></foreword></preface><sections>
+</foreword></preface><sections>
+<clause id="_" inline-header="false" obligation="normative"><title>CityGML package</title>
+<clause id="_" inline-header="false" obligation="normative"><title>CityGML overview</title>
+<p id="_">Diagram text</p>
+<figure id="figure-EAID_ACBB5EE3_3428_40f5_9C7C_E41923419F29">
+<name>CityGML Package Diagram</name>
+<image src="spec/assets/requirements//EAID_ACBB5EE3_3428_40f5_9C7C_E41923419F29.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
+</figure>
+<p id="_">BuildingFurnitureFunctionValue is a code list that enumerates the different purposes of a BuildingFurniture.</p>
+<figure id="figure-EAID_938AE961_1C57_4052_B964_997D1894A58D">
+<name>Use of ISO and OASIS standards in CityGML</name>
+<image src="spec/assets/requirements//EAID_938AE961_1C57_4052_B964_997D1894A58D.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
+</figure>
+<p id="_">The CityGML package is organized into
+2 packages with 1 modules:</p>
+<ol id="_" type="arabic">
+<li>
+<p id="_">Another package</p>
+</li>
+<li>
+<p id="_">CityTML package</p>
+</li>
+</ol>
+<p id="_">my text</p>
+<p id="_">Content for CityGML package</p></clause>
+<clause id="_" inline-header="false" obligation="normative"><title>Additional Information</title>
+<p id="_">text after CityGML package</p>
+<p id="_">mine text</p>
+<p id="_">text before Another package</p></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Another package</title>
 <clause id="_" inline-header="false" obligation="normative"><title>Another overview</title>
 <p id="_">Diagram text</p>
@@ -1818,17 +1847,15 @@
 </tr>
 </tbody>
 </table>
-<p id="_">spec/fixtures/another</p>
-<p id="_">my text</p></clause></clause>
+<p id="_">my text</p></clause></clause></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Test</title>
 <p id="_">My content</p>
-<p id="_">spec/fixtures/another</p>
 <p id="_">my text</p></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Test</title>
 <p id="_">My content</p>
 <clause id="_" inline-header="false" obligation="normative"><title>Additional Information</title>
 <p id="_">text after Another package</p>
-<p id="_">mine text</p></clause></clause>
+<p id="_">mine text</p></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>CityTML package</title>
 <clause id="_" inline-header="false" obligation="normative"><title>CityTML overview</title>
 <p id="_">Diagram text</p>
@@ -5456,9 +5483,1829 @@
 <td colspan="6" valign="top" align="left"></td>
 </tr>
 </tbody>
-</table>
-<p id="_">spec/fixtures/citytml</p></clause>
+</table></clause>
 <clause id="_" inline-header="false" obligation="normative">
 <title>Additional Information</title>
+<p id="_">mine text</p>
+</clause>
+<clause id="_" inline-header="false" obligation="normative"><title>Dynamizer package</title>
+<clause id="_" inline-header="false" obligation="normative"><title>Dynamizer overview</title>
+<p id="_">Diagram text</p>
+<figure id="figure-EAID_74DB2087_E1FC_42a7_A349_2D89BED649A5">
+<name>Dynamizer</name>
+<image src="spec/assets/requirements//EAID_74DB2087_E1FC_42a7_A349_2D89BED649A5.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
+</figure>
+<figure id="figure-EAID_BE0D44C2_C28B_4b5e_B937_1CA5152CAA6D">
+<name>Dynamizer&#8201;&#8212;&#8201;Code lists</name>
+<image src="spec/assets/requirements//EAID_BE0D44C2_C28B_4b5e_B937_1CA5152CAA6D.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
+</figure>
+<figure id="figure-EAID_904A37DC_3079_4ef4_9DB0_3DC2C3784549">
+<name>Dynamizer&#8201;&#8212;&#8201;ADE Data types</name>
+<image src="spec/assets/requirements//EAID_904A37DC_3079_4ef4_9DB0_3DC2C3784549.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
+</figure></clause>
+<clause id="_" inline-header="false" obligation="normative"><title>Defining tables</title>
+<table id="tab-P-dynamizer-C-abstractatomictimeseries" width="100%">
+<name>Elements of Dynamizer::AbstractAtomicTimeseries</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">AbstractAtomicTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="4" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfAbstractAtomicTimeseries</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfAbstractAtomicTimeseries</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">observationProperty</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">M</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">CharacterString</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">uom</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">CharacterString</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-dynamizer-C-abstracttimeseries" width="100%">
+<name>Elements of Dynamizer::AbstractTimeseries</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">AbstractTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="4" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfAbstractTimeseries</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfAbstractTimeseries</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">firstTimestamp</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">TM_Position</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">lastTimestamp</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">TM_Position</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-dynamizer-C-authenticationtypevalue" width="100%">
+<name>Elements of Dynamizer::AuthenticationTypeValue</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">AuthenticationTypeValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Public attributes:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-dynamizer-C-compositetimeseries" width="100%">
+<name>Elements of Dynamizer::CompositeTimeseries</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">CompositeTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="2" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfCompositeTimeseries</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfCompositeTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-dynamizer-C-dynamizer" width="100%">
+<name>Elements of Dynamizer::Dynamizer</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">Dynamizer</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="5" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfDynamizer</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfDynamizer</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">attributeRef</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">M</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">CharacterString</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">endTime</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">TM_Position</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">startTime</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">TM_Position</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-dynamizer-C-generictimeseries" width="100%">
+<name>Elements of Dynamizer::GenericTimeseries</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">GenericTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="3" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfGenericTimeseries</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfGenericTimeseries</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">valueType</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">M</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">TimeseriesTypeValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-dynamizer-C-sensorconnectiontypevalue" width="100%">
+<name>Elements of Dynamizer::SensorConnectionTypeValue</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">SensorConnectionTypeValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Public attributes:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-dynamizer-C-standardfiletimeseries" width="100%">
+<name>Elements of Dynamizer::StandardFileTimeseries</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">StandardFileTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="5" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfStandardFileTimeseries</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfStandardFileTimeseries</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">fileLocation</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">M</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">URI</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">fileType</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">M</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">StandardFileTypeValue</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">mimeType</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-dynamizer-C-standardfiletypevalue" width="100%">
+<name>Elements of Dynamizer::StandardFileTypeValue</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">StandardFileTypeValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Public attributes:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-dynamizer-C-tabulatedfiletimeseries" width="100%">
+<name>Elements of Dynamizer::TabulatedFileTimeseries</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">TabulatedFileTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="16" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfTabulatedFileTimeseries</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfTabulatedFileTimeseries</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">decimalSymbol</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">Character</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">fieldSeparator</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">M</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">CharacterString</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">fileLocation</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">M</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">URI</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">fileType</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">M</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">TabulatedFileTypeValue</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">idColumnName</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">CharacterString</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">idColumnNo</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">Integer</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">idValue</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">CharacterString</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">mimeType</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">numberOfHeaderLines</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">Integer</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">timeColumnName</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">CharacterString</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">timeColumnNo</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">Integer</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">valueColumnName</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">CharacterString</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">valueColumnNo</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">Integer</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">valueType</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">M</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">TimeseriesTypeValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-dynamizer-C-tabulatedfiletypevalue" width="100%">
+<name>Elements of Dynamizer::TabulatedFileTypeValue</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">TabulatedFileTypeValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Public attributes:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-dynamizer-E-timeseriestypevalue" width="100%">
+<name>Elements of Dynamizer::TimeseriesTypeValue</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">TimeseriesTypeValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="9" align="left">Values:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="6" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">int</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">double</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">string</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">geometry</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">uri</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">bool</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">implicitGeometry</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">appearance</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-dynamizer-DT-adeofabstractatomictimeseries" width="100%">
+<name>Elements of Dynamizer::ADEOfAbstractAtomicTimeseries</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfAbstractAtomicTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-dynamizer-DT-adeofabstracttimeseries" width="100%">
+<name>Elements of Dynamizer::ADEOfAbstractTimeseries</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfAbstractTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-dynamizer-DT-adeofcompositetimeseries" width="100%">
+<name>Elements of Dynamizer::ADEOfCompositeTimeseries</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfCompositeTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-dynamizer-DT-adeofdynamizer" width="100%">
+<name>Elements of Dynamizer::ADEOfDynamizer</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfDynamizer</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-dynamizer-DT-adeofgenerictimeseries" width="100%">
+<name>Elements of Dynamizer::ADEOfGenericTimeseries</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfGenericTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-dynamizer-DT-adeofstandardfiletimeseries" width="100%">
+<name>Elements of Dynamizer::ADEOfStandardFileTimeseries</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfStandardFileTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-dynamizer-DT-adeoftabulatedfiletimeseries" width="100%">
+<name>Elements of Dynamizer::ADEOfTabulatedFileTimeseries</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfTabulatedFileTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-dynamizer-DT-sensorconnection" width="100%">
+<name>Elements of Dynamizer::SensorConnection</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">SensorConnection</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="14" align="left">Values:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="6" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">authType</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">baseURL</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">connectionType</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">datastreamID</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">linkToObservation</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">linkToSensorDescription</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">mqttServer</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">mqttTopic</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">observationID</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">observationProperty</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">sensorID</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">sensorName</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">uom</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-dynamizer-DT-timeseriescomponent" width="100%">
+<name>Elements of Dynamizer::TimeseriesComponent</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">TimeseriesComponent</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="3" align="left">Values:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="6" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">additionalGap</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">repetitions</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-dynamizer-DT-timevaluepair" width="100%">
+<name>Elements of Dynamizer::TimeValuePair</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">TimeValuePair</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="10" align="left">Values:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="6" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">appearanceValue</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">boolValue</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">doubleValue</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">geometryValue</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">implicitGeometryValue</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">intValue</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">stringValue</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">timestamp</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">uriValue</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+</tbody>
+</table></clause>
+<clause id="_" inline-header="false" obligation="normative"><title>Additional Information</title>
 <p id="_">footer text</p>
-</clause></clause></sections>
+<p id="_">footer text</p>
+<p id="_">footer text</p></clause></clause></clause></clause></sections>
