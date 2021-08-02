@@ -1,0 +1,5464 @@
+<preface><foreword id="_" obligation="informative"><title>Foreword</title>
+<p id="_">mine text</p>
+<p id="_">text before Another package</p></foreword></preface><sections>
+<clause id="_" inline-header="false" obligation="normative"><title>Another package</title>
+<clause id="_" inline-header="false" obligation="normative"><title>Another overview</title>
+<p id="_">Diagram text</p>
+<figure id="figure-EAID_74DB2087_E1FC_42a7_A349_2D89BED649A5">
+<name>Dynamizer</name>
+<image src="spec/assets/requirements//EAID_74DB2087_E1FC_42a7_A349_2D89BED649A5.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
+</figure>
+<figure id="figure-EAID_BE0D44C2_C28B_4b5e_B937_1CA5152CAA6D">
+<name>Dynamizer&#8201;&#8212;&#8201;Code lists</name>
+<image src="spec/assets/requirements//EAID_BE0D44C2_C28B_4b5e_B937_1CA5152CAA6D.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
+</figure>
+<figure id="figure-EAID_904A37DC_3079_4ef4_9DB0_3DC2C3784549">
+<name>Dynamizer&#8201;&#8212;&#8201;ADE Data types</name>
+<image src="spec/assets/requirements//EAID_904A37DC_3079_4ef4_9DB0_3DC2C3784549.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
+</figure></clause>
+<clause id="_" inline-header="false" obligation="normative"><title>Defining tables</title>
+<table id="tab-P-another-C-abstractatomictimeseries" width="100%">
+<name>Elements of Another::AbstractAtomicTimeseries</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">AbstractAtomicTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="4" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfAbstractAtomicTimeseries</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfAbstractAtomicTimeseries</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">observationProperty</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">M</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">CharacterString</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">uom</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">CharacterString</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-another-C-abstracttimeseries" width="100%">
+<name>Elements of Another::AbstractTimeseries</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">AbstractTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="4" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfAbstractTimeseries</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfAbstractTimeseries</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">firstTimestamp</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">TM_Position</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">lastTimestamp</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">TM_Position</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-another-C-authenticationtypevalue" width="100%">
+<name>Elements of Another::AuthenticationTypeValue</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">AuthenticationTypeValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Public attributes:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-another-C-compositetimeseries" width="100%">
+<name>Elements of Another::CompositeTimeseries</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">CompositeTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="2" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfCompositeTimeseries</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfCompositeTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-another-C-dynamizer" width="100%">
+<name>Elements of Another::Dynamizer</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">Dynamizer</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="5" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfDynamizer</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfDynamizer</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">attributeRef</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">M</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">CharacterString</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">endTime</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">TM_Position</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">startTime</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">TM_Position</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-another-C-generictimeseries" width="100%">
+<name>Elements of Another::GenericTimeseries</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">GenericTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="3" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfGenericTimeseries</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfGenericTimeseries</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">valueType</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">M</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">TimeseriesTypeValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-another-C-sensorconnectiontypevalue" width="100%">
+<name>Elements of Another::SensorConnectionTypeValue</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">SensorConnectionTypeValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Public attributes:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-another-C-standardfiletimeseries" width="100%">
+<name>Elements of Another::StandardFileTimeseries</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">StandardFileTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="5" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfStandardFileTimeseries</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfStandardFileTimeseries</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">fileLocation</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">M</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">URI</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">fileType</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">M</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">StandardFileTypeValue</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">mimeType</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-another-C-standardfiletypevalue" width="100%">
+<name>Elements of Another::StandardFileTypeValue</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">StandardFileTypeValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Public attributes:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-another-C-tabulatedfiletimeseries" width="100%">
+<name>Elements of Another::TabulatedFileTimeseries</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">TabulatedFileTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="16" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfTabulatedFileTimeseries</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfTabulatedFileTimeseries</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">decimalSymbol</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">Character</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">fieldSeparator</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">M</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">CharacterString</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">fileLocation</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">M</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">URI</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">fileType</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">M</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">TabulatedFileTypeValue</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">idColumnName</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">CharacterString</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">idColumnNo</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">Integer</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">idValue</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">CharacterString</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">mimeType</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">numberOfHeaderLines</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">Integer</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">timeColumnName</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">CharacterString</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">timeColumnNo</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">Integer</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">valueColumnName</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">CharacterString</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">valueColumnNo</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">Integer</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">valueType</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">M</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">TimeseriesTypeValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-another-C-tabulatedfiletypevalue" width="100%">
+<name>Elements of Another::TabulatedFileTypeValue</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">TabulatedFileTypeValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Public attributes:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-another-E-timeseriestypevalue" width="100%">
+<name>Elements of Another::TimeseriesTypeValue</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">TimeseriesTypeValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="9" align="left">Values:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="6" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">int</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">double</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">string</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">geometry</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">uri</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">bool</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">implicitGeometry</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">appearance</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-another-DT-adeofabstractatomictimeseries" width="100%">
+<name>Elements of Another::ADEOfAbstractAtomicTimeseries</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfAbstractAtomicTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-another-DT-adeofabstracttimeseries" width="100%">
+<name>Elements of Another::ADEOfAbstractTimeseries</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfAbstractTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-another-DT-adeofcompositetimeseries" width="100%">
+<name>Elements of Another::ADEOfCompositeTimeseries</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfCompositeTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-another-DT-adeofdynamizer" width="100%">
+<name>Elements of Another::ADEOfDynamizer</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfDynamizer</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-another-DT-adeofgenerictimeseries" width="100%">
+<name>Elements of Another::ADEOfGenericTimeseries</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfGenericTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-another-DT-adeofstandardfiletimeseries" width="100%">
+<name>Elements of Another::ADEOfStandardFileTimeseries</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfStandardFileTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-another-DT-adeoftabulatedfiletimeseries" width="100%">
+<name>Elements of Another::ADEOfTabulatedFileTimeseries</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfTabulatedFileTimeseries</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-another-DT-sensorconnection" width="100%">
+<name>Elements of Another::SensorConnection</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">SensorConnection</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="14" align="left">Values:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="6" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">authType</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">baseURL</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">connectionType</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">datastreamID</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">linkToObservation</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">linkToSensorDescription</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">mqttServer</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">mqttTopic</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">observationID</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">observationProperty</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">sensorID</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">sensorName</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">uom</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-another-DT-timeseriescomponent" width="100%">
+<name>Elements of Another::TimeseriesComponent</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">TimeseriesComponent</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="3" align="left">Values:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="6" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">additionalGap</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">repetitions</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-another-DT-timevaluepair" width="100%">
+<name>Elements of Another::TimeValuePair</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">TimeValuePair</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="10" align="left">Values:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="6" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">appearanceValue</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">boolValue</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">doubleValue</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">geometryValue</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">implicitGeometryValue</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">intValue</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">stringValue</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">timestamp</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">uriValue</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+</tbody>
+</table>
+<p id="_">spec/fixtures/another</p>
+<p id="_">my text</p></clause></clause>
+<clause id="_" inline-header="false" obligation="normative"><title>Test</title>
+<p id="_">My content</p>
+<p id="_">spec/fixtures/another</p>
+<p id="_">my text</p></clause>
+<clause id="_" inline-header="false" obligation="normative"><title>Test</title>
+<p id="_">My content</p>
+<clause id="_" inline-header="false" obligation="normative"><title>Additional Information</title>
+<p id="_">text after Another package</p>
+<p id="_">mine text</p></clause></clause>
+<clause id="_" inline-header="false" obligation="normative"><title>CityTML package</title>
+<clause id="_" inline-header="false" obligation="normative"><title>CityTML overview</title>
+<p id="_">Diagram text</p>
+<figure id="figure-EAID_1D8C3E70_F679_46de_BDBB_ECF383899160">
+<name>Construction</name>
+<image src="spec/assets/requirements//EAID_1D8C3E70_F679_46de_BDBB_ECF383899160.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
+</figure>
+<figure id="figure-EAID_05A815AC_1EAE_4c98_A8F7_C178E3C1DF9C">
+<name>Construction&#8201;&#8212;&#8201;Code lists</name>
+<image src="spec/assets/requirements//EAID_05A815AC_1EAE_4c98_A8F7_C178E3C1DF9C.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
+</figure>
+<figure id="figure-EAID_3C234AFC_60AB_4cb3_A460_F99B1666A108">
+<name>Construction&#8201;&#8212;&#8201;ADE Data types</name>
+<image src="spec/assets/requirements//EAID_3C234AFC_60AB_4cb3_A460_F99B1666A108.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
+</figure>
+<p id="_">The CityTML package is organized into
+1 packages:</p>
+<ol id="_" type="arabic">
+<li>
+<p id="_">Dynamizer package</p>
+</li>
+</ol></clause>
+<clause id="_" inline-header="false" obligation="normative"><title>Defining tables</title>
+<table id="tab-P-citytml-C-abstractconstruction" width="100%">
+<name>Elements of CityTML::AbstractConstruction</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">AbstractConstruction</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="9" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfAbstractConstruction</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfAbstractConstruction</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">conditionOfConstruction</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ConditionOfConstructionValue</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">constructionEvent</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ConstructionEvent</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">dateOfConstruction</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">Date</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">dateOfDemolition</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">Date</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">elevation</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">Elevation</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">height</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">Height</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">occupancy</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">EAID_89AB0AD7_1A70_4201_8E11_27D292166FE9</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-abstractconstructionsurface" width="100%">
+<name>Elements of CityTML::AbstractConstructionSurface</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">AbstractConstructionSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="2" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfAbstractConstructionSurface</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfAbstractConstructionSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-abstractconstructiveelement" width="100%">
+<name>Elements of CityTML::AbstractConstructiveElement</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">AbstractConstructiveElement</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="3" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfAbstractConstructiveElement</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfAbstractConstructiveElement</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">isStructuralElement</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">Boolean</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-abstractfillingelement" width="100%">
+<name>Elements of CityTML::AbstractFillingElement</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">AbstractFillingElement</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="2" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfAbstractFillingElement</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfAbstractFillingElement</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-abstractfillingsurface" width="100%">
+<name>Elements of CityTML::AbstractFillingSurface</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">AbstractFillingSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="2" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfAbstractFillingSurface</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfAbstractFillingSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-abstractfurniture" width="100%">
+<name>Elements of CityTML::AbstractFurniture</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">AbstractFurniture</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="2" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfAbstractFurniture</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfAbstractFurniture</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-abstractinstallation" width="100%">
+<name>Elements of CityTML::AbstractInstallation</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">AbstractInstallation</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="3" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfAbstractInstallation</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfAbstractInstallation</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">relationToConstruction</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">RelationToConstruction</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-ceilingsurface" width="100%">
+<name>Elements of CityTML::CeilingSurface</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">CeilingSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="2" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfCeilingSurface</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfCeilingSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-door" width="100%">
+<name>Elements of CityTML::Door</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">Door</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="5" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfDoor</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfDoor</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">class</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">DoorClassValue</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">function</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">DoorFunctionValue</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">usage</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">DoorUsageValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-doorclassvalue" width="100%">
+<name>Elements of CityTML::DoorClassValue</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">DoorClassValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Public attributes:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-doorfunctionvalue" width="100%">
+<name>Elements of CityTML::DoorFunctionValue</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">DoorFunctionValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Public attributes:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-doorsurface" width="100%">
+<name>Elements of CityTML::DoorSurface</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">DoorSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="2" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfDoorSurface</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfDoorSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-doorusagevalue" width="100%">
+<name>Elements of CityTML::DoorUsageValue</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">DoorUsageValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Public attributes:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-elevationreferencevalue" width="100%">
+<name>Elements of CityTML::ElevationReferenceValue</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ElevationReferenceValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Public attributes:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-eventvalue" width="100%">
+<name>Elements of CityTML::EventValue</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">EventValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Public attributes:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-floorsurface" width="100%">
+<name>Elements of CityTML::FloorSurface</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">FloorSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="2" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfFloorSurface</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfFloorSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-groundsurface" width="100%">
+<name>Elements of CityTML::GroundSurface</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">GroundSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="2" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfGroundSurface</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfGroundSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-interiorwallsurface" width="100%">
+<name>Elements of CityTML::InteriorWallSurface</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">InteriorWallSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="2" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfInteriorWallSurface</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfInteriorWallSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-otherconstruction" width="100%">
+<name>Elements of CityTML::OtherConstruction</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">OtherConstruction</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="5" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfOtherConstruction</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfOtherConstruction</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">class</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">OtherConstructionClassValue</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">function</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">OtherConstructionFunctionValue</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">usage</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">OtherConstructionUsageValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-otherconstructionclassvalue" width="100%">
+<name>Elements of CityTML::OtherConstructionClassValue</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">OtherConstructionClassValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Public attributes:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-otherconstructionfunctionvalue" width="100%">
+<name>Elements of CityTML::OtherConstructionFunctionValue</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">OtherConstructionFunctionValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Public attributes:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-otherconstructionusagevalue" width="100%">
+<name>Elements of CityTML::OtherConstructionUsageValue</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">OtherConstructionUsageValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Public attributes:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-outerceilingsurface" width="100%">
+<name>Elements of CityTML::OuterCeilingSurface</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">OuterCeilingSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="2" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfOuterCeilingSurface</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfOuterCeilingSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-outerfloorsurface" width="100%">
+<name>Elements of CityTML::OuterFloorSurface</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">OuterFloorSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="2" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfOuterFloorSurface</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfOuterFloorSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-roofsurface" width="100%">
+<name>Elements of CityTML::RoofSurface</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">RoofSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="2" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfRoofSurface</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfRoofSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-wallsurface" width="100%">
+<name>Elements of CityTML::WallSurface</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">WallSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="2" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfWallSurface</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfWallSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-window" width="100%">
+<name>Elements of CityTML::Window</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">Window</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="5" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfWindow</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfWindow</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">class</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">1</p>
+</td>
+<td valign="top" align="left">
+<p id="_">WindowClassValue</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">function</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">WindowFunctionValue</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">usage</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">WindowUsageValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-windowclassvalue" width="100%">
+<name>Elements of CityTML::WindowClassValue</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">WindowClassValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Public attributes:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-windowfunctionvalue" width="100%">
+<name>Elements of CityTML::WindowFunctionValue</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">WindowFunctionValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Public attributes:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-windowsurface" width="100%">
+<name>Elements of CityTML::WindowSurface</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">WindowSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="2" align="left">Public attributes:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="2" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Derived</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Obligation</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Maximum occurrence</em>
+</p>
+</td>
+<td valign="top" align="left">
+<p id="_">
+<em>Data type</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">adeOfWindowSurface</p>
+</td>
+<td colspan="2" valign="top" align="left"></td>
+<td valign="top" align="left"></td>
+<td valign="top" align="left">
+<p id="_">C</p>
+</td>
+<td valign="top" align="left">
+<p id="_">*</p>
+</td>
+<td valign="top" align="left">
+<p id="_">ADEOfWindowSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-C-windowusagevalue" width="100%">
+<name>Elements of CityTML::WindowUsageValue</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">WindowUsageValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Public attributes:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Constraints:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-E-conditionofconstructionvalue" width="100%">
+<name>Elements of CityTML::ConditionOfConstructionValue</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ConditionOfConstructionValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="7" align="left">Values:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="6" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">declined</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">demolished</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">functional</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">projected</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">ruin</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">underConstruction</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-E-heightstatusvalue" width="100%">
+<name>Elements of CityTML::HeightStatusValue</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">HeightStatusValue</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="3" align="left">Values:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="6" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">estimated</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">measured</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-E-relationtoconstruction" width="100%">
+<name>Elements of CityTML::RelationToConstruction</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">RelationToConstruction</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="4" align="left">Values:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="6" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">inside</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">outside</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">bothInsideAndOutside</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-DT-adeofabstractconstruction" width="100%">
+<name>Elements of CityTML::ADEOfAbstractConstruction</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfAbstractConstruction</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-DT-adeofabstractconstructionsurface" width="100%">
+<name>Elements of CityTML::ADEOfAbstractConstructionSurface</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfAbstractConstructionSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-DT-adeofabstractconstructiveelement" width="100%">
+<name>Elements of CityTML::ADEOfAbstractConstructiveElement</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfAbstractConstructiveElement</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-DT-adeofabstractfillingelement" width="100%">
+<name>Elements of CityTML::ADEOfAbstractFillingElement</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfAbstractFillingElement</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-DT-adeofabstractfillingsurface" width="100%">
+<name>Elements of CityTML::ADEOfAbstractFillingSurface</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfAbstractFillingSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-DT-adeofabstractfurniture" width="100%">
+<name>Elements of CityTML::ADEOfAbstractFurniture</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfAbstractFurniture</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-DT-adeofabstractinstallation" width="100%">
+<name>Elements of CityTML::ADEOfAbstractInstallation</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfAbstractInstallation</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-DT-adeofceilingsurface" width="100%">
+<name>Elements of CityTML::ADEOfCeilingSurface</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfCeilingSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-DT-adeofdoor" width="100%">
+<name>Elements of CityTML::ADEOfDoor</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfDoor</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-DT-adeofdoorsurface" width="100%">
+<name>Elements of CityTML::ADEOfDoorSurface</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfDoorSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-DT-adeoffloorsurface" width="100%">
+<name>Elements of CityTML::ADEOfFloorSurface</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfFloorSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-DT-adeofgroundsurface" width="100%">
+<name>Elements of CityTML::ADEOfGroundSurface</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfGroundSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-DT-adeofinteriorwallsurface" width="100%">
+<name>Elements of CityTML::ADEOfInteriorWallSurface</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfInteriorWallSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-DT-adeofotherconstruction" width="100%">
+<name>Elements of CityTML::ADEOfOtherConstruction</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfOtherConstruction</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-DT-adeofouterceilingsurface" width="100%">
+<name>Elements of CityTML::ADEOfOuterCeilingSurface</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfOuterCeilingSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-DT-adeofouterfloorsurface" width="100%">
+<name>Elements of CityTML::ADEOfOuterFloorSurface</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfOuterFloorSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-DT-adeofroofsurface" width="100%">
+<name>Elements of CityTML::ADEOfRoofSurface</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfRoofSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-DT-adeofwallsurface" width="100%">
+<name>Elements of CityTML::ADEOfWallSurface</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfWallSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-DT-adeofwindow" width="100%">
+<name>Elements of CityTML::ADEOfWindow</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfWindow</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-DT-adeofwindowsurface" width="100%">
+<name>Elements of CityTML::ADEOfWindowSurface</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ADEOfWindowSurface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Values:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-DT-constructionevent" width="100%">
+<name>Elements of CityTML::ConstructionEvent</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">ConstructionEvent</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="4" align="left">Values:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="6" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">dateOfEvent</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">description</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">event</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-DT-elevation" width="100%">
+<name>Elements of CityTML::Elevation</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">Elevation</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="3" align="left">Values:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="6" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">elevationReference</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">elevationValue</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+</tbody>
+</table>
+<table id="tab-P-citytml-DT-height" width="100%">
+<name>Elements of CityTML::Height</name>
+<tbody>
+<tr>
+<th valign="top" align="left">Name:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">Height</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Definition:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Stereotype:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">interface</p>
+</td>
+</tr>
+<tr>
+<th valign="top" align="left">Abstract:</th>
+<td colspan="7" valign="top" align="left"></td>
+</tr>
+<tr>
+<th valign="top" align="left">Associations:</th>
+<td colspan="7" valign="top" align="left">
+<p id="_">(none)</p>
+</td>
+</tr>
+<tr>
+<th valign="top" rowspan="5" align="left">Values:</th>
+<td valign="top" align="left">
+<p id="_">
+<em>Name</em>
+</p>
+</td>
+<td colspan="6" valign="top" align="left">
+<p id="_">
+<em>Definition</em>
+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">highReference</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">lowReference</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">status</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+<tr>
+<td valign="top" align="left">
+<p id="_">value</p>
+</td>
+<td colspan="6" valign="top" align="left"></td>
+</tr>
+</tbody>
+</table>
+<p id="_">spec/fixtures/citytml</p></clause>
+<clause id="_" inline-header="false" obligation="normative">
+<title>Additional Information</title>
+<p id="_">footer text</p>
+</clause></clause></sections>

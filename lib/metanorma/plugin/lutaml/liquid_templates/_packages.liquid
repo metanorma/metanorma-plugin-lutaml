@@ -1,27 +1,23 @@
 {% for package in context.packages %}
+{% assign package_name = package.name | downcase | replace: ":", "" | replace: " ", "_" %}
+{% if additional_context.before %}
+{{ additional_context.before.text }}
+{% endif %}
 {% assign before_package_key = 'before;' | append: package.name %}
 {% if additional_context[before_package_key] %}
-{{ additional_context[before_package_key] }}
+{{ additional_context[before_package_key].text }}
 {% endif %}
 {% assign is_package_spare = package.name | slice: 0,5 %}
 {% if is_package_spare == 'old: ' %}{% continue %}
 {% elsif is_package_spare == 'Spare' %}{% continue %}
 {% endif %}
-{% assign package_name = package.name | downcase | replace: ":", "" | replace: " ", "_" %}
 
 {% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}{{equalsigns}} {{ package.name }} package
 {{equalsigns}}= {{ package.name }} overview
 
-// TODO: include blocks by base path
-//{% for diagram in package.diagrams %}
-//[[figure-{{ diagram.xmi_id }}]]
-//.{{ diagram.name }}
-//image::../../xmi-19170-only/Images/{{ diagram.xmi_id }}.png[]
-//
-//{% if diagram.definition %}
-//{{ diagram.definition | html2adoc }}
-//{% endif %}
-//{% endfor %}
+{% if additional_context.diagram_include_block %}
+{% include "diagrams_block", package_name: package_name, image_base_path: additional_context.diagram_include_block.base_path, text: additional_context.diagram_include_block.text %}
+{% endif %}
 
 {% if package.packages.size > 0 %}The {{ package.name }} package is organized into
 {{ package.packages.size }} packages{% assign modules_nested_size = 0 %}{% for module in package.packages %}{% assign modules_nested_size = modules_nested_size | plus: module.packages.size %}{% endfor %}{% if modules_nested_size > 0 %} with {{modules_nested_size}} modules{% endif %}:
@@ -38,7 +34,7 @@
 {% endif %}
 {% endfor %}
 
-{% if package.classes.size > 0 %}
+{% if package.classes.size > 0 or package.enums.size > 0 or package.data_types.size > 0 %}
 
 {{equalsigns}}= Defining tables
 
@@ -83,26 +79,46 @@
 {% include "packages_data_type" %}
 {% endfor %}
 
-// TODO: include blocks by base path
-// {% capture requirement_filename %}requirements/REQ_{{ package_name }}{% endcapture %}
-// {% capture requirement_content %}{% include requirement_filename %}{% endcapture %}
-// {% unless requirement_content contains "Liquid error" %}
-// The following requirements apply:
-// {{ requirement_content }}
-//
-// {% for num in (1..5) %}
-// {% capture nested_requirement_filename %}requirements/REQ_{{ package_name }}_{{num}}{% endcapture %}
-// {% capture nested_requirement_content %}{% include nested_requirement_filename %}{% endcapture %}
-// {% unless nested_requirement_content contains "Liquid error" %}
-// {{ nested_requirement_content }}
-// {% endunless %}
-// {% endfor %}
-// {% endunless %}
-
 {% endif %}
+
+{% if additional_context.include_block %}
+{% assign block = additional_context.include_block %}
+{% capture block_filename %}{{ block.base_path }}/{{ package_name }}{% endcapture %}
+{{ block_filename }}
+{% capture block_content %}{% include block_filename %}{% endcapture %}
+{% unless block_content contains "Liquid error" %}
+{% if block.text %}
+{{ block.text }}
+{% endif %}
+{{ block_content }}
+{% endunless %}
+{% endif %}
+
+{% assign include_block_package_key = 'include_block;' | append: package.name %}
+{% assign block = additional_context[include_block_package_key] %}
+{% if block %}
+{% capture block_filename %}{{ block.base_path }}/{{ package_name }}{% endcapture %}
+{{ block_filename }}
+{% capture block_content %}{% include block_filename %}{% endcapture %}
+{% unless block_content contains "Liquid error" %}
+{% if block.text %}
+{{ block.text }}
+{% endif %}
+{{ block_content }}
+{% endunless %}
+{% endif %}
+
 {% assign after_package_key = 'after;' | append: package.name %}
 {{equalsigns}}= Additional Information
 {% if additional_context[after_package_key] %}
-{{ additional_context[after_package_key] }}
+{{ additional_context[after_package_key].text }}
 {% endif %}
+{% if render_nested_packages %}
+This is render_nested_packages
+{% endif %}
+{% if package.packages.size > 0 and render_nested_packages %}{% assign nested_depth = depth | plus: 1 %}{% include "packages", depth: nested_depth, context: package %}{% endif %}
 {% endfor %}
+
+{% if additional_context.after %}
+{{ additional_context.after.text }}
+{% endif %}

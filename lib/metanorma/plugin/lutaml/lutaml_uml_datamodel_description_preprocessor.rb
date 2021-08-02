@@ -16,7 +16,6 @@ module Metanorma
           Asciidoctor::Extensions::Preprocessor
         MARCO_REGEXP =
           /\[lutaml_uml_datamodel_description,([^,]+),?(.+)?\]/
-        SUPPORTED_NESTED_MACROSES = %w[before after].freeze
         LIQUID_INCLUDE_PATH = File.join(
           Gem.loaded_specs["metanorma-plugin-lutaml"].full_gem_path,
           "lib", "metanorma", "plugin", "lutaml", "liquid_templates"
@@ -67,25 +66,30 @@ module Metanorma
 
         def collect_additional_context(input_lines, end_mark)
           additional_context = {}
+          block_lines = []
           while (block_line = input_lines.next) != end_mark
-            nested_match = SUPPORTED_NESTED_MACROSES
-              .map { |macro| [macro, block_line.match(/\[.#{macro}(,\s*package=("|')(?<package>.+?)("|'))?\]/)] }
-              .detect { |n| !n.last.nil? }
-            nested_context_value = []
-            if nested_match
-              macro_keyword = [nested_match.first, nested_match.last['package']].compact.join(";")
-              nested_end_mark = input_lines.next
-              while (block_line = input_lines.next) != nested_end_mark
-                nested_context_value.push(block_line)
-              end
-              additional_context[macro_keyword] = nested_context_value
-                .join("\n")
-            end
+            block_lines.push(block_line)
+          end
+          block_document = (Asciidoctor::Document.new(block_lines, {})).parse
+          block_document.blocks.each do |block|
+            attrs = block.attributes
+            name = attrs.delete('role')
+            package = attrs.delete('package')
+            macro_keyword = [name, package].compact.join(";")
+            additional_context[macro_keyword] = { 'text' => block.lines[1..-2].join("\n") }.merge(attrs)
           end
           additional_context
         end
 
         def create_context_object(lutaml_document, additional_context, options)
+          if options.length.zero?
+            return {
+              'render_nested_packages' => true,
+              "packages" => lutaml_document.to_liquid['packages'].first['packages'].first['packages'],
+              "additional_context" => additional_context
+            }
+          end
+
           root_package = lutaml_document.to_liquid['packages'].first
           all_packages = [root_package, *root_package['children_packages']]
           {
@@ -143,7 +147,7 @@ module Metanorma
 
         def table_template
           <<~LIQUID
-            {% include "packages", depth: 2, context: context, additional_context: context.additional_context %}
+            {% include "packages", depth: 2, context: context, additional_context: context.additional_context, render_nested_packages: context.render_nested_packages %}
           LIQUID
         end
       end
