@@ -285,26 +285,35 @@ The `lutaml_uml_datamodel_description` macro can be used:
 -----
 [lutaml_uml_datamodel_description, path/to/example.xmi]
 --
---
 [.before]
 ---
 my text
 ---
 
+[.diagram_include_block, base_path="requirements/"]
+...
+my text
+...
+
+[.include_block, package="Another", base_path="requirements/"]
+...
+my text
+...
+
 [.before, package="Another"]
----
+...
 text before Another package
----
+...
 
 [.after, package="Another"]
----
+...
 text after Another package
----
+...
 
 [.after, package="CityGML"]
----
+...
 text after CityGML package
----
+...
 
 [.after]
 ---

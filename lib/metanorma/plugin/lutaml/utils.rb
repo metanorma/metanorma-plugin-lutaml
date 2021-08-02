@@ -1,5 +1,6 @@
 require "expressir/express/cache"
 require "metanorma/plugin/lutaml/liquid/custom_filters"
+require "metanorma/plugin/lutaml/liquid/multiply_local_file_system"
 
 ::Liquid::Template.register_filter(Metanorma::Plugin::Lutaml::Liquid::CustomFilters)
 
@@ -25,8 +26,8 @@ module Metanorma
                                  context_name:, document:, include_path: nil)
           liquid_template = ::Liquid::Template.parse(template_string)
           # Allow includes for the template
-          include_path ||= Utils.relative_file_path(document, "")
-          liquid_template.registers[:file_system] = ::Liquid::LocalFileSystem.new(include_path)
+          include_paths = [Utils.relative_file_path(document, ""), include_path].compact
+          liquid_template.registers[:file_system] = ::Metanorma::Plugin::Lutaml::Liquid::LocalFileSystem.new(include_paths, ["_%s.liquid", "_%s.adoc"])
           rendered_string = liquid_template
             .render(context_name => context_items,
                     strict_variables: true,
