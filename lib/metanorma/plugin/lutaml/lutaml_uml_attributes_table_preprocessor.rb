@@ -14,7 +14,7 @@ module Metanorma
       #  @example [lutaml_uml_attributes_table,path/to/lutaml,EntityName]
       class LutamlUmlAttributesTablePreprocessor < Asciidoctor::Extensions::Preprocessor
         MARCO_REGEXP =
-          /\[lutaml_uml_attributes_table,([^,]+),?(.+)?,([^,]+),?(.+)?\]/
+          /\[lutaml_uml_attributes_table,([^,]+),?([^,]+),?(.+?)?\]/
         # search document for block `datamodel_attributes_table`
         #  read include derectives that goes after that in block and transform
         #  into yaml2text blocks
@@ -36,15 +36,16 @@ module Metanorma
           input_lines.each_with_object([]) do |line, result|
             if match = line.match(MARCO_REGEXP)
               lutaml_path = match[1]
-              entity_name = match[3]
-              result.push(*parse_marco(lutaml_path, entity_name, document))
+              entity_name = match[2]
+              skip_headers = match[3]
+              result.push(*parse_marco(lutaml_path, entity_name, document, skip_headers))
             else
               result.push(line)
             end
           end
         end
 
-        def parse_marco(lutaml_path, entity_name, document)
+        def parse_marco(lutaml_path, entity_name, document, skip_headers)
           lutaml_document = lutaml_document_from_file(document, lutaml_path)
             .serialized_document
           entities = [lutaml_document["classes"], lutaml_document["enums"]]
@@ -53,12 +54,12 @@ module Metanorma
           entity_definition = entities.detect do |klass|
             klass["name"] == entity_name.strip
           end
-          model_representation(entity_definition, document)
+          model_representation(entity_definition, document, skip_headers)
         end
 
-        def model_representation(entity_definition, document)
+        def model_representation(entity_definition, document, skip_headers)
           render_result, errors = Utils.render_liquid_string(
-            template_string: table_template,
+            template_string: table_template(skip_headers),
             context_items: entity_definition,
             context_name: "definition",
             document: document
@@ -68,9 +69,9 @@ module Metanorma
         end
 
         # rubocop:disable Layout/IndentHeredoc
-        def table_template
+        def table_template(skip_headers)
           <<~TEMPLATE
-          === {{ definition.name }}
+          #{"=== {{ definition.name }}" unless skip_headers}
           {{ definition.definition }}
 
           {% if definition.attributes %}
