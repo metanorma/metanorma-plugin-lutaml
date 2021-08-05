@@ -5,6 +5,7 @@ require "asciidoctor"
 require "asciidoctor/reader"
 require "lutaml"
 require "lutaml/uml"
+require "lutaml/formatter"
 require "metanorma/plugin/lutaml/utils"
 
 module Metanorma
@@ -41,7 +42,7 @@ module Metanorma
 
         # if no :imagesdir: leave image file in lutaml
         def generate_file(parent, _reader, uml_document)
-          formatter = ::Lutaml::Uml::Formatter::Graphviz.new
+          formatter = ::Lutaml::Formatter::Graphviz.new
           formatter.type = :png
 
           imagesdir = if parent.document.attr("imagesdir")
