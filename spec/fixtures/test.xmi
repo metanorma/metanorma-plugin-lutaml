@@ -8327,7 +8327,7 @@
 		</profiles>
 		<diagrams>
 			<diagram xmi:id="EAID_0E029ABF_C35A_49e3_9EEA_FFD4F32780A8">
-				<model package="EAPK_6B063E11_8B30_4e39_88C1_52D5FBD5FA21" localID="36320" owner="EAPK_6B063E11_8B30_4e39_88C1_52D5FBD5FA21" tpos="1"/>
+				<model package="EAPK_9C96A88B_E98B_490b_8A9C_24AEDAC64293" localID="36320" owner="EAPK_6B063E11_8B30_4e39_88C1_52D5FBD5FA21" tpos="1"/>
 				<properties name="Fig B1 Full model" type="Logical"/>
 				<project author="bormor" version="2015" created="2013-02-05 10:38:58" modified="2013-03-04 20:43:09"/>
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=0;SequenceNotes=0;ScalePrintImage=1;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1000;DocSize.cy=1000;ShowDetails=0;Orientation=P;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=1;HideProps=1;ShowReqs=0;ShowCons=0;PaperSize=1;HideParents=1;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>

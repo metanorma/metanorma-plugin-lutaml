@@ -2,6 +2,17 @@
 <title>Foreword</title>
 <p id="_">mine text</p>
 </foreword></preface><sections>
+<clause id="_" inline-header="false" obligation="normative"><title>Wrapper nested package package</title>
+<clause id="_" inline-header="false" obligation="normative"><title>Wrapper nested package overview</title>
+<p id="_">Diagram text</p>
+<p id="_">The Wrapper nested package package is organized into
+1 packages with 2 modules:</p>
+<ol id="_" type="arabic">
+<li>
+<p id="_">CityGML package</p>
+</li>
+</ol>
+<p id="_">mine text</p></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>CityGML package</title>
 <clause id="_" inline-header="false" obligation="normative"><title>CityGML overview</title>
 <p id="_">Diagram text</p>
@@ -1847,7 +1858,7 @@
 </tr>
 </tbody>
 </table>
-<p id="_">my text</p></clause></clause></clause>
+<p id="_">my text</p></clause></clause></clause></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Test</title>
 <p id="_">My content</p>
 <p id="_">my text</p></clause>
@@ -5483,11 +5494,8 @@
 <td colspan="6" valign="top" align="left"></td>
 </tr>
 </tbody>
-</table></clause>
-<clause id="_" inline-header="false" obligation="normative">
-<title>Additional Information</title>
-<p id="_">mine text</p>
-</clause>
+</table>
+<p id="_">mine text</p></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Dynamizer package</title>
 <clause id="_" inline-header="false" obligation="normative"><title>Dynamizer overview</title>
 <p id="_">Diagram text</p>
@@ -7304,8 +7312,8 @@
 <td colspan="6" valign="top" align="left"></td>
 </tr>
 </tbody>
-</table></clause>
-<clause id="_" inline-header="false" obligation="normative"><title>Additional Information</title>
+</table>
+<p id="_">footer text</p>
 <p id="_">footer text</p>
 <p id="_">footer text</p>
 <p id="_">footer text</p></clause></clause></clause></clause></sections>

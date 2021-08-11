@@ -359,6 +359,14 @@ Eg: script will take package diagrams supplied in xmi file and will try to inclu
 
 * `[.include_block, package="Another", base_path="spec/fixtures"]` - same as above, but include block will be included only for supplied package name
 
+In addition to macroses listed above that can be used only inside `lutaml_uml_datamodel_description` macro there is another macro called `lutaml_figure`. `lutaml_figure` is used to lookup and reference xmi package diagrams. The syntax is as follows:
+
+[source,adoc]
+-----
+This is lutaml_figure::[package="Wrapper root package", name="Fig B1 Full model"] figure
+-----
+
+This code will be transformed into `<<figure-{diagram.xmi_id}>>` and will point to diagram figure. One can only use this macro when document rendered `lutaml_uml_datamodel_description` macro as it needs diagram lookup table in order to refernce package diagram.
 
 Will produce this output:
 
