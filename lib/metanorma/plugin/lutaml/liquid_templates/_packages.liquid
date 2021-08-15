@@ -5,12 +5,6 @@
 {{ before.text }}
 {% endfor %}
 {% endif %}
-{% assign before_package_key = 'before;' | append: package.name %}
-{% if additional_context[before_package_key] and additional_context[before_package_key].size > 0 %}
-{% for before in additional_context[before_package_key] %}
-{{ before.text }}
-{% endfor %}
-{% endif %}
 {% assign is_package_spare = package.name | slice: 0,5 %}
 {% if is_package_spare == 'old: ' %}{% continue %}
 {% elsif is_package_spare == 'Spare' %}{% continue %}
@@ -19,6 +13,12 @@
 {% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}{{equalsigns}} {{ package.name }} package
 {{equalsigns}}= {{ package.name }} overview
 
+{% assign before_package_key = 'before;' | append: package.name %}
+{% if additional_context[before_package_key] and additional_context[before_package_key].size > 0 %}
+{% for before in additional_context[before_package_key] %}
+{{ before.text }}
+{% endfor %}
+{% endif %}
 {% if additional_context.diagram_include_block %}
 {% for diagram_include_block in additional_context.diagram_include_block %}
 {% include "diagrams_block", package_name: package_name, image_base_path: diagram_include_block.base_path, text: diagram_include_block.text %}
