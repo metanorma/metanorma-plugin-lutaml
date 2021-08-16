@@ -1,0 +1,113 @@
+{% for package in context.packages %}
+{% assign package_name = package.name | downcase | replace: ":", "" | replace: " ", "_" %}
+{% if additional_context.before and additional_context.before.size > 0 %}
+{% for before in additional_context.before %}
+{{ before.text }}
+{% endfor %}
+{% endif %}
+{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}{{equalsigns}} {{ package.name }}
+[[rc_{{ package_name }}-model_section]]
+{{equalsigns}}= {{ package.name }}
+
+{% assign before_package_key = 'before;' | append: package.name %}
+{% if additional_context[before_package_key] and additional_context[before_package_key].size > 0 %}
+{% for before in additional_context[before_package_key] %}
+{{ before.text }}
+{% endfor %}
+{% endif %}
+{% if additional_context.diagram_include_block %}
+{% for diagram_include_block in additional_context.diagram_include_block %}
+{% include "diagrams_block", package_name: package_name, image_base_path: diagram_include_block.base_path, text: diagram_include_block.text %}
+{% endfor %}
+{% endif %}
+
+{% if additional_context.include_block and additional_context.include_block.size > 0 %}
+{% for block in additional_context.include_block %}
+{% capture block_filename %}{{ block.base_path }}{{ package_name }}{% endcapture %}
+{% capture block_content %}{% include block_filename %}{% endcapture %}
+{% unless block_content contains "Liquid error" %}
+{% if block.text %}
+{{ block.text }}
+{% endif %}
+{{ block_content }}
+{% endunless %}
+{% endfor %}
+{% endif %}
+
+{% assign include_block_package_key = 'include_block;' | append: package.name %}
+{% if additional_context[include_block_package_key] and additional_context[include_block_package_key].size > 0 %}
+{% for block in additional_context[include_block_package_key] %}
+{% capture block_filename %}{{ block.base_path }}{{ package_name }}{% endcapture %}
+{% capture block_content %}{% include block_filename %}{% endcapture %}
+{% unless block_content contains "Liquid error" %}
+{% if block.text %}
+{{ block.text }}
+{% endif %}
+{{ block_content }}
+{% endunless %}
+{% endfor %}
+{% endif %}
+
+{{equalsigns}}= Class Definitions
+{% if package.classes.size > 0 %}
+.Classes used in {{ package.name }}
+[cols="2a,6a",options="header"]
+|===
+|Class |Description
+
+{% for klass in package.classes %}
+|<<{{ klass.name }}-section,{{ klass.name }}>>
+«{{ klass.stereotype }}»
+|{{ klass.definition }}
+
+{% endfor %}
+|===
+{% endif %}
+
+{% if package.data_types.size > 0 %}
+.Data Types used in {{ package.name }}
+[cols="2,6",options="header"]
+|===
+|Name |Description
+
+{% for klass in package.data_types %}
+|<<{{ klass.name }}-section,{{ klass.name }}>>
+|{{ klass.definition }}
+
+{% endfor %}
+
+|===
+{% endif %}
+
+{% if package.enums.size > 0 %}
+.Enumerated Classes used in {{ package.name }}
+[cols="2a,6a",options="header"]
+|===
+|Name |Description
+
+{% for klass in package.enums %}
+|<<{{ klass.name }}-section,{{ klass.name }}>>
+|{{ klass.definition }}
+
+{% endfor %}
+
+|===
+{% endif %}
+
+{% assign after_package_key = 'after;' | append: package.name %}
+{% if additional_context[after_package_key] %}
+{{equalsigns}}= Additional Information
+{% for after in additional_context[after_package_key] %}
+{{ after.text }}
+{% endfor %}
+{% endif %}
+{% if package.packages.size > 0 and render_nested_packages %}
+{% assign nested_depth = depth | plus: 1 %}{% include "packages_entity_list", depth: nested_depth, context: package %}
+{% endif %}
+{% endfor %}
+
+{% if additional_context.after and additional_context.after.size > 0 %}
+{% for after in additional_context.after %}
+{{ after.text }}
+{% endfor %}
+{% endif %}

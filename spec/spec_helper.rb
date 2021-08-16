@@ -7,8 +7,7 @@ require "metanorma-plugin-lutaml"
 Asciidoctor::Extensions.register do
   # preprocessor Metanorma::Plugin::Lutaml::LutamlPreprocessor
   # preprocessor Metanorma::Plugin::Lutaml::LutamlUmlAttributesTablePreprocessor
-  block Metanorma::Plugin::Lutaml::LutamlDiagramBlock, :lutaml_diagram
-  block_macro Metanorma::Plugin::Lutaml::LutamlDiagramBlockMacro, :lutaml_diagram
+  inline_macro Metanorma::Plugin::Lutaml::LutamlFigureInlineMacro, :lutaml_figure
   preprocessor Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreprocessor
 end
 

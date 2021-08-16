@@ -286,44 +286,44 @@ The `lutaml_uml_datamodel_description` macro can be used:
 [lutaml_uml_datamodel_description, path/to/example.xmi]
 --
 [.before]
-...
+....
 my text
-...
+....
 
 [.diagram_include_block, base_path="requirements/"]
-...
+....
 Diagram text
-...
+....
 
 [.include_block, package="Another", base_path="spec/fixtures"]
-...
+....
 my text
-...
+....
 
 [.include_block, base_path="spec/fixtures"]
-...
+....
 my text
-...
+....
 
 [.before, package="Another"]
-...
+....
 text before Another package
-...
+....
 
 [.after, package="Another"]
-...
+....
 text after Another package
-...
+....
 
 [.after, package="CityGML"]
-...
+....
 text after CityGML package
-...
+....
 
 [.after]
-...
+....
 footer text
-...
+....
 --
 --
 -----
@@ -332,7 +332,7 @@ Where:
 
 * `path/to/example.xmi` - required, path to the XMI file to render
 
-* `[.before]` - macro to add additional text before the rendered output, can be used only once, additional occurrences of macro will overwrite text
+* `[.before]` - macro to add additional text before the rendered output, can be used only once, additional occurrences of macro will overwrite text, not that `literal` block style must be used in there(eg `....`)
 
 * `[.after]` - macro to add additional text after the rendered output, can be used only once, additional occurrences of macro will overwrite text
 
@@ -359,6 +359,14 @@ Eg: script will take package diagrams supplied in xmi file and will try to inclu
 
 * `[.include_block, package="Another", base_path="spec/fixtures"]` - same as above, but include block will be included only for supplied package name
 
+In addition to macroses listed above that can be used only inside `lutaml_uml_datamodel_description` macro there is another macro called `lutaml_figure`. `lutaml_figure` is used to lookup and reference xmi package diagrams. The syntax is as follows:
+
+[source,adoc]
+-----
+This is lutaml_figure::[package="Wrapper root package", name="Fig B1 Full model"] figure
+-----
+
+This code will be transformed into `<<figure-{diagram.xmi_id}>>` and will point to diagram figure. One can only use this macro when document rendered `lutaml_uml_datamodel_description` macro as it needs diagram lookup table in order to refernce package diagram.
 
 Will produce this output:
 
@@ -453,18 +461,21 @@ packages:
   - three
   # skips these packages
   - skip: four
+render_style: entity_list|data_dictionary|default
+section_depth: 2
 -----
 
 Where:
 
 * `packages` - required, root element with the list of strings or objects
-
 * `Package *` - pattern matching, specifies lookup condition for packages to
 render.
 +
 NOTE: In this example, it is equal to the following regular expression: `/^Package.*$/`
 
 * `skip: four` - object with package name to skip
+* `render_style` - what template to use to render packages, can be: entity_list, data_dictionary or default
+* `section_depth` - what package to use as root package for render, eg `section_depth` equal to 2 tells processor to use first nested package of the first root packages in xmi file. Example: if xmi file has this package structure: [{ name: 'One', packages: [{ name: 'one-1' }, { name: 'one-2' }] }, { name: 'Two', packages: [{ name: 'two-1' }, { name: 'two-2' }] }] and we have `section_depth` equal to 2, root package will be `one-1`
 
 Usage with macro:
 

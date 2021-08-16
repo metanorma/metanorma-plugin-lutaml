@@ -1,30 +1,15 @@
-<preface><foreword id="_" obligation="informative">
-<title>Foreword</title>
-<p id="_">mine text</p>
-</foreword></preface><sections>
+<sections>
 <clause id="_" inline-header="false" obligation="normative"><title>Wrapper nested package package</title>
 <clause id="_" inline-header="false" obligation="normative"><title>Wrapper nested package overview</title>
-<p id="_">Diagram text</p>
 <p id="_">The Wrapper nested package package is organized into
 1 packages with 2 modules:</p>
 <ol id="_" type="arabic">
 <li>
 <p id="_">CityGML package</p>
 </li>
-</ol>
-<p id="_">mine text</p></clause>
+</ol></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>CityGML package</title>
 <clause id="_" inline-header="false" obligation="normative"><title>CityGML overview</title>
-<p id="_">Diagram text</p>
-<figure id="figure-EAID_ACBB5EE3_3428_40f5_9C7C_E41923419F29">
-<name>CityGML Package Diagram</name>
-<image src="spec/assets/requirements//EAID_ACBB5EE3_3428_40f5_9C7C_E41923419F29.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
-</figure>
-<p id="_">BuildingFurnitureFunctionValue is a code list that enumerates the different purposes of a BuildingFurniture.</p>
-<figure id="figure-EAID_938AE961_1C57_4052_B964_997D1894A58D">
-<name>Use of ISO and OASIS standards in CityGML</name>
-<image src="spec/assets/requirements//EAID_938AE961_1C57_4052_B964_997D1894A58D.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
-</figure>
 <p id="_">The CityGML package is organized into
 2 packages with 1 modules:</p>
 <ol id="_" type="arabic">
@@ -34,28 +19,11 @@
 <li>
 <p id="_">CityTML package</p>
 </li>
-</ol>
-<p id="_">my text</p>
-<p id="_">Content for CityGML package</p></clause>
-<clause id="_" inline-header="false" obligation="normative"><title>Additional Information</title>
-<p id="_">text after CityGML package</p>
-<p id="_">mine text</p></clause>
+</ol></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Another package</title>
-<clause id="_" inline-header="false" obligation="normative"><title>Another overview</title>
-<p id="_">text before Another package</p>
-<p id="_">Diagram text</p>
-<figure id="figure-EAID_74DB2087_E1FC_42a7_A349_2D89BED649A5">
-<name>Dynamizer</name>
-<image src="spec/assets/requirements//EAID_74DB2087_E1FC_42a7_A349_2D89BED649A5.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
-</figure>
-<figure id="figure-EAID_BE0D44C2_C28B_4b5e_B937_1CA5152CAA6D">
-<name>Dynamizer&#8201;&#8212;&#8201;Code lists</name>
-<image src="spec/assets/requirements//EAID_BE0D44C2_C28B_4b5e_B937_1CA5152CAA6D.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
-</figure>
-<figure id="figure-EAID_904A37DC_3079_4ef4_9DB0_3DC2C3784549">
-<name>Dynamizer&#8201;&#8212;&#8201;ADE Data types</name>
-<image src="spec/assets/requirements//EAID_904A37DC_3079_4ef4_9DB0_3DC2C3784549.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
-</figure></clause>
+<clause id="_" inline-header="false" obligation="normative">
+<title>Another overview</title>
+</clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Defining tables</title>
 <table id="tab-P-another-C-abstractatomictimeseries" width="100%">
 <name>Elements of Another::AbstractAtomicTimeseries</name>
@@ -1857,31 +1825,9 @@
 <td colspan="6" valign="top" align="left"></td>
 </tr>
 </tbody>
-</table>
-<p id="_">my text</p></clause></clause></clause></clause>
-<clause id="_" inline-header="false" obligation="normative"><title>Test</title>
-<p id="_">My content</p>
-<p id="_">my text</p></clause>
-<clause id="_" inline-header="false" obligation="normative"><title>Test</title>
-<p id="_">My content</p>
-<clause id="_" inline-header="false" obligation="normative"><title>Additional Information</title>
-<p id="_">text after Another package</p>
-<p id="_">mine text</p></clause>
+</table></clause></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>CityTML package</title>
 <clause id="_" inline-header="false" obligation="normative"><title>CityTML overview</title>
-<p id="_">Diagram text</p>
-<figure id="figure-EAID_1D8C3E70_F679_46de_BDBB_ECF383899160">
-<name>Construction</name>
-<image src="spec/assets/requirements//EAID_1D8C3E70_F679_46de_BDBB_ECF383899160.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
-</figure>
-<figure id="figure-EAID_05A815AC_1EAE_4c98_A8F7_C178E3C1DF9C">
-<name>Construction&#8201;&#8212;&#8201;Code lists</name>
-<image src="spec/assets/requirements//EAID_05A815AC_1EAE_4c98_A8F7_C178E3C1DF9C.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
-</figure>
-<figure id="figure-EAID_3C234AFC_60AB_4cb3_A460_F99B1666A108">
-<name>Construction&#8201;&#8212;&#8201;ADE Data types</name>
-<image src="spec/assets/requirements//EAID_3C234AFC_60AB_4cb3_A460_F99B1666A108.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
-</figure>
 <p id="_">The CityTML package is organized into
 1 packages:</p>
 <ol id="_" type="arabic">
@@ -5494,23 +5440,11 @@
 <td colspan="6" valign="top" align="left"></td>
 </tr>
 </tbody>
-</table>
-<p id="_">mine text</p></clause>
+</table></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Dynamizer package</title>
-<clause id="_" inline-header="false" obligation="normative"><title>Dynamizer overview</title>
-<p id="_">Diagram text</p>
-<figure id="figure-EAID_74DB2087_E1FC_42a7_A349_2D89BED649A5">
-<name>Dynamizer</name>
-<image src="spec/assets/requirements//EAID_74DB2087_E1FC_42a7_A349_2D89BED649A5.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
-</figure>
-<figure id="figure-EAID_BE0D44C2_C28B_4b5e_B937_1CA5152CAA6D">
-<name>Dynamizer&#8201;&#8212;&#8201;Code lists</name>
-<image src="spec/assets/requirements//EAID_BE0D44C2_C28B_4b5e_B937_1CA5152CAA6D.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
-</figure>
-<figure id="figure-EAID_904A37DC_3079_4ef4_9DB0_3DC2C3784549">
-<name>Dynamizer&#8201;&#8212;&#8201;ADE Data types</name>
-<image src="spec/assets/requirements//EAID_904A37DC_3079_4ef4_9DB0_3DC2C3784549.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
-</figure></clause>
+<clause id="_" inline-header="false" obligation="normative">
+<title>Dynamizer overview</title>
+</clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Defining tables</title>
 <table id="tab-P-dynamizer-C-abstractatomictimeseries" width="100%">
 <name>Elements of Dynamizer::AbstractAtomicTimeseries</name>
@@ -7312,8 +7246,5 @@
 <td colspan="6" valign="top" align="left"></td>
 </tr>
 </tbody>
-</table>
-<p id="_">footer text</p>
-<p id="_">footer text</p>
-<p id="_">footer text</p>
-<p id="_">footer text</p></clause></clause></clause></clause></sections>
+</table></clause></clause></clause></clause></clause>
+</sections>

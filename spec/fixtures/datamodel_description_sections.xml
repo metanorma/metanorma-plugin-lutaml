@@ -1,8 +1,10 @@
-<preface><foreword id="_" obligation="informative"><title>Foreword</title>
+<preface><foreword id="_" obligation="informative">
+<title>Foreword</title>
 <p id="_">mine text</p>
-<p id="_">text before Another package</p></foreword></preface><sections>
+</foreword></preface><sections>
 <clause id="_" inline-header="false" obligation="normative"><title>Another package</title>
 <clause id="_" inline-header="false" obligation="normative"><title>Another overview</title>
+<p id="_">text before Another package</p>
 <p id="_">Diagram text</p>
 <figure id="figure-EAID_74DB2087_E1FC_42a7_A349_2D89BED649A5">
 <name>Dynamizer</name>
