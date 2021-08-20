@@ -21,7 +21,7 @@
 {% endif %}
 {% if additional_context.diagram_include_block %}
 {% for diagram_include_block in additional_context.diagram_include_block %}
-{% include "diagrams_block", package_name: package_name, image_base_path: diagram_include_block.base_path, text: diagram_include_block.text %}
+{% include "diagrams_block", package_name: package_name, image_base_path: diagram_include_block.base_path, text: diagram_include_block.text, format: diagram_include_block.format %}
 {% endfor %}
 {% endif %}
 
