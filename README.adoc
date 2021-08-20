@@ -290,7 +290,7 @@ The `lutaml_uml_datamodel_description` macro can be used:
 my text
 ....
 
-[.diagram_include_block, base_path="requirements/"]
+[.diagram_include_block, base_path="requirements/", format="emf"]
 ....
 Diagram text
 ....
@@ -338,13 +338,13 @@ Where:
 
 * `[.after, package="Another"]` - macro with text to be inserted before(after in case of `.before` name) the package
 
-* `[.diagram_include_block]` - macro to automatically include diagram images. Attribute `base_path` is a required attribute to supply path prefix where to look for a digram image. The logic is as follows:
+* `[.diagram_include_block]` - macro to automatically include diagram images. Attribute `base_path` is a required attribute to supply path prefix where to look for a digram image. `format` is an optional attribute that tells what file extention to use when including diagram file. The logic is as follows:
 [source,adoc]
 -----
 {% for diagram in package.diagrams %}
 [[figure-{{ diagram.xmi_id }}]]
 .{{ diagram.name }}
-image::{{ image_base_path }}/{{ diagram.xmi_id }}.png[]
+image::{{ image_base_path }}/{{ diagram.xmi_id }}.{{ format | default: 'png' }}[]
 
 {% if diagram.definition %}
 {{ diagram.definition | html2adoc }}
