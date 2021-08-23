@@ -49,7 +49,7 @@
 {% endfor %}
 {% endif %}
 
-{{equalsigns}}= Class Definitions
+{{equalsigns}}= Class definitions
 {% if package.classes.size > 0 %}
 .Classes used in {{ package.name }}
 [cols="2a,6a",options="header"]
@@ -96,7 +96,7 @@
 
 {% assign after_package_key = 'after;' | append: package.name %}
 {% if additional_context[after_package_key] %}
-{{equalsigns}}= Additional Information
+{{equalsigns}}= Additional information
 {% for after in additional_context[after_package_key] %}
 {{ after.text }}
 {% endfor %}
