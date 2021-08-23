@@ -63,11 +63,11 @@ h|Stereotype:     | «{{ package.stereotype }}»
 [cols="1a"]
 |===
 |*{{ data_type.name }}*
-|[cols="1,4",frame=none,grid=none]
+|[cols="1,4"]
 !===
-!{nbsp}{nbsp}{nbsp}{nbsp}Definition: ! {{ data_type.definition }}
-!{nbsp}{nbsp}{nbsp}{nbsp}Subclass of: ! {{ generalizations }}
-!{nbsp}{nbsp}{nbsp}{nbsp}Stereotype: !  «DataType»
+!Definition:  ! {{ data_type.definition }}
+!Subclass of: ! {{ generalizations }}
+!Stereotype:  !  «DataType»
 !===
 {% if data_type.associations.size > 0 %}
 {% capture rendered_associations %}
@@ -79,23 +79,25 @@ h|Stereotype:     | «{{ package.stereotype }}»
 {% endfor %}
 {% endcapture %}
 {% if rendered_associations.size > 0 %}
-|[cols="15,20,60",frame=none,grid=none,options="header"]
+|
+[cols="15,20,60",options="header"]
 !===
-! *Role name* !*Target class and multiplicity*  !*Definition*
+! Role name !Target class and multiplicity !Definition
 {{ rendered_associations }}
 !===
 {% endif %}
 {% endif %}
 {% if data_type.attributes.size > 0 %}
-|[cols="15,20,60",frame=none,grid=none,options="header"]
+|
+[cols="15,20,60",options="header"]
 !===
-! *Attribute* !*Value type and multiplicity* !*Definition*
+! Attribute ! Value type and multiplicity ! Definition
 {% for attr in data_type.attributes %}
 {% capture cardinality %}{% if attr.cardinality.min == 'C' %}[0..{{ attr.cardinality.max }}]{% elsif assoc.member_end_cardinality.min == 'M' and assoc.member_end_cardinality.max == '1' %}[1..1]{% else %}[{{ attr.cardinality.max }}]{% endif %}{% endcapture %}
 ! {{ attr.name }}  !<<{{ attr.type }}-section,{{ attr.name }}>>  {{ cardinality }} !{{ attr.definition }}
 {% endfor %}
 !===
-| Note: Unless otherwise specified, all attributes and role names have the stereotype «Property».
+| NOTE: Unless otherwise specified, all attributes and role names have the stereotype «Property».
 {% endif %}
 |===
 
@@ -111,18 +113,20 @@ h|Stereotype:     | «{{ package.stereotype }}»
 [cols="1a"]
 |===
 |*{{ enum.name }}*
-|[cols="1,4",frame=none,grid=none]
+|
+[cols="1,4"]
 !===
-!{nbsp}{nbsp}{nbsp}{nbsp}Definition: ! {{ enum.definition }}
-!{nbsp}{nbsp}{nbsp}{nbsp}Stereotype: ! «Enumeration»
+!Definition: ! {{ enum.definition }}
+!Stereotype: ! «Enumeration»
 !===
 {% if enum.values.size > 0 %}
-|[cols="1,4",frame=none,grid=none,options="header"]
+|
+[cols="1,4",options="header"]
 !===
-^! *Literal value* !*Definition*
+! Literal value !Definition
 
 {% for val in enum.values %}
-^! {{ val.name }}  !{{ val.definition }}
+! {{ val.name }}  !{{ val.definition }}
 {% endfor %}
 !===
 {% endif %}
