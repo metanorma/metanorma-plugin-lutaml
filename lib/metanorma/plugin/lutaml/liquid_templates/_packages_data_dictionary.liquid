@@ -37,7 +37,7 @@ h|Stereotype:     | «{{ package.stereotype }}»
 {% endif %}
 
 {% if basic_types.size > 0 %}
-{{equalsigns}}= Basic Types
+{{equalsigns}}= Basic types
 
 {% include "packages_data_dictionary_classes", classes: basic_types %}
 {% endif %}
@@ -49,13 +49,13 @@ h|Stereotype:     | «{{ package.stereotype }}»
 {% endif %}
 
 {% if code_lists.size > 0 %}
-{{equalsigns}}= Code Lists
+{{equalsigns}}= Code lists
 
 {% include "packages_data_dictionary_classes", classes: code_lists %}
 {% endif %}
 
 {% if package.data_types.size > 0 %}
-{{equalsigns}}= Data Types
+{{equalsigns}}= Data types
 
 {% for data_type in package.data_types %}
 {% capture generalizations %}{% for assoc in data_type.associations | where: "member_end_type", "generalization" %}{{ assoc.member_end }} {% endfor %}{% endcapture %}
@@ -160,7 +160,7 @@ h|Stereotype:     | «{{ package.stereotype }}»
 
 {% assign after_package_key = 'after;' | append: package.name %}
 {% if additional_context[after_package_key] %}
-{{equalsigns}}= Additional Information
+{{equalsigns}}= Additional information
 {% for after in additional_context[after_package_key] %}
 {{ after.text }}
 {% endfor %}

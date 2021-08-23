@@ -12,6 +12,7 @@
 
 {% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
 
+[[lutaml-section-{{ package_name }}]]
 {{equalsigns}} {{ package.name }} package
 
 {{equalsigns}}= {{ package.name }} overview
@@ -54,7 +55,7 @@
 {% endif %}
 {% assign klass_name = klass.name | downcase | replace: ':', '' | replace: ' ', '_' %}
 {% assign klass_xid = klass.xmi_id %}
-.<<tab-P-{{ package_name }}-C-{{ klass_xid }}>> -- Elements of {{ package.name }}::{{ klass.name }}
+.<<tab-P-{{ package_name }}-C-{{ klass_xid }}>> -- Elements of "{{ package.name }}::{{ klass.name }}"
 
 {% endfor %}
 {% for enum in package.enums %}
@@ -64,7 +65,7 @@
 {% endif %}
 {% assign enum_name = enum.name | downcase | replace: ':', '' | replace: ' ', '_' %}
 {% assign enum_xid = enum.xmi_id %}
-.<<tab-P-{{ package_name }}-E-{{ enum_xid }}>> -- Elements of {{ package.name }}::{{ enum.name }}
+.<<tab-P-{{ package_name }}-E-{{ enum_xid }}>> -- Elements of "{{ package.name }}::{{ enum.name }}"
 
 {% endfor %}
 {% for data_type in package.data_types %}
@@ -74,7 +75,7 @@
 {% endif %}
 {% assign data_type_name = data_type.name | downcase | replace: ':', '' | replace: ' ', '_' %}
 {% assign data_type_xid = data_type.xmi_id %}
-.<<tab-P-{{ package_name }}-DT-{{ data_type_xid }}>> -- Elements of {{ package.name }}::{{ data_type.name }}
+.<<tab-P-{{ package_name }}-DT-{{ data_type_xid }}>> -- Elements of "{{ package.name }}::{{ data_type.name }}"
 
 {% endfor %}
 
@@ -121,7 +122,7 @@
 
 {% assign after_package_key = 'after;' | append: package.name %}
 {% if additional_context[after_package_key] %}
-{{equalsigns}}= Additional Information
+{{equalsigns}}= Additional information
 {% for after in additional_context[after_package_key] %}
 {{ after.text }}
 {% endfor %}
