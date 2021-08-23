@@ -3,8 +3,9 @@
 {% elsif is_klass_spare == 'Spare' %}{% continue %}
 {% endif %}
 {% assign klass_name = klass.name | downcase | replace: ':', '' | replace: ' ', '_' %}
-[[tab-P-{{ package_name }}-DT-{{ klass_name }}]]
-.Elements of {{ package.name }}::{{ klass.name }}
+{% assign klass_xid = klass.xmi_id %}
+[[tab-P-{{ package_name }}-DT-{{ klass_xid }}]]
+.Elements of "{{ package.name }}::{{ klass.name }}" (data type)
 [width="100%",cols="a,a,a,a,a,a,a,a"]
 |===
 
@@ -24,14 +25,14 @@ h|Inheritance from: 7+| {{ inherited | map: 'member_end' | join: ", " }}
 h|Generalization of: 7+| {{ generalizations | map: 'member_end' | join: ", " }}
 {% endif %}
 
-h|Abstract: 7+| {{ klass.is_abstract }}
+h|Abstract: 7+| {% if klass.is_abstract %}True{% else %}False{% endif %}
 {% assign aggregations = klass.associations | where: "member_end_type", "aggregation" %}
 {% if aggregations.size > 0 %}
 .{{aggregations.size | plus: 1}}+h|Associations:
-4+|_Association with:_
-|_Obligation_
+4+| _Association with_
+| _Obligation_
 | _Maximum occurrence_
-|_Provides:_
+| _Provides_
 
 {% for assoc in aggregations %}
 4+| {{assoc.member_end}}
@@ -41,12 +42,11 @@ h|Abstract: 7+| {{ klass.is_abstract }}
 
 {% endfor %}
 {% else %}
-
-.1+h|Associations: 7+| (none)
+h| Associations: 7+| (none)
 {% endif %}
 
 {% if klass.attributes.size > 0 %}
-.{{klass.attributes.size | plus: 1}}+h|Values:
+.{{klass.attributes.size | plus: 1}}+h| Values:
 | _Name_
 6+| _Definition_
 
@@ -56,7 +56,7 @@ h|Abstract: 7+| {{ klass.is_abstract }}
 
 {% endfor %}
 {% else %}
-.1+h|Values:
+h| Values:
 7+| (none)
 {% endif %}
 

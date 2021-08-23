@@ -25,8 +25,8 @@
 <title>Another overview</title>
 </clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Defining tables</title>
-<table id="tab-P-another-C-abstractatomictimeseries" width="100%">
-<name>Elements of Another::AbstractAtomicTimeseries</name>
+<table id="tab-P-another-C-EAID_3BCEAE64_F977_46b5_A08C_A29D52216B04" width="100%">
+<name>Elements of &#8220;Another::AbstractAtomicTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -46,7 +46,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -144,7 +146,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-C-abstracttimeseries" width="100%">
-<name>Elements of Another::AbstractTimeseries</name>
+<name>Elements of &#8220;Another::AbstractTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -164,7 +166,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -261,8 +265,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-C-authenticationtypevalue" width="100%">
-<name>Elements of Another::AuthenticationTypeValue</name>
+<table id="tab-P-another-C-EAID_29876515_22A7_4b7f_8F83_4F16D87F3025" width="100%">
+<name>Elements of &#8220;Another::AuthenticationTypeValue&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -282,7 +286,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -305,7 +311,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-C-compositetimeseries" width="100%">
-<name>Elements of Another::CompositeTimeseries</name>
+<name>Elements of &#8220;Another::CompositeTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -325,7 +331,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -391,7 +399,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-C-dynamizer" width="100%">
-<name>Elements of Another::Dynamizer</name>
+<name>Elements of &#8220;Another::Dynamizer&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -411,7 +419,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -525,7 +535,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-C-generictimeseries" width="100%">
-<name>Elements of Another::GenericTimeseries</name>
+<name>Elements of &#8220;Another::GenericTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -545,7 +555,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -627,7 +639,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-C-sensorconnectiontypevalue" width="100%">
-<name>Elements of Another::SensorConnectionTypeValue</name>
+<name>Elements of &#8220;Another::SensorConnectionTypeValue&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -647,7 +659,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -670,7 +684,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-C-standardfiletimeseries" width="100%">
-<name>Elements of Another::StandardFileTimeseries</name>
+<name>Elements of &#8220;Another::StandardFileTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -690,7 +704,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -804,7 +820,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-C-standardfiletypevalue" width="100%">
-<name>Elements of Another::StandardFileTypeValue</name>
+<name>Elements of &#8220;Another::StandardFileTypeValue&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -824,7 +840,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -847,7 +865,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-C-tabulatedfiletimeseries" width="100%">
-<name>Elements of Another::TabulatedFileTimeseries</name>
+<name>Elements of &#8220;Another::TabulatedFileTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -867,7 +885,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -1156,8 +1176,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-C-tabulatedfiletypevalue" width="100%">
-<name>Elements of Another::TabulatedFileTypeValue</name>
+<table id="tab-P-another-C-EAID_18357CC9_C00A_410a_9043_E05BEA22B6A7" width="100%">
+<name>Elements of &#8220;Another::TabulatedFileTypeValue&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1177,7 +1197,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -1200,7 +1222,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-E-timeseriestypevalue" width="100%">
-<name>Elements of Another::TimeseriesTypeValue</name>
+<name>Elements of &#8220;Another::TimeseriesTypeValue&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1220,7 +1242,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -1292,7 +1316,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-DT-adeofabstractatomictimeseries" width="100%">
-<name>Elements of Another::ADEOfAbstractAtomicTimeseries</name>
+<name>Elements of &#8220;Another::ADEOfAbstractAtomicTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1312,7 +1336,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -1329,7 +1355,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-DT-adeofabstracttimeseries" width="100%">
-<name>Elements of Another::ADEOfAbstractTimeseries</name>
+<name>Elements of &#8220;Another::ADEOfAbstractTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1349,7 +1375,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -1366,7 +1394,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-DT-adeofcompositetimeseries" width="100%">
-<name>Elements of Another::ADEOfCompositeTimeseries</name>
+<name>Elements of &#8220;Another::ADEOfCompositeTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1386,7 +1414,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -1403,7 +1433,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-DT-adeofdynamizer" width="100%">
-<name>Elements of Another::ADEOfDynamizer</name>
+<name>Elements of &#8220;Another::ADEOfDynamizer&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1423,7 +1453,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -1440,7 +1472,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-DT-adeofgenerictimeseries" width="100%">
-<name>Elements of Another::ADEOfGenericTimeseries</name>
+<name>Elements of &#8220;Another::ADEOfGenericTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1460,7 +1492,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -1477,7 +1511,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-DT-adeofstandardfiletimeseries" width="100%">
-<name>Elements of Another::ADEOfStandardFileTimeseries</name>
+<name>Elements of &#8220;Another::ADEOfStandardFileTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1497,7 +1531,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -1514,7 +1550,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-DT-adeoftabulatedfiletimeseries" width="100%">
-<name>Elements of Another::ADEOfTabulatedFileTimeseries</name>
+<name>Elements of &#8220;Another::ADEOfTabulatedFileTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1534,7 +1570,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -1551,7 +1589,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-DT-sensorconnection" width="100%">
-<name>Elements of Another::SensorConnection</name>
+<name>Elements of &#8220;Another::SensorConnection&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1571,7 +1609,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -1673,7 +1713,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-DT-timeseriescomponent" width="100%">
-<name>Elements of Another::TimeseriesComponent</name>
+<name>Elements of &#8220;Another::TimeseriesComponent&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1693,7 +1733,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -1729,7 +1771,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-DT-timevaluepair" width="100%">
-<name>Elements of Another::TimeValuePair</name>
+<name>Elements of &#8220;Another::TimeValuePair&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1749,7 +1791,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -1837,7 +1881,7 @@
 </ol></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Defining tables</title>
 <table id="tab-P-citytml-C-abstractconstruction" width="100%">
-<name>Elements of CityTML::AbstractConstruction</name>
+<name>Elements of &#8220;CityTML::AbstractConstruction&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1857,7 +1901,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -2035,7 +2081,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-abstractconstructionsurface" width="100%">
-<name>Elements of CityTML::AbstractConstructionSurface</name>
+<name>Elements of &#8220;CityTML::AbstractConstructionSurface&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -2055,7 +2101,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -2121,7 +2169,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-abstractconstructiveelement" width="100%">
-<name>Elements of CityTML::AbstractConstructiveElement</name>
+<name>Elements of &#8220;CityTML::AbstractConstructiveElement&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -2141,7 +2189,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -2223,7 +2273,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-abstractfillingelement" width="100%">
-<name>Elements of CityTML::AbstractFillingElement</name>
+<name>Elements of &#8220;CityTML::AbstractFillingElement&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -2243,7 +2293,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -2309,7 +2361,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-abstractfillingsurface" width="100%">
-<name>Elements of CityTML::AbstractFillingSurface</name>
+<name>Elements of &#8220;CityTML::AbstractFillingSurface&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -2329,7 +2381,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -2395,7 +2449,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-abstractfurniture" width="100%">
-<name>Elements of CityTML::AbstractFurniture</name>
+<name>Elements of &#8220;CityTML::AbstractFurniture&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -2415,7 +2469,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -2481,7 +2537,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-abstractinstallation" width="100%">
-<name>Elements of CityTML::AbstractInstallation</name>
+<name>Elements of &#8220;CityTML::AbstractInstallation&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -2501,7 +2557,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -2583,7 +2641,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-ceilingsurface" width="100%">
-<name>Elements of CityTML::CeilingSurface</name>
+<name>Elements of &#8220;CityTML::CeilingSurface&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -2603,7 +2661,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -2669,7 +2729,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-door" width="100%">
-<name>Elements of CityTML::Door</name>
+<name>Elements of &#8220;CityTML::Door&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -2689,7 +2749,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -2803,7 +2865,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-doorclassvalue" width="100%">
-<name>Elements of CityTML::DoorClassValue</name>
+<name>Elements of &#8220;CityTML::DoorClassValue&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -2823,7 +2885,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -2846,7 +2910,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-doorfunctionvalue" width="100%">
-<name>Elements of CityTML::DoorFunctionValue</name>
+<name>Elements of &#8220;CityTML::DoorFunctionValue&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -2866,7 +2930,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -2889,7 +2955,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-doorsurface" width="100%">
-<name>Elements of CityTML::DoorSurface</name>
+<name>Elements of &#8220;CityTML::DoorSurface&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -2909,7 +2975,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -2975,7 +3043,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-doorusagevalue" width="100%">
-<name>Elements of CityTML::DoorUsageValue</name>
+<name>Elements of &#8220;CityTML::DoorUsageValue&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -2995,7 +3063,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -3018,7 +3088,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-elevationreferencevalue" width="100%">
-<name>Elements of CityTML::ElevationReferenceValue</name>
+<name>Elements of &#8220;CityTML::ElevationReferenceValue&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -3038,7 +3108,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -3061,7 +3133,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-eventvalue" width="100%">
-<name>Elements of CityTML::EventValue</name>
+<name>Elements of &#8220;CityTML::EventValue&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -3081,7 +3153,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -3104,7 +3178,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-floorsurface" width="100%">
-<name>Elements of CityTML::FloorSurface</name>
+<name>Elements of &#8220;CityTML::FloorSurface&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -3124,7 +3198,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -3190,7 +3266,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-groundsurface" width="100%">
-<name>Elements of CityTML::GroundSurface</name>
+<name>Elements of &#8220;CityTML::GroundSurface&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -3210,7 +3286,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -3276,7 +3354,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-interiorwallsurface" width="100%">
-<name>Elements of CityTML::InteriorWallSurface</name>
+<name>Elements of &#8220;CityTML::InteriorWallSurface&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -3296,7 +3374,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -3362,7 +3442,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-otherconstruction" width="100%">
-<name>Elements of CityTML::OtherConstruction</name>
+<name>Elements of &#8220;CityTML::OtherConstruction&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -3382,7 +3462,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -3496,7 +3578,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-otherconstructionclassvalue" width="100%">
-<name>Elements of CityTML::OtherConstructionClassValue</name>
+<name>Elements of &#8220;CityTML::OtherConstructionClassValue&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -3516,7 +3598,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -3539,7 +3623,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-otherconstructionfunctionvalue" width="100%">
-<name>Elements of CityTML::OtherConstructionFunctionValue</name>
+<name>Elements of &#8220;CityTML::OtherConstructionFunctionValue&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -3559,7 +3643,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -3582,7 +3668,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-otherconstructionusagevalue" width="100%">
-<name>Elements of CityTML::OtherConstructionUsageValue</name>
+<name>Elements of &#8220;CityTML::OtherConstructionUsageValue&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -3602,7 +3688,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -3625,7 +3713,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-outerceilingsurface" width="100%">
-<name>Elements of CityTML::OuterCeilingSurface</name>
+<name>Elements of &#8220;CityTML::OuterCeilingSurface&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -3645,7 +3733,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -3711,7 +3801,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-outerfloorsurface" width="100%">
-<name>Elements of CityTML::OuterFloorSurface</name>
+<name>Elements of &#8220;CityTML::OuterFloorSurface&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -3731,7 +3821,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -3797,7 +3889,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-roofsurface" width="100%">
-<name>Elements of CityTML::RoofSurface</name>
+<name>Elements of &#8220;CityTML::RoofSurface&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -3817,7 +3909,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -3883,7 +3977,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-wallsurface" width="100%">
-<name>Elements of CityTML::WallSurface</name>
+<name>Elements of &#8220;CityTML::WallSurface&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -3903,7 +3997,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -3969,7 +4065,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-window" width="100%">
-<name>Elements of CityTML::Window</name>
+<name>Elements of &#8220;CityTML::Window&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -3989,7 +4085,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -4103,7 +4201,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-windowclassvalue" width="100%">
-<name>Elements of CityTML::WindowClassValue</name>
+<name>Elements of &#8220;CityTML::WindowClassValue&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4123,7 +4221,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -4146,7 +4246,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-windowfunctionvalue" width="100%">
-<name>Elements of CityTML::WindowFunctionValue</name>
+<name>Elements of &#8220;CityTML::WindowFunctionValue&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4166,7 +4266,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -4189,7 +4291,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-windowsurface" width="100%">
-<name>Elements of CityTML::WindowSurface</name>
+<name>Elements of &#8220;CityTML::WindowSurface&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4209,7 +4311,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -4275,7 +4379,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-C-windowusagevalue" width="100%">
-<name>Elements of CityTML::WindowUsageValue</name>
+<name>Elements of &#8220;CityTML::WindowUsageValue&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4295,7 +4399,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -4318,7 +4424,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-E-conditionofconstructionvalue" width="100%">
-<name>Elements of CityTML::ConditionOfConstructionValue</name>
+<name>Elements of &#8220;CityTML::ConditionOfConstructionValue&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4338,7 +4444,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -4398,7 +4506,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-E-heightstatusvalue" width="100%">
-<name>Elements of CityTML::HeightStatusValue</name>
+<name>Elements of &#8220;CityTML::HeightStatusValue&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4418,7 +4526,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -4454,7 +4564,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-E-relationtoconstruction" width="100%">
-<name>Elements of CityTML::RelationToConstruction</name>
+<name>Elements of &#8220;CityTML::RelationToConstruction&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4474,7 +4584,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -4516,7 +4628,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-DT-adeofabstractconstruction" width="100%">
-<name>Elements of CityTML::ADEOfAbstractConstruction</name>
+<name>Elements of &#8220;CityTML::ADEOfAbstractConstruction&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4536,7 +4648,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -4553,7 +4667,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-DT-adeofabstractconstructionsurface" width="100%">
-<name>Elements of CityTML::ADEOfAbstractConstructionSurface</name>
+<name>Elements of &#8220;CityTML::ADEOfAbstractConstructionSurface&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4573,7 +4687,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -4590,7 +4706,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-DT-adeofabstractconstructiveelement" width="100%">
-<name>Elements of CityTML::ADEOfAbstractConstructiveElement</name>
+<name>Elements of &#8220;CityTML::ADEOfAbstractConstructiveElement&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4610,7 +4726,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -4627,7 +4745,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-DT-adeofabstractfillingelement" width="100%">
-<name>Elements of CityTML::ADEOfAbstractFillingElement</name>
+<name>Elements of &#8220;CityTML::ADEOfAbstractFillingElement&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4647,7 +4765,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -4664,7 +4784,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-DT-adeofabstractfillingsurface" width="100%">
-<name>Elements of CityTML::ADEOfAbstractFillingSurface</name>
+<name>Elements of &#8220;CityTML::ADEOfAbstractFillingSurface&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4684,7 +4804,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -4701,7 +4823,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-DT-adeofabstractfurniture" width="100%">
-<name>Elements of CityTML::ADEOfAbstractFurniture</name>
+<name>Elements of &#8220;CityTML::ADEOfAbstractFurniture&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4721,7 +4843,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -4738,7 +4862,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-DT-adeofabstractinstallation" width="100%">
-<name>Elements of CityTML::ADEOfAbstractInstallation</name>
+<name>Elements of &#8220;CityTML::ADEOfAbstractInstallation&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4758,7 +4882,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -4775,7 +4901,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-DT-adeofceilingsurface" width="100%">
-<name>Elements of CityTML::ADEOfCeilingSurface</name>
+<name>Elements of &#8220;CityTML::ADEOfCeilingSurface&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4795,7 +4921,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -4812,7 +4940,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-DT-adeofdoor" width="100%">
-<name>Elements of CityTML::ADEOfDoor</name>
+<name>Elements of &#8220;CityTML::ADEOfDoor&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4832,7 +4960,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -4849,7 +4979,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-DT-adeofdoorsurface" width="100%">
-<name>Elements of CityTML::ADEOfDoorSurface</name>
+<name>Elements of &#8220;CityTML::ADEOfDoorSurface&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4869,7 +4999,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -4886,7 +5018,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-DT-adeoffloorsurface" width="100%">
-<name>Elements of CityTML::ADEOfFloorSurface</name>
+<name>Elements of &#8220;CityTML::ADEOfFloorSurface&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4906,7 +5038,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -4923,7 +5057,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-DT-adeofgroundsurface" width="100%">
-<name>Elements of CityTML::ADEOfGroundSurface</name>
+<name>Elements of &#8220;CityTML::ADEOfGroundSurface&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4943,7 +5077,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -4960,7 +5096,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-DT-adeofinteriorwallsurface" width="100%">
-<name>Elements of CityTML::ADEOfInteriorWallSurface</name>
+<name>Elements of &#8220;CityTML::ADEOfInteriorWallSurface&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4980,7 +5116,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -4997,7 +5135,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-DT-adeofotherconstruction" width="100%">
-<name>Elements of CityTML::ADEOfOtherConstruction</name>
+<name>Elements of &#8220;CityTML::ADEOfOtherConstruction&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5017,7 +5155,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -5034,7 +5174,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-DT-adeofouterceilingsurface" width="100%">
-<name>Elements of CityTML::ADEOfOuterCeilingSurface</name>
+<name>Elements of &#8220;CityTML::ADEOfOuterCeilingSurface&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5054,7 +5194,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -5071,7 +5213,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-DT-adeofouterfloorsurface" width="100%">
-<name>Elements of CityTML::ADEOfOuterFloorSurface</name>
+<name>Elements of &#8220;CityTML::ADEOfOuterFloorSurface&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5091,7 +5233,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -5108,7 +5252,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-DT-adeofroofsurface" width="100%">
-<name>Elements of CityTML::ADEOfRoofSurface</name>
+<name>Elements of &#8220;CityTML::ADEOfRoofSurface&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5128,7 +5272,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -5145,7 +5291,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-DT-adeofwallsurface" width="100%">
-<name>Elements of CityTML::ADEOfWallSurface</name>
+<name>Elements of &#8220;CityTML::ADEOfWallSurface&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5165,7 +5311,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -5182,7 +5330,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-DT-adeofwindow" width="100%">
-<name>Elements of CityTML::ADEOfWindow</name>
+<name>Elements of &#8220;CityTML::ADEOfWindow&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5202,7 +5350,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -5219,7 +5369,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-DT-adeofwindowsurface" width="100%">
-<name>Elements of CityTML::ADEOfWindowSurface</name>
+<name>Elements of &#8220;CityTML::ADEOfWindowSurface&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5239,7 +5389,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -5256,7 +5408,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-DT-constructionevent" width="100%">
-<name>Elements of CityTML::ConstructionEvent</name>
+<name>Elements of &#8220;CityTML::ConstructionEvent&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5276,7 +5428,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -5318,7 +5472,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-DT-elevation" width="100%">
-<name>Elements of CityTML::Elevation</name>
+<name>Elements of &#8220;CityTML::Elevation&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5338,7 +5492,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -5374,7 +5530,7 @@
 </tbody>
 </table>
 <table id="tab-P-citytml-DT-height" width="100%">
-<name>Elements of CityTML::Height</name>
+<name>Elements of &#8220;CityTML::Height&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5394,7 +5550,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -5446,8 +5604,8 @@
 <title>Dynamizer overview</title>
 </clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Defining tables</title>
-<table id="tab-P-dynamizer-C-abstractatomictimeseries" width="100%">
-<name>Elements of Dynamizer::AbstractAtomicTimeseries</name>
+<table id="tab-P-dynamizer-C-EAID_3BCEAE64_F977_46b5_A08C_A29D52216B04" width="100%">
+<name>Elements of &#8220;Dynamizer::AbstractAtomicTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5467,7 +5625,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -5565,7 +5725,7 @@
 </tbody>
 </table>
 <table id="tab-P-dynamizer-C-abstracttimeseries" width="100%">
-<name>Elements of Dynamizer::AbstractTimeseries</name>
+<name>Elements of &#8220;Dynamizer::AbstractTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5585,7 +5745,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -5683,7 +5845,7 @@
 </tbody>
 </table>
 <table id="tab-P-dynamizer-C-authenticationtypevalue" width="100%">
-<name>Elements of Dynamizer::AuthenticationTypeValue</name>
+<name>Elements of &#8220;Dynamizer::AuthenticationTypeValue&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5703,7 +5865,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -5726,7 +5890,7 @@
 </tbody>
 </table>
 <table id="tab-P-dynamizer-C-compositetimeseries" width="100%">
-<name>Elements of Dynamizer::CompositeTimeseries</name>
+<name>Elements of &#8220;Dynamizer::CompositeTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5746,7 +5910,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -5812,7 +5978,7 @@
 </tbody>
 </table>
 <table id="tab-P-dynamizer-C-dynamizer" width="100%">
-<name>Elements of Dynamizer::Dynamizer</name>
+<name>Elements of &#8220;Dynamizer::Dynamizer&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5832,7 +5998,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -5946,7 +6114,7 @@
 </tbody>
 </table>
 <table id="tab-P-dynamizer-C-generictimeseries" width="100%">
-<name>Elements of Dynamizer::GenericTimeseries</name>
+<name>Elements of &#8220;Dynamizer::GenericTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5966,7 +6134,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -6048,7 +6218,7 @@
 </tbody>
 </table>
 <table id="tab-P-dynamizer-C-sensorconnectiontypevalue" width="100%">
-<name>Elements of Dynamizer::SensorConnectionTypeValue</name>
+<name>Elements of &#8220;Dynamizer::SensorConnectionTypeValue&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -6068,7 +6238,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -6091,7 +6263,7 @@
 </tbody>
 </table>
 <table id="tab-P-dynamizer-C-standardfiletimeseries" width="100%">
-<name>Elements of Dynamizer::StandardFileTimeseries</name>
+<name>Elements of &#8220;Dynamizer::StandardFileTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -6111,7 +6283,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -6225,7 +6399,7 @@
 </tbody>
 </table>
 <table id="tab-P-dynamizer-C-standardfiletypevalue" width="100%">
-<name>Elements of Dynamizer::StandardFileTypeValue</name>
+<name>Elements of &#8220;Dynamizer::StandardFileTypeValue&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -6245,7 +6419,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -6268,7 +6444,7 @@
 </tbody>
 </table>
 <table id="tab-P-dynamizer-C-tabulatedfiletimeseries" width="100%">
-<name>Elements of Dynamizer::TabulatedFileTimeseries</name>
+<name>Elements of &#8220;Dynamizer::TabulatedFileTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -6288,7 +6464,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -6577,8 +6755,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-dynamizer-C-tabulatedfiletypevalue" width="100%">
-<name>Elements of Dynamizer::TabulatedFileTypeValue</name>
+<table id="tab-P-dynamizer-C-EAID_18357CC9_C00A_410a_9043_E05BEA22B6A7" width="100%">
+<name>Elements of &#8220;Dynamizer::TabulatedFileTypeValue&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -6598,7 +6776,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -6621,7 +6801,7 @@
 </tbody>
 </table>
 <table id="tab-P-dynamizer-E-timeseriestypevalue" width="100%">
-<name>Elements of Dynamizer::TimeseriesTypeValue</name>
+<name>Elements of &#8220;Dynamizer::TimeseriesTypeValue&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -6641,7 +6821,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -6713,7 +6895,7 @@
 </tbody>
 </table>
 <table id="tab-P-dynamizer-DT-adeofabstractatomictimeseries" width="100%">
-<name>Elements of Dynamizer::ADEOfAbstractAtomicTimeseries</name>
+<name>Elements of &#8220;Dynamizer::ADEOfAbstractAtomicTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -6733,7 +6915,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -6750,7 +6934,7 @@
 </tbody>
 </table>
 <table id="tab-P-dynamizer-DT-adeofabstracttimeseries" width="100%">
-<name>Elements of Dynamizer::ADEOfAbstractTimeseries</name>
+<name>Elements of &#8220;Dynamizer::ADEOfAbstractTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -6770,7 +6954,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -6787,7 +6973,7 @@
 </tbody>
 </table>
 <table id="tab-P-dynamizer-DT-adeofcompositetimeseries" width="100%">
-<name>Elements of Dynamizer::ADEOfCompositeTimeseries</name>
+<name>Elements of &#8220;Dynamizer::ADEOfCompositeTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -6807,7 +6993,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -6824,7 +7012,7 @@
 </tbody>
 </table>
 <table id="tab-P-dynamizer-DT-adeofdynamizer" width="100%">
-<name>Elements of Dynamizer::ADEOfDynamizer</name>
+<name>Elements of &#8220;Dynamizer::ADEOfDynamizer&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -6844,7 +7032,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -6861,7 +7051,7 @@
 </tbody>
 </table>
 <table id="tab-P-dynamizer-DT-adeofgenerictimeseries" width="100%">
-<name>Elements of Dynamizer::ADEOfGenericTimeseries</name>
+<name>Elements of &#8220;Dynamizer::ADEOfGenericTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -6881,7 +7071,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -6898,7 +7090,7 @@
 </tbody>
 </table>
 <table id="tab-P-dynamizer-DT-adeofstandardfiletimeseries" width="100%">
-<name>Elements of Dynamizer::ADEOfStandardFileTimeseries</name>
+<name>Elements of &#8220;Dynamizer::ADEOfStandardFileTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -6918,7 +7110,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -6935,7 +7129,7 @@
 </tbody>
 </table>
 <table id="tab-P-dynamizer-DT-adeoftabulatedfiletimeseries" width="100%">
-<name>Elements of Dynamizer::ADEOfTabulatedFileTimeseries</name>
+<name>Elements of &#8220;Dynamizer::ADEOfTabulatedFileTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -6955,7 +7149,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -6972,7 +7168,7 @@
 </tbody>
 </table>
 <table id="tab-P-dynamizer-DT-sensorconnection" width="100%">
-<name>Elements of Dynamizer::SensorConnection</name>
+<name>Elements of &#8220;Dynamizer::SensorConnection&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -6992,7 +7188,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -7094,7 +7292,7 @@
 </tbody>
 </table>
 <table id="tab-P-dynamizer-DT-timeseriescomponent" width="100%">
-<name>Elements of Dynamizer::TimeseriesComponent</name>
+<name>Elements of &#8220;Dynamizer::TimeseriesComponent&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -7114,7 +7312,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -7150,7 +7350,7 @@
 </tbody>
 </table>
 <table id="tab-P-dynamizer-DT-timevaluepair" width="100%">
-<name>Elements of Dynamizer::TimeValuePair</name>
+<name>Elements of &#8220;Dynamizer::TimeValuePair&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -7170,7 +7370,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>

@@ -10,7 +10,10 @@
 {% elsif is_package_spare == 'Spare' %}{% continue %}
 {% endif %}
 
-{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}{{equalsigns}} {{ package.name }} package
+{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
+
+{{equalsigns}} {{ package.name }} package
+
 {{equalsigns}}= {{ package.name }} overview
 
 {% assign before_package_key = 'before;' | append: package.name %}
@@ -28,7 +31,7 @@
 {% if package.packages.size > 0 %}The {{ package.name }} package is organized into
 {{ package.packages.size }} packages{% assign modules_nested_size = 0 %}{% for module in package.packages %}{% assign modules_nested_size = modules_nested_size | plus: module.packages.size %}{% endfor %}{% if modules_nested_size > 0 %} with {{modules_nested_size}} modules{% endif %}:
 {% endif %}
-[arabic]
+
 {% for module in package.packages %}
 {% if module.packages.length > 0 %}
 . {{ module.name }} package comprises:
@@ -44,14 +47,14 @@
 
 {{equalsigns}}= Defining tables
 
-[arabic]
 {% for klass in package.classes %}
 {% assign is_klass_spare = klass.name | slice: 0,5 %}
 {% if is_klass_spare == 'old: ' %}{% continue %}
 {% elsif is_klass_spare == 'Spare' %}{% continue %}
 {% endif %}
 {% assign klass_name = klass.name | downcase | replace: ':', '' | replace: ' ', '_' %}
-.<<tab-P-{{ package_name }}-C-{{ klass_name }}>> -- Elements of {{ package.name }}::{{ klass.name }}
+{% assign klass_xid = klass.xmi_id %}
+.<<tab-P-{{ package_name }}-C-{{ klass_xid }}>> -- Elements of {{ package.name }}::{{ klass.name }}
 
 {% endfor %}
 {% for enum in package.enums %}
@@ -60,7 +63,8 @@
 {% elsif is_enum_spare == 'Spare' %}{% continue %}
 {% endif %}
 {% assign enum_name = enum.name | downcase | replace: ':', '' | replace: ' ', '_' %}
-.<<tab-P-{{ package_name }}-E-{{ enum_name }}>> -- Elements of {{ package.name }}::{{ enum.name }}
+{% assign enum_xid = enum.xmi_id %}
+.<<tab-P-{{ package_name }}-E-{{ enum_xid }}>> -- Elements of {{ package.name }}::{{ enum.name }}
 
 {% endfor %}
 {% for data_type in package.data_types %}
@@ -69,7 +73,8 @@
 {% elsif is_data_type_spare == 'Spare' %}{% continue %}
 {% endif %}
 {% assign data_type_name = data_type.name | downcase | replace: ':', '' | replace: ' ', '_' %}
-.<<tab-P-{{ package_name }}-DT-{{ data_type_name }}>> -- Elements of {{ package.name }}::{{ data_type.name }}
+{% assign data_type_xid = data_type.xmi_id %}
+.<<tab-P-{{ package_name }}-DT-{{ data_type_xid }}>> -- Elements of {{ package.name }}::{{ data_type.name }}
 
 {% endfor %}
 

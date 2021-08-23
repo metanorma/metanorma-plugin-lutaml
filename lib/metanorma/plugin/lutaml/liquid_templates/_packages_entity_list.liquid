@@ -6,6 +6,7 @@
 {% endfor %}
 {% endif %}
 {% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}{{equalsigns}} {{ package.name }}
+
 [[rc_{{ package_name }}-model_section]]
 {{equalsigns}}= {{ package.name }}
 
@@ -56,8 +57,7 @@
 |Class |Description
 
 {% for klass in package.classes %}
-|<<{{ klass.name }}-section,{{ klass.name }}>>
-«{{ klass.stereotype }}»
+|<<{{ klass.name }}-section,{{ klass.name }}>> «{{ klass.stereotype }}»
 |{{ klass.definition }}
 
 {% endfor %}
