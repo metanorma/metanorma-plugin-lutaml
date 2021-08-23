@@ -19,8 +19,8 @@
 <image src="spec/assets/requirements//EAID_904A37DC_3079_4ef4_9DB0_3DC2C3784549.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
 </figure></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Defining tables</title>
-<table id="tab-P-another-C-abstractatomictimeseries" width="100%">
-<name>Elements of Another::AbstractAtomicTimeseries</name>
+<table id="tab-P-another-C-EAID_3BCEAE64_F977_46b5_A08C_A29D52216B04" width="100%">
+<name>Elements of &#8220;Another::AbstractAtomicTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -40,7 +40,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -138,7 +140,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-C-abstracttimeseries" width="100%">
-<name>Elements of Another::AbstractTimeseries</name>
+<name>Elements of &#8220;Another::AbstractTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -158,7 +160,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -255,8 +259,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-C-authenticationtypevalue" width="100%">
-<name>Elements of Another::AuthenticationTypeValue</name>
+<table id="tab-P-another-C-EAID_29876515_22A7_4b7f_8F83_4F16D87F3025" width="100%">
+<name>Elements of &#8220;Another::AuthenticationTypeValue&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -276,7 +280,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -299,7 +305,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-C-compositetimeseries" width="100%">
-<name>Elements of Another::CompositeTimeseries</name>
+<name>Elements of &#8220;Another::CompositeTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -319,7 +325,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -385,7 +393,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-C-dynamizer" width="100%">
-<name>Elements of Another::Dynamizer</name>
+<name>Elements of &#8220;Another::Dynamizer&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -405,7 +413,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -519,7 +529,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-C-generictimeseries" width="100%">
-<name>Elements of Another::GenericTimeseries</name>
+<name>Elements of &#8220;Another::GenericTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -539,7 +549,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -621,7 +633,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-C-sensorconnectiontypevalue" width="100%">
-<name>Elements of Another::SensorConnectionTypeValue</name>
+<name>Elements of &#8220;Another::SensorConnectionTypeValue&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -641,7 +653,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -664,7 +678,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-C-standardfiletimeseries" width="100%">
-<name>Elements of Another::StandardFileTimeseries</name>
+<name>Elements of &#8220;Another::StandardFileTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -684,7 +698,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -798,7 +814,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-C-standardfiletypevalue" width="100%">
-<name>Elements of Another::StandardFileTypeValue</name>
+<name>Elements of &#8220;Another::StandardFileTypeValue&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -818,7 +834,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -841,7 +859,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-C-tabulatedfiletimeseries" width="100%">
-<name>Elements of Another::TabulatedFileTimeseries</name>
+<name>Elements of &#8220;Another::TabulatedFileTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -861,7 +879,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -1150,8 +1170,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-C-tabulatedfiletypevalue" width="100%">
-<name>Elements of Another::TabulatedFileTypeValue</name>
+<table id="tab-P-another-C-EAID_18357CC9_C00A_410a_9043_E05BEA22B6A7" width="100%">
+<name>Elements of &#8220;Another::TabulatedFileTypeValue&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1171,7 +1191,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -1194,7 +1216,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-E-timeseriestypevalue" width="100%">
-<name>Elements of Another::TimeseriesTypeValue</name>
+<name>Elements of &#8220;Another::TimeseriesTypeValue&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1214,7 +1236,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -1286,7 +1310,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-DT-adeofabstractatomictimeseries" width="100%">
-<name>Elements of Another::ADEOfAbstractAtomicTimeseries</name>
+<name>Elements of &#8220;Another::ADEOfAbstractAtomicTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1306,7 +1330,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -1323,7 +1349,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-DT-adeofabstracttimeseries" width="100%">
-<name>Elements of Another::ADEOfAbstractTimeseries</name>
+<name>Elements of &#8220;Another::ADEOfAbstractTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1343,7 +1369,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -1360,7 +1388,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-DT-adeofcompositetimeseries" width="100%">
-<name>Elements of Another::ADEOfCompositeTimeseries</name>
+<name>Elements of &#8220;Another::ADEOfCompositeTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1380,7 +1408,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -1397,7 +1427,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-DT-adeofdynamizer" width="100%">
-<name>Elements of Another::ADEOfDynamizer</name>
+<name>Elements of &#8220;Another::ADEOfDynamizer&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1417,7 +1447,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -1434,7 +1466,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-DT-adeofgenerictimeseries" width="100%">
-<name>Elements of Another::ADEOfGenericTimeseries</name>
+<name>Elements of &#8220;Another::ADEOfGenericTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1454,7 +1486,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -1471,7 +1505,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-DT-adeofstandardfiletimeseries" width="100%">
-<name>Elements of Another::ADEOfStandardFileTimeseries</name>
+<name>Elements of &#8220;Another::ADEOfStandardFileTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1491,7 +1525,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -1508,7 +1544,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-DT-adeoftabulatedfiletimeseries" width="100%">
-<name>Elements of Another::ADEOfTabulatedFileTimeseries</name>
+<name>Elements of &#8220;Another::ADEOfTabulatedFileTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1528,7 +1564,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -1545,7 +1583,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-DT-sensorconnection" width="100%">
-<name>Elements of Another::SensorConnection</name>
+<name>Elements of &#8220;Another::SensorConnection&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1565,7 +1603,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -1667,7 +1707,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-DT-timeseriescomponent" width="100%">
-<name>Elements of Another::TimeseriesComponent</name>
+<name>Elements of &#8220;Another::TimeseriesComponent&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1687,7 +1727,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>
@@ -1723,7 +1765,7 @@
 </tbody>
 </table>
 <table id="tab-P-another-DT-timevaluepair" width="100%">
-<name>Elements of Another::TimeValuePair</name>
+<name>Elements of &#8220;Another::TimeValuePair&#8221; (class)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1743,7 +1785,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Abstract:</th>
-<td colspan="7" valign="top" align="left"></td>
+<td colspan="7" valign="top" align="left">
+<p id="_">False</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Associations:</th>

@@ -1,12 +1,18 @@
-= metanorma-plugin-lutaml
+= Metanorma LutaML plugin (metanorma-plugin-lutaml)
 
 image:https://github.com/metanorma/metanorma-plugin-lutaml/workflows/rake/badge.svg["Build Status", link="https://github.com/metanorma/metanorma-plugin-lutaml/actions?workflow=rake"]
 
-== Functionality
+== Purpose
 
-Metanorma plugin that allows you to access lutaml objects from a Metanorma document
+LutaML is a data model accessor that supports various data model formats,
+including:
 
-=== Installation
+* EXPRESS (`*.exp` files)
+* OMG UML in XMI format (`*.xmi` files)
+
+This plugin allows you to access LutaML models from within a Metanorma document.
+
+== Installation
 
 [source,console]
 ----
@@ -71,9 +77,11 @@ source directory that `[lutaml]` is used (e.g., if
 `/foo/bar/doc.adoc`, the data file is expected to be found at
 `/foo/bar/example.exp`);
 
-* `{my_context}` is the name where the EXPRESS Repository read from the .exp
-file can be accessed with. Context object is a serialized
-`Expressir::Model::Repository` object with all variable names available. See
+* `{my_context}` is the name where the EXPRESS Repository read from the `.exp`
+file can be accessed with.
+
+** The `context` object is a serialized `Expressir::Model::Repository` object
+with all variable names available. See
 https://github.com/lutaml/expressir[Expressir] docs for reference.
 `{my_context}` has `schemas` method to access Expressir
 https://github.com/lutaml/expressir/blob/master/lib/expressir/model/schema.rb[schemas]
@@ -142,7 +150,7 @@ diagram MyView {
   enum AddressClassProfile {
     imlicistAttributeProfile: CharacterString [0..1] {
       definition
-        this is multiline with `ascidoc`
+        this is multiline with `asciidoc`
       end definition
     }
   }
@@ -193,7 +201,7 @@ diagram MyView {
 ----
 
 
-=== Usage, `lutaml_uml_attributes_table` macro
+=== Usage of `lutaml_uml_attributes_table` macro
 
 This macro allows to quickly render data model attributes/values tables.
 
@@ -246,7 +254,7 @@ Will produce this output:
 |===
 -----
 
-In case of "enumeration"(AddressClassProfile) entity:
+In case of "enumeration" (AddressClassProfile) entity:
 
 [source,adoc]
 -----
@@ -264,12 +272,12 @@ Will produce this output:
 |===
 |Name |Definition
 
-|imlicistAttributeProfile |this is multiline with `ascidoc`
+|imlicistAttributeProfile |this is multiline with `asciidoc`
 
 |===
 -----
 
-=== Usage, `lutaml_uml_datamodel_description` macro
+=== Usage of `lutaml_uml_datamodel_description` macro
 
 This macro allows to quickly render data model packages and its dependent
 objects for supplied XMI file.
@@ -338,7 +346,7 @@ Where:
 
 * `[.after, package="Another"]` - macro with text to be inserted before(after in case of `.before` name) the package
 
-* `[.diagram_include_block]` - macro to automatically include diagram images. Attribute `base_path` is a required attribute to supply path prefix where to look for a digram image. `format` is an optional attribute that tells what file extention to use when including diagram file. The logic is as follows:
+* `[.diagram_include_block]` - macro to automatically include diagram images. Attribute `base_path` is a required attribute to supply path prefix where to look for a diagram image. `format` is an optional attribute that tells what file extension to use when including diagram file. The logic is as follows:
 [source,adoc]
 -----
 {% for diagram in package.diagrams %}
@@ -351,22 +359,23 @@ image::{{ image_base_path }}/{{ diagram.xmi_id }}.{{ format | default: 'png' }}[
 {% endif %}
 {% endfor %}
 -----
-Eg: script will take package diagrams supplied in xmi file and will try to include `image` with the name equal to diagram' xmi_id attribute plus `.png`. Also one can add any text to the macro text, it will be added as paragraph before each image include.
+
+For instance, the script will take package diagrams supplied in the XMI file and will try to include `image` with the name equal to diagram' xmi_id attribute plus `.png`. Also one can add any text to the macro text, it will be added as paragraph before each image include.
 
 * `[.diagram_include_block, package="Another"]` - same as above, but diagram will be included only for supplied package name
 
-* `[.include_block, base_path="spec/fixtures"]` - macro to inlude files(adoc/liquid) for each package name. Attribute `base_path` is a required attribute to supply path prefix where to look for file to include. Macro will look for a file called `base_path` + `/` `_package_name`(downcase, replace : -> '', ' ' -> '_') + `.adoc`[`.liquid`], eg for package 'My Package name' and `base_path` eq to `my/path`, macro will look for the following file path: `my/path/_my_package_name.adoc`.
+* `[.include_block, base_path="spec/fixtures"]` - macro to include files (`*.adoc` or `*.liquid`) for each package name. Attribute `base_path` is a required attribute to supply path prefix where to look for file to include. Macro will look for a file called `base_path` + `/` `_package_name`(downcase, replace : -> '', ' ' -> '_') + `.adoc`[`.liquid`], eg for package 'My Package name' and `base_path` eq to `my/path`, macro will look for the following file path: `my/path/_my_package_name.adoc`.
 
 * `[.include_block, package="Another", base_path="spec/fixtures"]` - same as above, but include block will be included only for supplied package name
 
-In addition to macroses listed above that can be used only inside `lutaml_uml_datamodel_description` macro there is another macro called `lutaml_figure`. `lutaml_figure` is used to lookup and reference xmi package diagrams. The syntax is as follows:
+In addition to the macros listed above that can be used only inside `lutaml_uml_datamodel_description` macro there is another macro called `lutaml_figure`. `lutaml_figure` is used to lookup and reference xmi package diagrams. The syntax is as follows:
 
 [source,adoc]
 -----
 This is lutaml_figure::[package="Wrapper root package", name="Fig B1 Full model"] figure
 -----
 
-This code will be transformed into `<<figure-{diagram.xmi_id}>>` and will point to diagram figure. One can only use this macro when document rendered `lutaml_uml_datamodel_description` macro as it needs diagram lookup table in order to refernce package diagram.
+This code will be transformed into `<<figure-{diagram.xmi_id}>>` and will point to diagram figure. One can only use this macro when document rendered `lutaml_uml_datamodel_description` macro as it needs diagram lookup table in order to reference package diagram.
 
 Will produce this output:
 
@@ -380,18 +389,17 @@ Diagram text
 
 [[figure-EAID_ACBB5EE3_3428_40f5_9C7C_E41923419F29]]
 .CityGML Package Diagram
-image::requirements//EAID_ACBB5EE3_3428_40f5_9C7C_E41923419F29.png[]
+image::requirements/EAID_ACBB5EE3_3428_40f5_9C7C_E41923419F29.png[]
 
 BuildingFurnitureFunctionValue is a code list that enumerates the different purposes of a BuildingFurniture.
 
 [[figure-EAID_938AE961_1C57_4052_B964_997D1894A58D]]
 .Use of ISO and OASIS standards in CityGML
-image::requirements//EAID_938AE961_1C57_4052_B964_997D1894A58D.png[]
+image::requirements/EAID_938AE961_1C57_4052_B964_997D1894A58D.png[]
 
 The CityGML package is organized into
 2 packages with 1 modules:
 
-[arabic]
 . Another package
 . CityTML package
 
@@ -401,18 +409,17 @@ Content for CityGML package
 
 ==== Defining tables
 
-[arabic]
-.<<tab-P-another-C-abstractatomictimeseries>> -- Elements of Another::AbstractAtomicTimeseries
+.<<tab-P-another-C-{XMI_ID}>> -- Elements of &#8220;Another::AbstractAtomicTimeseries&#8221; (class)
 
-[[tab-P-another-C-abstractatomictimeseries]]
-.Elements of Another::AbstractAtomicTimeseries
+[[tab-P-another-C-{XMI_ID}]]
+.Elements of &#8220;Another::AbstractAtomicTimeseries&#8221; (class)
 [width="100%",cols="a,a,a,a,a,a,a,a"]
 |===
 h|Name: 7+| AbstractAtomicTimeseries
 h|Definition: 7+|
 h|Stereotype: 7+| interface
 h|Abstract: 7+|
-.1+h|Associations: 7+| (none)
+h|Associations: 7+| (none)
 .4+h|Public attributes:
 | _Name_
 2+| _Definition_
@@ -446,7 +453,7 @@ h|Constraints: 7+| (none)
 text after CityGML package
 -----
 
-In addition to just supplying XMI file, this macro also supports YAML
+In addition to just supplying an XMI file, this macro also supports a YAML
 configuration file.
 
 The format for using YAML is this:
@@ -480,10 +487,14 @@ NOTE: In this example, it is equal to the following regular expression: `/^Packa
 Usage with macro:
 
 [source,adoc]
------
+--
 [lutaml_uml_datamodel_description, path/to/example.xmi, path/to/config.yml]
-....
------
+----
+[.diagram_include_block, base_path="models/Images", format="png"]
+...
+...
+----
+--
 
 The macro processor will read supplied YAML file and arrange packages according
 to the order supplied in the config file, also all packages supplied as `skip`
