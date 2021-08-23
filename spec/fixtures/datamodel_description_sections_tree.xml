@@ -177,7 +177,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-C-abstracttimeseries" width="100%">
+<table id="tab-P-another-C-EAID_C92B844A_C582_4644_8991_61AB0610C8E3" width="100%">
 <name>Elements of &#8220;Another::AbstractTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
@@ -342,7 +342,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-C-compositetimeseries" width="100%">
+<table id="tab-P-another-C-EAID_DE7B3315_7E78_4d50_A7A5_80F520716EDC" width="100%">
 <name>Elements of &#8220;Another::CompositeTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
@@ -430,7 +430,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-C-dynamizer" width="100%">
+<table id="tab-P-another-C-EAID_BD4BEEEE_BBD5_4b33_9CF9_4A2ABA430756" width="100%">
 <name>Elements of &#8220;Another::Dynamizer&#8221; (class)</name>
 <tbody>
 <tr>
@@ -566,7 +566,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-C-generictimeseries" width="100%">
+<table id="tab-P-another-C-EAID_CDE3D132_C627_4fdd_A6BD_6B6C1555E878" width="100%">
 <name>Elements of &#8220;Another::GenericTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
@@ -670,7 +670,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-C-sensorconnectiontypevalue" width="100%">
+<table id="tab-P-another-C-EAID_8C1FCCE9_A408_4b86_A5D7_532F28277ACE" width="100%">
 <name>Elements of &#8220;Another::SensorConnectionTypeValue&#8221; (class)</name>
 <tbody>
 <tr>
@@ -715,7 +715,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-C-standardfiletimeseries" width="100%">
+<table id="tab-P-another-C-EAID_FDF538F9_ECA6_43b2_9EFA_8AFAAA95AB62" width="100%">
 <name>Elements of &#8220;Another::StandardFileTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
@@ -851,7 +851,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-C-standardfiletypevalue" width="100%">
+<table id="tab-P-another-C-EAID_BE99CC5F_DEFB_459f_BE53_B8F12C8B8149" width="100%">
 <name>Elements of &#8220;Another::StandardFileTypeValue&#8221; (class)</name>
 <tbody>
 <tr>
@@ -896,7 +896,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-C-tabulatedfiletimeseries" width="100%">
+<table id="tab-P-another-C-EAID_1AA08CC8_682B_4697_830B_C3E10EC012D9" width="100%">
 <name>Elements of &#8220;Another::TabulatedFileTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
@@ -1253,8 +1253,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-E-timeseriestypevalue" width="100%">
-<name>Elements of &#8220;Another::TimeseriesTypeValue&#8221; (data type)</name>
+<table id="tab-P-another-E-EAID_20B7542F_5EE7_44c6_8AC5_055508241A3B" width="100%">
+<name>Elements of &#8220;Another::TimeseriesTypeValue&#8221; (enumeration)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1347,7 +1347,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-adeofabstractatomictimeseries" width="100%">
+<table id="tab-P-another-DT-EAID_1D8715F2_4E4A_4f36_A414_1326B6DC1EDD" width="100%">
 <name>Elements of &#8220;Another::ADEOfAbstractAtomicTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
@@ -1386,7 +1386,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-adeofabstracttimeseries" width="100%">
+<table id="tab-P-another-DT-EAID_1F4FA76D_0945_46f0_B222_3C4E92196351" width="100%">
 <name>Elements of &#8220;Another::ADEOfAbstractTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
@@ -5790,7 +5790,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-dynamizer-C-abstracttimeseries" width="100%">
+<table id=tab-P-dynamizer-C-EAID_C92B844A_C582_4644_8991_61AB0610C8E3" width="100%">
 <name>Elements of &#8220;Dynamizer::AbstractTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
@@ -5910,7 +5910,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-dynamizer-C-authenticationtypevalue" width="100%">
+<table id="tab-P-dynamizer-C-EAID_29876515_22A7_4b7f_8F83_4F16D87F3025" width="100%">
 <name>Elements of &#8220;Dynamizer::AuthenticationTypeValue&#8221; (class)</name>
 <tbody>
 <tr>
@@ -5955,7 +5955,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-dynamizer-C-compositetimeseries" width="100%">
+<table id="tab-P-dynamizer-C-EAID_DE7B3315_7E78_4d50_A7A5_80F520716EDC" width="100%">
 <name>Elements of &#8220;Dynamizer::CompositeTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
@@ -6043,7 +6043,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-dynamizer-C-dynamizer" width="100%">
+<table id="tab-P-dynamizer-C-EAID_BD4BEEEE_BBD5_4b33_9CF9_4A2ABA430756" width="100%">
 <name>Elements of &#8220;Dynamizer::Dynamizer&#8221; (class)</name>
 <tbody>
 <tr>
@@ -6179,7 +6179,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-dynamizer-C-generictimeseries" width="100%">
+<table id="tab-P-dynamizer-C-EAID_CDE3D132_C627_4fdd_A6BD_6B6C1555E878" width="100%">
 <name>Elements of &#8220;Dynamizer::GenericTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
@@ -6283,7 +6283,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-dynamizer-C-sensorconnectiontypevalue" width="100%">
+<table id="tab-P-dynamizer-C-EAID_8C1FCCE9_A408_4b86_A5D7_532F28277ACE" width="100%">
 <name>Elements of &#8220;Dynamizer::SensorConnectionTypeValue&#8221; (class)</name>
 <tbody>
 <tr>
@@ -6328,7 +6328,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-dynamizer-C-standardfiletimeseries" width="100%">
+<table id="tab-P-dynamizer-C-EAID_FDF538F9_ECA6_43b2_9EFA_8AFAAA95AB62" width="100%">
 <name>Elements of &#8220;Dynamizer::StandardFileTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
@@ -6464,7 +6464,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-dynamizer-C-standardfiletypevalue" width="100%">
+<table id="tab-P-dynamizer-C-EAID_BE99CC5F_DEFB_459f_BE53_B8F12C8B8149" width="100%">
 <name>Elements of &#8220;Dynamizer::StandardFileTypeValue&#8221; (class)</name>
 <tbody>
 <tr>
@@ -6509,7 +6509,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-dynamizer-C-tabulatedfiletimeseries" width="100%">
+<table id="tab-P-dynamizer-C-EAID_1AA08CC8_682B_4697_830B_C3E10EC012D9" width="100%">
 <name>Elements of &#8220;Dynamizer::TabulatedFileTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
@@ -6866,8 +6866,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-dynamizer-E-timeseriestypevalue" width="100%">
-<name>Elements of &#8220;Dynamizer::TimeseriesTypeValue&#8221; (data type)</name>
+<table id="tab-P-dynamizer-E-EAID_20B7542F_5EE7_44c6_8AC5_055508241A3B" width="100%">
+<name>Elements of &#8220;Dynamizer::TimeseriesTypeValue&#8221; (enumeration)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -6960,7 +6960,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-dynamizer-DT-adeofabstractatomictimeseries" width="100%">
+<table id="tab-P-dynamizer-DT-EAID_1D8715F2_4E4A_4f36_A414_1326B6DC1EDD" width="100%">
 <name>Elements of &#8220;Dynamizer::ADEOfAbstractAtomicTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
@@ -6999,7 +6999,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-dynamizer-DT-adeofabstracttimeseries" width="100%">
+<table id="tab-P-dynamizer-DT-EAID_1F4FA76D_0945_46f0_B222_3C4E92196351" width="100%">
 <name>Elements of &#8220;Dynamizer::ADEOfAbstractTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
@@ -7038,7 +7038,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-dynamizer-DT-adeofcompositetimeseries" width="100%">
+<table id="tab-P-dynamizer-DT-EAID_0DBF7AD4_080D_4238_9949_1CDB34142A59" width="100%">
 <name>Elements of &#8220;Dynamizer::ADEOfCompositeTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
@@ -7077,7 +7077,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-dynamizer-DT-adeofdynamizer" width="100%">
+<table id="tab-P-dynamizer-DT-EAID_6AE198DA_9848_4e6c_B17E_C1004F90782A" width="100%">
 <name>Elements of &#8220;Dynamizer::ADEOfDynamizer&#8221; (data type)</name>
 <tbody>
 <tr>
@@ -7116,7 +7116,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-dynamizer-DT-adeofgenerictimeseries" width="100%">
+<table id="tab-P-dynamizer-DT-EAID_561520A7_886A_4f79_852A_FC1DFD122B66" width="100%">
 <name>Elements of &#8220;Dynamizer::ADEOfGenericTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
@@ -7155,7 +7155,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-dynamizer-DT-adeofstandardfiletimeseries" width="100%">
+<table id="tab-P-dynamizer-DT-EAID_021B99FF_A404_4c54_B785_600CA37348C1" width="100%">
 <name>Elements of &#8220;Dynamizer::ADEOfStandardFileTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
@@ -7194,7 +7194,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-dynamizer-DT-adeoftabulatedfiletimeseries" width="100%">
+<table id="tab-P-dynamizer-DT-EAID_A197050C_E2CB_4d86_B69E_5B5E96E37FDE" width="100%">
 <name>Elements of &#8220;Dynamizer::ADEOfTabulatedFileTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
@@ -7233,7 +7233,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-dynamizer-DT-sensorconnection" width="100%">
+<table id="tab-P-dynamizer-DT-EAID_084E218B_32C6_41f2_A710_ADA8A5A8462C" width="100%">
 <name>Elements of &#8220;Dynamizer::SensorConnection&#8221; (data type)</name>
 <tbody>
 <tr>
@@ -7357,7 +7357,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-dynamizer-DT-timeseriescomponent" width="100%">
+<table id="tab-P-dynamizer-DT-EAID_8E506B76_0A77_4672_A50B_B82A9AF2A416" width="100%">
 <name>Elements of &#8220;Dynamizer::TimeseriesComponent&#8221; (data type)</name>
 <tbody>
 <tr>
@@ -7415,7 +7415,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-dynamizer-DT-timevaluepair" width="100%">
+<table id="tab-P-dynamizer-DT-EAID_2ECE65B5_3620_4c27_B3A9_2D705C545692" width="100%">
 <name>Elements of &#8220;Dynamizer::TimeValuePair&#8221; (data type)</name>
 <tbody>
 <tr>
