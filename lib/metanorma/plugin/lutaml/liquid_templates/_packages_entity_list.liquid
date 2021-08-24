@@ -65,13 +65,13 @@
 {% endif %}
 
 {% if package.data_types.size > 0 %}
-.Data Types used in {{ package.name }}
+.Data types used in {{ package.name }}
 [cols="2,6",options="header"]
 |===
 |Name |Description
 
 {% for klass in package.data_types %}
-|<<{{ klass.name }}-section,{{ klass.name }}>>
+|<<{{ klass.name }}-section,{{ klass.name }}>> «{{ klass.stereotype }}»
 |{{ klass.definition }}
 
 {% endfor %}
@@ -86,7 +86,7 @@
 |Name |Description
 
 {% for klass in package.enums %}
-|<<{{ klass.name }}-section,{{ klass.name }}>>
+|<<{{ klass.name }}-section,{{ klass.name }}>> «{{ klass.stereotype }}»
 |{{ klass.definition }}
 
 {% endfor %}
