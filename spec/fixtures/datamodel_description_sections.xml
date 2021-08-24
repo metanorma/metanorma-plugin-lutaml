@@ -2,7 +2,7 @@
 <title>Foreword</title>
 <p id="_">mine text</p>
 </foreword></preface><sections>
-<clause id="_" inline-header="false" obligation="normative"><title>Another package</title>
+<clause id="lutaml-section-another" inline-header="false" obligation="normative"><title>Another package</title>
 <clause id="_" inline-header="false" obligation="normative"><title>Another overview</title>
 <p id="_">text before Another package</p>
 <p id="_">Diagram text</p>
@@ -1387,8 +1387,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-adeofcompositetimeseries" width="100%">
-<name>Elements of &#8220;Another::ADEOfCompositeTimeseries&#8221; (class)</name>
+<table id="tab-P-another-DT-EAID_0DBF7AD4_080D_4238_9949_1CDB34142A59" width="100%">
+<name>Elements of &#8220;Another::ADEOfCompositeTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1426,8 +1426,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-adeofdynamizer" width="100%">
-<name>Elements of &#8220;Another::ADEOfDynamizer&#8221; (class)</name>
+<table id="tab-P-another-DT-EAID_6AE198DA_9848_4e6c_B17E_C1004F90782A" width="100%">
+<name>Elements of &#8220;Another::ADEOfDynamizer&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1465,8 +1465,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-adeofgenerictimeseries" width="100%">
-<name>Elements of &#8220;Another::ADEOfGenericTimeseries&#8221; (class)</name>
+<table id="tab-P-another-DT-EAID_561520A7_886A_4f79_852A_FC1DFD122B66" width="100%">
+<name>Elements of &#8220;Another::ADEOfGenericTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1504,8 +1504,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-adeofstandardfiletimeseries" width="100%">
-<name>Elements of &#8220;Another::ADEOfStandardFileTimeseries&#8221; (class)</name>
+<table id="tab-P-another-DT-EAID_021B99FF_A404_4c54_B785_600CA37348C1" width="100%">
+<name>Elements of &#8220;Another::ADEOfStandardFileTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1543,8 +1543,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-adeoftabulatedfiletimeseries" width="100%">
-<name>Elements of &#8220;Another::ADEOfTabulatedFileTimeseries&#8221; (class)</name>
+<table id="tab-P-another-DT-EAID_A197050C_E2CB_4d86_B69E_5B5E96E37FDE" width="100%">
+<name>Elements of &#8220;Another::ADEOfTabulatedFileTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1582,8 +1582,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-sensorconnection" width="100%">
-<name>Elements of &#8220;Another::SensorConnection&#8221; (class)</name>
+<table id="tab-P-another-DT-EAID_084E218B_32C6_41f2_A710_ADA8A5A8462C" width="100%">
+<name>Elements of &#8220;Another::SensorConnection&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1706,8 +1706,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-timeseriescomponent" width="100%">
-<name>Elements of &#8220;Another::TimeseriesComponent&#8221; (class)</name>
+<table id="tab-P-another-DT-EAID_8E506B76_0A77_4672_A50B_B82A9AF2A416" width="100%">
+<name>Elements of &#8220;Another::TimeseriesComponent&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1764,8 +1764,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-timevaluepair" width="100%">
-<name>Elements of &#8220;Another::TimeValuePair&#8221; (class)</name>
+<table id="tab-P-another-DT-EAID_2ECE65B5_3620_4c27_B3A9_2D705C545692" width="100%">
+<name>Elements of &#8220;Another::TimeValuePair&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1870,10 +1870,10 @@
 <p id="_">my text</p></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Test</title>
 <p id="_">My content</p>
-<clause id="_" inline-header="false" obligation="normative"><title>Additional Information</title>
+<clause id="_" inline-header="false" obligation="normative"><title>Additional information</title>
 <p id="_">text after Another package</p>
 <p id="_">mine text</p></clause></clause>
-<clause id="_" inline-header="false" obligation="normative"><title>CityGML package</title>
+<clause id="lutaml-section-citygml" inline-header="false" obligation="normative"><title>CityGML package</title>
 <clause id="_" inline-header="false" obligation="normative"><title>CityGML overview</title>
 <p id="_">Diagram text</p>
 <figure id="figure-EAID_ACBB5EE3_3428_40f5_9C7C_E41923419F29">
@@ -1897,6 +1897,6 @@
 </ol>
 <p id="_">my text</p>
 <p id="_">Content for CityGML package</p></clause>
-<clause id="_" inline-header="false" obligation="normative"><title>Additional Information</title>
+<clause id="_" inline-header="false" obligation="normative"><title>Additional information</title>
 <p id="_">text after CityGML package</p>
 <p id="_">footer text</p></clause></clause></sections>

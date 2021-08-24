@@ -1,5 +1,5 @@
 <sections>
-<clause id="_" inline-header="false" obligation="normative"><title>Wrapper nested package package</title>
+<clause id="lutaml-section-wrapper_nested_package" inline-header="false" obligation="normative"><title>Wrapper nested package package</title>
 <clause id="_" inline-header="false" obligation="normative"><title>Wrapper nested package overview</title>
 <p id="_">The Wrapper nested package package is organized into
 1 packages with 2 modules:</p>
@@ -8,7 +8,7 @@
 <p id="_">CityGML package</p>
 </li>
 </ol></clause>
-<clause id="_" inline-header="false" obligation="normative"><title>CityGML package</title>
+<clause id="lutaml-section-citygml" inline-header="false" obligation="normative"><title>CityGML package</title>
 <clause id="_" inline-header="false" obligation="normative"><title>CityGML overview</title>
 <p id="_">The CityGML package is organized into
 2 packages with 1 modules:</p>
@@ -20,7 +20,7 @@
 <p id="_">CityTML package</p>
 </li>
 </ol></clause>
-<clause id="_" inline-header="false" obligation="normative"><title>Another package</title>
+<clause id="lutaml-section-another" inline-header="false" obligation="normative"><title>Another package</title>
 <clause id="_" inline-header="false" obligation="normative">
 <title>Another overview</title>
 </clause>
@@ -1393,8 +1393,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-adeofcompositetimeseries" width="100%">
-<name>Elements of &#8220;Another::ADEOfCompositeTimeseries&#8221; (class)</name>
+<table id="tab-P-another-DT-EAID_0DBF7AD4_080D_4238_9949_1CDB34142A59" width="100%">
+<name>Elements of &#8220;Another::ADEOfCompositeTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1432,8 +1432,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-adeofdynamizer" width="100%">
-<name>Elements of &#8220;Another::ADEOfDynamizer&#8221; (class)</name>
+<table id="tab-P-another-DT-EAID_6AE198DA_9848_4e6c_B17E_C1004F90782A" width="100%">
+<name>Elements of &#8220;Another::ADEOfDynamizer&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1471,8 +1471,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-adeofgenerictimeseries" width="100%">
-<name>Elements of &#8220;Another::ADEOfGenericTimeseries&#8221; (class)</name>
+<table id="tab-P-another-DT-EAID_561520A7_886A_4f79_852A_FC1DFD122B66" width="100%">
+<name>Elements of &#8220;Another::ADEOfGenericTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1510,8 +1510,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-adeofstandardfiletimeseries" width="100%">
-<name>Elements of &#8220;Another::ADEOfStandardFileTimeseries&#8221; (class)</name>
+<table id="tab-P-another-DT-EAID_021B99FF_A404_4c54_B785_600CA37348C1" width="100%">
+<name>Elements of &#8220;Another::ADEOfStandardFileTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1549,8 +1549,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-adeoftabulatedfiletimeseries" width="100%">
-<name>Elements of &#8220;Another::ADEOfTabulatedFileTimeseries&#8221; (class)</name>
+<table id="tab-P-another-DT-EAID_A197050C_E2CB_4d86_B69E_5B5E96E37FDE" width="100%">
+<name>Elements of &#8220;Another::ADEOfTabulatedFileTimeseries&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1588,8 +1588,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-sensorconnection" width="100%">
-<name>Elements of &#8220;Another::SensorConnection&#8221; (class)</name>
+<table id="tab-P-another-DT-EAID_084E218B_32C6_41f2_A710_ADA8A5A8462C" width="100%">
+<name>Elements of &#8220;Another::SensorConnection&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1712,8 +1712,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-timeseriescomponent" width="100%">
-<name>Elements of &#8220;Another::TimeseriesComponent&#8221; (class)</name>
+<table id="tab-P-another-DT-EAID_8E506B76_0A77_4672_A50B_B82A9AF2A416" width="100%">
+<name>Elements of &#8220;Another::TimeseriesComponent&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1770,8 +1770,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-timevaluepair" width="100%">
-<name>Elements of &#8220;Another::TimeValuePair&#8221; (class)</name>
+<table id="tab-P-another-DT-EAID_2ECE65B5_3620_4c27_B3A9_2D705C545692" width="100%">
+<name>Elements of &#8220;Another::TimeValuePair&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1870,7 +1870,7 @@
 </tr>
 </tbody>
 </table></clause></clause>
-<clause id="_" inline-header="false" obligation="normative"><title>CityTML package</title>
+<clause id="lutaml-section-citytml" inline-header="false" obligation="normative"><title>CityTML package</title>
 <clause id="_" inline-header="false" obligation="normative"><title>CityTML overview</title>
 <p id="_">The CityTML package is organized into
 1 packages:</p>
@@ -1880,7 +1880,7 @@
 </li>
 </ol></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Defining tables</title>
-<table id="tab-P-citytml-C-abstractconstruction" width="100%">
+<table id="tab-P-citytml-C-EAID_D8E4EAFC_9DAF_4cba_9169_984738657435" width="100%">
 <name>Elements of &#8220;CityTML::AbstractConstruction&#8221; (class)</name>
 <tbody>
 <tr>
@@ -2080,7 +2080,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-abstractconstructionsurface" width="100%">
+<table id="tab-P-citytml-C-EAID_B67A828E_F6C6_4b88_93CC_6458D55A6760" width="100%">
 <name>Elements of &#8220;CityTML::AbstractConstructionSurface&#8221; (class)</name>
 <tbody>
 <tr>
@@ -2168,7 +2168,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-abstractconstructiveelement" width="100%">
+<table id="tab-P-citytml-C-EAID_2590191B_9EFA_4477_A32B_DA3DEDAC68BE" width="100%">
 <name>Elements of &#8220;CityTML::AbstractConstructiveElement&#8221; (class)</name>
 <tbody>
 <tr>
@@ -2272,7 +2272,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-abstractfillingelement" width="100%">
+<table id="tab-P-citytml-C-EAID_D9E5FA2E_C8A3_493b_9529_B3CA1C56481F" width="100%">
 <name>Elements of &#8220;CityTML::AbstractFillingElement&#8221; (class)</name>
 <tbody>
 <tr>
@@ -2360,7 +2360,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-abstractfillingsurface" width="100%">
+<table id="tab-P-citytml-C-EAID_6687F0F3_483C_4d13_B082_DF4736E1421F" width="100%">
 <name>Elements of &#8220;CityTML::AbstractFillingSurface&#8221; (class)</name>
 <tbody>
 <tr>
@@ -2448,7 +2448,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-abstractfurniture" width="100%">
+<table id="tab-P-citytml-C-EAID_A8DC7ACD_0AC9_4358_8FF2_AF0040FB4598" width="100%">
 <name>Elements of &#8220;CityTML::AbstractFurniture&#8221; (class)</name>
 <tbody>
 <tr>
@@ -2536,7 +2536,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-abstractinstallation" width="100%">
+<table id="tab-P-citytml-C-EAID_73A90C21_D0FC_4bff_9316_6DA37C582F2C" width="100%">
 <name>Elements of &#8220;CityTML::AbstractInstallation&#8221; (class)</name>
 <tbody>
 <tr>
@@ -2640,7 +2640,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-ceilingsurface" width="100%">
+<table id="tab-P-citytml-C-EAID_99C1DFF0_8DC5_4fc8_AF8B_3927A4A1BC8C" width="100%">
 <name>Elements of &#8220;CityTML::CeilingSurface&#8221; (class)</name>
 <tbody>
 <tr>
@@ -2728,7 +2728,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-door" width="100%">
+<table id="tab-P-citytml-C-EAID_350DA027_1632_4398_84AF_97877964E4D9" width="100%">
 <name>Elements of &#8220;CityTML::Door&#8221; (class)</name>
 <tbody>
 <tr>
@@ -2864,7 +2864,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-doorclassvalue" width="100%">
+<table id="tab-P-citytml-C-EAID_63F44B99_981E_41ba_8BF9_0B7231BD321A" width="100%">
 <name>Elements of &#8220;CityTML::DoorClassValue&#8221; (class)</name>
 <tbody>
 <tr>
@@ -2909,7 +2909,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-doorfunctionvalue" width="100%">
+<table id="tab-P-citytml-C-EAID_BA3F11AA_33C9_4a80_BF67_69B039008ADB" width="100%">
 <name>Elements of &#8220;CityTML::DoorFunctionValue&#8221; (class)</name>
 <tbody>
 <tr>
@@ -2954,7 +2954,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-doorsurface" width="100%">
+<table id="tab-P-citytml-C-EAID_D4C3D144_E4B9_4f7d_B0FB_CCF94FA53252" width="100%">
 <name>Elements of &#8220;CityTML::DoorSurface&#8221; (class)</name>
 <tbody>
 <tr>
@@ -3042,7 +3042,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-doorusagevalue" width="100%">
+<table id="tab-P-citytml-C-EAID_032B7B55_5204_4b23_8BD5_52D544FA64FB" width="100%">
 <name>Elements of &#8220;CityTML::DoorUsageValue&#8221; (class)</name>
 <tbody>
 <tr>
@@ -3087,7 +3087,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-elevationreferencevalue" width="100%">
+<table id="tab-P-citytml-C-EAID_BDFDE0B6_F386_4d54_AC27_4A21E5162BF0" width="100%">
 <name>Elements of &#8220;CityTML::ElevationReferenceValue&#8221; (class)</name>
 <tbody>
 <tr>
@@ -3132,7 +3132,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-eventvalue" width="100%">
+<table id="tab-P-citytml-C-EAID_344ECD3D_324C_465a_AE1C_235E2C2C93BE" width="100%">
 <name>Elements of &#8220;CityTML::EventValue&#8221; (class)</name>
 <tbody>
 <tr>
@@ -3177,7 +3177,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-floorsurface" width="100%">
+<table id="tab-P-citytml-C-EAID_81707D78_C8B4_469e_893F_AA2EA6642616" width="100%">
 <name>Elements of &#8220;CityTML::FloorSurface&#8221; (class)</name>
 <tbody>
 <tr>
@@ -3265,7 +3265,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-groundsurface" width="100%">
+<table id="tab-P-citytml-C-EAID_539B36DB_355A_4cf4_9080_EE01B12A88A1" width="100%">
 <name>Elements of &#8220;CityTML::GroundSurface&#8221; (class)</name>
 <tbody>
 <tr>
@@ -3353,7 +3353,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-interiorwallsurface" width="100%">
+<table id="tab-P-citytml-C-EAID_DBB20296_9BEA_46c7_925F_F8B90EAE8FB5" width="100%">
 <name>Elements of &#8220;CityTML::InteriorWallSurface&#8221; (class)</name>
 <tbody>
 <tr>
@@ -3441,7 +3441,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-otherconstruction" width="100%">
+<table id="tab-P-citytml-C-EAID_645EA139_9F9D_4caf_90C3_3455836FA55B" width="100%">
 <name>Elements of &#8220;CityTML::OtherConstruction&#8221; (class)</name>
 <tbody>
 <tr>
@@ -3577,7 +3577,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-otherconstructionclassvalue" width="100%">
+<table id="tab-P-citytml-C-EAID_51A4C2BE_7EE0_4504_81AD_5EEFEB382A16" width="100%">
 <name>Elements of &#8220;CityTML::OtherConstructionClassValue&#8221; (class)</name>
 <tbody>
 <tr>
@@ -3622,7 +3622,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-otherconstructionfunctionvalue" width="100%">
+<table id="tab-P-citytml-C-EAID_A60BC340_2B39_498b_B1E0_028C34AE6AD4" width="100%">
 <name>Elements of &#8220;CityTML::OtherConstructionFunctionValue&#8221; (class)</name>
 <tbody>
 <tr>
@@ -3667,7 +3667,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-otherconstructionusagevalue" width="100%">
+<table id="tab-P-citytml-C-EAID_639B442D_87A9_435b_891C_CB5C260B3497" width="100%">
 <name>Elements of &#8220;CityTML::OtherConstructionUsageValue&#8221; (class)</name>
 <tbody>
 <tr>
@@ -3712,7 +3712,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-outerceilingsurface" width="100%">
+<table id="tab-P-citytml-C-EAID_4B22820C_7FA0_494b_A840_683B7396FAF4" width="100%">
 <name>Elements of &#8220;CityTML::OuterCeilingSurface&#8221; (class)</name>
 <tbody>
 <tr>
@@ -3800,7 +3800,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-outerfloorsurface" width="100%">
+<table id="tab-P-citytml-C-EAID_FBD475D9_8756_45ee_B9A3_F0F84212382F" width="100%">
 <name>Elements of &#8220;CityTML::OuterFloorSurface&#8221; (class)</name>
 <tbody>
 <tr>
@@ -3888,7 +3888,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-roofsurface" width="100%">
+<table id="tab-P-citytml-C-EAID_8D70FA17_7111_4e57_99A7_012545DFF4BB" width="100%">
 <name>Elements of &#8220;CityTML::RoofSurface&#8221; (class)</name>
 <tbody>
 <tr>
@@ -3976,7 +3976,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-wallsurface" width="100%">
+<table id="tab-P-citytml-C-EAID_B015FAC6_B012_427b_BAF7_A2BD0156C30C" width="100%">
 <name>Elements of &#8220;CityTML::WallSurface&#8221; (class)</name>
 <tbody>
 <tr>
@@ -4064,7 +4064,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-window" width="100%">
+<table id="tab-P-citytml-C-EAID_E13F5A34_118F_4f56_A819_B1F8AF4D3DF8" width="100%">
 <name>Elements of &#8220;CityTML::Window&#8221; (class)</name>
 <tbody>
 <tr>
@@ -4200,7 +4200,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-windowclassvalue" width="100%">
+<table id="tab-P-citytml-C-EAID_31AB9AF9_C56C_4404_B463_5916A9F28AAF" width="100%">
 <name>Elements of &#8220;CityTML::WindowClassValue&#8221; (class)</name>
 <tbody>
 <tr>
@@ -4245,7 +4245,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-windowfunctionvalue" width="100%">
+<table id="tab-P-citytml-C-EAID_0A8AF28F_3BB8_4509_A8F2_AA2CB2CF98C8" width="100%">
 <name>Elements of &#8220;CityTML::WindowFunctionValue&#8221; (class)</name>
 <tbody>
 <tr>
@@ -4290,7 +4290,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-windowsurface" width="100%">
+<table id="tab-P-citytml-C-EAID_4AFB480E_1EF1_4d55_B5A4_4578605F73A5" width="100%">
 <name>Elements of &#8220;CityTML::WindowSurface&#8221; (class)</name>
 <tbody>
 <tr>
@@ -4378,7 +4378,7 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-C-windowusagevalue" width="100%">
+<table id="tab-P-citytml-C-EAID_2A86261E_5894_4543_820C_4EC2C3B0454B" width="100%">
 <name>Elements of &#8220;CityTML::WindowUsageValue&#8221; (class)</name>
 <tbody>
 <tr>
@@ -4423,8 +4423,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-E-conditionofconstructionvalue" width="100%">
-<name>Elements of &#8220;CityTML::ConditionOfConstructionValue&#8221; (class)</name>
+<table id="tab-P-citytml-E-EAID_B2C49F64_6095_4f8c_8FA3_492EA57A263F" width="100%">
+<name>Elements of &#8220;CityTML::ConditionOfConstructionValue&#8221; (enumeration)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4505,8 +4505,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-E-heightstatusvalue" width="100%">
-<name>Elements of &#8220;CityTML::HeightStatusValue&#8221; (class)</name>
+<table id="tab-P-citytml-E-EAID_81A5B9B1_B8C6_47b1_A58E_94EBD9C94867" width="100%">
+<name>Elements of &#8220;CityTML::HeightStatusValue&#8221; (enumeration)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4563,8 +4563,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-E-relationtoconstruction" width="100%">
-<name>Elements of &#8220;CityTML::RelationToConstruction&#8221; (class)</name>
+<table id="tab-P-citytml-E-EAID_9255FD68_C2A9_4ef6_B532_7537C3BBE509" width="100%">
+<name>Elements of &#8220;CityTML::RelationToConstruction&#8221; (enumeration)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4627,8 +4627,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-DT-adeofabstractconstruction" width="100%">
-<name>Elements of &#8220;CityTML::ADEOfAbstractConstruction&#8221; (class)</name>
+<table id="tab-P-citytml-DT-EAID_4661534F_B67D_46b5_BC56_CEED3792F85B" width="100%">
+<name>Elements of &#8220;CityTML::ADEOfAbstractConstruction&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4666,8 +4666,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-DT-adeofabstractconstructionsurface" width="100%">
-<name>Elements of &#8220;CityTML::ADEOfAbstractConstructionSurface&#8221; (class)</name>
+<table id="tab-P-citytml-DT-EAID_8BE81A2C_215F_4b43_BD0A_45A4A549413F" width="100%">
+<name>Elements of &#8220;CityTML::ADEOfAbstractConstructionSurface&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4705,8 +4705,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-DT-adeofabstractconstructiveelement" width="100%">
-<name>Elements of &#8220;CityTML::ADEOfAbstractConstructiveElement&#8221; (class)</name>
+<table id="tab-P-citytml-DT-EAID_85D5915A_4A27_4be6_994E_E2B345ADB379" width="100%">
+<name>Elements of &#8220;CityTML::ADEOfAbstractConstructiveElement&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4744,8 +4744,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-DT-adeofabstractfillingelement" width="100%">
-<name>Elements of &#8220;CityTML::ADEOfAbstractFillingElement&#8221; (class)</name>
+<table id="tab-P-citytml-DT-EAID_56A4AD38_2EAC_473f_8070_A2905EB49EEE" width="100%">
+<name>Elements of &#8220;CityTML::ADEOfAbstractFillingElement&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4783,8 +4783,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-DT-adeofabstractfillingsurface" width="100%">
-<name>Elements of &#8220;CityTML::ADEOfAbstractFillingSurface&#8221; (class)</name>
+<table id="tab-P-citytml-DT-EAID_84D5CA7C_C965_4bd6_B969_DE9A5682D00F" width="100%">
+<name>Elements of &#8220;CityTML::ADEOfAbstractFillingSurface&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4822,8 +4822,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-DT-adeofabstractfurniture" width="100%">
-<name>Elements of &#8220;CityTML::ADEOfAbstractFurniture&#8221; (class)</name>
+<table id="tab-P-citytml-DT-EAID_80E36981_3017_412f_BE42_5362EC08F2E3" width="100%">
+<name>Elements of &#8220;CityTML::ADEOfAbstractFurniture&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4861,8 +4861,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-DT-adeofabstractinstallation" width="100%">
-<name>Elements of &#8220;CityTML::ADEOfAbstractInstallation&#8221; (class)</name>
+<table id="tab-P-citytml-DT-EAID_6B5DEB87_CA95_4fd5_AE29_6009CC3F6EAA" width="100%">
+<name>Elements of &#8220;CityTML::ADEOfAbstractInstallation&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4900,8 +4900,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-DT-adeofceilingsurface" width="100%">
-<name>Elements of &#8220;CityTML::ADEOfCeilingSurface&#8221; (class)</name>
+<table id="tab-P-citytml-DT-EAID_ED07AAA2_4703_4403_ABB0_A2E7877AED6E" width="100%">
+<name>Elements of &#8220;CityTML::ADEOfCeilingSurface&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4939,8 +4939,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-DT-adeofdoor" width="100%">
-<name>Elements of &#8220;CityTML::ADEOfDoor&#8221; (class)</name>
+<table id="tab-P-citytml-DT-EAID_34F0C2FC_2C93_422d_8787_6E83DD201379" width="100%">
+<name>Elements of &#8220;CityTML::ADEOfDoor&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -4978,8 +4978,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-DT-adeofdoorsurface" width="100%">
-<name>Elements of &#8220;CityTML::ADEOfDoorSurface&#8221; (class)</name>
+<table id="tab-P-citytml-DT-EAID_3404798C_AE68_4929_BE0F_3250255F9C40" width="100%">
+<name>Elements of &#8220;CityTML::ADEOfDoorSurface&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5017,8 +5017,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-DT-adeoffloorsurface" width="100%">
-<name>Elements of &#8220;CityTML::ADEOfFloorSurface&#8221; (class)</name>
+<table id="tab-P-citytml-DT-EAID_79631F2C_839A_4807_B0BB_47E3EF5DC642" width="100%">
+<name>Elements of &#8220;CityTML::ADEOfFloorSurface&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5056,8 +5056,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-DT-adeofgroundsurface" width="100%">
-<name>Elements of &#8220;CityTML::ADEOfGroundSurface&#8221; (class)</name>
+<table id="tab-P-citytml-DT-EAID_E6278A2D_ECB2_4cc3_B7CF_69BE3E2E11E7" width="100%">
+<name>Elements of &#8220;CityTML::ADEOfGroundSurface&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5095,8 +5095,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-DT-adeofinteriorwallsurface" width="100%">
-<name>Elements of &#8220;CityTML::ADEOfInteriorWallSurface&#8221; (class)</name>
+<table id="tab-P-citytml-DT-EAID_5D0106EB_7DE8_4f6f_8033_CD32FF6FA0BE" width="100%">
+<name>Elements of &#8220;CityTML::ADEOfInteriorWallSurface&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5134,8 +5134,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-DT-adeofotherconstruction" width="100%">
-<name>Elements of &#8220;CityTML::ADEOfOtherConstruction&#8221; (class)</name>
+<table id="tab-P-citytml-DT-EAID_E9A28D15_AF44_4bda_B92D_520378751B2E" width="100%">
+<name>Elements of &#8220;CityTML::ADEOfOtherConstruction&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5173,8 +5173,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-DT-adeofouterceilingsurface" width="100%">
-<name>Elements of &#8220;CityTML::ADEOfOuterCeilingSurface&#8221; (class)</name>
+<table id="tab-P-citytml-DT-EAID_73AA9744_6E22_44df_AE69_786C1EB9FC84" width="100%">
+<name>Elements of &#8220;CityTML::ADEOfOuterCeilingSurface&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5212,8 +5212,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-DT-adeofouterfloorsurface" width="100%">
-<name>Elements of &#8220;CityTML::ADEOfOuterFloorSurface&#8221; (class)</name>
+<table id="tab-P-citytml-DT-EAID_EA88C349_EDD9_4e7e_AD1C_22FB15E1C5C5" width="100%">
+<name>Elements of &#8220;CityTML::ADEOfOuterFloorSurface&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5251,8 +5251,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-DT-adeofroofsurface" width="100%">
-<name>Elements of &#8220;CityTML::ADEOfRoofSurface&#8221; (class)</name>
+<table id="tab-P-citytml-DT-EAID_47CAC0D1_D933_4d6e_A9EE_3A6EDF67B7EA" width="100%">
+<name>Elements of &#8220;CityTML::ADEOfRoofSurface&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5290,8 +5290,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-DT-adeofwallsurface" width="100%">
-<name>Elements of &#8220;CityTML::ADEOfWallSurface&#8221; (class)</name>
+<table id="tab-P-citytml-DT-EAID_C29949D3_9FF5_4b08_916C_A34D1DD4A5A4" width="100%">
+<name>Elements of &#8220;CityTML::ADEOfWallSurface&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5329,8 +5329,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-DT-adeofwindow" width="100%">
-<name>Elements of &#8220;CityTML::ADEOfWindow&#8221; (class)</name>
+<table id="tab-P-citytml-DT-EAID_43595D3B_5828_4acd_BF8E_9409B453D0CB" width="100%">
+<name>Elements of &#8220;CityTML::ADEOfWindow&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5368,8 +5368,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-DT-adeofwindowsurface" width="100%">
-<name>Elements of &#8220;CityTML::ADEOfWindowSurface&#8221; (class)</name>
+<table id="tab-P-citytml-DT-EAID_4AC1AD23_9DFE_406c_92FC_8ECF8673210A" width="100%">
+<name>Elements of &#8220;CityTML::ADEOfWindowSurface&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5407,8 +5407,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-DT-constructionevent" width="100%">
-<name>Elements of &#8220;CityTML::ConstructionEvent&#8221; (class)</name>
+<table id="tab-P-citytml-DT-EAID_49E705E2_C072_45d0_8AC4_8A307C8FF685" width="100%">
+<name>Elements of &#8220;CityTML::ConstructionEvent&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5471,8 +5471,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-DT-elevation" width="100%">
-<name>Elements of &#8220;CityTML::Elevation&#8221; (class)</name>
+<table id="tab-P-citytml-DT-EAID_A7FDA76F_0932_4ed8_8D86_DBAE7777FE6F" width="100%">
+<name>Elements of &#8220;CityTML::Elevation&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5529,8 +5529,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-citytml-DT-height" width="100%">
-<name>Elements of &#8220;CityTML::Height&#8221; (class)</name>
+<table id="tab-P-citytml-DT-EAID_A9289D96_F914_40f1_8E45_EC020FAE12AB" width="100%">
+<name>Elements of &#8220;CityTML::Height&#8221; (data type)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -5599,7 +5599,7 @@
 </tr>
 </tbody>
 </table></clause>
-<clause id="_" inline-header="false" obligation="normative"><title>Dynamizer package</title>
+<clause id="lutaml-section-dynamizer" inline-header="false" obligation="normative"><title>Dynamizer package</title>
 <clause id="_" inline-header="false" obligation="normative">
 <title>Dynamizer overview</title>
 </clause>
@@ -5724,7 +5724,7 @@
 </tr>
 </tbody>
 </table>
-<table id=tab-P-dynamizer-C-EAID_C92B844A_C582_4644_8991_61AB0610C8E3" width="100%">
+<table id="tab-P-dynamizer-C-EAID_C92B844A_C582_4644_8991_61AB0610C8E3" width="100%">
 <name>Elements of &#8220;Dynamizer::AbstractTimeseries&#8221; (class)</name>
 <tbody>
 <tr>
