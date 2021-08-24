@@ -52,7 +52,7 @@ module Metanorma
 
         def process_text_blocks(document, input_lines, express_indexes)
           line = input_lines.next
-          block_match = line.match(/^\[lutaml,([^,]+)?,?([^,]+)?,?([^,]+)?\]/)
+          block_match = line.match(/^\[lutaml_express,([^,]+)?,?([^,]+)?,?([^,]+)?\]/)
           return [line] if block_match.nil?
 
           end_mark = input_lines.next

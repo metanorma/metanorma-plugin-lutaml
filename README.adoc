@@ -19,9 +19,18 @@ This plugin allows you to access LutaML models from within a Metanorma document.
 $ gem install metanorma-plugin-lutaml
 ----
 
-=== Usage, `lutaml` macro
 
-Given `example.exp` file with the content:
+== Usage with EXPRESS
+
+=== General
+
+LutaML supports accessing EXPRESS models via the
+https://github.com/lutaml/expressir[Expressir] parser.
+
+
+=== Usage of the `lutaml_express` EXPRESS macro
+
+Given an `example.exp` EXPRESS file with the content:
 
 [source,exp]
 ----
@@ -48,11 +57,11 @@ SCHEMA test_schema 'test';
 END_SCHEMA;
 ----
 
-And the `lutaml` macro block:
+And the `lutaml_express` macro block:
 
 [source,adoc]
 -----
-[lutaml,example.exp,my_context]
+[lutaml_express,example.exp,my_context]
 ----
 
 {% for schema in my_context.schemas %}
@@ -73,7 +82,7 @@ Where:
 * `{example.exp}` is the location of the EXPRESS schema file (`*.exp`) that
 contains data to be loaded. Location of the file is computed relative to the
 source directory that `[lutaml]` is used (e.g., if
-`[lutaml,example.exp,my_context]` is invoked in an `.adoc` file located at
+`[lutaml_express,example.exp,my_context]` is invoked in an `.adoc` file located at
 `/foo/bar/doc.adoc`, the data file is expected to be found at
 `/foo/bar/example.exp`);
 
@@ -129,7 +138,7 @@ Example of usage:
 = Document title
 Author
 :lutaml-express-index: my_custom_name; /path/to/express_files; cache=/path/to/cache_file.yaml
-[lutaml,my_custom_name,my_context]
+[lutaml_express,my_custom_name,my_context]
 ----
 {% for schema in my_context.schemas %}
 == {{schema.id}}
