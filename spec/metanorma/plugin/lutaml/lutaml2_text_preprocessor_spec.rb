@@ -14,7 +14,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :novalid:
           :no-isobib:
 
-          [lutaml,#{example_file},my_context]
+          [lutaml_express,#{example_file},my_context]
           ----
 
           {% for schema in my_context.schemas %}
@@ -86,7 +86,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :nodoc:
           :novalid:
           :no-isobib:
-          [lutaml,#{example_file},my_context, leveloffset=+2]
+          [lutaml_express,#{example_file},my_context, leveloffset=+2]
           ----
 
           {% for schema in my_context.schemas %}
@@ -100,7 +100,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           ----
 
 
-          [lutaml,#{example_file},my_context, leveloffset=-1]
+          [lutaml_express,#{example_file},my_context, leveloffset=-1]
           ----
 
           {% for schema in my_context.schemas %}
@@ -166,7 +166,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :novalid:
           :no-isobib:
 
-          [lutaml,#{example_file},my_context]
+          [lutaml_express,#{example_file},my_context]
           ----
           {% for schema in my_context.schemas %}
           == {{schema.id}}
@@ -224,7 +224,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             :no-isobib:
             :lutaml-express-index: express_index; #{fixtures_path('expressir_realtive_paths')}; cache=#{cache_path}
 
-            [lutaml,express_index,my_context]
+            [lutaml_express,express_index,my_context]
             ----
             {% for schema in my_context.schemas %}
             == {{schema.id}}
@@ -277,7 +277,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :novalid:
           :no-isobib:
 
-          [lutaml,#{example_file},my_context]
+          [lutaml_express,#{example_file},my_context]
           ----
           {% for schema in my_context.schemas %}
           == {{schema.id}}
@@ -347,14 +347,14 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :lutaml-express-index: first-express-set; #{fixtures_path('expressir_index_1')};
           :lutaml-express-index: second-express-set; #{fixtures_path('expressir_index_2')}; cache=#{cache_file_path}
 
-          [lutaml,first-express-set,my_context]
+          [lutaml_express,first-express-set,my_context]
           ----
           {% for schema in my_context.schemas %}
           == {{schema.id}}
           {% endfor %}
           ----
 
-          [lutaml,second-express-set,my_context]
+          [lutaml_express,second-express-set,my_context]
           ----
           {% for schema in my_context.schemas %}
           == {{schema.id}}
@@ -422,7 +422,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             :no-isobib:
             :lutaml-express-index: express-set; #{fixtures_path('none_existing_path')}; cache=#{cache_path}
 
-            [lutaml,express-set,my_context]
+            [lutaml_express,express-set,my_context]
             ----
             {% for schema in my_context.schemas %}
             == {{schema.id}}
@@ -474,7 +474,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             :no-isobib:
             :lutaml-express-index: express-set; #{fixtures_path('expressir_realtive_paths')}; cache=#{cache_path}
 
-            [lutaml,express-set,my_context]
+            [lutaml_express,express-set,my_context]
             ----
             {% for schema in my_context.schemas %}
             == {{schema.id}}
@@ -535,21 +535,21 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :lutaml-express-index: second-express-set; #{fixtures_path('lutaml_exp_index_2.yaml')};
           :lutaml-express-index: third-express-set; #{index_file_root_path};
 
-          [lutaml,first-express-set,my_context]
+          [lutaml_express,first-express-set,my_context]
           ----
           {% for schema in my_context.schemas %}
           == {{schema.id}}
           {% endfor %}
           ----
 
-          [lutaml,second-express-set,my_context]
+          [lutaml_express,second-express-set,my_context]
           ----
           {% for schema in my_context.schemas %}
           == {{schema.id}}
           {% endfor %}
           ----
 
-          [lutaml,third-express-set,my_context]
+          [lutaml_express,third-express-set,my_context]
           ----
           {% for schema in my_context.schemas %}
           == {{schema.id}}
@@ -622,7 +622,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :novalid:
           :no-isobib:
 
-          [lutaml, #{express_files_list.join('; ')}, my_context]
+          [lutaml_express, #{express_files_list.join('; ')}, my_context]
           ----
           {% for schema in my_context.schemas %}
           == {{schema.id}}
@@ -718,7 +718,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           :novalid:
           :no-isobib:
 
-          [lutaml, #{example_file}, my_context]
+          [lutaml_express, #{example_file}, my_context]
           ----
           {% assign my_include = "include" %}
           {{ my_include }}::#{fixtures_path("include_test.adoc")}[]
