@@ -26,6 +26,7 @@ module Metanorma
           'entity_list' => 'packages_entity_list',
           'data_dictionary' => 'packages_data_dictionary'
         }.freeze
+        RENDER_STYLE_ATTRIBUTE = 'render_style'.freeze
         SUPPORTED_NESTED_MACRO = %w[
           before diagram_include_block after include_block].freeze
         # search document for block `lutaml_uml_datamodel_description`
@@ -72,6 +73,35 @@ module Metanorma
             document,
             collect_additional_context(input_lines, input_lines.next),
             parse_yaml_config_file(document, block_match[2]))
+        end
+
+        def fill_in_entities_refs_attributes(document, lutaml_document_wrapper, options)
+          lutaml_document = lutaml_document_wrapper.original_document
+          render_style = options.fetch(RENDER_STYLE_ATTRIBUTE, 'default')
+          all_children_packages = lutaml_document.packages.map(&:children_packages).flatten
+          package_flat_packages = lambda do |pks|
+            pks.each_with_object({}) do |package, res|
+              res[package.name] = package.xmi_id
+            end
+          end
+          children_pks = package_flat_packages.call(all_children_packages)
+          ref_dictionary = package_flat_packages.call(lutaml_document.packages)
+                            .merge(children_pks)
+          %w[class enum data_type].each do |type|
+            package_flat = lambda do |pks|
+              pks.each_with_object({}) do |package, res|
+                plural = type == "class" ? "classes" : "#{type}s"
+                package.send(plural).map do |entity|
+                  res["#{type}:#{package.name}:#{entity.name}"] = entity.xmi_id
+                end
+              end
+            end
+            children_pks_daigs = package_flat.call(all_children_packages)
+              ref_dictionary = ref_dictionary
+                                .merge(package_flat.call(lutaml_document.packages)
+                                        .merge(children_pks_daigs))
+          end
+          document.attributes['lutaml_entity_id'] = ref_dictionary
         end
 
         def fill_in_diagrams_attributes(document, lutaml_document_wrapper)
@@ -163,8 +193,9 @@ module Metanorma
         end
 
         def model_representation(lutaml_document, document, additional_context, options)
+          fill_in_entities_refs_attributes(document, lutaml_document, options)
           render_result, errors = Utils.render_liquid_string(
-            template_string: table_template(options['section_depth'] || 2, options['render_style']),
+            template_string: table_template(options['section_depth'] || 2, options[RENDER_STYLE_ATTRIBUTE]),
             context_items: create_context_object(lutaml_document,
                               additional_context,
                               options),

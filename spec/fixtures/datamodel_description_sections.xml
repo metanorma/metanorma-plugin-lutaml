@@ -2,8 +2,8 @@
 <title>Foreword</title>
 <p id="_">mine text</p>
 </foreword></preface><sections>
-<clause id="lutaml-section-another" inline-header="false" obligation="normative"><title>Another package</title>
-<clause id="_" inline-header="false" obligation="normative"><title>Another overview</title>
+<clause id="_" inline-header="false" obligation="normative"><title>Another package</title>
+<clause id="section-EAPK_15C00628_ED51_4a92_8216_10ADF1613D98" inline-header="false" obligation="normative"><title>Another overview</title>
 <p id="_">text before Another package</p>
 <p id="_">Diagram text</p>
 <figure id="figure-EAID_74DB2087_E1FC_42a7_A349_2D89BED649A5">
@@ -19,8 +19,8 @@
 <image src="spec/assets/requirements//EAID_904A37DC_3079_4ef4_9DB0_3DC2C3784549.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
 </figure></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Defining tables</title>
-<table id="tab-P-another-C-EAID_3BCEAE64_F977_46b5_A08C_A29D52216B04" width="100%">
-<name>Elements of &#8220;Another::AbstractAtomicTimeseries&#8221; (class)</name>
+<table id="section-EAID_3BCEAE64_F977_46b5_A08C_A29D52216B04" width="100%">
+<name>Elements of Another::AbstractAtomicTimeseries</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -139,8 +139,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-C-EAID_C92B844A_C582_4644_8991_61AB0610C8E3" width="100%">
-<name>Elements of &#8220;Another::AbstractTimeseries&#8221; (class)</name>
+<table id="section-EAID_C92B844A_C582_4644_8991_61AB0610C8E3" width="100%">
+<name>Elements of Another::AbstractTimeseries</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -259,8 +259,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-C-EAID_29876515_22A7_4b7f_8F83_4F16D87F3025" width="100%">
-<name>Elements of &#8220;Another::AuthenticationTypeValue&#8221; (class)</name>
+<table id="section-EAID_29876515_22A7_4b7f_8F83_4F16D87F3025" width="100%">
+<name>Elements of Another::AuthenticationTypeValue</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -304,8 +304,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-C-EAID_DE7B3315_7E78_4d50_A7A5_80F520716EDC" width="100%">
-<name>Elements of &#8220;Another::CompositeTimeseries&#8221; (class)</name>
+<table id="section-EAID_DE7B3315_7E78_4d50_A7A5_80F520716EDC" width="100%">
+<name>Elements of Another::CompositeTimeseries</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -392,8 +392,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-C-EAID_BD4BEEEE_BBD5_4b33_9CF9_4A2ABA430756" width="100%">
-<name>Elements of &#8220;Another::Dynamizer&#8221; (class)</name>
+<table id="section-EAID_BD4BEEEE_BBD5_4b33_9CF9_4A2ABA430756" width="100%">
+<name>Elements of Another::Dynamizer</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -528,8 +528,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-C-EAID_CDE3D132_C627_4fdd_A6BD_6B6C1555E878" width="100%">
-<name>Elements of &#8220;Another::GenericTimeseries&#8221; (class)</name>
+<table id="section-EAID_CDE3D132_C627_4fdd_A6BD_6B6C1555E878" width="100%">
+<name>Elements of Another::GenericTimeseries</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -632,8 +632,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-C-EAID_8C1FCCE9_A408_4b86_A5D7_532F28277ACE" width="100%">
-<name>Elements of &#8220;Another::SensorConnectionTypeValue&#8221; (class)</name>
+<table id="section-EAID_8C1FCCE9_A408_4b86_A5D7_532F28277ACE" width="100%">
+<name>Elements of Another::SensorConnectionTypeValue</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -677,8 +677,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-C-EAID_FDF538F9_ECA6_43b2_9EFA_8AFAAA95AB62" width="100%">
-<name>Elements of &#8220;Another::StandardFileTimeseries&#8221; (class)</name>
+<table id="section-EAID_FDF538F9_ECA6_43b2_9EFA_8AFAAA95AB62" width="100%">
+<name>Elements of Another::StandardFileTimeseries</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -813,8 +813,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-C-EAID_BE99CC5F_DEFB_459f_BE53_B8F12C8B8149" width="100%">
-<name>Elements of &#8220;Another::StandardFileTypeValue&#8221; (class)</name>
+<table id="section-EAID_BE99CC5F_DEFB_459f_BE53_B8F12C8B8149" width="100%">
+<name>Elements of Another::StandardFileTypeValue</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -858,8 +858,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-C-EAID_1AA08CC8_682B_4697_830B_C3E10EC012D9" width="100%">
-<name>Elements of &#8220;Another::TabulatedFileTimeseries&#8221; (class)</name>
+<table id="section-EAID_1AA08CC8_682B_4697_830B_C3E10EC012D9" width="100%">
+<name>Elements of Another::TabulatedFileTimeseries</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1170,8 +1170,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-C-EAID_18357CC9_C00A_410a_9043_E05BEA22B6A7" width="100%">
-<name>Elements of &#8220;Another::TabulatedFileTypeValue&#8221; (class)</name>
+<table id="section-EAID_18357CC9_C00A_410a_9043_E05BEA22B6A7" width="100%">
+<name>Elements of Another::TabulatedFileTypeValue</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1215,8 +1215,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-E-EAID_20B7542F_5EE7_44c6_8AC5_055508241A3B" width="100%">
-<name>Elements of &#8220;Another::TimeseriesTypeValue&#8221; (enumeration)</name>
+<table id="section-EAID_20B7542F_5EE7_44c6_8AC5_055508241A3B" width="100%">
+<name>Elements of Another::TimeseriesTypeValue</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1309,8 +1309,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-EAID_1D8715F2_4E4A_4f36_A414_1326B6DC1EDD" width="100%">
-<name>Elements of &#8220;Another::ADEOfAbstractAtomicTimeseries&#8221; (data type)</name>
+<table id="section-EAID_1D8715F2_4E4A_4f36_A414_1326B6DC1EDD" width="100%">
+<name>Elements of Another::ADEOfAbstractAtomicTimeseries</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1348,8 +1348,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-EAID_1F4FA76D_0945_46f0_B222_3C4E92196351" width="100%">
-<name>Elements of &#8220;Another::ADEOfAbstractTimeseries&#8221; (data type)</name>
+<table id="section-EAID_1F4FA76D_0945_46f0_B222_3C4E92196351" width="100%">
+<name>Elements of Another::ADEOfAbstractTimeseries</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1387,8 +1387,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-EAID_0DBF7AD4_080D_4238_9949_1CDB34142A59" width="100%">
-<name>Elements of &#8220;Another::ADEOfCompositeTimeseries&#8221; (data type)</name>
+<table id="section-EAID_0DBF7AD4_080D_4238_9949_1CDB34142A59" width="100%">
+<name>Elements of Another::ADEOfCompositeTimeseries</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1426,8 +1426,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-EAID_6AE198DA_9848_4e6c_B17E_C1004F90782A" width="100%">
-<name>Elements of &#8220;Another::ADEOfDynamizer&#8221; (data type)</name>
+<table id="section-EAID_6AE198DA_9848_4e6c_B17E_C1004F90782A" width="100%">
+<name>Elements of Another::ADEOfDynamizer</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1465,8 +1465,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-EAID_561520A7_886A_4f79_852A_FC1DFD122B66" width="100%">
-<name>Elements of &#8220;Another::ADEOfGenericTimeseries&#8221; (data type)</name>
+<table id="section-EAID_561520A7_886A_4f79_852A_FC1DFD122B66" width="100%">
+<name>Elements of Another::ADEOfGenericTimeseries</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1504,8 +1504,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-EAID_021B99FF_A404_4c54_B785_600CA37348C1" width="100%">
-<name>Elements of &#8220;Another::ADEOfStandardFileTimeseries&#8221; (data type)</name>
+<table id="section-EAID_021B99FF_A404_4c54_B785_600CA37348C1" width="100%">
+<name>Elements of Another::ADEOfStandardFileTimeseries</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1543,8 +1543,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-EAID_A197050C_E2CB_4d86_B69E_5B5E96E37FDE" width="100%">
-<name>Elements of &#8220;Another::ADEOfTabulatedFileTimeseries&#8221; (data type)</name>
+<table id="section-EAID_A197050C_E2CB_4d86_B69E_5B5E96E37FDE" width="100%">
+<name>Elements of Another::ADEOfTabulatedFileTimeseries</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1582,8 +1582,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-EAID_084E218B_32C6_41f2_A710_ADA8A5A8462C" width="100%">
-<name>Elements of &#8220;Another::SensorConnection&#8221; (data type)</name>
+<table id="section-EAID_084E218B_32C6_41f2_A710_ADA8A5A8462C" width="100%">
+<name>Elements of Another::SensorConnection</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1706,8 +1706,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-EAID_8E506B76_0A77_4672_A50B_B82A9AF2A416" width="100%">
-<name>Elements of &#8220;Another::TimeseriesComponent&#8221; (data type)</name>
+<table id="section-EAID_8E506B76_0A77_4672_A50B_B82A9AF2A416" width="100%">
+<name>Elements of Another::TimeseriesComponent</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1764,8 +1764,8 @@
 </tr>
 </tbody>
 </table>
-<table id="tab-P-another-DT-EAID_2ECE65B5_3620_4c27_B3A9_2D705C545692" width="100%">
-<name>Elements of &#8220;Another::TimeValuePair&#8221; (data type)</name>
+<table id="section-EAID_2ECE65B5_3620_4c27_B3A9_2D705C545692" width="100%">
+<name>Elements of Another::TimeValuePair</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Name:</th>
@@ -1873,8 +1873,8 @@
 <clause id="_" inline-header="false" obligation="normative"><title>Additional information</title>
 <p id="_">text after Another package</p>
 <p id="_">mine text</p></clause></clause>
-<clause id="lutaml-section-citygml" inline-header="false" obligation="normative"><title>CityGML package</title>
-<clause id="_" inline-header="false" obligation="normative"><title>CityGML overview</title>
+<clause id="_" inline-header="false" obligation="normative"><title>CityGML package</title>
+<clause id="section-EAPK_369E0123_00FC_4098_BEF2_3BB506B2012A" inline-header="false" obligation="normative"><title>CityGML overview</title>
 <p id="_">Diagram text</p>
 <figure id="figure-EAID_ACBB5EE3_3428_40f5_9C7C_E41923419F29">
 <name>CityGML Package Diagram</name>
@@ -1900,3 +1900,5 @@
 <clause id="_" inline-header="false" obligation="normative"><title>Additional information</title>
 <p id="_">text after CityGML package</p>
 <p id="_">footer text</p></clause></clause></sections>
+</standard-document>
+</body></html>
