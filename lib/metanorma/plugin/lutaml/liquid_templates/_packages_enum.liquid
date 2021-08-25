@@ -3,9 +3,9 @@
 {% elsif is_klass_spare == 'Spare' %}{% continue %}
 {% endif %}
 {% assign klass_name = klass.name | downcase | replace: ':', '' | replace: ' ', '_' %}
-{% assign klass_xid = klass.xmi_id %}
-[[tab-P-{{ package_name }}-E-{{ klass_xid }}]]
-.Elements of "{{ package.name }}::{{ klass.name }}" (enumeration)
+
+[[section-{{ klass.xmi_id }}]]
+.Elements of {{ package.name }}::{{ klass.name }}
 [width="100%",cols="a,a,a,a,a,a,a,a"]
 |===
 

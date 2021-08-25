@@ -7,7 +7,7 @@
 {% endif %}
 {% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}{{equalsigns}} {{ package.name }}
 
-[[rc_{{ package_name }}-model_section]]
+[[section-{{ package.xmi_id }}]]
 {{equalsigns}}= {{ package.name }}
 
 {% assign before_package_key = 'before;' | append: package.name %}

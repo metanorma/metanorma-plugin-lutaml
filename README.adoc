@@ -382,6 +382,10 @@ In addition to the macros listed above that can be used only inside `lutaml_uml_
 [source,adoc]
 -----
 This is lutaml_figure::[package="Wrapper root package", name="Fig B1 Full model"] figure
+This is lutaml_table_package::[package="Wrapper root package"] package
+This is lutaml_table_class::[package="Wrapper root package", name="my name"] class
+This is lutaml_table_enum::[package="Wrapper root package", name="my name"] enum
+This is lutaml_table_data_type::[package="Wrapper root package", name="my name"] data_type
 -----
 
 This code will be transformed into `<<figure-{diagram.xmi_id}>>` and will point to diagram figure. One can only use this macro when document rendered `lutaml_uml_datamodel_description` macro as it needs diagram lookup table in order to reference package diagram.
@@ -418,10 +422,11 @@ Content for CityGML package
 
 ==== Defining tables
 
-.<<tab-P-another-C-{XMI_ID}>> -- Elements of &#8220;Another::AbstractAtomicTimeseries&#8221; (class)
+[arabic]
+.<<section-EAPK_9C96A88B_E98B_490b_8A9C_24AEDAC64293>> -- Elements of Another::AbstractAtomicTimeseries
 
-[[tab-P-another-C-{XMI_ID}]]
-.Elements of &#8220;Another::AbstractAtomicTimeseries&#8221; (class)
+[[section-EAPK_9C96A88B_E98B_490b_8A9C_24AEDAC64293]]
+.Elements of Another::AbstractAtomicTimeseries
 [width="100%",cols="a,a,a,a,a,a,a,a"]
 |===
 h|Name: 7+| AbstractAtomicTimeseries

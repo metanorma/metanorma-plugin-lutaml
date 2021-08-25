@@ -10,11 +10,8 @@
 {% elsif is_package_spare == 'Spare' %}{% continue %}
 {% endif %}
 
-{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
-
-[[lutaml-section-{{ package_name }}]]
-{{equalsigns}} {{ package.name }} package
-
+{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}{{equalsigns}} {{ package.name }} package
+[[section-{{ package.xmi_id }}]]
 {{equalsigns}}= {{ package.name }} overview
 
 {% assign before_package_key = 'before;' | append: package.name %}
@@ -54,8 +51,7 @@
 {% elsif is_klass_spare == 'Spare' %}{% continue %}
 {% endif %}
 {% assign klass_name = klass.name | downcase | replace: ':', '' | replace: ' ', '_' %}
-{% assign klass_xid = klass.xmi_id %}
-.<<tab-P-{{ package_name }}-C-{{ klass_xid }}>> -- Elements of "{{ package.name }}::{{ klass.name }}"
+.<<section-{{ klass.xmi_id }}>> -- Elements of {{ package.name }}::{{ klass.name }}
 
 {% endfor %}
 {% for enum in package.enums %}
@@ -64,8 +60,7 @@
 {% elsif is_enum_spare == 'Spare' %}{% continue %}
 {% endif %}
 {% assign enum_name = enum.name | downcase | replace: ':', '' | replace: ' ', '_' %}
-{% assign enum_xid = enum.xmi_id %}
-.<<tab-P-{{ package_name }}-E-{{ enum_xid }}>> -- Elements of "{{ package.name }}::{{ enum.name }}"
+.<<section-{{ enum.xmi_id }}>> -- Elements of {{ package.name }}::{{ enum.name }}
 
 {% endfor %}
 {% for data_type in package.data_types %}
@@ -74,8 +69,7 @@
 {% elsif is_data_type_spare == 'Spare' %}{% continue %}
 {% endif %}
 {% assign data_type_name = data_type.name | downcase | replace: ':', '' | replace: ' ', '_' %}
-{% assign data_type_xid = data_type.xmi_id %}
-.<<tab-P-{{ package_name }}-DT-{{ data_type_xid }}>> -- Elements of "{{ package.name }}::{{ data_type.name }}"
+.<<section-{{ data_type.xmi_id }}>> -- Elements of {{ package.name }}::{{ data_type.name }}
 
 {% endfor %}
 
