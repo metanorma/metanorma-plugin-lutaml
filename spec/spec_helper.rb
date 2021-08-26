@@ -5,10 +5,7 @@ require "metanorma-plugin-lutaml"
 # Register lutaml blocks as first preprocessors in line in order
 # to test properly with metanorma-standoc
 Asciidoctor::Extensions.register do
-  inline_macro Metanorma::Plugin::Lutaml::LutamlTablePackageInlineMacro, :lutaml_table_package
-  inline_macro Metanorma::Plugin::Lutaml::LutamlTableDataTypeInlineMacro, :lutaml_table_data_type
-  inline_macro Metanorma::Plugin::Lutaml::LutamlTableEnumInlineMacro, :lutaml_table_enum
-  inline_macro Metanorma::Plugin::Lutaml::LutamlTableClassInlineMacro, :lutaml_table_class
+  inline_macro Metanorma::Plugin::Lutaml::LutamlTableInlineMacro, :lutaml_table
   inline_macro Metanorma::Plugin::Lutaml::LutamlFigureInlineMacro, :lutaml_figure
   preprocessor Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreprocessor
 end
