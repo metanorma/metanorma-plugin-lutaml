@@ -51,7 +51,7 @@
 {% elsif is_klass_spare == 'Spare' %}{% continue %}
 {% endif %}
 {% assign klass_name = klass.name | downcase | replace: ':', '' | replace: ' ', '_' %}
-.<<section-{{ klass.xmi_id }}>> -- Elements of {{ package.name }}::{{ klass.name }}
+.<<section-{{ klass.xmi_id }}>> -- &#8220;Elements of {{ package.name }}::{{ klass.name }}&#8221; (class)
 
 {% endfor %}
 {% for enum in package.enums %}
@@ -60,7 +60,7 @@
 {% elsif is_enum_spare == 'Spare' %}{% continue %}
 {% endif %}
 {% assign enum_name = enum.name | downcase | replace: ':', '' | replace: ' ', '_' %}
-.<<section-{{ enum.xmi_id }}>> -- Elements of {{ package.name }}::{{ enum.name }}
+.<<section-{{ enum.xmi_id }}>> -- &#8220;Elements of {{ package.name }}::{{ enum.name }}&#8221; (enum)
 
 {% endfor %}
 {% for data_type in package.data_types %}
@@ -69,7 +69,7 @@
 {% elsif is_data_type_spare == 'Spare' %}{% continue %}
 {% endif %}
 {% assign data_type_name = data_type.name | downcase | replace: ':', '' | replace: ' ', '_' %}
-.<<section-{{ data_type.xmi_id }}>> -- Elements of {{ package.name }}::{{ data_type.name }}
+.<<section-{{ data_type.xmi_id }}>> -- &#8220;Elements of {{ package.name }}::{{ data_type.name }}&#8221; (data_type)
 
 {% endfor %}
 

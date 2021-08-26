@@ -3,14 +3,16 @@
 module Metanorma
   module Plugin
     module Lutaml
-      class LutamlTableEnumInlineMacro < Asciidoctor::Extensions::InlineMacroProcessor
+      class LutamlTableInlineMacro < Asciidoctor::Extensions::InlineMacroProcessor
         include LutamlDiagramBase
+        SUPPORTED_OPTIONS = %w[class enum data_type]
 
         use_dsl
-        named :lutaml_table_enum
+        named :lutaml_table_class
 
         def process(parent, _target, attrs)
-          entity_key = ['enum', attrs["package"], attrs["name"]].compact.join(":")
+          keyword = SUPPORTED_OPTIONS.find { |n| attrs[n] }
+          entity_key = [keyword, attrs["package"], attrs[keyword]].compact.join(":")
           return if parent.document.attributes['lutaml_entity_id'].nil?
           xmi_id = parent.document.attributes['lutaml_entity_id'][entity_key]
           return unless xmi_id
