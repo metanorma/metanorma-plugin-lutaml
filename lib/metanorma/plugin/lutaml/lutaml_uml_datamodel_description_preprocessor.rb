@@ -28,7 +28,7 @@ module Metanorma
         }.freeze
         RENDER_STYLE_ATTRIBUTE = 'render_style'.freeze
         SUPPORTED_NESTED_MACRO = %w[
-          before diagram_include_block after include_block].freeze
+          before diagram_include_block after include_block package_text].freeze
         # search document for block `lutaml_uml_datamodel_description`
         #  read include derectives that goes after that in block and transform
         #  into yaml2text blocks
@@ -118,6 +118,7 @@ module Metanorma
 
         def collect_additional_context(input_lines, end_mark)
           additional_context = Hash.new { |hash, key| hash[key] = [] }
+          additional_context['all_macroses'] = []
           block_lines = []
           while (block_line = input_lines.next) != end_mark
             block_lines.push(block_line)
@@ -132,6 +133,7 @@ module Metanorma
             macro_keyword = [name, package].compact.join(";")
             block_text = block.lines.length > 0 ? block.lines[1..-2].join("\n") : ''
             additional_context[macro_keyword].push({ 'text' => block_text }.merge(attrs))
+            additional_context['all_macroses'].push({ 'text' => block_text, 'type' => name, 'package' => package }.merge(attrs))
           end
           additional_context
         end
@@ -148,6 +150,7 @@ module Metanorma
             return {
               'render_nested_packages' => true,
               "packages" => root_package['packages'],
+              "root_packages" => [root_package],
               "additional_context" => additional_context
             }
           end
@@ -195,7 +198,7 @@ module Metanorma
         def model_representation(lutaml_document, document, additional_context, options)
           fill_in_entities_refs_attributes(document, lutaml_document, options)
           render_result, errors = Utils.render_liquid_string(
-            template_string: table_template(options['section_depth'] || 2, options[RENDER_STYLE_ATTRIBUTE]),
+            template_string: table_template(options['section_depth'] || 2, options['render_style'], options['include_root']),
             context_items: create_context_object(lutaml_document,
                               additional_context,
                               options),
@@ -207,9 +210,15 @@ module Metanorma
           render_result.split("\n")
         end
 
-        def table_template(section_depth, render_style)
+        def table_template(section_depth, render_style, include_root)
           include_name = RENDER_STYLES_INCLUDES.fetch(render_style, DEFAULT_RENDER_INCLUDE)
-          <<~LIQUID
+          result = ""
+          if include_root
+            result += <<~LIQUID
+              {% include "#{include_name}", context: context.root_packages, additional_context: context.additional_context, render_nested_packages: false %}
+            LIQUID
+          end
+          result += <<~LIQUID
             {% include "#{include_name}", depth: #{section_depth}, context: context, additional_context: context.additional_context, render_nested_packages: context.render_nested_packages %}
           LIQUID
         end

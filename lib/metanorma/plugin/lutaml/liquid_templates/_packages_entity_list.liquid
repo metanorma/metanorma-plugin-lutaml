@@ -5,66 +5,87 @@
 {{ before.text }}
 {% endfor %}
 {% endif %}
+{% if depth %}
 {% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}{{equalsigns}} {{ package.name }}
-
-[[section-{{ package.xmi_id }}]]
+[[rc_{{ package_name }}-model_section]]
 {{equalsigns}}= {{ package.name }}
+{% endif %}
 
-{% assign before_package_key = 'before;' | append: package.name %}
-{% if additional_context[before_package_key] and additional_context[before_package_key].size > 0 %}
-{% for before in additional_context[before_package_key] %}
-{{ before.text }}
+{% if additional_context.all_macroses.size > 0 %}
+{% assign sorted_all_macroses = additional_context.all_macroses | where: "position", "before" | sort: 'index' %}
+{% for block in sorted_all_macroses %}
+{% case block.type %}
+{% when 'include_block' %}
+{% unless block.package and block.package != package.name %}
+{% capture block_filename %}{{ block.base_path }}{{ package_name }}{% endcapture %}
+{% capture block_content %}{% include block_filename %}{% endcapture %}
+{% unless block_content contains "Liquid error" %}
+{% if block.text %}
+{{ block.text }}
+{% endif %}
+{{ block_content }}
+{% endunless %}
+{% endunless %}
+{% when 'package_text' %}
+{% unless block.package and block.package != package.name %}
+{{ block.text }}
+{% endunless %}
+{% else %}
+{% endcase %}
 {% endfor %}
 {% endif %}
+
+// TODO: move to all_macroses block
 {% if additional_context.diagram_include_block %}
 {% for diagram_include_block in additional_context.diagram_include_block %}
 {% include "diagrams_block", package_name: package_name, image_base_path: diagram_include_block.base_path, text: diagram_include_block.text %}
 {% endfor %}
 {% endif %}
 
-{% if additional_context.include_block and additional_context.include_block.size > 0 %}
-{% for block in additional_context.include_block %}
-{% capture block_filename %}{{ block.base_path }}{{ package_name }}{% endcapture %}
-{% capture block_content %}{% include block_filename %}{% endcapture %}
-{% unless block_content contains "Liquid error" %}
-{% if block.text %}
-{{ block.text }}
-{% endif %}
-{{ block_content }}
-{% endunless %}
-{% endfor %}
-{% endif %}
-
-{% assign include_block_package_key = 'include_block;' | append: package.name %}
-{% if additional_context[include_block_package_key] and additional_context[include_block_package_key].size > 0 %}
-{% for block in additional_context[include_block_package_key] %}
-{% capture block_filename %}{{ block.base_path }}{{ package_name }}{% endcapture %}
-{% capture block_content %}{% include block_filename %}{% endcapture %}
-{% unless block_content contains "Liquid error" %}
-{% if block.text %}
-{{ block.text }}
-{% endif %}
-{{ block_content }}
-{% endunless %}
-{% endfor %}
-{% endif %}
-
-{{equalsigns}}= Class definitions
 {% if package.classes.size > 0 %}
+{{equalsigns}}= Class definitions
+
+{% comment %} {% assign data_types = package.classes | where: "stereotype", "DataType" %} {% endcomment %}
+{% assign basic_types = package.classes | where: "stereotype", "BasicType" %}
+{% comment %} {% assign enumerations = package.classes | where: "stereotype", "Enumeration" %} {% endcomment %}
+{% assign code_lists = package.classes | where: "stereotype", "CodeList" %}
+
+{% assign not_classes_length = data_types.size | plus: basic_types.size | plus: enumerations.size | plus: code_lists.size %}
+{% assign not_classes_stereoptypes = 'DataType,BasicType,Enumeration,CodeList' | split: ','%}
+{% unless not_classes_length == package.classes.size %}
 .Classes used in {{ package.name }}
 [cols="2a,6a",options="header"]
 |===
-|Class |Description
-
+|Name |Description
 {% for klass in package.classes %}
+{% unless not_classes_stereoptypes contains klass.stereotype  %}
 |<<{{ klass.name }}-section,{{ klass.name }}>> «{{ klass.stereotype }}»
 |{{ klass.definition }}
 
+{% endunless %}
 {% endfor %}
 |===
-{% endif %}
+{% endunless %}
 
 {% if package.data_types.size > 0 %}
+{% include "packages_entity_list_classes", classes: package.data_types, type: "Data Types" %}
+{% endif %}
+
+{% if basic_types.size > 0 %}
+{% include "packages_entity_list_classes", classes: basic_types, type: "Primitive Data Types" %}
+{% endif %}
+
+{% if package.enums.size > 0 %}
+{% include "packages_entity_list_classes", classes: package.enums, type: "Enumerated" %}
+{% endif %}
+
+{% if code_lists.size > 0 %}
+{% include "packages_entity_list_classes", classes: code_lists, type: "CodeList Classes" %}
+{% endif %}
+
+{% endif %}
+
+{% comment %} {% if package.data_types.size > 0 %}
 .Data types used in {{ package.name }}
 [cols="2,6",options="header"]
 |===
@@ -92,7 +113,7 @@
 {% endfor %}
 
 |===
-{% endif %}
+{% endif %} {% endcomment %}
 
 {% assign after_package_key = 'after;' | append: package.name %}
 {% if additional_context[after_package_key] %}
