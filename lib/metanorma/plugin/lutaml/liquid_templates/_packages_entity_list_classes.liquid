@@ -1,0 +1,11 @@
+.{{ type }} used in {{ package.name }}
+[cols="2a,6a",options="header"]
+|===
+|Name |Description
+
+{% for klass in classes %}
+|<<{{ klass.name }}-section,{{ klass.name }}>> «{{ klass.stereotype | default: "Enumeration" }}»
+|{{ klass.definition }}
+
+{% endfor %}
+|===
