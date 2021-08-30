@@ -1,5 +1,5 @@
 {% for klass in classes %}
-{% capture generalizations %}{% for assoc in klass.associations | where: "member_end_type", "generalization" %}{{ assoc.member_end }} {% endfor %}{% endcapture %}
+{% capture generalizations %}{% assign inheritance = klass.associations | where: "member_end_type", "inheritance" %}{% for assoc in inheritance %}{{ assoc.member_end }} {% endfor %}{% endcapture %}
 [[{{ klass.name }}-section]]
 [cols="1a"]
 |===
