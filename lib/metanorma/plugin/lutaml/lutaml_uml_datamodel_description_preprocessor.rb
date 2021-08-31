@@ -151,14 +151,17 @@ module Metanorma
               'render_nested_packages' => true,
               "packages" => root_package['packages'],
               "root_packages" => [root_package],
-              "additional_context" => additional_context
+              "additional_context" => additional_context,
+              "name" => root_package['name']
             }
           end
 
           all_packages = [root_package, *root_package['children_packages']]
           {
             "packages" => sort_and_filter_out_packages(all_packages, options),
-            "additional_context" => additional_context
+            "additional_context" => additional_context,
+            "root_packages" => [root_package],
+            "name" => root_package['name']
           }
         end
 
