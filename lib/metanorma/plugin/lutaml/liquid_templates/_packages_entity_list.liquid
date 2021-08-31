@@ -21,13 +21,16 @@
 {% capture block_content %}{% include block_filename %}{% endcapture %}
 {% unless block_content contains "Liquid error" %}
 {% if block.text %}
+
 {{ block.text }}
 {% endif %}
+
 {{ block_content }}
 {% endunless %}
 {% endunless %}
 {% when 'package_text' %}
 {% unless block.package and block.package != package.name %}
+
 {{ block.text }}
 {% endunless %}
 {% else %}
