@@ -8,8 +8,13 @@
 [cols="1,4"]
 !===
 ! Definition:  ! {{ klass.definition }}
-! Subclass of: ! {{ generalizations }}
+! Subclass of: ! {% if generalizations.size > 4 %}{{ generalizations }}{% else %}None{% endif %}
 ! Stereotype:  ! «{{ klass.stereotype }}»
+{% if klass.constraints.size > 0 %}
+{% for constraint in klass.constraints %}
+! Constraint:  ! {{ constraint.body }}: {{ constraint.definition | replace: '|', '\|' }}
+{% endfor %}
+{% endif %}
 !===
 
 {% if klass.associations.size > 0 %}
@@ -52,7 +57,7 @@
 {% capture cardinality %}{% if attr.cardinality.min == 'C' %}[0..{{ attr.cardinality.max }}]{% elsif assoc.member_end_cardinality.min == 'M' and assoc.member_end_cardinality.max == '1' %}[1..1]{% else %}[{{ attr.cardinality.max }}]{% endif %}{% endcapture %}
 
 ! {{ attr.name }}
-!<<{{ attr.type }}-section,{{ attr.name }}>> {{ cardinality }}
+!<<{{ attr.type }}-section,{{ attr.type }}>> {{ cardinality }}
 !{{ attr.definition }}
 
 {% endfor %}

@@ -27,7 +27,7 @@ h|Stereotype:     | «{{ package.stereotype }}»
 {% assign feature_types = package.classes | where: "stereotype", "FeatureType" %}
 {% assign object_types = package.classes | where: "stereotype", "ObjectType" %}
 {% assign basic_types = package.classes | where: "stereotype", "BasicType" %}
-{% assign unions = package.classes | where: "stereotype", "Union" %}
+{% assign unions = package.data_types | where: "stereotype", "Union" %}
 {% assign code_lists = package.classes | where: "stereotype", "CodeList" %}
 {% if feature_types.size > 0 or object_types.size > 0 %}
 {{equalsigns}}= Classes
@@ -54,10 +54,11 @@ h|Stereotype:     | «{{ package.stereotype }}»
 {% include "packages_data_dictionary_classes", classes: code_lists %}
 {% endif %}
 
-{% if package.data_types.size > 0 %}
+{% assign non_unions = package.data_types | where: "stereotype", "DataType"  %}
+{% if non_unions.size > 0 %}
 {{equalsigns}}= Data types
 
-{% for data_type in package.data_types %}
+{% for data_type in non_unions %}
 {% capture generalizations %}{% assign inheritance = data_type.associations | where: "member_end_type", "inheritance" %}{% for assoc in inheritance %}{{ assoc.member_end }} {% endfor %}{% endcapture %}
 [[{{ data_type.name }}-section]]
 [cols="1a"]
@@ -66,8 +67,8 @@ h|Stereotype:     | «{{ package.stereotype }}»
 |[cols="1,4"]
 !===
 !Definition:  ! {{ data_type.definition }}
-!Subclass of: ! {{ generalizations }}
-!Stereotype:  !  «DataType»
+!Subclass of: ! {% if generalizations.size > 4 %}{{ generalizations }}{% else %}None{% endif %}
+!Stereotype:  !  «{{ data_type.stereotype }}»
 !===
 {% if data_type.associations.size > 0 %}
 {% capture rendered_associations %}
@@ -94,7 +95,7 @@ h|Stereotype:     | «{{ package.stereotype }}»
 ! Attribute ! Value type and multiplicity ! Definition
 {% for attr in data_type.attributes %}
 {% capture cardinality %}{% if attr.cardinality.min == 'C' %}[0..{{ attr.cardinality.max }}]{% elsif assoc.member_end_cardinality.min == 'M' and assoc.member_end_cardinality.max == '1' %}[1..1]{% else %}[{{ attr.cardinality.max }}]{% endif %}{% endcapture %}
-! {{ attr.name }}  !<<{{ attr.type }}-section,{{ attr.name }}>>  {{ cardinality }} !{{ attr.definition }}
+! {{ attr.name }}  !<<{{ attr.type }}-section,{{ attr.type }}>>  {{ cardinality }} !{{ attr.definition }}
 {% endfor %}
 !===
 | NOTE: Unless otherwise specified, all attributes and role names have the stereotype «Property».
