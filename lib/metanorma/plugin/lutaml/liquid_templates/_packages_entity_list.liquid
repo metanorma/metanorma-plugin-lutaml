@@ -53,7 +53,7 @@
 {% comment %} {% assign enumerations = package.classes | where: "stereotype", "Enumeration" %} {% endcomment %}
 {% assign code_lists = package.classes | where: "stereotype", "CodeList" %}
 
-{% assign not_classes_length = data_types.size | plus: basic_types.size | plus: enumerations.size | plus: code_lists.size %}
+{% assign not_classes_length = plus: basic_types.size | plus: code_lists.size %}
 {% assign not_classes_stereoptypes = 'DataType,BasicType,Enumeration,CodeList' | split: ','%}
 {% unless not_classes_length == package.classes.size %}
 .Classes used in {{ package.name }}
@@ -79,7 +79,7 @@
 {% endif %}
 
 {% if package.enums.size > 0 %}
-{% include "packages_entity_list_classes", classes: package.enums, type: "Enumerated" %}
+{% include "packages_entity_list_classes", classes: package.enums, type: "Enumerated Classes" %}
 {% endif %}
 
 {% if code_lists.size > 0 %}
