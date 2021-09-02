@@ -6,7 +6,6 @@
 {% endfor %}
 {% endif %}
 {% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}{{equalsigns}} {{ package.name }}
-{{equalsigns}}= {{ package.name }}
 
 {% assign before_package_key = 'before;' | append: package.name %}
 {% if additional_context[before_package_key] and additional_context[before_package_key].size > 0 %}

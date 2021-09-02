@@ -6,9 +6,8 @@
 {% endfor %}
 {% endif %}
 {% if depth %}
-{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}{{equalsigns}} {{ package.name }}
 [[rc_{{ package_name }}-model_section]]
-{{equalsigns}}= {{ package.name }}
+{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}{{equalsigns}} {{ package.name }}
 {% endif %}
 
 {% if additional_context.all_macroses.size > 0 %}
