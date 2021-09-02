@@ -131,7 +131,7 @@ module Metanorma
             name = attrs.delete('role')
             package = attrs.delete('package')
             macro_keyword = [name, package].compact.join(";")
-            block_text = block.lines.length > 0 ? block.lines[0..-2].join("\n") : ''
+            block_text = block.lines.length > 0 ? block.lines.join("\n") : ''
             additional_context[macro_keyword].push({ 'text' => block_text }.merge(attrs))
             additional_context['all_macroses'].push({ 'text' => block_text, 'type' => name, 'package' => package }.merge(attrs))
           end

@@ -24,17 +24,20 @@ h|Stereotype:     | «{{ package.stereotype }}»
 
 |===
 
-{% assign feature_types = package.classes | where: "stereotype", "FeatureType" %}
-{% assign object_types = package.classes | where: "stereotype", "ObjectType" %}
 {% assign basic_types = package.classes | where: "stereotype", "BasicType" %}
 {% assign unions = package.data_types | where: "stereotype", "Union" %}
 {% assign code_lists = package.classes | where: "stereotype", "CodeList" %}
-{% if feature_types.size > 0 or object_types.size > 0 %}
+{% assign not_classes_length = basic_types.size | plus: code_lists.size %}
+{% assign not_classes_stereoptypes = 'DataType,BasicType,Enumeration,CodeList' | split: ','%}
+{% unless not_classes_length == package.classes.size %}
 {{equalsigns}}= Classes
 
-{% include "packages_data_dictionary_classes", classes: feature_types %}
-{% include "packages_data_dictionary_classes", classes: object_types %}
-{% endif %}
+{% for klass in package.classes %}
+{% unless not_classes_stereoptypes contains klass.stereotype  %}
+{% include "packages_data_dictionary_class" %}
+{% endunless %}
+{% endfor %}
+{% endunless %}
 
 {% if basic_types.size > 0 %}
 {{equalsigns}}= Basic types
