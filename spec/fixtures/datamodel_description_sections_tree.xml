@@ -1,10 +1,14 @@
 <preface><foreword id="_" obligation="informative">
 <title>Foreword</title>
-<p id="_">mine text</p>
+<p id="_">&#8230;&#8203;
+mine text
+&#8230;&#8203;</p>
 </foreword></preface><sections>
 <clause id="_" inline-header="false" obligation="normative"><title>Wrapper nested package package</title>
 <clause id="section-EAPK_9C96A88B_E98B_490b_8A9C_24AEDAC64293" inline-header="false" obligation="normative"><title>Wrapper nested package overview</title>
-<p id="_">Diagram text</p>
+<p id="_">&#8230;&#8203;
+Diagram text
+&#8230;&#8203;</p>
 <p id="_">The Wrapper nested package package is organized into
 1 packages with 2 modules:</p>
 <ol id="_" type="arabic">
@@ -12,10 +16,14 @@
 <p id="_">CityGML package</p>
 </li>
 </ol>
-<p id="_">mine text</p></clause>
+<p id="_">&#8230;&#8203;
+mine text
+&#8230;&#8203;</p></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>CityGML package</title>
 <clause id="section-EAPK_369E0123_00FC_4098_BEF2_3BB506B2012A" inline-header="false" obligation="normative"><title>CityGML overview</title>
-<p id="_">Diagram text</p>
+<p id="_">&#8230;&#8203;
+Diagram text
+&#8230;&#8203;</p>
 <figure id="figure-EAID_ACBB5EE3_3428_40f5_9C7C_E41923419F29">
 <name>CityGML Package Diagram</name>
 <image src="spec/assets/requirements//EAID_ACBB5EE3_3428_40f5_9C7C_E41923419F29.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
@@ -35,15 +43,25 @@
 <p id="_">CityTML package</p>
 </li>
 </ol>
-<p id="_">my text</p>
+<p id="_">&#8230;&#8203;
+my text
+&#8230;&#8203;</p>
 <p id="_">Content for CityGML package</p></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Additional information</title>
-<p id="_">text after CityGML package</p>
-<p id="_">mine text</p></clause>
+<p id="_">&#8230;&#8203;
+text after CityGML package
+&#8230;&#8203;</p>
+<p id="_">&#8230;&#8203;
+mine text
+&#8230;&#8203;</p></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Another package</title>
 <clause id="section-EAPK_15C00628_ED51_4a92_8216_10ADF1613D98" inline-header="false" obligation="normative"><title>Another overview</title>
-<p id="_">text before Another package</p>
-<p id="_">Diagram text</p>
+<p id="_">&#8230;&#8203;
+text before Another package
+&#8230;&#8203;</p>
+<p id="_">&#8230;&#8203;
+Diagram text
+&#8230;&#8203;</p>
 <figure id="figure-EAID_74DB2087_E1FC_42a7_A349_2D89BED649A5">
 <name>Dynamizer</name>
 <image src="spec/assets/requirements//EAID_74DB2087_E1FC_42a7_A349_2D89BED649A5.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
@@ -1902,18 +1920,28 @@
 </tr>
 </tbody>
 </table>
-<p id="_">my text</p></clause></clause></clause></clause>
+<p id="_">&#8230;&#8203;
+my text
+&#8230;&#8203;</p></clause></clause></clause></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Test</title>
 <p id="_">My content</p>
-<p id="_">my text</p></clause>
+<p id="_">&#8230;&#8203;
+my text
+&#8230;&#8203;</p></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Test</title>
 <p id="_">My content</p>
 <clause id="_" inline-header="false" obligation="normative"><title>Additional information</title>
-<p id="_">text after Another package</p>
-<p id="_">mine text</p></clause>
+<p id="_">&#8230;&#8203;
+text after Another package
+&#8230;&#8203;</p>
+<p id="_">&#8230;&#8203;
+mine text
+&#8230;&#8203;</p></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>CityTML package</title>
 <clause id="section-EAPK_1C8607D1_2967_44ff_948A_2A9256D00A45" inline-header="false" obligation="normative"><title>CityTML overview</title>
-<p id="_">Diagram text</p>
+<p id="_">&#8230;&#8203;
+Diagram text
+&#8230;&#8203;</p>
 <figure id="figure-EAID_1D8C3E70_F679_46de_BDBB_ECF383899160">
 <name>Construction</name>
 <image src="spec/assets/requirements//EAID_1D8C3E70_F679_46de_BDBB_ECF383899160.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
@@ -5653,10 +5681,14 @@
 </tr>
 </tbody>
 </table>
-<p id="_">mine text</p></clause>
+<p id="_">&#8230;&#8203;
+mine text
+&#8230;&#8203;</p></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Dynamizer package</title>
 <clause id="section-EAPK_15C00628_ED51_4a92_8216_10ADF1613D98" inline-header="false" obligation="normative"><title>Dynamizer overview</title>
-<p id="_">Diagram text</p>
+<p id="_">&#8230;&#8203;
+Diagram text
+&#8230;&#8203;</p>
 <figure id="figure-EAID_74DB2087_E1FC_42a7_A349_2D89BED649A5">
 <name>Dynamizer</name>
 <image src="spec/assets/requirements//EAID_74DB2087_E1FC_42a7_A349_2D89BED649A5.png" id="_" mimetype="image/png" height="auto" width="auto"></image>
@@ -7515,9 +7547,17 @@
 </tr>
 </tbody>
 </table>
-<p id="_">footer text</p>
-<p id="_">footer text</p>
-<p id="_">footer text</p>
-<p id="_">footer text</p></clause></clause></clause></clause></sections>
+<p id="_">&#8230;&#8203;
+footer text
+&#8230;&#8203;</p>
+<p id="_">&#8230;&#8203;
+footer text
+&#8230;&#8203;</p>
+<p id="_">&#8230;&#8203;
+footer text
+&#8230;&#8203;</p>
+<p id="_">&#8230;&#8203;
+footer text
+&#8230;&#8203;</p></clause></clause></clause></clause></sections>
 </standard-document>
 </body></html>
