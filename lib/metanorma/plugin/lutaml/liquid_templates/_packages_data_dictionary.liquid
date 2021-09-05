@@ -28,37 +28,50 @@ h|Stereotype:     | «{{ package.stereotype }}»
 {% assign code_lists = package.classes | where: "stereotype", "CodeList" %}
 {% assign not_classes_length = basic_types.size | plus: code_lists.size %}
 {% assign not_classes_stereoptypes = 'DataType,BasicType,Enumeration,CodeList' | split: ','%}
-{% unless not_classes_length == package.classes.size %}
 {{equalsigns}}= Classes
+
+{% unless not_classes_length == package.classes.size %}
 
 {% for klass in package.classes %}
 {% unless not_classes_stereoptypes contains klass.stereotype  %}
 {% include "packages_data_dictionary_class" %}
 {% endunless %}
 {% endfor %}
+{% else %}
+None
 {% endunless %}
 
-{% if basic_types.size > 0 %}
 {{equalsigns}}= Basic types
 
+{% if basic_types.size > 0 %}
+
 {% include "packages_data_dictionary_classes", classes: basic_types %}
+{% else %}
+None
 {% endif %}
 
-{% if unions.size > 0 %}
 {{equalsigns}}= Unions
 
+{% if unions.size > 0 %}
+
 {% include "packages_data_dictionary_classes", classes: unions %}
+{% else %}
+None
 {% endif %}
 
-{% if code_lists.size > 0 %}
 {{equalsigns}}= Code lists
 
+{% if code_lists.size > 0 %}
+
 {% include "packages_data_dictionary_classes", classes: code_lists %}
+{% else %}
+None
 {% endif %}
+
+{{equalsigns}}= Data types
 
 {% assign non_unions = package.data_types | where: "stereotype", "DataType"  %}
 {% if non_unions.size > 0 %}
-{{equalsigns}}= Data types
 
 {% for data_type in non_unions %}
 {% capture generalizations %}{% assign inheritance = data_type.associations | where: "member_end_type", "inheritance" %}{% for assoc in inheritance %}{{ assoc.member_end }} {% endfor %}{% endcapture %}
@@ -105,10 +118,13 @@ h|Stereotype:     | «{{ package.stereotype }}»
 |===
 
 {% endfor %}
+{% else %}
+None
 {% endif %}
 
-{% if package.enums.size > 0 %}
 {{equalsigns}}= Enumerations
+
+{% if package.enums.size > 0 %}
 
 {% for enum in package.enums %}
 [[{{ enum.name }}-section]]
@@ -135,6 +151,8 @@ h|Stereotype:     | «{{ package.stereotype }}»
 |===
 
 {% endfor %}
+{% else %}
+None
 {% endif %}
 
 {% if additional_context.include_block and additional_context.include_block.size > 0 %}
