@@ -69,8 +69,8 @@ h| Public attributes:
 
 {% if klass.constraints.size > 0 %}
 .{{ klass.constraints.size }}+h| Constraints:
-{% for constr in klass.constraints %}
-7+| `{{ constr.body }}`
+{% for constraint in klass.constraints %}
+7+| `{{ constraint.body }}`: `{{ constraint.definition | replace: '|', '\|' }}`
 
 {% endfor %}
 {% else %}
