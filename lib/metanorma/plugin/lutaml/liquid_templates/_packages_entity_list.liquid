@@ -79,7 +79,7 @@
 {% endif %}
 
 {% if basic_types.size > 0 %}
-{% include "packages_entity_list_classes", classes: basic_types, type: "Primitive Data Types" %}
+{% include "packages_entity_list_classes", classes: basic_types, type: "Primitive data types", depth: nested_depth %}
 {% endif %}
 
 {% if package.enums.size > 0 %}
@@ -87,7 +87,7 @@
 {% endif %}
 
 {% if unions.size > 0 %}
-{% include "packages_entity_list_classes", classes: unions, type: "Union types" %}
+{% include "packages_entity_list_classes", classes: unions, type: "Union types", depth: nested_depth %}
 {% endif %}
 
 {% if code_lists.size > 0 %}
