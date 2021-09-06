@@ -38,7 +38,7 @@ h|Stereotype:     | «{{ package.stereotype }}»
 {% endunless %}
 {% endfor %}
 {% else %}
-None
+None.
 {% endunless %}
 
 {{equalsigns}}= Basic types
@@ -47,7 +47,7 @@ None
 
 {% include "packages_data_dictionary_classes", classes: basic_types %}
 {% else %}
-None
+None.
 {% endif %}
 
 {{equalsigns}}= Unions
@@ -56,7 +56,7 @@ None
 
 {% include "packages_data_dictionary_classes", classes: unions %}
 {% else %}
-None
+None.
 {% endif %}
 
 {{equalsigns}}= Code lists
@@ -65,7 +65,7 @@ None
 
 {% include "packages_data_dictionary_classes", classes: code_lists %}
 {% else %}
-None
+None.
 {% endif %}
 
 {{equalsigns}}= Data types
@@ -119,7 +119,7 @@ None
 
 {% endfor %}
 {% else %}
-None
+None.
 {% endif %}
 
 {{equalsigns}}= Enumerations
@@ -152,7 +152,7 @@ None
 
 {% endfor %}
 {% else %}
-None
+None.
 {% endif %}
 
 {% if additional_context.include_block and additional_context.include_block.size > 0 %}
