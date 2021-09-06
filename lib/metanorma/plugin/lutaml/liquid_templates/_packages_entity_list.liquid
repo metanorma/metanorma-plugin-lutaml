@@ -10,9 +10,9 @@
 {% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}{{equalsigns}} {{ package.name }}
 {% endif %}
 
-{% if additional_context.all_macroses.size > 0 %}
-{% assign sorted_all_macroses = additional_context.all_macroses | where: "position", "before" | sort: 'index' %}
-{% for block in sorted_all_macroses %}
+{% if additional_context.all_macros.size > 0 %}
+{% assign sorted_all_macros = additional_context.all_macros | where: "position", "before" | sort: 'index' %}
+{% for block in sorted_all_macros %}
 {% case block.type %}
 {% when 'include_block' %}
 {% unless block.package and block.package != package.name %}
@@ -37,7 +37,7 @@
 {% endfor %}
 {% endif %}
 
-// TODO: move to all_macroses block
+{% comment %} // TODO: move to all_macros block {% endcomment %}
 {% if additional_context.diagram_include_block %}
 {% for diagram_include_block in additional_context.diagram_include_block %}
 {% include "diagrams_block", package_name: package_name, image_base_path: diagram_include_block.base_path, text: diagram_include_block.text %}

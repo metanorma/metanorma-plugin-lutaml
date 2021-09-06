@@ -7,7 +7,7 @@ require "metanorma/plugin/lutaml/liquid/multiply_local_file_system"
 module Metanorma
   module Plugin
     module Lutaml
-      # Helpers for lutaml macroses
+      # Helpers for lutaml macros
       module Utils
         LUTAML_EXP_IDX_TAG = /^:lutaml-express-index:(?<index_name>.+?);(?<index_path>.+?);?(\s*cache=(?<cache_path>.+))?$/.freeze
 

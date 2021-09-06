@@ -118,7 +118,7 @@ module Metanorma
 
         def collect_additional_context(input_lines, end_mark)
           additional_context = Hash.new { |hash, key| hash[key] = [] }
-          additional_context['all_macroses'] = []
+          additional_context['all_macros'] = []
           block_lines = []
           while (block_line = input_lines.next) != end_mark
             block_lines.push(block_line)
@@ -133,7 +133,7 @@ module Metanorma
             macro_keyword = [name, package].compact.join(";")
             block_text = block.lines.length > 0 ? block.lines.join("\n") : ''
             additional_context[macro_keyword].push({ 'text' => block_text }.merge(attrs))
-            additional_context['all_macroses'].push({ 'text' => block_text, 'type' => name, 'package' => package }.merge(attrs))
+            additional_context['all_macros'].push({ 'text' => block_text, 'type' => name, 'package' => package }.merge(attrs))
           end
           additional_context
         end
