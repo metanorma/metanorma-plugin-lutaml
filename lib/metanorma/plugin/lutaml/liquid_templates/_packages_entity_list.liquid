@@ -53,6 +53,7 @@
 {% assign basic_types = package.classes | where: "stereotype", "BasicType" %}
 {% comment %} {% assign enumerations = package.classes | where: "stereotype", "Enumeration" %} {% endcomment %}
 {% assign code_lists = package.classes | where: "stereotype", "CodeList" %}
+{% assign unions = package.data_types | where: "stereotype", "Union" %}
 
 {% assign not_classes_length = plus: basic_types.size | plus: code_lists.size %}
 {% assign not_classes_stereotypes = 'DataType,BasicType,Enumeration,CodeList' | split: ','%}
@@ -72,16 +73,21 @@
 |===
 {% endunless %}
 
-{% if package.data_types.size > 0 %}
-{% include "packages_entity_list_classes", classes: package.data_types, type: "Data types", depth: nested_depth %}
+{% assign non_unions = package.data_types | where: "stereotype", "DataType"  %}
+{% if non_unions.size > 0 %}
+{% include "packages_entity_list_classes", classes: non_unions, type: "Data types", depth: nested_depth %}
 {% endif %}
 
 {% if basic_types.size > 0 %}
-{% include "packages_entity_list_classes", classes: basic_types, type: "Primitive data types", depth: nested_depth %}
+{% include "packages_entity_list_classes", classes: basic_types, type: "Primitive Data Types" %}
 {% endif %}
 
 {% if package.enums.size > 0 %}
 {% include "packages_entity_list_classes", classes: package.enums, type: "Enumerated classes", depth: nested_depth %}
+{% endif %}
+
+{% if unions.size > 0 %}
+{% include "packages_entity_list_classes", classes: unions, type: "Union types" %}
 {% endif %}
 
 {% if code_lists.size > 0 %}
@@ -119,6 +125,33 @@
 
 |===
 {% endif %} {% endcomment %}
+
+{% if additional_context.all_macroses.size > 0 %}
+{% assign sorted_all_macroses = additional_context.all_macroses | where: "position", "after" | sort: 'index' %}
+{% for block in sorted_all_macroses %}
+{% case block.type %}
+{% when 'include_block' %}
+{% unless block.package and block.package != package.name %}
+{% capture block_filename %}{{ block.base_path }}{{ package_name }}{% endcapture %}
+{% capture block_content %}{% include block_filename %}{% endcapture %}
+{% unless block_content contains "Liquid error" %}
+{% if block.text %}
+
+{{ block.text }}
+{% endif %}
+
+{{ block_content }}
+{% endunless %}
+{% endunless %}
+{% when 'package_text' %}
+{% unless block.package and block.package != package.name %}
+
+{{ block.text }}
+{% endunless %}
+{% else %}
+{% endcase %}
+{% endfor %}
+{% endif %}
 
 {% assign after_package_key = 'after;' | append: package.name %}
 {% if additional_context[after_package_key] %}
