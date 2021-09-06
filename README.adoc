@@ -97,8 +97,7 @@ https://github.com/lutaml/expressir/blob/master/lib/expressir/model/schema.rb[sc
 
 Will produce this output:
 
-[source,adoc]
------
+____
 == test_schema
 
 === my_type1
@@ -106,9 +105,9 @@ Will produce this output:
 === my_type3
 === my_type4
 === my_type5
------
+____
 
-This macro also supports `.lutaml` files.
+This command also supports `.lutaml` files.
 
 Instead of using the direct path to the file one can use `lutaml-express-index`
 document attribute to supply directory with express files or YAML index file to
@@ -137,19 +136,22 @@ Example of usage:
 -----
 = Document title
 Author
-:lutaml-express-index: my_custom_name; /path/to/express_files; cache=/path/to/cache_file.yaml
-[lutaml_express,my_custom_name,my_context]
+:lutaml-express-index: index_name; /path/to/express_files; cache=/path/to/cache_file.yaml
+[lutaml_express,index_name,context]
 ----
-{% for schema in my_context.schemas %}
+{% for schema in context.schemas %}
 == {{schema.id}}
 {% endfor %}
 ----
 -----
 
-=== Usage, `lutaml_diagram` macro
+== Usage with UML
 
-This macro allows to quickly render lutaml file as diagram image.
-Given `example.lutaml` file with the content:
+=== Rendering a LutaML view: `lutaml_diagram`
+
+This command allows to quickly render a LutaML view as an image file.
+
+Given a file `example.lutaml` file with content:
 
 [source,java]
 ----
@@ -173,16 +175,17 @@ diagram MyView {
 }
 ----
 
-And the `lutaml_diagram` macro:
+The `lutaml_diagram` command will add the image to the document.
 
 [source,adoc]
 -----
 lutaml_diagram::example.lutaml[]
 -----
 
-Will add diagram image to the document
+The `lutaml_diagram` command can also be used to denote a block with an embedded
+LutaML view.
 
-Also one can use `lutaml_diagram` block with embed lutaml code instead of block macro. Example:
+For example:
 
 [source,java]
 ----
@@ -193,9 +196,9 @@ diagram MyView {
 
   enum AddressClassProfile {
     imlicistAttributeProfile: CharacterString [0..1] {
-      definition
-        this is multiline with `ascidoc`
-      end definition
+      definition {
+        This is multiline AsciiDoc content.
+      }
     }
   }
 
@@ -210,9 +213,9 @@ diagram MyView {
 ----
 
 
-=== Usage of `lutaml_uml_attributes_table` macro
+=== `lutaml_uml_attributes_table`
 
-This macro allows to quickly render data model attributes/values tables.
+This command allows rendering definition tables for a UML model.
 
 Given `example.lutaml` file with the content:
 
@@ -247,21 +250,20 @@ And the `lutaml_uml_attributes_table` macro:
 
 Will produce this output:
 
-[source,adoc]
------
+____
 === AttributeProfile
-
 
 .AttributeProfile attributes
 |===
 |Name |Definition |Mandatory/ Optional/ Conditional |Max Occur |Data Type
 
-|addressClassProfile |TODO: enum 's definition |M |1 | `CharacterString`
+|addressClassProfile |TODO: enum's definition |M |1 | `CharacterString`
 
 |imlicistAttributeProfile |this is attribute definition with multiply lines |M |1 | `CharacterString`
 
 |===
------
+____
+
 
 In case of "enumeration" (AddressClassProfile) entity:
 
@@ -272,10 +274,8 @@ In case of "enumeration" (AddressClassProfile) entity:
 
 Will produce this output:
 
-[source,adoc]
------
+____
 === AddressClassProfile
-
 
 .AddressClassProfile values
 |===
@@ -284,11 +284,11 @@ Will produce this output:
 |imlicistAttributeProfile |this is multiline with `asciidoc`
 
 |===
------
+____
 
 === Usage of `lutaml_uml_datamodel_description` macro
 
-This macro allows to quickly render data model packages and its dependent
+This command allows to quickly render data model packages and its dependent
 objects for supplied XMI file.
 
 Given an Enterprise Architect `example.xmi` file with 2 packages:
@@ -349,13 +349,15 @@ Where:
 
 * `path/to/example.xmi` - required, path to the XMI file to render
 
-* `[.before]` - macro to add additional text before the rendered output, can be used only once, additional occurrences of macro will overwrite text, not that `literal` block style must be used in there(eg `....`)
+* `[.before]` - block text that adds additional text before the rendered output, can be used only once, additional occurrences of macro will overwrite text, not that `literal` block style must be used in there(eg `....`)
 
-* `[.after]` - macro to add additional text after the rendered output, can be used only once, additional occurrences of macro will overwrite text
+* `[.after]` - block text that adds additional text after the rendered output, can be used only once, additional occurrences of macro will overwrite text
 
-* `[.after, package="Another"]` - macro with text to be inserted before(after in case of `.before` name) the package
+* `[.after, package="Another"]` - block text to be inserted before(after in case of `.before` name) the package
 
-* `[.diagram_include_block]` - macro to automatically include diagram images. Attribute `base_path` is a required attribute to supply path prefix where to look for a diagram image. `format` is an optional attribute that tells what file extension to use when including diagram file. The logic is as follows:
+* `[.diagram_include_block]` - block text to automatically include diagram images. Attribute `base_path` is a required attribute to supply path prefix where to look for a diagram image. `format` is an optional attribute that tells what file extension to use when including diagram file.
++
+The logic is as follows:
 [source,adoc]
 -----
 {% for diagram in package.diagrams %}
@@ -377,15 +379,27 @@ For instance, the script will take package diagrams supplied in the XMI file and
 
 * `[.include_block, package="Another", base_path="spec/fixtures"]` - same as above, but include block will be included only for supplied package name
 
-In addition to the macros listed above that can be used only inside `lutaml_uml_datamodel_description` macro there is another macroses called `lutaml_figure` and `lutaml_table`. `lutaml_figure` is used to lookup and reference xmi package diagrams. `lutaml_table` is used to lookup rendered xmi entries. The syntax is as follows:
+
+There are two other commands that are used to refer to LutaML generated document elements:
+
+* `lutaml_figure`. Provides a reference anchor to a figure defined in the XMI
+  file, using its XMI ID for reference.
+
+* `lutaml_table`. Provides a reference anchor to the definition tables of a
+  particular package, class, enumeration or data type object in the XMI.
+
+The syntax is as follows:
 
 [source,adoc]
 -----
+// For lutaml_figure
 This is lutaml_figure::[package="Wrapper root package", name="Fig B1 Full model"] figure
+
+// For lutaml_table
 This is lutaml_table::[package="Wrapper root package"] package
 This is lutaml_table::[package="Wrapper root package", class="my name"] class
-This is lutaml_table::[package="Wrapper root package", enum="my name"] enum
-This is lutaml_table::[package="Wrapper root package", data_type="my name"] data_type
+This is lutaml_table::[package="Wrapper root package", enum="my name"] enumeration
+This is lutaml_table::[package="Wrapper root package", data_type="my name"] data type
 -----
 
 This code will be transformed into `<<figure-{diagram.xmi_id}>>` and will point to diagram figure. One can only use this macro when document rendered `lutaml_uml_datamodel_description` macro as it needs diagram lookup table in order to reference package diagram.
@@ -466,13 +480,20 @@ h|Constraints: 7+| (none)
 text after CityGML package
 -----
 
-In addition to just supplying an XMI file, this macro also supports a YAML
-configuration file.
+In addition to the XMI file, this macro also supports a YAML configuration file
+that specifies:
 
-The format for using YAML is this:
+* What packages to include in the render;
+
+* What render style is desired;
+
+* Location of the root package (which package should the iterative process start
+  at).
+
+The format for using the YAML configuration file:
 
 [source,yaml]
------
+----
 ---
 packages:
   # includes these packages
@@ -481,21 +502,49 @@ packages:
   - three
   # skips these packages
   - skip: four
-render_style: entity_list|data_dictionary|default
+render_style: entity_list | data_dictionary | default
 section_depth: 2
------
+----
 
 Where:
 
 * `packages` - required, root element with the list of strings or objects
+
 * `Package *` - pattern matching, specifies lookup condition for packages to
 render.
 +
 NOTE: In this example, it is equal to the following regular expression: `/^Package.*$/`
 
 * `skip: four` - object with package name to skip
-* `render_style` - what template to use to render packages, can be: entity_list, data_dictionary or default
-* `section_depth` - what package to use as root package for render, eg `section_depth` equal to 2 tells processor to use first nested package of the first root packages in xmi file. Example: if xmi file has this package structure: [{ name: 'One', packages: [{ name: 'one-1' }, { name: 'one-2' }] }, { name: 'Two', packages: [{ name: 'two-1' }, { name: 'two-2' }] }] and we have `section_depth` equal to 2, root package will be `one-1`
+
+* `render_style` - what template to use to render packages, can be one of:
+
+** `entity_list`
+
+** `data_dictionary`; or
+
+** `default`
+
+* `section_depth` - what package to use as root package for render.
+e.g., a `section_depth` equal to `2` tells the processor to use the first
+nested package of the first root packages in XMI file.
++
+EXAMPLE: If the XMI file has this package structure, and we have `section_depth`
+equal to 2, root package will be `one-1`.
++
+[source,json]
+----
+[
+  {
+    name: 'One',
+    packages: [{ name: 'one-1' }, { name: 'one-2' }]
+  },
+  {
+    name: 'Two',
+    packages: [{ name: 'two-1' }, { name: 'two-2' }]
+  }
+]
+----
 
 Usage with macro:
 
@@ -509,10 +558,11 @@ Usage with macro:
 ----
 --
 
-The macro processor will read supplied YAML file and arrange packages according
-to the order supplied in the config file, also all packages supplied as `skip`
-will be skipped during render
+The processor will read the supplied YAML config file (`path/to/config.yml`),
+and iterate through packages according to the order supplied in the file. All
+packages that matches `skip` in the YAML config file will be skipped during
+render.
 
 == Documentation
 
-Please refer to https://www.metanorma.com.
+Please refer to https://www.metanorma.oeg.
