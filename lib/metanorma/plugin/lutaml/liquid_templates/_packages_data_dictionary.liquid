@@ -27,13 +27,13 @@ h|Stereotype:     | «{{ package.stereotype }}»
 {% assign unions = package.data_types | where: "stereotype", "Union" %}
 {% assign code_lists = package.classes | where: "stereotype", "CodeList" %}
 {% assign not_classes_length = basic_types.size | plus: code_lists.size %}
-{% assign not_classes_stereoptypes = 'DataType,BasicType,Enumeration,CodeList' | split: ','%}
+{% assign not_classes_stereotypes = 'DataType,BasicType,Enumeration,CodeList' | split: ','%}
 {{equalsigns}}= Classes
 
 {% unless not_classes_length == package.classes.size %}
 
 {% for klass in package.classes %}
-{% unless not_classes_stereoptypes contains klass.stereotype  %}
+{% unless not_classes_stereotypes contains klass.stereotype  %}
 {% include "packages_data_dictionary_class" %}
 {% endunless %}
 {% endfor %}

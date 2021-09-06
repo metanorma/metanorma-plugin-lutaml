@@ -53,14 +53,14 @@
 {% assign code_lists = package.classes | where: "stereotype", "CodeList" %}
 
 {% assign not_classes_length = plus: basic_types.size | plus: code_lists.size %}
-{% assign not_classes_stereoptypes = 'DataType,BasicType,Enumeration,CodeList' | split: ','%}
+{% assign not_classes_stereotypes = 'DataType,BasicType,Enumeration,CodeList' | split: ','%}
 {% unless not_classes_length == package.classes.size %}
 .Classes used in {{ package.name }}
 [cols="2a,6a",options="header"]
 |===
 |Name |Description
 {% for klass in package.classes %}
-{% unless not_classes_stereoptypes contains klass.stereotype  %}
+{% unless not_classes_stereotypes contains klass.stereotype  %}
 |<<{{ klass.name }}-section,{{ klass.name }}>> «{{ klass.stereotype }}»
 |{{ klass.definition }}
 
