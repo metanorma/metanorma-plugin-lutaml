@@ -4,7 +4,7 @@
 {% endif %}
 {% assign klass_name = klass.name | downcase | replace: ':', '' | replace: ' ', '_' %}
 [[section-{{ klass.xmi_id }}]]
-.Elements of &#8220;{{ package.name }}::{{ klass.name }}&#8221; (class)
+.Elements of &#8220;{{ package.name }}::{{ klass.name }}&#8221; ({{ klass.stereotype }})
 [width="100%",cols="a,a,a,a,a,a,a,a"]
 |===
 

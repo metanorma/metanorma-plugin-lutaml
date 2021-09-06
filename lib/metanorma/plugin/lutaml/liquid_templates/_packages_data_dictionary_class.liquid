@@ -1,20 +1,23 @@
-{% capture generalizations %}{% assign inheritance = klass.associations | where: "member_end_type", "inheritance" %}{% for assoc in inheritance %}{{ assoc.member_end }} {% endfor %}{% endcapture %}
+{% capture generalizations %}{% assign inheritance = klass.associations | where: "member_end_type", "inheritance" %}{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
+{% for assoc in inheritance %}{{ assoc.member_end }} {% endfor %}{% endcapture %}
 [[{{ klass.name }}-section]]
-[cols="1a"]
-|===
-|*{{ klass.name }}*
-|
+{{equalsigns}} {{ klass.name }}
+
+.Metadata of {{ klass.name }} ({{klass.stereotype}})
 [cols="1,4"]
-!===
-! Definition:  ! {{ klass.definition }}
-! Subclass of: ! {% if generalizations.size > 4 %}{{ generalizations }}{% else %}None{% endif %}
-! Stereotype:  ! «{{ klass.stereotype }}»
+|===
+h| Definition:  | {{ klass.definition | replace: '|', '\|' }}
+h| Subclass of: | {% if generalizations.size > 4 %}{{ generalizations }}{% else %}None{% endif %}
+h| Stereotype:  | «{{ klass.stereotype }}»
+
 {% if klass.constraints.size > 0 %}
 {% for constraint in klass.constraints %}
-! Constraint:  ! {{ constraint.body }}: {{ constraint.definition | replace: '|', '\|' }}
+h| Constraint:
+| {{ constraint.body }}: {{ constraint.definition | replace: '|', '\|' }}
+
 {% endfor %}
 {% endif %}
-!===
+|===
 
 {% if klass.associations.size > 0 %}
 {% capture rendered_associations %}
@@ -24,44 +27,42 @@
 
 {% capture cardinality %}{% if assoc.member_end_cardinality.min == 'C' %}[0..{{ assoc.member_end_cardinality.max }}]{% elsif assoc.member_end_cardinality.min == 'M' and assoc.member_end_cardinality.max == '1' %}[1..1]{% else %}[{{ assoc.member_end_cardinality.max }}]{% endif %}{% endcapture %}
 
-! {{ assoc.member_end_attribute_name }}
-! <<{{assoc.member_end}}-section,{{assoc.member_end}}>> {{ cardinality }}
-! {{ assoc.definition }}
+| {{ assoc.member_end_attribute_name }}
+| <<{{assoc.member_end}}-section,{{assoc.member_end}}>> {{ cardinality }}
+| {{ assoc.definition | replace: '|', '\|' }}
 
 {% endif %}
 {% endfor %}
 {% endcapture %}
 
-{% if rendered_associations.size > 100 %}
-|
+{% if rendered_associations.strip.size > 5 %}
+.Associations of {{ klass.name }} ({{klass.stereotype}})
 [cols="15,20,60",options="header"]
-!===
-! *Role name*
-! *Target class and multiplicity*
-! *Definition*
+|===
+| Role name | Target class and multiplicity | Definition
+
 {{ rendered_associations }}
-!===
+
+|===
 {% endif %}
 
 {% endif %}
 {% if klass.attributes.size > 0 %}
-|
-[cols="15,20,60",options="header"]
-!===
-! *Attribute*
-! *Value type and multiplicity*
-! *Definition*
-{% for attr in klass.attributes %}
 
+.Attributes of {{ klass.name }} ({{klass.stereotype}})
+[cols="15,20,60",options="header"]
+|===
+| Attribute | Value type and multiplicity | Definition
+
+{% for attr in klass.attributes %}
 {% capture cardinality %}{% if attr.cardinality.min == 'C' %}[0..{{ attr.cardinality.max }}]{% elsif assoc.member_end_cardinality.min == 'M' and assoc.member_end_cardinality.max == '1' %}[1..1]{% else %}[{{ attr.cardinality.max }}]{% endif %}{% endcapture %}
 
-! {{ attr.name }}
-!<<{{ attr.type }}-section,{{ attr.type }}>> {{ cardinality }}
-!{{ attr.definition }}
+| {{ attr.name }}
+| <<{{ attr.type }}-section,{{ attr.type }}>> {{ cardinality }}
+| {{ attr.definition | replace: '|', '\|' }}
 
 {% endfor %}
-!===
-
-| NOTE: Unless otherwise specified, all attributes and role names have the stereotype «Property».
-{% endif %}
 |===
+
+NOTE: Unless otherwise specified, all attributes and role names have the stereotype «Property».
+{% endif %}

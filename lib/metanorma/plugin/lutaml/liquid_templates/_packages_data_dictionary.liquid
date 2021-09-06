@@ -1,11 +1,14 @@
 {% for package in context.packages %}
 {% assign package_name = package.name | downcase | replace: ":", "" | replace: " ", "_" %}
+{% assign nested_depth = depth | plus: 1 %}
 {% if additional_context.before and additional_context.before.size > 0 %}
 {% for before in additional_context.before %}
 {{ before.text }}
 {% endfor %}
 {% endif %}
-{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}{{equalsigns}} {{ package.name }}
+
+{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
+{{equalsigns}} {{ package.name }}
 
 {% assign before_package_key = 'before;' | append: package.name %}
 {% if additional_context[before_package_key] and additional_context[before_package_key].size > 0 %}
@@ -14,10 +17,11 @@
 {% endfor %}
 {% endif %}
 
+.Metadata of {{ package.name }} ({{ package.stereotype }})
 [cols="1a,4a"]
 |===
 
-h|Description:    | {{ package.definition }}
+h|Description:    | {{ package.definition | replace: '|', '\|' }}
 h|Parent package: | {{ context.name }}
 h|Stereotype:     | «{{ package.stereotype }}»
 
@@ -34,7 +38,7 @@ h|Stereotype:     | «{{ package.stereotype }}»
 
 {% for klass in package.classes %}
 {% unless not_classes_stereotypes contains klass.stereotype  %}
-{% include "packages_data_dictionary_class" %}
+{% include "packages_data_dictionary_class", depth: nested_depth %}
 {% endunless %}
 {% endfor %}
 {% else %}
@@ -45,7 +49,7 @@ None.
 
 {% if basic_types.size > 0 %}
 
-{% include "packages_data_dictionary_classes", classes: basic_types %}
+{% include "packages_data_dictionary_classes", classes: basic_types, depth: nested_depth %}
 {% else %}
 None.
 {% endif %}
@@ -54,7 +58,7 @@ None.
 
 {% if unions.size > 0 %}
 
-{% include "packages_data_dictionary_classes", classes: unions %}
+{% include "packages_data_dictionary_classes", classes: unions, depth: nested_depth %}
 {% else %}
 None.
 {% endif %}
@@ -63,7 +67,7 @@ None.
 
 {% if code_lists.size > 0 %}
 
-{% include "packages_data_dictionary_classes", classes: code_lists %}
+{% include "packages_data_dictionary_classes", classes: code_lists, depth: nested_depth %}
 {% else %}
 None.
 {% endif %}
@@ -76,46 +80,57 @@ None.
 {% for data_type in non_unions %}
 {% capture generalizations %}{% assign inheritance = data_type.associations | where: "member_end_type", "inheritance" %}{% for assoc in inheritance %}{{ assoc.member_end }} {% endfor %}{% endcapture %}
 [[{{ data_type.name }}-section]]
-[cols="1a"]
+{{equalsigns}}= {{ data_type.name }}
+
+.Metadata of {{ data_type.name }} ({{ data_type.stereotype }})
+[cols="1,4"]
 |===
-|*{{ data_type.name }}*
-|[cols="1,4"]
-!===
-!Definition:  ! {{ data_type.definition }}
-!Subclass of: ! {% if generalizations.size > 4 %}{{ generalizations }}{% else %}None{% endif %}
-!Stereotype:  !  «{{ data_type.stereotype }}»
-!===
+h|Definition:  | {{ data_type.definition | replace: '|', '\|' }}
+h|Subclass of: | {% if generalizations.size > 4 %}{{ generalizations }}{% else %}None{% endif %}
+h|Stereotype:  | «{{ data_type.stereotype }}»
+|===
+
 {% if data_type.associations.size > 0 %}
 {% capture rendered_associations %}
 {% for assoc in data_type.associations %}
 {% if assoc.member_end_attribute_name.size > 0 %}
 {% capture cardinality %}{% if assoc.member_end_cardinality.min == 'C' %}[0..{{ assoc.member_end_cardinality.max }}]{% elsif assoc.member_end_cardinality.min == 'M' and assoc.member_end_cardinality.max == '1' %}[1..1]{% else %}[{{ assoc.member_end_cardinality.max }}]{% endif %}{% endcapture %}
-! {{ assoc.member_end_attribute_name }}  !<<{{assoc.member_end}}-section,{{assoc.member_end}}>> {{ cardinality }} ! {{ assoc.definition }}
+| {{ assoc.member_end_attribute_name }}
+| <<{{assoc.member_end}}-section,{{assoc.member_end}}>> {{ cardinality }}
+| {{ assoc.definition | replace: '|', '\|' }}
 {% endif %}
 {% endfor %}
 {% endcapture %}
-{% if rendered_associations.size > 100 %}
-|
+
+{% if rendered_associations.strip.size > 5 %}
+.Associations of {{ data_type.name }} ({{ data_type.stereotype }})
 [cols="15,20,60",options="header"]
-!===
-! Role name !Target class and multiplicity !Definition
+|===
+| Role name | Target class and multiplicity | Definition
+
 {{ rendered_associations }}
-!===
+|===
 {% endif %}
 {% endif %}
+
 {% if data_type.attributes.size > 0 %}
-|
+.Attributes of {{ data_type.name }} ({{ data_type.stereotype }})
 [cols="15,20,60",options="header"]
-!===
-! Attribute ! Value type and multiplicity ! Definition
+|===
+| Attribute | Value type and multiplicity | Definition
+
 {% for attr in data_type.attributes %}
 {% capture cardinality %}{% if attr.cardinality.min == 'C' %}[0..{{ attr.cardinality.max }}]{% elsif assoc.member_end_cardinality.min == 'M' and assoc.member_end_cardinality.max == '1' %}[1..1]{% else %}[{{ attr.cardinality.max }}]{% endif %}{% endcapture %}
-! {{ attr.name }}  !<<{{ attr.type }}-section,{{ attr.type }}>>  {{ cardinality }} !{{ attr.definition }}
+| {{ attr.name }}
+| <<{{ attr.type }}-section,{{ attr.type }}>> {{ cardinality }}
+| {{ attr.definition | replace: '|', '\|' }}
+
 {% endfor %}
-!===
-| NOTE: Unless otherwise specified, all attributes and role names have the stereotype «Property».
-{% endif %}
+
 |===
+
+NOTE: Unless otherwise specified, all attributes and role names have the stereotype «Property».
+{% endif %}
 
 {% endfor %}
 {% else %}
@@ -125,30 +140,31 @@ None.
 {{equalsigns}}= Enumerations
 
 {% if package.enums.size > 0 %}
-
 {% for enum in package.enums %}
 [[{{ enum.name }}-section]]
-[cols="1a"]
-|===
-|*{{ enum.name }}*
-|
+{{equalsigns}}= {{ enum.name }}
+
+.Metadata of {{ enum.name }} ({{ enum.stereotype }})
 [cols="1,4"]
-!===
-!Definition: ! {{ enum.definition }}
-!Stereotype: ! «Enumeration»
-!===
+|===
+h|Definition: | {{ enum.definition | replace: '|', '\|' }}
+h|Stereotype: | «Enumeration»
+|===
+
 {% if enum.values.size > 0 %}
-|
+.Values of {{ enum.name }} ({{ enum.stereotype }})
 [cols="1,4",options="header"]
-!===
-! Literal value !Definition
+|===
+| Literal value | Definition
 
 {% for val in enum.values %}
-! {{ val.name }}  !{{ val.definition }}
+| {{ val.name }}
+| {{ val.definition | replace: '|', '\|' }}
+
 {% endfor %}
-!===
-{% endif %}
+
 |===
+{% endif %}
 
 {% endfor %}
 {% else %}
@@ -190,7 +206,7 @@ None.
 {% endfor %}
 {% endif %}
 {% if package.packages.size > 0 and render_nested_packages %}
-{% assign nested_depth = depth | plus: 1 %}{% include "packages_data_dictionary", depth: nested_depth, context: package %}
+{% include "packages_data_dictionary", depth: nested_depth, context: package %}
 {% endif %}
 {% endfor %}
 

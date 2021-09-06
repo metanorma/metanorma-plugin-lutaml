@@ -31,7 +31,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlAttributesTablePreprocessor d
           <tr>
           <th valign="top" align="left">Name</th>
           <th valign="top" align="left">Definition</th>
-          <th valign="top" align="left">Mandatory/ Optional/ Conditional</th>
+          <th valign="top" align="left">Mandatory / Optional / Conditional</th>
           <th valign="top" align="left">Max Occur</th>
           <th valign="top" align="left">Data Type</th>
           </tr>
@@ -96,7 +96,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlAttributesTablePreprocessor d
           <tr>
           <th valign="top" align="left">Name</th>
           <th valign="top" align="left">Definition</th>
-          <th valign="top" align="left">Mandatory/ Optional/ Conditional</th>
+          <th valign="top" align="left">Mandatory / Optional / Conditional</th>
           <th valign="top" align="left">Max Occur</th>
           <th valign="top" align="left">Data Type</th>
           </tr>

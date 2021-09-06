@@ -1,11 +1,11 @@
-.{{ type }} used in {{ package.name }}
+.{{ type }} defined in {{ package.name }} ({{ package.stereotype }})
 [cols="2a,6a",options="header"]
 |===
 |Name |Description
 
 {% for klass in classes %}
-|<<{{ klass.name }}-section,{{ klass.name }}>> «{{ klass.stereotype | default: "Enumeration" }}»
-|{{ klass.definition }}
+| <<{{ klass.name }}-section,{{ klass.name }}>> «{{ klass.stereotype | default: "Enumeration" }}»
+| {{ klass.definition | replace: '|', '\|' }}
 
 {% endfor %}
 |===

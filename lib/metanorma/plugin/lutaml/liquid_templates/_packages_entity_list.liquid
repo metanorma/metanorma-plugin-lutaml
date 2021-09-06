@@ -6,8 +6,10 @@
 {% endfor %}
 {% endif %}
 {% if depth %}
+{% assign nested_depth = depth | plus: 1 %}
+{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
 [[rc_{{ package_name }}-model_section]]
-{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}{{equalsigns}} {{ package.name }}
+{{equalsigns}} {{ package.name }}
 {% endif %}
 
 {% if additional_context.all_macros.size > 0 %}
@@ -55,14 +57,15 @@
 {% assign not_classes_length = plus: basic_types.size | plus: code_lists.size %}
 {% assign not_classes_stereotypes = 'DataType,BasicType,Enumeration,CodeList' | split: ','%}
 {% unless not_classes_length == package.classes.size %}
-.Classes used in {{ package.name }}
+.Classes defined in {{ package.name }} ({{ package.stereotype }})
 [cols="2a,6a",options="header"]
 |===
 |Name |Description
+
 {% for klass in package.classes %}
-{% unless not_classes_stereotypes contains klass.stereotype  %}
-|<<{{ klass.name }}-section,{{ klass.name }}>> «{{ klass.stereotype }}»
-|{{ klass.definition }}
+{% unless not_classes_stereotypes contains klass.stereotype %}
+| <<{{ klass.name }}-section,{{ klass.name }}>> «{{ klass.stereotype }}»
+| {{ klass.definition | replace: '|', '\|' }}
 
 {% endunless %}
 {% endfor %}
@@ -70,19 +73,19 @@
 {% endunless %}
 
 {% if package.data_types.size > 0 %}
-{% include "packages_entity_list_classes", classes: package.data_types, type: "Data Types" %}
+{% include "packages_entity_list_classes", classes: package.data_types, type: "Data types", depth: nested_depth %}
 {% endif %}
 
 {% if basic_types.size > 0 %}
-{% include "packages_entity_list_classes", classes: basic_types, type: "Primitive Data Types" %}
+{% include "packages_entity_list_classes", classes: basic_types, type: "Primitive data types", depth: nested_depth %}
 {% endif %}
 
 {% if package.enums.size > 0 %}
-{% include "packages_entity_list_classes", classes: package.enums, type: "Enumerated Classes" %}
+{% include "packages_entity_list_classes", classes: package.enums, type: "Enumerated classes", depth: nested_depth %}
 {% endif %}
 
 {% if code_lists.size > 0 %}
-{% include "packages_entity_list_classes", classes: code_lists, type: "CodeList Classes" %}
+{% include "packages_entity_list_classes", classes: code_lists, type: "Code list classes", depth: nested_depth %}
 {% endif %}
 
 {% endif %}
@@ -95,7 +98,7 @@
 
 {% for klass in package.data_types %}
 |<<{{ klass.name }}-section,{{ klass.name }}>> «{{ klass.stereotype }}»
-|{{ klass.definition }}
+|{{ klass.definition | replace: '|', '\|' }}
 
 {% endfor %}
 
@@ -110,7 +113,7 @@
 
 {% for klass in package.enums %}
 |<<{{ klass.name }}-section,{{ klass.name }}>> «{{ klass.stereotype }}»
-|{{ klass.definition }}
+|{{ klass.definition | replace: '|', '\|' }}
 
 {% endfor %}
 
@@ -125,7 +128,7 @@
 {% endfor %}
 {% endif %}
 {% if package.packages.size > 0 and render_nested_packages %}
-{% assign nested_depth = depth | plus: 1 %}{% include "packages_entity_list", depth: nested_depth, context: package %}
+{% include "packages_entity_list", depth: nested_depth, context: package %}
 {% endif %}
 {% endfor %}
 
