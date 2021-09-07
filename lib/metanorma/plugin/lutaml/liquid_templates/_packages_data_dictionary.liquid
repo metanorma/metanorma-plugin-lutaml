@@ -83,7 +83,7 @@ None.
 {{equalsigns}}= {{ data_type.name }}
 
 .Metadata of {{ data_type.name }} ({{ data_type.stereotype }})
-[cols="1,4"]
+[cols="1a,4a"]
 |===
 h|Definition:  | {{ data_type.definition | replace: '|', '\|' }}
 h|Subclass of: | {% if generalizations.size > 4 %}{{ generalizations }}{% else %}None{% endif %}
@@ -104,7 +104,7 @@ h|Stereotype:  | «{{ data_type.stereotype }}»
 
 {% if rendered_associations.strip.size > 5 %}
 .Associations of {{ data_type.name }} ({{ data_type.stereotype }})
-[cols="15,20,60",options="header"]
+[cols="15a,20a,60a",options="header"]
 |===
 | Role name | Target class and multiplicity | Definition
 
@@ -115,7 +115,7 @@ h|Stereotype:  | «{{ data_type.stereotype }}»
 
 {% if data_type.attributes.size > 0 %}
 .Attributes of {{ data_type.name }} ({{ data_type.stereotype }})
-[cols="15,20,60",options="header"]
+[cols="15a,20a,60a",options="header"]
 |===
 | Attribute | Value type and multiplicity | Definition
 
@@ -145,7 +145,7 @@ None.
 {{equalsigns}}= {{ enum.name }}
 
 .Metadata of {{ enum.name }} ({{ enum.stereotype }})
-[cols="1,4"]
+[cols="1a,4a"]
 |===
 h|Definition: | {{ enum.definition | replace: '|', '\|' }}
 h|Stereotype: | «Enumeration»
@@ -153,7 +153,7 @@ h|Stereotype: | «Enumeration»
 
 {% if enum.values.size > 0 %}
 .Values of {{ enum.name }} ({{ enum.stereotype }})
-[cols="1,4",options="header"]
+[cols="1a,4a",options="header"]
 |===
 | Literal value | Definition
 

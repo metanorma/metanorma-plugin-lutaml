@@ -4,7 +4,7 @@
 {{equalsigns}} {{ klass.name }}
 
 .Metadata of {{ klass.name }} ({{klass.stereotype}})
-[cols="1,4"]
+[cols="1a,4a"]
 |===
 h| Definition:  | {{ klass.definition | replace: '|', '\|' }}
 h| Subclass of: | {% if generalizations.size > 4 %}{{ generalizations }}{% else %}None{% endif %}
@@ -37,7 +37,7 @@ h| Constraint:
 
 {% if rendered_associations.strip.size > 5 %}
 .Associations of {{ klass.name }} ({{klass.stereotype}})
-[cols="15,20,60",options="header"]
+[cols="15a,20a,60a",options="header"]
 |===
 | Role name | Target class and multiplicity | Definition
 
@@ -50,7 +50,7 @@ h| Constraint:
 {% if klass.attributes.size > 0 %}
 
 .Attributes of {{ klass.name }} ({{klass.stereotype}})
-[cols="15,20,60",options="header"]
+[cols="15a,20a,60a",options="header"]
 |===
 | Attribute | Value type and multiplicity | Definition
 
