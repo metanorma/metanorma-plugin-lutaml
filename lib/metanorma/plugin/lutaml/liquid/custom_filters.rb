@@ -13,6 +13,10 @@ module Metanorma
             sub = ::Liquid::Template.parse(input)
             sub.render(@context)
           end
+
+          def identify(input)
+            input.split(/(?=[A-Z])/).map(&:downcase).join('-')
+          end
         end
       end
     end
