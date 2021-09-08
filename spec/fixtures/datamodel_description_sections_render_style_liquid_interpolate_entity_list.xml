@@ -1,0 +1,80 @@
+<preface><foreword id="_" obligation="informative"><title>Foreword</title>
+<p id="_">&#8230;&#8203;
+Before tag for Wrapper nested package
+&#8230;&#8203;</p>
+<p id="_">&#8230;&#8203;
+text before Another package interpolated: Wrapper nested package
+&#8230;&#8203;</p></foreword></preface><sections>
+<clause id="rc_wrapper_nested_package-model_section" inline-header="false" obligation="normative"><title>Wrapper nested package</title>
+<p id="_">&#8230;&#8203;
+This is is a pckage text for Wrapper nested package and package name wrapper_nested_package
+&#8230;&#8203;</p>
+<p id="_">&#8230;&#8203;
+This is is an include text for Wrapper nested package and package name wrapper_nested_package
+&#8230;&#8203;</p>
+<p id="_">Content for Wrapper package</p>
+<p id="_">&#8230;&#8203;
+text after Another package interpolated: Wrapper nested package
+&#8230;&#8203;</p>
+<p id="_">&#8230;&#8203;
+text after Another package interpolated: Wrapper nested package
+&#8230;&#8203;</p>
+<p id="_">&#8230;&#8203;
+Before tag for ISO 19135 Procedures for item registration XML
+&#8230;&#8203;</p>
+<clause id="rc_iso_19135_procedures_for_item_registration_xml-model_section" inline-header="false" obligation="normative">
+<title>ISO 19135 Procedures for item registration XML</title>
+<clause id="_" inline-header="false" obligation="normative"><title>Class definitions</title>
+<table id="_">
+<colgroup>
+<col width="25%">
+<col width="75%">
+</colgroup>
+<name>Classes defined in ISO 19135 Procedures for item registration XML ()</name>
+<thead>
+<tr>
+<th valign="top" align="left">Name</th>
+<th valign="top" align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top" align="left">
+<p id="_"><xref target="RE_Register-section">RE_Register</xref> &#171;interface&#187;</p>
+</td>
+<td valign="top" align="left">
+<p id="_">The class &#8220;RE_Register&#8221; specifies information about the register itself. It is a subtype of the Register class in the core profile.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="_">
+<colgroup>
+<col width="25%">
+<col width="75%">
+</colgroup>
+<name>Enumerated classes defined in ISO 19135 Procedures for item registration XML ()</name>
+<thead>
+<tr>
+<th valign="top" align="left">Name</th>
+<th valign="top" align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top" align="left">
+<p id="_"><xref target="RE_Register_enum-section">RE_Register_enum</xref> &#171;Enumeration&#187;</p>
+</td>
+<td valign="top" align="left"></td>
+</tr>
+</tbody>
+</table>
+<p id="_">&#8230;&#8203;
+After tag for Wrapper nested package
+&#8230;&#8203;</p>
+<p id="_">&#8230;&#8203;
+After tag for
+&#8230;&#8203;</p></clause>
+</clause></clause></sections>
+</standard-document>
+</body></html>

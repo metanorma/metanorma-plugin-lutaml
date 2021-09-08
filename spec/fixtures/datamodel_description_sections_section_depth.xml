@@ -17,6 +17,10 @@ Diagram text
 </li>
 </ol>
 <p id="_">&#8230;&#8203;
+my text
+&#8230;&#8203;</p>
+<p id="_">Content for Wrapper package</p>
+<p id="_">&#8230;&#8203;
 mine text
 &#8230;&#8203;</p></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>CityGML package</title>

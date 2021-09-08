@@ -2,7 +2,14 @@
 {% assign package_name = package.name | downcase | replace: ":", "" | replace: " ", "_" %}
 {% if additional_context.before and additional_context.before.size > 0 %}
 {% for before in additional_context.before %}
+{% if before.text %}
+
+{% if before.liquid %}
+{{ before.text | interpolate }}
+{% else %}
 {{ before.text }}
+{% endif %}
+{% endif %}
 {% endfor %}
 {% endif %}
 {% assign is_package_spare = package.name | slice: 0,5 %}
@@ -14,10 +21,52 @@
 [[section-{{ package.xmi_id }}]]
 {{equalsigns}}= {{ package.name }} overview
 
+{% if additional_context.all_macros.size > 0 %}
+{% assign sorted_all_macros = additional_context.all_macros | where: "position", "before" | sort: 'index' %}
+{% for block in sorted_all_macros %}
+{% case block.type %}
+{% when 'include_block' %}
+{% unless block.package and block.package != package.name %}
+{% capture block_filename %}{{ block.base_path }}{{ package_name }}{% endcapture %}
+{% capture block_content %}{% include block_filename %}{% endcapture %}
+{% unless block_content contains "Liquid error" %}
+{% if block.text %}
+
+{% if block.liquid %}
+{{ block.text | interpolate }}
+{% else %}
+{{ block.text }}
+{% endif %}
+{% endif %}
+
+{{ block_content }}
+{% endunless %}
+{% endunless %}
+{% when 'package_text' %}
+{% unless block.package and block.package != package.name %}
+
+{% if block.liquid %}
+{{ block.text | interpolate }}
+{% else %}
+{{ block.text }}
+{% endif %}
+{% endunless %}
+{% else %}
+{% endcase %}
+{% endfor %}
+{% endif %}
+
 {% assign before_package_key = 'before;' | append: package.name %}
 {% if additional_context[before_package_key] and additional_context[before_package_key].size > 0 %}
 {% for before in additional_context[before_package_key] %}
+{% if before.text %}
+
+{% if before.liquid %}
+{{ before.text | interpolate }}
+{% else %}
 {{ before.text }}
+{% endif %}
+{% endif %}
 {% endfor %}
 {% endif %}
 {% if additional_context.diagram_include_block %}
@@ -110,10 +159,50 @@
 {% capture block_content %}{% include block_filename %}{% endcapture %}
 {% unless block_content contains "Liquid error" %}
 {% if block.text %}
+
+{% if block.liquid %}
+{{ block.text | interpolate }}
+{% else %}
 {{ block.text }}
+{% endif %}
 {% endif %}
 {{ block_content }}
 {% endunless %}
+{% endfor %}
+{% endif %}
+
+{% if additional_context.all_macroses.size > 0 %}
+{% assign sorted_all_macroses = additional_context.all_macroses | where: "position", "after" | sort: 'index' %}
+{% for block in sorted_all_macroses %}
+{% case block.type %}
+{% when 'include_block' %}
+{% unless block.package and block.package != package.name %}
+{% capture block_filename %}{{ block.base_path }}{{ package_name }}{% endcapture %}
+{% capture block_content %}{% include block_filename %}{% endcapture %}
+{% unless block_content contains "Liquid error" %}
+{% if block.text %}
+
+{% if block.liquid %}
+{{ block.text | interpolate }}
+{% else %}
+{{ block.text }}
+{% endif %}
+{% endif %}
+
+{{ block_content }}
+{% endunless %}
+{% endunless %}
+{% when 'package_text' %}
+{% unless block.package and block.package != package.name %}
+
+{% if block.liquid %}
+{{ block.text | interpolate }}
+{% else %}
+{{ block.text }}
+{% endif %}
+{% endunless %}
+{% else %}
+{% endcase %}
 {% endfor %}
 {% endif %}
 
@@ -121,7 +210,14 @@
 {% if additional_context[after_package_key] %}
 {{equalsigns}}= Additional information
 {% for after in additional_context[after_package_key] %}
+{% if after.text %}
+
+{% if after.liquid %}
+{{ after.text | interpolate }}
+{% else %}
 {{ after.text }}
+{% endif %}
+{% endif %}
 {% endfor %}
 {% endif %}
 {% if package.packages.size > 0 and render_nested_packages %}
@@ -131,6 +227,13 @@
 
 {% if additional_context.after and additional_context.after.size > 0 %}
 {% for after in additional_context.after %}
+{% if after.text %}
+
+{% if after.liquid %}
+{{ after.text | interpolate }}
+{% else %}
 {{ after.text }}
+{% endif %}
+{% endif %}
 {% endfor %}
 {% endif %}
