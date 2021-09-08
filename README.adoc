@@ -355,6 +355,10 @@ Where:
 
 * `[.after, package="Another"]` - block text to be inserted before(after in case of `.before` name) the package
 
+* `[.package_text, position="after", package="Another"]` - include custom adoc code into package rendered body, `position` is a arequired attribute which tells where to insert the code.
+
+* `[.package_text, package="Another"]` - same as above, but include block will be included only for supplied package name
+
 * `[.diagram_include_block]` - block text to automatically include diagram images. Attribute `base_path` is a required attribute to supply path prefix where to look for a diagram image. `format` is an optional attribute that tells what file extension to use when including diagram file.
 +
 The logic is as follows:
@@ -378,6 +382,9 @@ For instance, the script will take package diagrams supplied in the XMI file and
 * `[.include_block, base_path="spec/fixtures"]` - macro to include files (`*.adoc` or `*.liquid`) for each package name. Attribute `base_path` is a required attribute to supply path prefix where to look for file to include. Macro will look for a file called `base_path` + `/` `_package_name`(downcase, replace : -> '', ' ' -> '_') + `.adoc`[`.liquid`], eg for package 'My Package name' and `base_path` eq to `my/path`, macro will look for the following file path: `my/path/_my_package_name.adoc`.
 
 * `[.include_block, package="Another", base_path="spec/fixtures"]` - same as above, but include block will be included only for supplied package name
+
+
+NOTE: .after, .before, package_text and include_block macroses all can be used with additional option - `liquid`, if this option is supplied then the code inside block will be interpolated in liquid context
 
 
 There are two other commands that are used to refer to LutaML generated document elements:
