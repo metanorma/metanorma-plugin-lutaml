@@ -171,9 +171,9 @@
 {% endfor %}
 {% endif %}
 
-{% if additional_context.all_macroses.size > 0 %}
-{% assign sorted_all_macroses = additional_context.all_macroses | where: "position", "after" | sort: 'index' %}
-{% for block in sorted_all_macroses %}
+{% if additional_context.all_macros.size > 0 %}
+{% assign sorted_all_macros = additional_context.all_macros | where: "position", "after" | sort: 'index' %}
+{% for block in sorted_all_macros %}
 {% case block.type %}
 {% when 'include_block' %}
 {% unless block.package and block.package != package.name %}
