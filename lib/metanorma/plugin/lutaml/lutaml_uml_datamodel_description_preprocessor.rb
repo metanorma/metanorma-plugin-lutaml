@@ -24,6 +24,7 @@ module Metanorma
         RENDER_STYLES_INCLUDES = {
           'default' => 'packages',
           'entity_list' => 'packages_entity_list',
+          'entity_list_class' => 'packages_entity_list_class',
           'data_dictionary' => 'packages_data_dictionary'
         }.freeze
         RENDER_STYLE_ATTRIBUTE = 'render_style'.freeze
@@ -71,7 +72,7 @@ module Metanorma
           model_representation(
             lutaml_document,
             document,
-            collect_additional_context(input_lines, input_lines.next),
+            collect_additional_context(document, input_lines, input_lines.next),
             parse_yaml_config_file(document, block_match[2]))
         end
 
@@ -116,14 +117,17 @@ module Metanorma
                                                       .merge(children_pks_daigs)
         end
 
-        def collect_additional_context(input_lines, end_mark)
+        def collect_additional_context(document, input_lines, end_mark)
           additional_context = Hash.new { |hash, key| hash[key] = [] }
           additional_context['all_macros'] = []
           block_lines = []
           while (block_line = input_lines.next) != end_mark
             block_lines.push(block_line)
           end
-          block_document = (Asciidoctor::Document.new(block_lines, {})).parse
+          processed_lines = self
+                              .process(document, Asciidoctor::Reader.new(block_lines))
+                              .read_lines
+          block_document = (Asciidoctor::Document.new(processed_lines, {})).parse
           block_document.blocks.each do |block|
             next unless SUPPORTED_NESTED_MACRO.include?(block.attributes['role'])
 
@@ -159,10 +163,19 @@ module Metanorma
           all_packages = [root_package, *root_package['children_packages']]
           {
             "packages" => sort_and_filter_out_packages(all_packages, options),
+            "package_entities" => package_entites(options),
             "additional_context" => additional_context,
             "root_packages" => [root_package],
             "name" => root_package['name']
           }
+        end
+
+        def package_entites(options)
+          return {} unless options['packages']
+
+          options['packages']
+            .find_all { |entity| entity.is_a?(Hash) && entity.values.first.is_a?(Array) }
+            .map { |entity| [entity.keys.first, entity.values.first.map { |n| [n, true] }.to_h] }.to_h
         end
 
         def sort_and_filter_out_packages(all_packages, options)
@@ -179,8 +192,9 @@ module Metanorma
             end
           # Step two - select supplied packages by pattern
           options['packages']
-            .find_all { |entity| entity.is_a?(String) }
-            .each do |entity|
+            .find_all { |entity| entity.is_a?(String) || (entity.is_a?(Hash) && !entity['skip']) }
+            .each do |entity_obj|
+              entity = entity_obj.is_a?(String) ? entity_obj : entity_obj.keys.first
               entity_regexp = config_entity_regexp(entity)
               all_packages.each.with_index do |package|
                 if package['name'] =~ entity_regexp
@@ -218,11 +232,11 @@ module Metanorma
           result = ""
           if include_root
             result += <<~LIQUID
-              {% include "#{include_name}", context: context.root_packages, additional_context: context.additional_context, render_nested_packages: false %}
+              {% include "#{include_name}", package_entities: context.package_entities, context: context.root_packages, additional_context: context.additional_context, render_nested_packages: false %}
             LIQUID
           end
           result += <<~LIQUID
-            {% include "#{include_name}", depth: #{section_depth}, context: context, additional_context: context.additional_context, render_nested_packages: context.render_nested_packages %}
+            {% include "#{include_name}", depth: #{section_depth}, package_entities: context.package_entities, context: context, additional_context: context.additional_context, render_nested_packages: context.render_nested_packages %}
           LIQUID
         end
       end
