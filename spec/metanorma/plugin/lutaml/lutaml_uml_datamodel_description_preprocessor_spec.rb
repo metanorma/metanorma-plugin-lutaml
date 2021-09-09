@@ -344,5 +344,112 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           .to(be_equivalent_to(output))
       end
     end
+
+    context "when there nested tags" do
+      let(:example_file) { fixtures_path("test.xmi") }
+      let(:nested_config_file) do
+        fixtures_path('temporary_datamodel_description_config.yml')
+      end
+      let(:input) do
+        <<~TEXT
+          = Document title
+          Author
+          :docfile: test.adoc
+          :nodoc:
+          :novalid:
+          :no-isobib:
+          :imagesdir: spec/assets
+
+          [lutaml_uml_datamodel_description,#{example_file}]
+          --
+          [.include_block, package="Wrapper nested package", base_path="spec/fixtures/"]
+          ...
+          my text
+          ...
+
+          [.before]
+          ...
+          mine text
+          ...
+
+          [.before, package="Wrapper nested package"]
+          ...
+          text before Wrapper nested package package
+          ...
+
+          [.after]
+          ...
+          footer text
+          ...
+
+          [.package_text, position="after"]
+          ....
+          [lutaml_uml_datamodel_description,#{example_file},#{nested_config_file}]
+          ---
+          [.before]
+          ....
+          Nested datamodel mine text
+          ....
+          ---
+          ....
+          --
+        TEXT
+      end
+      let(:output) do
+        <<~TEXT
+          #{BLANK_HDR}
+          #{File.read(fixtures_path("datamodel_description_sections_nested_macroses.xml"))}
+          </standard-document>
+          </body></html>
+        TEXT
+      end
+
+      around do |example|
+        File.open(nested_config_file, 'w') { |file| file.puts({ 'render_style' => 'entity_list' }.to_yaml) }
+        example.run
+        FileUtils.rm_f(config_file)
+      end
+
+      it "correctly renders input" do
+        expect(xml_string_conent(metanorma_process(input)))
+          .to(be_equivalent_to(output))
+      end
+    end
+
+    context "when package_entities option supplied" do
+      let(:example_file) { fixtures_path("test_2.xmi") }
+      let(:config_file) do
+        fixtures_path('lutaml_uml_datamodel_description_config_package_entities.yml')
+      end
+      let(:input) do
+        <<~TEXT
+          = Document title
+          Author
+          :docfile: test.adoc
+          :nodoc:
+          :novalid:
+          :no-isobib:
+          :imagesdir: spec/assets
+
+          .Classes in test2
+          [lutaml_uml_datamodel_description,#{example_file},#{config_file}]
+          ---
+          ---
+        TEXT
+      end
+      let(:output) do
+        <<~TEXT
+          #{BLANK_HDR}
+          #{File.read(fixtures_path("datamodel_description_sections_package_entities.xml"))}
+          </standard-document>
+          </body></html>
+        TEXT
+      end
+
+      it "correctly renders input" do
+        expect(xml_string_conent(metanorma_process(input)))
+          .to(be_equivalent_to(output))
+      end
+    end
   end
 end

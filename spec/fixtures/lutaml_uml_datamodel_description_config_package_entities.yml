@@ -1,0 +1,6 @@
+---
+packages:
+  - "Another Wrapper nested package":
+    - "NE_RE_Null_Register"
+    - "RE_Register_enum"
+render_style: "entity_list_class"

@@ -1,5 +1,0 @@
----
-packages:
-  - Another
-  - City*
-  - skip: Dynamizer
