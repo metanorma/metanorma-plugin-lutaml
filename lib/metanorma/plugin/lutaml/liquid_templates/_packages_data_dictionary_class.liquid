@@ -20,35 +20,24 @@ h| Constraint:
 |===
 
 {% if klass.associations.size > 0 %}
-{% capture rendered_associations %}
-{% for assoc in klass.associations %}
-
-{% if assoc.member_end_attribute_name.size > 0 %}
-
-{% capture cardinality %}{% if assoc.member_end_cardinality.min == 'C' %}[0..{{ assoc.member_end_cardinality.max }}]{% elsif assoc.member_end_cardinality.min == 'M' and assoc.member_end_cardinality.max == '1' %}[1..1]{% else %}[{{ assoc.member_end_cardinality.max }}]{% endif %}{% endcapture %}
-
-| {{ assoc.member_end_attribute_name }}
-| <<{{assoc.member_end}}-section,{{assoc.member_end}}>> {{ cardinality }}
-| {{ assoc.definition | replace: '|', '\|' }}
-
-{% endif %}
-{% endfor %}
-{% endcapture %}
-
-{% if rendered_associations.strip.size > 5 %}
 .Associations of {{ klass.name }} ({{klass.stereotype}})
 [cols="15a,20a,60a",options="header"]
 |===
 | Role name | Target class and multiplicity | Definition
 
-{{ rendered_associations }}
+{% for assoc in klass.associations %}
+{% if assoc.member_end_attribute_name.size > 0 %}
+{% capture cardinality %}{% if assoc.member_end_cardinality.min == 'C' %}[0..{{ assoc.member_end_cardinality.max }}]{% elsif assoc.member_end_cardinality.min == 'M' and assoc.member_end_cardinality.max == '1' %}[1..1]{% else %}[{{ assoc.member_end_cardinality.max }}]{% endif %}{% endcapture %}
+| {{ assoc.member_end_attribute_name }}
+| <<{{assoc.member_end}}-section,{{assoc.member_end}}>> {{ cardinality }}
+| {{ assoc.definition | replace: '|', '\|' }}
+{% endif %}
+{% endfor %}
 
 |===
 {% endif %}
 
-{% endif %}
 {% if klass.attributes.size > 0 %}
-
 .Attributes of {{ klass.name }} ({{klass.stereotype}})
 [cols="15a,20a,60a",options="header"]
 |===
