@@ -16,6 +16,7 @@
 
 {% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
 {{equalsigns}} {{ package.name }}
+{%comment%}(package: depth is {{ depth }}, nested_depth is {{ nested_depth }}){%endcomment%}
 
 {% if additional_context.all_macros.size > 0 %}
 {% assign sorted_all_macros = additional_context.all_macros | where: "position", "before" | sort: 'index' %}
@@ -76,75 +77,82 @@ h|Stereotype:     | «{{ package.stereotype }}»
 
 |===
 
+{% assign inner_depth = depth | plus: 2 %}
 {% assign basic_types = package.classes | where: "stereotype", "BasicType" %}
 {% assign unions = package.data_types | where: "stereotype", "Union" %}
 {% assign code_lists = package.classes | where: "stereotype", "CodeList" %}
 {% assign not_classes_length = basic_types.size | plus: code_lists.size %}
 {% assign not_classes_stereotypes = 'DataType,BasicType,Enumeration,CodeList' | split: ','%}
+{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
 {{equalsigns}}= Classes
+{%comment%}(class: depth is {{ depth }}, nested_depth is {{ nested_depth }}){%endcomment%}
 
 {% unless not_classes_length == package.classes.size %}
 
 {% for klass in package.classes %}
 {% unless not_classes_stereotypes contains klass.stereotype  %}
-{% include "packages_data_dictionary_class", depth: nested_depth | plus: 1 %}
+{% include "packages_data_dictionary_class", depth: inner_depth %}
 {% endunless %}
 {% endfor %}
 {% else %}
 None.
 {% endunless %}
 
+{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
 {{equalsigns}}= Basic types
+{%comment%}(class: depth is {{ depth }}, inner_depth is {{ inner_depth }}){%endcomment%}
 
 {% if basic_types.size > 0 %}
-
-{% include "packages_data_dictionary_classes", classes: basic_types, depth: nested_depth | plus: 1 %}
+{% include "packages_data_dictionary_classes", classes: basic_types, depth: inner_depth %}
 {% else %}
 None.
 {% endif %}
 
+{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
 {{equalsigns}}= Unions
+{%comment%}(class: depth is {{ depth }}, inner_depth is {{ inner_depth }}){%endcomment%}
 
 {% if unions.size > 0 %}
-
-{% include "packages_data_dictionary_classes", classes: unions, depth: nested_depth | plus: 1 %}
+{% include "packages_data_dictionary_classes", classes: unions, depth: inner_depth %}
 {% else %}
 None.
 {% endif %}
 
+{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
 {{equalsigns}}= Code lists
+{%comment%}(class: depth is {{ depth }}, inner_depth is {{ inner_depth }}){%endcomment%}
 
 {% if code_lists.size > 0 %}
-
-{% include "packages_data_dictionary_classes", classes: code_lists, depth: nested_depth | plus: 1 %}
+{% include "packages_data_dictionary_classes", classes: code_lists, depth: inner_depth %}
 {% else %}
 None.
 {% endif %}
 
+{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
 {{equalsigns}}= Data types
+{%comment%}(class: depth is {{ depth }}, inner_depth is {{ inner_depth }}){%endcomment%}
 
 {% assign non_unions = package.data_types | where: "stereotype", "DataType"  %}
 {% if non_unions.size > 0 %}
-
 {% for data_type in non_unions %}
-{% capture generalizations %}{% assign inheritance = data_type.associations | where: "member_end_type", "inheritance" %}{% for assoc in inheritance %}{{ assoc.member_end }} {% endfor %}{% endcapture %}
+{% capture generalizations %}
+{% assign inheritance = klass.associations | where: "member_end_type", "inheritance" %}
+{% for assoc in inheritance %}{{- assoc.member_end -}}{% endfor %}
+{% endcapture %}
+{% assign generalizations_stripped = generalizations | strip_newlines | strip %}
 [[{{ data_type.name }}-section]]
-{{equalsigns}}= {{ data_type.name }}
+{{equalsigns}}== {{ data_type.name }}
 
 .Metadata of {{ data_type.name }} ({{ data_type.stereotype }})
 [cols="1a,4a"]
 |===
 h|Definition:  | {{ data_type.definition | replace: '|', '\|' }}
-h|Subclass of: | {% if generalizations.size > 4 %}{{ generalizations }}{% else %}None{% endif %}
+h|Subclass of: | {% if generalizations_stripped.size > 0 %}NNN{{ generalizations_stripped }}NNN{% else %}None{% endif %}
 h|Stereotype:  | «{{ data_type.stereotype }}»
 |===
 
 {% if data_type.associations.size > 0 %}
-.Associations of {{ data_type.name }} ({{ data_type.stereotype }})
-[cols="15a,20a,60a",options="header"]
-|===
-| Role name | Target class and multiplicity | Definition
-
+{% capture rendered_associations %}
 {% for assoc in data_type.associations %}
 {% if assoc.member_end_attribute_name.size > 0 %}
 {% capture cardinality %}{% if assoc.member_end_cardinality.min == 'C' %}[0..{{ assoc.member_end_cardinality.max }}]{% elsif assoc.member_end_cardinality.min == 'M' and assoc.member_end_cardinality.max == '1' %}[1..1]{% else %}[{{ assoc.member_end_cardinality.max }}]{% endif %}{% endcapture %}
@@ -153,8 +161,20 @@ h|Stereotype:  | «{{ data_type.stereotype }}»
 | {{ assoc.definition | replace: '|', '\|' }}
 {% endif %}
 {% endfor %}
+{% endcapture %}
+
+{% assign associations_stripped = rendered_associations | strip_newlines | strip %}
+
+{% if associations_stripped.size > 0 %}
+.Associations of {{ data_type.name }} ({{ data_type.stereotype }})
+[cols="15a,20a,60a",options="header"]
+|===
+| Role name | Target class and multiplicity | Definition
+
+{{ rendered_associations }}
 
 |===
+{% endif %}
 {% endif %}
 
 {% if data_type.attributes.size > 0 %}
@@ -165,7 +185,6 @@ h|Stereotype:  | «{{ data_type.stereotype }}»
 
 {% for attr in data_type.attributes %}
 {% capture cardinality %}{% if attr.cardinality.min == 'C' %}[0..{{ attr.cardinality.max }}]{% elsif assoc.member_end_cardinality.min == 'M' and assoc.member_end_cardinality.max == '1' %}[1..1]{% else %}[{{ attr.cardinality.max }}]{% endif %}{% endcapture %}
-
 | {{ attr.name }}
 | <<{{ attr.type }}-section,{{ attr.type }}>> {{ cardinality }}
 | {{ attr.definition | replace: '|', '\|' }}
@@ -173,7 +192,11 @@ h|Stereotype:  | «{{ data_type.stereotype }}»
 {% endfor %}
 |===
 
-NOTE: Unless otherwise specified, all attributes and role names have the stereotype «Property».
+[NOTE,keep-separate=true]
+====
+Unless otherwise specified, all attributes and role names have the stereotype
+«Property».
+====
 {% endif %}
 
 {% endfor %}

@@ -1,13 +1,18 @@
-{% capture generalizations %}{% assign inheritance = klass.associations | where: "member_end_type", "inheritance" %}{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
-{% for assoc in inheritance %}{{ assoc.member_end }} {% endfor %}{% endcapture %}
+{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
+{% capture generalizations %}
+{% assign inheritance = klass.associations | where: "member_end_type", "inheritance" %}
+{% for assoc in inheritance %}{{- assoc.member_end -}}{% endfor %}
+{% endcapture %}
+{% assign generalizations_stripped = generalizations | strip_newlines | strip %}
 [[{{ klass.name }}-section]]
 {{equalsigns}} {{ klass.name }}
+{%comment%}(inside class: depth is {{ depth }}, equalsigns {{equalsigns}}){%endcomment%}
 
 .Metadata of {{ klass.name }} ({{klass.stereotype}})
 [cols="1a,4a"]
 |===
 h| Definition:  | {{ klass.definition | replace: '|', '\|' }}
-h| Subclass of: | {% if generalizations.size > 4 %}{{ generalizations }}{% else %}None{% endif %}
+h| Subclass of: | {% unless generalizations_stripped.size > 0 %}KKK{{ generalizations.strip }}KKK{% else %}None{% endunless %}
 h| Stereotype:  | «{{ klass.stereotype }}»
 
 {% if klass.constraints.size > 0 %}
@@ -20,11 +25,7 @@ h| Constraint:
 |===
 
 {% if klass.associations.size > 0 %}
-.Associations of {{ klass.name }} ({{klass.stereotype}})
-[cols="15a,20a,60a",options="header"]
-|===
-| Role name | Target class and multiplicity | Definition
-
+{% capture rendered_associations %}
 {% for assoc in klass.associations %}
 {% if assoc.member_end_attribute_name.size > 0 %}
 {% capture cardinality %}{% if assoc.member_end_cardinality.min == 'C' %}[0..{{ assoc.member_end_cardinality.max }}]{% elsif assoc.member_end_cardinality.min == 'M' and assoc.member_end_cardinality.max == '1' %}[1..1]{% else %}[{{ assoc.member_end_cardinality.max }}]{% endif %}{% endcapture %}
@@ -33,8 +34,19 @@ h| Constraint:
 | {{ assoc.definition | replace: '|', '\|' }}
 {% endif %}
 {% endfor %}
+{% endcapture %}
+{% assign associations_stripped = rendered_associations | strip_newlines | strip %}
+
+{% if associations_stripped.size > 0 %}
+.Associations of {{ klass.name }} ({{ klass.stereotype }})
+[cols="15a,20a,60a",options="header"]
+|===
+| Role name | Target class and multiplicity | Definition
+
+{{ rendered_associations }}
 
 |===
+{% endif %}
 {% endif %}
 
 {% if klass.attributes.size > 0 %}
@@ -45,7 +57,6 @@ h| Constraint:
 
 {% for attr in klass.attributes %}
 {% capture cardinality %}{% if attr.cardinality.min == 'C' %}[0..{{ attr.cardinality.max }}]{% elsif assoc.member_end_cardinality.min == 'M' and assoc.member_end_cardinality.max == '1' %}[1..1]{% else %}[{{ attr.cardinality.max }}]{% endif %}{% endcapture %}
-
 | {{ attr.name }}
 | <<{{ attr.type }}-section,{{ attr.type }}>> {{ cardinality }}
 | {{ attr.definition | replace: '|', '\|' }}
@@ -53,5 +64,9 @@ h| Constraint:
 {% endfor %}
 |===
 
-NOTE: Unless otherwise specified, all attributes and role names have the stereotype «Property».
+[NOTE,keep-separate=true]
+====
+Unless otherwise specified, all attributes and role names have the stereotype
+«Property».
+====
 {% endif %}
