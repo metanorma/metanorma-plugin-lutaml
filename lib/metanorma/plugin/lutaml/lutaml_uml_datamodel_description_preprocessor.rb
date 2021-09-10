@@ -171,7 +171,7 @@ module Metanorma
           all_packages = [root_package, *root_package['children_packages']]
           {
             "packages" => sort_and_filter_out_packages(all_packages, options),
-            "package_entities" => package_entites(options),
+            "package_entities" => package_entities(options),
             "package_skip_sections" => package_skip_sections(options),
             "additional_context" => additional_context,
             "root_packages" => [root_package],
@@ -179,12 +179,12 @@ module Metanorma
           }
         end
 
-        def package_entites(options)
+        def package_entities(options)
           return {} unless options['packages']
 
           options['packages']
-            .find_all { |entity| entity.is_a?(Hash) && entity.values.first['render_entites'] }
-            .map { |entity| [entity.keys.first, entity.values.first['render_entites'].map { |n| [n, true] }.to_h] }.to_h
+            .find_all { |entity| entity.is_a?(Hash) && entity.values.first['render_entities'] }
+            .map { |entity| [entity.keys.first, entity.values.first['render_entities'].map { |n| [n, true] }.to_h] }.to_h
         end
 
         def package_skip_sections(options)

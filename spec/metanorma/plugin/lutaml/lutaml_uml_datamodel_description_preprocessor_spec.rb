@@ -416,7 +416,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
       end
     end
 
-    context "when `render_entites` option supplied" do
+    context "when `render_entities` option supplied" do
       let(:example_file) { fixtures_path("test_2.xmi") }
       let(:config_file) do
         fixtures_path('lutaml_uml_datamodel_description_config_package_entities.yml')
