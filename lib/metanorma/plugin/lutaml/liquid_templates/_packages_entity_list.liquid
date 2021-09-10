@@ -79,7 +79,7 @@
 
 {% assign not_classes_length = plus: basic_types.size | plus: code_lists.size %}
 {% assign not_classes_stereotypes = 'DataType,BasicType,Enumeration,CodeList' | split: ','%}
-{% unless not_classes_length == package.classes.size %}
+{% unless not_classes_length == package.classes.size or package_skip_sections[package.name]['classes'] %}
 .Classes defined in {{ package.name }} ({{ package.stereotype }})
 [cols="2a,6a",options="header"]
 |===

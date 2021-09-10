@@ -1,0 +1,6 @@
+---
+packages:
+  - "Another Wrapper nested package":
+      skip_tables:
+        - classes
+render_style: "entity_list"

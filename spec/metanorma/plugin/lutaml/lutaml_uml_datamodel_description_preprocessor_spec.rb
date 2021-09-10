@@ -416,10 +416,46 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
       end
     end
 
-    context "when package_entities option supplied" do
+    context "when `render_entites` option supplied" do
       let(:example_file) { fixtures_path("test_2.xmi") }
       let(:config_file) do
         fixtures_path('lutaml_uml_datamodel_description_config_package_entities.yml')
+      end
+      let(:input) do
+        <<~TEXT
+          = Document title
+          Author
+          :docfile: test.adoc
+          :nodoc:
+          :novalid:
+          :no-isobib:
+          :imagesdir: spec/assets
+
+          .Classes in test2
+          [lutaml_uml_datamodel_description,#{example_file},#{config_file}]
+          ---
+          ---
+        TEXT
+      end
+      let(:output) do
+        <<~TEXT
+          #{BLANK_HDR}
+          #{File.read(fixtures_path("datamodel_description_sections_package_entities.xml"))}
+          </standard-document>
+          </body></html>
+        TEXT
+      end
+
+      it "correctly renders input" do
+        expect(xml_string_conent(metanorma_process(input)))
+          .to(be_equivalent_to(output))
+      end
+    end
+
+    context "when `skip_tables` option supplied" do
+      let(:example_file) { fixtures_path("test_2.xmi") }
+      let(:config_file) do
+        fixtures_path('lutaml_uml_datamodel_description_config_render_tables.yml')
       end
       let(:input) do
         <<~TEXT

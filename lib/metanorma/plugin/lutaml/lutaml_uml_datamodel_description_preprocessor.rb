@@ -172,6 +172,7 @@ module Metanorma
           {
             "packages" => sort_and_filter_out_packages(all_packages, options),
             "package_entities" => package_entites(options),
+            "package_skip_sections" => package_skip_sections(options),
             "additional_context" => additional_context,
             "root_packages" => [root_package],
             "name" => root_package['name']
@@ -182,8 +183,16 @@ module Metanorma
           return {} unless options['packages']
 
           options['packages']
-            .find_all { |entity| entity.is_a?(Hash) && entity.values.first.is_a?(Array) }
-            .map { |entity| [entity.keys.first, entity.values.first.map { |n| [n, true] }.to_h] }.to_h
+            .find_all { |entity| entity.is_a?(Hash) && entity.values.first['render_entites'] }
+            .map { |entity| [entity.keys.first, entity.values.first['render_entites'].map { |n| [n, true] }.to_h] }.to_h
+        end
+
+        def package_skip_sections(options)
+          return {} unless options['packages']
+
+          options['packages']
+            .find_all { |entity| entity.is_a?(Hash) && entity.values.first['skip_tables'] }
+            .map { |entity| [entity.keys.first, entity.values.first['skip_tables'].map { |n| [n, true] }.to_h] }.to_h
         end
 
         def sort_and_filter_out_packages(all_packages, options)
@@ -240,11 +249,11 @@ module Metanorma
           result = ""
           if include_root
             result += <<~LIQUID
-              {% include "#{include_name}", package_entities: context.package_entities, context: context.root_packages, additional_context: context.additional_context, render_nested_packages: false %}
+              {% include "#{include_name}", package_skip_sections: context.package_skip_sections, package_entities: context.package_entities, context: context.root_packages, additional_context: context.additional_context, render_nested_packages: false %}
             LIQUID
           end
           result += <<~LIQUID
-            {% include "#{include_name}", depth: #{section_depth}, package_entities: context.package_entities, context: context, additional_context: context.additional_context, render_nested_packages: context.render_nested_packages %}
+            {% include "#{include_name}", depth: #{section_depth}, package_skip_sections: context.package_skip_sections, package_entities: context.package_entities, context: context, additional_context: context.additional_context, render_nested_packages: context.render_nested_packages %}
           LIQUID
         end
       end
