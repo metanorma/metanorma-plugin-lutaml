@@ -14,7 +14,12 @@ h| Stereotype:  | «{{ klass.stereotype }}»
 {% if klass.constraints.size > 0 %}
 {% for constraint in klass.constraints %}
 h| Constraint:
-| `{{ constraint.body }}`: `{{ constraint.definition | replace: '|', '\|' }}`
+| `{{ constraint.body }}`:
+
+[source,ocl,%unnumbered]
+----
+{{ constraint.definition | replace: '|', '\|' }}
+----
 
 {% endfor %}
 {% endif %}
