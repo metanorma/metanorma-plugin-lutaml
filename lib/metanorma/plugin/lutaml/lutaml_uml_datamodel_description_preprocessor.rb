@@ -40,11 +40,19 @@ module Metanorma
 
         private
 
-        def lutaml_document_from_file(document, file_path)
-          ::Lutaml::Parser
-            .parse(File.new(Utils.relative_file_path(document, file_path),
-                            encoding: "UTF-8"))
-            .first
+        def lutaml_document_from_file_or_cache(document, file_path)
+          full_path = Utils.relative_file_path(document, file_path)
+          if document.attributes['lutaml_xmi_cache'] &&
+              document.attributes['lutaml_xmi_cache'][full_path]
+            return document.attributes['lutaml_xmi_cache'][full_path]
+          end
+          result_document = ::Lutaml::Parser.parse(File.new(full_path,
+                                encoding: "UTF-8"))
+                              .first
+                              result_document
+          document.attributes['lutaml_xmi_cache'] ||= {}
+          document.attributes['lutaml_xmi_cache'][full_path] = result_document
+          result_document
         end
 
         def parse_yaml_config_file(document, file_path)
@@ -67,7 +75,7 @@ module Metanorma
           block_match = line.match(MARCO_REGEXP)
           return [line] if block_match.nil?
 
-          lutaml_document = lutaml_document_from_file(document, block_match[1])
+          lutaml_document = lutaml_document_from_file_or_cache(document, block_match[1])
           fill_in_diagrams_attributes(document, lutaml_document)
           model_representation(
             lutaml_document,
