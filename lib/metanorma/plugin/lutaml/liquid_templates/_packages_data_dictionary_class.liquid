@@ -1,9 +1,5 @@
 {% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
-{% capture generalizations %}
-{% assign inheritance = klass.associations | where: "member_end_type", "inheritance" %}
-{% for assoc in inheritance %}{{- assoc.member_end -}}{% endfor %}
-{% endcapture %}
-{% assign generalizations_stripped = generalizations | strip_newlines | strip %}
+{% capture generalizations %}{% assign inheritance = klass.associations | where: "member_end_type", "inheritance" %}{% for assoc in inheritance %}{{ assoc.member_end }}{% endfor %}{% endcapture %}
 [[{{ klass.name }}-section]]
 {{equalsigns}} {{ klass.name }}
 {%comment%}(inside class: depth is {{ depth }}, equalsigns {{equalsigns}}){%endcomment%}
@@ -12,7 +8,7 @@
 [cols="1a,4a"]
 |===
 h| Definition:  | {{ klass.definition | replace: '|', '\|' }}
-h| Subclass of: | {% unless generalizations_stripped.size > 0 %}KKK{{ generalizations.strip }}KKK{% else %}None{% endunless %}
+h| Subclass of: | {% if generalizations.size > 0 %}{{ generalizations }}{% else %}None{% endif %}
 h| Stereotype:  | «{{ klass.stereotype }}»
 
 {% if klass.constraints.size > 0 %}

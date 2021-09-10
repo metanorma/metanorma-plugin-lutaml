@@ -135,11 +135,7 @@ None.
 {% assign non_unions = package.data_types | where: "stereotype", "DataType"  %}
 {% if non_unions.size > 0 %}
 {% for data_type in non_unions %}
-{% capture generalizations %}
-{% assign inheritance = klass.associations | where: "member_end_type", "inheritance" %}
-{% for assoc in inheritance %}{{- assoc.member_end -}}{% endfor %}
-{% endcapture %}
-{% assign generalizations_stripped = generalizations | strip_newlines | strip %}
+{% capture generalizations %}{% assign inheritance = klass.associations | where: "member_end_type", "inheritance" %}{% for assoc in inheritance %}{{ assoc.member_end }}{% endfor %}{% endcapture %}
 [[{{ data_type.name }}-section]]
 {{equalsigns}}== {{ data_type.name }}
 
@@ -147,7 +143,7 @@ None.
 [cols="1a,4a"]
 |===
 h|Definition:  | {{ data_type.definition | replace: '|', '\|' }}
-h|Subclass of: | {% if generalizations_stripped.size > 0 %}NNN{{ generalizations_stripped }}NNN{% else %}None{% endif %}
+h|Subclass of: | {% if generalizations.size > 0 %}{{ generalizations }}{% else %}None{% endif %}
 h|Stereotype:  | «{{ data_type.stereotype }}»
 |===
 
