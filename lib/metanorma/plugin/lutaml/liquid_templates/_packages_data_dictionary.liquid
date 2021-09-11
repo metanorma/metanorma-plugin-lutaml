@@ -151,7 +151,7 @@ h|Stereotype:  | «{{ data_type.stereotype }}»
 {% capture rendered_associations %}
 {% for assoc in data_type.associations %}
 {% if assoc.member_end_attribute_name.size > 0 %}
-{% capture cardinality %}{% if assoc.member_end_cardinality.min == 'C' %}[0..{{ assoc.member_end_cardinality.max }}]{% elsif assoc.member_end_cardinality.min == 'M' and assoc.member_end_cardinality.max == '1' %}[1..1]{% else %}[{{ assoc.member_end_cardinality.max }}]{% endif %}{% endcapture %}
+{% capture cardinality %}&#91;{% case assoc.member_end_cardinality.min %}{% when "C" %}0{% when "M" %}1{% else %}{{assoc.member_end_cardinality.min}}{% endcase %}..{{ assoc.member_end_cardinality.max }}&#93;{% endcapture %}
 | {{ assoc.member_end_attribute_name }}
 | <<{{assoc.member_end}}-section,{{assoc.member_end}}>> {{ cardinality }}
 | {{ assoc.definition | replace: '|', '\|' }}
@@ -180,7 +180,7 @@ h|Stereotype:  | «{{ data_type.stereotype }}»
 | Attribute | Value type and multiplicity | Definition
 
 {% for attr in data_type.attributes %}
-{% capture cardinality %}{% if attr.cardinality.min == 'C' %}[0..{{ attr.cardinality.max }}]{% elsif assoc.member_end_cardinality.min == 'M' and assoc.member_end_cardinality.max == '1' %}[1..1]{% else %}[{{ attr.cardinality.max }}]{% endif %}{% endcapture %}
+{% capture cardinality %}&#91;{% case attr.cardinality.min %}{% when 'C' %}0{% when 'M' %}1{% else %}{{ attr.cardinality.min }}{% endcase %}..{{ attr.cardinality.max }}&#93;{% endcapture %}
 | {{ attr.name }}
 | <<{{ attr.type }}-section,{{ attr.type }}>> {{ cardinality }}
 | {{ attr.definition | replace: '|', '\|' }}
