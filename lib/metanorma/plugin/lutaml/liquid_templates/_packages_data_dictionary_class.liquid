@@ -1,5 +1,5 @@
 {% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
-{% capture generalizations %}{% assign inheritance = klass.associations | where: "member_end_type", "inheritance" %}{% for assoc in inheritance %}{{ assoc.member_end }}{% endfor %}{% endcapture %}
+{% capture generalizations %}{% assign inheritance = klass.associations | where: "member_end_type", "inheritance" %}{% for assoc in inheritance %}<<{{ assoc.member_end }}-section,{{ assoc.member_end }}>>{% endfor %}{% endcapture %}
 [[{{ klass.name }}-section]]
 {{equalsigns}} {{ klass.name }}
 {%comment%}(inside class: depth is {{ depth }}, equalsigns {{equalsigns}}){%endcomment%}

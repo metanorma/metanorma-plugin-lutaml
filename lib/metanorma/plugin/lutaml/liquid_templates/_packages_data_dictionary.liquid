@@ -135,7 +135,7 @@ None.
 {% assign non_unions = package.data_types | where: "stereotype", "DataType"  %}
 {% if non_unions.size > 0 %}
 {% for data_type in non_unions %}
-{% capture generalizations %}{% assign inheritance = klass.associations | where: "member_end_type", "inheritance" %}{% for assoc in inheritance %}{{ assoc.member_end }}{% endfor %}{% endcapture %}
+{% capture generalizations %}{% assign inheritance = klass.associations | where: "member_end_type", "inheritance" %}{% for assoc in inheritance %}<<{{ assoc.member_end }}-section,{{ assoc.member_end }}>>{% endfor %}{% endcapture %}
 [[{{ data_type.name }}-section]]
 {{equalsigns}}== {{ data_type.name }}
 
