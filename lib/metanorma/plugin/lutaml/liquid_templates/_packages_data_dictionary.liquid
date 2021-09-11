@@ -145,6 +145,19 @@ None.
 h|Definition:  | {{ data_type.definition | replace: '|', '\|' }}
 h|Subclass of: | {% if generalizations.size > 0 %}{{ generalizations }}{% else %}None{% endif %}
 h|Stereotype:  | «{{ data_type.stereotype }}»
+
+{% if data_type.constraints.size > 0 %}
+{% for constraint in data_type.constraints %}
+h| Constraint:
+| `{{ constraint.body }}`:
+
+[source,ocl,%unnumbered]
+------
+{{ constraint.definition | replace: '|', '\|' }}
+------
+{% endfor %}
+{% endif %}
+
 |===
 
 {% if data_type.associations.size > 0 %}
