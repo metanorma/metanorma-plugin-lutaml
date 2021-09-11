@@ -17,12 +17,12 @@ h| Constraint:
 | `{{ constraint.body }}`:
 
 [source,ocl,%unnumbered]
-----
+------
 {{ constraint.definition | replace: '|', '\|' }}
-----
-
+------
 {% endfor %}
 {% endif %}
+
 |===
 
 {% if klass.associations.size > 0 %}
