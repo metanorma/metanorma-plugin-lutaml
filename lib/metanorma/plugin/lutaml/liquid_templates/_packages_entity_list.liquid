@@ -69,8 +69,10 @@
 {% endif %}
 
 {% if package.classes.size > 0 %}
+{% unless package_skip_sections[package.name]['classes'] %}
 {{equalsigns}}= Class definitions
 
+{% endunless %}
 {% comment %} {% assign data_types = package.classes | where: "stereotype", "DataType" %} {% endcomment %}
 {% assign basic_types = package.classes | where: "stereotype", "BasicType" %}
 {% comment %} {% assign enumerations = package.classes | where: "stereotype", "Enumeration" %} {% endcomment %}
