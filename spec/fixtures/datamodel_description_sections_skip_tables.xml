@@ -1,0 +1,28 @@
+<sections>
+<clause id="rc_another_wrapper_nested_package-model_section" inline-header="false" obligation="normative">
+<title>Another Wrapper nested package</title>
+<table id="_">
+<colgroup>
+<col width="25%">
+<col width="75%">
+</colgroup>
+<name>Enumerated classes defined in Another Wrapper nested package ()</name>
+<thead>
+<tr>
+<th valign="top" align="left">Name</th>
+<th valign="top" align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top" align="left">
+<p id="_"><xref target="RE_Register_enum-section">RE_Register_enum</xref> &#171;Enumeration&#187;</p>
+</td>
+<td valign="top" align="left"></td>
+</tr>
+</tbody>
+</table>
+</clause>
+</sections>
+</standard-document>
+</body></html>

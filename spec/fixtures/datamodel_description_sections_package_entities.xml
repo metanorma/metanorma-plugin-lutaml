@@ -1,43 +1,17 @@
 <sections>
-  <table id="_">
-    <colgroup>
-      <col width="25%">
-      <col width="75%">
-    </colgroup>
-    <name>Classes in test2</name>
-    <thead>
-      <tr>
-        <th valign="top" align="left">Class</th>
-        <th valign="top" align="left">Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td valign="top" align="left">
-          <p id="_">
-            <xref target="NE_RE_Register-section">NE_RE_Register</xref> &#171;interface&#187;
-          </p>
-        </td>
-        <td valign="top" align="left">
-          <p id="_">The class &#8220;RE_Register&#8221; specifies information about the register itself. It is a subtype
-            of the Register class in the core profile.</p>
-        </td>
-      </tr>
-      <tr>
-        <td valign="top" align="left">
-          <p id="_">
-            <xref target="NE_RE_Null_Register-section">NE_RE_Null_Register</xref> &#171;interface&#187;
-          </p>
-        </td>
-        <td valign="top" align="left">
-          <p id="_">The class &#8220;RE_Register&#8221; specifies information about the register itself. It is a subtype
-            of the Register class in the core profile.</p>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<table id="_">
+<colgroup>
+<col width="25%">
+<col width="75%">
+</colgroup>
+<name>Classes in test2</name>
+<thead>
+<tr>
+<th valign="top" align="left">Class</th>
+<th valign="top" align="left">Description</th>
+</tr>
+</thead>
+</table>
 </sections>
 </standard-document>
-</body>
-
-</html>
+</body></html>

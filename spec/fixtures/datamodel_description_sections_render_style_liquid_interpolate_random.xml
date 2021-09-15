@@ -30,7 +30,14 @@ This is is an include text for Wrapper nested package and package name wrapper_n
 <p id="_">&#8230;&#8203;
 After include block for Wrapper nested package and package name wrapper_nested_package
 &#8230;&#8203;</p>
-<p id="_">Content for Wrapper package</p></clause>
+<p id="_">Content for Wrapper package</p>
+<p id="_">&#8230;&#8203;
+After include block for Wrapper nested package and package name wrapper_nested_package
+&#8230;&#8203;</p>
+<p id="_">Content for Wrapper package</p>
+<p id="_">&#8230;&#8203;
+This is is a pckage text after for Wrapper nested package and package name wrapper_nested_package
+&#8230;&#8203;</p></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Additional information</title>
 <p id="_">&#8230;&#8203;
 text after Another package interpolated: Wrapper nested package

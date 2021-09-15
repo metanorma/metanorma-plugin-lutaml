@@ -69,7 +69,14 @@ This is is an include text for Wrapper nested package and package name wrapper_n
 <p id="_">&#8230;&#8203;
 After include block for Wrapper nested package and package name wrapper_nested_package
 &#8230;&#8203;</p>
-<p id="_">Content for Wrapper package</p></clause>
+<p id="_">Content for Wrapper package</p>
+<p id="_">&#8230;&#8203;
+After include block for Wrapper nested package and package name wrapper_nested_package
+&#8230;&#8203;</p>
+<p id="_">Content for Wrapper package</p>
+<p id="_">&#8230;&#8203;
+This is is a pckage text after for Wrapper nested package and package name wrapper_nested_package
+&#8230;&#8203;</p></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>Additional information</title>
 <p id="_">&#8230;&#8203;
 text after Another package interpolated: Wrapper nested package
@@ -108,7 +115,6 @@ Before tag for ISO 19135 Procedures for item registration XML
 </table>
 <clause id="_" inline-header="false" obligation="normative">
 <title>Classes</title>
-</clause>
 <clause id="RE_Register-section" inline-header="false" obligation="normative"><title>RE_Register</title>
 <table id="_">
 <colgroup>
@@ -119,20 +125,58 @@ Before tag for ISO 19135 Procedures for item registration XML
 <tbody>
 <tr>
 <th valign="top" align="left">Definition:</th>
-<td valign="top" align="left">The class &#8220;RE_Register&#8221; specifies information about the register itself. It is a subtype of the Register class in the core profile.</td>
+<td valign="top" align="left">
+<p id="_">The class &#8220;RE_Register&#8221; specifies information about the register itself. It is a subtype of the Register class in the core profile.</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">Register</td>
+<td valign="top" align="left">
+<p id="_">
+<xref target="Register-section">Register</xref>
+</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;interface&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;interface&#187;</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Constraint:</th>
 <td valign="top" align="left">
-<tt>count(self.version +self.dateOfLastChange) &gt;= 1</tt>: ``</td>
+<p id="_"><tt>count(self.version +self.dateOfLastChange) &gt;= 1</tt>:</p>
+<sourcecode lang="ocl" id="_"></sourcecode>
+</td>
+</tr>
+</tbody>
+</table>
+<table id="_">
+<colgroup>
+<col width="15.7894%">
+<col width="21.0526%">
+<col width="63.158%">
+</colgroup>
+<name>Associations of RE_Register (interface)</name>
+<thead>
+<tr>
+<th valign="top" align="left">Role name</th>
+<th valign="top" align="left">Target class and multiplicity</th>
+<th valign="top" align="left">Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top" align="left">
+<p id="_">citation</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="RE_ReferenceSource-section">RE_ReferenceSource</xref> [0..*]</p>
+</td>
+<td valign="top" align="left">
+<p id="_">The role &#8220;citation&#8221;  identifies reference source for one or more items in the RE_Register.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -152,67 +196,84 @@ Before tag for ISO 19135 Procedures for item registration XML
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">alternativeLanguages</td>
 <td valign="top" align="left">
-<xref target="Set_RE_Locale_-section">Set&lt;RE_Locale</xref>&gt; [0..1]</td>
-<td valign="top" align="left">The attribute &#8220;alternativeLanguages&#8221; supports cultural and linguistic adaptability, individual items in a register may provide elements of information in additional languages other than the operating language of the register.
-
-The attribute &lt;i&gt;alternativeLanguages &lt;/i&gt;shall be represented as a set of instances of RE_Locale, each specifying an additional unique locale used by items in the register. Every member of the set shall be used by at least one item in the register. The &lt;i&gt;locale &lt;/i&gt;of every &lt;i&gt;alternativeExpression &lt;/i&gt;used by any item in the register shall be included in this set of RE_Locales.
-
-This attribute provides a summary of alternative locales used by items in a register. Register owners shall specify and publish their policy as to whether all or only some of the items in a register shall have alternative expressions.</td>
+<p id="_">alternativeLanguages</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="Set_RE_Locale_-section">Set&lt;RE_Locale</xref>&gt; [0..1]</p>
+</td>
+<td valign="top" align="left">
+<p id="_">The attribute &#8220;alternativeLanguages&#8221; supports cultural and linguistic adaptability, individual items in a register may provide elements of information in additional languages other than the operating language of the register.</p>
+<p id="_">The attribute &lt;i&gt;alternativeLanguages &lt;/i&gt;shall be represented as a set of instances of RE_Locale, each specifying an additional unique locale used by items in the register. Every member of the set shall be used by at least one item in the register. The &lt;i&gt;locale &lt;/i&gt;of every &lt;i&gt;alternativeExpression &lt;/i&gt;used by any item in the register shall be included in this set of RE_Locales.</p>
+<p id="_">This attribute provides a summary of alternative locales used by items in a register. Register owners shall specify and publish their policy as to whether all or only some of the items in a register shall have alternative expressions.</p>
+</td>
 </tr>
 <tr>
-<td valign="top" align="left">contentSummary</td>
 <td valign="top" align="left">
-<xref target="CharacterString-section">CharacterString</xref> [1]</td>
-<td valign="top" align="left">The attribute &#8220;contentSummary&#8221;&lt;i&gt; &lt;/i&gt;is be represented as a CharacterString containing a general statement of the purpose for which items in the register are made available to potential users. It should also specify any limits to the scope of the register and identify the types of applications for which the items are intended.
-
-NOTE The scope of a register could be limited by theme, by region, by language or other criteria.
-
-EXAMPLE The scope of a terminology register could be limited to Spanish terms used to describe landforms in Latin America.</td>
+<p id="_">contentSummary</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="CharacterString-section">CharacterString</xref> [1..1]</p>
+</td>
+<td valign="top" align="left">
+<p id="_">The attribute &#8220;contentSummary&#8221;&lt;i&gt; &lt;/i&gt;is be represented as a CharacterString containing a general statement of the purpose for which items in the register are made available to potential users. It should also specify any limits to the scope of the register and identify the types of applications for which the items are intended.</p>
+<p id="_">NOTE The scope of a register could be limited by theme, by region, by language or other criteria.</p>
+<p id="_">EXAMPLE The scope of a terminology register could be limited to Spanish terms used to describe landforms in Latin America.</p>
+</td>
 </tr>
 <tr>
-<td valign="top" align="left">name</td>
 <td valign="top" align="left">
-<xref target="CharacterString-section">CharacterString</xref> [1]</td>
-<td valign="top" align="left">The attribute &#8220;name&#8221;&lt;i&gt; &lt;/i&gt;is be represented as a CharacterString containing a compact and human-readable designator that is used to uniquely denote that register within the set of registers maintained by the&lt;b&gt; &lt;/b&gt;register owner. In the case of a hierarchical register, the &#8220;&lt;i&gt;name&#8221; &lt;/i&gt;of a&lt;b&gt; &lt;/b&gt;subregister shall uniquely identify that subregister within the scope&lt;b&gt; &lt;/b&gt;
+<p id="_">name</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="CharacterString-section">CharacterString</xref> [1..1]</p>
+</td>
+<td valign="top" align="left">
+<p id="_">The attribute &#8220;name&#8221;&lt;i&gt; &lt;/i&gt;is be represented as a CharacterString containing a compact and human-readable designator that is used to uniquely denote that register within the set of registers maintained by the&lt;b&gt; &lt;/b&gt;register owner. In the case of a hierarchical register, the &#8220;&lt;i&gt;name&#8221; &lt;/i&gt;of a&lt;b&gt; &lt;/b&gt;subregister shall uniquely identify that subregister within the scope&lt;b&gt; &lt;/b&gt;
 EXAMPLE &#239;&#191;&#189;ISO/TC 211 Register of Feature Data Dictionaries and Feature Catalogues&#239;&#191;&#189; might be the name of the principal register of of all registers established by the owner of the principal register.
-a hierarchical register. &#239;&#191;&#189;DGIWG FACC Data Dictionary&#239;&#191;&#189; and &#239;&#191;&#189;IHO S-57 Object Dictionary&#239;&#191;&#189; might be the names of subregisters within the hierarchy.</td>
+a hierarchical register. &#239;&#191;&#189;DGIWG FACC Data Dictionary&#239;&#191;&#189; and &#239;&#191;&#189;IHO S-57 Object Dictionary&#239;&#191;&#189; might be the names of subregisters within the hierarchy.</p>
+</td>
 </tr>
 <tr>
-<td valign="top" align="left">operatingLanguage</td>
 <td valign="top" align="left">
-<xref target="EAID_3996125E_4828_4f3c_93BD_605E9059DE05-section">EAID_3996125E_4828_4f3c_93BD_605E9059DE05</xref> [1]</td>
-<td valign="top" align="left">The attribute &#8220;operatingLanguage&#8221;&lt;i&gt; &lt;/i&gt;is represented as an instance of class RE_Locale that is used to specify language, country information and character encoding for the proper interpretation of the content of character strings in the register.
-
-The values of all character strings in the register shall be in accordance with the value of &#8220;operatingLanguage&#8221;, unless otherwise stated.</td>
+<p id="_">operatingLanguage</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="EAID_3996125E_4828_4f3c_93BD_605E9059DE05-section">EAID_3996125E_4828_4f3c_93BD_605E9059DE05</xref> [1..1]</p>
+</td>
+<td valign="top" align="left">
+<p id="_">The attribute &#8220;operatingLanguage&#8221;&lt;i&gt; &lt;/i&gt;is represented as an instance of class RE_Locale that is used to specify language, country information and character encoding for the proper interpretation of the content of character strings in the register.</p>
+<p id="_">The values of all character strings in the register shall be in accordance with the value of &#8220;operatingLanguage&#8221;, unless otherwise stated.</p>
+</td>
 </tr>
 <tr>
-<td valign="top" align="left">uniformResourceIdentifier</td>
 <td valign="top" align="left">
-<xref target="URI-section">URI</xref> [*]</td>
-<td valign="top" align="left">The attribute &#8220;uniformResourceIdentifier&#8221;&lt;i&gt; &lt;/i&gt;takes as its value a set of URI&#8217;s, each referencing information about online resources associated with the register.
-
-EXAMPLE &#239;&#191;&#189;http://www.digest.org/Navigate2.htm&#239;&#191;&#189; and &#239;&#191;&#189;http://www.epa.gov/opppmsd1/PPISdata/index.html&#239;&#191;&#189; are
+<p id="_">uniformResourceIdentifier</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="URI-section">URI</xref> [1..*]</p>
+</td>
+<td valign="top" align="left">
+<p id="_">The attribute &#8220;uniformResourceIdentifier&#8221;&lt;i&gt; &lt;/i&gt;takes as its value a set of URI&#8217;s, each referencing information about online resources associated with the register.</p>
+<p id="_">EXAMPLE &#239;&#191;&#189;http://www.digest.org/Navigate2.htm&#239;&#191;&#189; and &#239;&#191;&#189;http://www.epa.gov/opppmsd1/PPISdata/index.html&#239;&#191;&#189; are
 sample values
 &lt;i&gt;
 &lt;/i&gt;&lt;i&gt;
-&lt;/i&gt;
-
-
-
-
-corresponding value of the attribute &lt;i&gt;OnLineResource.linkage &lt;/i&gt;specifies a resource providing access to the
+&lt;/i&gt;</p>
+<p id="_">corresponding value of the attribute &lt;i&gt;OnLineResource.linkage &lt;/i&gt;specifies a resource providing access to the
 complete content of the register.
 EXAMPLE &#239;&#191;&#189;http://www.digest.org/Navigate2.htm&#239;&#191;&#189; and &#239;&#191;&#189;http://www.epa.gov/opppmsd1/PPISdata/index.html&#239;&#191;&#189; are
-sample values of &lt;i&gt;OnLineResource.linkage&lt;/i&gt;.</td>
+sample values of &lt;i&gt;OnLineResource.linkage&lt;/i&gt;.</p>
+</td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
-
+</clause>
+</clause>
 <clause id="_" inline-header="false" obligation="normative">
 <title>Basic types</title>
 <p id="_">None.</p>
@@ -231,14 +292,13 @@ sample values of &lt;i&gt;OnLineResource.linkage&lt;/i&gt;.</td>
 </clause>
 <clause id="_" inline-header="false" obligation="normative">
 <title>Enumerations</title>
-</clause>
 <clause id="RE_Register_enum-section" inline-header="false" obligation="normative"><title>RE_Register_enum</title>
 <table id="_">
 <colgroup>
 <col width="20%">
 <col width="80%">
 </colgroup>
-<name>Metadata of RE_Register_enum ()</name>
+<name>Metadata of RE_Register_enum (Enumeration)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Definition:</th>
@@ -246,7 +306,9 @@ sample values of &lt;i&gt;OnLineResource.linkage&lt;/i&gt;.</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;Enumeration&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;Enumeration&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -255,6 +317,7 @@ After tag for Wrapper nested package
 &#8230;&#8203;</p>
 <p id="_">&#8230;&#8203;
 After tag for
-&#8230;&#8203;</p></clause></clause></clause></clause></sections>
+&#8230;&#8203;</p></clause>
+</clause></clause></clause></sections>
 </standard-document>
 </body></html>

@@ -125,9 +125,7 @@
 </tr>
 </tbody>
 </table>
-<clause id="_" inline-header="false" obligation="normative">
-<title>Classes</title>
-</clause>
+<clause id="_" inline-header="false" obligation="normative"><title>Classes</title>
 <clause id="AbstractAtomicTimeseries-section" inline-header="false" obligation="normative"><title>AbstractAtomicTimeseries</title>
 <table id="_">
 <colgroup>
@@ -142,11 +140,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -166,26 +168,36 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfAbstractAtomicTimeseries</td>
 <td valign="top" align="left">
-<xref target="ADEOfAbstractAtomicTimeseries-section">ADEOfAbstractAtomicTimeseries</xref> [0..*]</td>
+<p id="_">adeOfAbstractAtomicTimeseries</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfAbstractAtomicTimeseries-section">ADEOfAbstractAtomicTimeseries</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">observationProperty</td>
 <td valign="top" align="left">
-<xref target="CharacterString-section">CharacterString</xref> [1]</td>
+<p id="_">observationProperty</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="CharacterString-section">CharacterString</xref> [1..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">uom</td>
 <td valign="top" align="left">
-<xref target="CharacterString-section">CharacterString</xref> [0..1]</td>
+<p id="_">uom</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="CharacterString-section">CharacterString</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
@@ -203,11 +215,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -227,26 +243,36 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfAbstractTimeseries</td>
 <td valign="top" align="left">
-<xref target="ADEOfAbstractTimeseries-section">ADEOfAbstractTimeseries</xref> [0..*]</td>
+<p id="_">adeOfAbstractTimeseries</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfAbstractTimeseries-section">ADEOfAbstractTimeseries</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">firstTimestamp</td>
 <td valign="top" align="left">
-<xref target="TM_Position-section">TM_Position</xref> [0..1]</td>
+<p id="_">firstTimestamp</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="TM_Position-section">TM_Position</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">lastTimestamp</td>
 <td valign="top" align="left">
-<xref target="TM_Position-section">TM_Position</xref> [0..1]</td>
+<p id="_">lastTimestamp</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="TM_Position-section">TM_Position</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
@@ -265,11 +291,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -288,11 +318,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -312,14 +346,18 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfCompositeTimeseries</td>
 <td valign="top" align="left">
-<xref target="ADEOfCompositeTimeseries-section">ADEOfCompositeTimeseries</xref> [0..*]</td>
+<p id="_">adeOfCompositeTimeseries</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfCompositeTimeseries-section">ADEOfCompositeTimeseries</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
@@ -337,11 +375,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -361,32 +403,45 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfDynamizer</td>
 <td valign="top" align="left">
-<xref target="ADEOfDynamizer-section">ADEOfDynamizer</xref> [0..*]</td>
+<p id="_">adeOfDynamizer</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfDynamizer-section">ADEOfDynamizer</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">attributeRef</td>
 <td valign="top" align="left">
-<xref target="CharacterString-section">CharacterString</xref> [1]</td>
+<p id="_">attributeRef</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="CharacterString-section">CharacterString</xref> [1..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">endTime</td>
 <td valign="top" align="left">
-<xref target="TM_Position-section">TM_Position</xref> [0..1]</td>
+<p id="_">endTime</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="TM_Position-section">TM_Position</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">startTime</td>
 <td valign="top" align="left">
-<xref target="TM_Position-section">TM_Position</xref> [0..1]</td>
+<p id="_">startTime</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="TM_Position-section">TM_Position</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
@@ -404,11 +459,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -428,20 +487,27 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfGenericTimeseries</td>
 <td valign="top" align="left">
-<xref target="ADEOfGenericTimeseries-section">ADEOfGenericTimeseries</xref> [0..*]</td>
+<p id="_">adeOfGenericTimeseries</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfGenericTimeseries-section">ADEOfGenericTimeseries</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">valueType</td>
 <td valign="top" align="left">
-<xref target="TimeseriesTypeValue-section">TimeseriesTypeValue</xref> [1]</td>
+<p id="_">valueType</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="TimeseriesTypeValue-section">TimeseriesTypeValue</xref> [1..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
@@ -460,11 +526,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -483,11 +553,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -507,32 +581,45 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfStandardFileTimeseries</td>
 <td valign="top" align="left">
-<xref target="ADEOfStandardFileTimeseries-section">ADEOfStandardFileTimeseries</xref> [0..*]</td>
+<p id="_">adeOfStandardFileTimeseries</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfStandardFileTimeseries-section">ADEOfStandardFileTimeseries</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">fileLocation</td>
 <td valign="top" align="left">
-<xref target="URI-section">URI</xref> [1]</td>
+<p id="_">fileLocation</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="URI-section">URI</xref> [1..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">fileType</td>
 <td valign="top" align="left">
-<xref target="StandardFileTypeValue-section">StandardFileTypeValue</xref> [1]</td>
+<p id="_">fileType</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="StandardFileTypeValue-section">StandardFileTypeValue</xref> [1..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">mimeType</td>
 <td valign="top" align="left">
-<xref target="EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A-section">EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A</xref> [0..1]</td>
+<p id="_">mimeType</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A-section">EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
@@ -551,11 +638,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -574,11 +665,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -598,102 +693,149 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfTabulatedFileTimeseries</td>
 <td valign="top" align="left">
-<xref target="ADEOfTabulatedFileTimeseries-section">ADEOfTabulatedFileTimeseries</xref> [0..*]</td>
+<p id="_">adeOfTabulatedFileTimeseries</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfTabulatedFileTimeseries-section">ADEOfTabulatedFileTimeseries</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">decimalSymbol</td>
 <td valign="top" align="left">
-<xref target="Character-section">Character</xref> [0..1]</td>
+<p id="_">decimalSymbol</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="Character-section">Character</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">fieldSeparator</td>
 <td valign="top" align="left">
-<xref target="CharacterString-section">CharacterString</xref> [1]</td>
+<p id="_">fieldSeparator</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="CharacterString-section">CharacterString</xref> [1..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">fileLocation</td>
 <td valign="top" align="left">
-<xref target="URI-section">URI</xref> [1]</td>
+<p id="_">fileLocation</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="URI-section">URI</xref> [1..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">fileType</td>
 <td valign="top" align="left">
-<xref target="TabulatedFileTypeValue-section">TabulatedFileTypeValue</xref> [1]</td>
+<p id="_">fileType</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="TabulatedFileTypeValue-section">TabulatedFileTypeValue</xref> [1..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">idColumnName</td>
 <td valign="top" align="left">
-<xref target="CharacterString-section">CharacterString</xref> [0..1]</td>
+<p id="_">idColumnName</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="CharacterString-section">CharacterString</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">idColumnNo</td>
 <td valign="top" align="left">
-<xref target="Integer-section">Integer</xref> [0..1]</td>
+<p id="_">idColumnNo</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="Integer-section">Integer</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">idValue</td>
 <td valign="top" align="left">
-<xref target="CharacterString-section">CharacterString</xref> [0..1]</td>
+<p id="_">idValue</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="CharacterString-section">CharacterString</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">mimeType</td>
 <td valign="top" align="left">
-<xref target="EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A-section">EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A</xref> [0..1]</td>
+<p id="_">mimeType</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A-section">EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">numberOfHeaderLines</td>
 <td valign="top" align="left">
-<xref target="Integer-section">Integer</xref> [0..1]</td>
+<p id="_">numberOfHeaderLines</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="Integer-section">Integer</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">timeColumnName</td>
 <td valign="top" align="left">
-<xref target="CharacterString-section">CharacterString</xref> [0..1]</td>
+<p id="_">timeColumnName</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="CharacterString-section">CharacterString</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">timeColumnNo</td>
 <td valign="top" align="left">
-<xref target="Integer-section">Integer</xref> [0..1]</td>
+<p id="_">timeColumnNo</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="Integer-section">Integer</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">valueColumnName</td>
 <td valign="top" align="left">
-<xref target="CharacterString-section">CharacterString</xref> [0..1]</td>
+<p id="_">valueColumnName</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="CharacterString-section">CharacterString</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">valueColumnNo</td>
 <td valign="top" align="left">
-<xref target="Integer-section">Integer</xref> [0..1]</td>
+<p id="_">valueColumnNo</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="Integer-section">Integer</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">valueType</td>
 <td valign="top" align="left">
-<xref target="TimeseriesTypeValue-section">TimeseriesTypeValue</xref> [1]</td>
+<p id="_">valueType</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="TimeseriesTypeValue-section">TimeseriesTypeValue</xref> [1..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
-<clause id="TabulatedFileTypeValue-section" inline-header="false" obligation="normative"><title>TabulatedFileTypeValue</title>
+<clause id="TabulatedFileTypeValue-section" inline-header="false" obligation="normative">
+<title>TabulatedFileTypeValue</title>
 <table id="_">
 <colgroup>
 <col width="20%">
@@ -707,14 +849,19 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
+</clause></clause>
 <clause id="_" inline-header="false" obligation="normative">
 <title>Basic types</title>
 <p id="_">None.</p>
@@ -733,14 +880,13 @@
 </clause>
 <clause id="_" inline-header="false" obligation="normative">
 <title>Enumerations</title>
-</clause>
 <clause id="TimeseriesTypeValue-section" inline-header="false" obligation="normative"><title>TimeseriesTypeValue</title>
 <table id="_">
 <colgroup>
 <col width="20%">
 <col width="80%">
 </colgroup>
-<name>Metadata of TimeseriesTypeValue ()</name>
+<name>Metadata of TimeseriesTypeValue (Enumeration)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Definition:</th>
@@ -748,7 +894,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;Enumeration&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;Enumeration&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -757,7 +905,7 @@
 <col width="20%">
 <col width="80%">
 </colgroup>
-<name>Values of TimeseriesTypeValue ()</name>
+<name>Values of TimeseriesTypeValue (Enumeration)</name>
 <thead>
 <tr>
 <th valign="top" align="left">Literal value</th>
@@ -766,39 +914,56 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">int</td>
+<td valign="top" align="left">
+<p id="_">int</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">double</td>
+<td valign="top" align="left">
+<p id="_">double</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">string</td>
+<td valign="top" align="left">
+<p id="_">string</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">geometry</td>
+<td valign="top" align="left">
+<p id="_">geometry</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">uri</td>
+<td valign="top" align="left">
+<p id="_">uri</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">bool</td>
+<td valign="top" align="left">
+<p id="_">bool</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">implicitGeometry</td>
+<td valign="top" align="left">
+<p id="_">implicitGeometry</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">appearance</td>
+<td valign="top" align="left">
+<p id="_">appearance</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
-</table></clause></clause></clause>
+</table></clause>
+</clause></clause>
 <clause id="_" inline-header="false" obligation="normative"><title>CityTML</title>
 <table id="_">
 <colgroup>
@@ -825,9 +990,7 @@
 </tr>
 </tbody>
 </table>
-<clause id="_" inline-header="false" obligation="normative">
-<title>Classes</title>
-</clause>
+<clause id="_" inline-header="false" obligation="normative"><title>Classes</title>
 <clause id="AbstractConstruction-section" inline-header="false" obligation="normative"><title>AbstractConstruction</title>
 <table id="_">
 <colgroup>
@@ -842,11 +1005,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -866,56 +1033,81 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfAbstractConstruction</td>
 <td valign="top" align="left">
-<xref target="ADEOfAbstractConstruction-section">ADEOfAbstractConstruction</xref> [0..*]</td>
+<p id="_">adeOfAbstractConstruction</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfAbstractConstruction-section">ADEOfAbstractConstruction</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">conditionOfConstruction</td>
 <td valign="top" align="left">
-<xref target="ConditionOfConstructionValue-section">ConditionOfConstructionValue</xref> [0..1]</td>
+<p id="_">conditionOfConstruction</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ConditionOfConstructionValue-section">ConditionOfConstructionValue</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">constructionEvent</td>
 <td valign="top" align="left">
-<xref target="ConstructionEvent-section">ConstructionEvent</xref> [0..*]</td>
+<p id="_">constructionEvent</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ConstructionEvent-section">ConstructionEvent</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">dateOfConstruction</td>
 <td valign="top" align="left">
-<xref target="Date-section">Date</xref> [0..1]</td>
+<p id="_">dateOfConstruction</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="Date-section">Date</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">dateOfDemolition</td>
 <td valign="top" align="left">
-<xref target="Date-section">Date</xref> [0..1]</td>
+<p id="_">dateOfDemolition</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="Date-section">Date</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">elevation</td>
 <td valign="top" align="left">
-<xref target="Elevation-section">Elevation</xref> [0..*]</td>
+<p id="_">elevation</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="Elevation-section">Elevation</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">height</td>
 <td valign="top" align="left">
-<xref target="Height-section">Height</xref> [0..*]</td>
+<p id="_">height</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="Height-section">Height</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">occupancy</td>
 <td valign="top" align="left">
-<xref target="EAID_89AB0AD7_1A70_4201_8E11_27D292166FE9-section">EAID_89AB0AD7_1A70_4201_8E11_27D292166FE9</xref> [0..*]</td>
+<p id="_">occupancy</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="EAID_89AB0AD7_1A70_4201_8E11_27D292166FE9-section">EAID_89AB0AD7_1A70_4201_8E11_27D292166FE9</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
@@ -933,11 +1125,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -957,14 +1153,18 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfAbstractConstructionSurface</td>
 <td valign="top" align="left">
-<xref target="ADEOfAbstractConstructionSurface-section">ADEOfAbstractConstructionSurface</xref> [0..*]</td>
+<p id="_">adeOfAbstractConstructionSurface</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfAbstractConstructionSurface-section">ADEOfAbstractConstructionSurface</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
@@ -982,11 +1182,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1006,20 +1210,27 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfAbstractConstructiveElement</td>
 <td valign="top" align="left">
-<xref target="ADEOfAbstractConstructiveElement-section">ADEOfAbstractConstructiveElement</xref> [0..*]</td>
+<p id="_">adeOfAbstractConstructiveElement</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfAbstractConstructiveElement-section">ADEOfAbstractConstructiveElement</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">isStructuralElement</td>
 <td valign="top" align="left">
-<xref target="Boolean-section">Boolean</xref> [0..1]</td>
+<p id="_">isStructuralElement</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="Boolean-section">Boolean</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
@@ -1037,11 +1248,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1061,14 +1276,18 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfAbstractFillingElement</td>
 <td valign="top" align="left">
-<xref target="ADEOfAbstractFillingElement-section">ADEOfAbstractFillingElement</xref> [0..*]</td>
+<p id="_">adeOfAbstractFillingElement</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfAbstractFillingElement-section">ADEOfAbstractFillingElement</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
@@ -1086,11 +1305,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1110,14 +1333,18 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfAbstractFillingSurface</td>
 <td valign="top" align="left">
-<xref target="ADEOfAbstractFillingSurface-section">ADEOfAbstractFillingSurface</xref> [0..*]</td>
+<p id="_">adeOfAbstractFillingSurface</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfAbstractFillingSurface-section">ADEOfAbstractFillingSurface</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
@@ -1135,11 +1362,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1159,14 +1390,18 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfAbstractFurniture</td>
 <td valign="top" align="left">
-<xref target="ADEOfAbstractFurniture-section">ADEOfAbstractFurniture</xref> [0..*]</td>
+<p id="_">adeOfAbstractFurniture</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfAbstractFurniture-section">ADEOfAbstractFurniture</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
@@ -1184,11 +1419,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1208,20 +1447,27 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfAbstractInstallation</td>
 <td valign="top" align="left">
-<xref target="ADEOfAbstractInstallation-section">ADEOfAbstractInstallation</xref> [0..*]</td>
+<p id="_">adeOfAbstractInstallation</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfAbstractInstallation-section">ADEOfAbstractInstallation</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">relationToConstruction</td>
 <td valign="top" align="left">
-<xref target="RelationToConstruction-section">RelationToConstruction</xref> [0..1]</td>
+<p id="_">relationToConstruction</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="RelationToConstruction-section">RelationToConstruction</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
@@ -1239,11 +1485,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1263,14 +1513,18 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfCeilingSurface</td>
 <td valign="top" align="left">
-<xref target="ADEOfCeilingSurface-section">ADEOfCeilingSurface</xref> [0..*]</td>
+<p id="_">adeOfCeilingSurface</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfCeilingSurface-section">ADEOfCeilingSurface</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
@@ -1288,11 +1542,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1312,32 +1570,45 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfDoor</td>
 <td valign="top" align="left">
-<xref target="ADEOfDoor-section">ADEOfDoor</xref> [0..*]</td>
+<p id="_">adeOfDoor</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfDoor-section">ADEOfDoor</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">class</td>
 <td valign="top" align="left">
-<xref target="DoorClassValue-section">DoorClassValue</xref> [0..1]</td>
+<p id="_">class</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="DoorClassValue-section">DoorClassValue</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">function</td>
 <td valign="top" align="left">
-<xref target="DoorFunctionValue-section">DoorFunctionValue</xref> [0..*]</td>
+<p id="_">function</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="DoorFunctionValue-section">DoorFunctionValue</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">usage</td>
 <td valign="top" align="left">
-<xref target="DoorUsageValue-section">DoorUsageValue</xref> [0..*]</td>
+<p id="_">usage</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="DoorUsageValue-section">DoorUsageValue</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
@@ -1356,11 +1627,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1380,11 +1655,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1403,11 +1682,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1427,14 +1710,18 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfDoorSurface</td>
 <td valign="top" align="left">
-<xref target="ADEOfDoorSurface-section">ADEOfDoorSurface</xref> [0..*]</td>
+<p id="_">adeOfDoorSurface</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfDoorSurface-section">ADEOfDoorSurface</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
@@ -1453,11 +1740,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1477,11 +1768,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1501,11 +1796,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1524,11 +1823,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1548,14 +1851,18 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfFloorSurface</td>
 <td valign="top" align="left">
-<xref target="ADEOfFloorSurface-section">ADEOfFloorSurface</xref> [0..*]</td>
+<p id="_">adeOfFloorSurface</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfFloorSurface-section">ADEOfFloorSurface</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
@@ -1573,11 +1880,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1597,14 +1908,18 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfGroundSurface</td>
 <td valign="top" align="left">
-<xref target="ADEOfGroundSurface-section">ADEOfGroundSurface</xref> [0..*]</td>
+<p id="_">adeOfGroundSurface</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfGroundSurface-section">ADEOfGroundSurface</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
@@ -1622,11 +1937,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1646,14 +1965,18 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfInteriorWallSurface</td>
 <td valign="top" align="left">
-<xref target="ADEOfInteriorWallSurface-section">ADEOfInteriorWallSurface</xref> [0..*]</td>
+<p id="_">adeOfInteriorWallSurface</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfInteriorWallSurface-section">ADEOfInteriorWallSurface</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
@@ -1671,11 +1994,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1695,32 +2022,45 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfOtherConstruction</td>
 <td valign="top" align="left">
-<xref target="ADEOfOtherConstruction-section">ADEOfOtherConstruction</xref> [0..*]</td>
+<p id="_">adeOfOtherConstruction</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfOtherConstruction-section">ADEOfOtherConstruction</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">class</td>
 <td valign="top" align="left">
-<xref target="OtherConstructionClassValue-section">OtherConstructionClassValue</xref> [0..1]</td>
+<p id="_">class</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="OtherConstructionClassValue-section">OtherConstructionClassValue</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">function</td>
 <td valign="top" align="left">
-<xref target="OtherConstructionFunctionValue-section">OtherConstructionFunctionValue</xref> [0..*]</td>
+<p id="_">function</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="OtherConstructionFunctionValue-section">OtherConstructionFunctionValue</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">usage</td>
 <td valign="top" align="left">
-<xref target="OtherConstructionUsageValue-section">OtherConstructionUsageValue</xref> [0..*]</td>
+<p id="_">usage</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="OtherConstructionUsageValue-section">OtherConstructionUsageValue</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
@@ -1739,11 +2079,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1763,11 +2107,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1787,11 +2135,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1810,11 +2162,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1834,14 +2190,18 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfOuterCeilingSurface</td>
 <td valign="top" align="left">
-<xref target="ADEOfOuterCeilingSurface-section">ADEOfOuterCeilingSurface</xref> [0..*]</td>
+<p id="_">adeOfOuterCeilingSurface</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfOuterCeilingSurface-section">ADEOfOuterCeilingSurface</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
@@ -1859,11 +2219,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1883,14 +2247,18 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfOuterFloorSurface</td>
 <td valign="top" align="left">
-<xref target="ADEOfOuterFloorSurface-section">ADEOfOuterFloorSurface</xref> [0..*]</td>
+<p id="_">adeOfOuterFloorSurface</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfOuterFloorSurface-section">ADEOfOuterFloorSurface</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
@@ -1908,11 +2276,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1932,14 +2304,18 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfRoofSurface</td>
 <td valign="top" align="left">
-<xref target="ADEOfRoofSurface-section">ADEOfRoofSurface</xref> [0..*]</td>
+<p id="_">adeOfRoofSurface</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfRoofSurface-section">ADEOfRoofSurface</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
@@ -1957,11 +2333,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1981,14 +2361,18 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfWallSurface</td>
 <td valign="top" align="left">
-<xref target="ADEOfWallSurface-section">ADEOfWallSurface</xref> [0..*]</td>
+<p id="_">adeOfWallSurface</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfWallSurface-section">ADEOfWallSurface</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
@@ -2006,11 +2390,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -2030,32 +2418,45 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfWindow</td>
 <td valign="top" align="left">
-<xref target="ADEOfWindow-section">ADEOfWindow</xref> [0..*]</td>
+<p id="_">adeOfWindow</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfWindow-section">ADEOfWindow</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">class</td>
 <td valign="top" align="left">
-<xref target="WindowClassValue-section">WindowClassValue</xref> [0..1]</td>
+<p id="_">class</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="WindowClassValue-section">WindowClassValue</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">function</td>
 <td valign="top" align="left">
-<xref target="WindowFunctionValue-section">WindowFunctionValue</xref> [0..*]</td>
+<p id="_">function</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="WindowFunctionValue-section">WindowFunctionValue</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">usage</td>
 <td valign="top" align="left">
-<xref target="WindowUsageValue-section">WindowUsageValue</xref> [0..*]</td>
+<p id="_">usage</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="WindowUsageValue-section">WindowUsageValue</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
@@ -2074,11 +2475,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -2098,11 +2503,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -2121,11 +2530,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -2145,18 +2558,23 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfWindowSurface</td>
 <td valign="top" align="left">
-<xref target="ADEOfWindowSurface-section">ADEOfWindowSurface</xref> [0..*]</td>
+<p id="_">adeOfWindowSurface</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfWindowSurface-section">ADEOfWindowSurface</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
 </clause>
-<clause id="WindowUsageValue-section" inline-header="false" obligation="normative"><title>WindowUsageValue</title>
+<clause id="WindowUsageValue-section" inline-header="false" obligation="normative">
+<title>WindowUsageValue</title>
 <table id="_">
 <colgroup>
 <col width="20%">
@@ -2170,14 +2588,19 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
+</clause></clause>
 <clause id="_" inline-header="false" obligation="normative">
 <title>Basic types</title>
 <p id="_">None.</p>
@@ -2194,16 +2617,14 @@
 <title>Data types</title>
 <p id="_">None.</p>
 </clause>
-<clause id="_" inline-header="false" obligation="normative">
-<title>Enumerations</title>
-</clause>
+<clause id="_" inline-header="false" obligation="normative"><title>Enumerations</title>
 <clause id="ConditionOfConstructionValue-section" inline-header="false" obligation="normative"><title>ConditionOfConstructionValue</title>
 <table id="_">
 <colgroup>
 <col width="20%">
 <col width="80%">
 </colgroup>
-<name>Metadata of ConditionOfConstructionValue ()</name>
+<name>Metadata of ConditionOfConstructionValue (Enumeration)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Definition:</th>
@@ -2211,7 +2632,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;Enumeration&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;Enumeration&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -2220,7 +2643,7 @@
 <col width="20%">
 <col width="80%">
 </colgroup>
-<name>Values of ConditionOfConstructionValue ()</name>
+<name>Values of ConditionOfConstructionValue (Enumeration)</name>
 <thead>
 <tr>
 <th valign="top" align="left">Literal value</th>
@@ -2229,27 +2652,39 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">declined</td>
+<td valign="top" align="left">
+<p id="_">declined</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">demolished</td>
+<td valign="top" align="left">
+<p id="_">demolished</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">functional</td>
+<td valign="top" align="left">
+<p id="_">functional</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">projected</td>
+<td valign="top" align="left">
+<p id="_">projected</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">ruin</td>
+<td valign="top" align="left">
+<p id="_">ruin</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">underConstruction</td>
+<td valign="top" align="left">
+<p id="_">underConstruction</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
@@ -2260,7 +2695,7 @@
 <col width="20%">
 <col width="80%">
 </colgroup>
-<name>Metadata of HeightStatusValue ()</name>
+<name>Metadata of HeightStatusValue (Enumeration)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Definition:</th>
@@ -2268,7 +2703,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;Enumeration&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;Enumeration&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -2277,7 +2714,7 @@
 <col width="20%">
 <col width="80%">
 </colgroup>
-<name>Values of HeightStatusValue ()</name>
+<name>Values of HeightStatusValue (Enumeration)</name>
 <thead>
 <tr>
 <th valign="top" align="left">Literal value</th>
@@ -2286,11 +2723,15 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">estimated</td>
+<td valign="top" align="left">
+<p id="_">estimated</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">measured</td>
+<td valign="top" align="left">
+<p id="_">measured</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
@@ -2301,7 +2742,7 @@
 <col width="20%">
 <col width="80%">
 </colgroup>
-<name>Metadata of RelationToConstruction ()</name>
+<name>Metadata of RelationToConstruction (Enumeration)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Definition:</th>
@@ -2309,7 +2750,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;Enumeration&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;Enumeration&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -2318,7 +2761,7 @@
 <col width="20%">
 <col width="80%">
 </colgroup>
-<name>Values of RelationToConstruction ()</name>
+<name>Values of RelationToConstruction (Enumeration)</name>
 <thead>
 <tr>
 <th valign="top" align="left">Literal value</th>
@@ -2327,15 +2770,21 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">inside</td>
+<td valign="top" align="left">
+<p id="_">inside</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">outside</td>
+<td valign="top" align="left">
+<p id="_">outside</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">bothInsideAndOutside</td>
+<td valign="top" align="left">
+<p id="_">bothInsideAndOutside</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
@@ -2366,10 +2815,8 @@
 </tr>
 </tbody>
 </table>
-<clause id="_" inline-header="false" obligation="normative">
-<title>Classes</title>
-</clause>
-<clause id="AbstractAtomicTimeseries-section" inline-header="false" obligation="normative"><title>AbstractAtomicTimeseries</title>
+<clause id="_" inline-header="false" obligation="normative"><title>Classes</title>
+<p id="AbstractAtomicTimeseries-section">======= AbstractAtomicTimeseries</p>
 <table id="_">
 <colgroup>
 <col width="20%">
@@ -2383,11 +2830,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -2407,30 +2858,40 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfAbstractAtomicTimeseries</td>
 <td valign="top" align="left">
-<xref target="ADEOfAbstractAtomicTimeseries-section">ADEOfAbstractAtomicTimeseries</xref> [0..*]</td>
+<p id="_">adeOfAbstractAtomicTimeseries</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfAbstractAtomicTimeseries-section">ADEOfAbstractAtomicTimeseries</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">observationProperty</td>
 <td valign="top" align="left">
-<xref target="CharacterString-section">CharacterString</xref> [1]</td>
+<p id="_">observationProperty</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="CharacterString-section">CharacterString</xref> [1..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">uom</td>
 <td valign="top" align="left">
-<xref target="CharacterString-section">CharacterString</xref> [0..1]</td>
+<p id="_">uom</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="CharacterString-section">CharacterString</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
-</clause>
-<clause id="AbstractTimeseries-section" inline-header="false" obligation="normative"><title>AbstractTimeseries</title>
+
+<p id="AbstractTimeseries-section">======= AbstractTimeseries</p>
 <table id="_">
 <colgroup>
 <col width="20%">
@@ -2444,11 +2905,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -2468,31 +2933,40 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfAbstractTimeseries</td>
 <td valign="top" align="left">
-<xref target="ADEOfAbstractTimeseries-section">ADEOfAbstractTimeseries</xref> [0..*]</td>
+<p id="_">adeOfAbstractTimeseries</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfAbstractTimeseries-section">ADEOfAbstractTimeseries</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">firstTimestamp</td>
 <td valign="top" align="left">
-<xref target="TM_Position-section">TM_Position</xref> [0..1]</td>
+<p id="_">firstTimestamp</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="TM_Position-section">TM_Position</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">lastTimestamp</td>
 <td valign="top" align="left">
-<xref target="TM_Position-section">TM_Position</xref> [0..1]</td>
+<p id="_">lastTimestamp</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="TM_Position-section">TM_Position</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
-</clause>
-<clause id="AuthenticationTypeValue-section" inline-header="false" obligation="normative">
-<title>AuthenticationTypeValue</title>
+
+<p id="AuthenticationTypeValue-section">======= AuthenticationTypeValue</p>
 <table id="_">
 <colgroup>
 <col width="20%">
@@ -2506,16 +2980,19 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
-</clause>
-<clause id="CompositeTimeseries-section" inline-header="false" obligation="normative"><title>CompositeTimeseries</title>
+<p id="CompositeTimeseries-section">======= CompositeTimeseries</p>
 <table id="_">
 <colgroup>
 <col width="20%">
@@ -2529,11 +3006,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -2553,18 +3034,22 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfCompositeTimeseries</td>
 <td valign="top" align="left">
-<xref target="ADEOfCompositeTimeseries-section">ADEOfCompositeTimeseries</xref> [0..*]</td>
+<p id="_">adeOfCompositeTimeseries</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfCompositeTimeseries-section">ADEOfCompositeTimeseries</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
-</clause>
-<clause id="Dynamizer-section" inline-header="false" obligation="normative"><title>Dynamizer</title>
+
+<p id="Dynamizer-section">======= Dynamizer</p>
 <table id="_">
 <colgroup>
 <col width="20%">
@@ -2578,11 +3063,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -2602,36 +3091,49 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfDynamizer</td>
 <td valign="top" align="left">
-<xref target="ADEOfDynamizer-section">ADEOfDynamizer</xref> [0..*]</td>
+<p id="_">adeOfDynamizer</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfDynamizer-section">ADEOfDynamizer</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">attributeRef</td>
 <td valign="top" align="left">
-<xref target="CharacterString-section">CharacterString</xref> [1]</td>
+<p id="_">attributeRef</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="CharacterString-section">CharacterString</xref> [1..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">endTime</td>
 <td valign="top" align="left">
-<xref target="TM_Position-section">TM_Position</xref> [0..1]</td>
+<p id="_">endTime</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="TM_Position-section">TM_Position</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">startTime</td>
 <td valign="top" align="left">
-<xref target="TM_Position-section">TM_Position</xref> [0..1]</td>
+<p id="_">startTime</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="TM_Position-section">TM_Position</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
-</clause>
-<clause id="GenericTimeseries-section" inline-header="false" obligation="normative"><title>GenericTimeseries</title>
+
+<p id="GenericTimeseries-section">======= GenericTimeseries</p>
 <table id="_">
 <colgroup>
 <col width="20%">
@@ -2645,11 +3147,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -2669,25 +3175,31 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfGenericTimeseries</td>
 <td valign="top" align="left">
-<xref target="ADEOfGenericTimeseries-section">ADEOfGenericTimeseries</xref> [0..*]</td>
+<p id="_">adeOfGenericTimeseries</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfGenericTimeseries-section">ADEOfGenericTimeseries</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">valueType</td>
 <td valign="top" align="left">
-<xref target="TimeseriesTypeValue-section">TimeseriesTypeValue</xref> [1]</td>
+<p id="_">valueType</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="TimeseriesTypeValue-section">TimeseriesTypeValue</xref> [1..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
-</clause>
-<clause id="SensorConnectionTypeValue-section" inline-header="false" obligation="normative">
-<title>SensorConnectionTypeValue</title>
+
+<p id="SensorConnectionTypeValue-section">======= SensorConnectionTypeValue</p>
 <table id="_">
 <colgroup>
 <col width="20%">
@@ -2701,16 +3213,19 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
-</clause>
-<clause id="StandardFileTimeseries-section" inline-header="false" obligation="normative"><title>StandardFileTimeseries</title>
+<p id="StandardFileTimeseries-section">======= StandardFileTimeseries</p>
 <table id="_">
 <colgroup>
 <col width="20%">
@@ -2724,11 +3239,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -2748,37 +3267,49 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfStandardFileTimeseries</td>
 <td valign="top" align="left">
-<xref target="ADEOfStandardFileTimeseries-section">ADEOfStandardFileTimeseries</xref> [0..*]</td>
+<p id="_">adeOfStandardFileTimeseries</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfStandardFileTimeseries-section">ADEOfStandardFileTimeseries</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">fileLocation</td>
 <td valign="top" align="left">
-<xref target="URI-section">URI</xref> [1]</td>
+<p id="_">fileLocation</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="URI-section">URI</xref> [1..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">fileType</td>
 <td valign="top" align="left">
-<xref target="StandardFileTypeValue-section">StandardFileTypeValue</xref> [1]</td>
+<p id="_">fileType</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="StandardFileTypeValue-section">StandardFileTypeValue</xref> [1..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">mimeType</td>
 <td valign="top" align="left">
-<xref target="EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A-section">EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A</xref> [0..1]</td>
+<p id="_">mimeType</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A-section">EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
-</clause>
-<clause id="StandardFileTypeValue-section" inline-header="false" obligation="normative">
-<title>StandardFileTypeValue</title>
+
+<p id="StandardFileTypeValue-section">======= StandardFileTypeValue</p>
 <table id="_">
 <colgroup>
 <col width="20%">
@@ -2792,16 +3323,19 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
-</clause>
-<clause id="TabulatedFileTimeseries-section" inline-header="false" obligation="normative"><title>TabulatedFileTimeseries</title>
+<p id="TabulatedFileTimeseries-section">======= TabulatedFileTimeseries</p>
 <table id="_">
 <colgroup>
 <col width="20%">
@@ -2815,11 +3349,15 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -2839,102 +3377,148 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">adeOfTabulatedFileTimeseries</td>
 <td valign="top" align="left">
-<xref target="ADEOfTabulatedFileTimeseries-section">ADEOfTabulatedFileTimeseries</xref> [0..*]</td>
+<p id="_">adeOfTabulatedFileTimeseries</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="ADEOfTabulatedFileTimeseries-section">ADEOfTabulatedFileTimeseries</xref> [0..*]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">decimalSymbol</td>
 <td valign="top" align="left">
-<xref target="Character-section">Character</xref> [0..1]</td>
+<p id="_">decimalSymbol</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="Character-section">Character</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">fieldSeparator</td>
 <td valign="top" align="left">
-<xref target="CharacterString-section">CharacterString</xref> [1]</td>
+<p id="_">fieldSeparator</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="CharacterString-section">CharacterString</xref> [1..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">fileLocation</td>
 <td valign="top" align="left">
-<xref target="URI-section">URI</xref> [1]</td>
+<p id="_">fileLocation</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="URI-section">URI</xref> [1..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">fileType</td>
 <td valign="top" align="left">
-<xref target="TabulatedFileTypeValue-section">TabulatedFileTypeValue</xref> [1]</td>
+<p id="_">fileType</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="TabulatedFileTypeValue-section">TabulatedFileTypeValue</xref> [1..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">idColumnName</td>
 <td valign="top" align="left">
-<xref target="CharacterString-section">CharacterString</xref> [0..1]</td>
+<p id="_">idColumnName</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="CharacterString-section">CharacterString</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">idColumnNo</td>
 <td valign="top" align="left">
-<xref target="Integer-section">Integer</xref> [0..1]</td>
+<p id="_">idColumnNo</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="Integer-section">Integer</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">idValue</td>
 <td valign="top" align="left">
-<xref target="CharacterString-section">CharacterString</xref> [0..1]</td>
+<p id="_">idValue</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="CharacterString-section">CharacterString</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">mimeType</td>
 <td valign="top" align="left">
-<xref target="EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A-section">EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A</xref> [0..1]</td>
+<p id="_">mimeType</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A-section">EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">numberOfHeaderLines</td>
 <td valign="top" align="left">
-<xref target="Integer-section">Integer</xref> [0..1]</td>
+<p id="_">numberOfHeaderLines</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="Integer-section">Integer</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">timeColumnName</td>
 <td valign="top" align="left">
-<xref target="CharacterString-section">CharacterString</xref> [0..1]</td>
+<p id="_">timeColumnName</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="CharacterString-section">CharacterString</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">timeColumnNo</td>
 <td valign="top" align="left">
-<xref target="Integer-section">Integer</xref> [0..1]</td>
+<p id="_">timeColumnNo</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="Integer-section">Integer</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">valueColumnName</td>
 <td valign="top" align="left">
-<xref target="CharacterString-section">CharacterString</xref> [0..1]</td>
+<p id="_">valueColumnName</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="CharacterString-section">CharacterString</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">valueColumnNo</td>
 <td valign="top" align="left">
-<xref target="Integer-section">Integer</xref> [0..1]</td>
+<p id="_">valueColumnNo</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="Integer-section">Integer</xref> [0..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">valueType</td>
 <td valign="top" align="left">
-<xref target="TimeseriesTypeValue-section">TimeseriesTypeValue</xref> [1]</td>
+<p id="_">valueType</p>
+</td>
+<td valign="top" align="left">
+<p id="_"><xref target="TimeseriesTypeValue-section">TimeseriesTypeValue</xref> [1..1]</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
 <note id="_">
-<p id="_">Unless otherwise specified, all attributes and role names have the stereotype &#171;Property&#187;.</p>
+<p id="_">Unless otherwise specified, all attributes and role names have the stereotype
+&#171;Property&#187;.</p>
 </note>
 </table>
-</clause>
-<clause id="TabulatedFileTypeValue-section" inline-header="false" obligation="normative"><title>TabulatedFileTypeValue</title>
+
+<p id="TabulatedFileTypeValue-section">======= TabulatedFileTypeValue</p>
 <table id="_">
 <colgroup>
 <col width="20%">
@@ -2948,30 +3532,42 @@
 </tr>
 <tr>
 <th valign="top" align="left">Subclass of:</th>
-<td valign="top" align="left">None</td>
+<td valign="top" align="left">
+<p id="_">None</p>
+</td>
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;&#187;</p>
+</td>
 </tr>
 </tbody>
-</table>
-<p id="_">======= Basic types</p>
+</table></clause>
+<clause id="_" inline-header="false" obligation="normative">
+<title>Basic types</title>
 <p id="_">None.</p>
-<p id="_">======= Unions</p>
+</clause>
+<clause id="_" inline-header="false" obligation="normative">
+<title>Unions</title>
 <p id="_">None.</p>
-<p id="_">======= Code lists</p>
+</clause>
+<clause id="_" inline-header="false" obligation="normative">
+<title>Code lists</title>
 <p id="_">None.</p>
-<p id="_">======= Data types</p>
+</clause>
+<clause id="_" inline-header="false" obligation="normative">
+<title>Data types</title>
 <p id="_">None.</p>
-<p id="_">======= Enumerations</p>
+</clause>
+<clause id="_" inline-header="false" obligation="normative"><title>Enumerations</title>
 <p id="TimeseriesTypeValue-section">======= TimeseriesTypeValue</p>
 <table id="_">
 <colgroup>
 <col width="20%">
 <col width="80%">
 </colgroup>
-<name>Metadata of TimeseriesTypeValue ()</name>
+<name>Metadata of TimeseriesTypeValue (Enumeration)</name>
 <tbody>
 <tr>
 <th valign="top" align="left">Definition:</th>
@@ -2979,7 +3575,9 @@
 </tr>
 <tr>
 <th valign="top" align="left">Stereotype:</th>
-<td valign="top" align="left">&#171;Enumeration&#187;</td>
+<td valign="top" align="left">
+<p id="_">&#171;Enumeration&#187;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -2988,7 +3586,7 @@
 <col width="20%">
 <col width="80%">
 </colgroup>
-<name>Values of TimeseriesTypeValue ()</name>
+<name>Values of TimeseriesTypeValue (Enumeration)</name>
 <thead>
 <tr>
 <th valign="top" align="left">Literal value</th>
@@ -2997,35 +3595,51 @@
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left">int</td>
+<td valign="top" align="left">
+<p id="_">int</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">double</td>
+<td valign="top" align="left">
+<p id="_">double</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">string</td>
+<td valign="top" align="left">
+<p id="_">string</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">geometry</td>
+<td valign="top" align="left">
+<p id="_">geometry</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">uri</td>
+<td valign="top" align="left">
+<p id="_">uri</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">bool</td>
+<td valign="top" align="left">
+<p id="_">bool</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">implicitGeometry</td>
+<td valign="top" align="left">
+<p id="_">implicitGeometry</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 <tr>
-<td valign="top" align="left">appearance</td>
+<td valign="top" align="left">
+<p id="_">appearance</p>
+</td>
 <td valign="top" align="left"></td>
 </tr>
 </tbody>

@@ -14,6 +14,13 @@ This is is an include text for Wrapper nested package and package name wrapper_n
 &#8230;&#8203;</p>
 <p id="_">Content for Wrapper package</p>
 <p id="_">&#8230;&#8203;
+After include block for Wrapper nested package and package name wrapper_nested_package
+&#8230;&#8203;</p>
+<p id="_">Content for Wrapper package</p>
+<p id="_">&#8230;&#8203;
+This is is a pckage text after for Wrapper nested package and package name wrapper_nested_package
+&#8230;&#8203;</p>
+<p id="_">&#8230;&#8203;
 text after Another package interpolated: Wrapper nested package
 &#8230;&#8203;</p>
 <p id="_">&#8230;&#8203;

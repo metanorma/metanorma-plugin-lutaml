@@ -180,15 +180,17 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
               TEXT
             end
 
-            around do |example|
-              File.open(config_file, 'w') { |file| file.puts({ 'render_style' => style }.to_yaml) }
-              example.run
-              FileUtils.rm_f(config_file)
-            end
+            context 'when render_style' do
+              around do |example|
+                File.open(config_file, 'w') { |file| file.puts({ 'render_style' => style }.to_yaml) }
+                example.run
+                FileUtils.rm_f(config_file)
+              end
 
-            it "correctly renders input" do
-              expect(xml_string_conent(metanorma_process(input)))
-                .to(be_equivalent_to(output))
+              it "correctly renders input" do
+                expect(xml_string_conent(metanorma_process(input)))
+                  .to(be_equivalent_to(output))
+              end
             end
 
             context "when `liquid = true` option is used for `package_text` \
@@ -263,6 +265,12 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
                   </standard-document>
                   </body></html>
                 TEXT
+              end
+
+              around do |example|
+                File.open(config_file, 'w') { |file| file.puts({ 'render_style' => style }.to_yaml) }
+                example.run
+                FileUtils.rm_f(config_file)
               end
 
               it "correctly renders input" do
@@ -407,7 +415,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
       around do |example|
         File.open(nested_config_file, 'w') { |file| file.puts({ 'render_style' => 'entity_list' }.to_yaml) }
         example.run
-        FileUtils.rm_f(config_file)
+        FileUtils.rm_f(nested_config_file)
       end
 
       it "correctly renders input" do
@@ -476,7 +484,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
       let(:output) do
         <<~TEXT
           #{BLANK_HDR}
-          #{File.read(fixtures_path("datamodel_description_sections_package_entities.xml"))}
+          #{File.read(fixtures_path("datamodel_description_sections_skip_tables.xml"))}
           </standard-document>
           </body></html>
         TEXT
