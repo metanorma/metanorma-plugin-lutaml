@@ -195,12 +195,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="AbstractTimeseries-section" inline-header="false" obligation="normative"><title>AbstractTimeseries</title>
 <table id="_">
 <colgroup>
@@ -270,12 +269,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="AuthenticationTypeValue-section" inline-header="false" obligation="normative">
 <title>AuthenticationTypeValue</title>
 <table id="_">
@@ -355,12 +353,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="Dynamizer-section" inline-header="false" obligation="normative"><title>Dynamizer</title>
 <table id="_">
 <colgroup>
@@ -439,12 +436,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="GenericTimeseries-section" inline-header="false" obligation="normative"><title>GenericTimeseries</title>
 <table id="_">
 <colgroup>
@@ -505,12 +501,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="SensorConnectionTypeValue-section" inline-header="false" obligation="normative">
 <title>SensorConnectionTypeValue</title>
 <table id="_">
@@ -617,12 +612,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="StandardFileTypeValue-section" inline-header="false" obligation="normative">
 <title>StandardFileTypeValue</title>
 <table id="_">
@@ -828,12 +822,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="TabulatedFileTypeValue-section" inline-header="false" obligation="normative">
 <title>TabulatedFileTypeValue</title>
 <table id="_">
@@ -1105,12 +1098,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="AbstractConstructionSurface-section" inline-header="false" obligation="normative"><title>AbstractConstructionSurface</title>
 <table id="_">
 <colgroup>
@@ -1162,12 +1154,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="AbstractConstructiveElement-section" inline-header="false" obligation="normative"><title>AbstractConstructiveElement</title>
 <table id="_">
 <colgroup>
@@ -1228,12 +1219,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="AbstractFillingElement-section" inline-header="false" obligation="normative"><title>AbstractFillingElement</title>
 <table id="_">
 <colgroup>
@@ -1285,12 +1275,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="AbstractFillingSurface-section" inline-header="false" obligation="normative"><title>AbstractFillingSurface</title>
 <table id="_">
 <colgroup>
@@ -1342,12 +1331,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="AbstractFurniture-section" inline-header="false" obligation="normative"><title>AbstractFurniture</title>
 <table id="_">
 <colgroup>
@@ -1399,12 +1387,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="AbstractInstallation-section" inline-header="false" obligation="normative"><title>AbstractInstallation</title>
 <table id="_">
 <colgroup>
@@ -1465,12 +1452,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="CeilingSurface-section" inline-header="false" obligation="normative"><title>CeilingSurface</title>
 <table id="_">
 <colgroup>
@@ -1522,12 +1508,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="Door-section" inline-header="false" obligation="normative"><title>Door</title>
 <table id="_">
 <colgroup>
@@ -1606,12 +1591,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="DoorClassValue-section" inline-header="false" obligation="normative">
 <title>DoorClassValue</title>
 <table id="_">
@@ -1719,12 +1703,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="DoorUsageValue-section" inline-header="false" obligation="normative">
 <title>DoorUsageValue</title>
 <table id="_">
@@ -1860,12 +1843,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="GroundSurface-section" inline-header="false" obligation="normative"><title>GroundSurface</title>
 <table id="_">
 <colgroup>
@@ -1917,12 +1899,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="InteriorWallSurface-section" inline-header="false" obligation="normative"><title>InteriorWallSurface</title>
 <table id="_">
 <colgroup>
@@ -1974,12 +1955,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="OtherConstruction-section" inline-header="false" obligation="normative"><title>OtherConstruction</title>
 <table id="_">
 <colgroup>
@@ -2058,12 +2038,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="OtherConstructionClassValue-section" inline-header="false" obligation="normative">
 <title>OtherConstructionClassValue</title>
 <table id="_">
@@ -2199,12 +2178,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="OuterFloorSurface-section" inline-header="false" obligation="normative"><title>OuterFloorSurface</title>
 <table id="_">
 <colgroup>
@@ -2256,12 +2234,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="RoofSurface-section" inline-header="false" obligation="normative"><title>RoofSurface</title>
 <table id="_">
 <colgroup>
@@ -2313,12 +2290,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="WallSurface-section" inline-header="false" obligation="normative"><title>WallSurface</title>
 <table id="_">
 <colgroup>
@@ -2370,12 +2346,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="Window-section" inline-header="false" obligation="normative"><title>Window</title>
 <table id="_">
 <colgroup>
@@ -2454,12 +2429,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="WindowClassValue-section" inline-header="false" obligation="normative">
 <title>WindowClassValue</title>
 <table id="_">
@@ -2567,12 +2541,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 <clause id="WindowUsageValue-section" inline-header="false" obligation="normative">
 <title>WindowUsageValue</title>
 <table id="_">
@@ -2885,12 +2858,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
 </note>
-</table>
-
 <p id="AbstractTimeseries-section">======= AbstractTimeseries</p>
 <table id="_">
 <colgroup>
@@ -2960,12 +2932,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
 </note>
-</table>
-
 <p id="AuthenticationTypeValue-section">======= AuthenticationTypeValue</p>
 <table id="_">
 <colgroup>
@@ -3043,12 +3014,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
 </note>
-</table>
-
 <p id="Dynamizer-section">======= Dynamizer</p>
 <table id="_">
 <colgroup>
@@ -3127,12 +3097,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
 </note>
-</table>
-
 <p id="GenericTimeseries-section">======= GenericTimeseries</p>
 <table id="_">
 <colgroup>
@@ -3193,12 +3162,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
 </note>
-</table>
-
 <p id="SensorConnectionTypeValue-section">======= SensorConnectionTypeValue</p>
 <table id="_">
 <colgroup>
@@ -3303,12 +3271,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
 </note>
-</table>
-
 <p id="StandardFileTypeValue-section">======= StandardFileTypeValue</p>
 <table id="_">
 <colgroup>
@@ -3512,12 +3479,11 @@
 <td valign="top" align="left"></td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
 </note>
-</table>
-
 <p id="TabulatedFileTypeValue-section">======= TabulatedFileTypeValue</p>
 <table id="_">
 <colgroup>
