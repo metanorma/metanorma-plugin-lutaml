@@ -281,6 +281,94 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           end
         end
       end
+
+      context "when there is an `external_classes` option supplied" do
+        let(:example_file) { fixtures_path("test.xmi") }
+        let(:config_file) do
+          fixtures_path('temporary_datamodel_description_config.yml')
+        end
+        let(:input) do
+          <<~TEXT
+            = Document title
+            Author
+            :docfile: test.adoc
+            :nodoc:
+            :novalid:
+            :no-isobib:
+            :imagesdir: spec/assets
+
+            [lutaml_uml_datamodel_description,#{example_file},#{config_file}]
+            --
+            --
+          TEXT
+        end
+
+        around do |example|
+          File.open(config_file, 'w') do |file|
+            file.puts({ 'render_style' => render_style, 'external_classes' => external_classes }.to_yaml)
+          end
+          example.run
+          FileUtils.rm_f(config_file)
+        end
+
+        context "when render_style equal `data_dictionary`" do
+          subject(:xml_convert) { xml_string_conent(metanorma_process(input)) }
+
+          let(:render_style) { "data_dictionary" }
+          let(:example_file) { fixtures_path("test.xmi") }
+          let(:config_file) do
+            fixtures_path('temporary_datamodel_description_config.yml')
+          end
+          let(:input) do
+            <<~TEXT
+              = Document title
+              Author
+              :docfile: test.adoc
+              :nodoc:
+              :novalid:
+              :no-isobib:
+              :imagesdir: spec/assets
+
+              [lutaml_uml_datamodel_description,#{example_file},#{config_file}]
+              --
+              --
+            TEXT
+          end
+          let(:external_classes) do
+            {
+              "Register" => "My-custom-Register-section",
+              "RE_ReferenceSource" => "custom-RE_ReferenceSource"
+            }
+          end
+
+          it "correctly maps external and internal refs" do
+            expect(xml_convert).to(include('<xref target="My-custom-Register-section">Register</xref>'))
+            expect(xml_convert).to_not(include('<xref target="Register-section">Register</xref>'))
+
+            expect(xml_convert).to_not(include('<xref target="RE_ReferenceSource-section">RE_ReferenceSource</xref>'))
+            expect(xml_convert).to(include('<xref target="custom-RE_ReferenceSource">RE_ReferenceSource</xref>'))
+
+            expect(xml_convert).to(include('<xref target="CharacterString-section">CharacterString</xref>'))
+          end
+        end
+
+        context "when render_style equal `entity_list`" do
+          subject(:xml_convert) { xml_string_conent(metanorma_process(input)) }
+
+          let(:render_style) { "entity_list" }
+          let(:external_classes) do
+            {
+              "RE_Register" => "My-custom-RE_Register-section"
+            }
+          end
+
+          it "correctly maps external and internal refs" do
+            expect(xml_convert).to(include('<xref target="My-custom-RE_Register-section">RE_Register</xref>'))
+            expect(xml_convert).to_not(include('<xref target="RE_Register-section">RE_Register</xref>'))
+            expect(xml_convert).to(include('<xref target="RE_Register_enum-section">RE_Register_enum</xref>'))
+          end
+        end
+      end
     end
 
     context "when there is no options file" do
