@@ -89,7 +89,8 @@
 
 {% for klass in package.classes %}
 {% unless not_classes_stereotypes contains klass.stereotype %}
-| <<{{ klass.name }}-section,{{ klass.name }}>> «{{ klass.stereotype }}»
+{% capture ref_id %}{% if additional_context.external_classes[klass.name] %}{{ additional_context.external_classes[klass.name] }}{% else %}{{ klass.name }}-section{% endif %}{% endcapture %}
+| <<{{ ref_id }},{{ klass.name }}>> «{{ klass.stereotype }}»
 | {{ klass.definition | replace: '|', '\|' }}
 
 {% endunless %}
@@ -119,36 +120,6 @@
 {% endif %}
 
 {% endif %}
-
-{% comment %} {% if package.data_types.size > 0 %}
-.Data types used in {{ package.name }}
-[cols="2a,6a",options="header"]
-|===
-|Name |Description
-
-{% for klass in package.data_types %}
-|<<{{ klass.name }}-section,{{ klass.name }}>> «{{ klass.stereotype }}»
-|{{ klass.definition | replace: '|', '\|' }}
-
-{% endfor %}
-
-|===
-{% endif %}
-
-{% if package.enums.size > 0 %}
-.Enumerated Classes used in {{ package.name }}
-[cols="2a,6a",options="header"]
-|===
-|Name |Description
-
-{% for klass in package.enums %}
-|<<{{ klass.name }}-section,{{ klass.name }}>> «{{ klass.stereotype }}»
-|{{ klass.definition | replace: '|', '\|' }}
-
-{% endfor %}
-
-|===
-{% endif %} {% endcomment %}
 
 {% if additional_context.all_macros.size > 0 %}
 {% assign sorted_all_macros = additional_context.all_macros | where: "position", "after" | sort: 'index' %}

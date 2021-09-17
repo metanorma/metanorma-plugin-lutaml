@@ -163,7 +163,7 @@ module Metanorma
               'render_nested_packages' => true,
               "packages" => root_package['packages'],
               "root_packages" => [root_package],
-              "additional_context" => additional_context,
+              "additional_context" => additional_context.merge("external_classes" => options["external_classes"]),
               "name" => root_package['name']
             }
           end
@@ -173,7 +173,7 @@ module Metanorma
             "packages" => sort_and_filter_out_packages(all_packages, options),
             "package_entities" => package_entities(options),
             "package_skip_sections" => package_skip_sections(options),
-            "additional_context" => additional_context,
+            "additional_context" => additional_context.merge("external_classes" => options["external_classes"]),
             "root_packages" => [root_package],
             "name" => root_package['name']
           }

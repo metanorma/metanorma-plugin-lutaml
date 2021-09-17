@@ -135,7 +135,7 @@ None.
 {% assign non_unions = package.data_types | where: "stereotype", "DataType"  %}
 {% if non_unions.size > 0 %}
 {% for data_type in non_unions %}
-{% capture generalizations %}{% assign inheritance = klass.associations | where: "member_end_type", "inheritance" %}{% for assoc in inheritance %}<<{{ assoc.member_end }}-section,{{ assoc.member_end }}>>{% endfor %}{% endcapture %}
+{% capture generalizations %}{% assign inheritance = klass.associations | where: "member_end_type", "inheritance" %}{% for assoc in inheritance %}{% capture ref_id %}{% if additional_context.external_classes[assoc.member_end] %}{{ additional_context.external_classes[assoc.member_end] }}{% else %}{{ assoc.member_end }}-section{% endif %}{% endcapture %}<<{{ ref_id }},{{ assoc.member_end }}>>{% endfor %}{% endcapture %}
 [[{{ data_type.name }}-section]]
 {{equalsigns}}== {{ data_type.name }}
 
@@ -166,7 +166,8 @@ h| Constraint:
 {% if assoc.member_end_attribute_name.size > 0 %}
 {% capture cardinality %}&#91;{% case assoc.member_end_cardinality.min %}{% when "C" %}0{% when "M" %}1{% else %}{{assoc.member_end_cardinality.min}}{% endcase %}..{{ assoc.member_end_cardinality.max }}&#93;{% endcapture %}
 | {{ assoc.member_end_attribute_name }}
-| <<{{assoc.member_end}}-section,{{assoc.member_end}}>> {{ cardinality }}
+{% capture ref_id %}{% if additional_context.external_classes[assoc.member_end] %}{{ additional_context.external_classes[assoc.member_end] }}{% else %}{{ assoc.member_end }}-section{% endif %}{% endcapture %}
+| <<{{ ref_id }},{{assoc.member_end}}>> {{ cardinality }}
 | {{ assoc.definition | replace: '|', '\|' }}
 {% endif %}
 {% endfor %}
@@ -195,7 +196,8 @@ h| Constraint:
 {% for attr in data_type.attributes %}
 {% capture cardinality %}&#91;{% case attr.cardinality.min %}{% when 'C' %}0{% when 'M' %}1{% else %}{{ attr.cardinality.min }}{% endcase %}..{{ attr.cardinality.max }}&#93;{% endcapture %}
 | {{ attr.name }}
-| <<{{ attr.type }}-section,{{ attr.type }}>> {{ cardinality }}
+{% capture ref_id %}{% if additional_context.external_classes[attr.type] %}{{ additional_context.external_classes[attr.type] }}{% else %}{{ attr.type }}-section{% endif %}{% endcapture %}
+| <<{{ ref_id }},{{ attr.type }}>> {{ cardinality }}
 | {{ attr.definition | replace: '|', '\|' }}
 
 {% endfor %}
