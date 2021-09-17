@@ -200,7 +200,7 @@ Before tag for ISO 19135 Procedures for item registration XML
 <p id="_">alternativeLanguages</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="Set_RE_Locale_-section">Set&lt;RE_Locale</xref>&gt; [0..1]</p>
+<p id="_"><xref target="Set_lt_RE_Locale_gt_-section">Set&lt;RE_Locale</xref>&gt; [0..1]</p>
 </td>
 <td valign="top" align="left">
 <p id="_">The attribute &#8220;alternativeLanguages&#8221; supports cultural and linguistic adaptability, individual items in a register may provide elements of information in additional languages other than the operating language of the register.</p>
@@ -267,12 +267,11 @@ sample values of &lt;i&gt;OnLineResource.linkage&lt;/i&gt;.</p>
 </td>
 </tr>
 </tbody>
+</table>
 <note id="_">
 <p id="_">Unless otherwise specified, all attributes and role names have the stereotype
 &#171;Property&#187;.</p>
-</note>
-</table>
-</clause>
+</note></clause>
 </clause>
 <clause id="_" inline-header="false" obligation="normative">
 <title>Basic types</title>
