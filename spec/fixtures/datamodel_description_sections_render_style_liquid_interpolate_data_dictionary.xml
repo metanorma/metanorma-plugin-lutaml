@@ -115,7 +115,7 @@ Before tag for ISO 19135 Procedures for item registration XML
 </table>
 <clause id="_" inline-header="false" obligation="normative">
 <title>Classes</title>
-<clause id="RE_Register-section" inline-header="false" obligation="normative"><title>RE_Register</title>
+<clause id="section-EAID_82206E96_8D23_48dd_AC2F_31939C484AF2" inline-header="false" obligation="normative"><title>RE_Register</title>
 <table id="_">
 <colgroup>
 <col width="20%">
@@ -291,7 +291,7 @@ sample values of &lt;i&gt;OnLineResource.linkage&lt;/i&gt;.</p>
 </clause>
 <clause id="_" inline-header="false" obligation="normative">
 <title>Enumerations</title>
-<clause id="RE_Register_enum-section" inline-header="false" obligation="normative"><title>RE_Register_enum</title>
+<clause id="section-EAID_82206E96_8D23_48dd_AC2F_92839C484AF2" inline-header="false" obligation="normative"><title>RE_Register_enum</title>
 <table id="_">
 <colgroup>
 <col width="20%">
