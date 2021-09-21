@@ -22,7 +22,7 @@
 {% if depth %}
 {% assign nested_depth = depth | plus: 1 %}
 {% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
-[[rc_{{ package_name }}-model_section]]
+[[section-{{ package.xmi_id }}]]
 {{equalsigns}} {{ package.name }}
 {% endif %}
 

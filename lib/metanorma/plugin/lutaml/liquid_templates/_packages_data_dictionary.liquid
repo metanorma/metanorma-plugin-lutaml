@@ -136,7 +136,7 @@ None.
 {% if non_unions.size > 0 %}
 {% for data_type in non_unions %}
 {% capture generalizations %}{% assign inheritance = klass.associations | where: "member_end_type", "inheritance" %}{% for assoc in inheritance %}{% capture ref_id %}{% if additional_context.external_classes[assoc.member_end] %}{{ additional_context.external_classes[assoc.member_end] }}{% else %}{{ assoc.member_end }}-section{% endif %}{% endcapture %}<<{{ ref_id }},{{ assoc.member_end }}>>{% endfor %}{% endcapture %}
-[[{{ data_type.name }}-section]]
+[[section-{{ data_type.xmi_id }}]]
 {{equalsigns}}== {{ data_type.name }}
 
 .Metadata of {{ data_type.name }} ({{ data_type.stereotype }})
@@ -219,7 +219,7 @@ None.
 
 {% if package.enums.size > 0 %}
 {% for enum in package.enums %}
-[[{{ enum.name }}-section]]
+[[section-{{ enum.xmi_id }}]]
 {{equalsigns}}== {{ enum.name }}
 
 .Metadata of {{ enum.name }} (Enumeration)

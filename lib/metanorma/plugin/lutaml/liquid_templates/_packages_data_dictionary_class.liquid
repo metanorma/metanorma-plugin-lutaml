@@ -1,6 +1,6 @@
 {% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
 {% capture generalizations %}{% assign inheritance = klass.associations | where: "member_end_type", "inheritance" %}{% for assoc in inheritance %}{% capture ref_id %}{% if additional_context.external_classes[assoc.member_end] %}{{ additional_context.external_classes[assoc.member_end] }}{% else %}{{ assoc.member_end }}-section{% endif %}{% endcapture %}<<{{ ref_id }},{{ assoc.member_end }}>>{% endfor %}{% endcapture %}
-[[{{ klass.name }}-section]]
+[[section-{{ klass.xmi_id }}]]
 {{equalsigns}} {{ klass.name }}
 {%comment%}(inside class: depth is {{ depth }}, equalsigns {{equalsigns}}){%endcomment%}
 
