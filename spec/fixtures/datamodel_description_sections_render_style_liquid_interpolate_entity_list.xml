@@ -5,7 +5,7 @@ Before tag for Wrapper nested package
 <p id="_">&#8230;&#8203;
 text before Another package interpolated: Wrapper nested package
 &#8230;&#8203;</p></foreword></preface><sections>
-<clause id="rc_wrapper_nested_package-model_section" inline-header="false" obligation="normative"><title>Wrapper nested package</title>
+<clause id="section-EAPK_9C96A88B_E98B_490b_8A9C_24AEDAC64293" inline-header="false" obligation="normative"><title>Wrapper nested package</title>
 <p id="_">&#8230;&#8203;
 This is is a pckage text for Wrapper nested package and package name wrapper_nested_package
 &#8230;&#8203;</p>
@@ -29,7 +29,7 @@ text after Another package interpolated: Wrapper nested package
 <p id="_">&#8230;&#8203;
 Before tag for ISO 19135 Procedures for item registration XML
 &#8230;&#8203;</p>
-<clause id="rc_iso_19135_procedures_for_item_registration_xml-model_section" inline-header="false" obligation="normative">
+<clause id="section-EAPK_9C96A88B_E98B_490b_8A9C_24AEDAC64293" inline-header="false" obligation="normative">
 <title>ISO 19135 Procedures for item registration XML</title>
 <clause id="_" inline-header="false" obligation="normative"><title>Class definitions</title>
 <table id="_">

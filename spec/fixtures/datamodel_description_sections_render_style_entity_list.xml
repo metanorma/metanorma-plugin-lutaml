@@ -1,8 +1,8 @@
 <sections>
-<clause id="rc_wrapper_nested_package-model_section" inline-header="false" obligation="normative">
+<clause id="section-EAPK_9C96A88B_E98B_490b_8A9C_24AEDAC64293" inline-header="false" obligation="normative">
 <title>Wrapper nested package</title>
-<clause id="rc_citygml-model_section" inline-header="false" obligation="normative"><title>CityGML</title>
-<clause id="rc_another-model_section" inline-header="false" obligation="normative">
+<clause id="section-EAPK_369E0123_00FC_4098_BEF2_3BB506B2012A" inline-header="false" obligation="normative"><title>CityGML</title>
+<clause id="section-EAPK_15C00628_ED51_4a92_8216_10ADF1613D98" inline-header="false" obligation="normative">
 <title>Another</title>
 <clause id="_" inline-header="false" obligation="normative"><title>Class definitions</title>
 <table id="_">
@@ -108,7 +108,7 @@
 </tbody>
 </table></clause>
 </clause>
-<clause id="rc_citytml-model_section" inline-header="false" obligation="normative"><title>CityTML</title>
+<clause id="section-EAPK_1C8607D1_2967_44ff_948A_2A9256D00A45" inline-header="false" obligation="normative"><title>CityTML</title>
 <clause id="_" inline-header="false" obligation="normative"><title>Class definitions</title>
 <table id="_">
 <colgroup>
@@ -344,7 +344,7 @@
 </tr>
 </tbody>
 </table></clause>
-<clause id="rc_dynamizer-model_section" inline-header="false" obligation="normative">
+<clause id="section-EAPK_15C00628_ED51_4a92_8216_10ADF1613D98" inline-header="false" obligation="normative">
 <title>Dynamizer</title>
 <clause id="_" inline-header="false" obligation="normative"><title>Class definitions</title>
 <table id="_">
