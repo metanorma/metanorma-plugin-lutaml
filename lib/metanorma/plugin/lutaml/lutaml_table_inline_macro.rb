@@ -8,7 +8,7 @@ module Metanorma
         SUPPORTED_OPTIONS = %w[class enum data_type]
 
         use_dsl
-        named :lutaml_table_class
+        named :lutaml_table
 
         def process(parent, _target, attrs)
           keyword = SUPPORTED_OPTIONS.find { |n| attrs[n] }
