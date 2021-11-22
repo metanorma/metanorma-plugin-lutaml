@@ -42,11 +42,9 @@ my text
 </thead>
 <tbody>
 <tr>
+<td valign="top" align="left"></td>
 <td valign="top" align="left">
-<p id="_"><xref target="RE_Register-section">RE_Register</xref> &#171;interface&#187;</p>
-</td>
-<td valign="top" align="left">
-<p id="_">The class &#8220;RE_Register&#8221; specifies information about the register itself. It is a subtype of the Register class in the core profile.</p>
+<p id="_"><xref target="section-EAID_82206E96_8D23_48dd_AC2F_31939C484AF2">RE_Register</xref> &#171;interface&#187;</p>
 </td>
 </tr>
 </tbody>
@@ -66,7 +64,7 @@ my text
 <tbody>
 <tr>
 <td valign="top" align="left">
-<p id="_"><xref target="RE_Register_enum-section">RE_Register_enum</xref> &#171;Enumeration&#187;</p>
+<p id="_"><xref target="section-EAID_82206E96_8D23_48dd_AC2F_92839C484AF2">RE_Register_enum</xref> &#171;Enumeration&#187;</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -433,11 +431,9 @@ mine text
 </thead>
 <tbody>
 <tr>
+<td valign="top" align="left"></td>
 <td valign="top" align="left">
-<p id="_"><xref target="RE_Register-section">RE_Register</xref> &#171;interface&#187;</p>
-</td>
-<td valign="top" align="left">
-<p id="_">The class &#8220;RE_Register&#8221; specifies information about the register itself. It is a subtype of the Register class in the core profile.</p>
+<p id="_"><xref target="section-EAID_82206E96_8D23_48dd_AC2F_31939C484AF2">RE_Register</xref> &#171;interface&#187;</p>
 </td>
 </tr>
 </tbody>
@@ -457,7 +453,7 @@ mine text
 <tbody>
 <tr>
 <td valign="top" align="left">
-<p id="_"><xref target="RE_Register_enum-section">RE_Register_enum</xref> &#171;Enumeration&#187;</p>
+<p id="_"><xref target="section-EAID_82206E96_8D23_48dd_AC2F_92839C484AF2">RE_Register_enum</xref> &#171;Enumeration&#187;</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>

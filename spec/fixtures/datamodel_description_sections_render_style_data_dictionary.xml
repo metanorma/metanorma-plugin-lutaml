@@ -172,7 +172,7 @@
 <p id="_">adeOfAbstractAtomicTimeseries</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfAbstractAtomicTimeseries-section">ADEOfAbstractAtomicTimeseries</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_1D8715F2_4E4A_4f36_A414_1326B6DC1EDD">ADEOfAbstractAtomicTimeseries</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -181,7 +181,7 @@
 <p id="_">observationProperty</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="CharacterString-section">CharacterString</xref> [1..1]</p>
+<p id="_"><xref target="section-EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1">CharacterString</xref> [1..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -190,7 +190,7 @@
 <p id="_">uom</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="CharacterString-section">CharacterString</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1">CharacterString</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -246,7 +246,7 @@
 <p id="_">adeOfAbstractTimeseries</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfAbstractTimeseries-section">ADEOfAbstractTimeseries</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_1F4FA76D_0945_46f0_B222_3C4E92196351">ADEOfAbstractTimeseries</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -255,7 +255,7 @@
 <p id="_">firstTimestamp</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="TM_Position-section">TM_Position</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_2D0C03FB_FF62_4979_A2EB_A40C043B097E">TM_Position</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -264,7 +264,7 @@
 <p id="_">lastTimestamp</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="TM_Position-section">TM_Position</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_2D0C03FB_FF62_4979_A2EB_A40C043B097E">TM_Position</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -348,7 +348,7 @@
 <p id="_">adeOfCompositeTimeseries</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfCompositeTimeseries-section">ADEOfCompositeTimeseries</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_0DBF7AD4_080D_4238_9949_1CDB34142A59">ADEOfCompositeTimeseries</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -404,7 +404,7 @@
 <p id="_">adeOfDynamizer</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfDynamizer-section">ADEOfDynamizer</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_6AE198DA_9848_4e6c_B17E_C1004F90782A">ADEOfDynamizer</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -413,7 +413,7 @@
 <p id="_">attributeRef</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="CharacterString-section">CharacterString</xref> [1..1]</p>
+<p id="_"><xref target="section-EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1">CharacterString</xref> [1..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -422,7 +422,7 @@
 <p id="_">endTime</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="TM_Position-section">TM_Position</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_2D0C03FB_FF62_4979_A2EB_A40C043B097E">TM_Position</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -431,7 +431,7 @@
 <p id="_">startTime</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="TM_Position-section">TM_Position</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_2D0C03FB_FF62_4979_A2EB_A40C043B097E">TM_Position</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -487,7 +487,7 @@
 <p id="_">adeOfGenericTimeseries</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfGenericTimeseries-section">ADEOfGenericTimeseries</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_561520A7_886A_4f79_852A_FC1DFD122B66">ADEOfGenericTimeseries</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -496,7 +496,7 @@
 <p id="_">valueType</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="TimeseriesTypeValue-section">TimeseriesTypeValue</xref> [1..1]</p>
+<p id="_"><xref target="section-EAID_20B7542F_5EE7_44c6_8AC5_055508241A3B">TimeseriesTypeValue</xref> [1..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -580,7 +580,7 @@
 <p id="_">adeOfStandardFileTimeseries</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfStandardFileTimeseries-section">ADEOfStandardFileTimeseries</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_021B99FF_A404_4c54_B785_600CA37348C1">ADEOfStandardFileTimeseries</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -589,7 +589,7 @@
 <p id="_">fileLocation</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="URI-section">URI</xref> [1..1]</p>
+<p id="_"><xref target="section-EAID_DFC4D1CC_7484_47b3_9D6F_008BE7CD78FD">URI</xref> [1..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -598,7 +598,7 @@
 <p id="_">fileType</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="StandardFileTypeValue-section">StandardFileTypeValue</xref> [1..1]</p>
+<p id="_"><xref target="section-EAID_BE99CC5F_DEFB_459f_BE53_B8F12C8B8149">StandardFileTypeValue</xref> [1..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -607,7 +607,7 @@
 <p id="_">mimeType</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A-section">EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A">EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -691,7 +691,7 @@
 <p id="_">adeOfTabulatedFileTimeseries</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfTabulatedFileTimeseries-section">ADEOfTabulatedFileTimeseries</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_A197050C_E2CB_4d86_B69E_5B5E96E37FDE">ADEOfTabulatedFileTimeseries</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -700,7 +700,7 @@
 <p id="_">decimalSymbol</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="Character-section">Character</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_AA483ED2_BCC2_4bd2_A170_8C677344DE10">Character</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -709,7 +709,7 @@
 <p id="_">fieldSeparator</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="CharacterString-section">CharacterString</xref> [1..1]</p>
+<p id="_"><xref target="section-EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1">CharacterString</xref> [1..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -718,7 +718,7 @@
 <p id="_">fileLocation</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="URI-section">URI</xref> [1..1]</p>
+<p id="_"><xref target="section-EAID_DFC4D1CC_7484_47b3_9D6F_008BE7CD78FD">URI</xref> [1..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -727,7 +727,7 @@
 <p id="_">fileType</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="TabulatedFileTypeValue-section">TabulatedFileTypeValue</xref> [1..1]</p>
+<p id="_"><xref target="section-EAID_18357CC9_C00A_410a_9043_E05BEA22B6A7">TabulatedFileTypeValue</xref> [1..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -736,7 +736,7 @@
 <p id="_">idColumnName</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="CharacterString-section">CharacterString</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1">CharacterString</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -745,7 +745,7 @@
 <p id="_">idColumnNo</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="Integer-section">Integer</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_56690121_01D0_459e_9D52_D102EDCD8C9D">Integer</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -754,7 +754,7 @@
 <p id="_">idValue</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="CharacterString-section">CharacterString</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1">CharacterString</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -763,7 +763,7 @@
 <p id="_">mimeType</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A-section">EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A">EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -772,7 +772,7 @@
 <p id="_">numberOfHeaderLines</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="Integer-section">Integer</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_56690121_01D0_459e_9D52_D102EDCD8C9D">Integer</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -781,7 +781,7 @@
 <p id="_">timeColumnName</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="CharacterString-section">CharacterString</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1">CharacterString</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -790,7 +790,7 @@
 <p id="_">timeColumnNo</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="Integer-section">Integer</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_56690121_01D0_459e_9D52_D102EDCD8C9D">Integer</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -799,7 +799,7 @@
 <p id="_">valueColumnName</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="CharacterString-section">CharacterString</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1">CharacterString</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -808,7 +808,7 @@
 <p id="_">valueColumnNo</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="Integer-section">Integer</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_56690121_01D0_459e_9D52_D102EDCD8C9D">Integer</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -817,7 +817,7 @@
 <p id="_">valueType</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="TimeseriesTypeValue-section">TimeseriesTypeValue</xref> [1..1]</p>
+<p id="_"><xref target="section-EAID_20B7542F_5EE7_44c6_8AC5_055508241A3B">TimeseriesTypeValue</xref> [1..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -1030,7 +1030,7 @@
 <p id="_">adeOfAbstractConstruction</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfAbstractConstruction-section">ADEOfAbstractConstruction</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_4661534F_B67D_46b5_BC56_CEED3792F85B">ADEOfAbstractConstruction</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -1039,7 +1039,7 @@
 <p id="_">conditionOfConstruction</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ConditionOfConstructionValue-section">ConditionOfConstructionValue</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_B2C49F64_6095_4f8c_8FA3_492EA57A263F">ConditionOfConstructionValue</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -1048,7 +1048,7 @@
 <p id="_">constructionEvent</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ConstructionEvent-section">ConstructionEvent</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_49E705E2_C072_45d0_8AC4_8A307C8FF685">ConstructionEvent</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -1057,7 +1057,7 @@
 <p id="_">dateOfConstruction</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="Date-section">Date</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_5F1B0A70_92F5_42ef_9431_155EB96F7E5D">Date</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -1066,7 +1066,7 @@
 <p id="_">dateOfDemolition</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="Date-section">Date</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_5F1B0A70_92F5_42ef_9431_155EB96F7E5D">Date</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -1075,7 +1075,7 @@
 <p id="_">elevation</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="Elevation-section">Elevation</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_A7FDA76F_0932_4ed8_8D86_DBAE7777FE6F">Elevation</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -1084,7 +1084,7 @@
 <p id="_">height</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="Height-section">Height</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_A9289D96_F914_40f1_8E45_EC020FAE12AB">Height</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -1093,7 +1093,7 @@
 <p id="_">occupancy</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="EAID_89AB0AD7_1A70_4201_8E11_27D292166FE9-section">EAID_89AB0AD7_1A70_4201_8E11_27D292166FE9</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_89AB0AD7_1A70_4201_8E11_27D292166FE9">EAID_89AB0AD7_1A70_4201_8E11_27D292166FE9</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -1149,7 +1149,7 @@
 <p id="_">adeOfAbstractConstructionSurface</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfAbstractConstructionSurface-section">ADEOfAbstractConstructionSurface</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_8BE81A2C_215F_4b43_BD0A_45A4A549413F">ADEOfAbstractConstructionSurface</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -1205,7 +1205,7 @@
 <p id="_">adeOfAbstractConstructiveElement</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfAbstractConstructiveElement-section">ADEOfAbstractConstructiveElement</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_85D5915A_4A27_4be6_994E_E2B345ADB379">ADEOfAbstractConstructiveElement</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -1214,7 +1214,7 @@
 <p id="_">isStructuralElement</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="Boolean-section">Boolean</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_856E597C_0E32_427b_A9B4_FBAC45BFC002">Boolean</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -1270,7 +1270,7 @@
 <p id="_">adeOfAbstractFillingElement</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfAbstractFillingElement-section">ADEOfAbstractFillingElement</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_56A4AD38_2EAC_473f_8070_A2905EB49EEE">ADEOfAbstractFillingElement</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -1326,7 +1326,7 @@
 <p id="_">adeOfAbstractFillingSurface</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfAbstractFillingSurface-section">ADEOfAbstractFillingSurface</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_84D5CA7C_C965_4bd6_B969_DE9A5682D00F">ADEOfAbstractFillingSurface</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -1382,7 +1382,7 @@
 <p id="_">adeOfAbstractFurniture</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfAbstractFurniture-section">ADEOfAbstractFurniture</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_80E36981_3017_412f_BE42_5362EC08F2E3">ADEOfAbstractFurniture</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -1438,7 +1438,7 @@
 <p id="_">adeOfAbstractInstallation</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfAbstractInstallation-section">ADEOfAbstractInstallation</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_6B5DEB87_CA95_4fd5_AE29_6009CC3F6EAA">ADEOfAbstractInstallation</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -1447,7 +1447,7 @@
 <p id="_">relationToConstruction</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="RelationToConstruction-section">RelationToConstruction</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_9255FD68_C2A9_4ef6_B532_7537C3BBE509">RelationToConstruction</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -1503,7 +1503,7 @@
 <p id="_">adeOfCeilingSurface</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfCeilingSurface-section">ADEOfCeilingSurface</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_ED07AAA2_4703_4403_ABB0_A2E7877AED6E">ADEOfCeilingSurface</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -1559,7 +1559,7 @@
 <p id="_">adeOfDoor</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfDoor-section">ADEOfDoor</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_34F0C2FC_2C93_422d_8787_6E83DD201379">ADEOfDoor</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -1568,7 +1568,7 @@
 <p id="_">class</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="DoorClassValue-section">DoorClassValue</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_63F44B99_981E_41ba_8BF9_0B7231BD321A">DoorClassValue</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -1577,7 +1577,7 @@
 <p id="_">function</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="DoorFunctionValue-section">DoorFunctionValue</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_BA3F11AA_33C9_4a80_BF67_69B039008ADB">DoorFunctionValue</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -1586,7 +1586,7 @@
 <p id="_">usage</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="DoorUsageValue-section">DoorUsageValue</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_032B7B55_5204_4b23_8BD5_52D544FA64FB">DoorUsageValue</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -1698,7 +1698,7 @@
 <p id="_">adeOfDoorSurface</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfDoorSurface-section">ADEOfDoorSurface</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_3404798C_AE68_4929_BE0F_3250255F9C40">ADEOfDoorSurface</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -1838,7 +1838,7 @@
 <p id="_">adeOfFloorSurface</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfFloorSurface-section">ADEOfFloorSurface</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_79631F2C_839A_4807_B0BB_47E3EF5DC642">ADEOfFloorSurface</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -1894,7 +1894,7 @@
 <p id="_">adeOfGroundSurface</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfGroundSurface-section">ADEOfGroundSurface</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_E6278A2D_ECB2_4cc3_B7CF_69BE3E2E11E7">ADEOfGroundSurface</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -1950,7 +1950,7 @@
 <p id="_">adeOfInteriorWallSurface</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfInteriorWallSurface-section">ADEOfInteriorWallSurface</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_5D0106EB_7DE8_4f6f_8033_CD32FF6FA0BE">ADEOfInteriorWallSurface</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -2006,7 +2006,7 @@
 <p id="_">adeOfOtherConstruction</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfOtherConstruction-section">ADEOfOtherConstruction</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_E9A28D15_AF44_4bda_B92D_520378751B2E">ADEOfOtherConstruction</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -2015,7 +2015,7 @@
 <p id="_">class</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="OtherConstructionClassValue-section">OtherConstructionClassValue</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_51A4C2BE_7EE0_4504_81AD_5EEFEB382A16">OtherConstructionClassValue</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -2024,7 +2024,7 @@
 <p id="_">function</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="OtherConstructionFunctionValue-section">OtherConstructionFunctionValue</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_A60BC340_2B39_498b_B1E0_028C34AE6AD4">OtherConstructionFunctionValue</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -2033,7 +2033,7 @@
 <p id="_">usage</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="OtherConstructionUsageValue-section">OtherConstructionUsageValue</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_639B442D_87A9_435b_891C_CB5C260B3497">OtherConstructionUsageValue</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -2173,7 +2173,7 @@
 <p id="_">adeOfOuterCeilingSurface</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfOuterCeilingSurface-section">ADEOfOuterCeilingSurface</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_73AA9744_6E22_44df_AE69_786C1EB9FC84">ADEOfOuterCeilingSurface</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -2229,7 +2229,7 @@
 <p id="_">adeOfOuterFloorSurface</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfOuterFloorSurface-section">ADEOfOuterFloorSurface</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_EA88C349_EDD9_4e7e_AD1C_22FB15E1C5C5">ADEOfOuterFloorSurface</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -2285,7 +2285,7 @@
 <p id="_">adeOfRoofSurface</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfRoofSurface-section">ADEOfRoofSurface</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_47CAC0D1_D933_4d6e_A9EE_3A6EDF67B7EA">ADEOfRoofSurface</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -2341,7 +2341,7 @@
 <p id="_">adeOfWallSurface</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfWallSurface-section">ADEOfWallSurface</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_C29949D3_9FF5_4b08_916C_A34D1DD4A5A4">ADEOfWallSurface</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -2397,7 +2397,7 @@
 <p id="_">adeOfWindow</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfWindow-section">ADEOfWindow</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_43595D3B_5828_4acd_BF8E_9409B453D0CB">ADEOfWindow</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -2406,7 +2406,7 @@
 <p id="_">class</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="WindowClassValue-section">WindowClassValue</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_31AB9AF9_C56C_4404_B463_5916A9F28AAF">WindowClassValue</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -2415,7 +2415,7 @@
 <p id="_">function</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="WindowFunctionValue-section">WindowFunctionValue</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_0A8AF28F_3BB8_4509_A8F2_AA2CB2CF98C8">WindowFunctionValue</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -2424,7 +2424,7 @@
 <p id="_">usage</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="WindowUsageValue-section">WindowUsageValue</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_2A86261E_5894_4543_820C_4EC2C3B0454B">WindowUsageValue</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -2536,7 +2536,7 @@
 <p id="_">adeOfWindowSurface</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfWindowSurface-section">ADEOfWindowSurface</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_4AC1AD23_9DFE_406c_92FC_8ECF8673210A">ADEOfWindowSurface</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -2835,7 +2835,7 @@
 <p id="_">adeOfAbstractAtomicTimeseries</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfAbstractAtomicTimeseries-section">ADEOfAbstractAtomicTimeseries</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_1D8715F2_4E4A_4f36_A414_1326B6DC1EDD">ADEOfAbstractAtomicTimeseries</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -2844,7 +2844,7 @@
 <p id="_">observationProperty</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="CharacterString-section">CharacterString</xref> [1..1]</p>
+<p id="_"><xref target="section-EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1">CharacterString</xref> [1..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -2853,7 +2853,7 @@
 <p id="_">uom</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="CharacterString-section">CharacterString</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1">CharacterString</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -2909,7 +2909,7 @@
 <p id="_">adeOfAbstractTimeseries</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfAbstractTimeseries-section">ADEOfAbstractTimeseries</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_1F4FA76D_0945_46f0_B222_3C4E92196351">ADEOfAbstractTimeseries</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -2918,7 +2918,7 @@
 <p id="_">firstTimestamp</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="TM_Position-section">TM_Position</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_2D0C03FB_FF62_4979_A2EB_A40C043B097E">TM_Position</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -2927,7 +2927,7 @@
 <p id="_">lastTimestamp</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="TM_Position-section">TM_Position</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_2D0C03FB_FF62_4979_A2EB_A40C043B097E">TM_Position</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3009,7 +3009,7 @@
 <p id="_">adeOfCompositeTimeseries</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfCompositeTimeseries-section">ADEOfCompositeTimeseries</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_0DBF7AD4_080D_4238_9949_1CDB34142A59">ADEOfCompositeTimeseries</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3065,7 +3065,7 @@
 <p id="_">adeOfDynamizer</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfDynamizer-section">ADEOfDynamizer</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_6AE198DA_9848_4e6c_B17E_C1004F90782A">ADEOfDynamizer</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3074,7 +3074,7 @@
 <p id="_">attributeRef</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="CharacterString-section">CharacterString</xref> [1..1]</p>
+<p id="_"><xref target="section-EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1">CharacterString</xref> [1..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3083,7 +3083,7 @@
 <p id="_">endTime</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="TM_Position-section">TM_Position</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_2D0C03FB_FF62_4979_A2EB_A40C043B097E">TM_Position</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3092,7 +3092,7 @@
 <p id="_">startTime</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="TM_Position-section">TM_Position</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_2D0C03FB_FF62_4979_A2EB_A40C043B097E">TM_Position</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3148,7 +3148,7 @@
 <p id="_">adeOfGenericTimeseries</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfGenericTimeseries-section">ADEOfGenericTimeseries</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_561520A7_886A_4f79_852A_FC1DFD122B66">ADEOfGenericTimeseries</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3157,7 +3157,7 @@
 <p id="_">valueType</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="TimeseriesTypeValue-section">TimeseriesTypeValue</xref> [1..1]</p>
+<p id="_"><xref target="section-EAID_20B7542F_5EE7_44c6_8AC5_055508241A3B">TimeseriesTypeValue</xref> [1..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3239,7 +3239,7 @@
 <p id="_">adeOfStandardFileTimeseries</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfStandardFileTimeseries-section">ADEOfStandardFileTimeseries</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_021B99FF_A404_4c54_B785_600CA37348C1">ADEOfStandardFileTimeseries</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3248,7 +3248,7 @@
 <p id="_">fileLocation</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="URI-section">URI</xref> [1..1]</p>
+<p id="_"><xref target="section-EAID_DFC4D1CC_7484_47b3_9D6F_008BE7CD78FD">URI</xref> [1..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3257,7 +3257,7 @@
 <p id="_">fileType</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="StandardFileTypeValue-section">StandardFileTypeValue</xref> [1..1]</p>
+<p id="_"><xref target="section-EAID_BE99CC5F_DEFB_459f_BE53_B8F12C8B8149">StandardFileTypeValue</xref> [1..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3266,7 +3266,7 @@
 <p id="_">mimeType</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A-section">EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A">EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3348,7 +3348,7 @@
 <p id="_">adeOfTabulatedFileTimeseries</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="ADEOfTabulatedFileTimeseries-section">ADEOfTabulatedFileTimeseries</xref> [0..*]</p>
+<p id="_"><xref target="section-EAID_A197050C_E2CB_4d86_B69E_5B5E96E37FDE">ADEOfTabulatedFileTimeseries</xref> [0..*]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3357,7 +3357,7 @@
 <p id="_">decimalSymbol</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="Character-section">Character</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_AA483ED2_BCC2_4bd2_A170_8C677344DE10">Character</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3366,7 +3366,7 @@
 <p id="_">fieldSeparator</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="CharacterString-section">CharacterString</xref> [1..1]</p>
+<p id="_"><xref target="section-EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1">CharacterString</xref> [1..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3375,7 +3375,7 @@
 <p id="_">fileLocation</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="URI-section">URI</xref> [1..1]</p>
+<p id="_"><xref target="section-EAID_DFC4D1CC_7484_47b3_9D6F_008BE7CD78FD">URI</xref> [1..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3384,7 +3384,7 @@
 <p id="_">fileType</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="TabulatedFileTypeValue-section">TabulatedFileTypeValue</xref> [1..1]</p>
+<p id="_"><xref target="section-EAID_18357CC9_C00A_410a_9043_E05BEA22B6A7">TabulatedFileTypeValue</xref> [1..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3393,7 +3393,7 @@
 <p id="_">idColumnName</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="CharacterString-section">CharacterString</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1">CharacterString</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3402,7 +3402,7 @@
 <p id="_">idColumnNo</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="Integer-section">Integer</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_56690121_01D0_459e_9D52_D102EDCD8C9D">Integer</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3411,7 +3411,7 @@
 <p id="_">idValue</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="CharacterString-section">CharacterString</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1">CharacterString</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3420,7 +3420,7 @@
 <p id="_">mimeType</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A-section">EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A">EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3429,7 +3429,7 @@
 <p id="_">numberOfHeaderLines</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="Integer-section">Integer</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_56690121_01D0_459e_9D52_D102EDCD8C9D">Integer</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3438,7 +3438,7 @@
 <p id="_">timeColumnName</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="CharacterString-section">CharacterString</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1">CharacterString</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3447,7 +3447,7 @@
 <p id="_">timeColumnNo</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="Integer-section">Integer</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_56690121_01D0_459e_9D52_D102EDCD8C9D">Integer</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3456,7 +3456,7 @@
 <p id="_">valueColumnName</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="CharacterString-section">CharacterString</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1">CharacterString</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3465,7 +3465,7 @@
 <p id="_">valueColumnNo</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="Integer-section">Integer</xref> [0..1]</p>
+<p id="_"><xref target="section-EAID_56690121_01D0_459e_9D52_D102EDCD8C9D">Integer</xref> [0..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
@@ -3474,7 +3474,7 @@
 <p id="_">valueType</p>
 </td>
 <td valign="top" align="left">
-<p id="_"><xref target="TimeseriesTypeValue-section">TimeseriesTypeValue</xref> [1..1]</p>
+<p id="_"><xref target="section-EAID_20B7542F_5EE7_44c6_8AC5_055508241A3B">TimeseriesTypeValue</xref> [1..1]</p>
 </td>
 <td valign="top" align="left"></td>
 </tr>
