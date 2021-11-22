@@ -1,5 +1,5 @@
 {% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
-{% capture generalizations %}{% assign inheritance = klass.associations | where: "member_end_type", "inheritance" %}{% for assoc in inheritance %}{% capture ref_id %}{% if additional_context.external_classes[assoc.member_end] %}{{ additional_context.external_classes[assoc.member_end] }}{% else %}{{ assoc.member_end }}-section{% endif %}{% endcapture %}<<{{ ref_id }},{{ assoc.member_end }}>>{% endfor %}{% endcapture %}
+{% capture generalizations %}{% assign inheritance = klass.associations | where: "member_end_type", "inheritance" %}{% for assoc in inheritance %}{% if additional_context.external_classes[assoc.member_end] %}<<{{ additional_context.external_classes[assoc.member_end] }},{{ assoc.member_end }}>>{% else %}<<section-{{ assoc.member_end_xmi_id }},{{ assoc.member_end }}>>{% endif %}{% endfor %}{% endcapture %}
 [[section-{{ klass.xmi_id }}]]
 {{equalsigns}} {{ klass.name }}
 {%comment%}(inside class: depth is {{ depth }}, equalsigns {{equalsigns}}){%endcomment%}
@@ -31,8 +31,7 @@ h| Constraint:
 {% if assoc.member_end_attribute_name.size > 0 %}
 {% capture cardinality %}&#91;{% case assoc.member_end_cardinality.min %}{% when "C" %}0{% when "M" %}1{% else %}{{assoc.member_end_cardinality.min}}{% endcase %}..{{ assoc.member_end_cardinality.max }}&#93;{% endcapture %}
 | {{ assoc.member_end_attribute_name }}
-{% capture ref_id %}{% if additional_context.external_classes[assoc.member_end] %}{{ additional_context.external_classes[assoc.member_end] }}{% else %}{{ assoc.member_end }}-section{% endif %}{% endcapture %}
-| <<{{ ref_id }},{{assoc.member_end}}>> {{ cardinality }}
+{% if additional_context.external_classes[assoc.member_end] %}| <<{{ additional_context.external_classes[assoc.member_end] }},{{assoc.member_end}}>> {{ cardinality }}{% else %}| <<section-{{ assoc.member_end_xmi_id }},{{ assoc.member_end }}>> {{ cardinality }}{% endif %}
 | {{ assoc.definition | replace: '|', '\|' }}
 {% endif %}
 {% endfor %}
@@ -60,8 +59,7 @@ h| Constraint:
 {% for attr in klass.attributes %}
 {% capture cardinality %}&#91;{% case attr.cardinality.min %}{% when 'C' %}0{% when 'M' %}1{% else %}{{ attr.cardinality.min }}{% endcase %}..{{ attr.cardinality.max }}&#93;{% endcapture %}
 | {{ attr.name }}
-{% capture ref_id %}{% if additional_context.external_classes[attr.type] %}{{ additional_context.external_classes[attr.type] }}{% else %}{{ attr.type }}-section{% endif %}{% endcapture %}
-| <<{{ ref_id }},{{ attr.type }}>> {{ cardinality }}
+{% if additional_context.external_classes[attr.type] %}| <<{{ additional_context.external_classes[attr.type] }},{{ attr.type }}>> {{ cardinality }}{% else %}| <<section-{{ attr.xmi_id }},{{ attr.type }}>> {{ cardinality }}{% endif %}
 | {{ attr.definition | replace: '|', '\|' }}
 
 {% endfor %}
