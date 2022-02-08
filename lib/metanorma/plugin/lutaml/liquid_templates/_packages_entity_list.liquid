@@ -92,7 +92,7 @@
 {% if additional_context.external_classes[klass.name] %}
 | <<{{ additional_context.external_classes[klass.name] }},{{ klass.name }}>> «{{ klass.stereotype }}»
 {% else %}
-| | <<section-{{ klass.xmi_id }},{{ klass.name }}>> «{{ klass.stereotype }}»
+| <<section-{{ klass.xmi_id }},{{ klass.name }}>> «{{ klass.stereotype }}»
 {% endif %}
 | {{ klass.definition | replace: '|', '\|' }}
 
