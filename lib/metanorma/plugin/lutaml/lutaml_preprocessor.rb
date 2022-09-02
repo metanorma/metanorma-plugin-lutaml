@@ -5,7 +5,6 @@ require "asciidoctor"
 require "asciidoctor/reader"
 require "lutaml"
 require "metanorma/plugin/lutaml/utils"
-require "metanorma/plugin/lutaml/utils"
 require "metanorma/plugin/lutaml/express_remarks_decorator"
 
 module Metanorma

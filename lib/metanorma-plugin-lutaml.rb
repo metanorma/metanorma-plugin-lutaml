@@ -1,5 +1,6 @@
 require "metanorma/plugin/lutaml/version"
 require "metanorma/plugin/lutaml/lutaml_preprocessor"
+require "metanorma/plugin/lutaml/lutaml_uml_class_preprocessor"
 require "metanorma/plugin/lutaml/lutaml_uml_attributes_table_preprocessor"
 require "metanorma/plugin/lutaml/lutaml_uml_datamodel_description_preprocessor"
 require "metanorma/plugin/lutaml/lutaml_diagram_block"
@@ -17,6 +18,7 @@ module Metanorma
     preprocessor Metanorma::Plugin::Lutaml::LutamlPreprocessor
     preprocessor Metanorma::Plugin::Lutaml::LutamlUmlAttributesTablePreprocessor
     preprocessor Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreprocessor
+    preprocessor Metanorma::Plugin::Lutaml::LutamlUmlClassPreprocessor
     inline_macro Metanorma::Plugin::Lutaml::LutamlFigureInlineMacro
     inline_macro Metanorma::Plugin::Lutaml::LutamlTableInlineMacro
     block_macro Metanorma::Plugin::Lutaml::LutamlDiagramBlockMacro
