@@ -28,6 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "metanorma"
   spec.add_dependency "relaton-cli"
   spec.add_dependency "reverse_adoc"
+  spec.add_dependency "expressir"
 
   spec.add_development_dependency "byebug"
   spec.add_development_dependency "equivalent-xml"

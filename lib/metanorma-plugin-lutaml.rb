@@ -12,4 +12,14 @@ module Metanorma
     module Lutaml
     end
   end
+
+  Asciidoctor::Extensions.register do
+    preprocessor Metanorma::Plugin::Lutaml::LutamlPreprocessor
+    preprocessor Metanorma::Plugin::Lutaml::LutamlUmlAttributesTablePreprocessor
+    preprocessor Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreprocessor
+    inline_macro Metanorma::Plugin::Lutaml::LutamlFigureInlineMacro
+    inline_macro Metanorma::Plugin::Lutaml::LutamlTableInlineMacro
+    block_macro Metanorma::Plugin::Lutaml::LutamlDiagramBlockMacro
+    block Metanorma::Plugin::Lutaml::LutamlDiagramBlock
+  end
 end
