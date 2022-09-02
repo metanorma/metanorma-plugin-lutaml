@@ -3,8 +3,8 @@
 <title>Another Wrapper nested package</title>
 <table id="_">
 <colgroup>
-<col width="25%">
-<col width="75%">
+<col width="25%"/>
+<col width="75%"/>
 </colgroup>
 <name>Enumerated classes defined in Another Wrapper nested package ()</name>
 <thead>
@@ -24,5 +24,3 @@
 </table>
 </clause>
 </sections>
-</standard-document>
-</body></html>

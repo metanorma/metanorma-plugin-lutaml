@@ -17,7 +17,7 @@ module Metanorma
           xmi_id = parent.document.attributes['lutaml_entity_id'][entity_key]
           return unless xmi_id
 
-          %Q(<xref target="section-#{xmi_id}"></xref>)
+          %Q(<xref target="section-#{xmi_id}"/>)
         end
       end
     end

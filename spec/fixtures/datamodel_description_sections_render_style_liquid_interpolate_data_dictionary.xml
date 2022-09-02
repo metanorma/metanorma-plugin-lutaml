@@ -17,8 +17,8 @@ text before Another package interpolated: Wrapper nested package
 &#8230;&#8203;</p>
 <table id="_">
 <colgroup>
-<col width="20%">
-<col width="80%">
+<col width="20%"/>
+<col width="80%"/>
 </colgroup>
 <name>Metadata of Wrapper nested package ()</name>
 <tbody>
@@ -90,8 +90,8 @@ Before tag for ISO 19135 Procedures for item registration XML
 <clause id="_" inline-header="false" obligation="normative"><title>ISO 19135 Procedures for item registration XML</title>
 <table id="_">
 <colgroup>
-<col width="20%">
-<col width="80%">
+<col width="20%"/>
+<col width="80%"/>
 </colgroup>
 <name>Metadata of ISO 19135 Procedures for item registration XML ()</name>
 <tbody>
@@ -118,8 +118,8 @@ Before tag for ISO 19135 Procedures for item registration XML
 <clause id="section-EAID_82206E96_8D23_48dd_AC2F_31939C484AF2" inline-header="false" obligation="normative"><title>RE_Register</title>
 <table id="_">
 <colgroup>
-<col width="20%">
-<col width="80%">
+<col width="20%"/>
+<col width="80%"/>
 </colgroup>
 <name>Metadata of RE_Register (interface)</name>
 <tbody>
@@ -154,9 +154,9 @@ Before tag for ISO 19135 Procedures for item registration XML
 </table>
 <table id="_">
 <colgroup>
-<col width="15.7894%">
-<col width="21.0526%">
-<col width="63.158%">
+<col width="15.7894%"/>
+<col width="21.0526%"/>
+<col width="63.158%"/>
 </colgroup>
 <name>Associations of RE_Register (interface)</name>
 <thead>
@@ -182,9 +182,9 @@ Before tag for ISO 19135 Procedures for item registration XML
 </table>
 <table id="_">
 <colgroup>
-<col width="15.7894%">
-<col width="21.0526%">
-<col width="63.158%">
+<col width="15.7894%"/>
+<col width="21.0526%"/>
+<col width="63.158%"/>
 </colgroup>
 <name>Attributes of RE_Register (interface)</name>
 <thead>
@@ -294,8 +294,8 @@ sample values of &lt;i&gt;OnLineResource.linkage&lt;/i&gt;.</p>
 <clause id="section-EAID_82206E96_8D23_48dd_AC2F_92839C484AF2" inline-header="false" obligation="normative"><title>RE_Register_enum</title>
 <table id="_">
 <colgroup>
-<col width="20%">
-<col width="80%">
+<col width="20%"/>
+<col width="80%"/>
 </colgroup>
 <name>Metadata of RE_Register_enum (Enumeration)</name>
 <tbody>
@@ -318,5 +318,3 @@ After tag for Wrapper nested package
 After tag for
 &#8230;&#8203;</p></clause>
 </clause></clause></clause></sections>
-</standard-document>
-</body></html>

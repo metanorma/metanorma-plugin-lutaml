@@ -101,7 +101,7 @@
 |===
 {% endunless %}
 
-{% assign non_unions = package.data_types | where: "stereotype", "DataType"  %}
+{% assign non_unions = package.data_types | where: "stereotype", "DataType" %}
 {% if non_unions.size > 0 %}
 {% include "packages_entity_list_classes", classes: non_unions, type: "Data types", depth: nested_depth %}
 {% endif %}

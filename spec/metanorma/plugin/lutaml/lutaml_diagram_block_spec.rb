@@ -34,12 +34,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDiagramBlock do
           </figure>
           </sections>
           </standard-document>
-          </body></html>
         TEXT
       end
 
       it "correctly renders input" do
-        expect(strip_src(xml_string_conent(metanorma_process(input))))
+        expect(strip_src(xml_string_content(metanorma_process(input))))
           .to(be_equivalent_to(output))
       end
     end
@@ -69,12 +68,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDiagramBlock do
           </figure>
           </sections>
           </standard-document>
-          </body></html>
         TEXT
       end
 
       it "correctly renders input" do
-        expect(strip_src(xml_string_conent(metanorma_process(input))))
+        expect(strip_src(xml_string_content(metanorma_process(input))))
           .to(be_equivalent_to(output))
       end
     end

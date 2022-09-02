@@ -30,8 +30,8 @@ my text
 <clause id="_" inline-header="false" obligation="normative"><title>Class definitions</title>
 <table id="_">
 <colgroup>
-<col width="25%">
-<col width="75%">
+<col width="25%"/>
+<col width="75%"/>
 </colgroup>
 <name>Classes defined in ISO 19135 Procedures for item registration XML ()</name>
 <thead>
@@ -42,17 +42,19 @@ my text
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left"></td>
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_82206E96_8D23_48dd_AC2F_31939C484AF2">RE_Register</xref> &#171;interface&#187;</p>
+</td>
+<td valign="top" align="left">
+<p id="_">The class &#8220;RE_Register&#8221; specifies information about the register itself. It is a subtype of the Register class in the core profile.</p>
 </td>
 </tr>
 </tbody>
 </table>
 <table id="_">
 <colgroup>
-<col width="25%">
-<col width="75%">
+<col width="25%"/>
+<col width="75%"/>
 </colgroup>
 <name>Enumerated classes defined in ISO 19135 Procedures for item registration XML ()</name>
 <thead>
@@ -419,8 +421,8 @@ mine text
 <clause id="_" inline-header="false" obligation="normative"><title>Class definitions</title>
 <table id="_">
 <colgroup>
-<col width="25%">
-<col width="75%">
+<col width="25%"/>
+<col width="75%"/>
 </colgroup>
 <name>Classes defined in ISO 19135 Procedures for item registration XML ()</name>
 <thead>
@@ -431,17 +433,19 @@ mine text
 </thead>
 <tbody>
 <tr>
-<td valign="top" align="left"></td>
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_82206E96_8D23_48dd_AC2F_31939C484AF2">RE_Register</xref> &#171;interface&#187;</p>
+</td>
+<td valign="top" align="left">
+<p id="_">The class &#8220;RE_Register&#8221; specifies information about the register itself. It is a subtype of the Register class in the core profile.</p>
 </td>
 </tr>
 </tbody>
 </table>
 <table id="_">
 <colgroup>
-<col width="25%">
-<col width="75%">
+<col width="25%"/>
+<col width="75%"/>
 </colgroup>
 <name>Enumerated classes defined in ISO 19135 Procedures for item registration XML ()</name>
 <thead>
@@ -466,5 +470,3 @@ footer text
 footer text
 &#8230;&#8203;</p></clause>
 </clause></clause></sections>
-</standard-document>
-</body></html>

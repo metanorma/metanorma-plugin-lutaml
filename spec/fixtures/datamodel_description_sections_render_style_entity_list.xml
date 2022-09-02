@@ -7,8 +7,8 @@
 <clause id="_" inline-header="false" obligation="normative"><title>Class definitions</title>
 <table id="_">
 <colgroup>
-<col width="25%">
-<col width="75%">
+<col width="25%"/>
+<col width="75%"/>
 </colgroup>
 <name>Classes defined in Another ()</name>
 <thead>
@@ -25,10 +25,6 @@
 </td>
 </tr>
 <tr>
-<td valign="top" align="left"></td>
-<td valign="top" align="left"></td>
-</tr>
-<tr>
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_C92B844A_C582_4644_8991_61AB0610C8E3">AbstractTimeseries</xref> &#171;&#187;</p>
 </td>
@@ -39,10 +35,6 @@
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_29876515_22A7_4b7f_8F83_4F16D87F3025">AuthenticationTypeValue</xref> &#171;&#187;</p>
 </td>
-</tr>
-<tr>
-<td valign="top" align="left"></td>
-<td valign="top" align="left"></td>
 </tr>
 <tr>
 <td valign="top" align="left">
@@ -57,10 +49,6 @@
 </td>
 </tr>
 <tr>
-<td valign="top" align="left"></td>
-<td valign="top" align="left"></td>
-</tr>
-<tr>
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_CDE3D132_C627_4fdd_A6BD_6B6C1555E878">GenericTimeseries</xref> &#171;&#187;</p>
 </td>
@@ -73,10 +61,6 @@
 </td>
 </tr>
 <tr>
-<td valign="top" align="left"></td>
-<td valign="top" align="left"></td>
-</tr>
-<tr>
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_FDF538F9_ECA6_43b2_9EFA_8AFAAA95AB62">StandardFileTimeseries</xref> &#171;&#187;</p>
 </td>
@@ -87,10 +71,6 @@
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_BE99CC5F_DEFB_459f_BE53_B8F12C8B8149">StandardFileTypeValue</xref> &#171;&#187;</p>
 </td>
-</tr>
-<tr>
-<td valign="top" align="left"></td>
-<td valign="top" align="left"></td>
 </tr>
 <tr>
 <td valign="top" align="left">
@@ -108,8 +88,8 @@
 </table>
 <table id="_">
 <colgroup>
-<col width="25%">
-<col width="75%">
+<col width="25%"/>
+<col width="75%"/>
 </colgroup>
 <name>Enumerated classes defined in Another ()</name>
 <thead>
@@ -132,8 +112,8 @@
 <clause id="_" inline-header="false" obligation="normative"><title>Class definitions</title>
 <table id="_">
 <colgroup>
-<col width="25%">
-<col width="75%">
+<col width="25%"/>
+<col width="75%"/>
 </colgroup>
 <name>Classes defined in CityTML ()</name>
 <thead>
@@ -150,10 +130,6 @@
 </td>
 </tr>
 <tr>
-<td valign="top" align="left"></td>
-<td valign="top" align="left"></td>
-</tr>
-<tr>
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_B67A828E_F6C6_4b88_93CC_6458D55A6760">AbstractConstructionSurface</xref> &#171;&#187;</p>
 </td>
@@ -164,10 +140,6 @@
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_2590191B_9EFA_4477_A32B_DA3DEDAC68BE">AbstractConstructiveElement</xref> &#171;&#187;</p>
 </td>
-</tr>
-<tr>
-<td valign="top" align="left"></td>
-<td valign="top" align="left"></td>
 </tr>
 <tr>
 <td valign="top" align="left">
@@ -182,10 +154,6 @@
 </td>
 </tr>
 <tr>
-<td valign="top" align="left"></td>
-<td valign="top" align="left"></td>
-</tr>
-<tr>
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_A8DC7ACD_0AC9_4358_8FF2_AF0040FB4598">AbstractFurniture</xref> &#171;&#187;</p>
 </td>
@@ -196,10 +164,6 @@
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_73A90C21_D0FC_4bff_9316_6DA37C582F2C">AbstractInstallation</xref> &#171;&#187;</p>
 </td>
-</tr>
-<tr>
-<td valign="top" align="left"></td>
-<td valign="top" align="left"></td>
 </tr>
 <tr>
 <td valign="top" align="left">
@@ -214,10 +178,6 @@
 </td>
 </tr>
 <tr>
-<td valign="top" align="left"></td>
-<td valign="top" align="left"></td>
-</tr>
-<tr>
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_63F44B99_981E_41ba_8BF9_0B7231BD321A">DoorClassValue</xref> &#171;&#187;</p>
 </td>
@@ -228,10 +188,6 @@
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_BA3F11AA_33C9_4a80_BF67_69B039008ADB">DoorFunctionValue</xref> &#171;&#187;</p>
 </td>
-</tr>
-<tr>
-<td valign="top" align="left"></td>
-<td valign="top" align="left"></td>
 </tr>
 <tr>
 <td valign="top" align="left">
@@ -246,10 +202,6 @@
 </td>
 </tr>
 <tr>
-<td valign="top" align="left"></td>
-<td valign="top" align="left"></td>
-</tr>
-<tr>
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_BDFDE0B6_F386_4d54_AC27_4A21E5162BF0">ElevationReferenceValue</xref> &#171;&#187;</p>
 </td>
@@ -260,10 +212,6 @@
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_344ECD3D_324C_465a_AE1C_235E2C2C93BE">EventValue</xref> &#171;&#187;</p>
 </td>
-</tr>
-<tr>
-<td valign="top" align="left"></td>
-<td valign="top" align="left"></td>
 </tr>
 <tr>
 <td valign="top" align="left">
@@ -278,10 +226,6 @@
 </td>
 </tr>
 <tr>
-<td valign="top" align="left"></td>
-<td valign="top" align="left"></td>
-</tr>
-<tr>
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_DBB20296_9BEA_46c7_925F_F8B90EAE8FB5">InteriorWallSurface</xref> &#171;&#187;</p>
 </td>
@@ -292,10 +236,6 @@
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_645EA139_9F9D_4caf_90C3_3455836FA55B">OtherConstruction</xref> &#171;&#187;</p>
 </td>
-</tr>
-<tr>
-<td valign="top" align="left"></td>
-<td valign="top" align="left"></td>
 </tr>
 <tr>
 <td valign="top" align="left">
@@ -310,10 +250,6 @@
 </td>
 </tr>
 <tr>
-<td valign="top" align="left"></td>
-<td valign="top" align="left"></td>
-</tr>
-<tr>
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_639B442D_87A9_435b_891C_CB5C260B3497">OtherConstructionUsageValue</xref> &#171;&#187;</p>
 </td>
@@ -324,10 +260,6 @@
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_4B22820C_7FA0_494b_A840_683B7396FAF4">OuterCeilingSurface</xref> &#171;&#187;</p>
 </td>
-</tr>
-<tr>
-<td valign="top" align="left"></td>
-<td valign="top" align="left"></td>
 </tr>
 <tr>
 <td valign="top" align="left">
@@ -342,10 +274,6 @@
 </td>
 </tr>
 <tr>
-<td valign="top" align="left"></td>
-<td valign="top" align="left"></td>
-</tr>
-<tr>
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_B015FAC6_B012_427b_BAF7_A2BD0156C30C">WallSurface</xref> &#171;&#187;</p>
 </td>
@@ -358,10 +286,6 @@
 </td>
 </tr>
 <tr>
-<td valign="top" align="left"></td>
-<td valign="top" align="left"></td>
-</tr>
-<tr>
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_31AB9AF9_C56C_4404_B463_5916A9F28AAF">WindowClassValue</xref> &#171;&#187;</p>
 </td>
@@ -372,10 +296,6 @@
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_0A8AF28F_3BB8_4509_A8F2_AA2CB2CF98C8">WindowFunctionValue</xref> &#171;&#187;</p>
 </td>
-</tr>
-<tr>
-<td valign="top" align="left"></td>
-<td valign="top" align="left"></td>
 </tr>
 <tr>
 <td valign="top" align="left">
@@ -393,8 +313,8 @@
 </table>
 <table id="_">
 <colgroup>
-<col width="25%">
-<col width="75%">
+<col width="25%"/>
+<col width="75%"/>
 </colgroup>
 <name>Enumerated classes defined in CityTML ()</name>
 <thead>
@@ -429,8 +349,8 @@
 <clause id="_" inline-header="false" obligation="normative"><title>Class definitions</title>
 <table id="_">
 <colgroup>
-<col width="25%">
-<col width="75%">
+<col width="25%"/>
+<col width="75%"/>
 </colgroup>
 <name>Classes defined in Dynamizer ()</name>
 <thead>
@@ -447,10 +367,6 @@
 </td>
 </tr>
 <tr>
-<td valign="top" align="left"></td>
-<td valign="top" align="left"></td>
-</tr>
-<tr>
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_C92B844A_C582_4644_8991_61AB0610C8E3">AbstractTimeseries</xref> &#171;&#187;</p>
 </td>
@@ -461,10 +377,6 @@
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_29876515_22A7_4b7f_8F83_4F16D87F3025">AuthenticationTypeValue</xref> &#171;&#187;</p>
 </td>
-</tr>
-<tr>
-<td valign="top" align="left"></td>
-<td valign="top" align="left"></td>
 </tr>
 <tr>
 <td valign="top" align="left">
@@ -479,10 +391,6 @@
 </td>
 </tr>
 <tr>
-<td valign="top" align="left"></td>
-<td valign="top" align="left"></td>
-</tr>
-<tr>
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_CDE3D132_C627_4fdd_A6BD_6B6C1555E878">GenericTimeseries</xref> &#171;&#187;</p>
 </td>
@@ -495,10 +403,6 @@
 </td>
 </tr>
 <tr>
-<td valign="top" align="left"></td>
-<td valign="top" align="left"></td>
-</tr>
-<tr>
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_FDF538F9_ECA6_43b2_9EFA_8AFAAA95AB62">StandardFileTimeseries</xref> &#171;&#187;</p>
 </td>
@@ -509,10 +413,6 @@
 <td valign="top" align="left">
 <p id="_"><xref target="section-EAID_BE99CC5F_DEFB_459f_BE53_B8F12C8B8149">StandardFileTypeValue</xref> &#171;&#187;</p>
 </td>
-</tr>
-<tr>
-<td valign="top" align="left"></td>
-<td valign="top" align="left"></td>
 </tr>
 <tr>
 <td valign="top" align="left">
@@ -530,8 +430,8 @@
 </table>
 <table id="_">
 <colgroup>
-<col width="25%">
-<col width="75%">
+<col width="25%"/>
+<col width="75%"/>
 </colgroup>
 <name>Enumerated classes defined in Dynamizer ()</name>
 <thead>
@@ -552,5 +452,3 @@
 </clause></clause></clause>
 </clause>
 </sections>
-</standard-document>
-</body></html>
