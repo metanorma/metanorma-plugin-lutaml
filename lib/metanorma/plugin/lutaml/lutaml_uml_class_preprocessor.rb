@@ -38,15 +38,22 @@ module Metanorma
             ).first
         end
 
+        DEFAULT_OPTIONS = {
+          depth: 2
+        }
         def parse_options_to_hash(options_string)
-          return {} if options_string.nil? || options_string.empty?
+          return DEFAULT_OPTIONS.dup if options_string.nil? || options_string.empty?
 
-          options_string.split(",").inject({}) do |acc,pair|
+          opts = options_string.split(",").inject({}) do |acc,pair|
             key, value = pair.split("=")
+            key = key.to_sym
             value = true if value.nil?
-            acc[key.to_sym] = value if key
+            value = value.to_i if key == :depth
+            acc[key] = value if key
             acc
           end
+
+          DEFAULT_OPTIONS.dup.merge(opts)
         end
 
         def processed_lines(document, input_lines)
@@ -86,15 +93,17 @@ module Metanorma
           render_result.split("\n")
         end
 
-        def equalsigns
+        def equalsigns(depth)
+          "=" * depth
         end
 
         # rubocop:disable Layout/IndentHeredoc
         def template(options)
           skip_headers = options[:skip_headers]
+          depth = options[:depth]
 
           <<~TEMPLATE
-          #{"=== {{ definition.name }}" unless skip_headers}
+          #{equalsigns(depth) + " {{ definition.name }}" unless skip_headers}
           {{ definition.definition }}
 
           {% if definition.attributes %}
@@ -108,10 +117,10 @@ module Metanorma
           {% endfor %}
           |===
           {% else %}
-          ==== Attributes
+          #{equalsigns(depth+1)} Attributes
 
           {% for item in definition.attributes %}
-          ===== {{item.name}}
+          #{equalsigns(depth+2)} {{item.name}}
 
           {% if item.definition %}
           {{ item.definition }}
