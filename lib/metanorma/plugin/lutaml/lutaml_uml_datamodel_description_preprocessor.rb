@@ -14,7 +14,7 @@ module Metanorma
       #  @example [lutaml_uml_attributes_table,path/to/lutaml,EntityName]
       class LutamlUmlDatamodelDescriptionPreprocessor <
           Asciidoctor::Extensions::Preprocessor
-        MARCO_REGEXP =
+        MACRO_REGEXP =
           /\[lutaml_uml_datamodel_description,([^,]+),?(.+)?\]/
         LIQUID_INCLUDE_PATH = File.join(
           Gem.loaded_specs["metanorma-plugin-lutaml"].full_gem_path,
@@ -72,7 +72,7 @@ module Metanorma
 
         def process_text_blocks(document, input_lines)
           line = input_lines.next
-          block_match = line.match(MARCO_REGEXP)
+          block_match = line.match(MACRO_REGEXP)
           return [line] if block_match.nil?
 
           lutaml_document = lutaml_document_from_file_or_cache(document, block_match[1])
@@ -232,7 +232,7 @@ module Metanorma
         def model_representation(lutaml_document, document, additional_context, options)
           fill_in_entities_refs_attributes(document, lutaml_document, options)
           render_result, errors = Utils.render_liquid_string(
-            template_string: table_template(options['section_depth'] || 2, options['render_style'], options['include_root']),
+            template_string: template(options['section_depth'] || 2, options['render_style'], options['include_root']),
             context_items: create_context_object(lutaml_document,
                               additional_context,
                               options),
@@ -244,7 +244,7 @@ module Metanorma
           render_result.split("\n")
         end
 
-        def table_template(section_depth, render_style, include_root)
+        def template(section_depth, render_style, include_root)
           include_name = RENDER_STYLES_INCLUDES.fetch(render_style, DEFAULT_RENDER_INCLUDE)
           result = ""
           if include_root

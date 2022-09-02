@@ -1,3 +1,5 @@
+require "expressir"
+require "expressir/express/parser"
 require "expressir/express/cache"
 require "metanorma/plugin/lutaml/liquid/custom_filters"
 require "metanorma/plugin/lutaml/liquid/multiply_local_file_system"
