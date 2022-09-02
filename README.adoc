@@ -212,6 +212,80 @@ diagram MyView {
 ....
 ----
 
+=== Generating UML class and attributes: `lutaml_uml_class`
+
+This command allows rendering a definition clause for a UML class.
+
+Given `example.lutaml` with this content:
+
+[source,java]
+----
+class Register {
+  definition {
+    A register of information.
+  }
+
+  identifier: String[1] {
+    definition {
+      Unique identifier of the register.
+    }
+  }
+
+  concepts: Concept[0..*] {
+    definition {
+      Concepts.
+    }
+  }
+}
+----
+
+The command:
+
+[source,adoc]
+----
+[lutaml_uml_class,views/Register_Register.lutaml,Register]
+----
+
+Will produce this output:
+
+____
+== Register
+
+A register of information.
+
+=== Attributes
+
+==== identifier
+
+Unique identifier of the register.
+
+.Specification of `Register.identifier`
+|===
+h|Value type and multiplicity	| `String [1]`
+|===
+
+==== concepts
+
+Concepts.
+
+.Specification of `Register.concepts`
+|===
+h|Value type and multiplicity	| `Concepts [0..*]`
+|===
+
+____
+
+The command accepts two options:
+
+* `skip_headers=true` (or just `skip_headers`). The initial heading (the UML class name)
+will not be generated. This is useful if additional content is to be supplied
+to the clause, such as diagrams that are defined outside the UML model.
+
+* `depth={n}`. (default: `2`) This determines the depth of the generated headings.
+A depth of `2` means the initial heading will have 2 equal signs, and so forth.
+The heading depth of the attributes are in relation to the initial depth, so
+a depth of `2` will have the "Attributes" section at depth `3`.
+
 
 === `lutaml_uml_attributes_table`
 
