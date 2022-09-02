@@ -31,10 +31,11 @@ module Metanorma
         private
 
         def lutaml_document_from_file(document, file_path)
-          ::Lutaml::Parser
-            .parse(File.new(Utils.relative_file_path(document, file_path),
-                            encoding: "UTF-8"))
-            .first
+          ::Lutaml::Parser.parse(
+            File.new(
+              Utils.relative_file_path(document, file_path),
+              encoding: "UTF-8")
+            ).first
         end
 
         def parse_options_to_hash(options_string)

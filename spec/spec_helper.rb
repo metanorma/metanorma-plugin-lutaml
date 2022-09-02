@@ -33,14 +33,10 @@ RSpec.configure do |config|
 end
 
 BLANK_HDR = <<~"HDR".freeze
-  <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-  <?xml version="1.0" encoding="US-ASCII"?><html><body>
+  <?xml version="1.0" encoding="UTF-8"?>
   <standard-document xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="#{Metanorma::Standoc::VERSION}">
   <bibdata type="standard">
   <title language="en" format="text/plain">Document title</title>
-
-
-
   <language>en</language>
   <script>Latn</script>
   <status>
@@ -50,7 +46,7 @@ BLANK_HDR = <<~"HDR".freeze
   <from>#{Time.new.year}</from>
   </copyright>
   <ext>
-  <doctype>article</doctype>
+  <doctype>standard</doctype>
   </ext>
   </bibdata>
 HDR
@@ -61,8 +57,8 @@ def strip_guid(xml)
     .gsub(%r{ target="_[^"]+"}, ' target="_"')
 end
 
-def xml_string_conent(xml)
-  strip_guid(Nokogiri::HTML(xml).to_s)
+def xml_string_content(xml)
+  strip_guid(Nokogiri::XML(xml).to_s)
 end
 
 def metanorma_process(input)

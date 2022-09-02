@@ -1,8 +1,8 @@
 <sections>
 <table id="_">
 <colgroup>
-<col width="25%">
-<col width="75%">
+<col width="25%"/>
+<col width="75%"/>
 </colgroup>
 <name>Classes in test2</name>
 <thead>
@@ -13,5 +13,3 @@
 </thead>
 </table>
 </sections>
-</standard-document>
-</body></html>

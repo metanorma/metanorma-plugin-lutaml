@@ -34,8 +34,8 @@ Before tag for ISO 19135 Procedures for item registration XML
 <clause id="_" inline-header="false" obligation="normative"><title>Class definitions</title>
 <table id="_">
 <colgroup>
-<col width="25%">
-<col width="75%">
+<col width="25%"/>
+<col width="75%"/>
 </colgroup>
 <name>Classes defined in ISO 19135 Procedures for item registration XML ()</name>
 <thead>
@@ -57,8 +57,8 @@ Before tag for ISO 19135 Procedures for item registration XML
 </table>
 <table id="_">
 <colgroup>
-<col width="25%">
-<col width="75%">
+<col width="25%"/>
+<col width="75%"/>
 </colgroup>
 <name>Enumerated classes defined in ISO 19135 Procedures for item registration XML ()</name>
 <thead>
@@ -83,5 +83,3 @@ After tag for Wrapper nested package
 After tag for
 &#8230;&#8203;</p></clause>
 </clause></clause></sections>
-</standard-document>
-</body></html>

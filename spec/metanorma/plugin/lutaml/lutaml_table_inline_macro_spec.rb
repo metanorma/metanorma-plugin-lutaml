@@ -22,11 +22,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlTableInlineMacro do
         TEXT
       end
       let(:output) do
-        '<xref target="section-EAPK_9C96A88B_E98B_490b_8A9C_24AEDAC64293">'
+        '<xref target="section-EAPK_9C96A88B_E98B_490b_8A9C_24AEDAC64293"/>'
       end
 
       it "correctly renders input" do
-        expect(strip_src(xml_string_conent(metanorma_process(input))))
+        expect(strip_src(xml_string_content(metanorma_process(input))))
           .to(include(output))
       end
     end
@@ -52,11 +52,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlTableInlineMacro do
       TEXT
     end
     let(:output) do
-      '<xref target="section-EAID_82206E96_8D23_48dd_AC2F_31939C484AF2">'
+      '<xref target="section-EAID_82206E96_8D23_48dd_AC2F_31939C484AF2"/>'
     end
 
     it "correctly renders input" do
-      expect(strip_src(xml_string_conent(metanorma_process(input))))
+      expect(strip_src(xml_string_content(metanorma_process(input))))
         .to(include(output))
     end
   end
@@ -81,11 +81,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlTableInlineMacro do
       TEXT
     end
     let(:output) do
-      '<xref target="section-EAID_82206E96_8D23_48dd_AC2F_92839C484AF2">'
+      '<xref target="section-EAID_82206E96_8D23_48dd_AC2F_92839C484AF2"/>'
     end
 
     it "correctly renders input" do
-      expect(strip_src(xml_string_conent(metanorma_process(input))))
+      expect(strip_src(xml_string_content(metanorma_process(input))))
         .to(include(output))
     end
   end
@@ -110,11 +110,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlTableInlineMacro do
       TEXT
     end
     let(:output) do
-      '<xref target="section-ABCD_82206E96_8D23_48dd_AC2F_31939C484AF2">'
+      '<xref target="section-ABCD_82206E96_8D23_48dd_AC2F_31939C484AF2"/>'
     end
 
     it "correctly renders input" do
-      expect(strip_src(xml_string_conent(metanorma_process(input))))
+      expect(strip_src(xml_string_content(metanorma_process(input))))
         .to(include(output))
     end
   end

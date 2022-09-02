@@ -67,12 +67,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           #{BLANK_HDR}
           #{File.read(fixtures_path('datamodel_description_sections.xml'))}
           </standard-document>
-          </body></html>
         TEXT
       end
 
       it "correctly renders input" do
-        expect(xml_string_conent(metanorma_process(input)))
+        expect(xml_string_content(metanorma_process(input)))
           .to(be_equivalent_to(output))
       end
 
@@ -140,12 +139,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
             #{BLANK_HDR}
             #{File.read(fixtures_path('datamodel_description_sections_section_depth.xml'))}
             </standard-document>
-            </body></html>
-          TEXT
+            TEXT
         end
 
         it "correctly renders input" do
-          expect(xml_string_conent(metanorma_process(input)))
+          expect(xml_string_content(metanorma_process(input)))
             .to(be_equivalent_to(output))
         end
       end
@@ -176,7 +174,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
                 #{BLANK_HDR}
                 #{File.read(fixtures_path("datamodel_description_sections_render_style_#{style}.xml"))}
                 </standard-document>
-                </body></html>
               TEXT
             end
 
@@ -188,7 +185,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
               end
 
               it "correctly renders input" do
-                expect(xml_string_conent(metanorma_process(input)))
+                expect(xml_string_content(metanorma_process(input)))
                   .to(be_equivalent_to(output))
               end
             end
@@ -226,7 +223,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
         end
 
         context "when render_style equal `data_dictionary`" do
-          subject(:xml_convert) { xml_string_conent(metanorma_process(input)) }
+          subject(:xml_convert) { xml_string_content(metanorma_process(input)) }
 
           let(:render_style) { "data_dictionary" }
           let(:example_file) { fixtures_path("test.xmi") }
@@ -265,7 +262,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
         end
 
         context "when render_style equal `entity_list`" do
-          subject(:xml_convert) { xml_string_conent(metanorma_process(input)) }
+          subject(:xml_convert) { xml_string_content(metanorma_process(input)) }
 
           let(:render_style) { "entity_list" }
           let(:external_classes) do
@@ -342,12 +339,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           #{BLANK_HDR}
           #{File.read(fixtures_path('datamodel_description_sections_tree.xml'))}
           </standard-document>
-          </body></html>
         TEXT
       end
 
       it "correctly renders input" do
-        expect(xml_string_conent(metanorma_process(input)))
+        expect(xml_string_content(metanorma_process(input)))
           .to(be_equivalent_to(output))
       end
     end
@@ -394,9 +390,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           [lutaml_uml_datamodel_description,#{example_file},#{nested_config_file}]
           ---
           [.before]
-          ....
+          ......
           Nested datamodel mine text
-          ....
+          ......
           ---
           ....
           --
@@ -407,7 +403,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           #{BLANK_HDR}
           #{File.read(fixtures_path("datamodel_description_sections_nested_macroses.xml"))}
           </standard-document>
-          </body></html>
         TEXT
       end
 
@@ -418,7 +413,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
       end
 
       it "correctly renders input" do
-        expect(xml_string_conent(metanorma_process(input)))
+        expect(xml_string_content(metanorma_process(input)))
           .to(be_equivalent_to(output))
       end
     end
@@ -449,12 +444,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           #{BLANK_HDR}
           #{File.read(fixtures_path("datamodel_description_sections_package_entities.xml"))}
           </standard-document>
-          </body></html>
         TEXT
       end
 
       it "correctly renders input" do
-        expect(xml_string_conent(metanorma_process(input)))
+        expect(xml_string_content(metanorma_process(input)))
           .to(be_equivalent_to(output))
       end
     end
@@ -485,12 +479,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           #{BLANK_HDR}
           #{File.read(fixtures_path("datamodel_description_sections_skip_tables.xml"))}
           </standard-document>
-          </body></html>
         TEXT
       end
 
       it "correctly renders input" do
-        expect(xml_string_conent(metanorma_process(input)))
+        expect(xml_string_content(metanorma_process(input)))
           .to(be_equivalent_to(output))
       end
     end

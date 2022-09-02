@@ -69,13 +69,12 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               </clause></clause>
               </sections>
               </standard-document>
-              </body></html>
-            TEXT
+                TEXT
           end
 
           it "correctly renders input" do
-            expect(xml_string_conent(metanorma_process(input)))
-              .to(be_equivalent_to(output))
+            expect(xml_string_content(metanorma_process(input)))
+              .to(be_equivalent_to(xml_string_content(output)))
           end
         end
 
@@ -147,12 +146,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 <docidentifier type="repository">express/measure_schemaexpg4</docidentifier>
                 </bibitem>
                 </references></bibliography></standard-document>
-              </body></html>
-            TEXT
+                TEXT
           end
 
           it "correctly renders input" do
-            expect(xml_string_conent(metanorma_process(input)))
+            expect(xml_string_content(metanorma_process(input)))
               .to(be_equivalent_to(output))
           end
         end
@@ -188,10 +186,10 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 <clause id="_" inline-header="false" obligation="normative"><title>annotated_3d_model_data_quality_criteria_schema</title>
                 <p id="_">Mine text</p>
                 <p id="_">
-                <link target="#{fixtures_path('/downloads/report.pdf')}">Get Report
+                <link target="#{fixtures_path('/downloads/report.pdf')}">Get Report</link>
                 </p>
                 <p id="_">
-                <link target="http://test.com/include1.csv">
+                <link target="http://test.com/include1.csv"/>
                 </p>
 
 
@@ -199,16 +197,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 one,two,three</p>
                 <p id="_">Unresolved directive in &lt;stdin&gt;&#8201;&#8212;&#8201;include::#{fixtures_path('test/include1.csv')}[]</p>
                 <p id="_">
-                <link target="http://test.com/include1.csv">
+                <link target="http://test.com/include1.csv"/>
                 </p></clause>
               </sections>
               </standard-document>
-              </body></html>
             TEXT
           end
 
           it "correctly renders input" do
-            expect(xml_string_conent(metanorma_process(input)))
+            expect(xml_string_content(metanorma_process(input)))
               .to(be_equivalent_to(output))
           end
 
@@ -245,24 +242,23 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                   <clause id="_" inline-header="false" obligation="normative"><title>annotated_3d_model_data_quality_criteria_schema</title>
                   <p id="_">My text</p>
                   <p id="_">
-                  <link target="#{fixtures_path('/expressir_realtive_paths/downloads/report.pdf')}">Get Report
+                  <link target="#{fixtures_path('/expressir_realtive_paths/downloads/report.pdf')}">Get Report</link>
                   </p>
                   <p id="_">
-                  <link target="http://test.com/include1.csv">
+                  <link target="http://test.com/include1.csv"/>
                   </p>
                   <p id="_">Unresolved directive in &lt;stdin&gt;&#8201;&#8212;&#8201;include::#{fixtures_path('/expressir_realtive_paths/include1.csv')}[]</p>
                   <p id="_">Unresolved directive in &lt;stdin&gt;&#8201;&#8212;&#8201;include::#{fixtures_path('expressir_realtive_paths/test/include1.csv')}[]</p>
                   <p id="_">
-                  <link target="http://test.com/include1.csv">
+                  <link target="http://test.com/include1.csv"/>
                   </p></clause>
                 </sections>
                 </standard-document>
-                </body></html>
               TEXT
             end
 
             it "correctly renders input" do
-              expect(xml_string_conent(metanorma_process(input)))
+              expect(xml_string_content(metanorma_process(input)))
                 .to(be_equivalent_to(output))
             end
           end
@@ -324,14 +320,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               </bibitem>
               </references></bibliography>
               </standard-document>
-              </body>
-
-              </html>
             TEXT
           end
 
           it "correctly renders input" do
-            expect(xml_string_conent(metanorma_process(input)))
+            expect(xml_string_content(metanorma_process(input)))
               .to(be_equivalent_to(output))
           end
         end
@@ -385,8 +378,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 </clause>
               </sections>
               </standard-document>
-              </body></html>
-            TEXT
+                TEXT
           end
 
           around do |example|
@@ -396,7 +388,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           end
 
           it "correctly renders input" do
-            expect(xml_string_conent(metanorma_process(input)))
+            expect(xml_string_content(metanorma_process(input)))
               .to(be_equivalent_to(output))
           end
 
@@ -441,9 +433,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                   </clause>
                 </sections>
                 </standard-document>
-                </body>
-
-                </html>
               TEXT
             end
 
@@ -457,7 +446,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             end
 
             it "correctly renders input from cache" do
-              expect(xml_string_conent(metanorma_process(input)))
+              expect(xml_string_content(metanorma_process(input)))
                 .to(be_equivalent_to(output))
             end
           end
@@ -493,9 +482,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                   </clause>
                 </sections>
                 </standard-document>
-                </body>
-
-                </html>
               TEXT
             end
 
@@ -506,14 +492,14 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             end
 
             it "fallbacks to the original folder and renders from it" do
-              expect(xml_string_conent(metanorma_process(input)))
+              expect(xml_string_content(metanorma_process(input)))
                 .to(be_equivalent_to(output))
             end
 
             # TODO: metanorma/metanorma-plugin-lutaml#27
             unless Gem.win_platform?
               it "recreates the cache file with the correct data" do
-                expect { xml_string_conent(metanorma_process(input)) }
+                expect { xml_string_content(metanorma_process(input)) }
                   .to(change do
                     wraper = Metanorma::Plugin::Lutaml::Utils.express_from_cache(cache_path) rescue nil
                     wraper&.to_liquid&.length
@@ -586,9 +572,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 </clause>
               </sections>
               </standard-document>
-              </body>
-
-              </html>
             TEXT
           end
 
@@ -602,7 +585,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           end
 
           it "correctly renders input from cached index and supplied file" do
-            expect(xml_string_conent(metanorma_process(input)))
+            expect(xml_string_content(metanorma_process(input)))
               .to(be_equivalent_to(output))
           end
         end
@@ -698,14 +681,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               </bibitem>
               </references></bibliography>
               </standard-document>
-              </body>
-
-              </html>
             TEXT
           end
 
           it "correctly renders input" do
-            expect(xml_string_conent(metanorma_process(input)))
+            expect(xml_string_content(metanorma_process(input)))
               .to(be_equivalent_to(output))
           end
         end
@@ -737,13 +717,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               </clause>
               </sections>
               </standard-document>
-              </body>
-              </html>
             TEXT
           end
 
           it "correctly renders input" do
-            expect(xml_string_conent(metanorma_process(input)))
+            expect(xml_string_content(metanorma_process(input)))
               .to(be_equivalent_to(output))
           end
         end
