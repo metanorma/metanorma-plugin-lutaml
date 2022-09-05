@@ -103,52 +103,52 @@ module Metanorma
           depth = options[:depth]
 
           <<~TEMPLATE
-          #{equalsigns(depth) + " {{ definition.name }}" unless skip_headers}
+          {% if definition.keyword == 'enumeration' %}
+          #{equalsigns(depth) + " Enumeration: {{ definition.name }}" unless skip_headers}
+          {% else %}
+          #{equalsigns(depth) + " Class: {{ definition.name }}" unless skip_headers}
+          {% endif %}
+
+          #{equalsigns(depth+1)} Description
+
           {{ definition.definition }}
 
           {% if definition.attributes %}
           {% if definition.keyword == 'enumeration' %}
-          .{{ definition.name }} values
-          |===
-          |Name |Definition
-
           {% for item in definition.attributes %}
-          |{{ item.name }} |{{ item.definition }}
-          {% endfor %}
-          |===
-          {% else %}
-          #{equalsigns(depth+1)} Attributes
-
-          {% for item in definition.attributes %}
-          #{equalsigns(depth+2)} {{item.name}}
+          #{equalsigns(depth+1)} Enumeration value: {{item.name}}
 
           {% if item.definition %}
           {{ item.definition }}
           {% endif %}
 
-          .Specification of `{{ definition.name }}.{{ item.name }}`
-          [cols="h,a"]
-          |===
+          {% endfor %}
 
-          h|Value type and multiplicity
-          |
-          `{{ item.type }}`
+          {% else %}
+
+          {% for item in definition.attributes %}
+          #{equalsigns(depth+1)} Attribute: {{item.name}}
+
+          {% if item.definition %}
+          {{ item.definition }}
+          {% endif %}
+
+          Value type and multiplicity:
+          {% if item.type -%}{{ item.type }}{% else -%}(no type specified){% endif %}
           {% if item.cardinality.min -%}
           {% if item.cardinality.max -%}
-          `[{{item.cardinality.min}}..{{item.cardinality.max}}]`
+          {blank}[{{item.cardinality.min}}..{{item.cardinality.max}}]
           {% else -%}
-          `[{{item.cardinality.min}}]`
+          {blank}[{{item.cardinality.min}}]
           {% endif -%}
           {% else -%}
           (multiplicity unspecified)
           {% endif %}
 
           {% if item.origin %}
-          h|Origin
-          |<<{{ item.origin }}>>
+          Origin: <<{{ item.origin }}>>
           {% endif %}
 
-          |===
           {% endfor %}
 
           {% endif %}
