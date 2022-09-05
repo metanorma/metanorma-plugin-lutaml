@@ -209,7 +209,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               .to(be_equivalent_to(output))
           end
 
-          context "when loaded from a cache file" do
+          xcontext "when loaded from a cache file" do
             let(:cache_path) do
               fixtures_path('expressir_realtive_paths/test_relative_includes_cache.yaml')
             end
@@ -329,7 +329,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           end
         end
 
-        context "when lutaml-express-index keyword used with folder path" do
+        xcontext "when lutaml-express-index keyword used with folder path" do
           let(:cache_file_path) { fixtures_path("express_temp_cache_#{SecureRandom.uuid}.yaml") }
           let(:input) do
             <<~TEXT
