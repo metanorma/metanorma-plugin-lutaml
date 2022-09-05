@@ -23,9 +23,10 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
+  spec.add_dependency "asciidoctor"
   spec.add_dependency "liquid"
   spec.add_dependency "lutaml"
-  spec.add_dependency "metanorma"
+  #spec.add_dependency "metanorma"
   spec.add_dependency "relaton-cli"
   spec.add_dependency "reverse_adoc"
   spec.add_dependency "expressir"

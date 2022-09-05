@@ -6,15 +6,14 @@ require "metanorma-plugin-lutaml"
 # to test properly with metanorma-standoc
 Asciidoctor::Extensions.register do
   inline_macro Metanorma::Plugin::Lutaml::LutamlTableInlineMacro, :lutaml_table
-  inline_macro Metanorma::Plugin::Lutaml::LutamlFigureInlineMacro, :lutaml_figure
+  inline_macro Metanorma::Plugin::Lutaml::LutamlFigureInlineMacro,
+               :lutaml_figure
   preprocessor Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreprocessor
 end
 
 require "metanorma-standoc"
 require "rspec/matchers"
 require "equivalent-xml"
-require "metanorma"
-require "metanorma/standoc"
 require "rexml/document"
 require "byebug"
 
@@ -62,13 +61,15 @@ def xml_string_content(xml)
 end
 
 def metanorma_process(input)
-  Metanorma::Input::Asciidoc
-    .new
-    .process(input, "test.adoc", :standoc)
+  Asciidoctor.convert(input, backend: :standoc, header_footer: true,
+                             agree_to_terms: true, to_file: false, safe: :safe,
+                             attributes: ["nodoc", "stem", "xrefstyle=short",
+                                          "docfile=test.adoc",
+                                          "output_dir="])
 end
 
 def fixtures_path(path)
-  File.join(File.expand_path("./fixtures", __dir__), path)
+  File.join(File.expand_path("./fixtures/lutaml", __dir__), path)
 end
 
 def strip_src(xml)
