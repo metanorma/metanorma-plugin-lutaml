@@ -59,6 +59,7 @@ module Metanorma
           outfile = Tempfile.new(["lutaml", ".png"])
           outfile.binmode
           outfile.puts(formatter.format(uml_document))
+          outfile.close
 
           # Warning: metanorma/metanorma-standoc#187
           # Windows Ruby 2.4 will crash if a Tempfile is "mv"ed.
