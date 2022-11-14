@@ -45,10 +45,11 @@ module Metanorma
           formatter = ::Lutaml::Formatter::Graphviz.new
           formatter.type = :png
 
+          path_lutaml = "lutaml"
           imagesdir = if parent.document.attr("imagesdir")
-                        File.join(parent.document.attr("imagesdir"), "lutaml")
+                        File.join(parent.document.attr("imagesdir"), path_lutaml)
                       else
-                        "lutaml"
+                        path_lutaml
                       end
           result_path = Utils.relative_file_path(parent.document, imagesdir)
           result_pathname = Pathname.new(result_path)
@@ -58,6 +59,7 @@ module Metanorma
           outfile = Tempfile.new(["lutaml", ".png"])
           outfile.binmode
           outfile.puts(formatter.format(uml_document))
+          outfile.close
 
           # Warning: metanorma/metanorma-standoc#187
           # Windows Ruby 2.4 will crash if a Tempfile is "mv"ed.
@@ -65,7 +67,8 @@ module Metanorma
           filename = File.basename(outfile.path)
           FileUtils.cp(outfile, result_pathname) && outfile.unlink
 
-          File.join(result_pathname, filename)
+          #File.join(result_pathname, filename)
+          File.join(path_lutaml, filename)
         end
 
         def generate_attrs(attrs)
