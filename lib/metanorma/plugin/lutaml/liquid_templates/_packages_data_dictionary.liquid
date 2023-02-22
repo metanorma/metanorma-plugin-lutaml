@@ -67,13 +67,13 @@
 {% endfor %}
 {% endif %}
 
-.Metadata of {{ package.name }} ({{ package.stereotype }})
+.Metadata of {{ package.name }} {% if package.stereotype %}(«{{package.stereotype}}»){% endif %}
 [cols="1a,4a"]
 |===
 
-h|Description:    | {{ package.definition | replace: '|', '\|' }}
+h|Description:    | {{ package.definition | replace: '|', '\|' | html2adoc }}
 h|Parent package: | {{ context.name }}
-h|Stereotype:     | «{{ package.stereotype }}»
+h|Stereotype:     | {% if package.stereotype %}«{{package.stereotype}}»{% else %}None{% endif %}
 
 |===
 
@@ -139,12 +139,12 @@ None.
 [[section-{{ data_type.xmi_id }}]]
 {{equalsigns}}== {{ data_type.name }}
 
-.Metadata of {{ data_type.name }} ({{ data_type.stereotype }})
+.Metadata of {{ data_type.name }} {% if data_type.stereotype %}(«{{data_type.stereotype}}»){% endif %}
 [cols="1a,4a"]
 |===
-h|Definition:  | {{ data_type.definition | replace: '|', '\|' }}
+h|Definition:  | {{ data_type.definition | replace: '|', '\|' | html2adoc }}
 h|Subclass of: | {% if generalizations.size > 0 %}{{ generalizations }}{% else %}None{% endif %}
-h|Stereotype:  | «{{ data_type.stereotype }}»
+h|Stereotype:  | {% if data_type.stereotype %}«{{data_type.stereotype}}»{% else %}None{% endif %}
 
 {% if data_type.constraints.size > 0 %}
 {% for constraint in data_type.constraints %}
@@ -167,7 +167,7 @@ h| Constraint:
 {% capture cardinality %}&#91;{% case assoc.member_end_cardinality.min %}{% when "C" %}0{% when "M" %}1{% else %}{{assoc.member_end_cardinality.min}}{% endcase %}..{{ assoc.member_end_cardinality.max }}&#93;{% endcapture %}
 | {{ assoc.member_end_attribute_name }}
 {% if additional_context.external_classes[assoc.member_end] %}| <<{{ additional_context.external_classes[assoc.member_end] }},{{assoc.member_end}}>> {{ cardinality }}{% else %}| <<section-{{ assoc.member_end_xmi_id }},{{assoc.member_end}}>> {{ cardinality }}{% endif %}
-| {{ assoc.definition | replace: '|', '\|' }}
+| {{ assoc.definition | replace: '|', '\|' | html2adoc }}
 {% endif %}
 {% endfor %}
 {% endcapture %}
@@ -196,7 +196,7 @@ h| Constraint:
 {% capture cardinality %}&#91;{% case attr.cardinality.min %}{% when 'C' %}0{% when 'M' %}1{% else %}{{ attr.cardinality.min }}{% endcase %}..{{ attr.cardinality.max }}&#93;{% endcapture %}
 | {{ attr.name }}
 {% if additional_context.external_classes[attr.type] %}| <<{{ additional_context.external_classes[attr.type] }},{{ attr.type }}>> {{ cardinality }}{% else %}| <<section-{{ attr.xmi_id }},{{ attr.type }}>> {{ cardinality }}{% endif %}
-| {{ attr.definition | replace: '|', '\|' }}
+| {{ attr.definition | replace: '|', '\|' | html2adoc }}
 
 {% endfor %}
 |===
@@ -223,7 +223,7 @@ None.
 .Metadata of {{ enum.name }} (Enumeration)
 [cols="1a,4a"]
 |===
-h|Definition: | {{ enum.definition | replace: '|', '\|' }}
+h|Definition: | {{ enum.definition | replace: '|', '\|' | html2adoc }}
 h|Stereotype: | «Enumeration»
 |===
 
@@ -235,7 +235,7 @@ h|Stereotype: | «Enumeration»
 
 {% for val in enum.values %}
 | {{ val.name }}
-| {{ val.definition | replace: '|', '\|' }}
+| {{ val.definition | replace: '|', '\|' | html2adoc }}
 
 {% endfor %}
 
