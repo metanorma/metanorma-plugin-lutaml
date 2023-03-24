@@ -1,5 +1,5 @@
 {% for package in context.packages %}
-{% assign package_name = package.name | downcase | replace: ":", "" | replace: " ", "_" %}
+{% assign package_name = package.name | downcase | replace: ":", "" | replace: " ", "_" | replace: "-", "_" %}
 {% if additional_context.before and additional_context.before.size > 0 %}
 {% for before in additional_context.before %}
 {% if before.text %}
