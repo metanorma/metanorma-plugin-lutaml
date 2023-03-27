@@ -9,7 +9,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlAttributesTablePreprocessor d
         <<~TEXT
           = Document title
           Author
-          :docfile: test.adoc
           :nodoc:
           :novalid:
           :no-isobib:
@@ -75,7 +74,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlAttributesTablePreprocessor d
         <<~TEXT
           = Document title
           Author
-          :docfile: test.adoc
           :nodoc:
           :novalid:
           :no-isobib:
@@ -138,7 +136,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlAttributesTablePreprocessor d
         <<~TEXT
           = Document title
           Author
-          :docfile: test.adoc
           :nodoc:
           :novalid:
           :no-isobib:

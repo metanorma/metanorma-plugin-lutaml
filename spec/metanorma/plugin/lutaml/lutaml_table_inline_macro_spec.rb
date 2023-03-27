@@ -8,7 +8,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlTableInlineMacro do
         <<~TEXT
           = Document title
           Author
-          :docfile: test.adoc
           :nodoc:
           :novalid:
           :no-isobib:
@@ -38,7 +37,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlTableInlineMacro do
       <<~TEXT
         = Document title
         Author
-        :docfile: test.adoc
         :nodoc:
         :novalid:
         :no-isobib:
@@ -67,7 +65,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlTableInlineMacro do
       <<~TEXT
         = Document title
         Author
-        :docfile: test.adoc
         :nodoc:
         :novalid:
         :no-isobib:
@@ -96,7 +93,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlTableInlineMacro do
       <<~TEXT
         = Document title
         Author
-        :docfile: test.adoc
         :nodoc:
         :novalid:
         :no-isobib:

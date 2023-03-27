@@ -7,7 +7,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlFigureInlineMacro do
       <<~TEXT
         = Document title
         Author
-        :docfile: test.adoc
         :nodoc:
         :novalid:
         :no-isobib:

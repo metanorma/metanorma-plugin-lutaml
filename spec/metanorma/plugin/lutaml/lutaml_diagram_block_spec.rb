@@ -7,7 +7,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDiagramBlock do
         <<~TEXT
           = Document title
           Author
-          :docfile: test.adoc
           :nodoc:
           :novalid:
           :no-isobib:
@@ -49,7 +48,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDiagramBlock do
         <<~TEXT
           = Document title
           Author
-          :docfile: test.adoc
           :nodoc:
           :novalid:
           :no-isobib:
