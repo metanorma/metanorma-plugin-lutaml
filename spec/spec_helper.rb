@@ -45,7 +45,7 @@ def strip_guid(xml)
 end
 
 def xml_string_content(xml)
-  strip_guid(Nokogiri::XML(xml).to_s)
+  strip_guid(xmlpp(Nokogiri::XML(xml).to_s))
 end
 
 def metanorma_process(input)
@@ -63,3 +63,28 @@ end
 def strip_src(xml)
   xml.gsub(/\ssrc="[^"]+"/, ' src="_"')
 end
+
+XSL = Nokogiri::XSLT(<<~XSL.freeze)
+  <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
+    <xsl:strip-space elements="*"/>
+    <xsl:template match="/">
+      <xsl:copy-of select="."/>
+    </xsl:template>
+  </xsl:stylesheet>
+XSL
+
+def xmlpp(xml)
+  c = HTMLEntities.new
+  xml &&= xml.split(/(&\S+?;)/).map do |n|
+    if /^&\S+?;$/.match?(n)
+      c.encode(c.decode(n), :hexadecimal)
+    else n
+    end
+  end.join
+  XSL.transform(Nokogiri::XML(xml, &:noblanks))
+    .to_xml(indent: 2, encoding: "UTF-8")
+    .gsub(%r{<fetched>[^<]+</fetched>}, "<fetched/>")
+    .gsub(%r{ schema-version="[^"]+"}, "")
+end
+

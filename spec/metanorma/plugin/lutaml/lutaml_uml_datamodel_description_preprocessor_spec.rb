@@ -71,7 +71,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
 
       it "correctly renders input" do
         expect(xml_string_content(metanorma_process(input)))
-          .to(be_equivalent_to(output))
+          .to(be_equivalent_to(xml_string_content(output)))
       end
 
       context "when there is an section_depth option supplied" do
@@ -142,7 +142,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
 
         it "correctly renders input" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_equivalent_to(xml_string_content(output)))
         end
       end
 
@@ -183,7 +183,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
 
               it "correctly renders input" do
                 expect(xml_string_content(metanorma_process(input)))
-                  .to(be_equivalent_to(output))
+                  .to(be_equivalent_to(xml_string_content(output)))
               end
             end
           end
@@ -248,11 +248,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           end
 
           it "correctly maps external and internal refs" do
-            expect(xml_convert).to(include('<xref target="My-custom-Register-section">Register</xref>'))
-            expect(xml_convert).to_not(include('<xref target="Register-section">Register</xref>'))
+            expect(xml_convert).to(include('<xref target="My-custom-Register-section" style="short">Register</xref>'))
+            expect(xml_convert).to_not(include('<xref target="Register-section" style="short">Register</xref>'))
 
-            expect(xml_convert).to_not(include('<xref target="RE_ReferenceSource-section">RE_ReferenceSource</xref>'))
-            expect(xml_convert).to(include('<xref target="custom-RE_ReferenceSource">RE_ReferenceSource</xref>'))
+            expect(xml_convert).to_not(include('<xref target="RE_ReferenceSource-section" style="short">RE_ReferenceSource</xref>'))
+            expect(xml_convert).to(include('<xref target="custom-RE_ReferenceSource" style="short">RE_ReferenceSource</xref>'))
           end
         end
 
@@ -267,8 +267,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           end
 
           it "correctly maps external and internal refs" do
-            expect(xml_convert).to(include('<xref target="My-custom-RE_Register-section">RE_Register</xref>'))
-            expect(xml_convert).to_not(include('<xref target="RE_Register-section">RE_Register</xref>'))
+            expect(xml_convert).to(include('<xref target="My-custom-RE_Register-section" style="short">RE_Register</xref>'))
+            expect(xml_convert).to_not(include('<xref target="RE_Register-section" style="short">RE_Register</xref>'))
           end
         end
       end
@@ -338,7 +338,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
 
       it "correctly renders input" do
         expect(xml_string_content(metanorma_process(input)))
-          .to(be_equivalent_to(output))
+          .to(be_equivalent_to(xml_string_content(output)))
       end
     end
 
@@ -407,7 +407,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
 
       it "correctly renders input" do
         expect(xml_string_content(metanorma_process(input)))
-          .to(be_equivalent_to(output))
+          .to(be_equivalent_to(xml_string_content(output)))
       end
     end
 
@@ -441,7 +441,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
 
       it "correctly renders input" do
         expect(xml_string_content(metanorma_process(input)))
-          .to(be_equivalent_to(output))
+          .to(be_equivalent_to(xml_string_content(output)))
       end
     end
 
@@ -475,7 +475,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
 
       it "correctly renders input" do
         expect(xml_string_content(metanorma_process(input)))
-          .to(be_equivalent_to(output))
+          .to(be_equivalent_to(xml_string_content(output)))
       end
     end
   end
