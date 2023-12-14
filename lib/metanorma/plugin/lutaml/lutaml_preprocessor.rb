@@ -12,24 +12,38 @@ module Metanorma
     module Lutaml
       # Class for processing Lutaml files
       class LutamlPreprocessor < Asciidoctor::Extensions::Preprocessor
-        REMARKS_ATTRIBUTE = "remarks".freeze
+        REMARKS_ATTRIBUTE = "remarks"
 
         def process(document, reader)
           input_lines = reader.readlines.to_enum
+          has_lutaml = !input_lines.select { |x| lutaml?(x) }.empty?
           express_indexes = Utils.parse_document_express_indexes(
             document,
-            input_lines
+            input_lines,
           )
-          result_content = processed_lines(document, input_lines, express_indexes)
-          result_reader = Asciidoctor::PreprocessorReader.new(document, result_content)
-          result_reader
+          result_content = processed_lines(document, input_lines,
+                                           express_indexes)
+          has_lutaml and log(document, result_content)
+          Asciidoctor::PreprocessorReader.new(document, result_content)
         end
 
         protected
 
+        def log(document, result)
+          File.open("#{document.attr('docfile')}.lutaml.log.txt",
+                    "w:UTF-8") do |f|
+            f.write(result.join("\n"))
+          end
+        end
+
+        def lutaml?(line)
+          line.match(/^\[(?:\blutaml\b|\blutaml_express\b),([^,]+)?,?([^,]+)?,?([^,]+)?\]/)
+        end
+
         def content_from_files(document, file_paths)
           file_list = file_paths.map do |file_path|
-            File.new(Utils.relative_file_path(document, file_path), encoding: "UTF-8")
+            File.new(Utils.relative_file_path(document, file_path),
+                     encoding: "UTF-8")
           end
           ::Lutaml::Parser.parse(file_list)
         end
@@ -43,7 +57,7 @@ module Metanorma
               .push(*process_text_blocks(
                 document,
                 input_lines,
-                express_indexes
+                express_indexes,
               ))
           end
           result
@@ -51,7 +65,7 @@ module Metanorma
 
         def process_text_blocks(document, input_lines, express_indexes)
           line = input_lines.next
-          block_match = line.match(/^\[(?:\blutaml\b|\blutaml_express\b),([^,]+)?,?([^,]+)?,?([^,]+)?\]/)
+          block_match = lutaml?(line)
           return [line] if block_match.nil?
 
           end_mark = input_lines.next
@@ -97,7 +111,8 @@ module Metanorma
           result
         end
 
-        def parse_template(document, current_block, block_match, express_indexes)
+        def parse_template(document, current_block, block_match,
+express_indexes)
           options = parse_options(block_match[3])
           contexts_items(block_match, document, express_indexes)
             .map do |items|
@@ -112,9 +127,9 @@ module Metanorma
                                   context_items: items,
                                   context_name: block_match[2].strip)
             end.flatten
-          rescue StandardError => e
-            document.logger.warn("Failed to parse lutaml block: #{e.message}")
-            []
+        rescue StandardError => e
+          document.logger.warn("Failed to parse lutaml block: #{e.message}")
+          []
         end
 
         def parse_options(options_string)
@@ -155,7 +170,7 @@ module Metanorma
             template_string: context_lines.join("\n"),
             context_items: context_items,
             context_name: context_name,
-            document: document
+            document: document,
           )
           Utils.notify_render_errors(document, errors)
           render_result.split("\n")

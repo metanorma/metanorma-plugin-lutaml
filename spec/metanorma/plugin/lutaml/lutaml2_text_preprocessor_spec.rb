@@ -4,6 +4,56 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
   describe "#process" do
     let(:example_file) { fixtures_path("test_relative_includes_svgmap.exp") }
 
+    let(:input) do
+      <<~TEXT
+        = Document title
+        Author
+        :nodoc:
+        :novalid:
+        :no-isobib:
+
+        [fred,#{example_file},my_context]
+        ----
+
+        {% for schema in my_context.schemas %}
+        == {{schema.id}}
+
+        {% for entity in schema.entities %}
+        === {{entity.id}}
+        supertypes -> {{entity.supertypes.id}}
+        explicit -> {{entity.explicit.first.id}}
+
+        {% endfor %}
+        {% endfor %}
+        ----
+      TEXT
+    end
+    let(:output) do
+      <<~TEXT
+        #{BLANK_HDR}
+           <sections>
+             <sourcecode id="_" linenums="true">{% for schema in my_context.schemas %}
+         == {{schema.id}}
+
+         {% for entity in schema.entities %}
+         === {{entity.id}}
+         supertypes -&gt; {{entity.supertypes.id}}
+         explicit -&gt; {{entity.explicit.first.id}}
+
+         {% endfor %}
+         {% endfor %}</sourcecode>
+           </sections>
+         </standard-document>
+      TEXT
+    end
+
+    it "passes through non-lutaml content" do
+      FileUtils.rm_rf("test.adoc.lutaml.log.txt")
+      expect(xml_string_content(metanorma_process(input)))
+        .to(be_equivalent_to(xml_string_content(output)))
+      expect(File.exist?("test.adoc.lutaml.log.txt")).to be false
+    end
+
     %w[lutaml_express lutaml].each do |macro|
       context "when macro used" do
         context "Array of hashes" do
@@ -68,12 +118,14 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               </clause></clause>
               </sections>
               </standard-document>
-                TEXT
+            TEXT
           end
 
           it "correctly renders input" do
+            FileUtils.rm_rf("test.adoc.lutaml.log.txt")
             expect(xml_string_content(metanorma_process(input)))
               .to(be_equivalent_to(xml_string_content(output)))
+            expect(File.exist?("test.adoc.lutaml.log.txt")).to be true
           end
         end
 
@@ -119,21 +171,21 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 <sections><clause id="_" inline-header="false" obligation="normative"><title>annotated_3d_model_data_quality_criteria_schema</title>
                 <p id="_">Mine text</p>
                 <svgmap><figure id="_">
-                <image src="#{File.expand_path(fixtures_path("measure_schemaexpg5.svg"))}" id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
-                </figure><target href="1"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref></target><target href="2"><eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref></target><target href="3"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref></target></svgmap></clause>
+                <image src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
+                </figure><target href="1"><eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref></target><target href="2"><eref style="short" bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref></target><target href="3"><eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref></target></svgmap></clause>
                 <clause id="_" inline-header="false" obligation="normative"><title>annotated_3d_model_data_quality_criteria_schema</title>
                 <p id="_">Mine text</p>
                 <p id="_">===
-                image::#{File.expand_path(fixtures_path("measure_schemaexpg5.svg"))}[]</p>
+                image::#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}[]</p>
                 <ul id="_">
                 <li>
-                <p id="_"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>; 1</p>
+                <p id="_"><eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref>; 1</p>
                 </li>
                 <li>
-                <p id="_"><eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>; 2</p>
+                <p id="_"><eref style="short" bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>; 2</p>
                 </li>
                 <li>
-                <p id="_"><eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>; 3
+                <p id="_"><eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref>; 3
                 ===</p>
                 </li>
                 </ul></clause></sections>
@@ -144,7 +196,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 <docidentifier type="repository">express/measure_schemaexpg4</docidentifier>
                 </bibitem>
                 </references></bibliography></standard-document>
-                TEXT
+            TEXT
           end
 
           it "correctly renders input" do
@@ -208,7 +260,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
           xcontext "when loaded from a cache file" do
             let(:cache_path) do
-              fixtures_path('expressir_realtive_paths/test_relative_includes_cache.yaml')
+              fixtures_path("expressir_realtive_paths/test_relative_includes_cache.yaml")
             end
             let(:input) do
               <<~TEXT
@@ -260,7 +312,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         end
 
         context "when svgmap anchors are used" do
-          let(:example_file) { fixtures_path("test_relative_includes_svgmap.exp") }
+          let(:example_file) do
+            fixtures_path("test_relative_includes_svgmap.exp")
+          end
           let(:input) do
             <<~TEXT
               = Document title
@@ -295,13 +349,13 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                         height="auto" width="auto"></image>
                     </figure>
                     <target href="1">
-                      <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
+                      <eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref>
                     </target>
                     <target href="2">
-                      <eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>
+                      <eref style="short" bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>
                     </target>
                     <target href="3">
-                      <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
+                      <eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref>
                     </target>
                   </svgmap>
                 </clause>
@@ -324,7 +378,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         end
 
         xcontext "when lutaml-express-index keyword used with folder path" do
-          let(:cache_file_path) { fixtures_path("express_temp_cache_#{SecureRandom.uuid}.yaml") }
+          let(:cache_file_path) do
+            fixtures_path("express_temp_cache_#{SecureRandom.uuid}.yaml")
+          end
           let(:input) do
             <<~TEXT
               = Document title
@@ -371,7 +427,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 </clause>
               </sections>
               </standard-document>
-                TEXT
+            TEXT
           end
 
           around do |example|
@@ -390,15 +446,16 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               .to(change { File.file?(cache_file_path) }.from(false).to(true))
             expect(::Lutaml::Parser
                     .parse(File.new(cache_file_path),
-                            Lutaml::Parser::EXPRESS_CACHE_PARSE_TYPE)
+                           Lutaml::Parser::EXPRESS_CACHE_PARSE_TYPE)
                     .to_liquid["schemas"]
-                    .map {|n| n["id"] }
+                    .map { |n| n["id"] }
                     .sort)
-                  .to(eq(["Activity_method_characterized_arm", "Activity_method_characterized_mim"]))
+              .to(eq(["Activity_method_characterized_arm",
+                      "Activity_method_characterized_mim"]))
           end
 
           context "when the cache file exists and index folder is not" do
-            let(:cache_path) { fixtures_path('lutaml_exp_index_cache.yaml') }
+            let(:cache_path) { fixtures_path("lutaml_exp_index_cache.yaml") }
             let(:input) do
               <<~TEXT
                 = Document title
@@ -445,8 +502,12 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
           # TODO test expressir cache invalidation after the new expressir release
           context "when the cache file is corrupted" do
-            let(:cache_path_original) { fixtures_path('lutaml_exp_old_cache_original.yaml') }
-            let(:cache_path) { fixtures_path('lutaml_exp_corrupted_cache.yaml') }
+            let(:cache_path_original) do
+              fixtures_path("lutaml_exp_old_cache_original.yaml")
+            end
+            let(:cache_path) do
+              fixtures_path("lutaml_exp_corrupted_cache.yaml")
+            end
             let(:input) do
               <<~TEXT
                 = Document title
@@ -492,7 +553,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               it "recreates the cache file with the correct data" do
                 expect { xml_string_content(metanorma_process(input)) }
                   .to(change do
-                    wraper = Metanorma::Plugin::Lutaml::Utils.express_from_cache(cache_path) rescue nil
+                    wraper = begin
+                      Metanorma::Plugin::Lutaml::Utils.express_from_cache(cache_path)
+                    rescue StandardError
+                      nil
+                    end
                     wraper&.to_liquid&.length
                   end.from(nil).to(2))
               end
@@ -501,7 +566,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         end
 
         context "when lutaml-express-index keyword used with yaml index file" do
-          let(:index_file_root_path) { fixtures_path('lutaml_exp_index_root_path.yaml') }
+          let(:index_file_root_path) do
+            fixtures_path("lutaml_exp_index_root_path.yaml")
+          end
           let(:input) do
             <<~TEXT
               = Document title
@@ -567,8 +634,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
           around do |example|
             FileUtils.remove_file(index_file_root_path, true)
-            file = File.new(index_file_root_path, 'w')
-            file.puts(File.read(fixtures_path('lutaml_exp_index_root_path_template.yaml')) % { root_path: fixtures_path('') })
+            file = File.new(index_file_root_path, "w")
+            file.puts(File.read(fixtures_path("lutaml_exp_index_root_path_template.yaml")) % { root_path: fixtures_path("") })
             file.close
             example.run
             FileUtils.remove_file(index_file_root_path, true)
@@ -623,15 +690,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                     </figure>
                     <target
                       href="1">
-                      <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
+                      <eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref>
                     </target>
                     <target
                       href="2">
-                      <eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>
+                      <eref style="short" bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>
                     </target>
                     <target
                       href="3">
-                      <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
+                      <eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref>
                     </target>
                   </svgmap>
                 </clause>
@@ -646,15 +713,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                     </figure>
                     <target
                       href="1">
-                      <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
+                      <eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref>
                     </target>
                     <target
                       href="2">
-                      <eref bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>
+                      <eref style="short" bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>
                     </target>
                     <target
                       href="3">
-                      <eref bibitemid="express_measure_schema" citeas="">measure_schema</eref>
+                      <eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref>
                     </target>
                   </svgmap>
                 </clause>
@@ -691,7 +758,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               [#{macro}, #{example_file}, my_context]
               ----
               {% assign my_include = "include" %}
-              {{ my_include }}::#{fixtures_path("include_test.adoc")}[]
+              {{ my_include }}::#{fixtures_path('include_test.adoc')}[]
               ----
             TEXT
           end
