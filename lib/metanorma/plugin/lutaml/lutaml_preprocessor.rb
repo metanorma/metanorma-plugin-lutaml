@@ -15,7 +15,7 @@ module Metanorma
         REMARKS_ATTRIBUTE = "remarks"
 
         def process(document, reader)
-          input_lines = reader.readlines.to_enum
+          input_lines = reader.lines.to_enum
           has_lutaml = !input_lines.select { |x| lutaml?(x) }.empty?
           express_indexes = Utils.parse_document_express_indexes(
             document,

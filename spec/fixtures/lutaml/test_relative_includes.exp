@@ -7,6 +7,8 @@ link:http://test.com/include1.csv[]
 
 include::include1.csv[]
 
+include::test/include2.csv[]
+
 include::test/include1.csv[]
 
 include::http://test.com/include1.csv[]
