@@ -13,7 +13,8 @@ module Metanorma
     module Lutaml
       module LutamlDiagramBase
         def process(parent, reader, attrs)
-          uml_document = ::Lutaml::Uml::Parsers::Dsl.parse(lutaml_file(parent.document, reader))
+          uml_document = ::Lutaml::Uml::Parsers::Dsl
+            .parse(lutaml_file(parent.document, reader))
           filename = generate_file(parent, reader, uml_document)
           through_attrs = generate_attrs(attrs)
           through_attrs["target"] = filename
@@ -23,8 +24,8 @@ module Metanorma
           abort(parent, reader, attrs, e.message)
         end
 
-        def lutaml_file(reader)
-          raise 'Implement me!'
+        def lutaml_file(_reader)
+          raise "Implement me!"
         end
 
         protected
@@ -36,7 +37,7 @@ module Metanorma
           create_listing_block(
             parent,
             source,
-            attrs.reject { |k, _v| k == 1 }
+            attrs.reject { |k, _v| k == 1 },
           )
         end
 
@@ -47,14 +48,16 @@ module Metanorma
 
           path_lutaml = "lutaml"
           imagesdir = if parent.document.attr("imagesdir")
-                        File.join(parent.document.attr("imagesdir"), path_lutaml)
+                        File.join(parent.document.attr("imagesdir"),
+                                  path_lutaml)
                       else
                         path_lutaml
                       end
           result_path = Utils.relative_file_path(parent.document, imagesdir)
           result_pathname = Pathname.new(result_path)
           result_pathname.mkpath
-          File.writable?(result_pathname) || raise("Destination path #{result_path} not writable for Lutaml!")
+          File.writable?(result_pathname) ||
+            raise("Destination path #{result_path} not writable for Lutaml!")
 
           outfile = Tempfile.new(["lutaml", ".png"])
           outfile.binmode
@@ -67,7 +70,7 @@ module Metanorma
           filename = File.basename(outfile.path)
           FileUtils.cp(outfile, result_pathname) && outfile.unlink
 
-          #File.join(result_pathname, filename)
+          # File.join(result_pathname, filename)
           File.join(path_lutaml, filename)
         end
 

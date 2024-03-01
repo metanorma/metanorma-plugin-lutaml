@@ -54,6 +54,25 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
       expect(File.exist?("test.adoc.lutaml.log.txt")).to be false
     end
 
+    it "respects conditional directives" do
+      input1 = input.sub(":no-isobib:", ":no-isobib:\n:var1:")
+        .sub("[fred", "ifdef::var1[]\n[fred") 
+      input1 += "\nendif::[]"
+      FileUtils.rm_rf("test.adoc.lutaml.log.txt")
+      expect(xml_string_content(metanorma_process(input1)))
+        .to(be_equivalent_to(xml_string_content(output)))
+      expect(File.exist?("test.adoc.lutaml.log.txt")).to be false
+
+      input1 = input.sub(":no-isobib:", ":no-isobib:\n:var1:")
+        .sub("[fred", "ifdef::var2[]\n[fred") 
+      input1 += "\nendif::[]"
+      FileUtils.rm_rf("test.adoc.lutaml.log.txt")
+      output1 = output.sub(%r{<sections>.*</sections>}m, "<sections/>")
+      expect(xml_string_content(metanorma_process(input1)))
+        .to(be_equivalent_to(xml_string_content(output1)))
+      expect(File.exist?("test.adoc.lutaml.log.txt")).to be false
+    end
+
     %w[lutaml_express lutaml].each do |macro|
       context "when macro used" do
         context "Array of hashes" do
@@ -244,6 +263,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
                 <p id="_">header1,header2,header3
                 one,two,three</p>
+                <p id="_">header4,header5,header6
+                four,five,six</p>
                 <p id="_">Unresolved directive in &lt;stdin&gt;&#8201;&#8212;&#8201;include::#{fixtures_path('test/include1.csv')}[]</p>
                 <p id="_">
                 <link target="http://test.com/include1.csv"/>

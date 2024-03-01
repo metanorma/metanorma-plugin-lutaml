@@ -6,25 +6,26 @@ require "asciidoctor/reader"
 require "lutaml"
 require "metanorma/plugin/lutaml/utils"
 require "metanorma/plugin/lutaml/express_remarks_decorator"
+require "metanorma/plugin/lutaml/asciidoctor/preprocessor"
 
 module Metanorma
   module Plugin
     module Lutaml
       # Class for processing Lutaml files
-      class LutamlPreprocessor < Asciidoctor::Extensions::Preprocessor
+      class LutamlPreprocessor < ::Asciidoctor::Extensions::Preprocessor
         REMARKS_ATTRIBUTE = "remarks"
 
         def process(document, reader)
-          input_lines = reader.readlines.to_enum
+          r = Asciidoctor::PreprocessorNoIfdefsReader.new document, reader.lines
+          input_lines = r.readlines.to_enum
           has_lutaml = !input_lines.select { |x| lutaml?(x) }.empty?
           express_indexes = Utils.parse_document_express_indexes(
-            document,
-            input_lines,
+            document, input_lines
           )
           result_content = processed_lines(document, input_lines,
                                            express_indexes)
           has_lutaml and log(document, result_content)
-          Asciidoctor::PreprocessorReader.new(document, result_content)
+          Asciidoctor::PreprocessorNoIfdefsReader.new(document, result_content)
         end
 
         protected

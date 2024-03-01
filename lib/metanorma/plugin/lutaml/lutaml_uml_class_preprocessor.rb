@@ -6,13 +6,14 @@ require "asciidoctor/reader"
 require "lutaml"
 require "lutaml/uml"
 require "metanorma/plugin/lutaml/utils"
+require "metanorma/plugin/lutaml/asciidoctor/preprocessor"
 
 module Metanorma
   module Plugin
     module Lutaml
       #  Macro for quick rendering of datamodel attributes/values table
       #  @example [lutaml_uml_class,path/to/lutaml,EntityName]
-      class LutamlUmlClassPreprocessor < Asciidoctor::Extensions::Preprocessor
+      class LutamlUmlClassPreprocessor < ::Asciidoctor::Extensions::Preprocessor
         MACRO_REGEXP =
           /\[lutaml_uml_class,([^,]+),?([^,]+),?(.+?)?\]/
 
@@ -24,8 +25,10 @@ module Metanorma
         #  read include derectives that goes after that in block and transform
         #  into yaml2text blocks
         def process(document, reader)
-          input_lines = reader.readlines.to_enum
-          Asciidoctor::Reader.new(processed_lines(document, input_lines))
+          r = Asciidoctor::PreprocessorNoIfdefsReader.new document, reader.lines
+          input_lines = r.readlines.to_enum
+          Asciidoctor::PreprocessorNoIfdefsReader
+            .new(document, processed_lines(document, input_lines))
         end
 
         private
@@ -34,17 +37,18 @@ module Metanorma
           ::Lutaml::Parser.parse(
             File.new(
               Utils.relative_file_path(document, file_path),
-              encoding: "UTF-8")
-            ).first
+              encoding: "UTF-8",
+            ),
+          ).first
         end
 
-        DEFAULT_OPTIONS = {
-          depth: 2
-        }
-        def parse_options_to_hash(options_string)
-          return DEFAULT_OPTIONS.dup if options_string.nil? || options_string.empty?
+        DEFAULT_OPTIONS = { depth: 2 }.freeze
 
-          opts = options_string.split(",").inject({}) do |acc,pair|
+        def parse_options_to_hash(options_string)
+          return DEFAULT_OPTIONS.dup if options_string.nil? ||
+            options_string.empty?
+
+          opts = options_string.split(",").inject({}) do |acc, pair|
             key, value = pair.split("=")
             key = key.to_sym
             value = true if value.nil?
@@ -63,7 +67,8 @@ module Metanorma
               entity_name = match[2]
               options = parse_options_to_hash(match[3])
 
-              result.push(*parse_marco(lutaml_path, entity_name, document, options))
+              result.push(*parse_marco(lutaml_path, entity_name, document,
+                                       options))
             else
               result.push(line)
             end
@@ -87,7 +92,7 @@ module Metanorma
             template_string: template(options),
             context_items: entity_definition,
             context_name: "definition",
-            document: document
+            document: document,
           )
           Utils.notify_render_errors(document, errors)
           render_result.split("\n")
@@ -103,56 +108,56 @@ module Metanorma
           depth = options[:depth]
 
           <<~TEMPLATE
-          {% if definition.keyword == 'enumeration' %}
-          #{equalsigns(depth) + " Enumeration: {{ definition.name }}" unless skip_headers}
-          {% else %}
-          #{equalsigns(depth) + " Class: {{ definition.name }}" unless skip_headers}
-          {% endif %}
+            {% if definition.keyword == 'enumeration' %}
+            #{equalsigns(depth) + ' Enumeration: {{ definition.name }}' unless skip_headers}
+            {% else %}
+            #{equalsigns(depth) + ' Class: {{ definition.name }}' unless skip_headers}
+            {% endif %}
 
-          #{equalsigns(depth+1)} Description
+            #{equalsigns(depth + 1)} Description
 
-          {{ definition.definition }}
+            {{ definition.definition }}
 
-          {% if definition.attributes %}
-          {% if definition.keyword == 'enumeration' %}
-          {% for item in definition.attributes %}
-          #{equalsigns(depth+1)} Enumeration value: {{item.name}}
+            {% if definition.attributes %}
+            {% if definition.keyword == 'enumeration' %}
+            {% for item in definition.attributes %}
+            #{equalsigns(depth + 1)} Enumeration value: {{item.name}}
 
-          {% if item.definition %}
-          {{ item.definition }}
-          {% endif %}
+            {% if item.definition %}
+            {{ item.definition }}
+            {% endif %}
 
-          {% endfor %}
+            {% endfor %}
 
-          {% else %}
+            {% else %}
 
-          {% for item in definition.attributes %}
-          #{equalsigns(depth+1)} Attribute: {{item.name}}
+            {% for item in definition.attributes %}
+            #{equalsigns(depth + 1)} Attribute: {{item.name}}
 
-          {% if item.definition %}
-          {{ item.definition }}
-          {% endif %}
+            {% if item.definition %}
+            {{ item.definition }}
+            {% endif %}
 
-          Value type and multiplicity:
-          {% if item.type -%}{{ item.type }}{% else -%}(no type specified){% endif %}
-          {% if item.cardinality.min -%}
-          {% if item.cardinality.max -%}
-          {blank}[{{item.cardinality.min}}..{{item.cardinality.max}}]
-          {% else -%}
-          {blank}[{{item.cardinality.min}}]
-          {% endif -%}
-          {% else -%}
-          (multiplicity unspecified)
-          {% endif %}
+            Value type and multiplicity:
+            {% if item.type -%}{{ item.type }}{% else -%}(no type specified){% endif %}
+            {% if item.cardinality.min -%}
+            {% if item.cardinality.max -%}
+            {blank}[{{item.cardinality.min}}..{{item.cardinality.max}}]
+            {% else -%}
+            {blank}[{{item.cardinality.min}}]
+            {% endif -%}
+            {% else -%}
+            (multiplicity unspecified)
+            {% endif %}
 
-          {% if item.origin %}
-          Origin: <<{{ item.origin }}>>
-          {% endif %}
+            {% if item.origin %}
+            Origin: <<{{ item.origin }}>>
+            {% endif %}
 
-          {% endfor %}
+            {% endfor %}
 
-          {% endif %}
-          {% endif %}
+            {% endif %}
+            {% endif %}
 
           TEMPLATE
         end
