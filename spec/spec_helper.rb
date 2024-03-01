@@ -11,6 +11,15 @@ Asciidoctor::Extensions.register do
   preprocessor Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreprocessor
 end
 
+  Asciidoctor::Extensions.register do
+    preprocessor Metanorma::Plugin::Lutaml::LutamlPreprocessor
+    preprocessor Metanorma::Plugin::Lutaml::LutamlUmlAttributesTablePreprocessor
+    preprocessor Metanorma::Plugin::Lutaml::LutamlUmlClassPreprocessor
+    block_macro Metanorma::Plugin::Lutaml::LutamlDiagramBlockMacro
+    block Metanorma::Plugin::Lutaml::LutamlDiagramBlock
+  end
+
+
 require "metanorma-standoc"
 require "rspec/matchers"
 require "equivalent-xml"
