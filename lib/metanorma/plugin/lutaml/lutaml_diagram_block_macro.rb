@@ -5,7 +5,7 @@ require "metanorma/plugin/lutaml/lutaml_diagram_base"
 module Metanorma
   module Plugin
     module Lutaml
-      class LutamlDiagramBlockMacro < Asciidoctor::Extensions::BlockMacroProcessor
+      class LutamlDiagramBlockMacro < ::Asciidoctor::Extensions::BlockMacroProcessor
         include LutamlDiagramBase
 
         use_dsl
