@@ -77,7 +77,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
       context "when there is an section_depth option supplied" do
         let(:config_file) do
           fixtures_path(
-            "lutaml_uml_datamodel_description_config_section_depth.yml")
+            "lutaml_uml_datamodel_description_config_section_depth.yml",
+          )
         end
         let(:input) do
           <<~TEXT
@@ -137,7 +138,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
             #{BLANK_HDR}
             #{File.read(fixtures_path('datamodel_description_sections_section_depth.xml'))}
             </standard-document>
-            TEXT
+          TEXT
         end
 
         it "correctly renders input" do
@@ -150,7 +151,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
         %w[random entity_list data_dictionary].each do |style|
           context "when #{style}" do
             let(:config_file) do
-              fixtures_path('temporary_datamodel_description_config.yml')
+              fixtures_path("temporary_datamodel_description_config.yml")
             end
             let(:input) do
               <<~TEXT
@@ -174,9 +175,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
               TEXT
             end
 
-            context 'when render_style' do
+            context "when render_style" do
               around do |example|
-                File.open(config_file, 'w') { |file| file.puts({ 'render_style' => style }.to_yaml) }
+                File.open(config_file, "w") do |file|
+                  file.puts({ "render_style" => style }.to_yaml)
+                end
                 example.run
                 FileUtils.rm_f(config_file)
               end
@@ -193,7 +196,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
       context "when there is an `external_classes` option supplied" do
         let(:example_file) { fixtures_path("test.xmi") }
         let(:config_file) do
-          fixtures_path('temporary_datamodel_description_config.yml')
+          fixtures_path("temporary_datamodel_description_config.yml")
         end
         let(:input) do
           <<~TEXT
@@ -211,8 +214,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
         end
 
         around do |example|
-          File.open(config_file, 'w') do |file|
-            file.puts({ 'render_style' => render_style, 'external_classes' => external_classes }.to_yaml)
+          File.open(config_file, "w") do |file|
+            file.puts({ "render_style" => render_style,
+                        "external_classes" => external_classes }.to_yaml)
           end
           example.run
           FileUtils.rm_f(config_file)
@@ -224,7 +228,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           let(:render_style) { "data_dictionary" }
           let(:example_file) { fixtures_path("test.xmi") }
           let(:config_file) do
-            fixtures_path('temporary_datamodel_description_config.yml')
+            fixtures_path("temporary_datamodel_description_config.yml")
           end
           let(:input) do
             <<~TEXT
@@ -243,16 +247,19 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           let(:external_classes) do
             {
               "Register" => "My-custom-Register-section",
-              "RE_ReferenceSource" => "custom-RE_ReferenceSource"
+              "RE_ReferenceSource" => "custom-RE_ReferenceSource",
             }
           end
 
           it "correctly maps external and internal refs" do
-            expect(xml_convert).to(include('<xref target="My-custom-Register-section" style="short">Register</xref>'))
-            expect(xml_convert).to_not(include('<xref target="Register-section" style="short">Register</xref>'))
-
-            expect(xml_convert).to_not(include('<xref target="RE_ReferenceSource-section" style="short">RE_ReferenceSource</xref>'))
-            expect(xml_convert).to(include('<xref target="custom-RE_ReferenceSource" style="short">RE_ReferenceSource</xref>'))
+            expect(xml_convert)
+              .to(include('<xref target="My-custom-Register-section" style="short">Register</xref>'))
+            expect(xml_convert)
+              .to_not(include('<xref target="Register-section" style="short">Register</xref>'))
+            expect(xml_convert)
+              .to_not(include('<xref target="RE_ReferenceSource-section" style="short">RE_ReferenceSource</xref>'))
+            expect(xml_convert)
+              .to(include('<xref target="custom-RE_ReferenceSource" style="short">RE_ReferenceSource</xref>'))
           end
         end
 
@@ -262,13 +269,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           let(:render_style) { "entity_list" }
           let(:external_classes) do
             {
-              "RE_Register" => "My-custom-RE_Register-section"
+              "RE_Register" => "My-custom-RE_Register-section",
             }
           end
 
           it "correctly maps external and internal refs" do
-            expect(xml_convert).to(include('<xref target="My-custom-RE_Register-section" style="short">RE_Register</xref>'))
-            expect(xml_convert).to_not(include('<xref target="RE_Register-section" style="short">RE_Register</xref>'))
+            expect(xml_convert)
+              .to(include('<xref target="My-custom-RE_Register-section" style="short">RE_Register</xref>'))
+            expect(xml_convert)
+              .to_not(include('<xref target="RE_Register-section" style="short">RE_Register</xref>'))
           end
         end
       end
@@ -345,7 +354,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
     context "when there nested tags" do
       let(:example_file) { fixtures_path("test.xmi") }
       let(:nested_config_file) do
-        fixtures_path('temporary_datamodel_description_config.yml')
+        fixtures_path("temporary_datamodel_description_config.yml")
       end
       let(:input) do
         <<~TEXT
@@ -394,13 +403,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
       let(:output) do
         <<~TEXT
           #{BLANK_HDR}
-          #{File.read(fixtures_path("datamodel_description_sections_nested_macroses.xml"))}
+          #{File.read(fixtures_path('datamodel_description_sections_nested_macroses.xml'))}
           </standard-document>
         TEXT
       end
 
       around do |example|
-        File.open(nested_config_file, 'w') { |file| file.puts({ 'render_style' => 'entity_list' }.to_yaml) }
+        File.open(nested_config_file, "w") do |file|
+          file.puts({ "render_style" => "entity_list" }.to_yaml)
+        end
         example.run
         FileUtils.rm_f(nested_config_file)
       end
@@ -414,7 +425,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
     context "when `render_entities` option supplied" do
       let(:example_file) { fixtures_path("test_2.xmi") }
       let(:config_file) do
-        fixtures_path('lutaml_uml_datamodel_description_config_package_entities.yml')
+        fixtures_path("lutaml_uml_datamodel_description_config_package_entities.yml")
       end
       let(:input) do
         <<~TEXT
@@ -434,7 +445,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
       let(:output) do
         <<~TEXT
           #{BLANK_HDR}
-          #{File.read(fixtures_path("datamodel_description_sections_package_entities.xml"))}
+          #{File.read(fixtures_path('datamodel_description_sections_package_entities.xml'))}
           </standard-document>
         TEXT
       end
@@ -448,7 +459,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
     context "when `skip_tables` option supplied" do
       let(:example_file) { fixtures_path("test_2.xmi") }
       let(:config_file) do
-        fixtures_path('lutaml_uml_datamodel_description_config_render_tables.yml')
+        fixtures_path("lutaml_uml_datamodel_description_config_render_tables.yml")
       end
       let(:input) do
         <<~TEXT
@@ -468,7 +479,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
       let(:output) do
         <<~TEXT
           #{BLANK_HDR}
-          #{File.read(fixtures_path("datamodel_description_sections_skip_tables.xml"))}
+          #{File.read(fixtures_path('datamodel_description_sections_skip_tables.xml'))}
           </standard-document>
         TEXT
       end
