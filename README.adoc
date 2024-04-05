@@ -646,4 +646,4 @@ render.
 
 == Documentation
 
-Please refer to https://www.metanorma.oeg.
+Please refer to https://www.metanorma.org.
