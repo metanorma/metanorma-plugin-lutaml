@@ -103,9 +103,13 @@ force_read = false)
 
         def express_decorate_wrapper(wrapper, document)
           serialized = wrapper.to_liquid
-          serialized["schemas"] = serialized["schemas"].map do |j|
-            j.merge("relative_path_prefix" => Utils
-              .relative_file_path(document, File.dirname(j["file"])))
+          serialized["schemas"].map! do |j|
+            j.merge(
+              "relative_path_prefix" => Utils
+                .relative_file_path(document, File.dirname(j["file"])),
+              "formatted" => wrapper.original_document
+                .schemas.detect {|s| s.id == j["id"] }.to_s(no_remarks: true)
+            )
           end
           serialized
         end
