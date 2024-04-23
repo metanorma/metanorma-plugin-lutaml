@@ -33,17 +33,17 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         #{BLANK_HDR}
            <sections>
              <sourcecode id="_" linenums="true">{% for schema in my_context.schemas %}
-         == {{schema.id}}
+        == {{schema.id}}
 
-         {% for entity in schema.entities %}
-         === {{entity.id}}
-         supertypes -&gt; {{entity.supertypes.id}}
-         explicit -&gt; {{entity.explicit.first.id}}
+        {% for entity in schema.entities %}
+        === {{entity.id}}
+        supertypes -&gt; {{entity.supertypes.id}}
+        explicit -&gt; {{entity.explicit.first.id}}
 
-         {% endfor %}
-         {% endfor %}</sourcecode>
-           </sections>
-         </standard-document>
+        {% endfor %}
+        {% endfor %}</sourcecode>
+          </sections>
+        </standard-document>
       TEXT
     end
 
@@ -56,7 +56,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
     it "respects conditional directives" do
       input1 = input.sub(":no-isobib:", ":no-isobib:\n:var1:")
-        .sub("[fred", "ifdef::var1[]\n[fred") 
+        .sub("[fred", "ifdef::var1[]\n[fred")
       input1 += "\nendif::[]"
       FileUtils.rm_rf("test.adoc.lutaml.log.txt")
       expect(xml_string_content(metanorma_process(input1)))
@@ -64,7 +64,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
       expect(File.exist?("test.adoc.lutaml.log.txt")).to be false
 
       input1 = input.sub(":no-isobib:", ":no-isobib:\n:var1:")
-        .sub("[fred", "ifdef::var2[]\n[fred") 
+        .sub("[fred", "ifdef::var2[]\n[fred")
       input1 += "\nendif::[]"
       FileUtils.rm_rf("test.adoc.lutaml.log.txt")
       output1 = output.sub(%r{<sections>.*</sections>}m, "<sections/>")
@@ -281,7 +281,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
           context "when loaded from a cache file" do
             let(:cache_path) do
-              fixtures_path("expressir_realtive_paths/test_relative_includes_cache.yaml")
+              fixtures_path("expressir_relative_paths/test_relative_includes_cache.yaml")
             end
             let(:input) do
               <<~TEXT
@@ -290,7 +290,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 :nodoc:
                 :novalid:
                 :no-isobib:
-                :lutaml-express-index: express_index; #{fixtures_path('expressir_realtive_paths')}; cache=#{cache_path}
+                :lutaml-express-index: express_index; #{fixtures_path('expressir_relative_paths')}; cache=#{cache_path}
 
                 [lutaml_express,express_index,my_context]
                 ----
@@ -311,13 +311,13 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                   <clause id="_" inline-header="false" obligation="normative"><title>annotated_3d_model_data_quality_criteria_schema</title>
                   <p id="_">My text</p>
                   <p id="_">
-                  <link target="#{fixtures_path('/expressir_realtive_paths/downloads/report.pdf')}">Get Report</link>
+                  <link target="#{fixtures_path('/expressir_relative_paths/downloads/report.pdf')}">Get Report</link>
                   </p>
                   <p id="_">
                   <link target="http://test.com/include1.csv"/>
                   </p>
-                  <p id="_">Unresolved directive in &lt;stdin&gt;&#8201;&#8212;&#8201;include::#{fixtures_path('/expressir_realtive_paths/include1.csv')}[]</p>
-                  <p id="_">Unresolved directive in &lt;stdin&gt;&#8201;&#8212;&#8201;include::#{fixtures_path('expressir_realtive_paths/test/include1.csv')}[]</p>
+                  <p id="_">Unresolved directive in &lt;stdin&gt;&#8201;&#8212;&#8201;include::#{fixtures_path('/expressir_relative_paths/include1.csv')}[]</p>
+                  <p id="_">Unresolved directive in &lt;stdin&gt;&#8201;&#8212;&#8201;include::#{fixtures_path('expressir_relative_paths/test/include1.csv')}[]</p>
                   <p id="_">
                   <link target="http://test.com/include1.csv"/>
                   </p></clause>
@@ -536,7 +536,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 :nodoc:
                 :novalid:
                 :no-isobib:
-                :lutaml-express-index: express-set; #{fixtures_path('expressir_realtive_paths')}; cache=#{cache_path}
+                :lutaml-express-index: express-set; #{fixtures_path('expressir_relative_paths')}; cache=#{cache_path}
 
                 [lutaml_express,express-set,my_context]
                 ----
