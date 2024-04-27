@@ -40,6 +40,9 @@ module Metanorma
                 .find { |path| File.file?(path) }
             end
 
+            if result_path.nil?
+              raise ::Liquid::FileSystemError, "No documents in template path '#{File.expand_path(template_path)}'"
+            end
             unless roots.any? { |root| File.expand_path(result_path).start_with?(File.expand_path(root)) }
               raise ::Liquid::FileSystemError, "Illegal template path '#{File.expand_path(result_path)}'"
             end
