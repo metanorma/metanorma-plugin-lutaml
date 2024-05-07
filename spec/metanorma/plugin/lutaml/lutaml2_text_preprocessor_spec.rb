@@ -197,8 +197,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 <svgmap>
                   <figure id="_">
                     <image
-                      src="/Users/mulgogi/src/mn/metanorma-plugin-lutaml/spec/fixtures/lutaml/measure_schemaexpg5.svg"
-                      mimetype="image/svg+xml" id="_" height="auto" width="auto" />
+                      src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}"
+                      id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
                   </figure>
                   <target href="1">
                     <eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref>

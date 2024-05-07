@@ -41,36 +41,38 @@ end
 BLANK_HDR = <<~"HDR".freeze
   <?xml version="1.0" encoding="UTF-8"?>
   <standard-document xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="#{Metanorma::Standoc::VERSION}">
-  <bibdata type="standard">
-  <title language="en" format="text/plain">Document title</title>
-  <language>en</language>
-  <script>Latn</script>
-  <status><stage>published</stage></status>
-  <copyright>
-  <from>#{Date.today.year}</from>
-  </copyright>
-  <ext>
-    <doctype>standard</doctype>
-  </ext>
-  </bibdata>
-  <metanorma-extension>
-    <presentation-metadata>
-      <name>TOC Heading Levels</name>
-      <value>2</value>
-    </presentation-metadata>
-    <presentation-metadata>
-      <name>HTML TOC Heading Levels</name>
-      <value>2</value>
-    </presentation-metadata>
-    <presentation-metadata>
-      <name>DOC TOC Heading Levels</name>
-      <value>2</value>
-    </presentation-metadata>
-    <presentation-metadata>
-      <name>PDF TOC Heading Levels</name>
-      <value>2</value>
-    </presentation-metadata>
-  </metanorma-extension>
+    <bibdata type="standard">
+      <title language="en" format="text/plain">Document title</title>
+      <language>en</language>
+      <script>Latn</script>
+      <status>
+        <stage>published</stage>
+      </status>
+      <copyright>
+        <from>#{Date.today.year}</from>
+      </copyright>
+      <ext>
+        <doctype>standard</doctype>
+      </ext>
+    </bibdata>
+    <metanorma-extension>
+      <presentation-metadata>
+        <name>TOC Heading Levels</name>
+        <value>2</value>
+      </presentation-metadata>
+      <presentation-metadata>
+        <name>HTML TOC Heading Levels</name>
+        <value>2</value>
+      </presentation-metadata>
+      <presentation-metadata>
+        <name>DOC TOC Heading Levels</name>
+        <value>2</value>
+      </presentation-metadata>
+      <presentation-metadata>
+        <name>PDF TOC Heading Levels</name>
+        <value>2</value>
+      </presentation-metadata>
+    </metanorma-extension>
 HDR
 
 def strip_guid(xml)
