@@ -16,164 +16,245 @@ module Metanorma
         REMARKS_ATTRIBUTE = "remarks"
 
         def process(document, reader)
-          r = Asciidoctor::PreprocessorNoIfdefsReader.new document, reader.lines
+          r = Asciidoctor::PreprocessorNoIfdefsReader.new(document, reader.lines)
           input_lines = r.readlines.to_enum
-          has_lutaml = !input_lines.select { |x| lutaml?(x) }.empty?
+
+          has_lutaml = input_lines.any? { |line| lutaml?(line) }
           express_indexes = Utils.parse_document_express_indexes(
-            document, input_lines
+            document,
+            input_lines
           )
-          result_content = processed_lines(document, input_lines,
-                                           express_indexes)
-          has_lutaml and log(document, result_content)
+
+          result_content = process_input_lines(
+            document: document,
+            input_lines: input_lines,
+            express_indexes: express_indexes,
+          )
+
+          log(document, result_content) if has_lutaml
+
           Asciidoctor::PreprocessorNoIfdefsReader.new(document, result_content)
         end
 
         protected
 
-        def log(document, result)
-          File.open("#{document.attr('docfile')}.lutaml.log.txt",
-                    "w:UTF-8") do |f|
-            f.write(result.join("\n"))
+        def log(doc, text)
+          File.open("#{doc.attr('docfile')}.lutaml.log.txt", "w:UTF-8") do |f|
+            f.write(text.join("\n"))
           end
         end
 
         def lutaml?(line)
-          line.match(/^\[(?:\blutaml\b|\blutaml_express\b),([^,]+)?,?([^,]+)?,?([^,]+)?\]/)
+          line.match(/^\[(?:\blutaml\b|\blutaml_express\b),(?<index_names>[^,]+)?,?(?<context_name>[^,]+)?(?<options>,.*)?\]/)
         end
 
-        def content_from_files(document, file_paths)
-          file_list = file_paths.map do |file_path|
-            File.new(Utils.relative_file_path(document, file_path),
-                     encoding: "UTF-8")
-          end
-          ::Lutaml::Parser.parse(file_list)
+        def load_lutaml_file(document, file_path)
+          ::Lutaml::Parser.parse(
+            File.new(
+              Utils.relative_file_path(document, file_path),
+              encoding: "UTF-8"
+            )
+          )
         end
 
         private
 
-        def processed_lines(document, input_lines, express_indexes)
+        def process_input_lines(
+            document:,
+            input_lines:,
+            express_indexes:
+          )
+
           result = []
           loop do
-            result
-              .push(*process_text_blocks(
+            result.push(
+              *process_text_blocks(
                 document,
                 input_lines,
                 express_indexes,
-              ))
+              )
+            )
           end
           result
         end
 
         def process_text_blocks(document, input_lines, express_indexes)
           line = input_lines.next
-          block_match = lutaml?(line)
-          return [line] if block_match.nil?
+          block_header_match = lutaml?(line)
+
+          return [line] if block_header_match.nil?
+
+          index_names = block_header_match[:index_names].split(";").map(&:strip)
+          context_name = block_header_match[:context_name].strip
+
+          options = block_header_match[:options] &&
+            parse_options(block_header_match[:options].to_s.strip) || {}
 
           end_mark = input_lines.next
-          parse_template(document,
-                         collect_internal_block_lines(document,
-                                                      input_lines,
-                                                      end_mark),
-                         block_match,
-                         express_indexes)
+
+          render_template(
+            document: document,
+            lines: extract_block_lines(input_lines, end_mark),
+            index_names: index_names,
+            context_name: context_name,
+            options: options,
+            indexes: express_indexes
+          )
         end
 
-        def collect_internal_block_lines(_document, input_lines, end_mark)
-          current_block = []
+        def extract_block_lines(input_lines, end_mark)
+          block = []
           while (block_line = input_lines.next) != end_mark
-            current_block.push(block_line)
+            block.push(block_line)
           end
-          current_block
+          block
         end
 
-        def contexts_items(block_match, document, express_indexes)
-          contexts_names = block_match[1].split(";").map(&:strip)
-          file_paths = []
-          result = contexts_names.each_with_object([]) do |path, res|
-            if express_indexes[path]
-              res.push(express_indexes[path])
+        def gather_context_items(index_names:, document:, indexes:)
+          index_names.map do |path|
+            # TODO: Rephrase of the below TODO message.
+            # ::Lutaml::Parser.parse(file_list) can return an Array or just one.
+            # TODO: decide how to handle expressir multiply file parse as one
+            # object and lutaml
+
+            # Does this condition ever happen? That is only if the `lutaml-express-index` condition is not set
+            unless indexes[path]
+              wrapper = load_lutaml_file(document, path)
+              indexes[path] = {
+                wrapper: wrapper,
+                serialized_hash: wrapper.to_liquid
+              }
             else
-              file_paths.push(path)
+              indexes[path][:serialized_hash] ||= indexes[path][:wrapper].to_liquid
             end
+
+            indexes[path]
           end
-          if !file_paths.empty?
-            from_files = content_from_files(document, file_paths)
-            # TODO: decide how to handle expressir multiply file parse as one object and lutaml
-            if from_files.is_a?(Array)
-              result.push(*from_files.map(&:to_liquid))
-            else
-              from_files = from_files.to_liquid
-              from_files["schemas"] = from_files["schemas"].map do |n|
-                n.merge("relative_path_prefix" => Utils.relative_file_path(document, File.dirname(n["file"])))
-              end
-              result.push(from_files)
-            end
-          end
-          result
         end
 
-        def parse_template(document, current_block, block_match,
-express_indexes)
-          options = parse_options(block_match[3])
-          contexts_items(block_match, document, express_indexes)
-            .map do |items|
-              if items["schemas"]
-                items["schemas"] = items["schemas"].map do |j|
-                  opts = options.merge("relative_path_prefix" => j["relative_path_prefix"])
-                  decorate_context_items(j, opts)
-                end
+        def parse_yaml_config_file(document, file_path)
+          return nil if file_path.nil?
+
+          relative_file_path = Utils.relative_file_path(document, file_path)
+          YAML.safe_load(File.read(relative_file_path, encoding: "UTF-8"))
+        end
+
+        def decorate_schema_object(schema:, document:, indexes:, index_names:, selected:, options:)
+          # Mark a schema as "selected" with `.selected`
+          schema["selected"] = true if selected
+
+          # Provide pretty-formatted code under `.formatted`
+          index_found_key, index_found_value = indexes.detect do |k,v|
+            found = v[:wrapper].original_document.schemas.detect do |s|
+              s.id == schema["id"]
+            end
+          end
+
+          schema["formatted"] = index_found_value[:wrapper].original_document.schemas.detect do |s|
+            s.id == schema["id"]
+          end.to_s(no_remarks: true)
+
+          # Decorate the remaining things
+          decorate_context_items(
+            schema,
+            options.merge(
+              "relative_path_prefix" =>
+                Utils.relative_file_path(document, File.dirname(schema["file"]))
+            )
+          ) || {}
+        end
+
+        def render_template(document:, lines:, context_name:, index_names:, options:, indexes:)
+
+          config_yaml_path = options.delete("config_yaml")
+          config_yaml = config_yaml_path ?
+            parse_yaml_config_file(document, config_yaml_path) :
+            {}
+
+          selected_schemas = config_yaml["schemas"]
+
+          gather_context_items(
+            index_names: index_names,
+            document: document,
+            indexes: indexes
+          ).map do |items|
+
+            serialized_hash = items[:serialized_hash]
+
+            if serialized_hash["schemas"]
+              serialized_hash["schemas"].map! do |schema|
+
+                decorate_schema_object(
+                  schema: schema,
+                  document: document,
+                  index_names: index_names,
+                  indexes: indexes,
+                  selected: selected_schemas && selected_schemas.include?(schema["id"]),
+                  options: options
+                )
               end
-              parse_context_block(document: document,
-                                  context_lines: current_block,
-                                  context_items: items,
-                                  context_name: block_match[2].strip)
-            end.flatten
+            end
+
+            render_block(
+              document: document,
+              block_lines: lines,
+              context_items: serialized_hash,
+              context_name: context_name
+            )
+          end.flatten
         rescue StandardError => e
-          document.logger.warn("Failed to parse lutaml block: #{e.message}")
+          raise e
+          document.logger.warn("Failed to parse LutaML block: #{e.message}")
           []
         end
 
         def parse_options(options_string)
           options_string
             .to_s
-            .scan(/(.+?)=(\s?[^\s]+)/)
+            .scan(/,\s*([^=]+?)=(\s*[^,]+)/)
             .map { |elem| elem.map(&:strip) }
             .to_h
         end
 
-        def decorate_context_items(context_items, options)
-          return context_items if !context_items.is_a?(Hash)
-
-          context_items
-            .map do |(key, val)|
-              if val.is_a?(Hash)
-                [key, decorate_context_items(val, options)]
-              elsif key == REMARKS_ATTRIBUTE
-                [key,
-                 val&.map do |remark|
-                   Metanorma::Plugin::Lutaml::ExpressRemarksDecorator
-                     .call(remark, options)
-                 end]
-              elsif val.is_a?(Array)
-                [key, val.map { |n| decorate_context_items(n, options) }]
-              else
-                [key, val]
+        def decorate_context_item(key, val, options)
+          if key == REMARKS_ATTRIBUTE
+            return [
+              key,
+              val&.map do |remark|
+                Metanorma::Plugin::Lutaml::ExpressRemarksDecorator
+                  .call(remark, options)
               end
-            end
-            .to_h
+            ]
+          end
+
+          case val
+          when Hash
+            [key, decorate_context_items(val, options)]
+          when Array
+            [key, val.map { |n| decorate_context_items(n, options) }]
+          else
+            [key, val]
+          end
         end
 
-        def parse_context_block(context_lines:,
-                                context_items:,
-                                context_name:,
-                                document:)
+        def decorate_context_items(item, options)
+          return item unless item.is_a?(Hash)
+
+          item.map do |(key, val)|
+            decorate_context_item(key, val, options)
+          end.to_h
+        end
+
+        def render_block(block_lines:, context_items:, context_name:, document:)
           render_result, errors = Utils.render_liquid_string(
-            template_string: context_lines.join("\n"),
+            template_string: block_lines.join("\n"),
             context_items: context_items,
             context_name: context_name,
             document: document,
           )
+
           Utils.notify_render_errors(document, errors)
+
           render_result.split("\n")
         end
       end

@@ -27,16 +27,22 @@ module Metanorma
         def render_liquid_string(template_string:, context_items:,
                                  context_name:, document:, include_path: nil)
           liquid_template = ::Liquid::Template.parse(template_string)
+
           # Allow includes for the template
-          include_paths = [Utils.relative_file_path(document, ""),
-                           include_path].compact
+          include_paths = [
+            Utils.relative_file_path(document, ""),
+            include_path
+          ].compact
+
           liquid_template.registers[:file_system] =
             ::Metanorma::Plugin::Lutaml::Liquid::LocalFileSystem
               .new(include_paths, ["_%s.liquid", "_%s.adoc"])
+
           rendered_string = liquid_template
             .render(context_name => context_items,
                     strict_variables: true,
                     error_mode: :warn)
+
           [rendered_string, liquid_template.errors]
         end
 
@@ -48,37 +54,51 @@ module Metanorma
           end
         end
 
-        def process_express_index(path, cache_path, document,
-force_read = false)
-          if cache_path
-            cache_full_path = Utils.relative_file_path(document,
-                                                       cache_path)
-          end
+        def load_express_repositories(path:, cache_path:, document:, force_read: false)
+          cache_full_path = cache_path &&
+            Utils.relative_file_path(document, cache_path)
+
+          # If there is cache and "force read" not set.
           if !force_read && cache_full_path && File.file?(cache_full_path)
-            return express_from_cache(cache_full_path)
+            return load_express_repo_from_cache(cache_full_path)
           end
 
+          # If there is no cache or "force read" is set.
           full_path = Utils.relative_file_path(document, path)
-          wrapper = express_from_path(document, full_path)
+          lutaml_wrapper = load_express_repo_from_path(document, full_path)
+
           if cache_full_path && !File.file?(cache_full_path)
-            express_write_cache(cache_full_path, wrapper.original_document,
-                                document)
+            save_express_repo_to_cache(
+              cache_full_path,
+              lutaml_wrapper.original_document,
+              document
+            )
           end
-          wrapper
+
+          lutaml_wrapper
+
         rescue Expressir::Error
           FileUtils.rm_rf(cache_full_path)
-          process_express_index(path, cache_path, document, true)
+
+          load_express_repositories(
+            path: path,
+            cache_path: cache_path,
+            document: document,
+            force_read: true
+          )
+
         rescue StandardError => e
           document.logger.warn("Failed to load #{full_path}: #{e.message}")
-          nil
+          raise e
+          # nil
         end
 
-        def express_from_cache(path)
+        def load_express_repo_from_cache(path)
           ::Lutaml::Parser
             .parse(File.new(path), ::Lutaml::Parser::EXPRESS_CACHE_PARSE_TYPE)
         end
 
-        def express_write_cache(path, repository, document)
+        def save_express_repo_to_cache(path, repository, document)
           root_path = Pathname.new(relative_file_path(document, ""))
           Expressir::Express::Cache
             .to_file(path,
@@ -86,43 +106,28 @@ force_read = false)
                      root_path: root_path)
         end
 
-        def express_from_path(document, path)
-          if File.directory?(path)
-            return express_from_folder(path)
-          end
+        def load_express_repo_from_path(document, path)
+          return load_express_from_folder(path) if File.directory?(path)
 
-          express_from_index(document, path)
+          load_express_from_index(document, path)
         end
 
-        def express_from_folder(folder)
+        def load_express_from_folder(folder)
           files = Dir["#{folder}/*.exp"].map do |nested_path|
             File.new(nested_path, encoding: "UTF-8")
           end
           ::Lutaml::Parser.parse(files)
         end
 
-        def express_decorate_wrapper(wrapper, document)
-          serialized = wrapper.to_liquid
-          serialized["schemas"].map! do |j|
-            j.merge(
-              "relative_path_prefix" => Utils
-                .relative_file_path(document, File.dirname(j["file"])),
-              "formatted" => wrapper.original_document
-                .schemas.detect {|s| s.id == j["id"] }.to_s(no_remarks: true)
-            )
-          end
-          serialized
-        end
-
-        def express_from_index(document, path)
+        def load_express_from_index(document, path)
           yaml_content = YAML.safe_load(File.read(path))
           root_path = yaml_content["path"]
-          schemas_paths = yaml_content
-            .fetch("schemas")
+          schemas_paths = yaml_content["schemas"]
             .map do |(schema_name, schema_values)|
             schema_values["path"] || File.join(root_path.to_s,
                                                "#{schema_name}.exp")
           end
+
           files_to_load = schemas_paths.map do |path|
             File.new(Utils.relative_file_path(document, path),
                      encoding: "UTF-8")
@@ -134,20 +139,35 @@ force_read = false)
           express_indexes = {}
           loop do
             line = input_lines.next
+
+            # Finished parsing document attributes
             break if line.empty?
 
             match = line.match(LUTAML_EXP_IDX_TAG)
-            if match
-              name = match[:index_name]
-              path = match[:index_path]
-              cache = match[:cache_path]
-              repositories = process_express_index(path.strip, cache, document)
-              if repositories
-                express_indexes[name.strip] =
-                  express_decorate_wrapper(repositories, document)
-              end
+            next unless match
+
+            name = match[:index_name]&.strip
+            path = match[:index_path]&.strip
+            cache = match[:cache_path]&.strip
+
+            unless name && path
+              raise StandardError.new("No name and path set in `:lutaml-express-index:` attribute.")
+            end
+
+            lutaml_expressir_wrapper = load_express_repositories(
+              path: path,
+              cache_path: cache,
+              document: document
+            )
+
+            if lutaml_expressir_wrapper
+              express_indexes[name] = {
+                wrapper: lutaml_expressir_wrapper,
+                serialized_hash: nil
+              }
             end
           end
+
           express_indexes
         rescue StopIteration
           express_indexes

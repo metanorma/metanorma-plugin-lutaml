@@ -201,7 +201,8 @@ options)
         end
 
         def package_entities(options)
-          options["packages"] or return {}
+          return {} unless options["packages"]
+
           options["packages"]
             .find_all { |entity| entity.is_a?(Hash) && entity.values.first["render_entities"] }
             .map do |entity|
