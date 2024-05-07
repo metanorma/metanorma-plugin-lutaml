@@ -16,13 +16,14 @@ module Metanorma
         REMARKS_ATTRIBUTE = "remarks"
 
         def process(document, reader)
-          r = Asciidoctor::PreprocessorNoIfdefsReader.new(document, reader.lines)
+          r = Asciidoctor::PreprocessorNoIfdefsReader.new(document,
+                                                          reader.lines)
           input_lines = r.readlines.to_enum
 
           has_lutaml = input_lines.any? { |line| lutaml?(line) }
           express_indexes = Utils.parse_document_express_indexes(
             document,
-            input_lines
+            input_lines,
           )
 
           result_content = process_input_lines(
@@ -52,18 +53,18 @@ module Metanorma
           ::Lutaml::Parser.parse(
             File.new(
               Utils.relative_file_path(document, file_path),
-              encoding: "UTF-8"
-            )
+              encoding: "UTF-8",
+            ),
           )
         end
 
         private
 
         def process_input_lines(
-            document:,
+          document:,
             input_lines:,
             express_indexes:
-          )
+        )
 
           result = []
           loop do
@@ -72,7 +73,7 @@ module Metanorma
                 document,
                 input_lines,
                 express_indexes,
-              )
+              ),
             )
           end
           result
@@ -98,7 +99,7 @@ module Metanorma
             index_names: index_names,
             context_name: context_name,
             options: options,
-            indexes: express_indexes
+            indexes: express_indexes,
           )
         end
 
@@ -118,14 +119,14 @@ module Metanorma
             # object and lutaml
 
             # Does this condition ever happen? That is only if the `lutaml-express-index` condition is not set
-            unless indexes[path]
+            if indexes[path]
+              indexes[path][:serialized_hash] ||= indexes[path][:wrapper].to_liquid
+            else
               wrapper = load_lutaml_file(document, path)
               indexes[path] = {
                 wrapper: wrapper,
-                serialized_hash: wrapper.to_liquid
+                serialized_hash: wrapper.to_liquid,
               }
-            else
-              indexes[path][:serialized_hash] ||= indexes[path][:wrapper].to_liquid
             end
 
             indexes[path]
@@ -139,15 +140,14 @@ module Metanorma
           YAML.safe_load(File.read(relative_file_path, encoding: "UTF-8"))
         end
 
-        def decorate_schema_object(schema:, document:, indexes:, index_names:, selected:, options:)
+        def decorate_schema_object(schema:, document:, indexes:, index_names:,
+selected:, options:)
           # Mark a schema as "selected" with `.selected`
           schema["selected"] = true if selected
 
           # Provide pretty-formatted code under `.formatted`
-          index_found_key, index_found_value = indexes.detect do |k,v|
-            found = v[:wrapper].original_document.schemas.detect do |s|
-              s.id == schema["id"]
-            end
+          _, index_found_value = indexes.detect do |_k, _v|
+            _
           end
 
           schema["formatted"] = index_found_value[:wrapper].original_document.schemas.detect do |s|
@@ -159,47 +159,46 @@ module Metanorma
             schema,
             options.merge(
               "relative_path_prefix" =>
-                Utils.relative_file_path(document, File.dirname(schema["file"]))
-            )
+                Utils.relative_file_path(document,
+                                         File.dirname(schema["file"])),
+            ),
           ) || {}
         end
 
-        def render_template(document:, lines:, context_name:, index_names:, options:, indexes:)
-
+        def render_template(document:, lines:, context_name:, index_names:,
+options:, indexes:)
           config_yaml_path = options.delete("config_yaml")
-          config_yaml = config_yaml_path ?
-            parse_yaml_config_file(document, config_yaml_path) :
-            {}
+          config_yaml = if config_yaml_path
+                          parse_yaml_config_file(document, config_yaml_path)
+                        else
+                          {}
+                        end
 
           selected_schemas = config_yaml["schemas"]
 
           gather_context_items(
             index_names: index_names,
             document: document,
-            indexes: indexes
+            indexes: indexes,
           ).map do |items|
-
             serialized_hash = items[:serialized_hash]
 
-            if serialized_hash["schemas"]
-              serialized_hash["schemas"].map! do |schema|
-
-                decorate_schema_object(
-                  schema: schema,
-                  document: document,
-                  index_names: index_names,
-                  indexes: indexes,
-                  selected: selected_schemas && selected_schemas.include?(schema["id"]),
-                  options: options
-                )
-              end
+            serialized_hash["schemas"]&.map! do |schema|
+              decorate_schema_object(
+                schema: schema,
+                document: document,
+                index_names: index_names,
+                indexes: indexes,
+                selected: selected_schemas && selected_schemas.include?(schema["id"]),
+                options: options,
+              )
             end
 
             render_block(
               document: document,
               block_lines: lines,
               context_items: serialized_hash,
-              context_name: context_name
+              context_name: context_name,
             )
           end.flatten
         rescue StandardError => e
@@ -222,8 +221,8 @@ module Metanorma
               key,
               val&.map do |remark|
                 Metanorma::Plugin::Lutaml::ExpressRemarksDecorator
-                  .call(remark, options)
-              end
+                    .call(remark, options)
+              end,
             ]
           end
 

@@ -15,7 +15,7 @@ module Metanorma
       #  @example [lutaml_uml_class,path/to/lutaml,EntityName]
       class LutamlUmlClassPreprocessor < ::Asciidoctor::Extensions::Preprocessor
         MACRO_REGEXP =
-          /\[lutaml_uml_class,([^,]+),?([^,]+),?(.+?)?\]/
+          /\[lutaml_uml_class,([^,]+),?([^,]+),?(.+?)?\]/.freeze
 
         def get_macro_regexp
           self.class.const_get(:MACRO_REGEXP)
@@ -109,9 +109,9 @@ module Metanorma
 
           <<~TEMPLATE
             {% if definition.keyword == 'enumeration' %}
-            #{equalsigns(depth) + ' Enumeration: {{ definition.name }}' unless skip_headers}
+            #{"#{equalsigns(depth)} Enumeration: {{ definition.name }}" unless skip_headers}
             {% else %}
-            #{equalsigns(depth) + ' Class: {{ definition.name }}' unless skip_headers}
+            #{"#{equalsigns(depth)} Class: {{ definition.name }}" unless skip_headers}
             {% endif %}
 
             #{equalsigns(depth + 1)} Description

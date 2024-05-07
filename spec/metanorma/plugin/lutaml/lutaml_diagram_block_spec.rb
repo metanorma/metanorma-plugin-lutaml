@@ -43,7 +43,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDiagramBlock do
     end
 
     context "when inline macro, path supplied as the second arg" do
-      let(:example_file) { fixtures_path('diagram_definitions.lutaml') }
+      let(:example_file) { fixtures_path("diagram_definitions.lutaml") }
       let(:input) do
         <<~TEXT
           = Document title
