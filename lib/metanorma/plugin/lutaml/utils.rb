@@ -55,6 +55,7 @@ module Metanorma
         end
 
         def load_express_repositories(path:, cache_path:, document:, force_read: false)
+
           cache_full_path = cache_path &&
             Utils.relative_file_path(document, cache_path)
 
@@ -132,6 +133,7 @@ module Metanorma
             File.new(Utils.relative_file_path(document, path),
                      encoding: "UTF-8")
           end
+
           ::Lutaml::Parser.parse(files_to_load)
         end
 
