@@ -11,21 +11,20 @@ Asciidoctor::Extensions.register do
   preprocessor Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreprocessor
 end
 
-Asciidoctor::Extensions.register do
-  preprocessor Metanorma::Plugin::Lutaml::LutamlPreprocessor
-  preprocessor Metanorma::Plugin::Lutaml::LutamlUmlAttributesTablePreprocessor
-  preprocessor Metanorma::Plugin::Lutaml::LutamlUmlClassPreprocessor
-  block_macro Metanorma::Plugin::Lutaml::LutamlDiagramBlockMacro
-  block Metanorma::Plugin::Lutaml::LutamlDiagramBlock
-end
+  Asciidoctor::Extensions.register do
+    preprocessor Metanorma::Plugin::Lutaml::LutamlPreprocessor
+    preprocessor Metanorma::Plugin::Lutaml::LutamlUmlAttributesTablePreprocessor
+    preprocessor Metanorma::Plugin::Lutaml::LutamlUmlClassPreprocessor
+    block_macro Metanorma::Plugin::Lutaml::LutamlDiagramBlockMacro
+    block Metanorma::Plugin::Lutaml::LutamlDiagramBlock
+  end
+
 
 require "metanorma-standoc"
 require "rspec/matchers"
 require "equivalent-xml"
 
-Dir[File.expand_path("./support/**/**/*.rb", __dir__)].sort.each do |f|
-  require f
-end
+Dir[File.expand_path("./support/**/**/*.rb", __dir__)].each { |f| require f }
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -96,3 +95,4 @@ def xmlpp(xml)
     .gsub(%r{<fetched>[^<]+</fetched>}, "<fetched/>")
     .gsub(%r{ schema-version="[^"]+"}, "")
 end
+

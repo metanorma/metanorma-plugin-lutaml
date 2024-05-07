@@ -15,7 +15,7 @@ module Metanorma
           end
 
           def identify(input)
-            input.split(/(?=[A-Z])/).map(&:downcase).join("-")
+            input.split(/(?=[A-Z])/).map(&:downcase).join('-')
           end
         end
       end

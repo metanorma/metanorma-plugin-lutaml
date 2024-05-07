@@ -31,7 +31,7 @@ module Metanorma
           # Allow includes for the template
           include_paths = [
             Utils.relative_file_path(document, ""),
-            include_path,
+            include_path
           ].compact
 
           liquid_template.registers[:file_system] =
@@ -54,8 +54,7 @@ module Metanorma
           end
         end
 
-        def load_express_repositories(path:, cache_path:, document:,
-force_read: false)
+        def load_express_repositories(path:, cache_path:, document:, force_read: false)
           cache_full_path = cache_path &&
             Utils.relative_file_path(document, cache_path)
 
@@ -72,11 +71,12 @@ force_read: false)
             save_express_repo_to_cache(
               cache_full_path,
               lutaml_wrapper.original_document,
-              document,
+              document
             )
           end
 
           lutaml_wrapper
+
         rescue Expressir::Error
           FileUtils.rm_rf(cache_full_path)
 
@@ -84,8 +84,9 @@ force_read: false)
             path: path,
             cache_path: cache_path,
             document: document,
-            force_read: true,
+            force_read: true
           )
+
         rescue StandardError => e
           document.logger.warn("Failed to load #{full_path}: #{e.message}")
           raise e
@@ -156,13 +157,13 @@ force_read: false)
             lutaml_expressir_wrapper = load_express_repositories(
               path: path,
               cache_path: cache,
-              document: document,
+              document: document
             )
 
             if lutaml_expressir_wrapper
               express_indexes[name] = {
                 wrapper: lutaml_expressir_wrapper,
-                serialized_hash: nil,
+                serialized_hash: nil
               }
             end
           end

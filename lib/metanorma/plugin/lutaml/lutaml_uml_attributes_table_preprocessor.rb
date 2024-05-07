@@ -9,7 +9,7 @@ module Metanorma
       #  @example [lutaml_uml_attributes_table,path/to/lutaml,EntityName]
       class LutamlUmlAttributesTablePreprocessor < LutamlUmlClassPreprocessor
         MACRO_REGEXP =
-          /\[lutaml_uml_attributes_table,([^,]+),?([^,]+),?(.+?)?\]/.freeze
+          /\[lutaml_uml_attributes_table,([^,]+),?([^,]+),?(.+?)?\]/
 
         # rubocop:disable Layout/IndentHeredoc
         def template(options)
