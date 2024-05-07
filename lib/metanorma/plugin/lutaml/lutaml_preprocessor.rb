@@ -121,15 +121,20 @@ module Metanorma
             # Does this condition ever happen? That is only if the
             # `lutaml-express-index` condition is not set
             unless indexes[path]
-              raise StandardError.new(
-                "Unable to load EXPRESS index for `#{path}`, "\
-                "please define it at `:lutaml-express-index:`."
-              )
-              # wrapper = load_lutaml_file(document, path)
-              # indexes[path] = {
-              #   wrapper: wrapper,
-              #   serialized_hash: wrapper.to_liquid
-              # }
+
+              full_path = Utils.relative_file_path(document, path)
+              unless File.file?(full_path)
+                raise StandardError.new(
+                  "Unable to load EXPRESS index for `#{path}`, " \
+                  "please define it at `:lutaml-express-index:` or specify " \
+                  "the full path."
+                )
+              end
+              wrapper = load_lutaml_file(document, path)
+              indexes[path] = {
+                wrapper: wrapper,
+                serialized_hash: wrapper.to_liquid
+              }
             else
               indexes[path][:serialized_hash] ||= indexes[path][:wrapper].to_liquid
             end
