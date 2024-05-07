@@ -20,6 +20,7 @@ module Metanorma
           input_lines = r.readlines.to_enum
 
           has_lutaml = input_lines.any? { |line| lutaml?(line) }
+
           express_indexes = Utils.parse_document_express_indexes(
             document,
             input_lines
@@ -117,13 +118,18 @@ module Metanorma
             # TODO: decide how to handle expressir multiply file parse as one
             # object and lutaml
 
-            # Does this condition ever happen? That is only if the `lutaml-express-index` condition is not set
+            # Does this condition ever happen? That is only if the
+            # `lutaml-express-index` condition is not set
             unless indexes[path]
-              wrapper = load_lutaml_file(document, path)
-              indexes[path] = {
-                wrapper: wrapper,
-                serialized_hash: wrapper.to_liquid
-              }
+              raise StandardError.new(
+                "Unable to load EXPRESS index for `#{path}`, "\
+                "please define it at `:lutaml-express-index:`."
+              )
+              # wrapper = load_lutaml_file(document, path)
+              # indexes[path] = {
+              #   wrapper: wrapper,
+              #   serialized_hash: wrapper.to_liquid
+              # }
             else
               indexes[path][:serialized_hash] ||= indexes[path][:wrapper].to_liquid
             end
