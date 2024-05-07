@@ -186,38 +186,38 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
           let(:output) do
             <<~TEXT
-                #{BLANK_HDR}<sections><clause id="_" inline-header="false" obligation="normative"><title>annotated_3d_model_data_quality_criteria_schema</title>
-                <p id="_">Mine text</p>
-                <svgmap><figure id="_">
-                <image src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
-                </figure><target href="1"><eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref></target><target href="2"><eref style="short" bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref></target><target href="3"><eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref></target></svgmap></clause>
-                <clause id="_" inline-header="false" obligation="normative">
-                <title>annotated_3d_model_data_quality_criteria_schema</title>
-                <p id="_">Mine text</p>
-                <svgmap>
-                  <figure id="_">
-                    <image
-                      src="/Users/mulgogi/src/mn/metanorma-plugin-lutaml/spec/fixtures/lutaml/measure_schemaexpg5.svg"
-                      mimetype="image/svg+xml" id="_" height="auto" width="auto" />
-                  </figure>
-                  <target href="1">
-                    <eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref>
-                  </target>
-                  <target href="2">
-                    <eref style="short" bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>
-                  </target>
-                  <target href="3">
-                    <eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref>
-                  </target>
-                </svgmap>
-                </clause></sections>
-                <bibliography><references hidden="true" normative="false"><bibitem id="express_measure_schema" type="internal">
-                <docidentifier type="repository">express/measure_schema</docidentifier>
-                </bibitem>
-                <bibitem id="express_measure_schemaexpg4" type="internal">
-                <docidentifier type="repository">express/measure_schemaexpg4</docidentifier>
-                </bibitem>
-                </references></bibliography></standard-document>
+              #{BLANK_HDR}<sections><clause id="_" inline-header="false" obligation="normative"><title>annotated_3d_model_data_quality_criteria_schema</title>
+              <p id="_">Mine text</p>
+              <svgmap><figure id="_">
+              <image src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
+              </figure><target href="1"><eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref></target><target href="2"><eref style="short" bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref></target><target href="3"><eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref></target></svgmap></clause>
+              <clause id="_" inline-header="false" obligation="normative">
+              <title>annotated_3d_model_data_quality_criteria_schema</title>
+              <p id="_">Mine text</p>
+              <svgmap>
+                <figure id="_">
+                  <image
+                    src="/Users/mulgogi/src/mn/metanorma-plugin-lutaml/spec/fixtures/lutaml/measure_schemaexpg5.svg"
+                    mimetype="image/svg+xml" id="_" height="auto" width="auto" />
+                </figure>
+                <target href="1">
+                  <eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref>
+                </target>
+                <target href="2">
+                  <eref style="short" bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>
+                </target>
+                <target href="3">
+                  <eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref>
+                </target>
+              </svgmap>
+              </clause></sections>
+              <bibliography><references hidden="true" normative="false"><bibitem id="express_measure_schema" type="internal">
+              <docidentifier type="repository">express/measure_schema</docidentifier>
+              </bibitem>
+              <bibitem id="express_measure_schemaexpg4" type="internal">
+              <docidentifier type="repository">express/measure_schemaexpg4</docidentifier>
+              </bibitem>
+              </references></bibliography></standard-document>
             TEXT
           end
 
