@@ -12,13 +12,18 @@ module Metanorma
 
           def read_template_file(template_path)
             full_path = full_path(template_path)
-            raise FileSystemError, "No such template '#{template_path}'" unless File.exist?(full_path)
+
+            unless File.exist?(full_path)
+              raise FileSystemError, "No such template '#{template_path}'"
+            end
 
             File.read(full_path)
           end
 
           def full_path(template_path)
-            raise ::Liquid::FileSystemError, "Illegal template name '#{template_path}'" unless %r{\A[^./][a-zA-Z0-9_/]+\z}.match?(template_path)
+            unless %r{\A[^./][a-zA-Z0-9_/]+\z}.match?(template_path)
+              raise ::Liquid::FileSystemError, "Illegal template name '#{template_path}'"
+            end
 
             result_path = if template_path.include?('/')
               roots
@@ -43,6 +48,7 @@ module Metanorma
             if result_path.nil?
               raise ::Liquid::FileSystemError, "No documents in template path '#{File.expand_path(template_path)}'"
             end
+
             unless roots.any? { |root| File.expand_path(result_path).start_with?(File.expand_path(root)) }
               raise ::Liquid::FileSystemError, "Illegal template path '#{File.expand_path(result_path)}'"
             end
