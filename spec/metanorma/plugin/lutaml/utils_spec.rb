@@ -5,19 +5,17 @@ RSpec.describe Metanorma::Plugin::Lutaml::Utils do
     subject(:call) do
       described_class
         .render_liquid_string(template_string: template_string,
-                              context_items: context_items,
-                              context_name: context_name,
-                              document: Asciidoctor::Document.new)
+          context_items: context_items,
+          context_name: context_name,
+          document: Asciidoctor::Document.new)
     end
 
     context "when `interpolate` filter used" do
-      let(:template_string) do
-        "{{ context.name }}, {{ context.variable | interpolate }}"
-      end
+      let(:template_string) { "{{ context.name }}, {{ context.variable | interpolate }}" }
       let(:context_items) do
         {
           "name" => "Test",
-          "variable" => "Hi, my name is {{ context.name }}",
+          "variable" => "Hi, my name is {{ context.name }}"
         }
       end
       let(:context_name) { "context" }

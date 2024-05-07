@@ -6,8 +6,4 @@ git_source(:github) { |repo| "https://github.com/#{repo}" }
 
 gemspec
 
-begin
-  eval_gemfile("Gemfile.devel")
-rescue StandardError
-  nil
-end
+eval_gemfile("Gemfile.devel") rescue nil

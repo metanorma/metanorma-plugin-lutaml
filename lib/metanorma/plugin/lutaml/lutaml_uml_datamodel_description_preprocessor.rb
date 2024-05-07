@@ -16,7 +16,7 @@ module Metanorma
       class LutamlUmlDatamodelDescriptionPreprocessor <
           ::Asciidoctor::Extensions::Preprocessor
         MACRO_REGEXP =
-          /\[lutaml_uml_datamodel_description,([^,]+),?(.+)?\]/.freeze
+          /\[lutaml_uml_datamodel_description,([^,]+),?(.+)?\]/
         LIQUID_INCLUDE_PATH = File.join(
           Gem.loaded_specs["metanorma-plugin-lutaml"].full_gem_path,
           "lib", "metanorma", "plugin", "lutaml", "liquid_templates"
@@ -92,7 +92,7 @@ module Metanorma
         def fill_in_entities_refs_attributes(document, lutaml_document_wrapper,
 options)
           lutaml_document = lutaml_document_wrapper.original_document
-          options.fetch(RENDER_STYLE_ATTRIBUTE, "default")
+          render_style = options.fetch(RENDER_STYLE_ATTRIBUTE, "default")
           all_children_packages = lutaml_document.packages
             .map(&:children_packages).flatten
           package_flat_packages = lambda do |pks|

@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe Metanorma::Plugin::Lutaml::LutamlTableInlineMacro do
   describe "#process" do
-    context "when package referenced" do
+    context 'when package referenced' do
       let(:example_file) { fixtures_path("test.xmi") }
       let(:input) do
         <<~TEXT
@@ -31,7 +31,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlTableInlineMacro do
     end
   end
 
-  context "when class referenced" do
+  context 'when class referenced' do
     let(:example_file) { fixtures_path("test.xmi") }
     let(:input) do
       <<~TEXT
@@ -59,7 +59,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlTableInlineMacro do
     end
   end
 
-  context "when enum referenced" do
+  context 'when enum referenced' do
     let(:example_file) { fixtures_path("test.xmi") }
     let(:input) do
       <<~TEXT
@@ -87,7 +87,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlTableInlineMacro do
     end
   end
 
-  context "when data_type referenced" do
+  context 'when data_type referenced' do
     let(:example_file) { fixtures_path("test.xmi") }
     let(:input) do
       <<~TEXT
