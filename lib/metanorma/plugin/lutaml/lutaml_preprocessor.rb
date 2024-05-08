@@ -143,11 +143,27 @@ module Metanorma
           end
         end
 
-        def parse_yaml_config_file(document, file_path)
-          return nil if file_path.nil?
+        def read_config_yaml_file(document, file_path)
+          return {} if file_path.nil?
 
           relative_file_path = Utils.relative_file_path(document, file_path)
-          YAML.safe_load(File.read(relative_file_path, encoding: "UTF-8"))
+          config_yaml = YAML.safe_load(
+            File.read(relative_file_path, encoding: "UTF-8")
+          )
+
+          options = {}
+          if config_yaml["schemas"]
+            unless config_yaml["schemas"].is_a?(Hash)
+              raise StandardError.new(
+                "[lutaml_express] attribute `config_yaml` must point to a YAML " \
+                "file that has the `schema` key containing a hash."
+              )
+            end
+
+            options["selected_schemas"] = config_yaml["schemas"].keys
+          end
+
+          options
         end
 
         def decorate_schema_object(schema:, document:, indexes:, index_names:, selected:, options:)
@@ -178,11 +194,8 @@ module Metanorma
         def render_template(document:, lines:, context_name:, index_names:, options:, indexes:)
 
           config_yaml_path = options.delete("config_yaml")
-          config_yaml = config_yaml_path ?
-            parse_yaml_config_file(document, config_yaml_path) :
-            {}
-
-          selected_schemas = config_yaml["schemas"]
+          config = read_config_yaml_file(document, config_yaml_path)
+          selected_schemas = config["selected_schemas"]
 
           gather_context_items(
             index_names: index_names,
