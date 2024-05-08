@@ -154,11 +154,11 @@ per-block via a separate YAML file.
 
 [source,adoc]
 ----
-:lutaml-express-index: schemas_1; schemas_all.yaml;
+:lutaml-express-index: all_schemas; ../schemas_all.yaml;
 
-[lutaml_express,schemas_1,repo,leveloffset=+1,config_yaml=select.yaml]
+[lutaml_express,all_schemas,context,leveloffset=+1,config_yaml=schemas.yaml]
 ---
-{% assign selected = repo.schemas | where: "selected" %}
+{% assign selected = context.schemas | where: "selected" %}
 {% render "templates/resources/schema" for selected as schema %}
 ---
 ----
@@ -178,14 +178,16 @@ schemas:
 ...
 ----
 
-And `select.yaml` only selects 2 schemas:
+And `schemas.yaml` only selects 2 schemas:
 
 [source,yaml]
 ----
 ---
 schemas:
-  - action_schema
-  - application_context_schema
+  action_schema:
+    anything: ...
+  application_context_schema:
+    anything: ...
 ----
 
 The resulting block adds the `select` attribute to every schema of the the
