@@ -1,7 +1,7 @@
 ---
 schemas:
   arm:
-    path: spec/fixtures/lutaml/expressir_index_1/arm.exp
+    path: expressir_index_1/arm.exp
     diagrams:
       - action_schema/action_schemaexpg1.svg
       - action_schema/action_schemaexpg2.svg

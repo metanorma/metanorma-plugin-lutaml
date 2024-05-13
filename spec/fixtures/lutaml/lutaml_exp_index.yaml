@@ -1,22 +1,22 @@
 ---
 schemas:
   arm_svgmap:
-    path: spec/fixtures/lutaml/expressir_index_1/arm_svgmap.exp
+    path: expressir_index_1/arm_svgmap.exp
     diagrams:
       - action_schema/action_schemaexpg1.svg
       - action_schema/action_schemaexpg2.svg
   mim_annotated:
-    path: spec/fixtures/lutaml/expressir_index_1/mim_annotated.exp
+    path: expressir_index_1/mim_annotated.exp
     diagrams:
       - application_context_schema/application_context_schemaexpg1.svg
       - application_context_schema/application_context_schemaexpg2.svg
   approval_schema:
-    path: spec/fixtures/lutaml/expressir_index_2/arm_annotated.exp
+    path: expressir_index_2/arm_annotated.exp
     diagrams:
       - approval_schema/approval_schemaexpg1.svg
       - approval_schema/approval_schemaexpg2.svg
   mim:
-    path: spec/fixtures/lutaml/expressir_index_2/mim.exp
+    path: expressir_index_2/mim.exp
     diagrams:
       - basic_attribute_schema/basic_attribute_schemaexpg1.svg
       - basic_attribute_schema/basic_attribute_schemaexpg2.svg
