@@ -67,7 +67,7 @@ module Metanorma
               entity_name = match[2]
               options = parse_options_to_hash(match[3])
 
-              result.push(*parse_marco(lutaml_path, entity_name, document,
+              result.push(*parse_macro(lutaml_path, entity_name, document,
                                        options))
             else
               result.push(line)
@@ -75,7 +75,7 @@ module Metanorma
           end
         end
 
-        def parse_marco(lutaml_path, entity_name, document, options)
+        def parse_macro(lutaml_path, entity_name, document, options)
           lutaml_document = lutaml_document_from_file(document, lutaml_path)
             .serialized_document
           entities = [lutaml_document["classes"], lutaml_document["enums"]]
