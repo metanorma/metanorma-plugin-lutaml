@@ -120,18 +120,30 @@ module Metanorma
           ::Lutaml::Parser.parse(files)
         end
 
+        # TODO: Refactor this using Suma::SchemaConfig
         def load_express_from_index(document, path)
           yaml_content = YAML.safe_load(File.read(path))
-          root_path = yaml_content["path"]
-          schemas_paths = yaml_content["schemas"]
-            .map do |(schema_name, schema_values)|
-            schema_values["path"] || File.join(root_path.to_s,
-                                               "#{schema_name}.exp")
+          schema_yaml_base_path = Pathname.new(File.dirname(path))
+
+          # If there is a global root path set, all subsequent paths are
+          # relative to it.
+          if yaml_content['path']
+            root_schema_path = Pathname.new(yaml_content['path'])
+            schema_yaml_base_path = schema_yaml_base_path + root_schema_path
           end
 
-          files_to_load = schemas_paths.map do |path|
-            File.new(Utils.relative_file_path(document, path),
-                     encoding: "UTF-8")
+          files_to_load = yaml_content["schemas"].map do |key, value|
+
+            # If there is no path: set for a schema, we assume it uses the
+            # schema name as the #{filename}.exp.
+            schema_path = if value['path']
+              Pathname.new(value['path'])
+            else
+              Pathname.new("#{key}.exp")
+            end
+
+            real_schema_path = schema_yaml_base_path + schema_path
+            File.new(real_schema_path.cleanpath.to_s, encoding: "UTF-8")
           end
 
           ::Lutaml::Parser.parse(files_to_load)
