@@ -16,7 +16,7 @@ module Metanorma
       class LutamlUmlDatamodelDescriptionPreprocessor <
           ::Asciidoctor::Extensions::Preprocessor
         MACRO_REGEXP =
-          /\[lutaml_uml_datamodel_description,([^,]+),?(.+)?\]/
+          /\[lutaml_uml_datamodel_description,([^,]+),?(.+)?\]/.freeze
         LIQUID_INCLUDE_PATH = File.join(
           Gem.loaded_specs["metanorma-plugin-lutaml"].full_gem_path,
           "lib", "metanorma", "plugin", "lutaml", "liquid_templates"

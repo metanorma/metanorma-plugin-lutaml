@@ -16,14 +16,15 @@ module Metanorma
         REMARKS_ATTRIBUTE = "remarks"
 
         def process(document, reader)
-          r = Asciidoctor::PreprocessorNoIfdefsReader.new(document, reader.lines)
+          r = Asciidoctor::PreprocessorNoIfdefsReader.new(document,
+                                                          reader.lines)
           input_lines = r.readlines.to_enum
 
           has_lutaml = input_lines.any? { |line| lutaml?(line) }
 
           express_indexes = Utils.parse_document_express_indexes(
             document,
-            input_lines
+            input_lines,
           )
 
           result_content = process_input_lines(
@@ -53,18 +54,18 @@ module Metanorma
           ::Lutaml::Parser.parse(
             File.new(
               Utils.relative_file_path(document, file_path),
-              encoding: "UTF-8"
-            )
+              encoding: "UTF-8",
+            ),
           )
         end
 
         private
 
         def process_input_lines(
-            document:,
+          document:,
             input_lines:,
             express_indexes:
-          )
+        )
 
           result = []
           loop do
@@ -73,7 +74,7 @@ module Metanorma
                 document,
                 input_lines,
                 express_indexes,
-              )
+              ),
             )
           end
           result
@@ -99,7 +100,7 @@ module Metanorma
             index_names: index_names,
             context_name: context_name,
             options: options,
-            indexes: express_indexes
+            indexes: express_indexes,
           )
         end
 
@@ -120,23 +121,23 @@ module Metanorma
 
             # Does this condition ever happen? That is only if the
             # `lutaml-express-index` condition is not set
-            unless indexes[path]
+            if indexes[path]
+              indexes[path][:serialized_hash] ||= indexes[path][:wrapper].to_liquid
+            else
 
               full_path = Utils.relative_file_path(document, path)
               unless File.file?(full_path)
                 raise StandardError.new(
                   "Unable to load EXPRESS index for `#{path}`, " \
                   "please define it at `:lutaml-express-index:` or specify " \
-                  "the full path."
+                  "the full path.",
                 )
               end
               wrapper = load_lutaml_file(document, path)
               indexes[path] = {
                 wrapper: wrapper,
-                serialized_hash: wrapper.to_liquid
+                serialized_hash: wrapper.to_liquid,
               }
-            else
-              indexes[path][:serialized_hash] ||= indexes[path][:wrapper].to_liquid
             end
 
             indexes[path]
@@ -148,7 +149,7 @@ module Metanorma
 
           relative_file_path = Utils.relative_file_path(document, file_path)
           config_yaml = YAML.safe_load(
-            File.read(relative_file_path, encoding: "UTF-8")
+            File.read(relative_file_path, encoding: "UTF-8"),
           )
 
           options = {}
@@ -156,7 +157,7 @@ module Metanorma
             unless config_yaml["schemas"].is_a?(Hash)
               raise StandardError.new(
                 "[lutaml_express] attribute `config_yaml` must point to a YAML " \
-                "file that has the `schema` key containing a hash."
+                "file that has the `schema` key containing a hash.",
               )
             end
 
@@ -186,8 +187,9 @@ module Metanorma
             schema,
             options.merge(
               "relative_path_prefix" =>
-                Utils.relative_file_path(document, File.dirname(schema["file"]))
-            )
+                Utils.relative_file_path(document,
+                                         File.dirname(schema["file"])),
+            ),
           ) || {}
         end
 
@@ -200,7 +202,7 @@ module Metanorma
           gather_context_items(
             index_names: index_names,
             document: document,
-            indexes: indexes
+            indexes: indexes,
           ).map do |items|
 
             serialized_hash = items[:serialized_hash]
@@ -223,7 +225,7 @@ module Metanorma
               document: document,
               block_lines: lines,
               context_items: serialized_hash,
-              context_name: context_name
+              context_name: context_name,
             )
           end.flatten
         rescue StandardError => e
@@ -246,8 +248,8 @@ module Metanorma
               key,
               val&.map do |remark|
                 Metanorma::Plugin::Lutaml::ExpressRemarksDecorator
-                  .call(remark, options)
-              end
+                    .call(remark, options)
+              end,
             ]
           end
 

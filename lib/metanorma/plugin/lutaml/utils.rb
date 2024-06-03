@@ -31,7 +31,7 @@ module Metanorma
           # Allow includes for the template
           include_paths = [
             Utils.relative_file_path(document, ""),
-            include_path
+            include_path,
           ].compact
 
           liquid_template.registers[:file_system] =
@@ -72,12 +72,11 @@ module Metanorma
             save_express_repo_to_cache(
               cache_full_path,
               lutaml_wrapper.original_document,
-              document
+              document,
             )
           end
 
           lutaml_wrapper
-
         rescue Expressir::Error
           FileUtils.rm_rf(cache_full_path)
 
@@ -85,9 +84,8 @@ module Metanorma
             path: path,
             cache_path: cache_path,
             document: document,
-            force_read: true
+            force_read: true,
           )
-
         rescue StandardError => e
           document.logger.warn("Failed to load #{full_path}: #{e.message}")
           raise e
@@ -121,26 +119,21 @@ module Metanorma
         end
 
         # TODO: Refactor this using Suma::SchemaConfig
-        def load_express_from_index(document, path)
+        def load_express_from_index(_document, path)
           yaml_content = YAML.safe_load(File.read(path))
           schema_yaml_base_path = Pathname.new(File.dirname(path))
 
           # If there is a global root path set, all subsequent paths are
           # relative to it.
-          if yaml_content['path']
-            root_schema_path = Pathname.new(yaml_content['path'])
+          if yaml_content["path"]
+            root_schema_path = Pathname.new(yaml_content["path"])
             schema_yaml_base_path = schema_yaml_base_path + root_schema_path
           end
 
           files_to_load = yaml_content["schemas"].map do |key, value|
-
             # If there is no path: set for a schema, we assume it uses the
             # schema name as the #{filename}.exp.
-            schema_path = if value['path']
-              Pathname.new(value['path'])
-            else
-              Pathname.new("#{key}.exp")
-            end
+            schema_path = Pathname.new(value["path"] || "#{key}.exp")
 
             real_schema_path = schema_yaml_base_path + schema_path
             File.new(real_schema_path.cleanpath.to_s, encoding: "UTF-8")
@@ -171,13 +164,13 @@ module Metanorma
             lutaml_expressir_wrapper = load_express_repositories(
               path: path,
               cache_path: cache,
-              document: document
+              document: document,
             )
 
             if lutaml_expressir_wrapper
               express_indexes[name] = {
                 wrapper: lutaml_expressir_wrapper,
-                serialized_hash: nil
+                serialized_hash: nil,
               }
             end
           end
