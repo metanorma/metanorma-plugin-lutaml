@@ -69,7 +69,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
         TEXT
       end
 
-
       it "correctly renders input" do
         expect(xml_string_content(metanorma_process(input)))
           .to(be_equivalent_to(xml_string_content(output)))

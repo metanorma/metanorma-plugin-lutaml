@@ -26,11 +26,11 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "asciidoctor"
+  spec.add_dependency "coradoc"
   spec.add_dependency "expressir", "~> 1.4.0"
   spec.add_dependency "liquid"
   spec.add_dependency "lutaml"
   spec.add_dependency "relaton-cli"
-  spec.add_dependency "coradoc"
 
   spec.add_development_dependency "debug"
   spec.add_development_dependency "equivalent-xml"
