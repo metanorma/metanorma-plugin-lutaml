@@ -1,4 +1,5 @@
-require "reverse_adoc"
+require "coradoc"
+require "coradoc/reverse_adoc"
 
 module Metanorma
   module Plugin
@@ -6,7 +7,7 @@ module Metanorma
       module Liquid
         module CustomFilters
           def html2adoc(input)
-            ReverseAdoc.convert(input)
+            Coradoc::ReverseAdoc.convert(input)
           end
 
           def interpolate(input)
@@ -15,7 +16,7 @@ module Metanorma
           end
 
           def identify(input)
-            input.split(/(?=[A-Z])/).map(&:downcase).join('-')
+            input.split(/(?=[A-Z])/).map(&:downcase).join("-")
           end
         end
       end

@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "liquid"
   spec.add_dependency "lutaml"
   spec.add_dependency "relaton-cli"
-  spec.add_dependency "reverse_adoc", "~> 0.3.7"
+  spec.add_dependency "coradoc"
 
   spec.add_development_dependency "debug"
   spec.add_development_dependency "equivalent-xml"
