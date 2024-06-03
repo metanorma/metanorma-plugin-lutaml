@@ -239,7 +239,7 @@ Before tag for ISO 19135 Procedures for item registration XML
 <p id="_">uniformResourceIdentifier</p>
 </td>
 <td colspan="2" valign="top" align="left">
-<p id="_">The attribute &#8220;uniformResourceIdentifier&#8221; takes as its value a set of URI&#8217;s, each referencing information about online resources associated with the register. EXAMPLE &#239;&#191;&#189;http://www.digest.org/Navigate2.htm&#239;&#191;&#189; and &#239;&#191;&#189;http://www.epa.gov/opppmsd1/PPISdata/index.html&#239;&#191;&#189; are sample valuescorresponding value of the attribute <em>OnLineResource.linkage</em> specifies a resource providing access to the complete content of the register. EXAMPLE &#239;&#191;&#189;http://www.digest.org/Navigate2.htm&#239;&#191;&#189; and &#239;&#191;&#189;http://www.epa.gov/opppmsd1/PPISdata/index.html&#239;&#191;&#189; are sample values of <em>OnLineResource.linkage</em>.</p>
+<p id="_">The attribute &#8220;uniformResourceIdentifier&#8221; takes as its value a set of URI&#8217;s, each referencing information about online resources associated with the register. EXAMPLE &#239;&#191;&#189;http://www.digest.org/Navigate2.htm&#239;&#191;&#189; and &#239;&#191;&#189;http://www.epa.gov/opppmsd1/PPISdata/index.html&#239;&#191;&#189; are sample values corresponding value of the attribute <em>OnLineResource.linkage</em> specifies a resource providing access to the complete content of the register. EXAMPLE &#239;&#191;&#189;http://www.digest.org/Navigate2.htm&#239;&#191;&#189; and &#239;&#191;&#189;http://www.epa.gov/opppmsd1/PPISdata/index.html&#239;&#191;&#189; are sample values of <em>OnLineResource.linkage</em>.</p>
 </td>
 <td valign="top" align="left"></td>
 <td valign="top" align="left">
@@ -380,7 +380,7 @@ Before tag for ISO 19135 Procedures for item registration XML
 <p id="_">uniformResourceIdentifier</p>
 </td>
 <td colspan="6" valign="top" align="left">
-<p id="_">The attribute &#8220;uniformResourceIdentifier&#8221; takes as its value a set of URI&#8217;s, each referencing information about online resources associated with the register. EXAMPLE &#239;&#191;&#189;http://www.digest.org/Navigate2.htm&#239;&#191;&#189; and &#239;&#191;&#189;http://www.epa.gov/opppmsd1/PPISdata/index.html&#239;&#191;&#189; are sample valuescorresponding value of the attribute <em>OnLineResource.linkage</em> specifies a resource providing access to the complete content of the register. EXAMPLE &#239;&#191;&#189;http://www.digest.org/Navigate2.htm&#239;&#191;&#189; and &#239;&#191;&#189;http://www.epa.gov/opppmsd1/PPISdata/index.html&#239;&#191;&#189; are sample values of <em>OnLineResource.linkage</em>.</p>
+<p id="_">The attribute &#8220;uniformResourceIdentifier&#8221; takes as its value a set of URI&#8217;s, each referencing information about online resources associated with the register. EXAMPLE &#239;&#191;&#189;http://www.digest.org/Navigate2.htm&#239;&#191;&#189; and &#239;&#191;&#189;http://www.epa.gov/opppmsd1/PPISdata/index.html&#239;&#191;&#189; are sample values corresponding value of the attribute <em>OnLineResource.linkage</em> specifies a resource providing access to the complete content of the register. EXAMPLE &#239;&#191;&#189;http://www.digest.org/Navigate2.htm&#239;&#191;&#189; and &#239;&#191;&#189;http://www.epa.gov/opppmsd1/PPISdata/index.html&#239;&#191;&#189; are sample values of <em>OnLineResource.linkage</em>.</p>
 </td>
 </tr>
 </tbody>
