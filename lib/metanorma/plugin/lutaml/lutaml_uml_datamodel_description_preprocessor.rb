@@ -5,6 +5,7 @@ require "asciidoctor"
 require "asciidoctor/reader"
 require "lutaml"
 require "lutaml/uml"
+require "lutaml/xmi"
 require "metanorma/plugin/lutaml/utils"
 require "metanorma/plugin/lutaml/asciidoctor/preprocessor"
 
@@ -44,16 +45,21 @@ module Metanorma
 
         private
 
-        def lutaml_document_from_file_or_cache(document, file_path)
+        def lutaml_document_from_file_or_cache(document, file_path, yaml_config)
           full_path = Utils.relative_file_path(document, file_path)
           if document.attributes["lutaml_xmi_cache"] &&
               document.attributes["lutaml_xmi_cache"][full_path]
             return document.attributes["lutaml_xmi_cache"][full_path]
           end
 
+          if yaml_config["ea_extension"] && !yaml_config["ea_extension"].empty?
+            ea_extension_path = yaml_config["ea_extension"].first
+            ea_extension_full_path = Utils.relative_file_path(document, ea_extension_path)
+            Xmi::EaRoot.load_mdg_extension(ea_extension_full_path)
+          end
+
           result_document = ::Lutaml::Parser
             .parse(File.new(full_path, encoding: "UTF-8")).first
-          result_document
           document.attributes["lutaml_xmi_cache"] ||= {}
           document.attributes["lutaml_xmi_cache"][full_path] = result_document
           result_document
@@ -79,13 +85,15 @@ module Metanorma
           block_match = line.match(MACRO_REGEXP)
           return [line] if block_match.nil?
 
+          yaml_config = parse_yaml_config_file(document, block_match[2])
           lutaml_document = lutaml_document_from_file_or_cache(document,
-                                                               block_match[1])
+                                                               block_match[1],
+                                                               yaml_config)
           fill_in_diagrams_attributes(document, lutaml_document)
           model_representation(
             lutaml_document, document,
             collect_additional_context(document, input_lines, input_lines.next),
-            parse_yaml_config_file(document, block_match[2])
+            yaml_config
           )
         end
 
