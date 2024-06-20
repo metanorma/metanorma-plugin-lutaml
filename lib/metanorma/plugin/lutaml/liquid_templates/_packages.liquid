@@ -18,7 +18,9 @@
 {% endif %}
 
 {% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}{{equalsigns}} {{ package.name }} package
+{% if klass.xmi_id %}
 [[section-{{ package.xmi_id }}]]
+{% endif %}
 {{equalsigns}}= {{ package.name }} overview
 
 {% if additional_context.all_macros.size > 0 %}
