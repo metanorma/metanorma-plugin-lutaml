@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="windows-1252"?>
-<xmi:XMI xmlns:uml="http://www.omg.org/spec/UML/20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:GML="http://www.sparxsystems.com/profiles/GML/1.0" xmlns:thecustomprofile="http://www.sparxsystems.com/profiles/thecustomprofile/1.0" xmlns:CityGML="http://www.sparxsystems.com/profiles/CityGML/1.0">
+<xmi:XMI xmlns:uml="http://www.omg.org/spec/UML/20161101" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:GML="http://www.sparxsystems.com/profiles/GML/1.0" xmlns:thecustomprofile="http://www.sparxsystems.com/profiles/thecustomprofile/1.0" xmlns:CityGML="http://www.sparxsystems.com/profiles/CityGML/1.0">
 	<xmi:Documentation exporter="Enterprise Architect" exporterVersion="6.5"/>
 	<uml:Model xmi:type="uml:Model" name="EA_Model">
 		<packagedElement xmi:type="uml:Package" xmi:id="EAPK_9C96A88B_E98B_490b_8A9C_24AEDAC64293" name="Wrapper root package">
@@ -1535,7 +1535,7 @@
 			<packagedElement xmi:type="uml:Package" xmi:id="EAPrimitiveTypesPackage" name="EA_PrimitiveTypes_Package"/>
 		</primitivetypes>
 		<profiles>
-			<uml:Profile xmlns:uml="http://www.omg.org/spec/UML/20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmi:id="1BE46C37-5" nsPrefix="GML" name="GML" metamodelReference="mmref01">
+			<uml:Profile xmlns:uml="http://www.omg.org/spec/UML/20161101" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmi:id="1BE46C37-5" nsPrefix="GML" name="GML" metamodelReference="mmref01">
 				<ownedComment xmi:type="uml:Comment" xmi:id="comment01" annotatedElement="1BE46C37-5">
 					<body>UML Profile for GML Version:1.0</body>
 				</ownedComment>
@@ -1703,7 +1703,7 @@
 					<ownedEnd xmi:id="extension_property" name="extension_property" type="property" isComposite="true" lower="0" upper="1" memberEnd="extension_property property-base_Attribute"/>
 				</packagedElement>
 			</uml:Profile>
-			<uml:Profile xmlns:uml="http://www.omg.org/spec/UML/20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmi:id="thecustomprofile" nsPrefix="thecustomprofile" name="thecustomprofile" metamodelReference="mmref01">
+			<uml:Profile xmlns:uml="http://www.omg.org/spec/UML/20161101" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmi:id="thecustomprofile" nsPrefix="thecustomprofile" name="thecustomprofile" metamodelReference="mmref01">
 				<ownedComment xmi:type="uml:Comment" xmi:id="comment01" annotatedElement="thecustomprofile">
 					<body> Version:1.0</body>
 				</ownedComment>
@@ -1727,7 +1727,7 @@
 					<ownedEnd xmi:id="extension_OCL" name="extension_OCL" type="OCL" isComposite="true" lower="0" upper="1" memberEnd="extension_OCL OCL-base_Constraint"/>
 				</packagedElement>
 			</uml:Profile>
-			<uml:Profile xmlns:uml="http://www.omg.org/spec/UML/20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmi:id="FA5634AC-0" nsPrefix="CityGML" name="CityGML" metamodelReference="mmref01">
+			<uml:Profile xmlns:uml="http://www.omg.org/spec/UML/20161101" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmi:id="FA5634AC-0" nsPrefix="CityGML" name="CityGML" metamodelReference="mmref01">
 				<ownedComment xmi:type="uml:Comment" xmi:id="comment01" annotatedElement="FA5634AC-0">
 					<body>This profile defines a set of stereotypes and tagged values for defining CityGML application schemas. Version:1.0</body>
 				</ownedComment>
@@ -3728,7 +3728,7 @@
 	<CityGML:Property base_Property="EAID_ABF6E54C_ED14_425c_BC6D_B58192F214FA" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="2"/>
 	<CityGML:Property base_Property="EAID_59B7E43C_8817_4a58_87E5_D7EEF38304B6" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="3"/>
 	<CityGML:Property base_Property="EAID_C3E6C8AF_78AE_4ea3_B5F1_3E5F56A707AD" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="4"/>
-	<CityGML:ApplicationSchema base_Package="EAPK_1C8607D1_2967_44ff_948A_2A9256D00A45" version="3.0.0" language="en" xsdDocument="construction.xsd" xmlns="con" targetNamespace="http://www.opengis.net/citygml/construction/3.0"/>
+	<CityGML:ApplicationSchema base_Package="EAPK_1C8607D1_2967_44ff_948A_2A9256D00A45" version="3.0.0" language="en" xsdDocument="construction.xsd" xmlns="http://www.opengis.net/citygml/construction/3.0" targetNamespace="http://www.opengis.net/citygml/construction/3.0"/>
 	<CityGML:FeatureType base_Class="EAID_3BCEAE64_F977_46b5_A08C_A29D52216B04" gmlMixin="false" noPropertyType="false" isCollection="false" byValuePropertyType="false"/>
 	<CityGML:Property base_Property="EAID_90DC4655_AF4E_4565_B150_CEC1393141F0" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="3"/>
 	<CityGML:Property base_Property="EAID_0AE7AFBE_32FA_4f99_B6B8_5C60AB91C917" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="1"/>
@@ -3815,7 +3815,7 @@
 	<thecustomprofile:OCL base_Constraint="EAID_0F324249_AEF4_479f_AED6_EDFD15C8C3D0"/>
 	<thecustomprofile:OCL base_Constraint="EAID_69F92466_BDF0_4caa_8EB6_629A18089143"/>
 	<thecustomprofile:OCL base_Constraint="EAID_7A000AB5_79AA_4d77_B032_DDD3FA581ED0"/>
-	<CityGML:ApplicationSchema base_Package="EAPK_15C00628_ED51_4a92_8216_10ADF1613D98" version="3.0.0" language="en" xsdDocument="dynamizer.xsd" xmlns="dyn" targetNamespace="http://www.opengis.net/citygml/dynamizer/3.0"/>
+	<CityGML:ApplicationSchema base_Package="EAPK_15C00628_ED51_4a92_8216_10ADF1613D98" version="3.0.0" language="en" xsdDocument="dynamizer.xsd" xmlns="http://www.opengis.net/citygml/dynamizer/3.0" targetNamespace="http://www.opengis.net/citygml/dynamizer/3.0"/>
 	<CityGML:FeatureType base_Class="EAID_AC09C7DF_9D65_427c_8B92_5E168ACFE497" gmlMixin="false" noPropertyType="false" isCollection="false" byValuePropertyType="false"/>
 	<CityGML:Property base_Property="EAID_9400BA32_93D1_4bc6_AACD_8610CF5BC0CE" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="5"/>
 	<CityGML:Property base_Property="EAID_2753A0AA_47FB_487a_8BC8_70CDB47D1CD7" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="1"/>
@@ -3824,7 +3824,7 @@
 	<CityGML:Property base_Property="EAID_dst2F5353_9BBF_42da_AFC6_2C5198E4642C" xsdEncodingRule="$ea_notes=Values: notEncoded,iso19136_2007,gml33,citygml&#xA;" isMetadata="false$ea_notes=Values: True,False&#xA;Default: false&#xA;Description: Indicates whether the property is considered metadata about the instance - and not information about the phenomenon in the real world.&#xA;" inlineOrByReference="inlineOrByReference$ea_notes=Values: inline,byReference,inlineOrByReference&#xA;Default: inlineOrByReference&#xA;Description: Controls whether property values may be encoded inline or by reference.&#xA;" sequenceNumber="4$ea_notes= Unique integer value for properties of the type used to sort properties.&#xA;"/>
 	<CityGML:DataType base_DataType="EAID_275C58AD_DB88_4658_B3C6_E9CB09000BFE" noPropertyType="false"/>
 	<thecustomprofile:OCL base_Constraint="EAID_5FB7EF2F_2BF9_429a_84CD_D2C0DB4A75DF"/>
-	<CityGML:ApplicationSchema base_Package="EAPK_389F21DC_6F91_41f1_89BB_9D864B7E1E0A" version="3.0.0" language="en" xsdDocument="pointCloud.xsd" xmlns="pcl" targetNamespace="http://www.opengis.net/citygml/pointcloud/3.0"/>
+	<CityGML:ApplicationSchema base_Package="EAPK_389F21DC_6F91_41f1_89BB_9D864B7E1E0A" version="3.0.0" language="en" xsdDocument="pointCloud.xsd" xmlns="http://www.opengis.net/citygml/pointcloud/3.0" targetNamespace="http://www.opengis.net/citygml/pointcloud/3.0"/>
 	<CityGML:FeatureType base_Class="EAID_651E7E99_54A2_4c47_82C5_34643C998ADE" gmlMixin="false" noPropertyType="false" isCollection="false" byValuePropertyType="false"/>
 	<CityGML:Property base_Property="EAID_B41147F9_E895_434c_A9EB_F30FD14037BF" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="3"/>
 	<CityGML:Property base_Property="EAID_51BB763F_F9F1_4279_A7EB_1E65B80974DB" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="1"/>
@@ -3843,7 +3843,7 @@
 	<CityGML:Property base_Property="EAID_3EB1E371_1C6C_437c_B6F1_CDFE50324B3E" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="1"/>
 	<CityGML:Version base_Property="EAID_dst0D0A10_E29E_41aa_897E_1EFE1541CE09" isMetadata="false$ea_notes=Values: True,False&#xA;Default: false&#xA;" inlineOrByReference="inlineOrByReference$ea_notes=Values: inline,byReference,inlineOrByReference&#xA;Default: inlineOrByReference&#xA;" sequenceNumber="3"/>
 	<CityGML:Version base_Property="EAID_dst06ECEF_4FD3_4473_8204_25A838BF0128" isMetadata="false$ea_notes=Values: True,False&#xA;Default: false&#xA;" inlineOrByReference="inlineOrByReference$ea_notes=Values: inline,byReference,inlineOrByReference&#xA;Default: inlineOrByReference&#xA;" sequenceNumber="2"/>
-	<CityGML:ApplicationSchema base_Package="EAPK_9B83B69F_E472_4e96_A2C2_B48356E8C011" version="3.0.0" language="en" xsdDocument="versioning.xsd" xmlns="vers" targetNamespace="http://www.opengis.net/citygml/versioning/3.0"/>
+	<CityGML:ApplicationSchema base_Package="EAPK_9B83B69F_E472_4e96_A2C2_B48356E8C011" version="3.0.0" language="en" xsdDocument="versioning.xsd" xmlns="http://www.opengis.net/citygml/versioning/3.0" targetNamespace="http://www.opengis.net/citygml/versioning/3.0"/>
 	<CityGML:FeatureType base_Class="EAID_F177767E_E16F_45c4_8DBF_89823D62EBA5" gmlMixin="false" noPropertyType="false" isCollection="false" byValuePropertyType="false"/>
 	<CityGML:Property base_Property="EAID_8CA7304C_9A45_4cb5_AEEF_E8E0A9C77578" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="2"/>
 	<CityGML:Property base_Property="EAID_C239E48F_878E_4ab5_8E7C_C55D48EE64F3" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="1"/>
@@ -3897,7 +3897,7 @@
 	<thecustomprofile:OCL base_Constraint="EAID_DDD8C6C5_4A76_4a7f_85B3_2454E2345379"/>
 	<thecustomprofile:invariant base_Constraint="EAID_DDD8C6C5_4A76_4a7f_85B3_2454E2345379"/>
 	<thecustomprofile:OCL base_Constraint="EAID_F73EE698_BA3A_4e4a_83E5_0CD35430A71B"/>
-	<CityGML:ApplicationSchema base_Package="EAPK_E5331CB6_6DCD_42ba_BAFF_7747D02BBEDD" version="3.0.0" language="en" xsdDocument="appearance.xsd" xmlns="app" targetNamespace="http://www.opengis.net/citygml/appearance/3.0"/>
+	<CityGML:ApplicationSchema base_Package="EAPK_E5331CB6_6DCD_42ba_BAFF_7747D02BBEDD" version="3.0.0" language="en" xsdDocument="appearance.xsd" xmlns="http://www.opengis.net/citygml/appearance/3.0" targetNamespace="http://www.opengis.net/citygml/appearance/3.0"/>
 	<CityGML:FeatureType base_Class="EAID_CEDD569A_9618_4dc6_A32C_10A9F98E3730" gmlMixin="False" noPropertyType="false" isCollection="false" byValuePropertyType="false"/>
 	<CityGML:Property base_Property="EAID_162C24A8_79E8_4755_B7FC_0D6975436EA3" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="10"/>
 	<CityGML:Property base_Property="EAID_B300E9D5_4EA9_4a92_AA8B_B4E1F973B060" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="1"/>
@@ -3959,7 +3959,7 @@
 	<CityGML:DataType base_DataType="EAID_665B6EC3_E591_4817_A0D8_633FBC3EEDA4" noPropertyType="false"/>
 	<CityGML:DataType base_DataType="EAID_09AA2D8E_558B_4a6a_BF94_CA179ACA5266" noPropertyType="false"/>
 	<CityGML:DataType base_DataType="EAID_8818202E_267C_41da_BC2F_A8D41ABDC560" noPropertyType="false"/>
-	<CityGML:ApplicationSchema base_Package="EAPK_907C7DFC_E94C_45a2_A3CC_CFC4D25612E3" version="3.0.0" language="en" xsdDocument="bridge.xsd" xmlns="brid" targetNamespace="http://www.opengis.net/citygml/bridge/3.0"/>
+	<CityGML:ApplicationSchema base_Package="EAPK_907C7DFC_E94C_45a2_A3CC_CFC4D25612E3" version="3.0.0" language="en" xsdDocument="bridge.xsd" xmlns="http://www.opengis.net/citygml/bridge/3.0" targetNamespace="http://www.opengis.net/citygml/bridge/3.0"/>
 	<CityGML:FeatureType base_Class="EAID_DDCD5E0F_8E78_4200_B98D_E3E5599AE6A3" gmlMixin="False" noPropertyType="false" isCollection="false" byValuePropertyType="false"/>
 	<CityGML:Property base_Property="EAID_BB41748B_45B8_4c27_8637_49FCA9753BBC" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="15"/>
 	<CityGML:Property base_Property="EAID_A340F248_8393_44f3_B6A5_3F0DEC78D508" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="1"/>
@@ -4059,7 +4059,7 @@
 	<CityGML:Property base_Property="EAID_F3FD8F91_C400_45ee_9084_6C9ED70EB7A4" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="2"/>
 	<CityGML:Property base_Property="EAID_DAC5BD23_9394_4b8d_B944_9F16C3DD508A" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="3"/>
 	<CityGML:Property base_Property="EAID_083C9A93_559B_4f60_A897_4776C145FA63" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="4"/>
-	<CityGML:ApplicationSchema base_Package="EAPK_4F2C8A46_ADA6_4d7e_AB59_DF53F7FA0FEA" version="3.0.0" language="en" xsdDocument="building.xsd" xmlns="bldg" targetNamespace="http://www.opengis.net/citygml/building/3.0"/>
+	<CityGML:ApplicationSchema base_Package="EAPK_4F2C8A46_ADA6_4d7e_AB59_DF53F7FA0FEA" version="3.0.0" language="en" xsdDocument="building.xsd" xmlns="http://www.opengis.net/citygml/building/3.0" targetNamespace="http://www.opengis.net/citygml/building/3.0"/>
 	<CityGML:TopLevelFeatureType base_Class="EAID_1D3C3740_F111_4b04_8A6A_8524C9B71E2A" gmlMixin="false" noPropertyType="false" isCollection="false" byValuePropertyType="false"/>
 	<CityGML:Property base_Property="EAID_D4044AA5_12FE_4471_84AB_7F32D8734271" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="4"/>
 	<CityGML:Property base_Property="EAID_B3270C10_39B9_4a12_B749_DCFDD2A3F27A" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="1"/>
@@ -4069,7 +4069,7 @@
 	<CityGML:CodeList base_Class="EAID_E2CB3BD0_C393_47f5_84CF_1116CDBC8D60" asDictionary="true"/>
 	<CityGML:CodeList base_Class="EAID_53A2CBD6_B65D_4dc8_91B3_F010C4246514" asDictionary="true"/>
 	<CityGML:DataType base_DataType="EAID_97B84475_D8A9_4967_90BC_F013A801A203" noPropertyType="false"/>
-	<CityGML:ApplicationSchema base_Package="EAPK_E1321C0B_B95B_44c0_A3EA_3B507911CD78" version="3.0.0" language="en" xsdDocument="cityFurniture.xsd" xmlns="frn" targetNamespace="http://www.opengis.net/citygml/cityfurniture/3.0"/>
+	<CityGML:ApplicationSchema base_Package="EAPK_E1321C0B_B95B_44c0_A3EA_3B507911CD78" version="3.0.0" language="en" xsdDocument="cityFurniture.xsd" xmlns="http://www.opengis.net/citygml/cityfurniture/3.0" targetNamespace="http://www.opengis.net/citygml/cityfurniture/3.0"/>
 	<CityGML:TopLevelFeatureType base_Class="EAID_E3826C4E_33AB_487d_B285_5508A77596BA" gmlMixin="false" noPropertyType="false" isCollection="false" byValuePropertyType="false"/>
 	<CityGML:Property base_Property="EAID_C2917030_B617_488b_A958_DA0BDB6B6883" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="6"/>
 	<CityGML:Property base_Property="EAID_3D0552E7_6A95_4526_93E4_DDFC57C2F5BC" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="1"/>
@@ -4083,7 +4083,7 @@
 	<CityGML:ObjectType base_Class="EAID_0FC9537C_CCD5_413f_B8F5_D916C7C77DA1" noPropertyType="false" isCollection="false" byValuePropertyType="false"/>
 	<CityGML:Property base_Property="EAID_860F03FD_EC04_4211_B6A8_89159DD06BF5" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="1"/>
 	<CityGML:DataType base_DataType="EAID_24A61BFA_7BA5_49aa_9D37_A5CB1C8CEB2F" noPropertyType="false"/>
-	<CityGML:ApplicationSchema base_Package="EAPK_8877ED0D_AFFC_4f03_9B58_F2736F8935AB" version="3.0.0" language="en" xsdDocument="cityObjectGroup.xsd" xmlns="grp" targetNamespace="http://www.opengis.net/citygml/cityobjectgroup/3.0"/>
+	<CityGML:ApplicationSchema base_Package="EAPK_8877ED0D_AFFC_4f03_9B58_F2736F8935AB" version="3.0.0" language="en" xsdDocument="cityObjectGroup.xsd" xmlns="http://www.opengis.net/citygml/cityobjectgroup/3.0" targetNamespace="http://www.opengis.net/citygml/cityobjectgroup/3.0"/>
 	<CityGML:FeatureType base_Class="EAID_017BA3D1_780A_4538_B703_C1A83FF18099" gmlMixin="false" noPropertyType="false" isCollection="false" byValuePropertyType="false"/>
 	<CityGML:Property base_Property="EAID_BB6A5D89_BD60_4b0c_9BED_957B65C3F3A1" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="1"/>
 	<CityGML:FeatureType base_Class="EAID_B7DD64BA_C4AB_4607_9123_680D06F1C7C0" gmlMixin="false" noPropertyType="false" isCollection="false" byValuePropertyType="false"/>
@@ -4256,7 +4256,7 @@
 	<thecustomprofile:OCL base_Constraint="EAID_6FE3D86F_9375_4d24_8822_C430FF6A80AF"/>
 	<thecustomprofile:OCL base_Constraint="EAID_C5F2F87E_38AF_44d2_A8A8_A81F6C6A0D3B"/>
 	<thecustomprofile:OCL base_Constraint="EAID_F13D4A11_72FD_437c_9ABC_8BCA008309DA"/>
-	<CityGML:ApplicationSchema base_Package="EAPK_FDE7D4FC_4EF3_42d1_9A94_D7340DBBD79F" version="3.0.0" language="en" xsdDocument="cityGMLBase.xsd" xmlns="core" targetNamespace="http://www.opengis.net/citygml/3.0"/>
+	<CityGML:ApplicationSchema base_Package="EAPK_FDE7D4FC_4EF3_42d1_9A94_D7340DBBD79F" version="3.0.0" language="en" xsdDocument="cityGMLBase.xsd" xmlns="http://www.opengis.net/citygml/3.0" targetNamespace="http://www.opengis.net/citygml/3.0"/>
 	<CityGML:TopLevelFeatureType base_Class="EAID_B02A0581_AAA0_43cd_80F8_CE5AD802764A" gmlMixin="false" noPropertyType="false" isCollection="false" byValuePropertyType="false"/>
 	<CityGML:Property base_Property="EAID_DA8B5593_AC7C_4fcc_B077_D18D566DB028" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="4"/>
 	<CityGML:Property base_Property="EAID_5FC54C12_EDC9_49c4_B711_4C9C6FD6C8A6" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="1"/>
@@ -4318,7 +4318,7 @@
 	<CityGML:DataType base_DataType="EAID_3F5CEC30_3CCC_4d58_88B7_20BD4D29D96F" noPropertyType="false"/>
 	<CityGML:Property base_Property="EAID_01BAABD6_2D2F_4bb2_914D_EDEC024140D3" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="1"/>
 	<CityGML:Property base_Property="EAID_4DB825AD_09E1_40d3_90BF_80D68EDD2305" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="2"/>
-	<GML:ApplicationSchema base_Package="EAPK_511CFB07_CCBA_4005_B3CD_B18A5A29767A" version="3.0.0" xsdDocument="generics.xsd" xmlns="gen" targetNamespace="http://www.opengis.net/citygml/generics/3.0"/>
+	<GML:ApplicationSchema base_Package="EAPK_511CFB07_CCBA_4005_B3CD_B18A5A29767A" version="3.0.0" xsdDocument="generics.xsd" xmlns="http://www.opengis.net/citygml/generics/3.0" targetNamespace="http://www.opengis.net/citygml/generics/3.0"/>
 	<CityGML:TopLevelFeatureType base_Class="EAID_35EB0970_FB62_433e_87B7_D7C77F816533" gmlMixin="false" noPropertyType="false" isCollection="false" byValuePropertyType="false"/>
 	<CityGML:Property base_Property="EAID_B489F670_0BFE_4115_8FC4_465806D6532C" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="4"/>
 	<CityGML:Property base_Property="EAID_823F3C93_5954_46ff_87C2_76254D389D71" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="1"/>
@@ -4328,7 +4328,7 @@
 	<CityGML:CodeList base_Class="EAID_498D486F_CFD3_4d08_B9EB_CA9CA2DB89F5" asDictionary="true"/>
 	<CityGML:CodeList base_Class="EAID_92951EA3_582A_46ad_B6FE_3DEB9045C16D" asDictionary="true"/>
 	<CityGML:DataType base_DataType="EAID_08B472C2_6908_44c9_8CDA_139CE6416F4F" noPropertyType="false"/>
-	<CityGML:ApplicationSchema base_Package="EAPK_C1AAF1C3_9E48_468d_A272_EA37B3F35235" version="3.0.0" language="en" xsdDocument="landUse.xsd" xmlns="luse" targetNamespace="http://www.opengis.net/citygml/landuse/3.0"/>
+	<CityGML:ApplicationSchema base_Package="EAPK_C1AAF1C3_9E48_468d_A272_EA37B3F35235" version="3.0.0" language="en" xsdDocument="landUse.xsd" xmlns="http://www.opengis.net/citygml/landuse/3.0" targetNamespace="http://www.opengis.net/citygml/landuse/3.0"/>
 	<CityGML:FeatureType base_Class="EAID_057DADD3_ABDC_4035_BA1D_DC05B6FE70D7" gmlMixin="false" noPropertyType="false" isCollection="false" byValuePropertyType="false"/>
 	<CityGML:Property base_Property="EAID_C44CCEEC_65B6_4014_BE58_C7824115643E" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="3"/>
 	<CityGML:Property base_Property="EAID_F7918A8A_9ACD_4ff3_988C_2B2351CEEABC" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="1"/>
@@ -4358,7 +4358,7 @@
 	<CityGML:DataType base_DataType="EAID_DF552FE6_83BE_4ac9_8B04_33C9C228E5F5" noPropertyType="false"/>
 	<CityGML:DataType base_DataType="EAID_787CD588_67FA_4120_A58D_1238C929B670" noPropertyType="false"/>
 	<thecustomprofile:OCL base_Constraint="EAID_FA3061BB_7262_4a3e_AD90_FC20B9A61B46"/>
-	<CityGML:ApplicationSchema base_Package="EAPK_E5C5322E_A142_4812_AD39_C64DA8CBCE6E" version="3.0.0" language="en" xsdDocument="relief.xsd" xmlns="dem" targetNamespace="http://www.opengis.net/citygml/relief/3.0"/>
+	<CityGML:ApplicationSchema base_Package="EAPK_E5C5322E_A142_4812_AD39_C64DA8CBCE6E" version="3.0.0" language="en" xsdDocument="relief.xsd" xmlns="http://www.opengis.net/citygml/relief/3.0" targetNamespace="http://www.opengis.net/citygml/relief/3.0"/>
 	<CityGML:FeatureType base_Class="EAID_5884626B_F9D9_4709_AB4B_81AFA59F19C0" gmlMixin="false" noPropertyType="false" isCollection="false" byValuePropertyType="false"/>
 	<CityGML:Property base_Property="EAID_84FCA860_F594_4a1b_B138_2D350F8B8612" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="7"/>
 	<CityGML:Property base_Property="EAID_39A4CDD5_F5F1_431d_8F21_0BC31E5579C3" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="2"/>
@@ -4498,7 +4498,7 @@
 	<CityGML:DataType base_DataType="EAID_3001CE22_C210_4a87_A4F0_C24F888D0741" noPropertyType="false"/>
 	<CityGML:DataType base_DataType="EAID_04ACAE24_F192_4da3_9757_AA9E1157A443" noPropertyType="false"/>
 	<CityGML:DataType base_DataType="EAID_2A3E1928_5287_4fff_A325_C1415F73E1FA" noPropertyType="false"/>
-	<GML:ApplicationSchema base_Package="EAPK_5563BED2_B142_4d7d_9980_CF451817627D" version="3.0.0" xsdDocument="transportation.xsd" xmlns="tran" targetNamespace="http://www.opengis.net/citygml/transportation/3.0"/>
+	<GML:ApplicationSchema base_Package="EAPK_5563BED2_B142_4d7d_9980_CF451817627D" version="3.0.0" xsdDocument="transportation.xsd" xmlns="http://www.opengis.net/citygml/transportation/3.0" targetNamespace="http://www.opengis.net/citygml/transportation/3.0"/>
 	<CityGML:FeatureType base_Class="EAID_597E2B4E_6615_437e_B4A8_329962D28A73" gmlMixin="False" noPropertyType="false" isCollection="false" byValuePropertyType="false"/>
 	<CityGML:Property base_Property="EAID_2E3C514E_ADB5_4f4d_B0C1_C954CBB05FF5" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="8"/>
 	<CityGML:Property base_Property="EAID_5780CCF7_4D4C_4846_BBCE_FD2D0019BDB7" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="1"/>
@@ -4558,7 +4558,7 @@
 	<CityGML:DataType base_DataType="EAID_32D42A37_9927_40ba_9574_098C2D75EC8A" noPropertyType="false"/>
 	<CityGML:DataType base_DataType="EAID_90F3D187_2E95_4f72_A632_0766559CFDD4" noPropertyType="false"/>
 	<CityGML:DataType base_DataType="EAID_B22CE0C9_B2B3_49cc_BC88_29E930270DAA" noPropertyType="false"/>
-	<CityGML:ApplicationSchema base_Package="EAPK_070A5649_8282_4ad3_A1DE_A9A41FCB55B8" version="3.0.0" language="en" xsdDocument="tunnel.xsd" xmlns="tun" targetNamespace="http://www.opengis.net/citygml/tunnel/3.0"/>
+	<CityGML:ApplicationSchema base_Package="EAPK_070A5649_8282_4ad3_A1DE_A9A41FCB55B8" version="3.0.0" language="en" xsdDocument="tunnel.xsd" xmlns="http://www.opengis.net/citygml/tunnel/3.0" targetNamespace="http://www.opengis.net/citygml/tunnel/3.0"/>
 	<CityGML:FeatureType base_Class="EAID_02207ADB_3EA4_423c_9216_FC29EAA51E2E" gmlMixin="false" noPropertyType="false" isCollection="false" byValuePropertyType="false"/>
 	<CityGML:Property base_Property="EAID_5FC2E435_AE7E_48d9_8C45_9C64FFB737CF" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="1"/>
 	<CityGML:TopLevelFeatureType base_Class="EAID_63800980_A6BC_4f01_B0C3_317CBBFE3934" gmlMixin="false" noPropertyType="false" isCollection="false" byValuePropertyType="false"/>
@@ -4590,7 +4590,7 @@
 	<CityGML:DataType base_DataType="EAID_58DD4361_DBC4_4621_BDAD_310839175A78" noPropertyType="false"/>
 	<CityGML:DataType base_DataType="EAID_C18A5210_CB99_4be8_AC26_F0304F1093D4" noPropertyType="false"/>
 	<CityGML:DataType base_DataType="EAID_59DA0BF6_81B3_416d_888E_69703F29D39E" noPropertyType="false"/>
-	<CityGML:ApplicationSchema base_Package="EAPK_D44D446F_8AF9_49d7_BD32_6DA30532A847" version="3.0.0" language="en" xsdDocument="vegetation.xsd" xmlns="veg" targetNamespace="http://www.opengis.net/citygml/vegetation/3.0"/>
+	<CityGML:ApplicationSchema base_Package="EAPK_D44D446F_8AF9_49d7_BD32_6DA30532A847" version="3.0.0" language="en" xsdDocument="vegetation.xsd" xmlns="http://www.opengis.net/citygml/vegetation/3.0" targetNamespace="http://www.opengis.net/citygml/vegetation/3.0"/>
 	<CityGML:FeatureType base_Class="EAID_27BE7F41_0641_4d63_99E7_7D853AA20FE7" gmlMixin="false" noPropertyType="false" isCollection="false" byValuePropertyType="false"/>
 	<CityGML:Property base_Property="EAID_F4201E7C_B011_40ae_BC19_6AF7A7BEE204" isMetadata="false" inlineOrByReference="inlineOrByReference" sequenceNumber="1"/>
 	<CityGML:TopLevelFeatureType base_Class="EAID_80384F70_9D84_4889_A585_1E0215420245" gmlMixin="false" noPropertyType="false" isCollection="false" byValuePropertyType="false"/>
@@ -4612,5 +4612,5 @@
 	<CityGML:DataType base_DataType="EAID_D4D099D4_5536_4269_8D05_8E07FB2FEA83" noPropertyType="false"/>
 	<CityGML:DataType base_DataType="EAID_9B5ABB19_3D69_4ec8_A445_6FEBC73E9A2A" noPropertyType="false"/>
 	<CityGML:DataType base_DataType="EAID_48A3A99A_262F_475f_A48B_729C7A18850F" noPropertyType="false"/>
-	<CityGML:ApplicationSchema base_Package="EAPK_A5BC15D5_3041_4a84_BA9E_A28E1B43D317" version="3.0.0" language="en" xsdDocument="waterBody.xsd" xmlns="wtr" targetNamespace="http://www.opengis.net/citygml/waterbody/3.0"/>
+	<CityGML:ApplicationSchema base_Package="EAPK_A5BC15D5_3041_4a84_BA9E_A28E1B43D317" version="3.0.0" language="en" xsdDocument="waterBody.xsd" xmlns="http://www.opengis.net/citygml/waterbody/3.0" targetNamespace="http://www.opengis.net/citygml/waterbody/3.0"/>
 </xmi:XMI>

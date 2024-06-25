@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="windows-1252"?>
-<xmi:XMI xmlns:uml="http://www.omg.org/spec/UML/20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:GML="http://www.sparxsystems.com/profiles/GML/1.0" xmlns:thecustomprofile="http://www.sparxsystems.com/profiles/thecustomprofile/1.0" xmlns:EAUML="http://www.sparxsystems.com/profiles/EAUML/1.0">
+<xmi:XMI xmlns:uml="http://www.omg.org/spec/UML/20161101" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:GML="http://www.sparxsystems.com/profiles/GML/1.0" xmlns:thecustomprofile="http://www.sparxsystems.com/profiles/thecustomprofile/1.0" xmlns:EAUML="http://www.sparxsystems.com/profiles/EAUML/1.0">
 	<xmi:Documentation exporter="Enterprise Architect" exporterVersion="6.5"/>
 	<uml:Model xmi:type="uml:Model" name="EA_Model">
 		<packagedElement xmi:type="uml:Package" xmi:id="EAPK_9C96A88B_E98B_490b_8A9C_24AEDAC64293" name="Wrapper root package">
@@ -7296,7 +7296,7 @@
 			</packagedElement>
 		</primitivetypes>
 		<profiles>
-			<uml:Profile xmlns:uml="http://www.omg.org/spec/UML/20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmi:id="1BE46C37-5" nsPrefix="GML" name="GML" metamodelReference="mmref01">
+			<uml:Profile xmlns:uml="http://www.omg.org/spec/UML/20161101" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmi:id="1BE46C37-5" nsPrefix="GML" name="GML" metamodelReference="mmref01">
 				<ownedComment xmi:type="uml:Comment" xmi:id="comment01" annotatedElement="1BE46C37-5">
 					<body>UML Profile for GML Version:1.0</body>
 				</ownedComment>
@@ -7464,7 +7464,7 @@
 					<ownedEnd xmi:id="extension_property" name="extension_property" type="property" isComposite="true" lower="0" upper="1" memberEnd="extension_property property-base_Attribute"/>
 				</packagedElement>
 			</uml:Profile>
-			<uml:Profile xmlns:uml="http://www.omg.org/spec/UML/20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmi:id="thecustomprofile" nsPrefix="thecustomprofile" name="thecustomprofile" metamodelReference="mmref01">
+			<uml:Profile xmlns:uml="http://www.omg.org/spec/UML/20161101" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmi:id="thecustomprofile" nsPrefix="thecustomprofile" name="thecustomprofile" metamodelReference="mmref01">
 				<ownedComment xmi:type="uml:Comment" xmi:id="comment01" annotatedElement="thecustomprofile">
 					<body> Version:1.0</body>
 				</ownedComment>
@@ -7602,7 +7602,7 @@
 					<ownedEnd xmi:id="extension_codelist" name="extension_codelist" type="codelist" isComposite="true" lower="0" upper="1" memberEnd="extension_codelist codelist-base_Class"/>
 				</packagedElement>
 			</uml:Profile>
-			<uml:Profile xmlns:uml="http://www.omg.org/spec/UML/20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmi:id="8C9E6706-8" nsPrefix="EAUML" name="EAUML" metamodelReference="mmref01">
+			<uml:Profile xmlns:uml="http://www.omg.org/spec/UML/20161101" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmi:id="8C9E6706-8" nsPrefix="EAUML" name="EAUML" metamodelReference="mmref01">
 				<ownedComment xmi:type="uml:Comment" xmi:id="comment01" annotatedElement="8C9E6706-8">
 					<body>EAUML Version:1.0</body>
 				</ownedComment>
@@ -9287,7 +9287,7 @@
 	<thecustomprofile:Abstract base_Class="EAID_C7612DD4_3401_4aec_B86C_0362A67B0FE1"/>
 	<thecustomprofile:Abstract base_Class="EAID_CC7E3EFF_9C63_40fe_9FD0_C4C294E88B00"/>
 	<thecustomprofile:ISO_19100__Application_Schema base_Package="EAPK_3E4A4F46_609F_4cff_A4D7_4CB20B932FB8" __EAStereoName="ISO 19100::Application Schema"/>
-	<GML:ApplicationSchema base_Package="EAPK_3E4A4F46_609F_4cff_A4D7_4CB20B932FB8" version="FIXME" xsdDocument="FIXME" xmlns="FIXME" targetNamespace="FIXME"/>
+	<GML:ApplicationSchema base_Package="EAPK_3E4A4F46_609F_4cff_A4D7_4CB20B932FB8" version="3.0.0" xsdDocument="generics.xsd" xmlns="http://www.opengis.net/citygml/generics/3.0" targetNamespace="http://www.opengis.net/citygml/generics/3.0"/>
 	<thecustomprofile:interface base_Class="EAID_06ADE433_CD52_48b6_93BA_612C87AA2B44"/>
 	<thecustomprofile:interface base_Class="EAID_BBF0E8D3_8A54_4128_8087_9F49FD0C918C"/>
 	<thecustomprofile:interface base_Class="EAID_604E2220_042B_428d_BE8C_A3AE9540F700"/>
@@ -9296,7 +9296,7 @@
 	<thecustomprofile:persistence base_Class="EAID_3892EB12_6131_4948_8D62_C2E900D7A7AD" persistence="persistent"/>
 	<thecustomprofile:persistence base_Enumeration="EAID_4262A19F_88A9_4025_9577_E83262264746" persistence="persistent"/>
 	<thecustomprofile:ISO_19100__Application_Schema base_Package="EAPK_6E8F0973_38F2_4bcb_B2C0_0C8BCB0B2DE9" __EAStereoName="ISO 19100::Application Schema"/>
-	<GML:ApplicationSchema base_Package="EAPK_6E8F0973_38F2_4bcb_B2C0_0C8BCB0B2DE9" version="FIXME" xsdDocument="FIXME" xmlns="FIXME" targetNamespace="FIXME"/>
+	<GML:ApplicationSchema base_Package="EAPK_6E8F0973_38F2_4bcb_B2C0_0C8BCB0B2DE9" version="3.0.0" xsdDocument="generics.xsd" xmlns="http://www.opengis.net/citygml/generics/3.0" targetNamespace="http://www.opengis.net/citygml/generics/3.0"/>
 	<thecustomprofile:interface base_Class="EAID_846F237F_515A_4767_BC4B_C5E3C6E8D076"/>
 	<thecustomprofile:persistence base_Class="EAID_846F237F_515A_4767_BC4B_C5E3C6E8D076" persistence="persistent"/>
 	<thecustomprofile:interface base_Class="EAID_82206E96_8D23_48dd_AC2F_31939C484AF2"/>
@@ -9332,23 +9332,23 @@
 	<thecustomprofile:persistence base_Enumeration="EAID_718588CA_F05B_47a1_BBD0_D09D17B773C9" persistence="persistent"/>
 	<thecustomprofile:persistence base_Enumeration="EAID_9113B7DF_E236_4c60_992E_A4EB6FFC6795" persistence="persistent"/>
 	<thecustomprofile:ISO_19100__Application_Schema base_Package="EAPK_915AFA55_8468_4204_A3D5_08E700905ACC" __EAStereoName="ISO 19100::Application Schema"/>
-	<GML:ApplicationSchema base_Package="EAPK_915AFA55_8468_4204_A3D5_08E700905ACC" version="FIXME" xsdDocument="FIXME" xmlns="FIXME" targetNamespace="FIXME"/>
+	<GML:ApplicationSchema base_Package="EAPK_915AFA55_8468_4204_A3D5_08E700905ACC" version="3.0.0" xsdDocument="generics.xsd" xmlns="http://www.opengis.net/citygml/generics/3.0" targetNamespace="http://www.opengis.net/citygml/generics/3.0"/>
 	<thecustomprofile:interface base_Class="EAID_CB0E92C2_F179_4076_996A_F4BE19183A77"/>
 	<thecustomprofile:ISO_19100__Application_Schema base_Package="EAPK_077B4E52_C978_4bb0_A75C_9668163859BF" __EAStereoName="ISO 19100::Application Schema"/>
-	<GML:ApplicationSchema base_Package="EAPK_077B4E52_C978_4bb0_A75C_9668163859BF" version="FIXME" xsdDocument="FIXME" xmlns="FIXME" targetNamespace="FIXME"/>
+	<GML:ApplicationSchema base_Package="EAPK_077B4E52_C978_4bb0_A75C_9668163859BF" version="3.0.0" xsdDocument="generics.xsd" xmlns="http://www.opengis.net/citygml/generics/3.0" targetNamespace="http://www.opengis.net/citygml/generics/3.0"/>
 	<thecustomprofile:name base_Package="EAPK_9AA0709C_8FD1_48d2_A752_1F2153405F41" name="Procedures for item registration"/>
 	<thecustomprofile:publicationDate base_Package="EAPK_9AA0709C_8FD1_48d2_A752_1F2153405F41" publicationDate="2005-10"/>
 	<thecustomprofile:edition base_Package="EAPK_9AA0709C_8FD1_48d2_A752_1F2153405F41" edition="1"/>
 	<thecustomprofile:number base_Package="EAPK_9AA0709C_8FD1_48d2_A752_1F2153405F41" number="19135"/>
 	<thecustomprofile:yearVersion base_Package="EAPK_9AA0709C_8FD1_48d2_A752_1F2153405F41" yearVersion="2005"/>
 	<thecustomprofile:ISO_19100__Application_Schema base_Package="EAPK_A5AD8831_9249_4c53_8776_393B3EF218FC" __EAStereoName="ISO 19100::Application Schema"/>
-	<GML:ApplicationSchema base_Package="EAPK_A5AD8831_9249_4c53_8776_393B3EF218FC" version="1.0" xsdDocument="ISO19135/pre/pre.xsd" xmlns="pre" targetNamespace="http://www.isotc211.org/namespace/pre/1.0/2014-07-11"/>
+	<GML:ApplicationSchema base_Package="EAPK_A5AD8831_9249_4c53_8776_393B3EF218FC" version="1.0" xsdDocument="ISO19135/pre/pre.xsd" xmlns="http://www.isotc211.org/namespace/pre/1.0/2014-07-11" targetNamespace="http://www.isotc211.org/namespace/pre/1.0/2014-07-11"/>
 	<thecustomprofile:Abstract base_Class="EAID_86CC1046_36B8_4607_892B_1C48A92CE1A3"/>
 	<thecustomprofile:Abstract base_Class="EAID_B87BDE1F_886D_44ba_98FB_8BB5FB806D79"/>
 	<thecustomprofile:ISO_19100__Leaf base_Package="EAPK_8764FCF6_95EC_4015_82C3_E5BDA66B1BD0" __EAStereoName="ISO 19100::Leaf"/>
 	<GML:ApplicationSchema base_Package="EAPK_8764FCF6_95EC_4015_82C3_E5BDA66B1BD0" xsdDocument="ISO19135/pre/abstractCommonClasses.xsd"/>
 	<thecustomprofile:ISO_19100__Application_Schema base_Package="EAPK_9A048FF7_4C59_44aa_BABE_1B180DE058AF" __EAStereoName="ISO 19100::Application Schema"/>
-	<GML:ApplicationSchema base_Package="EAPK_9A048FF7_4C59_44aa_BABE_1B180DE058AF" version="1.0" xsdDocument="ISO19135/reg/1.0/reg.xsd" xmlns="reg" targetNamespace="http://www.isotc211.org/namespace/reg/1.0/2014-07-11"/>
+	<GML:ApplicationSchema base_Package="EAPK_9A048FF7_4C59_44aa_BABE_1B180DE058AF" version="1.0" xsdDocument="ISO19135/reg/1.0/reg.xsd" xmlns="http://www.isotc211.org/namespace/reg/1.0/2014-07-11" targetNamespace="http://www.isotc211.org/namespace/reg/1.0/2014-07-11"/>
 	<thecustomprofile:import base_ElementImport="EAID_0ADDCBCE_4389_4c61_B771_35EFBB1CE36A"/>
 	<thecustomprofile:import base_ElementImport="EAID_4C302505_8473_469a_A288_F9AA1DD12B98"/>
 	<thecustomprofile:import base_ElementImport="EAID_56683049_7F1D_4ecd_8DEC_C8FF1D59FE7B"/>
