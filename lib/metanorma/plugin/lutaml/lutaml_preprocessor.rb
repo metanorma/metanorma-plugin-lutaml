@@ -178,9 +178,14 @@ module Metanorma
             end
           end
 
-          schema["formatted"] = index_found_value[:wrapper].original_document.schemas.detect do |s|
+    n = index_found_value[:wrapper].original_document.schemas.detect do |s|
             s.id == schema["id"]
-          end.to_s(no_remarks: true)
+          end
+          schema["formatted"] = n.to_s(no_remarks: true)
+          f = formatter = Class.new(Expressir::Express::Formatter) do
+    include Expressir::Express::HyperlinkFormatter
+    end   
+          schema["formatted_hyperlinked"] = n.to_s(no_remarks: true, formatter: f)
 
           # Decorate the remaining things
           decorate_context_items(
