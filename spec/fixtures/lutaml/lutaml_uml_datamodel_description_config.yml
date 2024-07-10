@@ -3,3 +3,6 @@ packages:
   - Another
   - City*
   - skip: Dynamizer
+ea_extension:
+  - "ISO19103MDG v1.0.0-beta.xml"
+  - "CityGML.xml"
