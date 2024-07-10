@@ -52,10 +52,11 @@ module Metanorma
             return document.attributes["lutaml_xmi_cache"][full_path]
           end
 
-          if yaml_config["ea_extension"] && !yaml_config["ea_extension"].empty?
-            ea_extension_path = yaml_config["ea_extension"].first
-            ea_extension_full_path = Utils.relative_file_path(document, ea_extension_path)
-            Xmi::EaRoot.load_mdg_extension(ea_extension_full_path)
+          yaml_config["ea_extension"]&.each do |ea_extension_path|
+            ea_extension_full_path = File.expand_path(
+              ea_extension_path, File.dirname(file_path)
+            )
+            Xmi::EaRoot.load_extension(ea_extension_full_path)
           end
 
           result_document = ::Lutaml::Parser
