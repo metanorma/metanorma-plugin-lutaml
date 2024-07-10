@@ -1,2 +1,5 @@
 ---
 section_depth: 2
+ea_extension:
+  - "ISO19103MDG v1.0.0-beta.xml"
+  - "CityGML.xml"

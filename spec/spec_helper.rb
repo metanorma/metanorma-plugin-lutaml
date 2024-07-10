@@ -1,6 +1,7 @@
 require "bundler/setup"
 require "asciidoctor"
 require "metanorma-plugin-lutaml"
+require "rspec-html-matchers"
 
 # Register lutaml blocks as first preprocessors in line in order
 # to test properly with metanorma-standoc
@@ -34,6 +35,8 @@ RSpec.configure do |config|
 
   # Disable RSpec exposing methods globally on `Module` and `main`
   config.disable_monkey_patching!
+
+  config.include RSpecHtmlMatchers
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
