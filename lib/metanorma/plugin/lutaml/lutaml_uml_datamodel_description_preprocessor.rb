@@ -204,6 +204,8 @@ options)
             "additional_context" => additional_context
               .merge("external_classes" => options["external_classes"]),
             "root_packages" => [root_package],
+            "render_nested_packages" => options["render_nested_packages"] ||
+              false,
             "name" => root_package["name"],
           }
         end
