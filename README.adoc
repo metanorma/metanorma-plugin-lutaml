@@ -273,6 +273,26 @@ diagram MyView {
 ....
 ----
 
+=== Rendering a LutaML Enterprise Architect diagram from XMI: `lutaml_ea_diagram`
+
+This command allows to quickly render a LutaML diagram as an image file by
+specifying the name of diagram.
+
+[source,adoc]
+-----
+lutaml_ea_diagram::[name="name_of_diagram",base_path="/path/to/xmi-images",format="png"]
+-----
+
+The code will search the diagram with name `name_of_diagram` and then
+render it as:
+
+[source,adoc]
+-----
+[[figure-{{ diagram.xmi_id }}]]
+.{{ diagram.name }}
+image::{{ image_base_path }}/{{ diagram.xmi_id }}.{{ format | default: 'png' }}[]
+-----
+
 === Generating UML class and attributes: `lutaml_uml_class`
 
 This command allows rendering a definition clause for a UML class.
@@ -490,7 +510,7 @@ Where:
 
 * `[.after, package="Another"]` - block text to be inserted before(after in case of `.before` name) the package
 
-* `[.package_text, position="after", package="Another"]` - include custom adoc code into package rendered body, `position` is a arequired attribute which tells where to insert the code.
+* `[.package_text, position="after", package="Another"]` - include custom adoc code into package rendered body, `position` is a a required attribute which tells where to insert the code.
 
 * `[.package_text, package="Another"]` - same as above, but include block will be included only for supplied package name
 
