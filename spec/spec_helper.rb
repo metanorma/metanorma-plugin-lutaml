@@ -19,6 +19,7 @@ Asciidoctor::Extensions.register do
   block_macro Metanorma::Plugin::Lutaml::LutamlDiagramBlockMacro
   block Metanorma::Plugin::Lutaml::LutamlDiagramBlock
   block_macro Metanorma::Plugin::Lutaml::LutamlEaDiagramBlockMacro
+  block_macro Metanorma::Plugin::Lutaml::LutamlGmlDictionaryBlockMacro
 end
 
 require "metanorma-standoc"
@@ -108,4 +109,3 @@ end
 def strip_src(xml)
   xml.gsub(/\ssrc="[^"]+"/, ' src="_"')
 end
-
