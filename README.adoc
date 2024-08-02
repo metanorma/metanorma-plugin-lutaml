@@ -293,6 +293,42 @@ render it as:
 image::{{ image_base_path }}/{{ diagram.xmi_id }}.{{ format | default: 'png' }}[]
 -----
 
+=== Rendering a LutaML GML Dictionary: `lutaml_gml_dictionary`
+
+This command allows to render a LutaML GML Dictionary.
+
+[source,adoc]
+-----
+lutaml_gml_dictionary::[xml_path="/path/to/dictionary.xml",source="source_string",template_path="/path/to/template.liquid"]
+-----
+
+The command accepts the options listed below:
+
+* `xml_path="/path/to/dictionary.xml` specifies the path of xml file of the
+GML Dictionary.
+
+* `source="source_string"` shows the link of the anchor.
+
+* `template_path="/path/yo/template.liquid"` specifies the liquid template.
+  For example, you can create a liquid template shown below and link it to
+  `template_path`.
+
+[source,adoc]
+-----
+[cols="3a,22a"]
+|===
+| Name | {{ dict.file_name }}
+
+h| Code h| Description
+{% for entry in dict.dictionary_entry %}
+| {{ entry.name }} | {{ entry.description }}
+{% endfor %}
+|===
+
+[.source]
+<<{{ source.value }}>>
+-----
+
 === Generating UML class and attributes: `lutaml_uml_class`
 
 This command allows rendering a definition clause for a UML class.
