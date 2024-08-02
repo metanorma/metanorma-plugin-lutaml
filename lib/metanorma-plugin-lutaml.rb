@@ -8,6 +8,7 @@ require "metanorma/plugin/lutaml/lutaml_diagram_block_macro"
 require "metanorma/plugin/lutaml/lutaml_figure_inline_macro"
 require "metanorma/plugin/lutaml/lutaml_table_inline_macro"
 require "metanorma/plugin/lutaml/lutaml_ea_diagram_block_macro"
+require "metanorma/plugin/lutaml/lutaml_gml_dictionary_block_macro"
 
 module Metanorma
   module Plugin

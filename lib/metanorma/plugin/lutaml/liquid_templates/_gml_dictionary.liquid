@@ -1,0 +1,13 @@
+[cols="3a,22a"]
+|===
+| ファイル名 | {{ dict.file_name }}
+
+h| ファイルURL | https://www.geospatial.jp/iur/codelists/3.1/{{ dict.file_name }}
+h| コード h| 説明
+{% for entry in dict.dictionary_entry %}
+| {{ entry.name }} | {{ entry.description }}
+{% endfor %}
+|===
+
+[.source]
+<<{{ source.value }}>>
