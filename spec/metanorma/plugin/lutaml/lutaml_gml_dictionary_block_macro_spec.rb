@@ -15,11 +15,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlGmlDictionaryBlockMacro do
           :no-isobib:
           :imagesdir: spec/assets
 
-          [lutaml_uml_datamodel_description,#{example_file}]
-          --
-          --
-
-          lutaml_gml_dictionary::[xml_path="./spec/fixtures/lutaml/Building_class.xml",source="gsi_map_level_dps"]
+          lutaml_gml_dictionary::["spec/fixtures/lutaml/Building_class.xml",context=root,source="gsi_map_level_dps"]
         TEXT
       end
 
@@ -79,11 +75,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlGmlDictionaryBlockMacro do
           :no-isobib:
           :imagesdir: spec/assets
 
-          [lutaml_uml_datamodel_description,#{example_file}]
-          --
-          --
+          lutaml_gml_dictionary::["spec/fixtures/lutaml/Building_class.xml",context=root,template="spec/fixtures/lutaml/liquid_templates/_custom_gml_dictionary.liquid",source="gsi_map_level_dps"]
 
-          lutaml_gml_dictionary::[xml_path="./spec/fixtures/lutaml/Building_class.xml",source="gsi_map_level_dps",template_path="./spec/fixtures/lutaml/liquid_templates/_custom_gml_dictionary.liquid"]
         TEXT
       end
 
