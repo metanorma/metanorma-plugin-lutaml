@@ -6,4 +6,4 @@ packages:
 render_style: "entity_list"
 ea_extension:
   - "ISO19103MDG v1.0.0-beta.xml"
-  - "CityGML.xml"
+  - "CityGML_MDG_Technology.xml"
