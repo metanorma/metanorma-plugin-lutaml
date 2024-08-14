@@ -4,7 +4,6 @@ require "ogc/gml/dictionary"
 require "liquid"
 require_relative "liquid_drops/gml_dictionary_drop"
 require_relative "liquid_drops/gml_dictionary_entry_drop"
-require_relative "liquid_drops/gml_dictionary_source_drop"
 
 module Metanorma
   module Plugin
