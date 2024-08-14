@@ -2,7 +2,6 @@ require "spec_helper"
 
 RSpec.describe Metanorma::Plugin::Lutaml::LutamlGmlDictionaryBlock do
   describe "#process" do
-    let(:example_file) { fixtures_path("test.xmi") }
     subject(:output) { strip_guid(metanorma_process(input)) }
 
     context "with block template" do
@@ -15,7 +14,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlGmlDictionaryBlock do
           :no-isobib:
           :imagesdir: spec/assets
 
-          [lutaml_gml_dictionary,"spec/fixtures/lutaml/Building_class.xml",source="gsi_map_level_dps"]
+          [lutaml_gml_dictionary,"spec/fixtures/lutaml/Building_class.xml",context=dict]
           --
           {% capture link %}https://www.geospatial.jp/iur/codelists/3.1/{{ dict.file_name }}{% endcapture %}
 
@@ -31,7 +30,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlGmlDictionaryBlock do
           |===
 
           [.source]
-          <<{{ source.value }}>>
+          <<gsi_map_level_dps>>
           --
 
         TEXT
@@ -93,7 +92,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlGmlDictionaryBlock do
           :no-isobib:
           :imagesdir: spec/assets
 
-          [lutaml_gml_dictionary,"spec/fixtures/lutaml/TrafficArea_function.xml",source="gsi_map_level_dps"]
+          [lutaml_gml_dictionary,"spec/fixtures/lutaml/TrafficArea_function.xml",context=dict]
           --
           {% capture link %}https://www.geospatial.jp/iur/codelists/3.1/{{ dict.file_name }}{% endcapture %}
 
@@ -145,7 +144,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlGmlDictionaryBlock do
           |===
 
           [.source]
-          <<{{ source.value }}>>
+          <<gsi_map_level_dps>>
           --
 
         TEXT
