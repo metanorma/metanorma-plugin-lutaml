@@ -295,11 +295,22 @@ image::{{ image_base_path }}/{{ diagram.xmi_id }}.{{ format | default: 'png' }}[
 
 === Rendering a LutaML GML Dictionary: `lutaml_gml_dictionary`
 
-This command allows to render a LutaML GML Dictionary.
+This command allows to render a LutaML GML Dictionary by using Liquid Drop.
+
+GmlDictionaryDrop has the following attributes:
+
+* name
+* file_name
+* dictionary_entry
+
+Each `dictionary_entry` has the following attributes:
+
+* name
+* description
 
 [source,adoc]
 -----
-lutaml_gml_dictionary::["/path/to/dictionary.xml",source="source_string",template="/path/to/template.liquid"]
+lutaml_gml_dictionary::/path/to/dictionary.xml[template="/path/to/template.liquid",context=dict]
 -----
 
 The command accepts the options listed below:
@@ -307,10 +318,10 @@ The command accepts the options listed below:
 * `"/path/to/dictionary.xml` specifies the path of xml file of the
 GML Dictionary.
 
-* `source="source_string"` shows the link of the anchor.
-
-* `template="/path/yo/template.liquid"` specifies the liquid template.
+* `template="/path/to/template.liquid"` specifies the liquid template.
   For example, you can create a liquid template and link it by `template`.
+
+* `context=dict` define the context in the template.
 
 [source,adoc]
 -----
@@ -325,16 +336,16 @@ h| Code h| Description
 |===
 
 [.source]
-<<{{ source.value }}>>
+<<source_link>>
 -----
 
 In spite of specifying the path of the template, you can also define an inline
 template within a block by
-`[lutaml_gml_dictionary,"/path/to/dictionary.xml",source="source_string"]`.
+`[lutaml_gml_dictionary,"/path/to/dictionary.xml",context=dict]`.
 
 [source,adoc]
 -----
-[lutaml_gml_dictionary,"/path/to/dictionary.xml",source="source_string"]
+[lutaml_gml_dictionary,"/path/to/dictionary.xml",context=dict]
 --
 {% capture link %}https://www.test.com/{{ dict.file_name }}{% endcapture %}
 
@@ -349,7 +360,7 @@ h| Help | Description
 |===
 
 [.source]
-<<{{ source.value }}>>
+<<source_link>>
 --
 -----
 

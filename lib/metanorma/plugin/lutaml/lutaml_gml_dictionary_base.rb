@@ -12,15 +12,14 @@ module Metanorma
         private
 
         def render(tmpl, parent, attrs, orig_gml_path)
-          dict = get_gml_dictionary(parent, attrs, orig_gml_path)
-          tmpl.assigns["dict"] = GmlDictionaryDrop.new(dict)
-          tmpl.assigns["source"] = GmlDictionarySourceDrop.new(attrs["source"])
+          dict = get_gml_dictionary(parent, orig_gml_path)
+          tmpl.assigns[attrs["context"]] = GmlDictionaryDrop.new(dict)
           rendered_tmpl = tmpl.render
           block = create_open_block(parent, "", attrs)
           parse_content(block, rendered_tmpl, attrs)
         end
 
-        def get_gml_dictionary(parent, attrs, orig_gml_path)
+        def get_gml_dictionary(parent, orig_gml_path)
           gml_path = Utils.relative_file_path(
             parent.document, orig_gml_path
           )
