@@ -35,6 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "debug"
   spec.add_development_dependency "equivalent-xml"
   spec.add_development_dependency "metanorma-standoc"
+  spec.add_development_dependency "ogc-gml"
   spec.add_development_dependency "rake", "~> 13"
   spec.add_development_dependency "rspec", "~> 3.6"
   spec.add_development_dependency "rspec-html-matchers"
