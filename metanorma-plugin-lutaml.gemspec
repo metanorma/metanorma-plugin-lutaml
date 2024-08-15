@@ -30,6 +30,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "expressir", "~> 1.4.0"
   spec.add_dependency "liquid"
   spec.add_dependency "lutaml", ">= 0.9.4"
+  spec.add_dependency "ogc-gml"
   spec.add_dependency "relaton-cli"
 
   spec.add_development_dependency "debug"
