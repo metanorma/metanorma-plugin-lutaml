@@ -23,7 +23,8 @@ module Metanorma
           gml_path = Utils.relative_file_path(
             parent.document, orig_gml_path
           )
-          Ogc::Gml::Dictionary.from_xml(xml_content(gml_path))
+
+          ::Ogc::Gml::Dictionary.from_xml(xml_content(gml_path))
         end
 
         def xml_content(filepath)
