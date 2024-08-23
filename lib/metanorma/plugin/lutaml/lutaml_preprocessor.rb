@@ -229,9 +229,12 @@ module Metanorma
             )
           end.flatten
         rescue StandardError => e
+          ::Metanorma::Util.log(
+            "[LutamlPreprocessor] Failed to parse LutaML block: #{e.message}",
+            :error,
+          )
+          # [] # Return empty array to avoid breaking the document
           raise e
-          document.logger.warn("Failed to parse LutaML block: #{e.message}")
-          []
         end
 
         def parse_options(options_string)

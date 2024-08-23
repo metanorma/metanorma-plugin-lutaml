@@ -48,9 +48,11 @@ module Metanorma
 
         def notify_render_errors(document, errors)
           errors.each do |error_obj|
-            document
-              .logger
-              .warn("Liquid render error: #{error_obj.message}")
+            ::Metanorma::Util.log(
+              "[metanorma-plugin-lutaml] Liquid render error: " \
+              "#{error_obj.message}",
+              :error,
+            )
           end
         end
 
@@ -87,7 +89,11 @@ module Metanorma
             force_read: true,
           )
         rescue StandardError => e
-          document.logger.warn("Failed to load #{full_path}: #{e.message}")
+          ::Metanorma::Util.log(
+            "[metanorma-plugin-lutaml] Failed to load " \
+            "#{full_path}: #{e.message}",
+            :error,
+          )
           raise e
           # nil
         end
