@@ -21,7 +21,9 @@ module Metanorma
 
         def gml_dictionary_template(document, template_path)
           if template_path.nil?
-            document.logger.warn("Template not found!")
+            ::Metanorma::Util.log(
+              "[lutaml_gml_dictionary] Error: Template not found!", :error
+            )
           end
 
           rel_tmpl_path = Utils.relative_file_path(
