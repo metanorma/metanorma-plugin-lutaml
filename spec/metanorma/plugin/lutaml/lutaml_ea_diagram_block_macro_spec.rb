@@ -4,7 +4,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaDiagramBlockMacro do
   describe "#process" do
     context "when package referenced" do
       let(:example_file) do
-        # fixtures_path("plateau_uml_20240708_all_packages_export.xmi")
         fixtures_path("test.xmi")
       end
       let(:input) do

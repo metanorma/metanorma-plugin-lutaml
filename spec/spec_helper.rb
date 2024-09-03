@@ -21,6 +21,7 @@ Asciidoctor::Extensions.register do
   block_macro Metanorma::Plugin::Lutaml::LutamlEaDiagramBlockMacro
   block_macro Metanorma::Plugin::Lutaml::LutamlGmlDictionaryBlockMacro
   block Metanorma::Plugin::Lutaml::LutamlGmlDictionaryBlock
+  block_macro Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro
 end
 
 require "metanorma-standoc"
