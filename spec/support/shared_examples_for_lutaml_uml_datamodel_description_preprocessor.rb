@@ -112,3 +112,13 @@ RSpec.shared_examples "should contain xref objects" do |xref|
     end
   end
 end
+
+RSpec.shared_examples "should contain name, type, definition" do |i|
+  it "should contain name, type, definition" do
+    expect(subject).to have_tag("tr") do
+      with_tag "td", text: i[:name]
+      with_tag "td", text: i[:type]
+      with_tag "td", text: i[:def] if i[:def]
+    end
+  end
+end
