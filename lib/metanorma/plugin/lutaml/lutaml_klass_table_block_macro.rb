@@ -69,36 +69,41 @@ module Metanorma
           table_tmpl.render
         end
 
-        def render_general_rows(gen_attributes, upper_klass, parent, attrs)
+        def render_general_rows(gen_attributes, upper_klass, gen_name, parent,
+                                attrs)
           row_tmpl = get_template(
             parent.document, attrs["row_template"], :row
           )
-          render_rows(gen_attributes, upper_klass, row_tmpl)
+          render_rows(gen_attributes, upper_klass, gen_name, row_tmpl)
         end
 
-        def render_assoc_rows(gen_attributes, upper_klass, parent, attrs)
+        def render_assoc_rows(gen_attributes, upper_klass, gen_name, parent,
+                              attrs)
           row_tmpl = get_template(
             parent.document, attrs["assoc_template"], :assoc_row
           )
-          render_rows(gen_attributes, upper_klass, row_tmpl)
+          render_rows(gen_attributes, upper_klass, gen_name, row_tmpl)
         end
 
-        def render_rows(gen_attributes, upper_klass, row_tmpl)
-          attributes = prepare_row_attrbiutes(gen_attributes, upper_klass)
+        def render_rows(gen_attributes, upper_klass, gen_name, row_tmpl)
+          attributes = prepare_row_attrbiutes(gen_attributes, upper_klass,
+                                              gen_name)
           row_tmpl.assigns["attributes"] = attributes
           row_tmpl.render
         end
 
-        def prepare_row_attrbiutes(gen_attributes, upper_klass)
+        def prepare_row_attrbiutes(gen_attributes, upper_klass, gen_name) # rubocop:disable Metrics/MethodLength
           gen_attributes.map do |attr|
-            attr[:upper_klass] = case attr[:type_ns]
-                                 when "core", "gml"
-                                   upper_klass
-                                 else
-                                   attr[:type_ns]
-                                 end
+            attr[:gen_name] = gen_name
+            attr[:upper_klass] = upper_klass
+            attr[:name_ns] = case attr[:type_ns]
+                             when "core", "gml"
+                               upper_klass
+                             else
+                               attr[:type_ns]
+                             end
 
-            attr[:upper_klass] = upper_klass if attr[:upper_klass].nil?
+            attr[:name_ns] = upper_klass if attr[:name_ns].nil?
 
             KlassTableAttributeDrop.new(attr)
           end
@@ -107,13 +112,17 @@ module Metanorma
         def render_owned_props(gen, parent, attrs)
           gen_attributes = gen[:general_attributes]
           upper_klass = gen[:general_upper_klass]
-          render_general_rows(gen_attributes, upper_klass, parent, attrs)
+          gen_name = gen[:general_name]
+          render_general_rows(gen_attributes, upper_klass, gen_name, parent,
+                              attrs)
         end
 
         def render_assoc_props(gen, parent, attrs)
           gen_attributes = gen[:general_attributes]
           upper_klass = gen[:general_upper_klass]
-          render_assoc_rows(gen_attributes, upper_klass, parent, attrs)
+          gen_name = gen[:general_name]
+          render_assoc_rows(gen_attributes, upper_klass, gen_name, parent,
+                            attrs)
         end
 
         def render_inherited_props(gen, parent, attrs)
@@ -125,8 +134,9 @@ module Metanorma
           while general_item && !general_item.empty?
             gen_attributes = general_item[:general_attributes]
             upper_klass = general_item[:general_upper_klass]
+            gen_name = general_item[:general_name]
             rendered_rows += render_general_rows(gen_attributes, upper_klass,
-                                                 parent, attrs)
+                                                 gen_name, parent, attrs)
             general_item = general_item[:general]
           end
 
@@ -138,6 +148,7 @@ module Metanorma
           rendered_rows += render_general_rows(
             gen[:gml_attributes],
             gen[:gml_attributes].first[:upper_klass],
+            "gml",
             parent, attrs
           )
           rendered_rows
@@ -148,6 +159,7 @@ module Metanorma
           rendered_rows += render_general_rows(
             gen[:core_attributes],
             gen[:core_attributes].first[:upper_klass],
+            "core",
             parent, attrs
           )
           rendered_rows
@@ -158,6 +170,7 @@ module Metanorma
           rendered_rows += render_general_rows(
             gen[:gen_attributes],
             gen[:gen_attributes].first[:upper_klass],
+            "gen",
             parent, attrs
           )
           rendered_rows
@@ -170,8 +183,9 @@ module Metanorma
           while general_item && !general_item.empty?
             gen_attributes = general_item[:general_attributes]
             upper_klass = general_item[:general_upper_klass]
+            gen_name = general_item[:general_name]
             rendered_rows += render_assoc_rows(gen_attributes, upper_klass,
-                                               parent, attrs)
+                                               gen_name, parent, attrs)
             general_item = general_item[:general]
           end
 

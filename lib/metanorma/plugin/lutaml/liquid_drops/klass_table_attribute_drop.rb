@@ -53,7 +53,15 @@ class KlassTableAttributeDrop < Liquid::Drop
     @attr[:upper_klass]
   end
 
+  def name_ns
+    @attr[:name_ns]
+  end
+
   def type_ns
     @attr[:type_ns]
+  end
+
+  def gen_name
+    @attr[:gen_name]
   end
 end
