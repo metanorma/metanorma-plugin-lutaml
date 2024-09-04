@@ -1,7 +1,7 @@
 {%- for attr in attributes -%}
   {%- if attr.has_association? != false -%}
-    | {{ attr.upper_klass }}:{{ attr.name }}
-    | {{ attr.type_ns }}:{{ attr.type }} [{{ attr.cardinality }}]    
+    | {{ attr.name_ns }}:{{ attr.name }} ({{ attr.gen_name }})  
+    | {{ attr.type_ns }}:{{ attr.type }} [{{ attr.cardinality }}]  
     | {{ attr.definition }}
   {%- endif -%}
 {%- endfor -%}
