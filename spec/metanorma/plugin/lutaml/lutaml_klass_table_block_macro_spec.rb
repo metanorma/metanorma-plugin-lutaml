@@ -173,8 +173,10 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
 
     context "should render inherited properties from generalization" do
       [
-        { name: "bldg:lod0RoofEdge",
-          type: "gml:MultiSurface [0..1]" },
+        {
+          name: "bldg:lod0RoofEdge",
+          type: "gml:MultiSurface [0..1]",
+        },
         {
           name: "bldg:address",
           type: "core:Address [0..*]",
