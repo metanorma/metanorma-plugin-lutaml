@@ -1,5 +1,5 @@
 require "coradoc"
-require "coradoc/reverse_adoc"
+require "coradoc/input/html"
 
 module Metanorma
   module Plugin
@@ -7,7 +7,7 @@ module Metanorma
       module Liquid
         module CustomFilters
           def html2adoc(input)
-            Coradoc::ReverseAdoc.convert(input)
+            Coradoc::Input::HTML.convert(input)
           end
 
           def interpolate(input)
