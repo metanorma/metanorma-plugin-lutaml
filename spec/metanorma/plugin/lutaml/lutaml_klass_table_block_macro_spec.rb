@@ -28,7 +28,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
     end
 
     xcontext "should render core properties" do
-      [
+      name_type_def = [
         {
           name: "core:creationDate",
           type: "xs::date [0..1]",
@@ -49,13 +49,12 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
           type: "xs::date [0..1]",
           def: "データが削除された日。",
         },
-      ].each do |i|
-        include_examples "should contain name, type, definition", i
-      end
+      ]
+      include_examples "should contain name, type, definition", name_type_def
     end
 
     xcontext "should render gml properties" do
-      [
+      name_type_def = [
         {
           name: "gml:boundedBy",
           type: "gml::Envelope [0..1]",
@@ -69,13 +68,12 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
           name: "gml:name",
           type: "gml::CodeType [0..1]",
         },
-      ].each do |i|
-        include_examples "should contain name, type, definition", i
-      end
+      ]
+      include_examples "should contain name, type, definition", name_type_def
     end
 
     xcontext "should render gen properties" do
-      [
+      name_type_def = [
         {
           name: "gen:dateAttribute",
           type: "gen:dateAttribute [1..1]",
@@ -104,13 +102,12 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
           name: "gen:uriAttribute",
           type: "gen:uriAttribute [1..1]",
         },
-      ].each do |i|
-        include_examples "should contain name, type, definition", i
-      end
+      ]
+      include_examples "should contain name, type, definition", name_type_def
     end
 
     context "should render inherited properties" do
-      [
+      name_type_def = [
         {
           name: "bldg:class",
           type: "gml::CodeType [0..1]",
@@ -166,13 +163,12 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
           type: "xs::gYear [0..1]",
           def: "建築物が解体された年。",
         },
-      ].each do |i|
-        include_examples "should contain name, type, definition", i
-      end
+      ]
+      include_examples "should contain name, type, definition", name_type_def
     end
 
     context "should render inherited properties from generalization" do
-      [
+      name_type_def = [
         {
           name: "bldg:lod0RoofEdge",
           type: "gml:MultiSurface [0..1]",
@@ -289,9 +285,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
           name: "bldg:interiorBuildingInstallation",
           type: "bldg:IntBuildingInstallation [0..*]",
         },
-      ].each do |i|
-        include_examples "should contain name, type, definition", i
-      end
+      ]
+      include_examples "should contain name, type, definition", name_type_def
     end
   end
 end
