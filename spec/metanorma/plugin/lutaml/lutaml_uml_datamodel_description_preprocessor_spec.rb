@@ -85,7 +85,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
                          "text after CityGML package"
         include_examples "should contain footer text"
 
-        [
+        table = [
           {
             id: "EAID_3BCEAE64_F977_46b5_A08C_A29D52216B04",
             name: "Elements of(.*)Another::AbstractAtomicTimeseries",
@@ -176,11 +176,10 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
             id: "EAID_2ECE65B5_3620_4c27_B3A9_2D705C545692",
             name: "Definition table of(.*)Another::TimeValuePair",
           },
-        ].each do |i|
-          include_examples "should contain table", i[:id], i[:name]
-        end
+        ]
+        include_examples "should contain table", table
 
-        [
+        figure = [
           {
             id: "EAID_74DB2087_E1FC_42a7_A349_2D89BED649A5",
             name: "Dynamizer",
@@ -211,9 +210,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
             src: "spec/assets/requirements//" \
                  "EAID_938AE961_1C57_4052_B964_997D1894A58D.png",
           },
-        ].each do |i|
-          include_examples "should contain figure", i[:id], i[:name], i[:src]
-        end
+        ]
+        include_examples "should contain figure", figure
       end
 
       context "when there is an section_depth option supplied" do
@@ -300,7 +298,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           include_examples "should contain package content",
                            "Wrapper nested package"
 
-          [
+          table = [
             {
               id: "EAID_3BCEAE64_F977_46b5_A08C_A29D52216B04",
               name: "Elements of(.*)Another::AbstractAtomicTimeseries",
@@ -343,11 +341,10 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
               name: "Definition table of(.*)" \
               "Dynamizer::ADEOfCompositeTimeseries",
             },
-          ].each do |i|
-            include_examples "should contain table", i[:id], i[:name]
-          end
+          ]
+          include_examples "should contain table", table
 
-          [
+          figure = [
             {
               id: "EAID_ACBB5EE3_3428_40f5_9C7C_E41923419F29",
               name: "CityGML Package Diagram",
@@ -378,9 +375,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
               src: "spec/assets/requirements//" \
               "EAID_05A815AC_1EAE_4c98_A8F7_C178E3C1DF9C.png",
             },
-          ].each do |i|
-            include_examples "should contain figure", i[:id], i[:name], i[:src]
-          end
+          ]
+          include_examples "should contain figure", figure
         end
       end
 
@@ -427,7 +423,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
                   include_examples "should contain package content",
                                    "Wrapper nested package"
 
-                  [
+                  table = [
                     {
                       id: "EAID_3BCEAE64_F977_46b5_A08C_A29D52216B04",
                       name: "Elements of(.*)Another::AbstractAtomicTimeseries",
@@ -526,9 +522,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
                       id: "EAID_2ECE65B5_3620_4c27_B3A9_2D705C545692",
                       name: "Definition table of(.*)Another::TimeValuePair",
                     },
-                  ].each do |i|
-                    include_examples "should contain table", i[:id], i[:name]
-                  end
+                  ]
+                  include_examples "should contain table", table
                 when "entity_list"
                   include_examples "should contain clause title",
                                    "section-" \
@@ -543,7 +538,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
                                    "EAPK_15C00628_ED51_4a92_8216_10ADF1613D98",
                                    "Another"
 
-                  [
+                  xref = [
                     {
                       id: "EAID_3BCEAE64_F977_46b5_A08C_A29D52216B04",
                       name: "AbstractAtomicTimeseries",
@@ -564,21 +559,17 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
                       id: "EAID_D8E4EAFC_9DAF_4cba_9169_984738657435",
                       name: "AbstractConstruction",
                     },
-                  ].each do |i|
-                    include_examples "should contain xref objects",
-                                     i[:id], i[:name]
-                  end
+                  ]
+                  include_examples "should contain xref objects", xref
                 when "data_dictionary"
-                  [
-                    "Description",
-                    "Parent package",
-                    "Stereotype",
-                    "Subclass of",
-                  ].each do |th|
-                    it "should contain table headers" do
-                      expect(subject).to have_tag("th") do
-                        with_text /#{th}:/
-                      end
+                  it "should contain table headers" do
+                    [
+                      "Description",
+                      "Parent package",
+                      "Stereotype",
+                      "Subclass of",
+                    ].each do |th|
+                      expect(subject).to have_tag("th"), text: /#{th}:/
                     end
                   end
 
@@ -593,7 +584,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
                     expect(subject).to have_tag("note")
                   end
 
-                  [
+                  xref = [
                     {
                       id: "EAID_1D8715F2_4E4A_4f36_A414_1326B6DC1EDD",
                       name: "ADEOfAbstractAtomicTimeseries",
@@ -614,10 +605,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
                       id: "EAID_0DBF7AD4_080D_4238_9949_1CDB34142A59",
                       name: "ADEOfCompositeTimeseries",
                     },
-                  ].each do |i|
-                    include_examples "should contain xref objects",
-                                     i[:id], i[:name]
-                  end
+                  ]
+                  include_examples "should contain xref objects", xref
                 end
               end
             end
@@ -788,7 +777,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
                          "text after CityGML package"
         include_examples "should contain footer text"
 
-        [
+        table = [
           {
             id: "EAID_3BCEAE64_F977_46b5_A08C_A29D52216B04",
             name: "Elements of(.*)Another::AbstractAtomicTimeseries",
@@ -879,11 +868,10 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
             id: "EAID_2ECE65B5_3620_4c27_B3A9_2D705C545692",
             name: "Definition table of(.*)Another::TimeValuePair",
           },
-        ].each do |i|
-          include_examples "should contain table", i[:id], i[:name]
-        end
+        ]
+        include_examples "should contain table", table
 
-        [
+        figure = [
           {
             id: "EAID_74DB2087_E1FC_42a7_A349_2D89BED649A5",
             name: "Dynamizer",
@@ -914,9 +902,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
             src: "spec/assets/requirements//" \
                  "EAID_938AE961_1C57_4052_B964_997D1894A58D.png",
           },
-        ].each do |i|
-          include_examples "should contain figure", i[:id], i[:name], i[:src]
-        end
+        ]
+        include_examples "should contain figure", figure
       end
     end
 
@@ -990,7 +977,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
                          "ISO 19135 Procedures for item registration XML"
         include_examples "should contain table headers"
 
-        [
+        xref = [
           {
             id: "EAID_82206E96_8D23_48dd_AC2F_31939C484AF2",
             name: "RE_Register",
@@ -999,12 +986,10 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
             id: "EAID_82206E96_8D23_48dd_AC2F_92839C484AF2",
             name: "RE_Register_enum",
           },
-        ].each do |i|
-          include_examples "should contain xref objects",
-                           i[:id], i[:name]
-        end
+        ]
+        include_examples "should contain xref objects", xref
 
-        [
+        table = [
           {
             id: "EAID_82206E96_8D23_48dd_AC2F_31939C484AF2",
             name: "Elements of(.*)ISO 19135 Procedures for item " \
@@ -1015,9 +1000,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
             name: "Definition table of(.*)ISO 19135 Procedures for item " \
                   "registration",
           },
-        ].each do |i|
-          include_examples "should contain table", i[:id], i[:name]
-        end
+        ]
+        include_examples "should contain table", table
       end
     end
 
@@ -1054,8 +1038,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           end
         end
 
-        %w[Class Description].each do |th|
-          it "should contain table headers" do
+        it "should contain table headers" do
+          %w[Class Description].each do |th|
             expect(subject).to have_tag("th"), with: { text: th.to_s }
           end
         end
@@ -1097,21 +1081,19 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           end
         end
 
-        %w[Name Description].each do |th|
-          it "should contain table headers" do
+        it "should contain table headers" do
+          %w[Name Description].each do |th|
             expect(subject).to have_tag("th"), with: { text: th.to_s }
           end
         end
 
-        [
+        xref = [
           {
             id: "EAID_82206E96_8D23_48dd_AC2F_92839C484AF2",
             name: "RE_Register_enum",
           },
-        ].each do |i|
-          include_examples "should contain xref objects",
-                           i[:id], i[:name]
-        end
+        ]
+        include_examples "should contain xref objects", xref
       end
     end
   end
