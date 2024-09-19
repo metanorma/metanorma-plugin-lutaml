@@ -121,10 +121,10 @@ options)
                 end
               end
             end
-            children_pks_daigs = package_flat.call(all_children_packages)
+            children_pks_diags = package_flat.call(all_children_packages)
             ref_dictionary = ref_dictionary
               .merge(package_flat.call(lutaml_document.packages)
-                                      .merge(children_pks_daigs))
+                                      .merge(children_pks_diags))
           end
           document.attributes["lutaml_entity_id"] = ref_dictionary
         end
@@ -138,12 +138,12 @@ options)
               end
             end
           end
-          children_pks_daigs = package_flat_diagrams.call(
+          children_pks_diags = package_flat_diagrams.call(
             lutaml_document.packages.map(&:children_packages).flatten,
           )
           document.attributes["lutaml_figure_id"] = package_flat_diagrams
             .call(lutaml_document.packages)
-            .merge(children_pks_daigs)
+            .merge(children_pks_diags)
         end
 
         def collect_additional_context(document, input_lines, end_mark)
@@ -265,7 +265,7 @@ options)
 
         def config_entity_regexp(entity)
           additional_sym = ".*" if /\*$/.match?(entity)
-          %r{^#{Regexp.escape(entity.gsub('*', ''))}#{additional_sym}$}
+          %r{^#{Regexp.escape(entity.delete('*'))}#{additional_sym}$}
         end
 
         def model_representation(lutaml_document, document, additional_context,
