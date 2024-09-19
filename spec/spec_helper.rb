@@ -10,7 +10,7 @@ Asciidoctor::Extensions.register do
   inline_macro Metanorma::Plugin::Lutaml::LutamlFigureInlineMacro,
                :lutaml_figure
   preprocessor Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreprocessor
-  preprocessor Metanorma::Plugin::Lutaml::LutamlDropDatamodelDescriptionPreprocessor
+  preprocessor Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor
 end
 
 Asciidoctor::Extensions.register do

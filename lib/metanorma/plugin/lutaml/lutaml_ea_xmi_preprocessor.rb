@@ -15,10 +15,10 @@ module Metanorma
     module Lutaml
       #  Macro for quick rendering of datamodel attributes/values tables
       #  from liquid drop object
-      class LutamlDropDatamodelDescriptionPreprocessor <
+      class LutamlEaXmiPreprocessor <
           ::Asciidoctor::Extensions::Preprocessor
         MACRO_REGEXP =
-          /\[lutaml_drop_datamodel_description,([^,]+),?(.+)?\]/.freeze
+          /\[lutaml_ea_xmi,([^,]+),?(.+)?\]/.freeze
         LIQUID_INCLUDE_PATH = File.join(
           Gem.loaded_specs["metanorma-plugin-lutaml"].full_gem_path,
           "lib", "metanorma", "plugin", "lutaml", "liquid_templates"
@@ -34,7 +34,7 @@ module Metanorma
         SUPPORTED_NESTED_MACRO = %w[
           before diagram_include_block after include_block package_text
         ].freeze
-        # search document for block `lutaml_drop_datamodel_description`
+        # search document for block `lutaml_ea_xmi`
         #  read include derectives that goes after that in block and transform
         #  into yaml2text blocks
         def process(document, reader)
