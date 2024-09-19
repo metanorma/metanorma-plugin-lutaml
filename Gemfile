@@ -12,7 +12,6 @@ rescue StandardError
   nil
 end
 
-gem "lutaml", github: "lutaml/lutaml", branch: "render-klass-table"
 # gem "lutaml", path: "../../lutaml/lutaml"
 
 gem "ogc-gml", github: "lutaml/ogc-gml"
