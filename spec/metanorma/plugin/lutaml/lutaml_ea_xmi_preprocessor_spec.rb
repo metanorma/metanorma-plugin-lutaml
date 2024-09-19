@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Metanorma::Plugin::Lutaml::LutamlDropDatamodelDescriptionPreprocessor do
+RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
   describe "#process" do
     let(:example_file) { fixtures_path("large_test.xmi") }
     let(:config_file) do
@@ -17,7 +17,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDropDatamodelDescriptionPreproce
           :no-isobib:
           :imagesdir: spec/assets
 
-          [lutaml_drop_datamodel_description,#{example_file},#{config_file}]
+          [lutaml_ea_xmi,#{example_file},#{config_file}]
           --
           [.diagram_include_block, base_path="requirements/"]
           ...
@@ -226,7 +226,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDropDatamodelDescriptionPreproce
             :no-isobib:
             :imagesdir: spec/assets
 
-            [lutaml_drop_datamodel_description,#{example_file},#{config_file}]
+            [lutaml_ea_xmi,#{example_file},#{config_file}]
             --
             [.diagram_include_block, base_path="requirements/"]
             ...
@@ -392,7 +392,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDropDatamodelDescriptionPreproce
                 :no-isobib:
                 :imagesdir: spec/assets
 
-                [lutaml_drop_datamodel_description,#{example_file},#{config_file}]
+                [lutaml_ea_xmi,#{example_file},#{config_file}]
                 --
                 --
               TEXT
@@ -627,7 +627,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDropDatamodelDescriptionPreproce
             :no-isobib:
             :imagesdir: spec/assets
 
-            [lutaml_drop_datamodel_description,#{example_file},#{config_file}]
+            [lutaml_ea_xmi,#{example_file},#{config_file}]
             --
             --
           TEXT
@@ -659,7 +659,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDropDatamodelDescriptionPreproce
               :no-isobib:
               :imagesdir: spec/assets
 
-              [lutaml_drop_datamodel_description,#{example_file},#{config_file}]
+              [lutaml_ea_xmi,#{example_file},#{config_file}]
               --
               --
             TEXT
@@ -713,7 +713,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDropDatamodelDescriptionPreproce
           :no-isobib:
           :imagesdir: spec/assets
 
-          [lutaml_drop_datamodel_description,#{example_file}]
+          [lutaml_ea_xmi,#{example_file}]
           --
           [.diagram_include_block, base_path="requirements/"]
           ...
@@ -920,7 +920,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDropDatamodelDescriptionPreproce
           :no-isobib:
           :imagesdir: spec/assets
 
-          [lutaml_drop_datamodel_description,#{example_file}]
+          [lutaml_ea_xmi,#{example_file}]
           --
           [.include_block, package="Wrapper nested package", base_path="spec/fixtures/lutaml/"]
           ...
@@ -944,7 +944,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDropDatamodelDescriptionPreproce
 
           [.package_text, position="after"]
           ....
-          [lutaml_drop_datamodel_description,#{example_file},#{nested_config_file}]
+          [lutaml_ea_xmi,#{example_file},#{nested_config_file}]
           ---
           [.before]
           ......
@@ -1021,7 +1021,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDropDatamodelDescriptionPreproce
           :imagesdir: spec/assets
 
           .Classes in test2
-          [lutaml_drop_datamodel_description,#{example_file},#{config_file}]
+          [lutaml_ea_xmi,#{example_file},#{config_file}]
           ---
           ---
         TEXT
@@ -1062,7 +1062,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDropDatamodelDescriptionPreproce
           :imagesdir: spec/assets
 
           .Classes in test2
-          [lutaml_drop_datamodel_description,#{example_file},#{config_file}]
+          [lutaml_ea_xmi,#{example_file},#{config_file}]
           ---
           ---
         TEXT
