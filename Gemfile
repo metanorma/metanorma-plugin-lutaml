@@ -11,7 +11,3 @@ begin
 rescue StandardError
   nil
 end
-
-# gem "lutaml", path: "../../lutaml/lutaml"
-
-gem "ogc-gml", github: "lutaml/ogc-gml"
