@@ -826,6 +826,33 @@ and iterate through packages according to the order supplied in the file. All
 packages that matches `skip` in the YAML config file will be skipped during
 render.
 
+=== Usage of `lutaml_ea_xmi` macro
+
+This command is a replacement for `lutaml_uml_datamodel_description` to perform
+the same functionalities of `lutaml_uml_datamodel_description`, which is to
+render data model packages and its dependent objects for supplied XMI file, by
+using Liquid Drop.  The performance of `lutaml_ea_xmi` can be improved by
+10~20 times. (Tested with a 10.6MB XMI file with 120000+ lines)
+
+To use this macro, you only need to replace `lutaml_uml_datamodel_description`
+by `lutaml_ea_xmi`.
+
+Replace:
+
+[source,adoc]
+-----
+[lutaml_uml_datamodel_description, path/to/example.xmi]
+...
+-----
+
+By:
+
+[source,adoc]
+-----
+[lutaml_ea_xmi, path/to/example.xmi]
+...
+-----
+
 == Documentation
 
 Please refer to https://www.metanorma.org.
