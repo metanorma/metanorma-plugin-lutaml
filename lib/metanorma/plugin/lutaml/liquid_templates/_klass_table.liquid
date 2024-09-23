@@ -1,23 +1,24 @@
 [cols="1a,1a,2a"]
 |===
-| 型の定義
+| Definition of Type
 2+| {{ root.definition }}
 
-h| 上位の型 2+| {{ root.general.upper_klass }}:{{ root.general.name }}
-h| ステレオタイプ 2+| << {{ root.stereotype }} >>
+h| Upper Type 2+| {{ root.general.upper_klass }}:{{ root.general.name }}
+h| Stereotype 2+| << {{ root.stereotype }} >>
 
-3+h| 継承する属性
-h| 属性名 h| 属性の型及び多重度 h| 定義
+3+h| Inherited Properties
+h| Property Name h| Property Type and Multiplicity h| Definition
 {{ content.inherited_props }}
 
-3+h| 自身に定義された属性
+3+h| Self-defined Properties
+h| Property Name h| Property Type and Multiplicity h| Definition
 {{ content.owned_props }}
 
-3+h| 継承する関連役割
-h| 関連役割名 h| 関連役割の型及び多重度 h| 定義
+3+h| Properties Inherited from Association
+h| Property Name h| Property Type and Multiplicity h| Definition
 {{ content.inherited_assoc_props }}
 
-3+h| 自身に定義された関連役割
-h| 関連役割名 h| 関連役割の型及び多重度 h| 定義
+3+h| Properties Defined in Association
+h| Property Name h| Property Type and Multiplicity h| Definition
 {{ content.assoc_props }}
 |===
