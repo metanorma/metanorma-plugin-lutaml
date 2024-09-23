@@ -315,7 +315,7 @@ lutaml_gml_dictionary::/path/to/dictionary.xml[template="/path/to/template.liqui
 
 The command accepts the options listed below:
 
-* `"/path/to/dictionary.xml` specifies the path of xml file of the
+* `/path/to/dictionary.xml` specifies the path of xml file of the
 GML Dictionary.
 
 * `template="/path/to/template.liquid"` specifies the liquid template.
@@ -363,6 +363,36 @@ h| Help | Description
 <<source_link>>
 --
 -----
+
+=== Rendering a LutaML table of a class: `lutaml_klass_table`
+
+This command allows to render a LutaML table of a class by using Liquid Drop.
+
+The table will show:
+
+* Class Name
+* Class Definition
+* Inherited Properties
+* Self-defined Properties
+* Properties Inherited from Association
+* Properties Defined in Association
+
+[source,adoc]
+-----
+lutaml_klass_table::/path/to/example.xmi[name="NameOfClass",tmpl_folder="/path/to/templates"]
+-----
+
+The command accepts the options listed below:
+
+* `/path/to/example.xmi` specifies the path of xmi file.
+
+* `name="NameOfClass"` specifies the name of the Class.
+
+* `tmpl_folder="/path/to/templates"` specifies the folder path of the templates.
+  (Optional)  By default, it will look for the templates `_klass_table.liquid`,
+  `_klass_row.liquid` and `_klass_assoc_row.liquid` defined in
+  `lib/metanorma/plugin/lutaml/templates`.  These templates can be customized by
+  defining them in `/path/to/templates` and then set the `tmpl_folder` option.
 
 === Generating UML class and attributes: `lutaml_uml_class`
 
