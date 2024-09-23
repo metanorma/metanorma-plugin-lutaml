@@ -11,23 +11,23 @@ module Metanorma
       class LutamlKlassTableBlockMacro < ::Asciidoctor::Extensions::BlockMacroProcessor
         DEFAULT_TEMPLATE_PATH = File.join(
           Gem::Specification.find_by_name("metanorma-plugin-lutaml").gem_dir,
-          "lib/metanorma/plugin/lutaml/liquid_templates/<NAME>.liquid",
+          "lib", "metanorma", "plugin", "lutaml", "liquid_templates"
         )
-        DEFAULT_TABLE_TEMPLATE = DEFAULT_TEMPLATE_PATH
-          .gsub("<NAME>", "_klass_table")
-        DEFAULT_ROW_TEMPLATE = DEFAULT_TEMPLATE_PATH
-          .gsub("<NAME>", "_klass_row")
-        DEFAULT_ASSOC_ROW_TEMPLATE = DEFAULT_TEMPLATE_PATH
-          .gsub("<NAME>", "_klass_assoc_row")
 
         use_dsl
         named :lutaml_klass_table
 
         def process(parent, target, attrs)
-          result_path = Utils.relative_file_path(parent.document, target)
+          xmi_path = Utils.relative_file_path(parent.document, target)
+
+          if attrs["tmpl_folder"]
+            attrs["tmpl_folder"] = Utils.relative_file_path(
+              parent.document, attrs["tmpl_folder"]
+            )
+          end
 
           gen = ::Lutaml::XMI::Parsers::XML.serialize_generalization_by_name(
-            result_path, attrs["name"]
+            xmi_path, attrs["name"]
           )
 
           render(gen, parent, attrs)
@@ -51,16 +51,6 @@ module Metanorma
             gen, parent, attrs
           )
 
-          # content[:inherited_props] += render_named_inherited_props(
-          #   gen, parent, attrs, "gml"
-          # )
-          # content[:inherited_props] += render_named_inherited_props(
-          #   gen, parent, attrs, "core"
-          # )
-          # content[:inherited_assoc_props] += render_named_inherited_props(
-          #   gen, parent, attrs, "gen"
-          # )
-
           rendered_table = render_table(gen, parent, attrs, content)
 
           block = create_open_block(parent, "", attrs)
@@ -69,7 +59,7 @@ module Metanorma
 
         def render_table(gen, parent, attrs, content)
           table_tmpl = get_template(
-            parent.document, attrs["table_template"], :table
+            parent.document, attrs, :table
           )
 
           table_tmpl.assigns["root"] = KlassTableDrop.new(gen)
@@ -81,14 +71,14 @@ module Metanorma
 
         def render_general_rows(general_item, parent, attrs)
           row_tmpl = get_template(
-            parent.document, attrs["row_template"], :row
+            parent.document, attrs, :row
           )
           render_rows(general_item, row_tmpl)
         end
 
         def render_assoc_rows(general_item, parent, attrs)
           row_tmpl = get_template(
-            parent.document, attrs["assoc_template"], :assoc_row
+            parent.document, attrs, :assoc_row
           )
           render_rows(general_item, row_tmpl)
         end
@@ -127,28 +117,6 @@ module Metanorma
           render_assoc_rows(gen, parent, attrs)
         end
 
-        def render_gml_inherited_props(gen, parent, attrs)
-          render_named_inherited_props(gen, parent, attrs, "gml")
-        end
-
-        def render_core_inherited_props(gen, parent, attrs)
-          render_named_inherited_props(gen, parent, attrs, "core")
-        end
-
-        def render_gen_inherited_props(gen, parent, attrs)
-          render_named_inherited_props(gen, parent, attrs, "gen")
-        end
-
-        def render_named_inherited_props(gen, parent, attrs, name)
-          attr_key = "#{name}_attributes".to_sym
-          general_item = {}
-          general_item[:general_attributes] = gen[attr_key]
-          general_item[:general_upper_klass] = gen[attr_key].first[:upper_klass]
-          general_item[:general_name] = name
-
-          render_general_rows(general_item, parent, attrs)
-        end
-
         def render_inherited_props(gen, parent, attrs)
           render_inherited_rows(gen, parent, attrs, assoc: false)
         end
@@ -173,10 +141,13 @@ module Metanorma
           rendered_rows
         end
 
-        def get_template(document, template_path, tmpl_type)
-          if template_path.nil?
-            template_path = get_default_template_path(tmpl_type)
+        def get_template(document, attrs, tmpl_type)
+          tmpl_folder = DEFAULT_TEMPLATE_PATH
+          if attrs["tmpl_folder"]
+            tmpl_folder = attrs["tmpl_folder"]
           end
+          template_path = get_default_template_path(tmpl_type, tmpl_folder,
+                                                    attrs)
 
           rel_tmpl_path = Utils.relative_file_path(
             document, template_path
@@ -185,15 +156,17 @@ module Metanorma
           ::Liquid::Template.parse(File.read(rel_tmpl_path))
         end
 
-        def get_default_template_path(tmpl_type)
-          case tmpl_type
-          when :row
-            DEFAULT_ROW_TEMPLATE
-          when :assoc_row
-            DEFAULT_ASSOC_ROW_TEMPLATE
-          else
-            DEFAULT_TABLE_TEMPLATE
-          end
+        def get_default_template_path(tmpl_type, tmpl_folder, attrs)
+          liquid_template = case tmpl_type
+                            when :row
+                              attrs["row_tmpl_name"] || "_klass_row"
+                            when :assoc_row
+                              attrs["assoc_row_tmpl_name"] || "_klass_assoc_row"
+                            else
+                              attrs["table_tmpl_name"] || "_klass_table"
+                            end
+
+          File.join(tmpl_folder, "#{liquid_template}.liquid")
         end
       end
     end
