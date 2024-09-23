@@ -523,18 +523,24 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
                   include_examples "should contain table", table
 
                 when "entity_list"
-                  include_examples "should contain clause title",
-                                   "section-" \
-                                   "EAPK_9C96A88B_E98B_490b_8A9C_24AEDAC64293",
-                                   "Wrapper nested package"
-                  include_examples "should contain clause title",
-                                   "section-" \
-                                   "EAPK_369E0123_00FC_4098_BEF2_3BB506B2012A",
-                                   "CityGML"
-                  include_examples "should contain clause title",
-                                   "section-" \
-                                   "EAPK_15C00628_ED51_4a92_8216_10ADF1613D98",
-                                   "Another"
+                  clause_title = [
+                    {
+                      clause_id: "section-" \
+                      "EAPK_9C96A88B_E98B_490b_8A9C_24AEDAC64293",
+                      title: "Wrapper nested package",
+                    },
+                    {
+                      clause_id: "section-" \
+                      "EAPK_369E0123_00FC_4098_BEF2_3BB506B2012A",
+                      title: "CityGML",
+                    },
+                    {
+                      clause_id: "section-" \
+                      "EAPK_15C00628_ED51_4a92_8216_10ADF1613D98",
+                      title: "Another",
+                    },
+                  ]
+                  include_examples "should contain clause title", clause_title
 
                   xref = [
                     {
@@ -968,12 +974,17 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
       # @note datamodel_description_sections_nested_macroses.xml
       context "correctly renders input" do
         include_examples "should contain preface"
-        include_examples "should contain clause title",
-                         "section-EAPK_9C96A88B_E98B_490b_8A9C_24AEDAC64293",
-                         "Wrapper nested package"
-        include_examples "should contain clause title",
-                         "section-EAPK_9C96A88B_E98B_490b_8A9C_24AEDAC64293",
-                         "ISO 19135 Procedures for item registration XML"
+        clause_title = [
+          {
+            clause_id: "section-EAPK_9C96A88B_E98B_490b_8A9C_24AEDAC64293",
+            title: "Wrapper nested package",
+          },
+          {
+            clause_id: "section-EAPK_9C96A88B_E98B_490b_8A9C_24AEDAC64293",
+            title: "ISO 19135 Procedures for item registration XML",
+          },
+        ]
+        include_examples "should contain clause title", clause_title
         include_examples "should contain table headers"
 
         xref = [
@@ -1039,7 +1050,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
 
         it "should contain table headers" do
           %w[Class Description].each do |th|
-            expect(subject).to have_tag("th"), with: { text: th.to_s }
+            expect(subject).to have_tag("th", text: th)
           end
         end
       end
@@ -1082,7 +1093,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
 
         it "should contain table headers" do
           %w[Name Description].each do |th|
-            expect(subject).to have_tag("th"), with: { text: th.to_s }
+            expect(subject).to have_tag("th", text: th)
           end
         end
 
