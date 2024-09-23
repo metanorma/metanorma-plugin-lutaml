@@ -42,36 +42,38 @@ RSpec.shared_examples "should contain package content" do |package_name|
   end
 end
 
-RSpec.shared_examples "should contain clause title" do |clause_id, title|
+RSpec.shared_examples "should contain clause title" do |clause_title|
   it "should contain clause title" do
-    expect(subject).to have_tag("clause", with: { id: clause_id }) do
-      with_tag "title", text: /#{title}/
+    clause_title.each do |ct|
+      expect(subject).to have_tag("clause", with: { id: ct[:clause_id] }) do
+        with_tag "title", text: /#{ct[:title]}/
+      end
     end
   end
 end
 
 RSpec.shared_examples "should contain text" do |text|
   it "should contain text" do
-    expect(subject).to have_tag("p"), with: { text: /#{text}/ }
+    expect(subject).to have_tag("p", text: /#{text}/)
   end
 end
 
-RSpec.shared_examples "should contain figure" do |figure|
+RSpec.shared_examples "should contain figure" do |figures|
   it "should contain figure" do
-    figure.each do |id, name, src|
-      expect(subject).to have_tag("figure"), with: { id: "figure-#{id}" }
-      expect(subject).to have_tag("name"), text: /#{name}/
-      expect(subject).to have_tag("image"), with: { src: src }
+    figures.each do |figure|
+      expect(subject).to have_tag("figure",
+                                  with: { id: "figure-#{figure[:id]}" })
+      expect(subject).to have_tag("name", text: /#{figure[:name]}/)
+      expect(subject).to have_tag("image", with: { src: figure[:src] })
     end
   end
 end
 
 RSpec.shared_examples "should contain table" do |table|
-  it "should contain table id and name" do
-    table.each do |id, name|
-      expect(subject).to have_tag("table"), with: { id: "table#section-#{id}" }
+  it "should contain table name" do
+    table.each do |i|
       expect(subject).to have_tag("table") do
-        with_tag "name", text: /#{name}/
+        with_tag "name", text: /#{i[:name]}/
       end
     end
   end
@@ -97,18 +99,29 @@ RSpec.shared_examples "should contain table headers" do
       Constraints
       Values
     ].each do |th|
-      expect(subject).to have_tag("th"), with: { text: "#{th}:" }
+      expect(subject).to have_tag("th", text: /#{th}/)
     end
   end
 end
 
-RSpec.shared_examples "should contain xref objects" do |xref|
+RSpec.shared_examples "should contain properties related headers" do |headers|
+  it "should contain properties related headers" do
+    headers.each do |th|
+      expect(subject).to have_tag("th", text: /#{th}/)
+    end
+  end
+end
+
+RSpec.shared_examples "should contain xref objects" do |xrefs|
   it "should contain xref objects" do
-    xref.each do |id, name|
-      expect(subject).to have_tag("xref"), with: {
-        target: "section-#{id}",
-        text: /#{name}/,
-      }
+    xrefs.each do |xref|
+      expect(subject).to have_tag(
+        "xref",
+        with: {
+          target: "section-#{xref[:id]}",
+        },
+        text: xref[:name],
+      )
     end
   end
 end
