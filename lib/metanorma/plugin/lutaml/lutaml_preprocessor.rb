@@ -167,18 +167,21 @@ module Metanorma
           options
         end
 
-        def decorate_schema_object(schema:, document:, indexes:, index_names:, selected:, options:)
+        def decorate_schema_object(schema:, document:, indexes:, index_names:, # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Metrics/ParameterLists
+selected:, options:)
           # Mark a schema as "selected" with `.selected`
           schema["selected"] = true if selected
 
           # Provide pretty-formatted code under `.formatted`
-          index_found_key, index_found_value = indexes.detect do |k,v|
-            found = v[:wrapper].original_document.schemas.detect do |s|
+          _index_found_key, index_found_value = indexes.detect do |k, v|
+            _found = get_original_document(v[:wrapper]).schemas.detect do |s|
               s.id == schema["id"]
             end
           end
 
-          schema["formatted"] = index_found_value[:wrapper].original_document.schemas.detect do |s|
+          schema["formatted"] = get_original_document(
+            index_found_value[:wrapper],
+          ).schemas.detect do |s|
             s.id == schema["id"]
           end.to_s(no_remarks: true)
 
@@ -193,8 +196,15 @@ module Metanorma
           ) || {}
         end
 
-        def render_template(document:, lines:, context_name:, index_names:, options:, indexes:)
+        def get_original_document(wrapper)
+          doc = wrapper
+          return doc if doc.instance_of?(::Lutaml::XMI::RootDrop)
 
+          doc.original_document
+        end
+
+        def render_template(document:, lines:, context_name:, index_names:, # rubocop:disable Metrics/ParameterLists,Metrics/AbcSize,Metrics/MethodLength
+options:, indexes:)
           config_yaml_path = options.delete("config_yaml")
           config = read_config_yaml_file(document, config_yaml_path)
           selected_schemas = config["selected_schemas"]
@@ -204,21 +214,19 @@ module Metanorma
             document: document,
             indexes: indexes,
           ).map do |items|
-
             serialized_hash = items[:serialized_hash]
 
-            if serialized_hash["schemas"]
-              serialized_hash["schemas"].map! do |schema|
-
-                decorate_schema_object(
-                  schema: schema,
-                  document: document,
-                  index_names: index_names,
-                  indexes: indexes,
-                  selected: selected_schemas && selected_schemas.include?(schema["id"]),
-                  options: options
-                )
-              end
+            serialized_hash["schemas"]&.map! do |schema|
+              decorate_schema_object(
+                schema: schema,
+                document: document,
+                index_names: index_names,
+                indexes: indexes,
+                selected: selected_schemas && selected_schemas.include?(
+                  schema["id"],
+                ),
+                options: options,
+              )
             end
 
             render_block(
