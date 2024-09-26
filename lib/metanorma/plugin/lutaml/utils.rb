@@ -56,8 +56,15 @@ module Metanorma
           end
         end
 
-        def load_express_repositories(path:, cache_path:, document:, force_read: false)
+        def get_original_document(wrapper)
+          doc = wrapper
+          return doc if doc.instance_of?(::Lutaml::XMI::RootDrop)
 
+          doc.original_document
+        end
+
+        def load_express_repositories(path:, cache_path:, document:,
+force_read: false)
           cache_full_path = cache_path &&
             Utils.relative_file_path(document, cache_path)
 
@@ -73,7 +80,7 @@ module Metanorma
           if cache_full_path && !File.file?(cache_full_path)
             save_express_repo_to_cache(
               cache_full_path,
-              lutaml_wrapper.original_document,
+              get_original_document(lutaml_wrapper),
               document,
             )
           end

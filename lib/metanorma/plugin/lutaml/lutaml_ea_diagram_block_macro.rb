@@ -12,8 +12,7 @@ module Metanorma
         named :lutaml_ea_diagram
 
         def process(parent, _target, attrs)
-          orig_doc = parent.document.attributes["lutaml_xmi_cache"]
-            .values.first.original_document
+          orig_doc = get_original_document(parent)
           diagram = fetch_diagram_by_name(orig_doc, attrs["name"])
           return if diagram.nil?
 
@@ -26,6 +25,13 @@ module Metanorma
         end
 
         private
+
+        def get_original_document(parent)
+          doc = parent.document.attributes["lutaml_xmi_cache"].values.first
+          return doc if doc.instance_of?(::Lutaml::XMI::RootDrop)
+
+          doc.original_document
+        end
 
         def img_src_path(document, attrs, diagram)
           base_path = attrs["base_path"]
