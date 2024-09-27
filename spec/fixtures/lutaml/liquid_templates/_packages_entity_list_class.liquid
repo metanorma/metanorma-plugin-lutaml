@@ -1,0 +1,19 @@
+{% for package in context.packages %}
+{% assign not_classes_stereotypes = 'DataType,BasicType,Enumeration,CodeList' | split: ','%}
+[cols="2a,6a",options="header"]
+|===
+|Class |Description
+
+{% for klass in package.classes %}
+{% assign klass_name = klass.name %}
+{% assign package_name = package.name %}
+{% unless package_entities and package_entities[package_name][klass_name] != true %}
+{% unless not_classes_stereotypes contains klass.stereotype %}
+| <<section-{{ klass.xmi_id }},{{ klass.name }}>> «{{ klass.stereotype }}»
+| {{ klass.definition | replace: '|', '\|' }}
+
+{% endunless %}
+{% endunless %}
+{% endfor %}
+|===
+{% endfor %}

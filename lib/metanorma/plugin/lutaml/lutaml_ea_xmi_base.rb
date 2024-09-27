@@ -314,10 +314,16 @@ module Metanorma
                                                  options),
             context_name: "context",
             document: document,
-            include_path: LIQUID_INCLUDE_PATH,
+            include_path: template_path(document, options["template_path"]),
           )
           Utils.notify_render_errors(document, errors)
           render_result.split("\n")
+        end
+
+        def template_path(document, template_path)
+          return LIQUID_INCLUDE_PATH if template_path.nil?
+
+          Utils.relative_file_path(document, template_path)
         end
 
         def template(section_depth, render_style, include_root)
