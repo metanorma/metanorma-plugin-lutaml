@@ -4,3 +4,5 @@ spec/assets/lutaml
 test.err
 
 .rubocop-https--*
+.DS_Store
+.vscode
