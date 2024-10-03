@@ -128,7 +128,11 @@
 {% endfor %}
 
 {% for klass in package.classes %}
+{% if klass.type == "Class" %}
 {% include "packages_class" %}
+{% else %}
+{% include "packages_assoc_class" %}
+{% endif %}
 {% endfor %}
 
 {% for klass in package.enums %}
