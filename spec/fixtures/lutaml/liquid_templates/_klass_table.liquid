@@ -8,17 +8,57 @@ h| ステレオタイプ 2+| << {{ root.stereotype }} >>
 
 3+h| 継承する属性
 h| 属性名 h| 属性の型及び多重度 h| 定義
-{{ content.inherited_props }}
+{% for attr in root.inherited_props %}
+  {%- if attr.has_association? == false -%}
+    {%- capture name_col -%}
+      {{ attr.name_ns }}:{{ attr.name }}
+      ({{ attr.gen_name }})
+    {%- endcapture -%}
+    | {{ name_col | newline_to_br }}
+    | {{ attr.type }} [{{ attr.cardinality }}] 
+    | {{ attr.definition }}
+  {%- endif -%}
+{% endfor %}
 
 3+h| 自身に定義された属性
 h| 属性名 h| 属性の型及び多重度 h| 定義
-{{ content.owned_props }}
+{% for attr in root.owned_props %}
+  {%- if attr.has_association? == false -%}
+    {%- capture name_col -%}
+      {{ attr.name_ns }}:{{ attr.name }}
+      ({{ attr.gen_name }})
+    {%- endcapture -%}
+    | {{ name_col | newline_to_br }}
+    | {{ attr.type }} [{{ attr.cardinality }}] 
+    | {{ attr.definition }}
+  {%- endif -%}
+{% endfor %}
 
 3+h| 継承する関連役割
 h| 関連役割名 h| 関連役割の型及び多重度 h| 定義
-{{ content.inherited_assoc_props }}
+{% for attr in root.inherited_assoc_props %}
+  {%- if attr.has_association? == true -%}
+    {%- capture name_col -%}
+      {{ attr.name_ns }}:{{ attr.name }}
+      ({{ attr.gen_name }})
+    {%- endcapture -%}
+    | {{ name_col | newline_to_br }}
+    | {{ attr.type_ns }}:{{ attr.type }} [{{ attr.cardinality }}] 
+    | {{ attr.definition }}
+  {%- endif -%}
+{% endfor %}
 
 3+h| 自身に定義された関連役割
 h| 関連役割名 h| 関連役割の型及び多重度 h| 定義
-{{ content.assoc_props }}
+{% for attr in root.assoc_props %}
+  {%- if attr.has_association? == true -%}
+    {%- capture name_col -%}
+      {{ attr.name_ns }}:{{ attr.name }}
+      ({{ attr.gen_name }})
+    {%- endcapture -%}
+    | {{ name_col | newline_to_br }}
+    | {{ attr.type_ns }}:{{ attr.type }} [{{ attr.cardinality }}] 
+    | {{ attr.definition }}
+  {%- endif -%}
+{% endfor %}
 |===

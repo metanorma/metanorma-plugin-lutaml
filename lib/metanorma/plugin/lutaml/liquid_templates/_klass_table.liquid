@@ -8,17 +8,57 @@ h| Stereotype 2+| << {{ root.stereotype }} >>
 
 3+h| Inherited Properties
 h| Property Name h| Property Type and Multiplicity h| Definition
-{{ content.inherited_props }}
+{% for attr in root.inherited_props %}
+  {%- if attr.has_association? == false -%}
+    {%- capture name_col -%}
+      {{ attr.name_ns }}:{{ attr.name }}
+      ({{ attr.gen_name }})
+    {%- endcapture -%}
+    | {{ name_col | newline_to_br }}
+    | {{ attr.type }} [{{ attr.cardinality }}] 
+    | {{ attr.definition }}
+  {%- endif -%}
+{% endfor %}
 
 3+h| Self-defined Properties
 h| Property Name h| Property Type and Multiplicity h| Definition
-{{ content.owned_props }}
+{% for attr in root.owned_props %}
+  {%- if attr.has_association? == false -%}
+    {%- capture name_col -%}
+      {{ attr.name_ns }}:{{ attr.name }}
+      ({{ attr.gen_name }})
+    {%- endcapture -%}
+    | {{ name_col | newline_to_br }}
+    | {{ attr.type }} [{{ attr.cardinality }}] 
+    | {{ attr.definition }}
+  {%- endif -%}
+{% endfor %}
 
 3+h| Properties Inherited from Association
 h| Property Name h| Property Type and Multiplicity h| Definition
-{{ content.inherited_assoc_props }}
+{% for attr in root.inherited_assoc_props %}
+  {%- if attr.has_association? == true -%}
+    {%- capture name_col -%}
+      {{ attr.name_ns }}:{{ attr.name }}
+      ({{ attr.gen_name }})
+    {%- endcapture -%}
+    | {{ name_col | newline_to_br }}
+    | {{ attr.type_ns }}:{{ attr.type }} [{{ attr.cardinality }}] 
+    | {{ attr.definition }}
+  {%- endif -%}
+{% endfor %}
 
 3+h| Properties Defined in Association
 h| Property Name h| Property Type and Multiplicity h| Definition
-{{ content.assoc_props }}
+{% for attr in root.assoc_props %}
+  {%- if attr.has_association? == true -%}
+    {%- capture name_col -%}
+      {{ attr.name_ns }}:{{ attr.name }}
+      ({{ attr.gen_name }})
+    {%- endcapture -%}
+    | {{ name_col | newline_to_br }}
+    | {{ attr.type_ns }}:{{ attr.type }} [{{ attr.cardinality }}] 
+    | {{ attr.definition }}
+  {%- endif -%}
+{% endfor %}
 |===
