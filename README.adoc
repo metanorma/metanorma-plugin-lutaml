@@ -379,7 +379,7 @@ The table will show:
 
 [source,adoc]
 -----
-lutaml_klass_table::/path/to/example.xmi[name="NameOfClass",tmpl_folder="/path/to/templates"]
+lutaml_klass_table::/path/to/example.xmi[name="NameOfClass",template="/path/to/templates/_my_klass_table.liquid"]
 -----
 
 The command accepts the options listed below:
@@ -388,11 +388,11 @@ The command accepts the options listed below:
 
 * `name="NameOfClass"` specifies the name of the Class.
 
-* `tmpl_folder="/path/to/templates"` specifies the folder path of the templates.
-  (Optional)  By default, it will look for the templates `_klass_table.liquid`,
-  `_klass_row.liquid` and `_klass_assoc_row.liquid` defined in
-  `lib/metanorma/plugin/lutaml/templates`.  These templates can be customized by
-  defining them in `/path/to/templates` and then set the `tmpl_folder` option.
+* `template="/path/to/templates/_my_klass_table.liquid"` specifies the path of
+  the liquid template. (Optional)
+  By default, it will look for the template `_klass_table.liquid` defined in
+  `lib/metanorma/plugin/lutaml/templates`.  This template can be customized by
+  changing the template path in the `template` option.
 
 === Generating UML class and attributes: `lutaml_uml_class`
 
