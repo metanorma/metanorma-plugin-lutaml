@@ -240,7 +240,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
           :no-isobib:
           :imagesdir: spec/assets
 
-          lutaml_klass_table::#{example_file}[name="Building",tmpl_folder="spec/fixtures/lutaml/liquid_templates"]
+          lutaml_klass_table::#{example_file}[name="Building",template="spec/fixtures/lutaml/liquid_templates/_klass_table.liquid"]
         TEXT
       end
 
