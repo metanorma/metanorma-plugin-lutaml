@@ -1188,9 +1188,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
         include_examples "should contain footer text"
 
         it "should contain table headers defined in the templates" do
-          File.open("test.html", "w") do |file|
-            file.write(metanorma_process(input))
-          end
           [
             "New\ Name",
             "New\ Definition",
