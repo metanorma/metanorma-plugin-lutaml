@@ -63,6 +63,7 @@ BLANK_HDR = <<~"HDR".freeze
       </copyright>
       <ext>
         <doctype>standard</doctype>
+        <flavor>standoc</flavor>
       </ext>
     </bibdata>
     <metanorma-extension>
