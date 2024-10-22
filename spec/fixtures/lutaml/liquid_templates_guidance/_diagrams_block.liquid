@@ -1,0 +1,11 @@
+{{ text }}
+
+{% for diagram in package.diagrams %}
+[[figure-{{ diagram.xmi_id }}]]
+.{{ diagram.name }}
+image::{{ image_base_path }}/{{ diagram.xmi_id }}.{{ format | default: 'png' }}[]
+
+{% if diagram.definition %}
+{{ diagram.definition | html2adoc }}
+{% endif %}
+{% endfor %}

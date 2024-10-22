@@ -1,0 +1,87 @@
+{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
+{% capture generalizations %}{% assign inheritance = klass.associations | where: "member_end_type", "inheritance" %}{% for assoc in inheritance %}{% if additional_context.external_classes[assoc.member_end] %}<<{{ additional_context.external_classes[assoc.member_end] }},{{ assoc.member_end }}>>{% else %}<<section-{{ assoc.member_end_xmi_id }},{{ assoc.member_end }}>>{% endif %}{% endfor %}{% endcapture %}
+[[section-{{ klass.xmi_id }}]]
+{{equalsigns}} {{ klass.name }}
+{%comment%}(inside class: depth is {{ depth }}, equalsigns {{equalsigns}}){%endcomment%}
+
+.Metadata of {{ klass.name }} {% if klass.stereotype %}(«{{klass.stereotype}}»){% endif %}
+[cols="1a,4a"]
+|===
+h| Definition:
+|
+{% if klass.definition %}
+{{ klass.definition | replace: '|', '\|' | html2adoc }}
+{% endif %}
+
+h| Subclass of:
+|
+{% if generalizations.size > 0 %}{{ generalizations }}{% else %}None{% endif %}
+
+h| Stereotype:
+|
+{% if klass.stereotype %}
+«{{ klass.stereotype }}»
+{% else %}
+None
+{% endif %}
+
+{% if klass.constraints.size > 0 %}
+{% for constraint in klass.constraints %}
+h| Constraint:
+| `{{ constraint.body }}`:
+
+[source,ocl,%unnumbered]
+------
+{{ constraint.definition | replace: '|', '\|' }}
+------
+{% endfor %}
+{% endif %}
+
+|===
+
+{% if klass.associations.size > 0 %}
+{% capture rendered_associations %}
+{% for assoc in klass.associations %}
+{% if assoc.member_end_attribute_name.size > 0 %}
+{% capture cardinality %}&#91;{% case assoc.member_end_cardinality.min %}{% when "C" %}0{% when "M" %}1{% else %}{{assoc.member_end_cardinality.min}}{% endcase %}..{{ assoc.member_end_cardinality.max }}&#93;{% endcapture %}
+| {{ assoc.member_end_attribute_name }}
+{% if additional_context.external_classes[assoc.member_end] %}| <<{{ additional_context.external_classes[assoc.member_end] }},{{assoc.member_end}}>> {{ cardinality }}{% else %}| <<section-{{ assoc.member_end_xmi_id }},{{ assoc.member_end }}>> {{ cardinality }}{% endif %}
+| {{ assoc.definition | replace: '|', '\|' | html2adoc }}
+{% endif %}
+{% endfor %}
+{% endcapture %}
+{% assign associations_stripped = rendered_associations | strip_newlines | strip %}
+
+{% if associations_stripped.size > 0 %}
+.Associations of {{ klass.name }} ({{ klass.stereotype }})
+[cols="15a,20a,60a",options="header"]
+|===
+| Role name | Target class and multiplicity | Definition
+
+{{ rendered_associations }}
+
+|===
+{% endif %}
+{% endif %}
+
+{% if klass.attributes.size > 0 %}
+.Attributes of {{ klass.name }} ({{klass.stereotype}})
+[cols="15a,20a,60a",options="header"]
+|===
+| Attribute | Value type and multiplicity | Definition
+
+{% for attr in klass.attributes %}
+{% capture cardinality %}&#91;{% case attr.cardinality.min %}{% when 'C' %}0{% when 'M' %}1{% else %}{{ attr.cardinality.min }}{% endcase %}..{{ attr.cardinality.max }}&#93;{% endcapture %}
+| {{ attr.name }}
+{% if additional_context.external_classes[attr.type] %}| <<{{ additional_context.external_classes[attr.type] }},{{ attr.type }}>> {{ cardinality }}{% else %}| <<section-{{ attr.xmi_id }},{{ attr.type }}>> {{ cardinality }}{% endif %}
+| {{ attr.definition | replace: '|', '\|' | html2adoc }}
+
+{% endfor %}
+|===
+
+[NOTE,keep-separate=true]
+====
+Unless otherwise specified, all attributes and role names have the stereotype
+«Property».
+====
+{% endif %}

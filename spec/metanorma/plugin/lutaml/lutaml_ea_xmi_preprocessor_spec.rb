@@ -1331,5 +1331,116 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
         include_examples "should contain figure", figure
       end
     end
+
+    context "when `guidance` option supplied" do
+      let(:example_file) { fixtures_path("plateau_all_packages_export.xmi") }
+      let(:config_file) do
+        fixtures_path(
+          "lutaml_uml_datamodel_description_config_guidance.yml",
+        )
+      end
+      let (:input) do
+        <<~TEXT
+          = Document title
+          Author
+          :nodoc:
+          :novalid:
+          :no-isobib:
+          :imagesdir: spec/assets
+
+          [lutaml_ea_xmi,#{example_file},#{config_file}]
+          --
+          [.diagram_include_block, base_path="requirements/"]
+          ...
+          Diagram text
+          ...
+
+          [.include_block, package="Another", base_path="spec/fixtures/lutaml/"]
+          ...
+          my text
+          ...
+
+          [.include_block, base_path="spec/fixtures/lutaml/"]
+          ...
+          my text
+          ...
+
+          [.before]
+          ...
+          mine text
+          ...
+
+          [.before, package="Another"]
+          ...
+          text before Another package
+          ...
+
+          [.after, package="Another"]
+          ...
+          text after Another package
+          ...
+
+          [.after, package="CityGML"]
+          ...
+          text after CityGML package
+          ...
+
+          [.after]
+          ...
+          footer text
+          ...
+          --
+        TEXT
+      end
+
+      subject (:output) { metanorma_process(input) }
+
+      context "correctly renders input" do
+        include_examples "should contain text", "Diagram text"
+        include_examples "should contain text", "my text"
+        include_examples "should contain text", "mine text"
+        include_examples "should contain footer text"
+
+        table = [
+          {
+            name: "Elements of(.*)bldg::_AbstractBuilding",
+          },
+          {
+            name: "Elements of(.*)bldg::Building",
+          },
+          {
+            name: "Elements of(.*)bldg::BuildingPart",
+          },
+        ]
+        include_examples "should contain table", table
+
+        it "should contain Used and Guidance" do
+          [
+            {
+              name: "gml:boundedBy",
+              type: "gml::Envelope [0..1]",
+              desc: "建築物の範囲及び適用される空間参照系。",
+              used: "false",
+              guidance: "この属性は使用されていません。",
+            },
+            {
+              name: "gml:description",
+              type: "gml::StringOrRefType [0..1]",
+              desc: "土地利用の概要。",
+              used: "true",
+              guidance: "",
+            },
+          ].each do |i|
+            expect(subject).to have_tag("tr") do
+              with_tag "td", text: /#{i[:name]}/
+              with_tag "td", text: i[:type]
+              with_tag "td", text: i[:desc]
+              with_tag "td", text: i[:used]
+              with_tag "td", text: i[:guidance]
+            end
+          end
+        end
+      end
+    end
   end
 end
