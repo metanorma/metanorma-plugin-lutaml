@@ -55,10 +55,22 @@ module Metanorma
             Xmi::EaRoot.load_extension(ea_extension_full_path)
           end
 
-          result_document = parse_result_document(full_path)
+          guidance = get_guidance_file(document, yaml_config["guidance"])
+          result_document = parse_result_document(full_path, guidance)
           document.attributes["lutaml_xmi_cache"] ||= {}
           document.attributes["lutaml_xmi_cache"][full_path] = result_document
           result_document
+        end
+
+        def get_guidance_file(document, guidance_config)
+          guidance = nil
+
+          if guidance_config
+            guidance = Utils.relative_file_path(document,
+                                                guidance_config)
+          end
+
+          guidance
         end
 
         def parse_yaml_config_file(document, file_path)

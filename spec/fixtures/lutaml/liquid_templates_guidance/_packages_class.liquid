@@ -1,0 +1,90 @@
+{% assign is_klass_spare = klass.name | slice: 0,5 %}
+{% if is_klass_spare == 'old: ' %}{% continue %}
+{% elsif is_klass_spare == 'Spare' %}{% continue %}
+{% endif %}
+{% assign klass_name = klass.name | downcase | replace: ':', '' | replace: ' ', '_' %}
+[[section-{{ klass.type }}-{{ klass.xmi_id }}]]
+.Elements of &#8220;{{ package.name }}::{{ klass.name }}&#8221; ({{ klass.stereotype }})
+{% assign root = klass.generalization %}
+
+{%- capture upper_klass_name -%}
+{{ root.general.upper_klass }}:{{ root.general.name }}
+{%- endcapture -%}
+{%- if upper_klass_name == ":" -%}
+  {%- assign upper_klass_name = "-" -%}
+{%- endif -%}
+{%- capture stereotype -%}<< {{ root.stereotype }} >>{%- endcapture -%}
+{%- if stereotype == "<<  >>" -%}
+  {%- assign stereotype = " " -%}
+{%- endif -%}
+
+[cols="1a,1a,2a,1a,1a"]
+|===
+| Definition of Type 4+| {{ root.definition }}
+h| Upper Type 4+| {{ upper_klass_name }}
+h| Stereotype 4+| {{ stereotype }}
+
+5+h| Inherited Properties
+h| Property Name h| Property Type and Multiplicity h| Definition h| Used h| Guidance
+{% for attr in root.inherited_props %}
+  {%- if attr.has_association? == false -%}
+    {%- capture name_col -%}
+      {{ attr.name_ns }}:{{ attr.name }}
+      ({{ attr.gen_name }})
+    {%- endcapture -%}
+    | {{ name_col | newline_to_br }}
+    | {{ attr.type }} [{{ attr.cardinality.min }}..{{ attr.cardinality.max }}] 
+    | {{ attr.definition }}
+    | {{ attr.used? }}
+    | {{ attr.guidance }}
+  {%- endif -%}
+{% endfor %}
+
+5+h| Self-defined Properties
+h| Property Name h| Property Type and Multiplicity h| Definition h| Used h| Guidance
+{% for attr in root.owned_props %}
+  {%- if attr.has_association? == false -%}
+    {%- capture name_col -%}
+      {{ attr.name_ns }}:{{ attr.name }}
+      ({{ attr.gen_name }})
+    {%- endcapture -%}
+    | {{ name_col | newline_to_br }}
+    | {{ attr.type }} [{{ attr.cardinality.min }}..{{ attr.cardinality.max }}] 
+    | {{ attr.definition }}
+    | {{ attr.used? }}
+    | {{ attr.guidance }}
+  {%- endif -%}
+{% endfor %}
+
+5+h| Properties Inherited from Association
+h| Property Name h| Property Type and Multiplicity h| Definition h| Used h| Guidance
+{% for attr in root.inherited_assoc_props %}
+  {%- if attr.has_association? == true -%}
+    {%- capture name_col -%}
+      {{ attr.name_ns }}:{{ attr.name }}
+      ({{ attr.gen_name }})
+    {%- endcapture -%}
+    | {{ name_col | newline_to_br }}
+    | {{ attr.type_ns }}:{{ attr.type }} [{{ attr.cardinality.min }}..{{ attr.cardinality.max }}] 
+    | {{ attr.definition }}
+    | {{ attr.used? }}
+    | {{ attr.guidance }}
+  {%- endif -%}
+{% endfor %}
+
+5+h| Properties Defined in Association
+h| Property Name h| Property Type and Multiplicity h| Definition h| Used h| Guidance
+{% for attr in root.assoc_props %}
+  {%- if attr.has_association? == true -%}
+    {%- capture name_col -%}
+      {{ attr.name_ns }}:{{ attr.name }}
+      ({{ attr.gen_name }})
+    {%- endcapture -%}
+    | {{ name_col | newline_to_br }}
+    | {{ attr.type_ns }}:{{ attr.type }} [{{ attr.cardinality.min }}..{{ attr.cardinality.max }}] 
+    | {{ attr.definition }}
+    | {{ attr.used? }}
+    | {{ attr.guidance }}
+  {%- endif -%}
+{% endfor %}
+|===

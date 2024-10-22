@@ -22,8 +22,14 @@ module Metanorma
             )
           end
 
+          if attrs["guidance"]
+            attrs["guidance"] = Utils.relative_file_path(
+              parent.document, attrs["guidance"]
+            )
+          end
+
           klass = ::Lutaml::XMI::Parsers::XML.serialize_generalization_by_name(
-            xmi_path, attrs["name"]
+            xmi_path, attrs["name"], attrs["guidance"]
           )
 
           render(klass, parent, attrs)

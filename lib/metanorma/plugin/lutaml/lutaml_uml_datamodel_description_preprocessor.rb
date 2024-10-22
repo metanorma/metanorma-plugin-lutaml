@@ -24,7 +24,7 @@ module Metanorma
 
         private
 
-        def parse_result_document(full_path)
+        def parse_result_document(full_path, _guidance = nil)
           ::Lutaml::Parser.parse(File.new(full_path, encoding: "UTF-8")).first
         end
       end
