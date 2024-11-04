@@ -394,6 +394,29 @@ The command accepts the options listed below:
   `lib/metanorma/plugin/lutaml/templates`.  This template can be customized by
   changing the template path in the `template` option.
 
+* `guidance="/path/to/my_guidance.yml"`specifies the path of
+  the yaml file of the guidance. (Optional)
+
+The guidance file should be in the following format:
+
+[source,yaml]
+----
+---
+classes:
+  - name: Name Of Class
+    attributes:
+      - name: Name Of Attribute (e.g. gml:boundedBy)
+        used: false
+        guidance: |
+          Drop guidance message here.
+...
+----
+
+If you want to define the guidance, you can define the `name` of the class
+under `classes`.  Then define which `attributes` you want to add guidance by the
+`name`. Set `used` to show the attribute is used or not. Drop the message of
+guidance in `guidance`.
+
 === Generating UML class and attributes: `lutaml_uml_class`
 
 This command allows rendering a definition clause for a UML class.
@@ -852,6 +875,19 @@ By:
 [lutaml_ea_xmi, path/to/example.xmi]
 ...
 -----
+
+You can define guidance in the configuration file as well. The configuration
+file will looks like:
+
+[source,yaml]
+-----
+packages:
+  - my_package
+guidance: "path/to/guidance.yaml"
+-----
+
+Please refer to `lutaml_klass_table` section for how to configure the guidance
+yaml file.
 
 == Documentation
 
