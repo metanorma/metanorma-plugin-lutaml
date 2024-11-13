@@ -699,5 +699,248 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
         end
       end
     end
+
+    context "with name and package options" do
+      subject(:output) { metanorma_process(input) }
+
+      let(:example_file) do
+        fixtures_path("plateau_all_packages_export.xmi")
+      end
+      let(:input) do
+        <<~TEXT
+          = Document title
+          Author
+          :nodoc:
+          :novalid:
+          :no-isobib:
+          :imagesdir: spec/assets
+
+          lutaml_klass_table::#{example_file}[package="tun",name="Door"]
+        TEXT
+      end
+
+      it "should render table" do
+        expect(output).to have_tag("table") do
+          with_tag "colgroup"
+          with_tag "tbody"
+        end
+      end
+
+      context "should render inherited properties" do
+        name_type_def = [
+          {
+            name: "gml:description",
+            type: "gml::StringOrRefType [0..1]",
+            def: "土地利用の概要。",
+          },
+          {
+            name: "gml:name",
+            type: "gml::CodeType [0..1]",
+            def: "",
+          },
+          {
+            name: "gml:boundedBy",
+            type: "gml::Envelope [0..1]",
+            def: "建築物の範囲及び適用される空間参照系。",
+          },
+          {
+            name: "core:creationDate",
+            type: "xs::date [0..1]",
+            def: "データが作成された日。運用上必須とする。",
+          },
+          {
+            name: "core:terminationDate",
+            type: "xs::date [0..1]",
+            def: "データが削除された日。",
+          },
+          {
+            name: "core:relativeToTerrain",
+            type: "core::RelativeToTerrainType [0..1]",
+            def: "建築物と地表面との相対的な位置関係。",
+          },
+          {
+            name: "core:relativeToWater",
+            type: "core::RelativeToWaterType [0..1]",
+            def: "建築物と水面との相対的な位置関係。",
+          },
+        ]
+        include_examples "should contain name, type, definition", name_type_def
+      end
+
+      context "should render default table headers" do
+        headers = %w[
+          Inherited Properties
+          Self-defined Properties
+          Properties Inherited from Association
+          Properties Defined in Association
+          Property Name
+          Property Type and Multiplicity
+          Definition
+        ]
+        include_examples "should contain properties related headers", headers
+      end
+    end
+
+    context "with relative path option" do
+      subject(:output) { metanorma_process(input) }
+
+      let(:example_file) do
+        fixtures_path("plateau_all_packages_export.xmi")
+      end
+      let(:input) do
+        <<~TEXT
+          = Document title
+          Author
+          :nodoc:
+          :novalid:
+          :no-isobib:
+          :imagesdir: spec/assets
+
+          lutaml_klass_table::#{example_file}[path="tun::Door"]
+        TEXT
+      end
+
+      it "should render table" do
+        expect(output).to have_tag("table") do
+          with_tag "colgroup"
+          with_tag "tbody"
+        end
+      end
+
+      context "should render inherited properties" do
+        name_type_def = [
+          {
+            name: "gml:description",
+            type: "gml::StringOrRefType [0..1]",
+            def: "土地利用の概要。",
+          },
+          {
+            name: "gml:name",
+            type: "gml::CodeType [0..1]",
+            def: "",
+          },
+          {
+            name: "gml:boundedBy",
+            type: "gml::Envelope [0..1]",
+            def: "建築物の範囲及び適用される空間参照系。",
+          },
+          {
+            name: "core:creationDate",
+            type: "xs::date [0..1]",
+            def: "データが作成された日。運用上必須とする。",
+          },
+          {
+            name: "core:terminationDate",
+            type: "xs::date [0..1]",
+            def: "データが削除された日。",
+          },
+          {
+            name: "core:relativeToTerrain",
+            type: "core::RelativeToTerrainType [0..1]",
+            def: "建築物と地表面との相対的な位置関係。",
+          },
+          {
+            name: "core:relativeToWater",
+            type: "core::RelativeToWaterType [0..1]",
+            def: "建築物と水面との相対的な位置関係。",
+          },
+        ]
+        include_examples "should contain name, type, definition", name_type_def
+      end
+
+      context "should render default table headers" do
+        headers = %w[
+          Inherited Properties
+          Self-defined Properties
+          Properties Inherited from Association
+          Properties Defined in Association
+          Property Name
+          Property Type and Multiplicity
+          Definition
+        ]
+        include_examples "should contain properties related headers", headers
+      end
+    end
+
+    context "with absolute path option" do
+      subject(:output) { metanorma_process(input) }
+
+      let(:example_file) do
+        fixtures_path("plateau_all_packages_export.xmi")
+      end
+      let(:input) do
+        <<~TEXT
+          = Document title
+          Author
+          :nodoc:
+          :novalid:
+          :no-isobib:
+          :imagesdir: spec/assets
+
+          lutaml_klass_table::#{example_file}[path="::EA_Model::Conceptual Models::CityGML2.0::tun::Door"]
+        TEXT
+      end
+
+      it "should render table" do
+        expect(output).to have_tag("table") do
+          with_tag "colgroup"
+          with_tag "tbody"
+        end
+      end
+
+      context "should render inherited properties" do
+        name_type_def = [
+          {
+            name: "gml:description",
+            type: "gml::StringOrRefType [0..1]",
+            def: "土地利用の概要。",
+          },
+          {
+            name: "gml:name",
+            type: "gml::CodeType [0..1]",
+            def: "",
+          },
+          {
+            name: "gml:boundedBy",
+            type: "gml::Envelope [0..1]",
+            def: "建築物の範囲及び適用される空間参照系。",
+          },
+          {
+            name: "core:creationDate",
+            type: "xs::date [0..1]",
+            def: "データが作成された日。運用上必須とする。",
+          },
+          {
+            name: "core:terminationDate",
+            type: "xs::date [0..1]",
+            def: "データが削除された日。",
+          },
+          {
+            name: "core:relativeToTerrain",
+            type: "core::RelativeToTerrainType [0..1]",
+            def: "建築物と地表面との相対的な位置関係。",
+          },
+          {
+            name: "core:relativeToWater",
+            type: "core::RelativeToWaterType [0..1]",
+            def: "建築物と水面との相対的な位置関係。",
+          },
+        ]
+        include_examples "should contain name, type, definition", name_type_def
+      end
+
+      context "should render default table headers" do
+        headers = %w[
+          Inherited Properties
+          Self-defined Properties
+          Properties Inherited from Association
+          Properties Defined in Association
+          Property Name
+          Property Type and Multiplicity
+          Definition
+        ]
+        include_examples "should contain properties related headers", headers
+      end
+    end
   end
 end

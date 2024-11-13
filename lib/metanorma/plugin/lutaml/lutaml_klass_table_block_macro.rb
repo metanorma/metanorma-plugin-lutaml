@@ -28,8 +28,16 @@ module Metanorma
             )
           end
 
+          path = if !attrs["path"].nil?
+                   attrs["path"]
+                 elsif !attrs["package"].nil? && !attrs["name"].nil?
+                   "#{attrs['package']}::#{attrs['name']}"
+                 else
+                   attrs["name"]
+                 end
+
           klass = ::Lutaml::XMI::Parsers::XML.serialize_generalization_by_name(
-            xmi_path, attrs["name"], attrs["guidance"]
+            xmi_path, path, attrs["guidance"]
           )
 
           render(klass, parent, attrs)
