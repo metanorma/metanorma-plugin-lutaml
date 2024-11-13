@@ -386,7 +386,25 @@ The command accepts the options listed below:
 
 * `/path/to/example.xmi` specifies the path of xmi file.
 
-* `name="NameOfClass"` specifies the name of the Class.
+* `name` option only, `name` option with `package` option or `path` option.
+  One of 3 forms of options can be used to specify the name of the class.
+
+** `name="NameOfClass"` specifies the name of the Class. (e.g. `name="Building"`)
+
+** `package="NameOfPackage"name="NameOfClass"` specifies the name of the
+   `class` (specified by `name` option) inside the `package`
+   (specified by `package` option).
+   The `package` option must be used with the `name` option.
+   (e.g. `package="uro",name="_BoundarySurface"`)
+
+** `path="PathOfClass"` specifies the `absolute` path of the Class
+   which is started with `::`
+   (e.g. `path="::EA_Model::Conceptual Models::i-UR::Urban Planning ADE 3.
+   1::uro::_BoundarySurface"`)
+   or `relative` path of the Class which is not started with `::`
+   (e.g. `path="uro::_BoundarySurface"`).
+   The last part of the path separated by `::` is the name of the Class.
+   The other parts of the path are the names of the Packages.
 
 * `template="/path/to/templates/_my_klass_table.liquid"` specifies the path of
   the liquid template. (Optional)
@@ -394,7 +412,7 @@ The command accepts the options listed below:
   `lib/metanorma/plugin/lutaml/templates`.  This template can be customized by
   changing the template path in the `template` option.
 
-* `guidance="/path/to/my_guidance.yml"`specifies the path of
+* `guidance="/path/to/my_guidance.yml"` specifies the path of
   the yaml file of the guidance. (Optional)
 
 The guidance file should be in the following format:
