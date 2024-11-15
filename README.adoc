@@ -907,8 +907,36 @@ packages:
 guidance: "path/to/guidance.yaml"
 -----
 
-Please refer to `lutaml_klass_table` section for how to configure the guidance
-yaml file.
+The guidance file should be in the following format:
+
+[source,yaml]
+----
+---
+classes:
+  - name: "NameOfClass"
+    attributes:
+      - name: Name Of Attribute (e.g. gml:boundedBy)
+        used: false
+        guidance: |
+          Drop guidance message here.
+...
+----
+
+If you want to define the guidance, you can define the `name` of the class
+under `classes`.  Then define which `attributes` you want to add guidance by the
+`name`. Set `used` to show the attribute is used or not. Drop the message of
+guidance in `guidance`.
+
+The `name` of class can be defined in the following ways:
+
+* `name: "NameOfClass"` specifies the name of the `class`.
+  (e.g. `name: "Building"`)
+  If there are multiple classes with the same name, it is recommended to
+  specify the class by absolute path.
+
+* `name: "::NameOfPackage::NameOfClass"` specifies the name of the `class` in
+  `absolute` path.
+  (e.g. `name: "::EA_Model::Conceptual Models::CityGML2.0::bldg::Building"`)
 
 == Documentation
 
