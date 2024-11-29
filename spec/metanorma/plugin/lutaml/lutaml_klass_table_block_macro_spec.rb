@@ -100,8 +100,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
             type: "core:Address [0..*]",
           },
           {
-            name: "uro:boundedBy",
-            type: "uro:_BoundarySurface [0..*]",
+            name: "bldg:boundedBy",
+            type: "bldg:_BoundarySurface [0..*]",
           },
           {
             name: "bldg:lod2Solid",
@@ -323,8 +323,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
             type: "core:Address [0..*]",
           },
           {
-            name: "uro:boundedBy",
-            type: "uro:_BoundarySurface [0..*]",
+            name: "bldg:boundedBy",
+            type: "bldg:_BoundarySurface [0..*]",
           },
           {
             name: "bldg:lod2Solid",
@@ -546,8 +546,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
             type: "core:Address [0..*]",
           },
           {
-            name: "uro:boundedBy",
-            type: "uro:_BoundarySurface [0..*]",
+            name: "bldg:boundedBy",
+            type: "bldg:_BoundarySurface [0..*]",
           },
           {
             name: "bldg:lod2Solid",
