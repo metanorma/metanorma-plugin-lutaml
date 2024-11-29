@@ -15,12 +15,13 @@ module Metanorma
       class LutamlPreprocessor < ::Asciidoctor::Extensions::Preprocessor
         REMARKS_ATTRIBUTE = "remarks"
 
-        def process(document, reader)
+        def process(document, reader) # rubocop:disable Metrics/MethodLength
           r = Asciidoctor::PreprocessorNoIfdefsReader.new(document,
                                                           reader.lines)
           input_lines = r.readlines.to_enum
 
           has_lutaml = input_lines.any? { |line| lutaml?(line) }
+          has_lutaml_liquid = input_lines.any? { |line| lutaml_liquid?(line) }
 
           express_indexes = Utils.parse_document_express_indexes(
             document,
@@ -33,7 +34,7 @@ module Metanorma
             express_indexes: express_indexes,
           )
 
-          log(document, result_content) if has_lutaml
+          log(document, result_content) if has_lutaml || has_lutaml_liquid
 
           Asciidoctor::PreprocessorNoIfdefsReader.new(document, result_content)
         end
@@ -50,6 +51,10 @@ module Metanorma
           line.match(/^\[(?:\blutaml\b|\blutaml_express\b),(?<index_names>[^,]+)?,?(?<context_name>[^,]+)?(?<options>,.*)?\]/)
         end
 
+        def lutaml_liquid?(line)
+          line.match(/^\[(?:\blutaml_express_liquid\b),(?<index_names>[^,]+)?,?(?<context_name>[^,]+)?(?<options>,.*)?\]/)
+        end
+
         def load_lutaml_file(document, file_path)
           ::Lutaml::Parser.parse(
             File.new(
@@ -61,28 +66,19 @@ module Metanorma
 
         private
 
-        def process_input_lines(
-          document:,
-            input_lines:,
-            express_indexes:
-        )
-
+        def process_input_lines(document:, input_lines:, express_indexes:)
           result = []
           loop do
             result.push(
-              *process_text_blocks(
-                document,
-                input_lines,
-                express_indexes,
-              ),
+              *process_text_blocks(document, input_lines, express_indexes),
             )
           end
           result
         end
 
-        def process_text_blocks(document, input_lines, express_indexes)
+        def process_text_blocks(document, input_lines, express_indexes) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength
           line = input_lines.next
-          block_header_match = lutaml?(line)
+          block_header_match = lutaml?(line) || lutaml_liquid?(line)
 
           return [line] if block_header_match.nil?
 
@@ -93,6 +89,17 @@ module Metanorma
             parse_options(block_header_match[:options].to_s.strip) || {}
 
           end_mark = input_lines.next
+
+          if lutaml_liquid?(line)
+            return render_liquid_template(
+              document: document,
+              lines: extract_block_lines(input_lines, end_mark),
+              index_names: index_names,
+              context_name: context_name,
+              options: options,
+              indexes: express_indexes,
+            )
+          end
 
           render_template(
             document: document,
@@ -122,7 +129,8 @@ module Metanorma
             # Does this condition ever happen? That is only if the
             # `lutaml-express-index` condition is not set
             if indexes[path]
-              indexes[path][:serialized_hash] ||= indexes[path][:wrapper].to_liquid
+              indexes[path][:serialized_hash] ||=
+                indexes[path][:wrapper].to_liquid
             else
 
               full_path = Utils.relative_file_path(document, path)
@@ -137,6 +145,30 @@ module Metanorma
               indexes[path] = {
                 wrapper: wrapper,
                 serialized_hash: wrapper.to_liquid,
+              }
+            end
+
+            indexes[path]
+          end
+        end
+
+        def gather_context_liquid_items(index_names:, document:, indexes:)
+          index_names.map do |path|
+            if indexes[path]
+              indexes[path][:liquid_drop] ||=
+                indexes[path][:wrapper].original_document.to_liquid
+            else
+              full_path = Utils.relative_file_path(document, path)
+              unless File.file?(full_path)
+                raise StandardError.new(
+                  "Unable to load EXPRESS index for `#{path}`, " \
+                  "please define it at `:lutaml-express-index:` or specify " \
+                  "the full path.",
+                )
+              end
+              wrapper = load_lutaml_file(document, path)
+              indexes[path] = {
+                liquid_drop: wrapper.original_document.to_liquid,
               }
             end
 
@@ -235,6 +267,27 @@ options:, indexes:)
               context_items: serialized_hash,
               context_name: context_name,
             )
+          end.flatten
+        rescue StandardError => e
+          ::Metanorma::Util.log(
+            "[LutamlPreprocessor] Failed to parse LutaML block: #{e.message}",
+            :error,
+          )
+          # [] # Return empty array to avoid breaking the document
+          raise e
+        end
+
+        def render_liquid_template(document:, lines:, context_name:, # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Metrics/ParameterLists
+index_names:, options:, indexes:)
+          gather_context_liquid_items(
+            index_names: index_names,
+            document: document,
+            indexes: indexes,
+          ).map do |items|
+            repo_drop = items[:liquid_drop]
+            template = ::Liquid::Template.parse(lines.join("\n"))
+            template.assigns[context_name] = repo_drop
+            template.render
           end.flatten
         rescue StandardError => e
           ::Metanorma::Util.log(
