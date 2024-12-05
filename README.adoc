@@ -225,7 +225,7 @@ Example of usage:
 Author
 :lutaml-express-index: index_name; /path/to/express_files; cache=/path/to/cache_file.yaml
 
-[lutaml,index_name,context]
+[lutaml_express_liquid,index_name,context]
 ----
 {% for schema in context.schemas %}
 == {{schema.id}}
@@ -233,7 +233,14 @@ Author
 ----
 -----
 
-=== Filtering EXPRESS schemas defined in an index for `lutaml_express`
+* The `lutaml_express_liquid` macro processes the EXPRESS files specified by
+  the `index_name` and makes them available in the `context` as
+  Liquid Drops object.
+
+* The Liquid template inside the macro block iterates over the `schemas` in
+  the `context` and renders the attributes of each schema such as `id`.
+
+=== Using `config.yaml`
 
 This functionality allows `[lutaml_express]` blocks to load a full set of
 EXPRESS schemas in one index, and then provide a select ("filter") option
