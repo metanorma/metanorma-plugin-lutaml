@@ -48,11 +48,11 @@ module Metanorma
         end
 
         def lutaml?(line)
-          line.match(/^\[(?:\blutaml\b|\blutaml_express\b),(?<index_names>[^,]+)?,?(?<context_name>[^,]+)?(?<options>,.*)?\]/)
+          false
         end
 
         def lutaml_liquid?(line)
-          line.match(/^\[(?:\blutaml_express_liquid\b),(?<index_names>[^,]+)?,?(?<context_name>[^,]+)?(?<options>,.*)?\]/)
+          line.match(/^\[(?:\blutaml\b|\blutaml_express\b|\blutaml_express_liquid\b),(?<index_names>[^,]+)?,?(?<context_name>[^,]+)?(?<options>,.*)?\]/) # rubocop:disable Layout/LineLength
         end
 
         def load_lutaml_file(document, file_path)
