@@ -73,7 +73,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
       expect(File.exist?("test.adoc.lutaml.log.txt")).to be false
     end
 
-    %w[lutaml_express lutaml].each do |macro|
+    %w[lutaml_express_liquid].each do |macro|
       context "when macro used" do
         context "Array of hashes" do
           let(:input) do
@@ -170,7 +170,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               ----
 
 
-              [lutaml_express,#{example_file},my_context, leveloffset=-1]
+              [lutaml_express_liquid,#{example_file},my_context, leveloffset=-1]
               ----
 
               {% for schema in my_context.schemas %}
@@ -292,7 +292,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 :no-isobib:
                 :lutaml-express-index: express_index; #{fixtures_path('expressir_relative_paths')}; cache=#{cache_path}
 
-                [lutaml_express,express_index,my_context]
+                [lutaml_express_liquid,express_index,my_context]
                 ----
                 {% for schema in my_context.schemas %}
                 == {{schema.id}}
@@ -417,7 +417,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               {% endfor %}
               ----
 
-              [lutaml_express,second-express-set,my_context]
+              [lutaml_express_liquid,second-express-set,my_context]
               ----
               {% for schema in my_context.schemas %}
               == {{schema.id}}
@@ -483,7 +483,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 :no-isobib:
                 :lutaml-express-index: express-set; #{fixtures_path('none_existing_path')}; cache=#{cache_path}
 
-                [lutaml_express,express-set,my_context]
+                [lutaml_express_liquid,express-set,my_context]
                 ----
                 {% for schema in my_context.schemas %}
                 == {{schema.id}}
@@ -534,7 +534,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 :no-isobib:
                 :lutaml-express-index: express-set; #{fixtures_path('expressir_relative_paths')}; cache=#{cache_path}
 
-                [lutaml_express,express-set,my_context]
+                [lutaml_express_liquid,express-set,my_context]
                 ----
                 {% for schema in my_context.schemas %}
                 == {{schema.id}}
@@ -603,14 +603,14 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               {% endfor %}
               ----
 
-              [lutaml_express,second-express-set,my_context]
+              [lutaml_express_liquid,second-express-set,my_context]
               ----
               {% for schema in my_context.schemas %}
               == {{schema.id}}
               {% endfor %}
               ----
 
-              [lutaml_express,third-express-set,my_context]
+              [lutaml_express_liquid,third-express-set,my_context]
               ----
               {% for schema in my_context.schemas %}
               == {{schema.id}}

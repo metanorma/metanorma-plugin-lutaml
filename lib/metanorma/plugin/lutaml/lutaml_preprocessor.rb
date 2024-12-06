@@ -152,11 +152,15 @@ module Metanorma
           end
         end
 
-        def gather_context_liquid_items(index_names:, document:, indexes:)
+        def gather_context_liquid_items(index_names:, document:, indexes:,
+selected_schemas:, options:) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Metrics/ParameterLists
           index_names.map do |path|
             if indexes[path]
               indexes[path][:liquid_drop] ||=
-                indexes[path][:wrapper].original_document.to_liquid
+                indexes[path][:wrapper].original_document.to_liquid(
+                  selected_schemas: selected_schemas,
+                  options: options,
+                )
             else
               full_path = Utils.relative_file_path(document, path)
               unless File.file?(full_path)
@@ -168,7 +172,10 @@ module Metanorma
               end
               wrapper = load_lutaml_file(document, path)
               indexes[path] = {
-                liquid_drop: wrapper.original_document.to_liquid,
+                liquid_drop: wrapper.original_document.to_liquid(
+                  selected_schemas: selected_schemas,
+                  options: options,
+                ),
               }
             end
 
@@ -188,8 +195,8 @@ module Metanorma
           if config_yaml["schemas"]
             unless config_yaml["schemas"].is_a?(Hash)
               raise StandardError.new(
-                "[lutaml_express] attribute `config_yaml` must point to a YAML " \
-                "file that has the `schema` key containing a hash.",
+                "[lutaml_express] attribute `config_yaml` must point to a " \
+                "YAML file that has the `schema` key containing a hash.",
               )
             end
 
@@ -279,14 +286,23 @@ options:, indexes:)
 
         def render_liquid_template(document:, lines:, context_name:, # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Metrics/ParameterLists
 index_names:, options:, indexes:)
-          gather_context_liquid_items(
+          config_yaml_path = options.delete("config_yaml")
+          config = read_config_yaml_file(document, config_yaml_path)
+          selected_schemas = config["selected_schemas"]
+
+          all_items = gather_context_liquid_items(
             index_names: index_names,
             document: document,
             indexes: indexes,
-          ).map do |items|
-            repo_drop = items[:liquid_drop]
+            selected_schemas: selected_schemas,
+            options: options.merge("document" => document),
+          )
+
+          all_items.map do |item|
+            repo_drop = item[:liquid_drop]
             template = ::Liquid::Template.parse(lines.join("\n"))
             template.assigns[context_name] = repo_drop
+            template.assigns["selected_schemas"] = selected_schemas
             template.render
           end.flatten
         rescue StandardError => e
