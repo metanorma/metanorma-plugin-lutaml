@@ -145,7 +145,11 @@ And the `lutaml_express` block:
 
 [source,adoc]
 -----
+<<<<<<< HEAD
 [lutaml_express,example.exp,my_context]
+=======
+[lutaml_express_liquid,example.exp,my_context]
+>>>>>>> accd8ee (Remove obsolete codes of macros "lutaml" and "lutaml_express")
 ----
 {% for schema in my_context.schemas %}
 == {{schema.id}}
@@ -169,9 +173,9 @@ Where:
 
 * `{example.exp}` is the location of the EXPRESS schema file (`*.exp`) that
 contains data to be loaded. Location of the file is computed relative to the
-source directory that `[lutaml]` is used (e.g., if
-`[lutaml,example.exp,my_context]` is invoked in an `.adoc` file located at
-`/foo/bar/doc.adoc`, the data file is expected to be found at
+source directory that `[lutaml_express_liquid]` is used (e.g., if
+`[lutaml_express_liquid,example.exp,my_context]` is invoked in an `.adoc` file
+located at `/foo/bar/doc.adoc`, the data file is expected to be found at
 `/foo/bar/example.exp`);
 
 * `{my_context}` is the name where the EXPRESS Repository read from the `.exp`
@@ -242,7 +246,7 @@ Author
 
 === Using `config.yaml`
 
-This functionality allows `[lutaml_express]` blocks to load a full set of
+This functionality allows `[lutaml_express_liquid]` blocks to load a full set of
 EXPRESS schemas in one index, and then provide a select ("filter") option
 per-block via a separate YAML file.
 
@@ -250,8 +254,8 @@ per-block via a separate YAML file.
 -----
 :lutaml-express-index: all_schemas; ../schemas_all.yaml;
 
-[lutaml_express,all_schemas,context,leveloffset=+1,config_yaml=schemas.yaml]
-----
+[lutaml_express_liquid,all_schemas,context,leveloffset=+1,config_yaml=schemas.yaml]
+---
 {% assign selected = context.schemas | where: "selected" %}
 {% render "templates/resources/schema" for selected as schema %}
 ----
@@ -289,9 +293,9 @@ The resulting block adds the `select` attribute to every schema of the the
 via Liquid:
 
 [source,liquid]
------
-[lutaml_express,schemas_1,repo,leveloffset=+1,config_yaml=select.yaml]
 ----
+[lutaml_express_liquid,schemas_1,repo,leveloffset=+1,config_yaml=select.yaml]
+---
 {% assign selected = repo.schemas | where: "selected" %}
 ... do things with `selected` ...
 ---
