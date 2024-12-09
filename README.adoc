@@ -244,7 +244,7 @@ Author
 * The Liquid template inside the macro block iterates over the `schemas` in
   the `context` and renders the attributes of each schema such as `id`.
 
-=== Using `config.yaml`
+=== Using `config_yaml`
 
 This functionality allows `[lutaml_express_liquid]` blocks to load a full set of
 EXPRESS schemas in one index, and then provide a select ("filter") option
@@ -254,7 +254,7 @@ per-block via a separate YAML file.
 -----
 :lutaml-express-index: all_schemas; ../schemas_all.yaml;
 
-[lutaml_express_liquid,all_schemas,context,leveloffset=+1,config_yaml=schemas.yaml]
+[lutaml_express_liquid,all_schemas,context,config_yaml=schemas.yaml]
 ---
 {% assign selected = context.schemas | where: "selected" %}
 {% render "templates/resources/schema" for selected as schema %}
@@ -294,7 +294,7 @@ via Liquid:
 
 [source,liquid]
 ----
-[lutaml_express_liquid,schemas_1,repo,leveloffset=+1,config_yaml=select.yaml]
+[lutaml_express_liquid,schemas_1,repo,config_yaml=select.yaml]
 ---
 {% assign selected = repo.schemas | where: "selected" %}
 ... do things with `selected` ...
