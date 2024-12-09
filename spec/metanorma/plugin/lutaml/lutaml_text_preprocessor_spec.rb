@@ -156,7 +156,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               :nodoc:
               :novalid:
               :no-isobib:
-              [#{macro},#{example_file},my_context, leveloffset=+2]
+              [#{macro},#{example_file},my_context]
               ----
 
               {% for schema in my_context.schemas %}
@@ -170,7 +170,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               ----
 
 
-              [lutaml_express_liquid,#{example_file},my_context, leveloffset=-1]
+              [lutaml_express_liquid,#{example_file},my_context]
               ----
 
               {% for schema in my_context.schemas %}
