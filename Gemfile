@@ -11,6 +11,3 @@ begin
 rescue StandardError
   nil
 end
-
-# gem "expressir", path: "../../lutaml/expressir"
-gem "expressir", github: "lutaml/expressir", branch: "extend-liquid-drops-model"
