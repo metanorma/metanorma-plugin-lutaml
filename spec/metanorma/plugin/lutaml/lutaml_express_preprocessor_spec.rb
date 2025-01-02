@@ -3,7 +3,6 @@ require "spec_helper"
 RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
   describe "#process" do
     context "when lutaml-express-index keyword used with yaml index file" do
-      let(:macro) { "lutaml_express_liquid" }
       context "with macro: lutaml_express_liquid" do
         context "with content like: suma schema_attachment" do
           let(:input) do
@@ -15,7 +14,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               :no-isobib:
               :lutaml-express-index: express_index; #{fixtures_path('lutaml_exp_arm_svgmap_index.yaml')}
 
-              [#{macro},express_index,context]
+              [lutaml_express_liquid,express_index,context]
               ----
               {% for schema in context.schemas %}
 
@@ -79,7 +78,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               :no-isobib:
               :lutaml-express-index: express_index; #{fixtures_path('lutaml_exp_arm_svgmap_index.yaml')}
 
-              [#{macro},express_index,context]
+              [lutaml_express_liquid,express_index,context]
               ----
               {% for schema in context.schemas %}
 
@@ -228,7 +227,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               :no-isobib:
               :lutaml-express-index: express_index; #{fixtures_path('lutaml_exp_index.yaml')}
 
-              [#{macro},express_index,context,config_yaml=#{fixtures_path('lutaml_exp_arm_svgmap_index.yaml')}]
+              [lutaml_express_liquid,express_index,context,config_yaml=#{fixtures_path('lutaml_exp_arm_svgmap_index.yaml')}]
               ----
               {% assign selected = context.schemas | where: "selected" %}
               {% for schema in selected %}
@@ -296,7 +295,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               :nodoc:
               :novalid:
               :no-isobib:
-              [#{macro},#{example_file},my_context]
+              [lutaml_express_liquid,#{example_file},my_context]
               ----
 
               {% for schema in my_context.schemas %}
@@ -310,7 +309,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               ----
 
 
-              [#{macro},#{example_file},my_context]
+              [lutaml_express_liquid,#{example_file},my_context]
               ----
 
               {% for schema in my_context.schemas %}

@@ -13,7 +13,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlTableInlineMacro do
           :no-isobib:
           :imagesdir: spec/assets
 
-          [lutaml_uml_datamodel_description,#{example_file}]
+          [lutaml_ea_xmi,#{example_file}]
           --
           --
 
@@ -42,7 +42,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlTableInlineMacro do
         :no-isobib:
         :imagesdir: spec/assets
 
-        [lutaml_uml_datamodel_description,#{example_file}]
+        [lutaml_ea_xmi,#{example_file}]
         --
         --
 
@@ -70,7 +70,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlTableInlineMacro do
         :no-isobib:
         :imagesdir: spec/assets
 
-        [lutaml_uml_datamodel_description,#{example_file}]
+        [lutaml_ea_xmi,#{example_file}]
         --
         --
 
@@ -98,7 +98,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlTableInlineMacro do
         :no-isobib:
         :imagesdir: spec/assets
 
-        [lutaml_uml_datamodel_description,#{example_file}]
+        [lutaml_ea_xmi,#{example_file}]
         --
         --
 
