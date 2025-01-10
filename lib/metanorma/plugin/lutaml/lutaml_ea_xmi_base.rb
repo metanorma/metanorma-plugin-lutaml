@@ -27,6 +27,7 @@ module Metanorma
         SUPPORTED_NESTED_MACRO = %w[
           before diagram_include_block after include_block package_text
         ].freeze
+        XMI_INDEX_REGEXP = /^:lutaml-xmi-index:(?<index_name>.+?);(?<index_path>.+?);?(\s*config=(?<config_path>.+))?$/.freeze # rubocop:disable Lint/MixedRegexpCaptureTypes,Layout/LineLength
 
         # search document for block `lutaml_ea_xmi`
         # or `lutaml_uml_datamodel_description`
@@ -92,22 +93,73 @@ module Metanorma
           self.class.const_get(:MACRO_REGEXP)
         end
 
-        def process_text_blocks(document, input_lines) # rubocop:disable Metrics/MethodLength
+        def process_xmi_index_lines(document, line)
+          block_match = line.match(XMI_INDEX_REGEXP)
+
+          return if block_match.nil?
+
+          name = block_match[:index_name]&.strip
+          path = block_match[:index_path]&.strip
+          config = block_match[:config_path]&.strip
+
+          document.attributes["lutaml_xmi_index"] ||= {}
+          document.attributes["lutaml_xmi_index"][name] = {
+            path: path,
+            config: config,
+          }
+        end
+
+        def process_text_blocks(document, input_lines) # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
           line = input_lines.next
+          process_xmi_index_lines(document, line)
           block_match = line.match(get_macro_regexp)
 
           return [line] if block_match.nil?
 
-          yaml_config = parse_yaml_config_file(document, block_match[2])
-          lutaml_document = lutaml_document_from_file_or_cache(document,
-                                                               block_match[1],
-                                                               yaml_config)
+          config_yaml_path = block_match[2]&.strip
+          xmi_or_index = block_match[1]&.strip
+
+          lutaml_document, yaml_config = load_lutaml_doc_and_config(
+            document,
+            xmi_or_index,
+            config_yaml_path,
+          )
+
           fill_in_diagrams_attributes(document, lutaml_document)
           model_representation(
             lutaml_document, document,
             collect_additional_context(document, input_lines, input_lines.next),
             yaml_config
           )
+        end
+
+        def load_lutaml_doc_and_config(document, xmi_or_index, config_yaml_path)
+          index = xmi_or_index.match(/index=(.*)/)
+
+          if index
+            # load lutaml index
+            index_name = index[1]
+
+            if document.attributes["lutaml_xmi_index"][index_name].nil? ||
+                document.attributes["lutaml_xmi_index"][index_name][:path].nil?
+              ::Metanorma::Util.log(
+                "[metanorma-plugin-lutaml] lutaml_xmi_index error: " \
+                "XMI index #{index_name} path not found!",
+                :error,
+              )
+            end
+
+            xmi_or_index = document
+              .attributes["lutaml_xmi_index"][index_name][:path]
+            config_yaml_path = document
+              .attributes["lutaml_xmi_index"][index_name][:config]
+          end
+
+          yaml_config = parse_yaml_config_file(document, config_yaml_path)
+          lutaml_document = lutaml_document_from_file_or_cache(document,
+                                                               xmi_or_index,
+                                                               yaml_config)
+          [lutaml_document, yaml_config]
         end
 
         def get_original_document(wrapper)

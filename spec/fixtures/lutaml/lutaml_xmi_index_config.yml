@@ -1,0 +1,7 @@
+---
+packages:
+  - Wrapper nested package
+render_style: data_dictionary
+ea_extension:
+  - "ISO19103MDG v1.0.0-beta.xml"
+  - "CityGML_MDG_Technology.xml"
