@@ -7,12 +7,13 @@ module Metanorma
     module Lutaml
       class LutamlEaDiagramBlockMacro < ::Asciidoctor::Extensions::BlockMacroProcessor
         include LutamlDiagramBase
+        include LutamlEaXmiBase
 
         use_dsl
         named :lutaml_ea_diagram
 
         def process(parent, _target, attrs)
-          orig_doc = get_original_document(parent)
+          orig_doc = get_original_document(parent, attrs["index"])
           diagram = fetch_diagram_by_name(orig_doc, attrs["name"])
           return if diagram.nil?
 
@@ -26,11 +27,41 @@ module Metanorma
 
         private
 
-        def get_original_document(parent)
-          doc = parent.document.attributes["lutaml_xmi_cache"].values.first
+        def parse_result_document(full_path, guidance = nil)
+          ::Lutaml::XMI::Parsers::XML.serialize_xmi_to_liquid(
+            File.new(full_path, encoding: "UTF-8"),
+            guidance,
+          )
+        end
+
+        def get_original_document(parent, index = nil)
+          path = get_path_from_index(parent, index) if index
+
+          if index && path
+            doc = lutaml_document_from_file_or_cache(parent.document, path, {})
+          end
+
+          doc ||= parent.document.attributes["lutaml_xmi_cache"].values.first
           return doc if doc.instance_of?(::Lutaml::XMI::RootDrop)
 
           doc.original_document
+        end
+
+        def get_path_from_index(parent, index_name) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+          lutaml_xmi_index = parent.document
+            .attributes["lutaml_xmi_index"][index_name]
+
+          if lutaml_xmi_index.nil? || lutaml_xmi_index[:path].nil?
+            ::Metanorma::Util.log(
+              "[metanorma-plugin-lutaml] lutaml_xmi_index error: " \
+              "XMI index #{index_name} path not found!",
+              :error,
+            )
+
+            return nil
+          end
+
+          lutaml_xmi_index[:path]
         end
 
         def img_src_path(document, attrs, diagram)
