@@ -4,13 +4,15 @@ image:https://github.com/metanorma/metanorma-plugin-lutaml/workflows/rake/badge.
 
 == Purpose
 
-LutaML is a data model accessor that supports various data model formats,
-including:
+LutaML is a data model accessor that supports various data model formats.
+
+This plugin allows you to access the following types of information models from
+within a Metanorma document:
 
 * EXPRESS (`*.exp` files)
-* OMG UML in XMI format (`*.xmi` files)
+* LutaML-UML (`*.lutaml` files)
+* Enterprise Architect exported UML in XMI format (`*.xmi` files)
 
-This plugin allows you to access LutaML models from within a Metanorma document.
 
 == Installation
 
@@ -24,11 +26,93 @@ $ gem install metanorma-plugin-lutaml
 
 === General
 
+The LutaML plugin supports working with EXPRESS schema files to render EXPRESS
+models and definitions.
+
 LutaML supports accessing EXPRESS models via the
 https://github.com/lutaml/expressir[Expressir] parser.
 
 
-=== Usage of the `lutaml` command
+=== Document attribute `:lutaml-express-index:`
+
+This attribute allows specifying one or more EXPRESS files to defined names
+for later use with `lutaml_express` command.
+
+Syntax:
+
+[source,adoc]
+----
+:lutaml-express-index: shortname_of_index; name_of_schemas_listing_file.yml;
+----
+
+Where:
+
+`shortname_of_index`:: is name of the parsed EXPRESS files context for the later
+use.
+
+`name_of_schemas_listing_file.yml`:: location of the YAML index file to parse
+all EXPRESS files listed within.
+
+
+[example]
+.Define an index in the document and use it in the `lutaml_express` command
+====
+[source,adoc]
+-----
+:lutaml-express-index: my_custom_name; /path/to/schemas.yml
+
+[lutaml_express,my_custom_name,context]
+----
+{% for schema in context.schemas %}
+== {{schema.id}}
+
+{% for entity in schema.entities %}
+=== {{entity.id}}
+{% endfor %}
+
+{% endfor %}
+-----
+
+Where the `schemas.yml` file contains:
+
+[source,yaml]
+----
+---
+schemas:
+  action_schema:
+    path: "../../schemas/resources/action_schema/action_schema.exp"
+  application_context_schema:
+    path: "../../schemas/resources/application_context_schema/application_context_schema.exp"
+----
+====
+
+
+=== Schemas listing file
+
+The schemas listing file is a YAML file that lists all EXPRESS files to be
+parsed. The file should have the following structure:
+
+[source,yaml]
+----
+---
+schemas:
+  schema_name:
+    path: path/to/schema_file.exp
+  schema_name_2:
+    path: path/to/schema_file_2.exp
+----
+
+Where:
+
+`schema_name`:: is the name of the EXPRESS schema.
+
+`path`:: (optional) path to the EXPRESS schema file. When the path is not
+specified, the command will look for the schema file in the directory where the
+YAML file is located using the filename pattern `{schema_name}.exp`. The path
+can be relative to the YAML file or an absolute path.
+
+
+=== Usage of the `lutaml_express` command
 
 Given an `example.exp` EXPRESS file with content:
 
@@ -57,13 +141,12 @@ SCHEMA test_schema 'test';
 END_SCHEMA;
 ----
 
-And the `lutaml` block:
+And the `lutaml_express` block:
 
 [source,adoc]
 -----
-[lutaml,example.exp,my_context]
+[lutaml_express,example.exp,my_context]
 ----
-
 {% for schema in my_context.schemas %}
 == {{schema.id}}
 
@@ -74,6 +157,11 @@ And the `lutaml` block:
 {% endfor %}
 ----
 -----
+
+NOTE: The `lutaml` command can auto-detect the EXPRESS schema file type by the
+file extension. If the file extension is `.exp`, the command will use the
+`Expressir` parser to parse the file. If the file extension is `.lutaml`, the
+command will use the `Lutaml` parser to parse the file.
 
 Where:
 
@@ -107,28 +195,27 @@ ____
 === my_type5
 ____
 
-This command also supports `.lutaml` files.
 
-Instead of using the direct path to the file one can use `lutaml-express-index`
+Instead of using the direct path to the file one can use `:lutaml-express-index:`
 document attribute to supply directory with express files or YAML index file to
 parse as well as the cache file location.
 
-The syntax is as follows:
+Syntax:
 
 [source,adoc]
------
+----
 :lutaml-express-index: my_custom_name; dir_or_index_path[; cache=cache_path]
------
+----
 
 Where:
 
-* `my_custom_name` - is name of the parsed EXPRESS files context for the later
-use with lutaml macro
+`my_custom_name`:: is name of the parsed EXPRESS files context for the later
+use with lutaml command
 
-* `dir_or_index_path` - location of directory with EXPRESS files or path to the
+`dir_or_index_path`:: location of directory with EXPRESS files or path to the
 YAML index file to parse
 
-* `cache_path` - optional, location of the Expressir cache file to use
+`cache_path`:: (optional) location of the Expressir cache file to use
 
 Example of usage:
 
@@ -146,22 +233,22 @@ Author
 ----
 -----
 
-=== Using `config.yaml`
+=== Filtering EXPRESS schemas defined in an index for `lutaml_express`
 
 This functionality allows `[lutaml_express]` blocks to load a full set of
 EXPRESS schemas in one index, and then provide a select ("filter") option
 per-block via a separate YAML file.
 
 [source,adoc]
-----
+-----
 :lutaml-express-index: all_schemas; ../schemas_all.yaml;
 
 [lutaml_express,all_schemas,context,leveloffset=+1,config_yaml=schemas.yaml]
----
+----
 {% assign selected = context.schemas | where: "selected" %}
 {% render "templates/resources/schema" for selected as schema %}
----
 ----
+-----
 
 Where `schemas_all.yml` provides all schemas:
 
@@ -195,18 +282,25 @@ The resulting block adds the `select` attribute to every schema of the the
 via Liquid:
 
 [source,liquid]
-----
+-----
 [lutaml_express,schemas_1,repo,leveloffset=+1,config_yaml=select.yaml]
----
+----
 {% assign selected = repo.schemas | where: "selected" %}
 ... do things with `selected` ...
-----
+---
+-----
 
 NOTE: This functionality is used in the ISO 10303 SRL to load the full schema
 set at once but only render the selected schemas in individual documents.
 
 
-== Usage with UML
+== Usage with Lutaml-UML
+
+=== General
+
+The LutaML plugin supports working with LutaML UML files to render UML diagrams
+and class definitions.
+
 
 === Rendering a LutaML view: `lutaml_diagram`
 
@@ -239,9 +333,9 @@ diagram MyView {
 The `lutaml_diagram` command will add the image to the document.
 
 [source,adoc]
------
+----
 lutaml_diagram::example.lutaml[]
------
+----
 
 The `lutaml_diagram` command can also be used to denote a block with an embedded
 LutaML view.
@@ -273,192 +367,7 @@ diagram MyView {
 ....
 ----
 
-=== Rendering a LutaML Enterprise Architect diagram from XMI: `lutaml_ea_diagram`
-
-This command allows to quickly render a LutaML diagram as an image file by
-specifying the name of diagram.
-
-[source,adoc]
------
-lutaml_ea_diagram::[name="name_of_diagram",base_path="/path/to/xmi-images",format="png"]
------
-
-where:
-
-* `name` - name of the diagram to render.
-* `base_path` - base path where the diagram images are located.
-* `format` - format of the image file. (Optional)
-* `index` - index name of the XMI file. (Optional)
-* `package` - name of the package which contains the diagram. (Optional)
-
-The code will search the diagram with name `name_of_diagram` and then
-render it as:
-
-[source,adoc]
------
-[[figure-{{ diagram.xmi_id }}]]
-.{{ diagram.name }}
-image::{{ image_base_path }}/{{ diagram.xmi_id }}.{{ format | default: 'png' }}[]
------
-
-You can use the `package` option to restrict the search result of the diagram.
-
-Example:
-
-[source,adoc]
------
-lutaml_ea_diagram::[name="DiagramName",package="PackageA",base_path="/path/to/xmi-images"]
------
-
-The search wil be restricted to the diagrams named `DiagramName` in the
-`PackageA` package.
-
-=== Rendering a LutaML GML Dictionary: `lutaml_gml_dictionary`
-
-This command allows to render a LutaML GML Dictionary by using Liquid Drop.
-
-GmlDictionaryDrop has the following attributes:
-
-* name
-* file_name
-* dictionary_entry
-
-Each `dictionary_entry` has the following attributes:
-
-* name
-* description
-
-[source,adoc]
------
-lutaml_gml_dictionary::/path/to/dictionary.xml[template="/path/to/template.liquid",context=dict]
------
-
-The command accepts the options listed below:
-
-* `/path/to/dictionary.xml` specifies the path of xml file of the
-GML Dictionary.
-
-* `template="/path/to/template.liquid"` specifies the liquid template.
-  For example, you can create a liquid template and link it by `template`.
-
-* `context=dict` define the context in the template.
-
-[source,adoc]
------
-[cols="3a,22a"]
-|===
-| Name | {{ dict.file_name }}
-
-h| Code h| Description
-{% for entry in dict.dictionary_entry %}
-| {{ entry.name }} | {{ entry.description }}
-{% endfor %}
-|===
-
-[.source]
-<<source_link>>
------
-
-In spite of specifying the path of the template, you can also define an inline
-template within a block by
-`[lutaml_gml_dictionary,"/path/to/dictionary.xml",context=dict]`.
-
-[source,adoc]
------
-[lutaml_gml_dictionary,"/path/to/dictionary.xml",context=dict]
---
-{% capture link %}https://www.test.com/{{ dict.file_name }}{% endcapture %}
-
-[cols="3a,22a"]
-|===
-| File Name | {{ dict.file_name }}
-h| URL | {{ link }}
-h| Help | Description
-{% for entry in dict.dictionary_entry %}
-| {{ entry.name }} | {{ entry.description }}
-{% endfor %}
-|===
-
-[.source]
-<<source_link>>
---
------
-
-=== Rendering a LutaML table of a class: `lutaml_klass_table`
-
-This command allows to render a LutaML table of a class by using Liquid Drop.
-
-The table will show:
-
-* Class Name
-* Class Definition
-* Inherited Properties
-* Self-defined Properties
-* Properties Inherited from Association
-* Properties Defined in Association
-
-[source,adoc]
------
-lutaml_klass_table::/path/to/example.xmi[name="NameOfClass",template="/path/to/templates/_my_klass_table.liquid"]
------
-
-The command accepts the options listed below:
-
-* `/path/to/example.xmi` specifies the path of xmi file.
-
-* `name` option only, `name` option with `package` option or `path` option.
-  One of 3 forms of options can be used to specify the name of the class.
-
-** `name="NameOfClass"` specifies the name of the `class`.
-   (e.g. `name="Building"`)
-   If there are multiple classes with the same name, other form of options
-   are recommended to specify the class.
-
-** `package="NameOfPackage"name="NameOfClass"` specifies the name of the
-   `class` (specified by `name` option) inside the `package`
-   (specified by `package` option).
-   The `package` option must be used with the `name` option.
-   (e.g. `package="uro",name="_BoundarySurface"`)
-
-** `path="PathOfClass"` specifies the `absolute` path of the `class`
-   which is started with `::`
-   (e.g. `path="::EA_Model::Conceptual Models::i-UR::Urban Planning ADE 3.
-   1::uro::_BoundarySurface"`)
-   or `relative` path of the `class` which is not started with `::`
-   (e.g. `path="uro::_BoundarySurface"`).
-   The last part of the path separated by `::` is the name of the `class`.
-   The other parts of the path are the names of the `packages`.
-
-* `template="/path/to/templates/_my_klass_table.liquid"` specifies the path of
-  the liquid template. (Optional)
-  By default, it will look for the template `_klass_table.liquid` defined in
-  `lib/metanorma/plugin/lutaml/templates`.  This template can be customized by
-  changing the template path in the `template` option.
-
-* `guidance="/path/to/my_guidance.yml"` specifies the path of
-  the yaml file of the guidance. (Optional)
-
-The guidance file should be in the following format:
-
-[source,yaml]
-----
----
-classes:
-  - name: Name Of Class
-    attributes:
-      - name: Name Of Attribute (e.g. gml:boundedBy)
-        used: false
-        guidance: |
-          Drop guidance message here.
-...
-----
-
-If you want to define the guidance, you can define the `name` of the class
-under `classes`.  Then define which `attributes` you want to add guidance by the
-`name`. Set `used` to show the attribute is used or not. Drop the message of
-guidance in `guidance`.
-
-=== Generating UML class and attributes: `lutaml_uml_class`
+=== Generating a UML class and attributes clause: `lutaml_uml_class`
 
 This command allows rendering a definition clause for a UML class.
 
@@ -523,17 +432,17 @@ ____
 
 The command accepts two options:
 
-* `skip_headers=true` (or just `skip_headers`). The initial heading (the UML class name)
+`skip_headers=true`:: (or just `skip_headers`) The initial heading (the UML class name)
 will not be generated. This is useful if additional content is to be supplied
 to the clause, such as diagrams that are defined outside the UML model.
 
-* `depth={n}`. (default: `2`) This determines the depth of the generated headings.
+`depth={n}`:: (default: `2`) This determines the depth of the generated headings.
 A depth of `2` means the initial heading will have 2 equal signs, and so forth.
 The heading depth of the attributes are in relation to the initial depth, so
 a depth of `2` will have the "Attributes" section at depth `3`.
 
 
-=== `lutaml_uml_attributes_table`
+=== Generating a UML attributes table: `lutaml_uml_attributes_table`
 
 This command allows rendering definition tables for a UML model.
 
@@ -561,12 +470,12 @@ diagram MyView {
 }
 ----
 
-And the `lutaml_uml_attributes_table` macro:
+And the `lutaml_uml_attributes_table` command:
 
 [source,adoc]
------
+----
 [lutaml_uml_attributes_table, example.lutaml, AttributeProfile]
------
+----
 
 Will produce this output:
 
@@ -588,9 +497,9 @@ ____
 In case of "enumeration" (AddressClassProfile) entity:
 
 [source,adoc]
------
+----
 [lutaml_uml_attributes_table, example.lutaml, AddressClassProfile]
------
+----
 
 Will produce this output:
 
@@ -606,7 +515,292 @@ ____
 |===
 ____
 
-=== Usage of `lutaml_uml_datamodel_description` macro
+
+== Usage with Enterprise Architect (UML in XMI)
+
+=== General
+
+The LutaML plugin supports working with Enterprise Architect exported XMI files
+to render UML diagrams and class definitions.
+
+The commands are prefixed as `lutaml_ea_*` to denote their specific use with
+Enterprise Architect XMI files.
+
+
+=== Document attribute `:lutaml-xmi-index:`
+
+This attribute allows specifying one or more XMI files to defined names
+for later use with `lutaml_ea_*` commands.
+
+Syntax:
+
+[source,adoc]
+----
+:lutaml-xmi-index: index_name; index_path[; config=config_path]
+----
+
+where:
+
+`index_name`:: name of index
+`index_path`:: path to XMI file for the later use with `lutaml_ea_*` command
+`config_path`:: optional, location of YAML configuration file that specifies
+what packages to include in the render, what render style is desired and
+location of the root package.
+
+
+[example]
+.Define two indexes in the document and use them in the `lutaml_ea_xmi` command
+====
+[source,adoc]
+----
+:lutaml-xmi-index: first-xmi-index; /path/to/first.xmi
+:lutaml-xmi-index: second-xmi-index; /path/to/second.xmi; config=/path/to/config.yml
+
+[lutaml_ea_xmi,index=first-xmi-index]
+--
+...
+--
+
+lutaml_ea_diagram::[name="NameOfDiagramInSecondXmiIndex",base_path="./xmi-images",format="png",index="second-xmi-index"]
+...
+----
+
+The command `lutaml_ea_xmi` will load the XMI file from the path
+`/path/to/first.xmi` which is specified by the `index`: `first-xmi-index`.
+
+The command `lutaml_ea_diagram` will load the XMI file from the path
+`/path/to/second.xmi` which is specified by the `index`: `second-xmi-index`.
+====
+
+
+=== Rendering a Enterprise Architect diagram from XMI: `lutaml_ea_diagram`
+
+This command allows to quickly render a LutaML diagram as an image file by
+specifying the name of diagram.
+
+Syntax:
+
+[source,adoc]
+----
+lutaml_ea_diagram::[{options}]
+----
+
+where `{options}` is a hash of options, where:
+
+`name`:: (mandatory) name of the diagram to render.
+`base_path`:: (mandatory) base path where the diagram images are located.
+`format`:: (optional) format of the image file. Defaults to `png`.
+`index`:: (optional) index name of the XMI file. If the index is not provided,
+the command will look for the diagram in the first XMI file specified through
+the `lutaml_ea_xmi` command.
+`package`:: (optional) name of the package which contains the diagram. If the
+package is not provided, the command will look for the diagram across all
+packages in the XMI file.
+
+The diagram with name `name_of_diagram` will be converted into the following
+Metanorma block:
+
+[source,adoc]
+----
+[[figure-{{ diagram.xmi_id }}]]
+.{{ diagram.name }}
+image::{{ image_base_path }}/{{ diagram.xmi_id }}.{{ format | default: 'png' }}[]
+----
+
+[example]
+.Specifying a diagram within an XMI file
+====
+[source,adoc]
+----
+lutaml_ea_diagram::[name="name_of_diagram",base_path="/path/to/xmi-images",format="png"]
+----
+
+Renders the diagram with name `name_of_diagram` from the XMI file in PNG format,
+where the EA images exported with the XMI file are at `/path/to/xmi-images`.
+====
+
+[example]
+.Specifying a diagram within a specific package (if there are multiple diagrams with the same name)
+====
+[source,adoc]
+----
+lutaml_ea_diagram::[name="DiagramName",package="PackageA",base_path="/path/to/xmi-images"]
+----
+
+The search wil be restricted to the diagrams named `DiagramName` in the
+`PackageA` package.
+====
+
+[example]
+.Specifying a diagram using a specific index
+====
+[source,adoc]
+----
+:lutaml-xmi-index: index_name; /path/to/xmi-file.xmi
+
+...
+
+lutaml_ea_diagram::[name="name_of_diagram",base_path="/path/to/xmi-images",format="png",index="index_name"]
+----
+
+Renders the diagram with name `name_of_diagram` from the XMI file in PNG format,
+where the EA images exported with the XMI file are at `/path/to/xmi-images` and
+the XMI file defined in the index `index_name`.
+====
+
+
+
+=== Generating a class definition table for a class: `lutaml_klass_table`
+
+This command allows to render a LutaML table of a class by using Liquid Drop.
+
+The table will show:
+
+* Class Name
+* Class Definition
+* Inherited Properties
+* Self-defined Properties
+* Properties Inherited from Association
+* Properties Defined in Association
+
+[source,adoc]
+----
+lutaml_klass_table::/path/to/example.xmi[name="NameOfClass",template="/path/to/templates/_my_klass_table.liquid"]
+----
+
+The command accepts the options listed below:
+
+* `/path/to/example.xmi` specifies the path of xmi file.
+
+* `name` option only, `name` option with `package` option or `path` option.
+  One of 3 forms of options can be used to specify the name of the class.
+
+** `name="NameOfClass"` specifies the name of the `class`.
+   (e.g. `name="Building"`)
+   If there are multiple classes with the same name, other form of options
+   are recommended to specify the class.
+
+** `package="NameOfPackage"name="NameOfClass"` specifies the name of the
+   `class` (specified by `name` option) inside the `package`
+   (specified by `package` option).
+   The `package` option must be used with the `name` option.
+   (e.g. `package="uro",name="_BoundarySurface"`)
+
+** `path="PathOfClass"` specifies the `absolute` path of the `class`
+   which is started with `::`
+   (e.g. `path="::EA_Model::Conceptual Models::i-UR::Urban Planning ADE 3.
+   1::uro::_BoundarySurface"`)
+   or `relative` path of the `class` which is not started with `::`
+   (e.g. `path="uro::_BoundarySurface"`).
+   The last part of the path separated by `::` is the name of the `class`.
+   The other parts of the path are the names of the `packages`.
+
+* `template="/path/to/templates/_my_klass_table.liquid"` specifies the path of
+  the liquid template. (Optional)
+  By default, it will look for the template `_klass_table.liquid` defined in
+  `lib/metanorma/plugin/lutaml/templates`.  This template can be customized by
+  changing the template path in the `template` option.
+
+* `guidance="/path/to/my_guidance.yml"` specifies the path of
+  the yaml file of the guidance. (Optional)
+
+The guidance file should be in the following format:
+
+[source,yaml]
+----
+---
+classes:
+  - name: Name Of Class
+    attributes:
+      - name: Name Of Attribute (e.g. gml:boundedBy)
+        used: false
+        guidance: |
+          Drop guidance message here.
+...
+----
+
+If you want to define the guidance, you can define the `name` of the class
+under `classes`.  Then define which `attributes` you want to add guidance by the
+`name`. Set `used` to show the attribute is used or not. Drop the message of
+guidance in `guidance`.
+
+
+
+
+=== Usage of `lutaml_ea_xmi` command
+
+The `lutaml_ea_xmi` command supersedes the `lutaml_uml_datamodel_description`
+command which it is functionally equivalent to.
+
+This command renders data model packages and its dependent objects for supplied
+XMI file, by using Liquid Drop objects.
+
+NOTE: The performance of `lutaml_ea_xmi` exceeds
+`lutaml_uml_datamodel_description` by 10~20 times (Tested with a 10.6MB XMI file
+with 120,000+ lines).
+
+NOTE: To migrate to this command from `lutaml_uml_datamodel_description`, just
+replace the command `lutaml_uml_datamodel_description` by `lutaml_ea_xmi`.
+
+Replace:
+
+[source,adoc]
+----
+[lutaml_uml_datamodel_description, path/to/example.xmi]
+...
+----
+
+By:
+
+[source,adoc]
+----
+[lutaml_ea_xmi, path/to/example.xmi]
+...
+----
+
+You can define guidance in the configuration file as well. The configuration
+file will looks like:
+
+[source,yaml]
+----
+packages:
+- my_package
+guidance: "path/to/guidance.yaml"
+----
+
+The guidance file should be in the following format:
+
+[source,yaml]
+----
+---
+classes:
+- name: "NameOfClass"
+  attributes:
+  - name: Name Of Attribute (e.g. gml:boundedBy)
+    used: false
+    guidance: |
+      Drop guidance message here.
+...
+----
+
+If you want to define the guidance, you can define the `name` of the class
+under `classes`.  Then define which `attributes` you want to add guidance by the
+`name`. Set `used` to show the attribute is used or not. Drop the message of
+guidance in `guidance`.
+
+The `name` of class can be defined in the following ways:
+
+* `name: "NameOfClass"` specifies the name of the `class`.
+  (e.g. `name: "Building"`)
+  If there are multiple classes with the same name, it is recommended to
+  specify the class by absolute path.
+
+* `name: "::NameOfPackage::NameOfClass"` specifies the name of the `class` in
+  `absolute` path.
+  (e.g. `name: "::EA_Model::Conceptual Models::CityGML2.0::bldg::Building"`)
+
+
+=== Usage of `lutaml_uml_datamodel_description` command
 
 This command allows to quickly render data model packages and its dependent
 objects for supplied XMI file.
@@ -616,10 +810,10 @@ Given an Enterprise Architect `example.xmi` file with 2 packages:
 * 'Another'
 * 'CityGML'
 
-The `lutaml_uml_datamodel_description` macro can be used:
+The `lutaml_uml_datamodel_description` command can be used:
 
 [source,adoc]
------
+----
 [lutaml_uml_datamodel_description, path/to/example.xmi]
 --
 [.before]
@@ -663,15 +857,15 @@ footer text
 ....
 --
 --
------
+----
 
 Where:
 
 * `path/to/example.xmi` - required, path to the XMI file to render
 
-* `[.before]` - block text that adds additional text before the rendered output, can be used only once, additional occurrences of macro will overwrite text, not that `literal` block style must be used in there(eg `....`)
+* `[.before]` - block text that adds additional text before the rendered output, can be used only once, additional occurrences of command will overwrite text, not that `literal` block style must be used in there(eg `....`)
 
-* `[.after]` - block text that adds additional text after the rendered output, can be used only once, additional occurrences of macro will overwrite text
+* `[.after]` - block text that adds additional text after the rendered output, can be used only once, additional occurrences of command will overwrite text
 
 * `[.after, package="Another"]` - block text to be inserted before(after in case of `.before` name) the package
 
@@ -683,7 +877,7 @@ Where:
 +
 The logic is as follows:
 [source,adoc]
------
+----
 {% for diagram in package.diagrams %}
 [[figure-{{ diagram.xmi_id }}]]
 .{{ diagram.name }}
@@ -693,18 +887,21 @@ image::{{ image_base_path }}/{{ diagram.xmi_id }}.{{ format | default: 'png' }}[
 {{ diagram.definition | html2adoc }}
 {% endif %}
 {% endfor %}
------
+----
 
-For instance, the script will take package diagrams supplied in the XMI file and will try to include `image` with the name equal to diagram' xmi_id attribute plus `.png`. Also one can add any text to the macro text, it will be added as paragraph before each image include.
+For instance, the script will take package diagrams supplied in the XMI file and will try to include `image` with the name equal to diagram' xmi_id attribute plus `.png`. Also one can add any text to the command text, it will be added as paragraph before each image include.
 
 * `[.diagram_include_block, package="Another"]` - same as above, but diagram will be included only for supplied package name
 
-* `[.include_block, base_path="spec/fixtures"]` - macro to include files (`*.adoc` or `*.liquid`) for each package name. Attribute `base_path` is a required attribute to supply path prefix where to look for file to include. Macro will look for a file called `base_path` + `/` `_package_name`(downcase, replace : -> '', ' ' -> '_') + `.adoc`[`.liquid`], eg for package 'My Package name' and `base_path` eq to `my/path`, macro will look for the following file path: `my/path/_my_package_name.adoc`.
+* `[.include_block, base_path="spec/fixtures"]` - command to include files (`*.adoc` or `*.liquid`) for each package name. Attribute `base_path` is a required attribute to supply path prefix where to look for file to include. command will look for a file called `base_path` + `/` `_package_name`(downcase, replace : -> '', ' ' -> '_') + `.adoc`[`.liquid`], eg for package 'My Package name' and `base_path` eq to `my/path`, command will look for the following file path: `my/path/_my_package_name.adoc`.
 
 * `[.include_block, package="Another", base_path="spec/fixtures"]` - same as above, but include block will be included only for supplied package name
 
 
-NOTE: .after, .before, package_text and include_block macroses all can be used with additional option - `liquid`, if this option is supplied then the code inside block will be interpolated in liquid context
+NOTE: .after, .before, package_text and include_block commandses all can be used with additional option - `liquid`, if this option is supplied then the code inside block will be interpolated in liquid context
+
+
+=== Referencing objects generated by LutaML
 
 
 There are two other commands that are used to refer to LutaML generated document elements:
@@ -715,10 +912,11 @@ There are two other commands that are used to refer to LutaML generated document
 * `lutaml_table`. Provides a reference anchor to the definition tables of a
   particular package, class, enumeration or data type object in the XMI.
 
+
 The syntax is as follows:
 
 [source,adoc]
------
+----
 // For lutaml_figure
 This is lutaml_figure::[package="Wrapper root package", name="Fig B1 Full model"] figure
 
@@ -727,14 +925,14 @@ This is lutaml_table::[package="Wrapper root package"] package
 This is lutaml_table::[package="Wrapper root package", class="my name"] class
 This is lutaml_table::[package="Wrapper root package", enum="my name"] enumeration
 This is lutaml_table::[package="Wrapper root package", data_type="my name"] data type
------
+----
 
-This code will be transformed into `<<figure-{diagram.xmi_id}>>` and will point to diagram figure. One can only use this macro when document rendered `lutaml_uml_datamodel_description` macro as it needs diagram lookup table in order to reference package diagram.
+This code will be transformed into `<<figure-{diagram.xmi_id}>>` and will point to diagram figure. One can only use this command when document rendered `lutaml_uml_datamodel_description` command as it needs diagram lookup table in order to reference package diagram.
 
 Will produce this output:
 
 [source,adoc]
------
+----
 my text
 == CityGML package
 === CityGML overview
@@ -805,9 +1003,9 @@ h|Constraints: 7+| (none)
 === Additional Information
 
 text after CityGML package
------
+----
 
-In addition to the XMI file, this macro also supports a YAML configuration file
+In addition to the XMI file, this command also supports a YAML configuration file
 that specifies:
 
 * What packages to include in the render;
@@ -873,7 +1071,7 @@ equal to 2, root package will be `one-1`.
 ]
 ----
 
-Usage with macro:
+Usage with command:
 
 [source,adoc]
 --
@@ -890,116 +1088,82 @@ and iterate through packages according to the order supplied in the file. All
 packages that matches `skip` in the YAML config file will be skipped during
 render.
 
-=== Usage of `lutaml-xmi-index`
 
-This command allows to define a set of XMI files in indexes.
 
-The syntax is as follows:
 
-[source,adoc]
------
-:lutaml-xmi-index: index_name; index_path[; config=config_path]
------
+== Usage with GML
 
-where:
+=== Rendering a LutaML GML Dictionary: `lutaml_gml_dictionary`
 
-* `index_name` - name of index
-* `index_path` - path to XMI file for the later use with `lutaml_ea_*` macro
-* `config_path` - optional, location of YAML configuration file that specifies
-  what packages to include in the render, what render style is desired and
-  location of the root package.
+This command allows to render a LutaML GML Dictionary by using Liquid Drop.
 
-==== Example of usage
+GmlDictionaryDrop has the following attributes:
 
-Define two indexes in the document and use them in the `lutaml_ea_xmi` macro:
+* name
+* file_name
+* dictionary_entry
+
+Each `dictionary_entry` has the following attributes:
+
+* name
+* description
 
 [source,adoc]
------
-:lutaml-xmi-index: first-xmi-index; /path/to/first.xmi
-:lutaml-xmi-index: second-xmi-index; /path/to/second.xmi; config=/path/to/config.yml
-
-[lutaml_ea_xmi,index=first-xmi-index]
---
-...
---
-
-lutaml_ea_diagram::[name="NameOfDiagramInSecondXmiIndex",base_path="./xmi-images",format="png",index="second-xmi-index"]
-...
------
-
-The macro `lutaml_ea_xmi` will load the XMI file from the path
-`/path/to/first.xmi` which is specified by the `index`: `first-xmi-index`.
-
-The macro `lutaml_ea_diagram` will load the XMI file from the path
-`/path/to/second.xmi` which is specified by the `index`: `second-xmi-index`.
-
-=== Usage of `lutaml_ea_xmi` macro
-
-This command is a replacement for `lutaml_uml_datamodel_description` to perform
-the same functionalities of `lutaml_uml_datamodel_description`, which is to
-render data model packages and its dependent objects for supplied XMI file, by
-using Liquid Drop.  The performance of `lutaml_ea_xmi` can be improved by
-10~20 times. (Tested with a 10.6MB XMI file with 120000+ lines)
-
-To use this macro, you only need to replace `lutaml_uml_datamodel_description`
-by `lutaml_ea_xmi`.
-
-Replace:
-
-[source,adoc]
------
-[lutaml_uml_datamodel_description, path/to/example.xmi]
-...
------
-
-By:
-
-[source,adoc]
------
-[lutaml_ea_xmi, path/to/example.xmi]
-...
------
-
-You can define guidance in the configuration file as well. The configuration
-file will looks like:
-
-[source,yaml]
------
-packages:
-  - my_package
-guidance: "path/to/guidance.yaml"
------
-
-The guidance file should be in the following format:
-
-[source,yaml]
 ----
----
-classes:
-  - name: "NameOfClass"
-    attributes:
-      - name: Name Of Attribute (e.g. gml:boundedBy)
-        used: false
-        guidance: |
-          Drop guidance message here.
-...
+lutaml_gml_dictionary::/path/to/dictionary.xml[template="/path/to/template.liquid",context=dict]
 ----
 
-If you want to define the guidance, you can define the `name` of the class
-under `classes`.  Then define which `attributes` you want to add guidance by the
-`name`. Set `used` to show the attribute is used or not. Drop the message of
-guidance in `guidance`.
+The command accepts the options listed below:
 
-The `name` of class can be defined in the following ways:
+* `/path/to/dictionary.xml` specifies the path of xml file of the
+GML Dictionary.
 
-* `name: "NameOfClass"` specifies the name of the `class`.
-  (e.g. `name: "Building"`)
-  If there are multiple classes with the same name, it is recommended to
-  specify the class by absolute path.
+* `template="/path/to/template.liquid"` specifies the liquid template.
+  For example, you can create a liquid template and link it by `template`.
 
-* `name: "::NameOfPackage::NameOfClass"` specifies the name of the `class` in
-  `absolute` path.
-  (e.g. `name: "::EA_Model::Conceptual Models::CityGML2.0::bldg::Building"`)
+* `context=dict` define the context in the template.
+
+[source,adoc]
+----
+[cols="3a,22a"]
+|===
+| Name | {{ dict.file_name }}
+
+h| Code h| Description
+{% for entry in dict.dictionary_entry %}
+| {{ entry.name }} | {{ entry.description }}
+{% endfor %}
+|===
+
+[.source]
+<<source_link>>
+----
+
+In spite of specifying the path of the template, you can also define an inline
+template within a block by
+`[lutaml_gml_dictionary,"/path/to/dictionary.xml",context=dict]`.
+
+[source,adoc]
+----
+[lutaml_gml_dictionary,"/path/to/dictionary.xml",context=dict]
+--
+{% capture link %}https://www.test.com/{{ dict.file_name }}{% endcapture %}
+
+[cols="3a,22a"]
+|===
+| File Name | {{ dict.file_name }}
+h| URL | {{ link }}
+h| Help | Description
+{% for entry in dict.dictionary_entry %}
+| {{ entry.name }} | {{ entry.description }}
+{% endfor %}
+|===
+
+[.source]
+<<source_link>>
+--
+----
+
 
 == Documentation
 
