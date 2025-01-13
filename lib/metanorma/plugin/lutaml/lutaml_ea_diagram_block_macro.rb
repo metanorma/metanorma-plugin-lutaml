@@ -14,7 +14,7 @@ module Metanorma
 
         def process(parent, _target, attrs)
           orig_doc = get_original_document(parent, attrs["index"])
-          diagram = fetch_diagram_by_name(orig_doc, attrs["name"])
+          diagram = fetch_diagram_by_name(orig_doc, attrs)
           return if diagram.nil?
 
           through_attrs = generate_attrs(attrs)
@@ -72,19 +72,30 @@ module Metanorma
           "#{img_path}/#{diagram.xmi_id}.#{format}"
         end
 
-        def fetch_diagram_by_name(orig_doc, name)
+        def fetch_diagram_by_name(orig_doc, attrs)
+          name = attrs["name"]
+          package_name = attrs["package"]
           found_diagrams = []
-          loop_sub_packages(orig_doc.packages.first, name, found_diagrams)
+
+          loop_sub_packages(
+            orig_doc.packages.first, name, found_diagrams, package_name
+          )
+
           found_diagrams.first
         end
 
-        def loop_sub_packages(package, name, found_diagrams)
+        def loop_sub_packages(package, name, found_diagrams, package_name) # rubocop:disable Metrics/CyclomaticComplexity
           found_diagram = package.diagrams.find { |diag| diag.name == name }
+
+          if found_diagram && package_name &&
+              found_diagram.package_name != package_name
+            found_diagram = nil
+          end
 
           found_diagrams << found_diagram if found_diagram
 
           package.packages.each do |sub_package|
-            loop_sub_packages(sub_package, name, found_diagrams)
+            loop_sub_packages(sub_package, name, found_diagrams, package_name)
           end
         end
       end
