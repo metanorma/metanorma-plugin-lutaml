@@ -283,6 +283,14 @@ specifying the name of diagram.
 lutaml_ea_diagram::[name="name_of_diagram",base_path="/path/to/xmi-images",format="png"]
 -----
 
+where:
+
+* `name` - name of the diagram to render.
+* `base_path` - base path where the diagram images are located.
+* `format` - format of the image file. (Optional)
+* `index` - index name of the XMI file. (Optional)
+* `package` - name of the package which contains the diagram. (Optional)
+
 The code will search the diagram with name `name_of_diagram` and then
 render it as:
 
@@ -292,6 +300,18 @@ render it as:
 .{{ diagram.name }}
 image::{{ image_base_path }}/{{ diagram.xmi_id }}.{{ format | default: 'png' }}[]
 -----
+
+You can use the `package` option to restrict the search result of the diagram.
+
+Example:
+
+[source,adoc]
+-----
+lutaml_ea_diagram::[name="DiagramName",package="PackageA",base_path="/path/to/xmi-images"]
+-----
+
+The search wil be restricted to the diagrams named `DiagramName` in the
+`PackageA` package.
 
 === Rendering a LutaML GML Dictionary: `lutaml_gml_dictionary`
 
@@ -869,6 +889,49 @@ The processor will read the supplied YAML config file (`path/to/config.yml`),
 and iterate through packages according to the order supplied in the file. All
 packages that matches `skip` in the YAML config file will be skipped during
 render.
+
+=== Usage of `lutaml-xmi-index`
+
+This command allows to define a set of XMI files in indexes.
+
+The syntax is as follows:
+
+[source,adoc]
+-----
+:lutaml-xmi-index: index_name; index_path[; config=config_path]
+-----
+
+where:
+
+* `index_name` - name of index
+* `index_path` - path to XMI file for the later use with `lutaml_ea_*` macro
+* `config_path` - optional, location of YAML configuration file that specifies
+  what packages to include in the render, what render style is desired and
+  location of the root package.
+
+==== Example of usage
+
+Define two indexes in the document and use them in the `lutaml_ea_xmi` macro:
+
+[source,adoc]
+-----
+:lutaml-xmi-index: first-xmi-index; /path/to/first.xmi
+:lutaml-xmi-index: second-xmi-index; /path/to/second.xmi; config=/path/to/config.yml
+
+[lutaml_ea_xmi,index=first-xmi-index]
+--
+...
+--
+
+lutaml_ea_diagram::[name="NameOfDiagramInSecondXmiIndex",base_path="./xmi-images",format="png",index="second-xmi-index"]
+...
+-----
+
+The macro `lutaml_ea_xmi` will load the XMI file from the path
+`/path/to/first.xmi` which is specified by the `index`: `first-xmi-index`.
+
+The macro `lutaml_ea_diagram` will load the XMI file from the path
+`/path/to/second.xmi` which is specified by the `index`: `second-xmi-index`.
 
 === Usage of `lutaml_ea_xmi` macro
 
