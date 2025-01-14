@@ -4,7 +4,12 @@ require "expressir/express/cache"
 require "metanorma/plugin/lutaml/liquid/custom_filters"
 require "metanorma/plugin/lutaml/liquid/multiply_local_file_system"
 
-::Liquid::Template.register_filter(Metanorma::Plugin::Lutaml::Liquid::CustomFilters)
+liquid_klass = if Object.const_defined?("Liquid::Environment")
+                 Object.const_get("Liquid::Environment").default
+               else
+                 Object.const_get("Liquid::Template")
+               end
+liquid_klass.register_filter(Metanorma::Plugin::Lutaml::Liquid::CustomFilters)
 
 module Metanorma
   module Plugin
