@@ -145,11 +145,7 @@ And the `lutaml_express` block:
 
 [source,adoc]
 -----
-<<<<<<< HEAD
-[lutaml_express,example.exp,my_context]
-=======
 [lutaml_express_liquid,example.exp,my_context]
->>>>>>> accd8ee (Remove obsolete codes of macros "lutaml" and "lutaml_express")
 ----
 {% for schema in my_context.schemas %}
 == {{schema.id}}
