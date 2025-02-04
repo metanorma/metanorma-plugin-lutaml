@@ -102,13 +102,13 @@ module Metanorma
           block
         end
 
-        def gather_context_liquid_items(index_names:, document:, indexes:, # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-selected_schemas:, options:)
+        def gather_context_liquid_items( # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Metrics/ParameterLists
+          index_names:, document:, indexes:, options: {}
+        )
           index_names.map do |path|
             if indexes[path]
               indexes[path][:liquid_drop] ||=
                 indexes[path][:wrapper].original_document.to_liquid(
-                  selected_schemas: selected_schemas,
                   options: options,
                 )
             else
@@ -123,7 +123,6 @@ selected_schemas:, options:)
               wrapper = load_lutaml_file(document, path)
               indexes[path] = {
                 liquid_drop: wrapper.original_document.to_liquid(
-                  selected_schemas: selected_schemas,
                   options: options,
                 ),
               }
@@ -167,13 +166,14 @@ selected_schemas:, options:)
 index_names:, options:, indexes:)
           config_yaml_path = options.delete("config_yaml")
           config = read_config_yaml_file(document, config_yaml_path)
-          selected_schemas = config["selected_schemas"]
+          if config["selected_schemas"]
+            options["selected_schemas"] = config["selected_schemas"]
+          end
 
           all_items = gather_context_liquid_items(
             index_names: index_names,
             document: document,
             indexes: indexes,
-            selected_schemas: selected_schemas,
             options: options.merge("document" => document),
           )
 
@@ -181,7 +181,6 @@ index_names:, options:, indexes:)
             repo_drop = item[:liquid_drop]
             template = ::Liquid::Template.parse(lines.join("\n"))
             template.assigns[context_name] = repo_drop
-            template.assigns["selected_schemas"] = selected_schemas
             template.render
           end.flatten
         rescue StandardError => e
