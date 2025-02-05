@@ -1,7 +1,7 @@
 module Metanorma
   module Plugin
     module Lutaml
-      VERSION = "0.7.18".freeze
+      VERSION = "0.7.19".freeze
     end
   end
 end
