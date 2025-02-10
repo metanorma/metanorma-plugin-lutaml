@@ -14,7 +14,6 @@ module Metanorma
   module Plugin
     module Lutaml
       #  Macro for quick rendering of datamodel attributes/values table
-      #  @example [lutaml_uml_attributes_table,path/to/lutaml,EntityName]
       class LutamlUmlDatamodelDescriptionPreprocessor <
           ::Asciidoctor::Extensions::Preprocessor
         include LutamlEaXmiBase

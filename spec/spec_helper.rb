@@ -15,8 +15,6 @@ end
 
 Asciidoctor::Extensions.register do
   preprocessor Metanorma::Plugin::Lutaml::LutamlPreprocessor
-  preprocessor Metanorma::Plugin::Lutaml::LutamlUmlAttributesTablePreprocessor
-  preprocessor Metanorma::Plugin::Lutaml::LutamlUmlClassPreprocessor
   block_macro Metanorma::Plugin::Lutaml::LutamlDiagramBlockMacro
   block Metanorma::Plugin::Lutaml::LutamlDiagramBlock
   block_macro Metanorma::Plugin::Lutaml::LutamlEaDiagramBlockMacro
