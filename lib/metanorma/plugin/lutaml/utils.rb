@@ -41,7 +41,7 @@ module Metanorma
 
           liquid_template.registers[:file_system] =
             ::Metanorma::Plugin::Lutaml::Liquid::LocalFileSystem
-              .new(include_paths, ["_%s.liquid", "_%s.adoc"])
+              .new(include_paths, ["%s.liquid", "_%s.liquid", "_%s.adoc"])
 
           rendered_string = liquid_template
             .render(context_name => context_items,

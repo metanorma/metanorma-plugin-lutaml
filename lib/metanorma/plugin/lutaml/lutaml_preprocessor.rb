@@ -177,9 +177,18 @@ index_names:, options:, indexes:)
             options: options.merge("document" => document),
           )
 
+          # Allow includes for the template
+          include_paths = [
+            Utils.relative_file_path(document, ""),
+            options["include_path"],
+          ].compact
+
           all_items.map do |item|
             repo_drop = item[:liquid_drop]
             template = ::Liquid::Template.parse(lines.join("\n"))
+            template.registers[:file_system] =
+              ::Metanorma::Plugin::Lutaml::Liquid::LocalFileSystem
+                .new(include_paths, ["%s.liquid", "_%s.liquid", "_%s.adoc"])
             template.assigns[context_name] = repo_drop
             template.render
           end.flatten
