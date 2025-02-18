@@ -295,7 +295,7 @@ via Liquid:
 {% assign selected = repo.schemas | where: "selected" %}
 ... do things with `selected` ...
 ---
------
+----
 
 NOTE: This functionality is used in the ISO 10303 SRL to load the full schema
 set at once but only render the selected schemas in individual documents.
