@@ -58,7 +58,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 END_SCHEMA;</sourcecode>
                 </clause>
               </sections>
-              </standard-document>
+              </metanorma>
             TEXT
           end
 
@@ -126,7 +126,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               END_SCHEMA;</sourcecode>
                     </clause>
                  </sections>
-                 </standard-document>
+                 </metanorma>
             TEXT
           end
 
@@ -273,7 +273,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 END_SCHEMA;</sourcecode>
                 </clause>
               </sections>
-              </standard-document>
+              </metanorma>
             TEXT
           end
 
@@ -323,46 +323,66 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             TEXT
           end
 
-          let(:output) do
+          let(:expected_output) do
             <<~TEXT
-              #{BLANK_HDR}<sections><clause id="_" inline-header="false" obligation="normative"><title>annotated_3d_model_data_quality_criteria_schema</title>
-              <p id="_">Mine text</p>
-              <svgmap><figure id="_">
-              <image src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
-              </figure><target href="1"><eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref></target><target href="2"><eref style="short" bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref></target><target href="3"><eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref></target></svgmap></clause>
-              <clause id="_" inline-header="false" obligation="normative">
-              <title>annotated_3d_model_data_quality_criteria_schema</title>
-              <p id="_">Mine text</p>
-              <svgmap>
-                <figure id="_">
-                  <image
-                    src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}"
-                    id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
-                </figure>
-                <target href="1">
-                  <eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref>
-                </target>
-                <target href="2">
-                  <eref style="short" bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>
-                </target>
-                <target href="3">
-                  <eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref>
-                </target>
-              </svgmap>
-              </clause></sections>
-              <bibliography><references hidden="true" normative="false"><bibitem id="express_measure_schema" type="internal">
-              <docidentifier type="repository">express/measure_schema</docidentifier>
-              </bibitem>
-              <bibitem id="express_measure_schemaexpg4" type="internal">
-              <docidentifier type="repository">express/measure_schemaexpg4</docidentifier>
-              </bibitem>
-              </references></bibliography></standard-document>
+              #{BLANK_HDR}
+                <sections>
+                  <clause id="_" inline-header="false" obligation="normative">
+                    <title>annotated_3d_model_data_quality_criteria_schema</title>
+                    <p id="_">Mine text</p>
+                    <svgmap>
+                      <figure id="_">
+                        <image src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" mimetype="image/svg+xml"  id="_" height="auto" width="auto"/>
+                      </figure>
+                      <target href="1">
+                        <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
+                      </target>
+                      <target href="2">
+                        <eref style="short" bibitemid="express_measure_schemaexpg4" citeas=""><display-text>measure_schemaexpg4</display-text></eref>
+                      </target>
+                      <target href="3">
+                        <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
+                      </target>
+                    </svgmap>
+                  </clause>
+                  <clause id="_" inline-header="false" obligation="normative">
+                    <title>annotated_3d_model_data_quality_criteria_schema</title>
+                    <p id="_">Mine text</p>
+                    <svgmap>
+                      <figure id="_">
+                        <image src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" mimetype="image/svg+xml"  id="_" height="auto" width="auto"/>
+                      </figure>
+                      <target href="1">
+                        <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
+                      </target>
+                      <target href="2">
+                        <eref style="short" bibitemid="express_measure_schemaexpg4" citeas=""><display-text>measure_schemaexpg4</display-text></eref>
+                      </target>
+                      <target href="3">
+                        <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
+                      </target>
+                    </svgmap>
+                  </clause>
+                </sections>
+                <bibliography>
+                  <references hidden="true" normative="false">
+                    <bibitem id="express_measure_schema" type="internal">
+                      <docidentifier type="repository">express/measure_schema</docidentifier>
+                    </bibitem>
+                    <bibitem id="express_measure_schemaexpg4" type="internal">
+                      <docidentifier type="repository">express/measure_schemaexpg4</docidentifier>
+                    </bibitem>
+                  </references>
+                </bibliography>
+              </metanorma>
             TEXT
           end
 
           it "correctly renders input" do
-            expect(xml_string_content(metanorma_process(input)))
-              .to(be_equivalent_to(output))
+            output = remove_xml_whitespaces(
+              xml_string_content(metanorma_process(input)))
+            expect(output)
+              .to(be_equivalent_to(remove_xml_whitespaces(expected_output)))
           end
         end
       end

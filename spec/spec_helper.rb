@@ -48,7 +48,7 @@ end
 
 BLANK_HDR = <<~"HDR".freeze
   <?xml version="1.0" encoding="UTF-8"?>
-  <standard-document xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="#{Metanorma::Standoc::VERSION}">
+  <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="#{Metanorma::Standoc::VERSION}" flavor="standoc">
     <bibdata type="standard">
       <title language="en" format="text/plain">Document title</title>
       <language>en</language>
@@ -90,6 +90,10 @@ def strip_guid(xml)
     .gsub(%r{ target="_[^"]+"}, ' target="_"')
     .gsub(%r{<fetched>[^<]+</fetched>}, "<fetched/>")
     .gsub(%r{ schema-version="[^"]+"}, "")
+end
+
+def remove_xml_whitespaces(xml)
+  xml.gsub(/\\n/, '').gsub(/>\s*/, ">").gsub(/\s*</, "<")
 end
 
 def xml_string_content(xml)

@@ -678,14 +678,16 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
           end
 
           it "correctly maps external and internal refs" do
-            expect(xml_convert)
-              .to_not(include('<xref target="My-custom-Register-section" style="short">Register</xref>'))
-            expect(xml_convert)
-              .to_not(include('<xref target="Register-section" style="short">Register</xref>'))
-            expect(xml_convert)
-              .to_not(include('<xref target="RE_ReferenceSource-section" style="short">RE_ReferenceSource</xref>'))
-            expect(xml_convert)
-              .to(include('<xref target="custom-RE_ReferenceSource" style="short">RE_ReferenceSource</xref>'))
+           xml_output = remove_xml_whitespaces(xml_convert)
+
+            expect(xml_output)
+              .to_not(include('<xref target="My-custom-Register-section" style="short"><display-text>Register</display-text></xref>'))
+            expect(xml_output)
+              .to_not(include('<xref target="Register-section" style="short"><display-text>Register</display-text></xref>'))
+            expect(xml_output)
+              .to_not(include('<xref target="RE_ReferenceSource-section" style="short"><display-text>RE_ReferenceSource</display-text></xref>'))
+            expect(xml_output)
+              .to(include('<xref target="custom-RE_ReferenceSource" style="short"><display-text>RE_ReferenceSource</display-text></xref>'))
           end
         end
 
@@ -700,10 +702,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
           end
 
           it "correctly maps external and internal refs" do
-            expect(xml_convert)
-              .to(include('<xref target="My-custom-RE_Register-section" style="short">RE_Register</xref>'))
-            expect(xml_convert)
-              .to_not(include('<xref target="RE_Register-section" style="short">RE_Register</xref>'))
+            xml_output = remove_xml_whitespaces(xml_convert)
+            expect(xml_output)
+              .to(include('<xref target="My-custom-RE_Register-section" style="short"><display-text>RE_Register</display-text></xref>'))
+            expect(xml_output)
+              .to_not(include('<xref target="RE_Register-section" style="short"><display-text>RE_Register</display-text></xref>'))
           end
         end
       end
