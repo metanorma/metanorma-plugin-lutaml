@@ -43,7 +43,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         {% endfor %}
         {% endfor %}</sourcecode>
           </sections>
-        </standard-document>
+        </metanorma>
       TEXT
     end
 
@@ -135,7 +135,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             explicit → </p>
             </clause></clause>
             </sections>
-            </standard-document>
+            </metanorma>
           TEXT
         end
 
@@ -189,7 +189,17 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             <p id="_">Mine text</p>
             <svgmap><figure id="_">
             <image src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
-            </figure><target href="1"><eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref></target><target href="2"><eref style="short" bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref></target><target href="3"><eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref></target></svgmap></clause>
+            </figure>
+            <target href="1">
+              <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
+            </target>
+            <target href="2">
+              <eref style="short" bibitemid="express_measure_schemaexpg4" citeas=""><display-text>measure_schemaexpg4</display-text></eref>
+            </target>
+            <target href="3">
+              <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
+            </target>
+            </svgmap></clause>
             <clause id="_" inline-header="false" obligation="normative">
             <title>annotated_3d_model_data_quality_criteria_schema</title>
             <p id="_">Mine text</p>
@@ -200,13 +210,13 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                   id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
               </figure>
               <target href="1">
-                <eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref>
+                <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
               </target>
               <target href="2">
-                <eref style="short" bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>
+                <eref style="short" bibitemid="express_measure_schemaexpg4" citeas=""><display-text>measure_schemaexpg4</display-text></eref>
               </target>
               <target href="3">
-                <eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref>
+                <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
               </target>
             </svgmap>
             </clause></sections>
@@ -216,7 +226,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             <bibitem id="express_measure_schemaexpg4" type="internal">
             <docidentifier type="repository">express/measure_schemaexpg4</docidentifier>
             </bibitem>
-            </references></bibliography></standard-document>
+            </references></bibliography></metanorma>
           TEXT
         end
 
@@ -269,7 +279,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               <link target="http://test.com/include1.csv"/>
               </p></clause>
             </sections>
-            </standard-document>
+            </metanorma>
           TEXT
         end
 
@@ -320,7 +330,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 <link target="http://test.com/include1.csv"/>
                 </p></clause>
               </sections>
-              </standard-document>
+              </metanorma>
             TEXT
           end
           it "correctly renders input" do
@@ -367,13 +377,13 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                       height="auto" width="auto"></image>
                   </figure>
                   <target href="1">
-                    <eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref>
+                    <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
                   </target>
                   <target href="2">
-                    <eref style="short" bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>
+                    <eref style="short" bibitemid="express_measure_schemaexpg4" citeas=""><display-text>measure_schemaexpg4</display-text></eref>
                   </target>
                   <target href="3">
-                    <eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref>
+                    <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
                   </target>
                 </svgmap>
               </clause>
@@ -385,7 +395,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             <docidentifier type="repository">express/measure_schemaexpg4</docidentifier>
             </bibitem>
             </references></bibliography>
-            </standard-document>
+            </metanorma>
           TEXT
         end
 
@@ -443,7 +453,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 <title>Activity_method_characterized_mim</title>
               </clause>
             </sections>
-            </standard-document>
+            </metanorma>
           TEXT
         end
 
@@ -497,7 +507,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                   <title>annotated_3d_model_data_quality_criteria_schema</title>
                 </clause>
               </sections>
-              </standard-document>
+              </metanorma>
             TEXT
           end
 
@@ -548,7 +558,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                   <title>annotated_3d_model_data_quality_criteria_schema</title>
                 </clause>
               </sections>
-              </standard-document>
+              </metanorma>
             TEXT
           end
 
@@ -642,7 +652,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 <title>annotated_3d_model_data_quality_criteria_schema</title>
               </clause>
             </sections>
-            </standard-document>
+            </metanorma>
           TEXT
         end
 
@@ -703,15 +713,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                   </figure>
                   <target
                     href="1">
-                    <eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref>
+                    <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
                   </target>
                   <target
                     href="2">
-                    <eref style="short" bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>
+                    <eref style="short" bibitemid="express_measure_schemaexpg4" citeas=""><display-text>measure_schemaexpg4</display-text></eref>
                   </target>
                   <target
                     href="3">
-                    <eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref>
+                    <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
                   </target>
                 </svgmap>
               </clause>
@@ -726,15 +736,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                   </figure>
                   <target
                     href="1">
-                    <eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref>
+                    <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
                   </target>
                   <target
                     href="2">
-                    <eref style="short" bibitemid="express_measure_schemaexpg4" citeas="">measure_schemaexpg4</eref>
+                    <eref style="short" bibitemid="express_measure_schemaexpg4" citeas=""><display-text>measure_schemaexpg4</display-text></eref>
                   </target>
                   <target
                     href="3">
-                    <eref style="short" bibitemid="express_measure_schema" citeas="">measure_schema</eref>
+                    <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
                   </target>
                 </svgmap>
               </clause>
@@ -749,7 +759,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             <docidentifier type="repository">express/measure_schemaexpg4</docidentifier>
             </bibitem>
             </references></bibliography>
-            </standard-document>
+            </metanorma>
           TEXT
         end
 
@@ -784,7 +794,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             <p id="_">My content</p>
             </clause>
             </sections>
-            </standard-document>
+            </metanorma>
           TEXT
         end
 

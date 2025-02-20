@@ -32,7 +32,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDiagramBlock do
           <image src="_" id="_" mimetype="image/png" height="auto" width="auto"></image>
           </figure>
           </sections>
-          </standard-document>
+          </metanorma>
         TEXT
       end
 
@@ -65,7 +65,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDiagramBlock do
           <image src="_" id="_" mimetype="image/png" height="auto" width="auto"></image>
           </figure>
           </sections>
-          </standard-document>
+          </metanorma>
         TEXT
       end
 
