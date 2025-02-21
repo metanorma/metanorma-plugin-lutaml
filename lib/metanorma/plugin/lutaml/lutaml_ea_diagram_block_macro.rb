@@ -42,9 +42,7 @@ module Metanorma
           end
 
           doc ||= parent.document.attributes["lutaml_xmi_cache"].values.first
-          return doc if doc.instance_of?(::Lutaml::XMI::RootDrop)
-
-          doc.original_document
+          doc
         end
 
         def get_path_from_index(parent, index_name) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength

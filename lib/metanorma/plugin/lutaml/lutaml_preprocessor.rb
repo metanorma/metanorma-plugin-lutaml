@@ -49,7 +49,7 @@ module Metanorma
           line.match(/^\[(?:\blutaml\b|\blutaml_express\b|\blutaml_express_liquid\b),(?<index_names>[^,]+)?,?(?<context_name>[^,]+)?(?<options>,.*)?\]/) # rubocop:disable Layout/LineLength
         end
 
-        def load_lutaml_file(document, file_path)
+        def load_express_lutaml_file(document, file_path)
           ::Lutaml::Parser.parse(
             File.new(
               Utils.relative_file_path(document, file_path),
@@ -108,9 +108,7 @@ module Metanorma
           index_names.map do |path|
             if indexes[path]
               indexes[path][:liquid_drop] ||=
-                indexes[path][:wrapper].original_document.to_liquid(
-                  options: options,
-                )
+                indexes[path][:model].to_liquid(options: options)
             else
               full_path = Utils.relative_file_path(document, path)
               unless File.file?(full_path)
@@ -120,11 +118,9 @@ module Metanorma
                   "the full path.",
                 )
               end
-              wrapper = load_lutaml_file(document, path)
+              express_model = load_express_lutaml_file(document, path)
               indexes[path] = {
-                liquid_drop: wrapper.original_document.to_liquid(
-                  options: options,
-                ),
+                liquid_drop: express_model.to_liquid(options: options),
               }
             end
 
@@ -153,13 +149,6 @@ module Metanorma
           end
 
           options
-        end
-
-        def get_original_document(wrapper)
-          doc = wrapper
-          return doc if doc.instance_of?(::Lutaml::XMI::RootDrop)
-
-          doc.original_document
         end
 
         def render_liquid_template(document:, lines:, context_name:, # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Metrics/ParameterLists

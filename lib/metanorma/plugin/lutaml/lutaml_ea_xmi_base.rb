@@ -162,16 +162,8 @@ module Metanorma
           [lutaml_document, yaml_config]
         end
 
-        def get_original_document(wrapper)
-          doc = wrapper
-          return doc if doc.instance_of?(::Lutaml::XMI::RootDrop)
-
-          doc.original_document
-        end
-
         def fill_in_entities_refs_attributes(document, # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength
           lutaml_document, _options)
-          lutaml_document = get_original_document(lutaml_document)
           # render_style = options.fetch(RENDER_STYLE_ATTRIBUTE, "default")
           all_children_packages = lutaml_document.packages
             .map(&:children_packages).flatten
@@ -201,7 +193,6 @@ module Metanorma
         end
 
         def fill_in_diagrams_attributes(document, lutaml_document) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-          lutaml_document = get_original_document(lutaml_document)
           package_flat_diagrams = lambda do |pks|
             pks.each_with_object({}) do |package, res|
               package.diagrams.map do |diag|
