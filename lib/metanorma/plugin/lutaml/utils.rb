@@ -61,13 +61,6 @@ module Metanorma
           end
         end
 
-        def get_original_document(wrapper)
-          doc = wrapper
-          return doc if doc.instance_of?(::Lutaml::XMI::RootDrop)
-
-          doc.original_document
-        end
-
         def load_express_repositories(path:, cache_path:, document:,
 force_read: false)
           cache_full_path = cache_path &&
@@ -80,17 +73,17 @@ force_read: false)
 
           # If there is no cache or "force read" is set.
           full_path = Utils.relative_file_path(document, path)
-          lutaml_wrapper = load_express_repo_from_path(document, full_path)
+          lutaml_doc = load_express_repo_from_path(document, full_path)
 
           if cache_full_path && !File.file?(cache_full_path)
             save_express_repo_to_cache(
               cache_full_path,
-              get_original_document(lutaml_wrapper),
+              lutaml_doc,
               document,
             )
           end
 
-          lutaml_wrapper
+          lutaml_doc
         rescue Expressir::Error
           FileUtils.rm_rf(cache_full_path)
 
@@ -179,16 +172,15 @@ force_read: false)
               raise StandardError.new("No name and path set in `:lutaml-express-index:` attribute.")
             end
 
-            lutaml_expressir_wrapper = load_express_repositories(
+            lutaml_expressir_model = load_express_repositories(
               path: path,
               cache_path: cache,
               document: document,
             )
 
-            if lutaml_expressir_wrapper
+            if lutaml_expressir_model
               express_indexes[name] = {
-                wrapper: lutaml_expressir_wrapper,
-                serialized_hash: nil,
+                model: lutaml_expressir_model,
               }
             end
           end
