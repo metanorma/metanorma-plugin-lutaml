@@ -32,7 +32,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
       <<~TEXT
         #{BLANK_HDR}
            <sections>
-             <sourcecode id="_" linenums="true">{% for schema in my_context.schemas %}
+             <sourcecode id="_" linenums="true">
+               <body>{% for schema in my_context.schemas %}
         == {{schema.id}}
 
         {% for entity in schema.entities %}
@@ -41,7 +42,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         explicit -&gt; {{entity.explicit.first.id}}
 
         {% endfor %}
-        {% endfor %}</sourcecode>
+        {% endfor %}</body>
+            </sourcecode>
           </sections>
         </metanorma>
       TEXT

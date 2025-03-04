@@ -35,7 +35,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               #{BLANK_HDR}<sections>
                 <clause id="_" unnumbered="true" inline-header="false" obligation="normative">
                 <title>Activity_method_assignment_arm</title>
-                <sourcecode id="_" unnumbered="true">SCHEMA Activity_method_assignment_arm;
+                <sourcecode id="_" unnumbered="true">
+                <body>SCHEMA Activity_method_assignment_arm;
 
                 USE FROM Activity_method_arm;
 
@@ -55,7 +56,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                   role : STRING;
                 END_ENTITY;
 
-                END_SCHEMA;</sourcecode>
+                END_SCHEMA;</body>
+                  </sourcecode>
                 </clause>
               </sections>
               </metanorma>
@@ -103,7 +105,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                           <bookmark id="_"/>
                           [[.types]][[.activity_method_item]][[.entities]][[.Activity_method_relationship]][[.Applied_activity_method_assignment]]
                        </title>
-                       <sourcecode id="_" unnumbered="true">SCHEMA Activity_method_assignment_arm;
+                       <sourcecode id="_" unnumbered="true">
+                       <body>SCHEMA Activity_method_assignment_arm;
 
               USE FROM Activity_method_arm;
 
@@ -123,7 +126,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 role : STRING;
               END_ENTITY;
 
-              END_SCHEMA;</sourcecode>
+              END_SCHEMA;</body>
+                      </sourcecode>
                     </clause>
                  </sections>
                  </metanorma>
@@ -250,7 +254,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               #{BLANK_HDR}<sections>
                 <clause id="_" unnumbered="true" inline-header="false" obligation="normative">
                 <title>Activity_method_assignment_arm</title>
-                <sourcecode id="_" unnumbered="true">SCHEMA Activity_method_assignment_arm;
+                <sourcecode id="_" unnumbered="true">
+                <body>SCHEMA Activity_method_assignment_arm;
 
                 USE FROM Activity_method_arm;
 
@@ -270,7 +275,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                   role : STRING;
                 END_ENTITY;
 
-                END_SCHEMA;</sourcecode>
+                END_SCHEMA;</body>
+                  </sourcecode>
                 </clause>
               </sections>
               </metanorma>
