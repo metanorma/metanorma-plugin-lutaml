@@ -105,10 +105,11 @@ module Metanorma
         def gather_context_liquid_items( # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Metrics/ParameterLists
           index_names:, document:, indexes:, options: {}
         )
-          index_names.map do |path|
-            if indexes[path]
-              indexes[path][:liquid_drop] ||=
-                indexes[path][:model].to_liquid(options: options)
+          index_names.map do |path| # rubocop:disable Metrics/BlockLength
+            if indexes[path] && indexes[path][:model]
+              repo = indexes[path][:model]
+              repo = update_repo(options, repo)
+              indexes[path][:liquid_drop] ||= repo.to_liquid
             else
               full_path = Utils.relative_file_path(document, path)
               unless File.file?(full_path)
@@ -118,13 +119,56 @@ module Metanorma
                   "the full path.",
                 )
               end
-              express_model = load_express_lutaml_file(document, path)
+              repo = load_express_lutaml_file(document, path)
+              repo = update_repo(options, repo)
               indexes[path] = {
-                liquid_drop: express_model.to_liquid(options: options),
+                liquid_drop: repo.to_liquid,
               }
             end
 
             indexes[path]
+          end
+        end
+
+        def update_repo(options, repo) # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
+          repo = repo.content if repo.is_a? Expressir::Model::Cache
+
+          repo.schemas.each do |schema|
+            # update selected
+            if options["selected_schemas"]
+              schema.selected = options["selected_schemas"]
+                .include?(schema.file_basename) ||
+                options["selected_schemas"].include?(schema.id)
+            end
+
+            # update remarks
+            schema.remarks = decorate_remarks(options, schema)
+          end
+
+          repo
+        end
+
+        def relative_path_prefix(options, model)
+          return nil if options.nil? || options["document"].nil?
+
+          document = options["document"]
+          file_path = File.dirname(model.file)
+          docfile_directory = File.dirname(
+            document.attributes["docfile"] || ".",
+          )
+          document
+            .path_resolver
+            .system_path(file_path, docfile_directory)
+        end
+
+        def decorate_remarks(options, model)
+          return [] unless model.remarks
+
+          options["relative_path_prefix"] = relative_path_prefix(options, model)
+
+          model.remarks.map do |remark|
+            ::Expressir::Express::ExpressRemarksDecorator
+              .call(remark, options)
           end
         end
 
