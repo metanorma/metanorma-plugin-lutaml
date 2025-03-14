@@ -42,7 +42,7 @@ module Metanorma
 
         private
 
-        def lutaml_document_from_file_or_cache(document, file_path, yaml_config) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+        def lutaml_document_from_file_or_cache(document, file_path, yaml_config, yaml_config_path = nil) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Layout/LineLength
           full_path = Utils.relative_file_path(document, file_path)
           if document.attributes["lutaml_xmi_cache"] &&
               document.attributes["lutaml_xmi_cache"][full_path]
@@ -50,8 +50,10 @@ module Metanorma
           end
 
           yaml_config["ea_extension"]&.each do |ea_extension_path|
+            # resolve paths of ea extensions based on the location of
+            # config yaml file
             ea_extension_full_path = File.expand_path(
-              ea_extension_path, File.dirname(file_path)
+              ea_extension_path, File.dirname(yaml_config_path)
             )
             Xmi::EaRoot.load_extension(ea_extension_full_path)
           end
@@ -156,9 +158,12 @@ module Metanorma
           end
 
           yaml_config = parse_yaml_config_file(document, config_yaml_path)
-          lutaml_document = lutaml_document_from_file_or_cache(document,
-                                                               xmi_or_index,
-                                                               yaml_config)
+          lutaml_document = lutaml_document_from_file_or_cache(
+            document,
+            xmi_or_index,
+            yaml_config,
+            Utils.relative_file_path(document, config_yaml_path),
+          )
           [lutaml_document, yaml_config]
         end
 
