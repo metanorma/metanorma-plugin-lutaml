@@ -871,7 +871,9 @@ that specifies:
 * What render style is desired;
 
 * Location of the root package (which package should the iterative process start
-  at).
+  at);
+
+* Which EA extensions to be loaded.
 
 The format for using the YAML configuration file:
 
@@ -887,6 +889,9 @@ packages:
   - skip: four
 render_style: entity_list | data_dictionary | default
 section_depth: 2
+ea_extension:
+  - "CityGML_MDG_Technology.xml"
+  - "xmi_definition_for_some_standard.xml"
 ----
 
 Where:
@@ -928,6 +933,12 @@ equal to 2, root package will be `one-1`.
   }
 ]
 ----
+
+* `ea_extension` - optional, list of EA extensions to load. Some XMI files may
+contain elements that cannot be resolved by default, for example CityGML
+elements.  You can use `ea_extension` to load the definition of these elements
+in XML format (`CityGML_MDG_Technology.xml`) in order to resolve them.  The
+location of the xml files is relative to the config YAML file.
 
 Usage with command:
 
