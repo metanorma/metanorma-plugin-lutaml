@@ -206,6 +206,7 @@ selected:, options:)
         def render_template(document:, lines:, context_name:, index_names:, # rubocop:disable Metrics/ParameterLists,Metrics/AbcSize,Metrics/MethodLength
 options:, indexes:)
           config_yaml_path = options.delete("config_yaml")
+          add_root = options.delete("add_root")
           config = read_config_yaml_file(document, config_yaml_path)
           selected_schemas = config["selected_schemas"]
 
@@ -234,6 +235,10 @@ options:, indexes:)
               block_lines: lines,
               context_items: serialized_hash,
               context_name: context_name,
+
+              # Add pwd as root to solve location error in
+              # `{% render %}` tags from ISO 10303-SRL templates
+              include_path: add_root == "pwd" ? Dir.pwd : nil,
             )
           end.flatten
         rescue StandardError => e
@@ -282,12 +287,13 @@ options:, indexes:)
           end.to_h
         end
 
-        def render_block(block_lines:, context_items:, context_name:, document:)
+        def render_block(block_lines:, context_items:, context_name:, document:, include_path:)
           render_result, errors = Utils.render_liquid_string(
             template_string: block_lines.join("\n"),
             context_items: context_items,
             context_name: context_name,
             document: document,
+            include_path: include_path,
           )
 
           Utils.notify_render_errors(document, errors)
