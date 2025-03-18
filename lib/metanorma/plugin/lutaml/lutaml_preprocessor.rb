@@ -130,31 +130,38 @@ module Metanorma
           end
         end
 
-        def update_repo(options, repo) # rubocop:disable Metrics/MethodLength,Metrics/AbcSize,Metrics/CyclomaticComplexity
+        def update_repo(options, repo)
+          # Unwrap repo if it's a cache
           repo = repo.content if repo.is_a? Expressir::Model::Cache
 
+          # Process each schema
           repo.schemas.each do |schema|
-            # update selected
-            if options["selected_schemas"]
-              schema.selected = options["selected_schemas"]
-                .include?(schema.file_basename) ||
-                options["selected_schemas"].include?(schema.id)
-            end
-
-            options["relative_path_prefix"] = relative_path_prefix(options,
-                                                                   schema)
-
-            # update remarks
-            schema.remarks = decorate_remarks(options, schema.remarks)
-
-            # update remark items
-            schema.remark_items ||= []
-            schema.remark_items.each do |ri|
-              ri.remarks = decorate_remarks(options, ri.remarks)
-            end
+            update_schema_selection(schema, options)
+            options["relative_path_prefix"] =
+              relative_path_prefix(options, schema)
+            update_schema_remarks(schema, options)
           end
 
           repo
+        end
+
+        def update_schema_selection(schema, options)
+          return unless options["selected_schemas"]
+
+          schema.selected = options["selected_schemas"].include?(schema.file_basename) ||
+            options["selected_schemas"].include?(schema.id)
+        end
+
+        def update_schema_remarks(schema, options)
+          # Update schema-level remarks
+          schema.remarks = decorate_remarks(options, schema.remarks)
+
+          # Update remark items
+          return unless schema.remark_items
+
+          schema.remark_items.each do |ri|
+            ri.remarks = decorate_remarks(options, ri.remarks)
+          end
         end
 
         def relative_path_prefix(options, model)
@@ -179,7 +186,7 @@ module Metanorma
           end
         end
 
-        def read_config_yaml_file(document, file_path) # rubocop:disable Metrics/MethodLength
+        def read_config_yaml_file(document, file_path)
           return {} if file_path.nil?
 
           relative_file_path = Utils.relative_file_path(document, file_path)
@@ -187,29 +194,24 @@ module Metanorma
             File.read(relative_file_path, encoding: "UTF-8"),
           )
 
-          options = {}
-          if config_yaml["schemas"]
-            unless config_yaml["schemas"].is_a?(Hash)
-              raise StandardError.new(
-                "[lutaml_express_liquid] attribute `config_yaml` must point " \
-                "to a YAML file that has the `schema` key containing a hash.",
-              )
-            end
+          return {} unless config_yaml["schemas"]
 
-            options["selected_schemas"] = config_yaml["schemas"].keys
+          unless config_yaml["schemas"].is_a?(Hash)
+            raise StandardError.new(
+              "[lutaml_express_liquid] attribute `config_yaml` must point " \
+              "to a YAML file that has the `schemas` key containing a hash.",
+            )
           end
 
-          options
+          { "selected_schemas" => config_yaml["schemas"].keys }
         end
 
         def render_liquid_template(document:, lines:, context_name:, # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Metrics/ParameterLists
-index_names:, options:, indexes:)
-          config_yaml_path = options.delete("config_yaml")
-          config = read_config_yaml_file(document, config_yaml_path)
-          if config["selected_schemas"]
-            options["selected_schemas"] = config["selected_schemas"]
-          end
+                      index_names:, options:, indexes:)
+          # Process options and configuration
+          options = process_options(document, options)
 
+          # Get all context items in one go
           all_items = gather_context_liquid_items(
             index_names: index_names,
             document: document,
@@ -217,19 +219,21 @@ index_names:, options:, indexes:)
             options: options.merge("document" => document),
           )
 
-          # Allow includes for the template
+          # Setup include paths for liquid templates
           include_paths = [
             Utils.relative_file_path(document, ""),
             options["include_path"],
           ].compact
+          file_system = ::Metanorma::Plugin::Lutaml::Liquid::LocalFileSystem
+            .new(include_paths, ["%s.liquid", "_%s.liquid", "_%s.adoc"])
 
+          # Parse template once outside the loop
+          template = ::Liquid::Template.parse(lines.join("\n"))
+          template.registers[:file_system] = file_system
+
+          # Render for each item
           all_items.map do |item|
-            repo_drop = item[:liquid_drop]
-            template = ::Liquid::Template.parse(lines.join("\n"))
-            template.registers[:file_system] =
-              ::Metanorma::Plugin::Lutaml::Liquid::LocalFileSystem
-                .new(include_paths, ["%s.liquid", "_%s.liquid", "_%s.adoc"])
-            template.assigns[context_name] = repo_drop
+            template.assigns[context_name] = item[:liquid_drop]
             template.render
           end.flatten
         rescue StandardError => e
@@ -237,8 +241,19 @@ index_names:, options:, indexes:)
             "[LutamlPreprocessor] Failed to parse LutaML block: #{e.message}",
             :error,
           )
-          # [] # Return empty array to avoid breaking the document
           raise e
+        end
+
+        def process_options(document, options)
+          # Process config file if specified
+          if (config_yaml_path = options.delete("config_yaml"))
+            config = read_config_yaml_file(document, config_yaml_path)
+            if config["selected_schemas"]
+              options["selected_schemas"] =
+                config["selected_schemas"]
+            end
+          end
+          options
         end
 
         def parse_options(options_string)
