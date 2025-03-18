@@ -11,3 +11,5 @@ begin
 rescue StandardError
   nil
 end
+
+gem "expressir", github: "lutaml/expressir", branch: "rt-lutaml-model"
