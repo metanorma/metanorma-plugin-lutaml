@@ -130,7 +130,7 @@ module Metanorma
           end
         end
 
-        def update_repo(options, repo) # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
+        def update_repo(options, repo) # rubocop:disable Metrics/MethodLength,Metrics/AbcSize,Metrics/CyclomaticComplexity
           repo = repo.content if repo.is_a? Expressir::Model::Cache
 
           repo.schemas.each do |schema|
@@ -141,8 +141,17 @@ module Metanorma
                 options["selected_schemas"].include?(schema.id)
             end
 
+            options["relative_path_prefix"] = relative_path_prefix(options,
+                                                                   schema)
+
             # update remarks
-            schema.remarks = decorate_remarks(options, schema)
+            schema.remarks = decorate_remarks(options, schema.remarks)
+
+            # update remark items
+            schema.remark_items ||= []
+            schema.remark_items.each do |ri|
+              ri.remarks = decorate_remarks(options, ri.remarks)
+            end
           end
 
           repo
@@ -161,12 +170,10 @@ module Metanorma
             .system_path(file_path, docfile_directory)
         end
 
-        def decorate_remarks(options, model)
-          return [] unless model.remarks
+        def decorate_remarks(options, remarks)
+          return [] unless remarks
 
-          options["relative_path_prefix"] = relative_path_prefix(options, model)
-
-          model.remarks.map do |remark|
+          remarks.map do |remark|
             ::Expressir::Express::ExpressRemarksDecorator
               .call(remark, options)
           end
