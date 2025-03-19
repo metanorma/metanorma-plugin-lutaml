@@ -13,3 +13,4 @@ rescue StandardError
 end
 
 gem "expressir", github: "lutaml/expressir", branch: "rt-lutaml-model"
+gem "lutaml-model", github: "lutaml/lutaml-model", branch: "main"
