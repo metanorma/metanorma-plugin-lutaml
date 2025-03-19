@@ -300,6 +300,25 @@ via Liquid:
 NOTE: This functionality is used in the ISO 10303 SRL to load the full schema
 set at once but only render the selected schemas in individual documents.
 
+=== Using `include_path`
+
+This functionality allows `[lutaml_express_liquid]` blocks to load templates
+from the paths other than the location of the document.
+
+[source,adoc]
+-----
+:lutaml-express-index: all_schemas; ../schemas_all.yaml;
+
+[lutaml_express_liquid,all_schemas,context,config_yaml=schemas.yaml,include_path=../templates]
+---
+{% assign selected = context.schemas | where: "selected" %}
+{% render "templates/resources/schema" for selected as schema %}
+----
+-----
+
+The resulting block adds the `include_path` to the Liquid renderer.  The path is
+resolved based on the location of the document.  You can add multiple paths by
+separating them with commas.
 
 == Usage with Lutaml-UML
 
