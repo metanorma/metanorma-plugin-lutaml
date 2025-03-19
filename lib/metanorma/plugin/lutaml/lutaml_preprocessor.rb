@@ -220,10 +220,12 @@ module Metanorma
           )
 
           # Setup include paths for liquid templates
-          include_paths = [
-            Utils.relative_file_path(document, ""),
-            options["include_path"],
-          ].compact
+          include_paths = [Utils.relative_file_path(document, "")]
+          options["include_path"]&.split(",")&.each do |path|
+            # resolve include_path relative to the document
+            include_paths.push(Utils.relative_file_path(document, path))
+          end
+
           file_system = ::Metanorma::Plugin::Lutaml::Liquid::LocalFileSystem
             .new(include_paths, ["%s.liquid", "_%s.liquid", "_%s.adoc"])
 
