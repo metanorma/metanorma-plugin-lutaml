@@ -12,5 +12,16 @@ rescue StandardError
   nil
 end
 
-gem "expressir", github: "lutaml/expressir", branch: "rt-lutaml-model"
-gem "lutaml-model", github: "lutaml/lutaml-model", branch: "main"
+gem "debug"
+gem "equivalent-xml"
+gem "metanorma-standoc"
+gem "rake"
+gem "rspec"
+gem "rspec-html-matchers"
+gem "rubocop"
+gem "rubocop-performance"
+gem "simplecov"
+gem "timecop"
+gem "vcr"
+gem "webmock"
+gem "xml-c14n"
