@@ -1,4 +1,5 @@
 require "metanorma/plugin/lutaml/version"
+require "metanorma/plugin/lutaml/config"
 require "metanorma/plugin/lutaml/lutaml_preprocessor"
 require "metanorma/plugin/lutaml/lutaml_uml_datamodel_description_preprocessor"
 require "metanorma/plugin/lutaml/lutaml_ea_xmi_preprocessor"

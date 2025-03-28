@@ -49,7 +49,7 @@ module Metanorma
             return document.attributes["lutaml_xmi_cache"][full_path]
           end
 
-          yaml_config["ea_extension"]&.each do |ea_extension_path|
+          yaml_config.ea_extension&.each do |ea_extension_path|
             # resolve paths of ea extensions based on the location of
             # config yaml file
             ea_extension_full_path = File.expand_path(
@@ -58,7 +58,7 @@ module Metanorma
             Xmi::EaRoot.load_extension(ea_extension_full_path)
           end
 
-          guidance = get_guidance_file(document, yaml_config["guidance"])
+          guidance = get_guidance_file(document, yaml_config.guidance)
           result_document = parse_result_document(full_path, guidance)
           document.attributes["lutaml_xmi_cache"] ||= {}
           document.attributes["lutaml_xmi_cache"][full_path] = result_document
@@ -77,10 +77,13 @@ module Metanorma
         end
 
         def parse_yaml_config_file(document, file_path)
-          return {} if file_path.nil?
+          return Metanorma::Plugin::Lutaml::Config::Root.new if file_path.nil?
 
           relative_file_path = Utils.relative_file_path(document, file_path)
-          YAML.safe_load(File.read(relative_file_path, encoding: "UTF-8"))
+
+          Metanorma::Plugin::Lutaml::Config::Root.from_yaml(
+            File.read(relative_file_path, encoding: "UTF-8"),
+          )
         end
 
         def processed_lines(document, input_lines)
@@ -261,14 +264,14 @@ module Metanorma
 
         def create_context_object(lutaml_document, additional_context, options) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
           root_package = package_level(lutaml_document.to_liquid,
-                                       options["package_root_level"] || 1)
-          if options.empty? || options["packages"].nil?
+                                       options.package_root_level || 1)
+          if options.packages.nil?
             return {
               "render_nested_packages" => true,
               "packages" => root_package["packages"],
               "root_packages" => [root_package],
               "additional_context" => additional_context
-                  .merge("external_classes" => options["external_classes"]),
+                  .merge("external_classes" => options.external_classes),
               "name" => root_package["name"],
             }
           end
@@ -279,38 +282,38 @@ module Metanorma
             "package_entities" => package_entities(options),
             "package_skip_sections" => package_skip_sections(options),
             "additional_context" => additional_context
-              .merge("external_classes" => options["external_classes"]),
+              .merge("external_classes" => options.external_classes),
             "root_packages" => [root_package],
-            "render_nested_packages" => options["render_nested_packages"] ||
+            "render_nested_packages" => options.render_nested_packages ||
               false,
             "name" => root_package["name"],
           }
         end
 
         def package_entities(options) # rubocop:disable Metrics/AbcSize
-          return {} unless options["packages"]
+          return {} unless options.packages
 
-          options["packages"].find_all do |entity|
-            entity.is_a?(Hash) && entity.values.first["render_entities"]
-          end.map do |entity|
-            [entity.keys.first,
-             entity.values.first["render_entities"].map { |n| [n, true] }.to_h]
-          end.to_h
+          packages_hash = {}
+          packages = options.packages.reject { |p| p.render_entities.nil? }
+          packages.each do |p|
+            packages_hash[p.name] = p.render_entities.map { |n| [n, true] }.to_h
+          end
+          packages_hash
         end
 
         def package_skip_sections(options) # rubocop:disable Metrics/AbcSize
-          return {} unless options["packages"]
+          return {} unless options.packages
 
-          options["packages"].find_all do |entity|
-            entity.is_a?(Hash) && entity.values.first["skip_tables"]
-          end.map do |entity|
-            [entity.keys.first,
-             entity.values.first["skip_tables"].map { |n| [n, true] }.to_h]
-          end.to_h
+          packages_hash = {}
+          packages = options.packages.reject { |p| p.skip_tables.nil? }
+          packages.each do |p|
+            packages_hash[p.name] = p.skip_tables.map { |n| [n, true] }.to_h
+          end
+          packages_hash
         end
 
         def sort_and_filter_out_packages(all_packages, options) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
-          return all_packages if options["packages"].nil?
+          return all_packages if options.packages.nil?
 
           result = []
           # Step one - filter out all skipped packages
@@ -322,11 +325,11 @@ module Metanorma
                                               result)
         end
 
-        def filter_out_all_skipped_packages(options, all_packages)
-          options["packages"].find_all do |entity|
-            entity.is_a?(Hash) && entity["skip"]
-          end.each do |entity|
-            entity_regexp = config_entity_regexp(entity["skip"])
+        def filter_out_all_skipped_packages(options, all_packages) # rubocop:disable Metrics/AbcSize
+          return all_packages if options.skip.nil?
+
+          options.skip.each do |skip_package|
+            entity_regexp = config_entity_regexp(skip_package)
             all_packages.delete_if do |package|
               package["name"] =~ entity_regexp
             end
@@ -335,21 +338,14 @@ module Metanorma
           all_packages
         end
 
-        def select_supplied_packages_by_pattern(options, all_packages, result) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
-          options["packages"].find_all do |entity|
-            entity.is_a?(String) || (entity.is_a?(Hash) && !entity["skip"])
-          end.each do |entity_obj|
-            entity = if entity_obj.is_a?(String)
-                       entity_obj
-                     else
-                       entity_obj.keys.first
-                     end
-            entity_regexp = config_entity_regexp(entity)
-            all_packages.each do |package|
-              if package["name"]&.match?(entity_regexp)
-                result.push(package)
+        def select_supplied_packages_by_pattern(options, all_packages, result) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+          options.packages.each do |package|
+            entity_regexp = config_entity_regexp(package.name)
+            all_packages.each do |p|
+              if p["name"]&.match?(entity_regexp)
+                result.push(p)
                 all_packages.delete_if do |nest_package|
-                  nest_package["name"] == package["name"]
+                  nest_package["name"] == p["name"]
                 end
               end
             end
@@ -366,15 +362,15 @@ module Metanorma
         def model_representation(lutaml_doc, document, add_context, options) # rubocop:disable Metrics/MethodLength
           fill_in_entities_refs_attributes(document, lutaml_doc, options)
           render_result, errors = Utils.render_liquid_string(
-            template_string: template(options["section_depth"] || 2,
-                                      options["render_style"],
-                                      options["include_root"]),
+            template_string: template(options.section_depth || 2,
+                                      options.render_style,
+                                      options.include_root),
             context_items: create_context_object(lutaml_doc,
                                                  add_context,
                                                  options),
             context_name: "context",
             document: document,
-            include_path: template_path(document, options["template_path"]),
+            include_path: template_path(document, options.template_path),
           )
           Utils.notify_render_errors(document, errors)
           render_result.split("\n")
