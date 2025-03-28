@@ -38,7 +38,10 @@ module Metanorma
           path = get_path_from_index(parent, index) if index
 
           if index && path
-            doc = lutaml_document_from_file_or_cache(parent.document, path, {})
+            doc = lutaml_document_from_file_or_cache(
+              parent.document, path,
+              Metanorma::Plugin::Lutaml::Config::Root.new
+            )
           end
 
           doc ||= parent.document.attributes["lutaml_xmi_cache"].values.first
