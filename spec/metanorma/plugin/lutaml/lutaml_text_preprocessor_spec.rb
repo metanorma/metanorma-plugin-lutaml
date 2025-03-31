@@ -335,6 +335,19 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               </metanorma>
             TEXT
           end
+
+          before do
+            puts "Recreate cache file to latest version..."
+            yaml_compressed = File.binread(cache_path)
+            yaml = Zlib::Inflate.inflate(yaml_compressed)
+            cache = Expressir::Model::Cache.from_yaml(yaml)
+            cache.version = "2.1.17"
+            yaml = cache.to_yaml
+            yaml_compressed = Zlib::Deflate.deflate(yaml)
+            File.binwrite(cache_path, yaml_compressed)
+            puts "Recreate cache file to latest version...done!"
+          end
+
           it "correctly renders input" do
             expect(xml_string_content(metanorma_process(input)))
               .to(be_equivalent_to(output))
