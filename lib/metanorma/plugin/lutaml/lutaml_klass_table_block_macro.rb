@@ -4,6 +4,8 @@ module Metanorma
   module Plugin
     module Lutaml
       class LutamlKlassTableBlockMacro < ::Asciidoctor::Extensions::BlockMacroProcessor
+        include LutamlEaXmiBase
+
         DEFAULT_TEMPLATE = File.join(
           Gem::Specification.find_by_name("metanorma-plugin-lutaml").gem_dir,
           "lib", "metanorma", "plugin", "lutaml", "liquid_templates",
@@ -22,10 +24,9 @@ module Metanorma
             )
           end
 
+          guidance = nil
           if attrs["guidance"]
-            attrs["guidance"] = Utils.relative_file_path(
-              parent.document, attrs["guidance"]
-            )
+            guidance = get_guidance(parent.document, attrs["guidance"])
           end
 
           path = if !attrs["path"].nil?
@@ -37,7 +38,7 @@ module Metanorma
                  end
 
           klass = ::Lutaml::XMI::Parsers::XML.serialize_generalization_by_name(
-            xmi_path, path, attrs["guidance"]
+            xmi_path, path, guidance
           )
 
           render(klass, parent, attrs)

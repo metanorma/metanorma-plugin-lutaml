@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "coradoc", "~> 1.1.1"
   spec.add_dependency "expressir", "~> 2.1.13"
   spec.add_dependency "liquid"
-  spec.add_dependency "lutaml", "~> 0.9.25"
+  spec.add_dependency "lutaml", "~> 0.9.32"
   spec.add_dependency "ogc-gml", "~>1.0.0"
   spec.add_dependency "relaton-cli"
 end

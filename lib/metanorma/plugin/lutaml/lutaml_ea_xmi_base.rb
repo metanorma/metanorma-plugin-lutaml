@@ -58,22 +58,21 @@ module Metanorma
             Xmi::EaRoot.load_extension(ea_extension_full_path)
           end
 
-          guidance = get_guidance_file(document, yaml_config.guidance)
+          guidance = get_guidance(document, yaml_config.guidance)
           result_document = parse_result_document(full_path, guidance)
           document.attributes["lutaml_xmi_cache"] ||= {}
           document.attributes["lutaml_xmi_cache"][full_path] = result_document
           result_document
         end
 
-        def get_guidance_file(document, guidance_config)
-          guidance = nil
+        def get_guidance(document, guidance_config)
+          return unless guidance_config
 
-          if guidance_config
-            guidance = Utils.relative_file_path(document,
-                                                guidance_config)
-          end
-
-          guidance
+          guidance_yaml = Utils.relative_file_path(document, guidance_config)
+          guidance = Metanorma::Plugin::Lutaml::Config::Guidance.from_yaml(
+            File.read(guidance_yaml, encoding: "UTF-8"),
+          )
+          guidance.to_yaml_hash
         end
 
         def parse_yaml_config_file(document, file_path)
