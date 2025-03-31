@@ -7,7 +7,7 @@ module Metanorma
         module CustomFilters
           def html2adoc(input)
             # Coradoc::ReverseAdoc.convert(input)
-            Coradoc::Input::HTML.convert(input)
+            Coradoc::Input::Html.convert(input)
           end
 
           def interpolate(input)
