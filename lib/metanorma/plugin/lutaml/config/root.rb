@@ -34,8 +34,8 @@ module Metanorma
             map "external_classes", to: :external_classes
           end
 
-          def packages_from_yaml(model, values) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
-            values.each do |value| # rubocop:disable Metrics/BlockLength
+          def packages_from_yaml(model, values) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
+            values.each do |value|
               if value.is_a?(Hash)
                 if value.keys.first == "skip"
                   # contains skip key
@@ -43,23 +43,7 @@ module Metanorma
                   model.skip << value["skip"]
                 else
                   # contains skip_tables or render_entities key
-                  package = Package.new
-                  package.name = value.keys.first
-                  package_options = value[package.name]
-
-                  if package_options.key?("skip_tables")
-                    package_options["skip_tables"].each do |table|
-                      package.skip_tables ||= []
-                      package.skip_tables << table
-                    end
-                  end
-
-                  if package_options.key?("render_entities")
-                    package_options["render_entities"].each do |entity|
-                      package.render_entities ||= []
-                      package.render_entities << entity
-                    end
-                  end
+                  package = create_package_from_value(value)
 
                   model.packages ||= []
                   model.packages << package
@@ -88,6 +72,30 @@ module Metanorma
             model.skip.each do |skip_package|
               doc["packages"] << { "skip" => skip_package }
             end
+          end
+
+          private
+
+          def create_package_from_value(value) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength
+            package = Package.new
+            package.name = value.keys.first
+            package_options = value[package.name]
+
+            if package_options.key?("skip_tables")
+              package_options["skip_tables"].each do |table|
+                package.skip_tables ||= []
+                package.skip_tables << table
+              end
+            end
+
+            if package_options.key?("render_entities")
+              package_options["render_entities"].each do |entity|
+                package.render_entities ||= []
+                package.render_entities << entity
+              end
+            end
+
+            package
           end
         end
       end

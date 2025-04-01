@@ -278,8 +278,8 @@ module Metanorma
           all_packages = [root_package, *root_package["children_packages"]]
           {
             "packages" => sort_and_filter_out_packages(all_packages, options),
-            "package_entities" => package_entities(options),
-            "package_skip_sections" => package_skip_sections(options),
+            "package_entities" => package_hash(options, "render_entities"),
+            "package_skip_sections" => package_hash(options, "skip_tables"),
             "additional_context" => additional_context
               .merge("external_classes" => options.external_classes),
             "root_packages" => [root_package],
@@ -289,26 +289,15 @@ module Metanorma
           }
         end
 
-        def package_entities(options) # rubocop:disable Metrics/AbcSize
+        def package_hash(options, key)
           return {} unless options.packages
 
-          packages_hash = {}
-          packages = options.packages.reject { |p| p.render_entities.nil? }
+          result = {}
+          packages = options.packages.reject { |p| p.send(key.to_sym).nil? }
           packages.each do |p|
-            packages_hash[p.name] = p.render_entities.map { |n| [n, true] }.to_h
+            result[p.name] = p.send(key.to_sym).map { |n| [n, true] }.to_h
           end
-          packages_hash
-        end
-
-        def package_skip_sections(options) # rubocop:disable Metrics/AbcSize
-          return {} unless options.packages
-
-          packages_hash = {}
-          packages = options.packages.reject { |p| p.skip_tables.nil? }
-          packages.each do |p|
-            packages_hash[p.name] = p.skip_tables.map { |n| [n, true] }.to_h
-          end
-          packages_hash
+          result
         end
 
         def sort_and_filter_out_packages(all_packages, options) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
