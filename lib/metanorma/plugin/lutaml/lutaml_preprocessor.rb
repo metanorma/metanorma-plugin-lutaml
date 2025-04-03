@@ -6,6 +6,7 @@ require "asciidoctor/reader"
 require "lutaml"
 require "metanorma/plugin/lutaml/utils"
 require "metanorma/plugin/lutaml/asciidoctor/preprocessor"
+require "metanorma/plugin/lutaml/express_remarks_decorator"
 
 module Metanorma
   module Plugin
@@ -182,7 +183,7 @@ module Metanorma
           return [] unless remarks
 
           remarks.map do |remark|
-            ::Expressir::Express::ExpressRemarksDecorator
+            ::Metanorma::Plugin::Lutaml::ExpressRemarksDecorator
               .call(remark, options)
           end
         end
