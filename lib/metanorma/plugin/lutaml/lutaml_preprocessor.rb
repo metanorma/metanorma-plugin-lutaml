@@ -139,7 +139,7 @@ module Metanorma
             update_schema_selection(schema, options)
             options["relative_path_prefix"] =
               relative_path_prefix(options, schema)
-            update_schema_remarks(schema, options)
+            update_remarks(schema, options)
           end
 
           repo
@@ -152,15 +152,16 @@ module Metanorma
             options["selected_schemas"].include?(schema.id)
         end
 
-        def update_schema_remarks(schema, options)
-          # Update schema-level remarks
-          schema.remarks = decorate_remarks(options, schema.remarks)
-
-          # Update remark items
-          return unless schema.remark_items
-
-          schema.remark_items.each do |ri|
+        def update_remarks(model, options)
+          model.remarks = decorate_remarks(options, model.remarks)
+          model.remark_items&.each do |ri|
             ri.remarks = decorate_remarks(options, ri.remarks)
+          end
+
+          model.children.each do |child|
+            if child.respond_to?(:remarks) && child.respond_to?(:remark_items)
+              update_remarks(child, options)
+            end
           end
         end
 
