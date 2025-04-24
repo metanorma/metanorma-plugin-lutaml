@@ -238,6 +238,7 @@ module Metanorma
           # Render for each item
           all_items.map do |item|
             template.assigns[context_name] = item[:liquid_drop]
+            template.assigns["schemas_order"] = options["selected_schemas"]
             template.render
           end.flatten
         rescue StandardError => e
