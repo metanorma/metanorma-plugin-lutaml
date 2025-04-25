@@ -252,8 +252,8 @@ per-block via a separate YAML file.
 
 [lutaml_express_liquid,all_schemas,context,config_yaml=schemas.yaml]
 ---
-{% assign selected = context.schemas | where: "selected" %}
-{% render "templates/resources/schema" for selected as schema %}
+{% assign all_schemas = repo.schemas  %}
+{% render "templates/resources/schema" for ordered_schemas as schema %}
 ----
 -----
 
@@ -284,16 +284,16 @@ schemas:
     anything: ...
 ----
 
-The resulting block adds the `select` attribute to every schema of the the
-"context" object, which allows you to filter those out for complex operations
-via Liquid:
+The resulting block adds the `ordered_schemas` context to allows you to filter
+out the schemas you want to render according to the order in the config_yaml.
 
 [source,liquid]
 ----
 [lutaml_express_liquid,schemas_1,repo,config_yaml=select.yaml]
 ---
-{% assign selected = repo.schemas | where: "selected" %}
-... do things with `selected` ...
+{% assign all_schemas = repo.schemas  %}
+{% render "templates/resources/schema" for ordered_schemas as schema %}
+...
 ---
 ----
 
@@ -311,8 +311,9 @@ from the paths other than the location of the document.
 
 [lutaml_express_liquid,all_schemas,context,config_yaml=schemas.yaml,include_path=../templates]
 ---
-{% assign selected = context.schemas | where: "selected" %}
-{% render "templates/resources/schema" for selected as schema %}
+{% assign all_schemas = repo.schemas  %}
+{% render "templates/resources/schema" for ordered_schemas as schema %}
+...
 ----
 -----
 
