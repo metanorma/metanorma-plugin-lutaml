@@ -137,20 +137,12 @@ module Metanorma
 
           # Process each schema
           repo.schemas.each do |schema|
-            update_schema_selection(schema, options)
             options["relative_path_prefix"] =
               relative_path_prefix(options, schema)
             update_remarks(schema, options)
           end
 
           repo
-        end
-
-        def update_schema_selection(schema, options)
-          return unless options["selected_schemas"]
-
-          schema.selected = options["selected_schemas"].include?(schema.file_basename) ||
-            options["selected_schemas"].include?(schema.id)
         end
 
         def update_remarks(model, options)
@@ -215,10 +207,8 @@ module Metanorma
 
           # Get all context items in one go
           all_items = gather_context_liquid_items(
-            index_names: index_names,
-            document: document,
-            indexes: indexes,
-            options: options.merge("document" => document),
+            index_names: index_names, document: document, indexes: indexes,
+            options: options.merge("document" => document)
           )
 
           # Setup include paths for liquid templates
@@ -238,15 +228,31 @@ module Metanorma
           # Render for each item
           all_items.map do |item|
             template.assigns[context_name] = item[:liquid_drop]
+            template.assigns["ordered_schemas"] = reorder_schemas(
+              item[:liquid_drop], options
+            )
             template.assigns["schemas_order"] = options["selected_schemas"]
             template.render
           end.flatten
         rescue StandardError => e
-          ::Metanorma::Util.log(
-            "[LutamlPreprocessor] Failed to parse LutaML block: #{e.message}",
-            :error,
-          )
+          ::Metanorma::Util
+            .log("[LutamlPreprocessor] Failed to parse LutaML block: " \
+                 "#{e.message}", :error)
           raise e
+        end
+
+        def reorder_schemas(repo_liquid, options)
+          return repo_liquid.schemas unless options["selected_schemas"]
+
+          ordered_schemas = []
+          options["selected_schemas"].each do |schema_name|
+            ordered_schema = repo_liquid.schemas.find do |schema|
+              schema.id == schema_name || schema.file_basename == schema_name
+            end
+            ordered_schemas.push(ordered_schema)
+          end
+
+          ordered_schemas
         end
 
         def process_options(document, options)

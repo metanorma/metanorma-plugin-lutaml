@@ -233,8 +233,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
               [lutaml_express_liquid,express_index,context,config_yaml=#{fixtures_path('lutaml_exp_arm_svgmap_index.yaml')}]
               ----
-              {% assign selected = context.schemas | where: "selected" %}
-              {% for schema in selected %}
+              {% for schema in ordered_schemas %}
 
               [%unnumbered]
               == {{ schema.id }}
