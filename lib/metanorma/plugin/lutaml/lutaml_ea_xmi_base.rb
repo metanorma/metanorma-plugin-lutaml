@@ -85,6 +85,29 @@ module Metanorma
           )
         end
 
+        def get_xmi_path(parent, target, attrs)
+          return get_path_from_index(parent, attrs["index"]) if attrs["index"]
+
+          Utils.relative_file_path(parent.document, target)
+        end
+
+        def get_path_from_index(parent, index_name) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+          lutaml_xmi_index = parent.document
+            .attributes["lutaml_xmi_index"][index_name]
+
+          if lutaml_xmi_index.nil? || lutaml_xmi_index[:path].nil?
+            ::Metanorma::Util.log(
+              "[metanorma-plugin-lutaml] lutaml_xmi_index error: " \
+              "XMI index #{index_name} path not found!",
+              :error,
+            )
+
+            return nil
+          end
+
+          lutaml_xmi_index[:path]
+        end
+
         def processed_lines(document, input_lines)
           result = []
           loop do
@@ -97,7 +120,7 @@ module Metanorma
           self.class.const_get(:MACRO_REGEXP)
         end
 
-        def process_xmi_index_lines(document, line)
+        def process_xmi_index_lines(document, line) # rubocop:disable Metrics/AbcSize
           block_match = line.match(XMI_INDEX_REGEXP)
 
           return if block_match.nil?

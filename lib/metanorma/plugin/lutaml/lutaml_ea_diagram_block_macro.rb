@@ -48,23 +48,6 @@ module Metanorma
           doc
         end
 
-        def get_path_from_index(parent, index_name) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-          lutaml_xmi_index = parent.document
-            .attributes["lutaml_xmi_index"][index_name]
-
-          if lutaml_xmi_index.nil? || lutaml_xmi_index[:path].nil?
-            ::Metanorma::Util.log(
-              "[metanorma-plugin-lutaml] lutaml_xmi_index error: " \
-              "XMI index #{index_name} path not found!",
-              :error,
-            )
-
-            return nil
-          end
-
-          lutaml_xmi_index[:path]
-        end
-
         def img_src_path(document, attrs, diagram)
           base_path = attrs["base_path"]
           format = attrs["format"] || "png"

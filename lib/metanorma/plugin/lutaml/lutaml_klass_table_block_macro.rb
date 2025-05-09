@@ -15,8 +15,8 @@ module Metanorma
         use_dsl
         named :lutaml_klass_table
 
-        def process(parent, target, attrs)
-          xmi_path = Utils.relative_file_path(parent.document, target)
+        def process(parent, target, attrs) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+          xmi_path = get_xmi_path(parent, target, attrs)
 
           if attrs["template"]
             attrs["template"] = Utils.relative_file_path(

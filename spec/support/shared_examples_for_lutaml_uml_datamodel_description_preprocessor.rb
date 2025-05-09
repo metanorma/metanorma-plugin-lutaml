@@ -137,3 +137,32 @@ RSpec.shared_examples "should contain name, type, definition" do |name_type_def|
     end
   end
 end
+
+RSpec.shared_examples "should contain Used and Guidance" do
+  it "should contain Used and Guidance" do
+    [
+      {
+        name: "gml:boundedBy",
+        type: "gml::Envelope [0..1]",
+        desc: "建築物の範囲及び適用される空間参照系。",
+        used: "false",
+        guidance: "この属性は使用されていません。",
+      },
+      {
+        name: "gml:description",
+        type: "gml::StringOrRefType [0..1]",
+        desc: "土地利用の概要。",
+        used: "true",
+        guidance: "",
+      },
+    ].each do |i|
+      expect(subject).to have_tag("tr") do
+        with_tag "td", text: /#{i[:name]}/
+        with_tag "td", text: i[:type]
+        with_tag "td", text: i[:desc]
+        with_tag "td", text: i[:used]
+        with_tag "td", text: i[:guidance]
+      end
+    end
+  end
+end
