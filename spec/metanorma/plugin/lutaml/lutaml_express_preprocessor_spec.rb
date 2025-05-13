@@ -33,7 +33,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           let(:output) do
             <<~TEXT
               #{BLANK_HDR}<sections>
-                <clause id="_" unnumbered="true" inline-header="false" obligation="normative">
+                <clause id="_" anchor="_activity_method_assignment_arm" unnumbered="true" inline-header="false" obligation="normative">
                 <title>Activity_method_assignment_arm</title>
                 <sourcecode id="_" unnumbered="true">
                 <body>SCHEMA Activity_method_assignment_arm;
@@ -100,9 +100,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           let(:output) do
             <<~TEXT
                  #{BLANK_HDR}<sections>
-                   <clause id="_" unnumbered="true" type="express" inline-header="false" obligation="normative">
+                   <clause id="_" anchor="_types_activity_method_item_entities_activity_method_relationship_applied_activity_method_assignment" unnumbered="true" type="express" inline-header="false" obligation="normative">
                        <title>
-                          <bookmark id="_"/>
+                          <bookmark id="_" anchor="_funds"/>
                           [[.types]][[.activity_method_item]][[.entities]][[.Activity_method_relationship]][[.Applied_activity_method_assignment]]
                        </title>
                        <sourcecode id="_" unnumbered="true">
@@ -251,7 +251,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           let(:output) do
             <<~TEXT
               #{BLANK_HDR}<sections>
-                <clause id="_" unnumbered="true" inline-header="false" obligation="normative">
+                <clause id="_" anchor="_activity_method_assignment_arm" unnumbered="true" inline-header="false" obligation="normative">
                 <title>Activity_method_assignment_arm</title>
                 <sourcecode id="_" unnumbered="true">
                 <body>SCHEMA Activity_method_assignment_arm;
@@ -332,12 +332,12 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             <<~TEXT
               #{BLANK_HDR}
                 <sections>
-                  <clause id="_" inline-header="false" obligation="normative">
+                  <clause id="_" anchor="_annotated_3d_model_data_quality_criteria_schema" inline-header="false" obligation="normative">
                     <title>annotated_3d_model_data_quality_criteria_schema</title>
                     <p id="_">Mine text</p>
-                    <svgmap>
+                    <svgmap id="_">
                       <figure id="_">
-                        <image src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" mimetype="image/svg+xml"  id="_" height="auto" width="auto"/>
+                        <image id="_" src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" mimetype="image/svg+xml" height="auto" width="auto"/>
                       </figure>
                       <target href="1">
                         <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
@@ -350,12 +350,12 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                       </target>
                     </svgmap>
                   </clause>
-                  <clause id="_" inline-header="false" obligation="normative">
+                  <clause id="_" anchor="_annotated_3d_model_data_quality_criteria_schema_2" inline-header="false" obligation="normative">
                     <title>annotated_3d_model_data_quality_criteria_schema</title>
                     <p id="_">Mine text</p>
-                    <svgmap>
+                    <svgmap id="_">
                       <figure id="_">
-                        <image src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" mimetype="image/svg+xml"  id="_" height="auto" width="auto"/>
+                        <image id="_" src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" mimetype="image/svg+xml" height="auto" width="auto"/>
                       </figure>
                       <target href="1">
                         <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
@@ -371,10 +371,10 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 </sections>
                 <bibliography>
                   <references hidden="true" normative="false">
-                    <bibitem id="express_measure_schema" type="internal">
+                    <bibitem anchor="express_measure_schema" id="_" type="internal">
                       <docidentifier type="repository">express/measure_schema</docidentifier>
                     </bibitem>
-                    <bibitem id="express_measure_schemaexpg4" type="internal">
+                    <bibitem anchor="express_measure_schemaexpg4" id="_" type="internal">
                       <docidentifier type="repository">express/measure_schemaexpg4</docidentifier>
                     </bibitem>
                   </references>

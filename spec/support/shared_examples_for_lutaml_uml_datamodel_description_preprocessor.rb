@@ -45,7 +45,7 @@ end
 RSpec.shared_examples "should contain clause title" do |clause_title|
   it "should contain clause title" do
     clause_title.each do |ct|
-      expect(subject).to have_tag("clause", with: { id: ct[:clause_id] }) do
+      expect(subject).to have_tag("clause", with: { anchor: ct[:clause_id] }) do
         with_tag "title", text: /#{ct[:title]}/
       end
     end
@@ -62,7 +62,7 @@ RSpec.shared_examples "should contain figure" do |figures|
   it "should contain figure" do
     figures.each do |figure|
       expect(subject).to have_tag("figure",
-                                  with: { id: "figure-#{figure[:id]}" })
+                                  with: { anchor: "figure-#{figure[:id]}" })
       expect(subject).to have_tag("name", text: /#{figure[:name]}/)
       expect(subject).to have_tag("image", with: { src: figure[:src] })
     end
