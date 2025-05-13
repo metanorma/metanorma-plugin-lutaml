@@ -24,8 +24,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaDiagramBlockMacro do
       let(:output) do
         [
           "<name>Fig B1 Full model</name>",
-          "<image src=\"_\" mimetype=\"image/png\" " \
-          "id=\"_\" " \
+          "<image id=\"_\" src=\"_\" mimetype=\"image/png\" " \
           "height=\"auto\" width=\"auto\"/>",
         ]
       end
@@ -62,8 +61,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaDiagramBlockMacro do
         let(:output) do
           [
             "<name>Fig B1 Full model</name>",
-            "<image src=\"_\" mimetype=\"image/png\" " \
-            "id=\"_\" " \
+            "<image id=\"_\" src=\"_\" mimetype=\"image/png\" " \
             "height=\"auto\" width=\"auto\"/>",
           ]
         end
@@ -96,8 +94,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaDiagramBlockMacro do
         let(:output) do
           [
             "<name>CityGML Package Diagram</name>",
-            "<image src=\"_\" mimetype=\"image/png\" " \
-            "id=\"_\" " \
+            "<image id=\"_\" src=\"_\" mimetype=\"image/png\" " \
             "height=\"auto\" width=\"auto\"/>",
           ]
         end
@@ -130,8 +127,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaDiagramBlockMacro do
         let(:output) do
           [
             "<name>CityGML Package Diagram</name>",
-            "<image src=\"_\" mimetype=\"image/png\" " \
-            "id=\"_\" " \
+            "<image id=\"_\" src=\"_\" mimetype=\"image/png\" " \
             "height=\"auto\" width=\"auto\"/>",
           ]
         end
