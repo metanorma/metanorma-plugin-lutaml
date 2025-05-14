@@ -238,7 +238,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
       {
         name: "gml:name",
         type: "gml::CodeType [0..1]",
-        def: "",
       },
       {
         name: "gml:boundedBy",

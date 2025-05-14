@@ -132,7 +132,10 @@ RSpec.shared_examples "should contain name, type, definition" do |name_type_def|
       expect(subject).to have_tag("tr") do
         with_tag "td", text: /#{i[:name]}/
         with_tag "td", text: i[:type]
-        with_tag "td", text: i[:def] if i[:def]
+      end
+
+      if i[:def]
+        expect(subject).to have_tag("td", seen: /i[:def]/)
       end
     end
   end
