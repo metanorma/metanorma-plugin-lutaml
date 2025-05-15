@@ -6,12 +6,14 @@ require "asciidoctor/reader"
 require "lutaml"
 require "lutaml/uml"
 require "lutaml/formatter"
-require "metanorma/plugin/lutaml/utils"
+require_relative "utils"
 
 module Metanorma
   module Plugin
     module Lutaml
       module LutamlEaXmiBase
+        include Utils
+
         LIQUID_INCLUDE_PATH = File.join(
           Gem.loaded_specs["metanorma-plugin-lutaml"].full_gem_path,
           "lib", "metanorma", "plugin", "lutaml", "liquid_templates"
@@ -106,14 +108,6 @@ module Metanorma
           end
 
           lutaml_xmi_index[:path]
-        end
-
-        def processed_lines(document, input_lines)
-          result = []
-          loop do
-            result.push(*process_text_blocks(document, input_lines))
-          end
-          result
         end
 
         def get_macro_regexp
@@ -284,22 +278,29 @@ module Metanorma
           package_level(lutaml_document["packages"].first, level - 1)
         end
 
-        def create_context_object(lutaml_document, additional_context, options) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+        def create_context_object( # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+          lutaml_document, additional_context, options,
+          context_name = "context"
+        )
           root_package = package_level(lutaml_document.to_liquid,
                                        options.package_root_level || 1)
+          contexts = {}
+
           if options.packages.nil?
-            return {
+            contexts[context_name] = {
               "render_nested_packages" => true,
               "packages" => root_package["packages"],
               "root_packages" => [root_package],
               "additional_context" => additional_context
-                  .merge("external_classes" => options.external_classes),
+                .merge("external_classes" => options.external_classes),
               "name" => root_package["name"],
             }
+
+            return contexts
           end
 
           all_packages = [root_package, *root_package["children_packages"]]
-          {
+          contexts[context_name] = {
             "packages" => sort_and_filter_out_packages(all_packages, options),
             "package_entities" => package_hash(options, "render_entities"),
             "package_skip_sections" => package_hash(options, "skip_tables"),
@@ -310,6 +311,8 @@ module Metanorma
               false,
             "name" => root_package["name"],
           }
+
+          contexts
         end
 
         def package_hash(options, key)
@@ -376,10 +379,10 @@ module Metanorma
             template_string: template(options.section_depth || 2,
                                       options.render_style,
                                       options.include_root),
-            context_items: create_context_object(lutaml_doc,
-                                                 add_context,
-                                                 options),
-            context_name: "context",
+            contexts: create_context_object(lutaml_doc,
+                                            add_context,
+                                            options,
+                                            "context"),
             document: document,
             include_path: template_path(document, options.template_path),
           )

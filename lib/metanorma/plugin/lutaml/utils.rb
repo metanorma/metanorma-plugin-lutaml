@@ -29,9 +29,10 @@ module Metanorma
             .system_path(file_path, docfile_directory)
         end
 
-        def render_liquid_string(template_string:, context_items:, # rubocop:disable Metrics/MethodLength
-                                 context_name:, document:, include_path: nil)
-          liquid_template = ::Liquid::Template.parse(template_string)
+        def render_liquid_string(template_string:, contexts:, # rubocop:disable Metrics/MethodLength
+                                 document:, include_path: nil)
+          liquid_template = ::Liquid::Template
+            .parse(template_string, environment: create_liquid_environment)
 
           # Allow includes for the template
           include_paths = [
@@ -44,11 +45,31 @@ module Metanorma
               .new(include_paths, ["%s.liquid", "_%s.liquid", "_%s.adoc"])
 
           rendered_string = liquid_template
-            .render(context_name => context_items,
-                    strict_variables: true,
+            .render(contexts,
+                    strict_variables: false,
                     error_mode: :warn)
 
           [rendered_string, liquid_template.errors]
+        end
+
+        def create_liquid_environment
+          ::Liquid::Environment.new.tap do |liquid_env|
+            liquid_env.register_tag(
+              "keyiterator",
+              ::Metanorma::Plugin::Lutaml::Liquid::CustomBlocks::KeyIterator,
+            )
+            liquid_env.register_filter(
+              ::Metanorma::Plugin::Lutaml::Liquid::CustomFilters,
+            )
+          end
+        end
+
+        def processed_lines(document, input_lines)
+          result = []
+          loop do
+            result.push(*process_text_blocks(document, input_lines))
+          end
+          result
         end
 
         def notify_render_errors(document, errors)
@@ -62,7 +83,7 @@ module Metanorma
         end
 
         def load_express_repositories(path:, cache_path:, document:,
-force_read: false)
+          force_read: false)
           cache_full_path = cache_path &&
             Utils.relative_file_path(document, cache_path)
 

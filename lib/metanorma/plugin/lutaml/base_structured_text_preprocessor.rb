@@ -8,6 +8,7 @@ require_relative "liquid/custom_filters/values"
 require_relative "liquid/custom_filters/replace_regex"
 require_relative "liquid/custom_filters/loadfile"
 require_relative "source_extractor"
+require_relative "utils"
 
 module Asciidoctor
   class PreprocessorNoIfdefsReader < PreprocessorReader
@@ -23,6 +24,8 @@ module Metanorma
       # Base class for processing structured data blocks(yaml, json)
       class BaseStructuredTextPreprocessor <
         Asciidoctor::Extensions::Preprocessor
+        include Utils
+
         BLOCK_START_REGEXP = /\{(.+?)\.\*,(.+),(.+)\}/.freeze
         BLOCK_END_REGEXP = /\A\{[A-Z]+\}\z/.freeze
         LOAD_FILE_REGEXP = /{% assign (.*) = (.*) \| load_file %}/.freeze
@@ -50,23 +53,6 @@ module Metanorma
         end
 
         private
-
-        def processed_lines(document, input_lines)
-          result = []
-          loop do
-            result.push(*process_text_blocks(document, input_lines))
-          end
-          result
-        end
-
-        def relative_file_path(document, file_path)
-          docfile_directory = File.dirname(
-            document.attributes["docfile"] || ".",
-          )
-          document
-            .path_resolver
-            .system_path(file_path, docfile_directory)
-        end
 
         def process_text_blocks(document, input_lines)
           line = input_lines.next
@@ -173,42 +159,6 @@ module Metanorma
           )
           notify_render_errors(document, errors)
           render_result.split("\n")
-        end
-
-        def render_liquid_string(template_string:, contexts:, document:) # rubocop:disable Metrics/MethodLength
-          liquid_template = ::Liquid::Template
-            .parse(template_string, environment: create_liquid_environment)
-
-          # Allow includes for the template
-          liquid_template.registers[:file_system] =
-            ::Liquid::LocalFileSystem.new(relative_file_path(document, ""))
-
-          rendered_string = liquid_template.render(
-            contexts,
-            strict_variables: false,
-            error_mode: :warn,
-          )
-          [rendered_string, liquid_template.errors]
-        end
-
-        def create_liquid_environment
-          ::Liquid::Environment.new.tap do |liquid_env|
-            liquid_env.register_tag(
-              "keyiterator",
-              ::Metanorma::Plugin::Lutaml::Liquid::CustomBlocks::KeyIterator,
-            )
-            liquid_env.register_filter(
-              ::Metanorma::Plugin::Lutaml::Liquid::CustomFilters,
-            )
-          end
-        end
-
-        def notify_render_errors(document, errors)
-          errors.each do |error_obj|
-            document
-              .logger
-              .warn("Liquid render error: #{error_obj.message}")
-          end
         end
       end
     end
