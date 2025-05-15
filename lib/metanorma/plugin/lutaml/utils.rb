@@ -1,7 +1,7 @@
 require "expressir"
 require "expressir/express/parser"
 require "expressir/express/cache"
-require "metanorma/plugin/lutaml/liquid/custom_filters"
+require "metanorma/plugin/lutaml/liquid/custom_filters/html2adoc"
 require "metanorma/plugin/lutaml/liquid/multiply_local_file_system"
 
 liquid_klass = if Object.const_defined?("Liquid::Environment")
@@ -29,7 +29,7 @@ module Metanorma
             .system_path(file_path, docfile_directory)
         end
 
-        def render_liquid_string(template_string:, context_items:,
+        def render_liquid_string(template_string:, context_items:, # rubocop:disable Metrics/MethodLength
                                  context_name:, document:, include_path: nil)
           liquid_template = ::Liquid::Template.parse(template_string)
 
@@ -130,7 +130,7 @@ force_read: false)
         end
 
         # TODO: Refactor this using Suma::SchemaConfig
-        def load_express_from_index(_document, path)
+        def load_express_from_index(_document, path) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
           yaml_content = YAML.safe_load(File.read(path))
           schema_yaml_base_path = Pathname.new(File.dirname(path))
 
@@ -153,7 +153,7 @@ force_read: false)
           ::Lutaml::Parser.parse(files_to_load)
         end
 
-        def parse_document_express_indexes(document, input_lines)
+        def parse_document_express_indexes(document, input_lines) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
           express_indexes = {}
           loop do
             line = input_lines.next

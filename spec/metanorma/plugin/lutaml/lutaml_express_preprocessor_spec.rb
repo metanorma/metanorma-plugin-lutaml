@@ -65,7 +65,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           end
 
           it "correctly renders input" do
-            expect(xml_string_content(metanorma_process(input)))
+            expect(xml_string_content(metanorma_convert(input)))
               .to(be_equivalent_to(output))
           end
         end
@@ -216,7 +216,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           end
 
           it "correctly renders input" do
-            expect(xml_string_content(metanorma_process(input)))
+            expect(xml_string_content(metanorma_convert(input)))
               .to(be_equivalent_to(output))
           end
         end
@@ -283,7 +283,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           end
 
           it "correctly renders input" do
-            expect(xml_string_content(metanorma_process(input)))
+            expect(xml_string_content(metanorma_convert(input)))
               .to(be_equivalent_to(output))
           end
         end
@@ -385,7 +385,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
           it "correctly renders input" do
             output = remove_xml_whitespaces(
-              xml_string_content(metanorma_process(input)))
+              xml_string_content(metanorma_convert(input)))
             expect(output)
               .to(be_equivalent_to(remove_xml_whitespaces(expected_output)))
           end

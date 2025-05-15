@@ -62,7 +62,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
         TEXT
       end
 
-      subject (:output) { metanorma_process(input) }
+      subject (:output) { metanorma_convert(input) }
 
       context "correctly renders input" do
         include_examples "should contain preface"
@@ -270,7 +270,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
             --
           TEXT
         end
-        subject (:output) { metanorma_process(input) }
+        subject (:output) { metanorma_convert(input) }
 
         # @note datamodel_description_sections_section_depth.xml
         context "correctly renders input" do
@@ -397,7 +397,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
                 --
               TEXT
             end
-            subject(:output) { metanorma_process(input) }
+            subject(:output) { metanorma_convert(input) }
 
             context "when render_style" do
               around do |example|
@@ -649,7 +649,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
         end
 
         context "when render_style equal `data_dictionary`" do
-          subject(:xml_convert) { xml_string_content(metanorma_process(input)) }
+          subject(:xml_convert) { xml_string_content(metanorma_convert(input)) }
 
           let(:render_style) { "data_dictionary" }
           let(:example_file) { fixtures_path("test.xmi") }
@@ -692,7 +692,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
         end
 
         context "when render_style equal `entity_list`" do
-          subject(:xml_convert) { xml_string_content(metanorma_process(input)) }
+          subject(:xml_convert) { xml_string_content(metanorma_convert(input)) }
 
           let(:render_style) { "entity_list" }
           let(:external_classes) do
@@ -766,7 +766,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
           --
         TEXT
       end
-      subject(:output) { metanorma_process(input) }
+      subject(:output) { metanorma_convert(input) }
 
       # @note datamodel_description_sections_tree.xml
       context "correctly renders input" do
@@ -964,7 +964,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
           --
         TEXT
       end
-      subject(:output) { metanorma_process(input) }
+      subject(:output) { metanorma_convert(input) }
 
       around do |example|
         File.open(nested_config_file, "w") do |file|
@@ -1040,7 +1040,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
           ---
         TEXT
       end
-      subject(:output) { metanorma_process(input) }
+      subject(:output) { metanorma_convert(input) }
 
       # @note datamodel_description_sections_package_entities.xml
       context "correctly renders input" do
@@ -1081,7 +1081,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
           ---
         TEXT
       end
-      subject(:output) { metanorma_process(input) }
+      subject(:output) { metanorma_convert(input) }
 
       # @note datamodel_description_sections_skip_tables.xml
       context "correctly renders input" do
@@ -1170,7 +1170,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
         TEXT
       end
 
-      subject (:output) { metanorma_process(input) }
+      subject (:output) { metanorma_convert(input) }
 
       context "correctly renders input" do
         include_examples "should contain preface"
@@ -1396,7 +1396,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
         TEXT
       end
 
-      subject (:output) { metanorma_process(input) }
+      subject (:output) { metanorma_convert(input) }
 
       context "correctly renders input" do
         include_examples "should contain text", "Diagram text"

@@ -75,7 +75,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
             --
           TEXT
         end
-        subject(:output) { metanorma_process(input) }
+        subject(:output) { metanorma_convert(input) }
 
         context "correctly renders" do
           context "data in first-xmi-index" do

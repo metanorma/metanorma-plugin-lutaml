@@ -51,7 +51,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
     it "passes through non-lutaml content" do
       FileUtils.rm_rf("test.adoc.lutaml.log.txt")
-      expect(xml_string_content(metanorma_process(input)))
+      expect(xml_string_content(metanorma_convert(input)))
         .to(be_equivalent_to(xml_string_content(output)))
       expect(File.exist?("test.adoc.lutaml.log.txt")).to be false
     end
@@ -61,7 +61,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         .sub("[fred", "ifdef::var1[]\n[fred")
       input1 += "\nendif::[]"
       FileUtils.rm_rf("test.adoc.lutaml.log.txt")
-      expect(xml_string_content(metanorma_process(input1)))
+      expect(xml_string_content(metanorma_convert(input1)))
         .to(be_equivalent_to(xml_string_content(output)))
       expect(File.exist?("test.adoc.lutaml.log.txt")).to be false
 
@@ -70,7 +70,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
       input1 += "\nendif::[]"
       FileUtils.rm_rf("test.adoc.lutaml.log.txt")
       output1 = output.sub(%r{<sections>.*</sections>}m, "<sections/>")
-      expect(xml_string_content(metanorma_process(input1)))
+      expect(xml_string_content(metanorma_convert(input1)))
         .to(be_equivalent_to(xml_string_content(output1)))
       expect(File.exist?("test.adoc.lutaml.log.txt")).to be false
     end
@@ -143,7 +143,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
         it "correctly renders input" do
           FileUtils.rm_rf("test.adoc.lutaml.log.txt")
-          expect(xml_string_content(metanorma_process(input)))
+          expect(xml_string_content(metanorma_convert(input)))
             .to(be_equivalent_to(xml_string_content(output)))
           expect(File.exist?("test.adoc.lutaml.log.txt")).to be true
         end
@@ -233,7 +233,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         end
 
         it "correctly renders input" do
-          expect(xml_string_content(metanorma_process(input)))
+          expect(xml_string_content(metanorma_convert(input)))
             .to(be_equivalent_to(output))
         end
       end
@@ -286,7 +286,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         end
 
         it "correctly renders input" do
-          expect(xml_string_content(metanorma_process(input)))
+          expect(xml_string_content(metanorma_convert(input)))
             .to(be_equivalent_to(output))
         end
 
@@ -349,7 +349,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           end
 
           it "correctly renders input" do
-            expect(xml_string_content(metanorma_process(input)))
+            expect(xml_string_content(metanorma_convert(input)))
               .to(be_equivalent_to(output))
           end
         end
@@ -415,7 +415,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         end
 
         it "correctly renders input" do
-          expect(xml_string_content(metanorma_process(input)))
+          expect(xml_string_content(metanorma_convert(input)))
             .to(be_equivalent_to(output))
         end
       end
@@ -479,12 +479,12 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         end
 
         it "correctly renders input" do
-          expect(xml_string_content(metanorma_process(input)))
+          expect(xml_string_content(metanorma_convert(input)))
             .to(be_equivalent_to(output))
         end
 
         it "creates a valid cache file for supplied path" do
-          expect { metanorma_process(input) }
+          expect { metanorma_convert(input) }
             .to(change { File.file?(cache_file_path) }.from(false).to(true))
           expect(::Lutaml::Parser
                   .parse(File.new(cache_file_path),
@@ -536,7 +536,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           end
 
           it "correctly renders input from cache" do
-            expect(xml_string_content(metanorma_process(input)))
+            expect(xml_string_content(metanorma_convert(input)))
               .to(be_equivalent_to(output))
           end
         end
@@ -584,14 +584,14 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           end
 
           it "fallbacks to the original folder and renders from it" do
-            expect(xml_string_content(metanorma_process(input)))
+            expect(xml_string_content(metanorma_convert(input)))
               .to(be_equivalent_to(output))
           end
 
           # TODO: metanorma/metanorma-plugin-lutaml#27
           unless Gem.win_platform?
             it "recreates the cache file with the correct data" do
-              expect { xml_string_content(metanorma_process(input)) }
+              expect { xml_string_content(metanorma_convert(input)) }
                 .to(change do
                   wraper = begin
                     Metanorma::Plugin::Lutaml::Utils.express_from_cache(cache_path)
@@ -681,7 +681,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         end
 
         it "correctly renders input from cached index and supplied file" do
-          expect(xml_string_content(metanorma_process(input)))
+          expect(xml_string_content(metanorma_convert(input)))
             .to(be_equivalent_to(output))
         end
       end
@@ -779,7 +779,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         end
 
         it "correctly renders input" do
-          expect(xml_string_content(metanorma_process(input)))
+          expect(xml_string_content(metanorma_convert(input)))
             .to(be_equivalent_to(output))
         end
       end
@@ -814,7 +814,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         end
 
         it "correctly renders input" do
-          expect(xml_string_content(metanorma_process(input)))
+          expect(xml_string_content(metanorma_convert(input)))
             .to(be_equivalent_to(output))
         end
       end

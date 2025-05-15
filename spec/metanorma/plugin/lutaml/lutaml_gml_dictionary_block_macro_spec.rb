@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe Metanorma::Plugin::Lutaml::LutamlGmlDictionaryBlockMacro do
   describe "#process" do
-    subject(:output) { strip_guid(metanorma_process(input)) }
+    subject(:output) { strip_guid(metanorma_convert(input)) }
 
     context "with template" do
       let(:input) do
