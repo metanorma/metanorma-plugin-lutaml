@@ -279,7 +279,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
     building_headers_with_guidance = building_headers.dup
     building_headers_with_guidance.append("Used", "Guidance")
 
-    subject(:output) { metanorma_process(input) }
+    subject(:output) { metanorma_convert(input) }
 
     context "specify xmi file by path" do
       context "with built-in templates" do
