@@ -5,8 +5,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::Utils do
     subject(:call) do
       described_class
         .render_liquid_string(template_string: template_string,
-                              context_items: context_items,
-                              context_name: context_name,
+                              contexts: contexts,
                               document: Asciidoctor::Document.new)
     end
 
@@ -14,13 +13,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::Utils do
       let(:template_string) do
         "{{ context.name }}, {{ context.variable | interpolate }}"
       end
-      let(:context_items) do
+      let(:context_name) { "context" }
+      let(:contexts) do
         {
-          "name" => "Test",
-          "variable" => "Hi, my name is {{ context.name }}",
+          context_name => {
+            "name" => "Test",
+            "variable" => "Hi, my name is {{ context.name }}",
+          },
         }
       end
-      let(:context_name) { "context" }
 
       it "renders interpolated string" do
         expect(call).to eq(["Test, Hi, my name is Test", []])

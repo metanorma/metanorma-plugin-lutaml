@@ -1,7 +1,13 @@
+# frozen_string_literal: true
+
+require_relative "utils"
+
 module Metanorma
   module Plugin
     module Lutaml
       class SourceExtractor
+        include Utils
+
         # example:
         #   - [[abc]]
         ANCHOR_REGEX_1 = /^\[\[(?<id>[^\]]*)\]\]\s*$/.freeze
@@ -70,15 +76,6 @@ module Metanorma
           file_path = relative_file_path(document, m[2])
 
           File.exist?(file_path) ? file_path : nil
-        end
-
-        def relative_file_path(document, file_path)
-          docfile_directory = File.dirname(
-            document.attributes["docfile"] || ".",
-          )
-          document
-            .path_resolver
-            .system_path(file_path, docfile_directory)
         end
 
         def read_section(lines)
