@@ -11,7 +11,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::Yaml2TextPreprocessor do
 
   context "when YAML repeated nodes" do
     let(:example_file) { datastruct_fixtures_path("nested_repeated_nodes.yml") }
-    let(:example_file2) { datastruct_fixtures_path("nested_repeated_nodes_2.yml") }
+    let(:example_file2) do
+      datastruct_fixtures_path("nested_repeated_nodes_2.yml")
+    end
     let(:input) do
       <<~TEXT
         = Document title
@@ -75,7 +77,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::Yaml2TextPreprocessor do
 
   context "when multiple YAML files" do
     let(:example_file) { datastruct_fixtures_path("nested_repeated_nodes.yml") }
-    let(:example_file2) { datastruct_fixtures_path("nested_repeated_nodes_2.yml") }
+    let(:example_file2) do
+      datastruct_fixtures_path("nested_repeated_nodes_2.yml")
+    end
     let(:input) do
       <<~TEXT
         = Document title

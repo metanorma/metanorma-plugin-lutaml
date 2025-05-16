@@ -139,7 +139,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             "[[#{@id}.#{a}]]"
           end
 
-          def schema_anchors
+          def schema_anchors # rubocop:disable Metrics/AbcSize
             <<~HEREDOC
               // _fund_cons.liquid
               [[#{@id}_funds]]
@@ -385,7 +385,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
           it "correctly renders input" do
             output = remove_xml_whitespaces(
-              xml_string_content(metanorma_convert(input)))
+              xml_string_content(metanorma_convert(input)),
+            )
             expect(output)
               .to(be_equivalent_to(remove_xml_whitespaces(expected_output)))
           end

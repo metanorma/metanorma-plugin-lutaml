@@ -193,7 +193,7 @@ module Metanorma
           end
         end
 
-        def read_config_yaml_file(document, file_path)
+        def read_config_yaml_file(document, file_path) # rubocop:disable Metrics/MethodLength
           return {} if file_path.nil?
 
           relative_file_path = Utils.relative_file_path(document, file_path)

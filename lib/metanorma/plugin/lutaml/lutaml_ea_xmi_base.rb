@@ -165,7 +165,7 @@ module Metanorma
           )
         end
 
-        def load_lutaml_doc_and_config(document, xmi_or_index, config_yaml_path)
+        def load_lutaml_doc_and_config(document, xmi_or_index, config_yaml_path) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
           index = xmi_or_index.match(/index=(.*)/)
 
           if index

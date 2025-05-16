@@ -292,7 +292,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
         context "when loaded from a cache file" do
           let(:cache_path) do
-            fixtures_path("expressir_relative_paths/test_relative_includes_cache.yaml")
+            fixtures_path(
+              "expressir_relative_paths/test_relative_includes_cache.yaml",
+            )
           end
           let(:input) do
             <<~TEXT
@@ -488,7 +490,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             .to(change { File.file?(cache_file_path) }.from(false).to(true))
           expect(::Lutaml::Parser
                   .parse(File.new(cache_file_path),
-                          Lutaml::Parser::EXPRESS_CACHE_PARSE_TYPE)
+                         Lutaml::Parser::EXPRESS_CACHE_PARSE_TYPE)
                   .to_liquid["schemas"]
                   .map { |n| n["id"] }
                   .sort)
@@ -527,7 +529,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           end
 
           before do
-            repository = Expressir::Express::Parser.from_files([File.new(fixtures_path("test.exp"))])
+            repository = Expressir::Express::Parser.from_files(
+              [File.new(fixtures_path("test.exp"))],
+            )
             Expressir::Express::Cache.to_file(cache_path, repository)
           end
 
@@ -594,7 +598,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               expect { xml_string_content(metanorma_convert(input)) }
                 .to(change do
                   wraper = begin
-                    Metanorma::Plugin::Lutaml::Utils.express_from_cache(cache_path)
+                    Metanorma::Plugin::Lutaml::Utils
+                      .express_from_cache(cache_path)
                   rescue StandardError
                     nil
                   end
@@ -674,7 +679,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         around do |example|
           FileUtils.remove_file(index_file_root_path, true)
           file = File.new(index_file_root_path, "w")
-          file.puts(File.read(fixtures_path("lutaml_exp_index_root_path_template.yaml")) % { root_path: fixtures_path("") })
+          file.puts(
+            File.read(
+              fixtures_path("lutaml_exp_index_root_path_template.yaml"),
+            ) % { root_path: fixtures_path("") },
+          )
           file.close
           example.run
           FileUtils.remove_file(index_file_root_path, true)
