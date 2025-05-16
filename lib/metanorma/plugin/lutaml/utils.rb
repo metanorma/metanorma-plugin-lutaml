@@ -1,15 +1,12 @@
 require "expressir"
 require "expressir/express/parser"
 require "expressir/express/cache"
-require "metanorma/plugin/lutaml/liquid/custom_filters/html2adoc"
 require "metanorma/plugin/lutaml/liquid/multiply_local_file_system"
-
-liquid_klass = if Object.const_defined?("Liquid::Environment")
-                 Object.const_get("Liquid::Environment").default
-               else
-                 Object.const_get("Liquid::Template")
-               end
-liquid_klass.register_filter(Metanorma::Plugin::Lutaml::Liquid::CustomFilters)
+require "metanorma/plugin/lutaml/liquid/custom_blocks/key_iterator"
+require "metanorma/plugin/lutaml/liquid/custom_filters/html2adoc"
+require "metanorma/plugin/lutaml/liquid/custom_filters/values"
+require "metanorma/plugin/lutaml/liquid/custom_filters/replace_regex"
+require "metanorma/plugin/lutaml/liquid/custom_filters/loadfile"
 
 module Metanorma
   module Plugin
