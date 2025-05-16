@@ -44,7 +44,7 @@ module Metanorma
 
         # search document for block `lutaml_ea_xmi`
         # or `lutaml_uml_datamodel_description`
-        # read include derectives that goes after that in block and transform
+        # read include directives that goes after that in block and transform
         # into yaml2text blocks
         def process(document, reader)
           r = Asciidoctor::PreprocessorNoIfdefsReader.new document, reader.lines
