@@ -16,7 +16,18 @@ module Metanorma
     module Lutaml
       # Helpers for lutaml macros
       module Utils
-        LUTAML_EXP_IDX_TAG = /^:lutaml-express-index:(?<index_name>.+?);(?<index_path>.+?);?(\s*cache=(?<cache_path>.+))?$/.freeze
+        LUTAML_EXP_IDX_TAG = %r{
+          ^:lutaml-express-index: # Start of the pattern
+          (?<index_name>.+?)      # Capture index name
+          ;                       # Separator
+          (?<index_path>.+?)      # Capture index path
+          ;?                      # Optional separator
+          (?<cache_group>         # Optional cache group
+            \s*cache=             # Cache prefix
+            (?<cache_path>.+)     # Capture cache path
+          )?                      # End of optional group
+          $                       # End of the pattern
+        }x.freeze
 
         module_function
 

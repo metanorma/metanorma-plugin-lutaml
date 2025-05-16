@@ -4,7 +4,19 @@ module Metanorma
   module Plugin
     module Lutaml
       class ExpressRemarksDecorator
-        RELATIVE_PREFIX_MACRO_REGEXP = /^(link|image|video|audio|include)(:+)?(?![^\/:]+:\/\/|[A-Z]:\/|\/)([^:\[]+)(\[.*\])?$/.freeze
+        RELATIVE_PREFIX_MACRO_REGEXP = %r{
+          ^                                # Start of line
+          (link|image|video|audio|include) # Capture group 1: content type
+          (:+)?                            # Capture group 2: optional colons
+          (?!                              # Negative lookahead
+            [^\/:]+://|                    # Don't match URLs (http://, etc.)
+            [A-Z]:/|                       # Don't match Windows paths
+            /                              # Don't match absolute paths
+          )                                # End negative lookahead
+          ([^:\[]+)                        # Capture group 3: the path/name
+          (\[.*\])?                        # Capture group 4: optional attribute
+          $                                # End of line
+        }x.freeze
 
         attr_reader :remark, :options
 

@@ -29,7 +29,18 @@ module Metanorma
         SUPPORTED_NESTED_MACRO = %w[
           before diagram_include_block after include_block package_text
         ].freeze
-        XMI_INDEX_REGEXP = /^:lutaml-xmi-index:(?<index_name>.+?);(?<index_path>.+?);?(\s*config=(?<config_path>.+))?$/.freeze # rubocop:disable Lint/MixedRegexpCaptureTypes,Layout/LineLength
+        XMI_INDEX_REGEXP = %r{
+          ^:lutaml-xmi-index:  # Start of the pattern
+          (?<index_name>.+?)   # Capture index name
+          ;                    # Separator
+          (?<index_path>.+?)   # Capture index path
+          ;?                   # Optional separator
+          (?<config_group>     # Optional config group
+            \s*config=         # Config prefix
+            (?<config_path>.+) # Capture config path
+          )?                   # End of optional group
+          $                    # End of the pattern
+        }x.freeze
 
         # search document for block `lutaml_ea_xmi`
         # or `lutaml_uml_datamodel_description`
