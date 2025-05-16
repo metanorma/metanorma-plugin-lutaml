@@ -3,27 +3,16 @@
 require "liquid"
 require "asciidoctor"
 require "asciidoctor/reader"
-require_relative "liquid/custom_blocks/key_iterator"
-require_relative "liquid/custom_filters/values"
-require_relative "liquid/custom_filters/replace_regex"
-require_relative "liquid/custom_filters/loadfile"
 require_relative "source_extractor"
 require_relative "utils"
-
-module Asciidoctor
-  class PreprocessorNoIfdefsReader < PreprocessorReader
-    def preprocess_conditional_directive(_keyword, _target, _delimiter, _text)
-      false # decline to resolve idefs
-    end
-  end
-end
+require "metanorma/plugin/lutaml/asciidoctor/preprocessor"
 
 module Metanorma
   module Plugin
     module Lutaml
       # Base class for processing structured data blocks(yaml, json)
       class BaseStructuredTextPreprocessor <
-        Asciidoctor::Extensions::Preprocessor
+        ::Asciidoctor::Extensions::Preprocessor
         include Utils
 
         BLOCK_START_REGEXP = /\{(.+?)\.\*,(.+),(.+)\}/.freeze
@@ -31,15 +20,13 @@ module Metanorma
         LOAD_FILE_REGEXP = /{% assign (.*) = (.*) \| load_file %}/.freeze
 
         def process(document, reader)
-          r = ::Asciidoctor::PreprocessorNoIfdefsReader
-            .new document, reader.lines
+          r = Asciidoctor::PreprocessorNoIfdefsReader
+            .new(document, reader.lines)
           input_lines = r.readlines
-          Metanorma::Plugin::Lutaml::SourceExtractor.extract(
-            document,
-            input_lines,
-          )
-          Asciidoctor::PreprocessorNoIfdefsReader
-            .new(document, processed_lines(document, input_lines.to_enum))
+          Metanorma::Plugin::Lutaml::SourceExtractor
+            .extract(document, input_lines)
+          result_content = processed_lines(document, input_lines.to_enum)
+          Asciidoctor::PreprocessorNoIfdefsReader.new(document, result_content)
         end
 
         protected
