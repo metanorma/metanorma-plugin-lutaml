@@ -3,7 +3,8 @@
 module Metanorma
   module Plugin
     module Lutaml
-      class LutamlKlassTableBlockMacro < ::Asciidoctor::Extensions::BlockMacroProcessor
+      class LutamlKlassTableBlockMacro <
+        ::Asciidoctor::Extensions::BlockMacroProcessor
         include LutamlEaXmiBase
 
         DEFAULT_TEMPLATE = File.join(

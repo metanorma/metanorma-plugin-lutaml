@@ -568,7 +568,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
 
                 when "data_dictionary"
                   it "should contain table headers" do
-                    [
+                    [ # rubocop:disable Performance/CollectionLiteralInLoop
                       "Description",
                       "Parent package",
                       "Stereotype",
@@ -678,16 +678,22 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
           end
 
           it "correctly maps external and internal refs" do
-           xml_output = remove_xml_whitespaces(xml_convert)
+            xml_output = remove_xml_whitespaces(xml_convert)
 
             expect(xml_output)
-              .to_not(include('<xref target="My-custom-Register-section" style="short"><display-text>Register</display-text></xref>'))
+              .to_not(include("<xref target=\"My-custom-Register-section\" " \
+              "style=\"short\"><display-text>Register</display-text></xref>"))
             expect(xml_output)
-              .to_not(include('<xref target="Register-section" style="short"><display-text>Register</display-text></xref>'))
+              .to_not(include("<xref target=\"Register-section\" " \
+              "style=\"short\"><display-text>Register</display-text></xref>"))
             expect(xml_output)
-              .to_not(include('<xref target="RE_ReferenceSource-section" style="short"><display-text>RE_ReferenceSource</display-text></xref>'))
+              .to_not(include("<xref target=\"RE_ReferenceSource-section\" " \
+              "style=\"short\"><display-text>RE_ReferenceSource" \
+              "</display-text></xref>"))
             expect(xml_output)
-              .to(include('<xref target="custom-RE_ReferenceSource" style="short"><display-text>RE_ReferenceSource</display-text></xref>'))
+              .to(include("<xref target=\"custom-RE_ReferenceSource\" " \
+              "style=\"short\"><display-text>RE_ReferenceSource" \
+              "</display-text></xref>"))
           end
         end
 
@@ -704,9 +710,13 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
           it "correctly maps external and internal refs" do
             xml_output = remove_xml_whitespaces(xml_convert)
             expect(xml_output)
-              .to(include('<xref target="My-custom-RE_Register-section" style="short"><display-text>RE_Register</display-text></xref>'))
+              .to(include("<xref target=\"My-custom-RE_Register-section\" " \
+              "style=\"short\"><display-text>RE_Register" \
+              "</display-text></xref>"))
             expect(xml_output)
-              .to_not(include('<xref target="RE_Register-section" style="short"><display-text>RE_Register</display-text></xref>'))
+              .to_not(include("<xref target=\"RE_Register-section\" " \
+              "style=\"short\"><display-text>RE_Register" \
+              "</display-text></xref>"))
           end
         end
       end

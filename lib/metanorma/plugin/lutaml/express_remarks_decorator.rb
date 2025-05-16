@@ -33,7 +33,7 @@ module Metanorma
           result = remark
           if options["relative_path_prefix"]
             result = update_relative_paths(result,
-                                          options["relative_path_prefix"])
+                                           options["relative_path_prefix"])
           end
           result
         end
@@ -56,10 +56,11 @@ module Metanorma
         def prefix_relative_paths(line, path_prefix)
           line.gsub(RELATIVE_PREFIX_MACRO_REGEXP) do |_match|
             prefixed_path = File.join(path_prefix, $3.strip)
-            # When we are dealing with a relative path of a template:
-            # ../path/to/file we need to transform it into
-            # the absolute one because `image::` macro wont understand it other way
-            prefixed_path = File.absolute_path(prefixed_path) if prefixed_path.start_with?("../")
+            # Transform relative path (../path/to/file) into the absolute path
+            # because `image::` macro wont understand it other way
+            if prefixed_path.start_with?("../")
+              prefixed_path = File.absolute_path(prefixed_path)
+            end
             full_path = File.expand_path(prefixed_path)
             "#{$1}#{$2}#{full_path}#{$4}"
           end

@@ -8,7 +8,7 @@ class GmlDictionaryDrop < Liquid::Drop
   end
 
   def name
-    @dict.name.join("")
+    @dict.name.join
   end
 
   def file_name

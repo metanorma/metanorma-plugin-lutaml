@@ -83,7 +83,7 @@ module Metanorma
           result
         end
 
-        def notify_render_errors(document, errors)
+        def notify_render_errors(_document, errors)
           errors.each do |error_obj|
             ::Metanorma::Util.log(
               "[metanorma-plugin-lutaml] Liquid render error: " \
@@ -93,8 +93,9 @@ module Metanorma
           end
         end
 
-        def load_express_repositories(path:, cache_path:, document:,
-          force_read: false)
+        def load_express_repositories( # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
+          path:, cache_path:, document:, force_read: false
+        )
           cache_full_path = cache_path &&
             Utils.relative_file_path(document, cache_path)
 
@@ -201,7 +202,8 @@ module Metanorma
             cache = match[:cache_path]&.strip
 
             unless name && path
-              raise StandardError.new("No name and path set in `:lutaml-express-index:` attribute.")
+              raise StandardError.new("No name and path set in " \
+                                      "`:lutaml-express-index:` attribute.")
             end
 
             lutaml_expressir_model = load_express_repositories(
@@ -211,9 +213,7 @@ module Metanorma
             )
 
             if lutaml_expressir_model
-              express_indexes[name] = {
-                model: lutaml_expressir_model,
-              }
+              express_indexes[name] = { model: lutaml_expressir_model }
             end
           end
 

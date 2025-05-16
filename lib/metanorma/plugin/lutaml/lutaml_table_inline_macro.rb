@@ -3,7 +3,8 @@
 module Metanorma
   module Plugin
     module Lutaml
-      class LutamlTableInlineMacro < ::Asciidoctor::Extensions::InlineMacroProcessor
+      class LutamlTableInlineMacro <
+        ::Asciidoctor::Extensions::InlineMacroProcessor
         include LutamlDiagramBase
         SUPPORTED_OPTIONS = %w[class enum data_type].freeze
 

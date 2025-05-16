@@ -9,15 +9,13 @@ Asciidoctor::Extensions.register do
   inline_macro Metanorma::Plugin::Lutaml::LutamlTableInlineMacro, :lutaml_table
   inline_macro Metanorma::Plugin::Lutaml::LutamlFigureInlineMacro,
                :lutaml_figure
-  preprocessor Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreprocessor
+  preprocessor Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreprocessor # rubocop:disable Layout/LineLength
   preprocessor Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor
   preprocessor Metanorma::Plugin::Lutaml::Json2TextPreprocessor
   preprocessor Metanorma::Plugin::Lutaml::Yaml2TextPreprocessor
   preprocessor Metanorma::Plugin::Lutaml::Data2TextPreprocessor
-end
-
-Asciidoctor::Extensions.register do
   preprocessor Metanorma::Plugin::Lutaml::LutamlPreprocessor
+
   block_macro Metanorma::Plugin::Lutaml::LutamlDiagramBlockMacro
   block Metanorma::Plugin::Lutaml::LutamlDiagramBlock
   block_macro Metanorma::Plugin::Lutaml::LutamlEaDiagramBlockMacro
@@ -99,7 +97,7 @@ def strip_guid(xml)
 end
 
 def remove_xml_whitespaces(xml)
-  xml.gsub(/\\n/, '').gsub(/>\s*/, ">").gsub(/\s*</, "<")
+  xml.gsub(/\\n/, "").gsub(/>\s*/, ">").gsub(/\s*</, "<")
 end
 
 def xml_string_content(xml)

@@ -42,7 +42,7 @@ module Metanorma
         end
 
         # if no :imagesdir: leave image file in lutaml
-        def generate_file(parent, _reader, uml_document)
+        def generate_file(parent, _reader, uml_document) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
           formatter = ::Lutaml::Formatter::Graphviz.new
           formatter.type = :png
 

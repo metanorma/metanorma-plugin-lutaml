@@ -2,8 +2,8 @@ require "spec_helper"
 
 RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
   describe "#process" do
-    let(:example_file_1) { fixtures_path("large_test.xmi") }
-    let(:example_file_2) { fixtures_path("test.xmi") }
+    let(:example_file1) { fixtures_path("large_test.xmi") }
+    let(:example_file2) { fixtures_path("test.xmi") }
     let(:config_file) { fixtures_path("lutaml_xmi_index_config.yml") }
 
     context "when using lutaml-xmi-index" do
@@ -17,8 +17,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
             :no-isobib:
             :imagesdir: spec/assets
 
-            :lutaml-xmi-index:first-xmi-index;#{example_file_1}
-            :lutaml-xmi-index:second-xmi-index;#{example_file_2};config=#{config_file}
+            :lutaml-xmi-index:first-xmi-index;#{example_file1}
+            :lutaml-xmi-index:second-xmi-index;#{example_file2};config=#{config_file}
 
             [lutaml_ea_xmi,index=first-xmi-index]
             --
@@ -166,7 +166,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
               },
               {
                 id: "EAID_021B99FF_A404_4c54_B785_600CA37348C1",
-                name: "Definition table of(.*)Another::ADEOfStandardFileTimeseries",
+                name: "Definition table of(.*)Another::ADEOfStandardFileTimeseries", # rubocop:disable Layout/LineLength
               },
               {
                 id: "EAID_A197050C_E2CB_4d86_B69E_5B5E96E37FDE",
