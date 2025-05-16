@@ -14,6 +14,19 @@ module Metanorma
       # Class for processing Lutaml files
       class LutamlPreprocessor < ::Asciidoctor::Extensions::Preprocessor
         REMARKS_ATTRIBUTE = "remarks"
+        EXPRESS_PREPROCESSOR_REGEX = %r{
+          ^                            # Start of line
+          \[                           # Opening bracket
+          (?:\blutaml\b|               # Match lutaml or
+            \blutaml_express\b|        # lutaml_express or
+            \blutaml_express_liquid\b) # lutaml_express_liquid
+          ,                            # Comma separator
+          (?<index_names>[^,]+)?       # Optional index names
+          ,?                           # Optional comma
+          (?<context_name>[^,]+)?      # Optional context name
+          (?<options>,.*)?             # Optional options
+          \]                           # Closing bracket
+        }x.freeze
 
         def process(document, reader) # rubocop:disable Metrics/MethodLength
           r = Asciidoctor::PreprocessorNoIfdefsReader.new(document,
@@ -47,7 +60,7 @@ module Metanorma
         end
 
         def lutaml_liquid?(line)
-          line.match(/^\[(?:\blutaml\b|\blutaml_express\b|\blutaml_express_liquid\b),(?<index_names>[^,]+)?,?(?<context_name>[^,]+)?(?<options>,.*)?\]/) # rubocop:disable Layout/LineLength
+          line.match(EXPRESS_PREPROCESSOR_REGEX)
         end
 
         def load_express_lutaml_file(document, file_path)
@@ -180,7 +193,7 @@ module Metanorma
           end
         end
 
-        def read_config_yaml_file(document, file_path)
+        def read_config_yaml_file(document, file_path) # rubocop:disable Metrics/MethodLength
           return {} if file_path.nil?
 
           relative_file_path = Utils.relative_file_path(document, file_path)

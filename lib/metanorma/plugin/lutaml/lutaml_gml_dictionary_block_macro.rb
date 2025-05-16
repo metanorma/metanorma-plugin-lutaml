@@ -3,8 +3,10 @@
 module Metanorma
   module Plugin
     module Lutaml
-      class LutamlGmlDictionaryBlockMacro < ::Asciidoctor::Extensions::BlockMacroProcessor
+      class LutamlGmlDictionaryBlockMacro <
+        ::Asciidoctor::Extensions::BlockMacroProcessor
         include LutamlGmlDictionaryBase
+
         use_dsl
         named :lutaml_gml_dictionary
 

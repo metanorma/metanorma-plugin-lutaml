@@ -3,7 +3,8 @@
 module Metanorma
   module Plugin
     module Lutaml
-      class LutamlFigureInlineMacro < ::Asciidoctor::Extensions::InlineMacroProcessor
+      class LutamlFigureInlineMacro <
+        ::Asciidoctor::Extensions::InlineMacroProcessor
         include LutamlDiagramBase
 
         use_dsl

@@ -9,12 +9,13 @@ Asciidoctor::Extensions.register do
   inline_macro Metanorma::Plugin::Lutaml::LutamlTableInlineMacro, :lutaml_table
   inline_macro Metanorma::Plugin::Lutaml::LutamlFigureInlineMacro,
                :lutaml_figure
-  preprocessor Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreprocessor
+  preprocessor Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreprocessor # rubocop:disable Layout/LineLength
   preprocessor Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor
-end
-
-Asciidoctor::Extensions.register do
+  preprocessor Metanorma::Plugin::Lutaml::Json2TextPreprocessor
+  preprocessor Metanorma::Plugin::Lutaml::Yaml2TextPreprocessor
+  preprocessor Metanorma::Plugin::Lutaml::Data2TextPreprocessor
   preprocessor Metanorma::Plugin::Lutaml::LutamlPreprocessor
+
   block_macro Metanorma::Plugin::Lutaml::LutamlDiagramBlockMacro
   block Metanorma::Plugin::Lutaml::LutamlDiagramBlock
   block_macro Metanorma::Plugin::Lutaml::LutamlEaDiagramBlockMacro
@@ -26,6 +27,9 @@ end
 require "metanorma-standoc"
 require "rspec/matchers"
 require "equivalent-xml"
+require "metanorma"
+require "metanorma/standoc"
+require "byebug"
 require "xml-c14n"
 
 Dir[File.expand_path("./support/**/**/*.rb", __dir__)].sort.each do |f|
@@ -93,14 +97,14 @@ def strip_guid(xml)
 end
 
 def remove_xml_whitespaces(xml)
-  xml.gsub(/\\n/, '').gsub(/>\s*/, ">").gsub(/\s*</, "<")
+  xml.gsub(/\\n/, "").gsub(/>\s*/, ">").gsub(/\s*</, "<")
 end
 
 def xml_string_content(xml)
   strip_guid(Xml::C14n.format(Nokogiri::XML(xml).to_s))
 end
 
-def metanorma_process(input)
+def metanorma_convert(input)
   Asciidoctor.convert(input, backend: :standoc, header_footer: true,
                              agree_to_terms: true, to_file: false, safe: :safe,
                              attributes: ["nodoc", "stem", "xrefstyle=short",
@@ -108,8 +112,20 @@ def metanorma_process(input)
                                           "output_dir="])
 end
 
+def metanorma_process(input)
+  Metanorma::Input::Asciidoc
+    .new
+    .process(input, "test.adoc", :standoc)
+end
+
 def fixtures_path(path)
   File.join(File.expand_path("./fixtures/lutaml", __dir__), path)
+end
+
+def datastruct_fixtures_path(path)
+  File.join(
+    File.expand_path("../spec/fixtures/lutaml/datastruct", __dir__), path
+  )
 end
 
 def strip_src(xml)

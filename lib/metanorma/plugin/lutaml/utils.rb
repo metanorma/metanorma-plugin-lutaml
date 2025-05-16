@@ -1,22 +1,30 @@
 require "expressir"
 require "expressir/express/parser"
 require "expressir/express/cache"
-require "metanorma/plugin/lutaml/liquid/custom_filters"
 require "metanorma/plugin/lutaml/liquid/multiply_local_file_system"
-
-liquid_klass = if Object.const_defined?("Liquid::Environment")
-                 Object.const_get("Liquid::Environment").default
-               else
-                 Object.const_get("Liquid::Template")
-               end
-liquid_klass.register_filter(Metanorma::Plugin::Lutaml::Liquid::CustomFilters)
+require "metanorma/plugin/lutaml/liquid/custom_blocks/key_iterator"
+require "metanorma/plugin/lutaml/liquid/custom_filters/html2adoc"
+require "metanorma/plugin/lutaml/liquid/custom_filters/values"
+require "metanorma/plugin/lutaml/liquid/custom_filters/replace_regex"
+require "metanorma/plugin/lutaml/liquid/custom_filters/loadfile"
 
 module Metanorma
   module Plugin
     module Lutaml
       # Helpers for lutaml macros
       module Utils
-        LUTAML_EXP_IDX_TAG = /^:lutaml-express-index:(?<index_name>.+?);(?<index_path>.+?);?(\s*cache=(?<cache_path>.+))?$/.freeze
+        LUTAML_EXP_IDX_TAG = %r{
+          ^:lutaml-express-index: # Start of the pattern
+          (?<index_name>.+?)      # Capture index name
+          ;                       # Separator
+          (?<index_path>.+?)      # Capture index path
+          ;?                      # Optional separator
+          (?<cache_group>         # Optional cache group
+            \s*cache=             # Cache prefix
+            (?<cache_path>.+)     # Capture cache path
+          )?                      # End of optional group
+          $                       # End of the pattern
+        }x.freeze
 
         module_function
 
@@ -29,9 +37,10 @@ module Metanorma
             .system_path(file_path, docfile_directory)
         end
 
-        def render_liquid_string(template_string:, context_items:,
-                                 context_name:, document:, include_path: nil)
-          liquid_template = ::Liquid::Template.parse(template_string)
+        def render_liquid_string(template_string:, contexts:, # rubocop:disable Metrics/MethodLength
+                                 document:, include_path: nil)
+          liquid_template = ::Liquid::Template
+            .parse(template_string, environment: create_liquid_environment)
 
           # Allow includes for the template
           include_paths = [
@@ -44,14 +53,34 @@ module Metanorma
               .new(include_paths, ["%s.liquid", "_%s.liquid", "_%s.adoc"])
 
           rendered_string = liquid_template
-            .render(context_name => context_items,
-                    strict_variables: true,
+            .render(contexts,
+                    strict_variables: false,
                     error_mode: :warn)
 
           [rendered_string, liquid_template.errors]
         end
 
-        def notify_render_errors(document, errors)
+        def create_liquid_environment
+          ::Liquid::Environment.new.tap do |liquid_env|
+            liquid_env.register_tag(
+              "keyiterator",
+              ::Metanorma::Plugin::Lutaml::Liquid::CustomBlocks::KeyIterator,
+            )
+            liquid_env.register_filter(
+              ::Metanorma::Plugin::Lutaml::Liquid::CustomFilters,
+            )
+          end
+        end
+
+        def processed_lines(document, input_lines)
+          result = []
+          loop do
+            result.push(*process_text_blocks(document, input_lines))
+          end
+          result
+        end
+
+        def notify_render_errors(_document, errors)
           errors.each do |error_obj|
             ::Metanorma::Util.log(
               "[metanorma-plugin-lutaml] Liquid render error: " \
@@ -61,8 +90,9 @@ module Metanorma
           end
         end
 
-        def load_express_repositories(path:, cache_path:, document:,
-force_read: false)
+        def load_express_repositories( # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
+          path:, cache_path:, document:, force_read: false
+        )
           cache_full_path = cache_path &&
             Utils.relative_file_path(document, cache_path)
 
@@ -130,7 +160,7 @@ force_read: false)
         end
 
         # TODO: Refactor this using Suma::SchemaConfig
-        def load_express_from_index(_document, path)
+        def load_express_from_index(_document, path) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
           yaml_content = YAML.safe_load(File.read(path))
           schema_yaml_base_path = Pathname.new(File.dirname(path))
 
@@ -153,7 +183,7 @@ force_read: false)
           ::Lutaml::Parser.parse(files_to_load)
         end
 
-        def parse_document_express_indexes(document, input_lines)
+        def parse_document_express_indexes(document, input_lines) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
           express_indexes = {}
           loop do
             line = input_lines.next
@@ -169,7 +199,8 @@ force_read: false)
             cache = match[:cache_path]&.strip
 
             unless name && path
-              raise StandardError.new("No name and path set in `:lutaml-express-index:` attribute.")
+              raise StandardError.new("No name and path set in " \
+                                      "`:lutaml-express-index:` attribute.")
             end
 
             lutaml_expressir_model = load_express_repositories(
@@ -179,9 +210,7 @@ force_read: false)
             )
 
             if lutaml_expressir_model
-              express_indexes[name] = {
-                model: lutaml_expressir_model,
-              }
+              express_indexes[name] = { model: lutaml_expressir_model }
             end
           end
 

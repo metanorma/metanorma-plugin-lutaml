@@ -30,14 +30,14 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaDiagramBlockMacro do
       end
 
       it "correctly renders input" do
-        expect(strip_guid(strip_src(metanorma_process(input))))
+        expect(strip_guid(strip_src(metanorma_convert(input))))
           .to(include(output.join("\n")))
       end
     end
 
     context "when using with lutaml-xmi-index" do
-      let(:example_file_1) { fixtures_path("test.xmi") }
-      let(:example_file_2) { fixtures_path("large_test.xmi") }
+      let(:example_file1) { fixtures_path("test.xmi") }
+      let(:example_file2) { fixtures_path("large_test.xmi") }
 
       context "with lutaml_ea_diagram and without index option" do
         let(:input) do
@@ -48,8 +48,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaDiagramBlockMacro do
             :novalid:
             :no-isobib:
             :imagesdir: spec/assets
-            :lutaml-xmi-index:first-xmi-index;#{example_file_1}
-            :lutaml-xmi-index:second-xmi-index;#{example_file_2}
+            :lutaml-xmi-index:first-xmi-index;#{example_file1}
+            :lutaml-xmi-index:second-xmi-index;#{example_file2}
 
             [lutaml_ea_xmi,index=first-xmi-index]
             --
@@ -67,7 +67,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaDiagramBlockMacro do
         end
 
         it "correctly renders input" do
-          expect(strip_guid(strip_src(metanorma_process(input))))
+          expect(strip_guid(strip_src(metanorma_convert(input))))
             .to(include(output.join("\n")))
         end
       end
@@ -81,8 +81,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaDiagramBlockMacro do
             :novalid:
             :no-isobib:
             :imagesdir: spec/assets
-            :lutaml-xmi-index:first-xmi-index;#{example_file_1}
-            :lutaml-xmi-index:second-xmi-index;#{example_file_2}
+            :lutaml-xmi-index:first-xmi-index;#{example_file1}
+            :lutaml-xmi-index:second-xmi-index;#{example_file2}
 
             [lutaml_ea_xmi,index=first-xmi-index]
             --
@@ -100,7 +100,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaDiagramBlockMacro do
         end
 
         it "correctly renders input" do
-          expect(strip_guid(strip_src(metanorma_process(input))))
+          expect(strip_guid(strip_src(metanorma_convert(input))))
             .to(include(output.join("\n")))
         end
       end
@@ -114,8 +114,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaDiagramBlockMacro do
             :novalid:
             :no-isobib:
             :imagesdir: spec/assets
-            :lutaml-xmi-index:first-xmi-index;#{example_file_1}
-            :lutaml-xmi-index:second-xmi-index;#{example_file_2}
+            :lutaml-xmi-index:first-xmi-index;#{example_file1}
+            :lutaml-xmi-index:second-xmi-index;#{example_file2}
 
             [lutaml_ea_xmi,index=first-xmi-index]
             --
@@ -133,7 +133,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaDiagramBlockMacro do
         end
 
         it "correctly renders input" do
-          expect(strip_guid(strip_src(metanorma_process(input))))
+          expect(strip_guid(strip_src(metanorma_convert(input))))
             .to(include(output.join("\n")))
         end
       end

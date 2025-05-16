@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreprocessor do
+RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreprocessor do # rubocop:disable Layout/LineLength
   describe "#process" do
     let(:example_file) { fixtures_path("large_test.xmi") }
     let(:config_file) do
@@ -61,11 +61,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           --
         TEXT
       end
-      subject (:output) { metanorma_process(input) }
+      subject (:output) { metanorma_convert(input) }
 
       # @note datamodel_description_sections.xml
       context "correctly renders input" do
-        # expect(xml_string_content(metanorma_process(input)))
+        # expect(xml_string_content(metanorma_convert(input)))
         #     .to(be_equivalent_to(xml_string_content(output)))
 
         include_examples "should contain preface"
@@ -273,7 +273,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
             --
           TEXT
         end
-        subject (:output) { metanorma_process(input) }
+        subject (:output) { metanorma_convert(input) }
 
         # @note datamodel_description_sections_section_depth.xml
         context "correctly renders input" do
@@ -400,7 +400,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
                 --
               TEXT
             end
-            subject(:output) { metanorma_process(input) }
+            subject(:output) { metanorma_convert(input) }
 
             context "when render_style" do
               around do |example|
@@ -569,7 +569,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
                   include_examples "should contain xref objects", xref
                 when "data_dictionary"
                   it "should contain table headers" do
-                    [
+                    [ # rubocop:disable Performance/CollectionLiteralInLoop
                       "Description",
                       "Parent package",
                       "Stereotype",
@@ -650,7 +650,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
         end
 
         context "when render_style equal `data_dictionary`" do
-          subject(:xml_convert) { xml_string_content(metanorma_process(input)) }
+          subject(:xml_convert) { xml_string_content(metanorma_convert(input)) }
 
           let(:render_style) { "data_dictionary" }
           let(:example_file) { fixtures_path("test.xmi") }
@@ -681,18 +681,24 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           it "correctly maps external and internal refs" do
             xml_output = remove_xml_whitespaces(xml_convert)
             expect(xml_output)
-              .to_not(include('<xref target="My-custom-Register-section" style="short"><display-text>Register</display-text></xref>'))
+              .to_not(include("<xref target=\"My-custom-Register-section\" " \
+              "style=\"short\"><display-text>Register</display-text></xref>"))
             expect(xml_output)
-              .to_not(include('<xref target="Register-section" style="short"><display-text>Register</display-text></xref>'))
+              .to_not(include("<xref target=\"Register-section\" " \
+              "style=\"short\"><display-text>Register</display-text></xref>"))
             expect(xml_output)
-              .to_not(include('<xref target="RE_ReferenceSource-section" style="short"><display-text>RE_ReferenceSource</display-text></xref>'))
+              .to_not(include("<xref target=\"RE_ReferenceSource-section\" " \
+              "style=\"short\"><display-text>RE_ReferenceSource" \
+              "</display-text></xref>"))
             expect(xml_output)
-              .to(include('<xref target="custom-RE_ReferenceSource" style="short"><display-text>RE_ReferenceSource</display-text></xref>'))
+              .to(include("<xref target=\"custom-RE_ReferenceSource\" " \
+              "style=\"short\"><display-text>RE_ReferenceSource" \
+              "</display-text></xref>"))
           end
         end
 
         context "when render_style equal `entity_list`" do
-          subject(:xml_convert) { xml_string_content(metanorma_process(input)) }
+          subject(:xml_convert) { xml_string_content(metanorma_convert(input)) }
 
           let(:render_style) { "entity_list" }
           let(:external_classes) do
@@ -704,9 +710,13 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           it "correctly maps external and internal refs" do
             xml_output = remove_xml_whitespaces(xml_convert)
             expect(xml_output)
-              .to(include('<xref target="My-custom-RE_Register-section" style="short"><display-text>RE_Register</display-text></xref>'))
+              .to(include("<xref target=\"My-custom-RE_Register-section\" " \
+              "style=\"short\"><display-text>RE_Register</display-text>" \
+              "</xref>"))
             expect(xml_output)
-              .to_not(include('<xref target="RE_Register-section" style="short"><display-text>RE_Register</display-text></xref>'))
+              .to_not(include("<xref target=\"RE_Register-section\" " \
+              "style=\"short\"><display-text>RE_Register</display-text>" \
+              "</xref>"))
           end
         end
       end
@@ -766,7 +776,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           --
         TEXT
       end
-      subject(:output) { metanorma_process(input) }
+      subject(:output) { metanorma_convert(input) }
 
       # @note datamodel_description_sections_tree.xml
       context "correctly renders input" do
@@ -964,7 +974,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           --
         TEXT
       end
-      subject(:output) { metanorma_process(input) }
+      subject(:output) { metanorma_convert(input) }
 
       around do |example|
         File.open(nested_config_file, "w") do |file|
@@ -1040,7 +1050,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           ---
         TEXT
       end
-      subject(:output) { metanorma_process(input) }
+      subject(:output) { metanorma_convert(input) }
 
       # @note datamodel_description_sections_package_entities.xml
       context "correctly renders input" do
@@ -1081,7 +1091,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           ---
         TEXT
       end
-      subject(:output) { metanorma_process(input) }
+      subject(:output) { metanorma_convert(input) }
 
       # @note datamodel_description_sections_skip_tables.xml
       context "correctly renders input" do

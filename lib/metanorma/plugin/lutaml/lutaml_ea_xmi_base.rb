@@ -6,12 +6,14 @@ require "asciidoctor/reader"
 require "lutaml"
 require "lutaml/uml"
 require "lutaml/formatter"
-require "metanorma/plugin/lutaml/utils"
+require_relative "utils"
 
 module Metanorma
   module Plugin
     module Lutaml
       module LutamlEaXmiBase
+        include Utils
+
         LIQUID_INCLUDE_PATH = File.join(
           Gem.loaded_specs["metanorma-plugin-lutaml"].full_gem_path,
           "lib", "metanorma", "plugin", "lutaml", "liquid_templates"
@@ -27,11 +29,22 @@ module Metanorma
         SUPPORTED_NESTED_MACRO = %w[
           before diagram_include_block after include_block package_text
         ].freeze
-        XMI_INDEX_REGEXP = /^:lutaml-xmi-index:(?<index_name>.+?);(?<index_path>.+?);?(\s*config=(?<config_path>.+))?$/.freeze # rubocop:disable Lint/MixedRegexpCaptureTypes,Layout/LineLength
+        XMI_INDEX_REGEXP = %r{
+          ^:lutaml-xmi-index:  # Start of the pattern
+          (?<index_name>.+?)   # Capture index name
+          ;                    # Separator
+          (?<index_path>.+?)   # Capture index path
+          ;?                   # Optional separator
+          (?<config_group>     # Optional config group
+            \s*config=         # Config prefix
+            (?<config_path>.+) # Capture config path
+          )?                   # End of optional group
+          $                    # End of the pattern
+        }x.freeze
 
         # search document for block `lutaml_ea_xmi`
         # or `lutaml_uml_datamodel_description`
-        # read include derectives that goes after that in block and transform
+        # read include directives that goes after that in block and transform
         # into yaml2text blocks
         def process(document, reader)
           r = Asciidoctor::PreprocessorNoIfdefsReader.new document, reader.lines
@@ -108,14 +121,6 @@ module Metanorma
           lutaml_xmi_index[:path]
         end
 
-        def processed_lines(document, input_lines)
-          result = []
-          loop do
-            result.push(*process_text_blocks(document, input_lines))
-          end
-          result
-        end
-
         def get_macro_regexp
           self.class.const_get(:MACRO_REGEXP)
         end
@@ -160,7 +165,7 @@ module Metanorma
           )
         end
 
-        def load_lutaml_doc_and_config(document, xmi_or_index, config_yaml_path)
+        def load_lutaml_doc_and_config(document, xmi_or_index, config_yaml_path) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
           index = xmi_or_index.match(/index=(.*)/)
 
           if index
@@ -284,22 +289,29 @@ module Metanorma
           package_level(lutaml_document["packages"].first, level - 1)
         end
 
-        def create_context_object(lutaml_document, additional_context, options) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+        def create_context_object( # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+          lutaml_document, additional_context, options,
+          context_name = "context"
+        )
           root_package = package_level(lutaml_document.to_liquid,
                                        options.package_root_level || 1)
+          contexts = {}
+
           if options.packages.nil?
-            return {
+            contexts[context_name] = {
               "render_nested_packages" => true,
               "packages" => root_package["packages"],
               "root_packages" => [root_package],
               "additional_context" => additional_context
-                  .merge("external_classes" => options.external_classes),
+                .merge("external_classes" => options.external_classes),
               "name" => root_package["name"],
             }
+
+            return contexts
           end
 
           all_packages = [root_package, *root_package["children_packages"]]
-          {
+          contexts[context_name] = {
             "packages" => sort_and_filter_out_packages(all_packages, options),
             "package_entities" => package_hash(options, "render_entities"),
             "package_skip_sections" => package_hash(options, "skip_tables"),
@@ -310,6 +322,8 @@ module Metanorma
               false,
             "name" => root_package["name"],
           }
+
+          contexts
         end
 
         def package_hash(options, key)
@@ -376,10 +390,10 @@ module Metanorma
             template_string: template(options.section_depth || 2,
                                       options.render_style,
                                       options.include_root),
-            context_items: create_context_object(lutaml_doc,
-                                                 add_context,
-                                                 options),
-            context_name: "context",
+            contexts: create_context_object(lutaml_doc,
+                                            add_context,
+                                            options,
+                                            "context"),
             document: document,
             include_path: template_path(document, options.template_path),
           )

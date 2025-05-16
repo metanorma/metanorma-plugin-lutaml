@@ -24,7 +24,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlFigureInlineMacro do
     end
 
     it "correctly renders input" do
-      expect(strip_src(xml_string_content(metanorma_process(input))))
+      expect(strip_src(xml_string_content(metanorma_convert(input))))
         .to(include(output))
     end
   end
