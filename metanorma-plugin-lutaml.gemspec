@@ -37,18 +37,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "ogc-gml", "~>1.0.0"
   spec.add_dependency "relaton-cli"
 
-  spec.add_development_dependency "byebug"
-  spec.add_development_dependency "equivalent-xml"
-  spec.add_development_dependency "metanorma"
-  spec.add_development_dependency "metanorma-standoc"
-  spec.add_development_dependency "rake", "~> 13"
-  spec.add_development_dependency "rspec", "~> 3.6"
-  spec.add_development_dependency "rubocop", "~> 1.58"
-  spec.add_development_dependency "rubocop-performance", "~> 1.19"
-  spec.add_development_dependency "simplecov", "~> 0.15"
-  spec.add_development_dependency "timecop", "~> 0.9"
-  spec.add_development_dependency "vcr", "~> 6.1.0"
-  spec.add_development_dependency "webmock"
-  spec.add_development_dependency "xml-c14n"
   spec.metadata["rubygems_mfa_required"] = "false"
 end
