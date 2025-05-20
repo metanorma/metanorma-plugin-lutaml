@@ -130,11 +130,11 @@ module Metanorma
             line.gsub!(BLOCK_END_REGEXP, "{% endkeyiterator %}")
           end
           line
-            .gsub(/(?<!{){(?!%)([^{}]+)(?<!%)}(?!})/, '{{\1}}')
-            .gsub(/[a-z\.]+\#/, "index")
-            .gsub(/{{(.+)\s+\+\s+(\d+)\s*?}}/, '{{ \1 | plus: \2 }}')
-            .gsub(/{{(.+)\s+-\s+(\d+)\s*?}}/, '{{ \1 | minus: \2 }}')
-            .gsub(/{{(.+)\.values(.*?)}}/,
+            .gsub(/(?<!{){(?!%)([^{}]{1,900})(?<!%)}(?!})/, '{{\1}}')
+            .gsub(/[a-z\.]{1,900}\#/, "index")
+            .gsub(/{{([^}]{1,900})\s+\+\s+(\d+)\s*?}}/, '{{ \1 | plus: \2 }}')
+            .gsub(/{{([^}]{1,900})\s+-\s+(\d+)\s*?}}/, '{{ \1 | minus: \2 }}')
+            .gsub(/{{([^}]{1,500})\.values([^}]{0,500})}}/,
                   '{% assign custom_value = \1 | values %}{{custom_value\2}}')
         end
 
