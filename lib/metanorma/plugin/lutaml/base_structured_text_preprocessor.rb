@@ -81,26 +81,9 @@ module Metanorma
             transform_line_liquid(x)
           end
 
-          include_path = nil
-          template_path = nil
-          contexts = if block_match[1].include?("=")
-                       multiple_contexts, include_path, template_path =
-                         content_from_multiple_contexts(
-                           document, block_match
-                         )
-
-                       multiple_contexts
-                     elsif block_match[1].start_with?("#")
-                       {
-                         block_match[2].strip =>
-                           content_from_anchor(document, block_match[1][1..-1]),
-                       }
-                     else
-                       {
-                         block_match[2].strip =>
-                           content_from_file(document, block_match[1]),
-                       }
-                     end
+          contexts, include_path, template_path = resolve_context(
+            document, block_match
+          )
 
           parse_context_block(
             document: document,
@@ -113,6 +96,30 @@ module Metanorma
           ::Metanorma::Util.log("Failed to parse #{config[:block_name]} \
               block: #{e.message}", :error)
           []
+        end
+
+        def resolve_context(document, block_match) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+          include_path = nil
+          template_path = nil
+
+          contexts = if block_match[1].include?("=")
+                       multiple_contexts, include_path, template_path =
+                         content_from_multiple_contexts(
+                           document, block_match
+                         )
+                       multiple_contexts
+                     elsif block_match[1].start_with?("#")
+                       {
+                         block_match[2].strip =>
+                           content_from_anchor(document, block_match[1][1..-1]),
+                       }
+                     else
+                       {
+                         block_match[2].strip =>
+                           content_from_file(document, block_match[1]),
+                       }
+                     end
+          [contexts, include_path, template_path]
         end
 
         def content_from_multiple_contexts(document, block_match) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
