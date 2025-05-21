@@ -81,10 +81,15 @@ module Metanorma
             transform_line_liquid(x)
           end
 
+          include_path = nil
+          template_path = nil
           contexts = if block_match[1].include?("=")
-                       content_from_multiple_contexts(
-                         document, block_match
-                       )
+                       multiple_contexts, include_path, template_path =
+                         content_from_multiple_contexts(
+                           document, block_match
+                         )
+
+                       multiple_contexts
                      elsif block_match[1].start_with?("#")
                        {
                          block_match[2].strip =>
@@ -97,9 +102,13 @@ module Metanorma
                        }
                      end
 
-          parse_context_block(document: document,
-                              context_lines: transformed_liquid_lines,
-                              contexts: contexts)
+          parse_context_block(
+            document: document,
+            context_lines: transformed_liquid_lines,
+            contexts: contexts,
+            include_path: include_path,
+            template_path: template_path,
+          )
         rescue StandardError => e
           ::Metanorma::Util.log("Failed to parse #{config[:block_name]} \
               block: #{e.message}", :error)
@@ -108,17 +117,26 @@ module Metanorma
 
         def content_from_multiple_contexts(document, block_match) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
           contexts = {}
+          include_path = nil
+          template_path = nil
+
           (1..block_match.size - 1).each do |i|
             context_and_paths = block_match[i].strip
             context_and_paths.split(",").each do |context_and_path|
               context_and_path.strip!
               context_name, path = context_and_path.split("=")
-              context_items = content_from_file(document, path)
-              contexts[context_name] = context_items
+
+              if context_name == "include_path"
+                include_path = path
+              elsif context_name == "template"
+                template_path = path
+              else
+                context_items = content_from_file(document, path)
+                contexts[context_name] = context_items
+              end
             end
           end
-
-          contexts
+          [contexts, include_path, template_path]
         end
 
         def transform_line_liquid(line) # rubocop:disable Metrics/MethodLength
@@ -138,11 +156,24 @@ module Metanorma
                   '{% assign custom_value = \1 | values %}{{custom_value\2}}')
         end
 
-        def parse_context_block(context_lines:, contexts:, document:)
+        def parse_context_block( # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+          context_lines:, contexts:, document:,
+          include_path: nil, template_path: nil
+        )
+          if include_path
+            include_path = relative_file_path(document, include_path)
+          end
+
+          if template_path
+            template_path = relative_file_path(document, template_path)
+          end
+
           render_result, errors = render_liquid_string(
             template_string: context_lines.join("\n"),
             contexts: contexts,
             document: document,
+            include_path: include_path,
+            template_path: template_path,
           )
           notify_render_errors(document, errors)
           render_result.split("\n")

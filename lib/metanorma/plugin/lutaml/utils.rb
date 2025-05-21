@@ -37,21 +37,25 @@ module Metanorma
             .system_path(file_path, docfile_directory)
         end
 
-        def render_liquid_string(template_string:, contexts:, # rubocop:disable Metrics/MethodLength
-                                 document:, include_path: nil)
-          liquid_template = ::Liquid::Template
-            .parse(template_string, environment: create_liquid_environment)
-
+        def render_liquid_string( # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
+          template_string:, contexts:, document:,
+          include_path: nil, template_path: nil
+        )
           # Allow includes for the template
           include_paths = [
             Utils.relative_file_path(document, ""),
-            include_path,
+            include_path, template_path
           ].compact
 
+          if template_path
+            template_string = File.read(template_path)
+          end
+
+          liquid_template = ::Liquid::Template
+            .parse(template_string, environment: create_liquid_environment)
           liquid_template.registers[:file_system] =
             ::Metanorma::Plugin::Lutaml::Liquid::LocalFileSystem
               .new(include_paths, ["%s.liquid", "_%s.liquid", "_%s.adoc"])
-
           rendered_string = liquid_template
             .render(contexts,
                     strict_variables: false,
