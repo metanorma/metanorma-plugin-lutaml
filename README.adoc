@@ -1922,6 +1922,100 @@ The color is red and the shape is square.
 ====
 
 
+==== Options in multiple contexts
+
+When using the `data2text` block, you can use `include_path` option or
+`template` option.
+
+The `include_path` option add the path of the template files for
+rendering liquid templates.
+
+[example]
+====
+Given:
+
+`strings1.json`
+[source,json]
+----
+{
+  "foo": "bar",
+  "dead": "beef"
+}
+----
+
+`strings2.yaml`
+[source,yaml]
+----
+---
+hello: world
+color: red
+shape: square
+----
+
+`_my_template.liquid` in `templates` folder:
+[source,liquid]
+----
+I'm heading to the {{my_json.foo}} for {{myjson.dead}}.
+----
+
+And the block:
+[source,asciidoc]
+------
+[data2text,my_json=strings1.json,my_yaml=strings2.yaml,include_path=templates]
+----
+Hello {{my_yaml.hello}}.
+
+{% render 'my_template' my_json: my_json %}
+----
+------
+
+Will render as:
+[source,asciidoc]
+----
+Hello world.
+
+I'm heading to the bar for beef.
+----
+====
+
+
+The `template` option can be used to specify the template file to be used.
+
+[example]
+====
+Given:
+
+`strings1.json`
+[source,json]
+----
+{
+  "foo": "bar",
+  "dead": "beef"
+}
+----
+
+`_my_template.liquid` in `templates` folder
+[source,liquid]
+----
+I'm heading to the {{my_json.foo}} for {{myjson.dead}}.
+----
+
+And the block:
+[source,asciidoc]
+------
+[data2text,my_json=strings1.json,template=templates/_my_template.liquid]
+----
+----
+------
+
+Will render as:
+[source,asciidoc]
+----
+I'm heading to the bar for beef.
+----
+====
+
+
 ==== Nested loading of data file paths
 
 There are cases where the data file paths are not known in advance or are
