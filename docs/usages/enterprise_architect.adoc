@@ -1,0 +1,583 @@
+
+== Usage with Enterprise Architect (UML in XMI)
+
+=== General
+
+The LutaML plugin supports working with Enterprise Architect exported XMI files
+to render UML diagrams and class definitions.
+
+The commands are prefixed as `lutaml_ea_*` to denote their specific use with
+Enterprise Architect XMI files.
+
+
+=== Document attribute `:lutaml-xmi-index:`
+
+This attribute allows specifying one or more XMI files to defined names
+for later use with `lutaml_ea_*` commands.
+
+Syntax:
+
+[source,adoc]
+----
+:lutaml-xmi-index: index_name; index_path[; config=config_path]
+----
+
+where:
+
+`index_name`:: name of index
+`index_path`:: path to XMI file for the later use with `lutaml_ea_*` command
+`config_path`:: optional, location of YAML configuration file that specifies
+what packages to include in the render, what render style is desired and
+location of the root package.
+
+
+[example]
+.Define two indexes in the document and use them in the `lutaml_ea_xmi` command
+====
+[source,adoc]
+----
+:lutaml-xmi-index: first-xmi-index; /path/to/first.xmi
+:lutaml-xmi-index: second-xmi-index; /path/to/second.xmi; config=/path/to/config.yml
+
+[lutaml_ea_xmi,index=first-xmi-index]
+--
+...
+--
+
+lutaml_ea_diagram::[name="NameOfDiagramInSecondXmiIndex",base_path="./xmi-images",format="png",index="second-xmi-index"]
+...
+----
+
+The command `lutaml_ea_xmi` will load the XMI file from the path
+`/path/to/first.xmi` which is specified by the `index`: `first-xmi-index`.
+
+The command `lutaml_ea_diagram` will load the XMI file from the path
+`/path/to/second.xmi` which is specified by the `index`: `second-xmi-index`.
+====
+
+
+=== Rendering a Enterprise Architect diagram from XMI: `lutaml_ea_diagram`
+
+This command allows to quickly render a LutaML diagram as an image file by
+specifying the name of diagram.
+
+Syntax:
+
+[source,adoc]
+----
+lutaml_ea_diagram::[{options}]
+----
+
+where `{options}` is a hash of options, where:
+
+`name`:: (mandatory) name of the diagram to render.
+`base_path`:: (mandatory) base path where the diagram images are located.
+`format`:: (optional) format of the image file. Defaults to `png`.
+`index`:: (optional) index name of the XMI file. If the index is not provided,
+the command will look for the diagram in the first XMI file specified through
+the `lutaml_ea_xmi` command.
+`package`:: (optional) name of the package which contains the diagram. If the
+package is not provided, the command will look for the diagram across all
+packages in the XMI file.
+
+The diagram with name `name_of_diagram` will be converted into the following
+Metanorma block:
+
+[source,adoc]
+----
+[[figure-{{ diagram.xmi_id }}]]
+.{{ diagram.name }}
+image::{{ image_base_path }}/{{ diagram.xmi_id }}.{{ format | default: 'png' }}[]
+----
+
+[example]
+.Specifying a diagram within an XMI file
+====
+[source,adoc]
+----
+lutaml_ea_diagram::[name="name_of_diagram",base_path="/path/to/xmi-images",format="png"]
+----
+
+Renders the diagram with name `name_of_diagram` from the XMI file in PNG format,
+where the EA images exported with the XMI file are at `/path/to/xmi-images`.
+====
+
+[example]
+.Specifying a diagram within a specific package (if there are multiple diagrams with the same name)
+====
+[source,adoc]
+----
+lutaml_ea_diagram::[name="DiagramName",package="PackageA",base_path="/path/to/xmi-images"]
+----
+
+The search wil be restricted to the diagrams named `DiagramName` in the
+`PackageA` package.
+====
+
+[example]
+.Specifying a diagram using a specific index
+====
+[source,adoc]
+----
+:lutaml-xmi-index: index_name; /path/to/xmi-file.xmi
+
+...
+
+lutaml_ea_diagram::[name="name_of_diagram",base_path="/path/to/xmi-images",format="png",index="index_name"]
+----
+
+Renders the diagram with name `name_of_diagram` from the XMI file in PNG format,
+where the EA images exported with the XMI file are at `/path/to/xmi-images` and
+the XMI file defined in the index `index_name`.
+====
+
+
+
+=== Generating a class definition table for a class: `lutaml_klass_table`
+
+This command allows to render a LutaML table of a class by using Liquid Drop.
+
+The table will show:
+
+* Class Name
+* Class Definition
+* Inherited Properties
+* Self-defined Properties
+* Properties Inherited from Association
+* Properties Defined in Association
+
+[source,adoc]
+----
+lutaml_klass_table::/path/to/example.xmi[name="NameOfClass",template="/path/to/templates/_my_klass_table.liquid"]
+----
+
+The command accepts the options listed below:
+
+* `/path/to/example.xmi` specifies the path of xmi file.
+
+* `name` option only, `name` option with `package` option or `path` option.
+  One of 3 forms of options can be used to specify the name of the class.
+
+** `name="NameOfClass"` specifies the name of the `class`.
+   (e.g. `name="Building"`)
+   If there are multiple classes with the same name, other form of options
+   are recommended to specify the class.
+
+** `package="NameOfPackage"name="NameOfClass"` specifies the name of the
+   `class` (specified by `name` option) inside the `package`
+   (specified by `package` option).
+   The `package` option must be used with the `name` option.
+   (e.g. `package="uro",name="_BoundarySurface"`)
+
+** `path="PathOfClass"` specifies the `absolute` path of the `class`
+   which is started with `::`
+   (e.g. `path="::EA_Model::Conceptual Models::i-UR::Urban Planning ADE 3.
+   1::uro::_BoundarySurface"`)
+   or `relative` path of the `class` which is not started with `::`
+   (e.g. `path="uro::_BoundarySurface"`).
+   The last part of the path separated by `::` is the name of the `class`.
+   The other parts of the path are the names of the `packages`.
+
+* `template="/path/to/templates/_my_klass_table.liquid"` specifies the path of
+  the liquid template. (Optional)
+  By default, it will look for the template `_klass_table.liquid` defined in
+  `lib/metanorma/plugin/lutaml/templates`.  This template can be customized by
+  changing the template path in the `template` option.
+
+* `guidance="/path/to/my_guidance.yml"` specifies the path of
+  the yaml file of the guidance. (Optional)
+
+The guidance file should be in the following format:
+
+[source,yaml]
+----
+---
+classes:
+  - name: Name Of Class
+    attributes:
+      - name: Name Of Attribute (e.g. gml:boundedBy)
+        used: false
+        guidance: |
+          Drop guidance message here.
+...
+----
+
+If you want to define the guidance, you can define the `name` of the class
+under `classes`.  Then define which `attributes` you want to add guidance by the
+`name`. Set `used` to show the attribute is used or not. Drop the message of
+guidance in `guidance`.
+
+
+
+
+=== Usage of `lutaml_ea_xmi` command
+
+The `lutaml_ea_xmi` command supersedes the `lutaml_uml_datamodel_description`
+command which it is functionally equivalent to.
+
+This command renders data model packages and its dependent objects for supplied
+XMI file, by using Liquid Drop objects.
+
+NOTE: The performance of `lutaml_ea_xmi` exceeds
+`lutaml_uml_datamodel_description` by 10~20 times (Tested with a 10.6MB XMI file
+with 120,000+ lines).
+
+NOTE: To migrate to this command from `lutaml_uml_datamodel_description`, just
+replace the command `lutaml_uml_datamodel_description` by `lutaml_ea_xmi`.
+
+Replace:
+
+[source,adoc]
+----
+[lutaml_uml_datamodel_description, path/to/example.xmi]
+...
+----
+
+By:
+
+[source,adoc]
+----
+[lutaml_ea_xmi, path/to/example.xmi]
+...
+----
+
+You can define guidance in the configuration file as well. The configuration
+file will looks like:
+
+[source,yaml]
+----
+packages:
+- my_package
+guidance: "path/to/guidance.yaml"
+----
+
+The guidance file should be in the following format:
+
+[source,yaml]
+----
+---
+classes:
+- name: "NameOfClass"
+  attributes:
+  - name: Name Of Attribute (e.g. gml:boundedBy)
+    used: false
+    guidance: |
+      Drop guidance message here.
+...
+----
+
+If you want to define the guidance, you can define the `name` of the class
+under `classes`.  Then define which `attributes` you want to add guidance by the
+`name`. Set `used` to show the attribute is used or not. Drop the message of
+guidance in `guidance`.
+
+The `name` of class can be defined in the following ways:
+
+* `name: "NameOfClass"` specifies the name of the `class`.
+  (e.g. `name: "Building"`)
+  If there are multiple classes with the same name, it is recommended to
+  specify the class by absolute path.
+
+* `name: "::NameOfPackage::NameOfClass"` specifies the name of the `class` in
+  `absolute` path.
+  (e.g. `name: "::EA_Model::Conceptual Models::CityGML2.0::bldg::Building"`)
+
+
+=== Usage of `lutaml_uml_datamodel_description` command
+
+This command allows to quickly render data model packages and its dependent
+objects for supplied XMI file.
+
+Given an Enterprise Architect `example.xmi` file with 2 packages:
+
+* 'Another'
+* 'CityGML'
+
+The `lutaml_uml_datamodel_description` command can be used:
+
+[source,adoc]
+----
+[lutaml_uml_datamodel_description, path/to/example.xmi]
+--
+[.before]
+....
+my text
+....
+
+[.diagram_include_block, base_path="requirements/", format="emf"]
+....
+Diagram text
+....
+
+[.include_block, package="Another", base_path="spec/fixtures"]
+....
+my text
+....
+
+[.include_block, base_path="spec/fixtures"]
+....
+my text
+....
+
+[.before, package="Another"]
+....
+text before Another package
+....
+
+[.after, package="Another"]
+....
+text after Another package
+....
+
+[.after, package="CityGML"]
+....
+text after CityGML package
+....
+
+[.after]
+....
+footer text
+....
+--
+--
+----
+
+Where:
+
+* `path/to/example.xmi` - required, path to the XMI file to render
+
+* `[.before]` - block text that adds additional text before the rendered output, can be used only once, additional occurrences of command will overwrite text, not that `literal` block style must be used in there(eg `....`)
+
+* `[.after]` - block text that adds additional text after the rendered output, can be used only once, additional occurrences of command will overwrite text
+
+* `[.after, package="Another"]` - block text to be inserted before(after in case of `.before` name) the package
+
+* `[.package_text, position="after", package="Another"]` - include custom adoc code into package rendered body, `position` is a a required attribute which tells where to insert the code.
+
+* `[.package_text, package="Another"]` - same as above, but include block will be included only for supplied package name
+
+* `[.diagram_include_block]` - block text to automatically include diagram images. Attribute `base_path` is a required attribute to supply path prefix where to look for a diagram image. `format` is an optional attribute that tells what file extension to use when including diagram file.
++
+The logic is as follows:
+[source,adoc]
+----
+{% for diagram in package.diagrams %}
+[[figure-{{ diagram.xmi_id }}]]
+.{{ diagram.name }}
+image::{{ image_base_path }}/{{ diagram.xmi_id }}.{{ format | default: 'png' }}[]
+
+{% if diagram.definition %}
+{{ diagram.definition | html2adoc }}
+{% endif %}
+{% endfor %}
+----
+
+For instance, the script will take package diagrams supplied in the XMI file and will try to include `image` with the name equal to diagram' xmi_id attribute plus `.png`. Also one can add any text to the command text, it will be added as paragraph before each image include.
+
+* `[.diagram_include_block, package="Another"]` - same as above, but diagram will be included only for supplied package name
+
+* `[.include_block, base_path="spec/fixtures"]` - command to include files (`*.adoc` or `*.liquid`) for each package name. Attribute `base_path` is a required attribute to supply path prefix where to look for file to include. command will look for a file called `base_path` + `/` `_package_name`(downcase, replace : -> '', ' ' -> '_') + `.adoc`[`.liquid`], eg for package 'My Package name' and `base_path` eq to `my/path`, command will look for the following file path: `my/path/_my_package_name.adoc`.
+
+* `[.include_block, package="Another", base_path="spec/fixtures"]` - same as above, but include block will be included only for supplied package name
+
+
+NOTE: .after, .before, package_text and include_block commandses all can be used with additional option - `liquid`, if this option is supplied then the code inside block will be interpolated in liquid context
+
+
+=== Referencing objects generated by LutaML
+
+
+There are two other commands that are used to refer to LutaML generated document elements:
+
+* `lutaml_figure`. Provides a reference anchor to a figure defined in the XMI
+  file, using its XMI ID for reference.
+
+* `lutaml_table`. Provides a reference anchor to the definition tables of a
+  particular package, class, enumeration or data type object in the XMI.
+
+
+The syntax is as follows:
+
+[source,adoc]
+----
+// For lutaml_figure
+This is lutaml_figure::[package="Wrapper root package", name="Fig B1 Full model"] figure
+
+// For lutaml_table
+This is lutaml_table::[package="Wrapper root package"] package
+This is lutaml_table::[package="Wrapper root package", class="my name"] class
+This is lutaml_table::[package="Wrapper root package", enum="my name"] enumeration
+This is lutaml_table::[package="Wrapper root package", data_type="my name"] data type
+----
+
+This code will be transformed into `<<figure-{diagram.xmi_id}>>` and will point to diagram figure. One can only use this command when document rendered `lutaml_uml_datamodel_description` command as it needs diagram lookup table in order to reference package diagram.
+
+Will produce this output:
+
+[source,adoc]
+----
+my text
+== CityGML package
+=== CityGML overview
+
+Diagram text
+
+[[figure-EAID_ACBB5EE3_3428_40f5_9C7C_E41923419F29]]
+.CityGML Package Diagram
+image::requirements/EAID_ACBB5EE3_3428_40f5_9C7C_E41923419F29.png[]
+
+BuildingFurnitureFunctionValue is a code list that enumerates the different purposes of a BuildingFurniture.
+
+[[figure-EAID_938AE961_1C57_4052_B964_997D1894A58D]]
+.Use of ISO and OASIS standards in CityGML
+image::requirements/EAID_938AE961_1C57_4052_B964_997D1894A58D.png[]
+
+The CityGML package is organized into
+2 packages with 1 modules:
+
+. Another package
+. CityTML package
+
+my text
+
+Content for CityGML package
+
+==== Defining tables
+
+.<<section-EAPK_9C96A88B_E98B_490b_8A9C_24AEDAC64293>> -- Elements of &#8220;Another::AbstractAtomicTimeseries&#8221; (class)
+
+[[section-EAPK_9C96A88B_E98B_490b_8A9C_24AEDAC64293]]
+.Elements of &#8220;Another::AbstractAtomicTimeseries&#8221; (class)
+[width="100%",cols="a,a,a,a,a,a,a,a"]
+|===
+h|Name: 7+| AbstractAtomicTimeseries
+h|Definition: 7+|
+h|Stereotype: 7+| interface
+h|Abstract: 7+|
+h|Associations: 7+| (none)
+.4+h|Public attributes:
+| _Name_
+2+| _Definition_
+| _Derived_
+| _Obligation_
+| _Maximum occurrence_
+| _Data type_
+| adeOfAbstractAtomicTimeseries
+2+|
+|
+| C
+| *
+| ADEOfAbstractAtomicTimeseries
+| observationProperty
+2+|
+|
+| M
+| 1
+| CharacterString
+| uom
+2+|
+|
+| C
+| 1
+| CharacterString
+h|Constraints: 7+| (none)
+|===
+
+=== Additional Information
+
+text after CityGML package
+----
+
+In addition to the XMI file, this command also supports a YAML configuration file
+that specifies:
+
+* What packages to include in the render;
+
+* What render style is desired;
+
+* Location of the root package (which package should the iterative process start
+  at);
+
+* Which EA extensions to be loaded.
+
+The format for using the YAML configuration file:
+
+[source,yaml]
+----
+---
+packages:
+  # includes these packages
+  - "Package *"
+  - two*
+  - three
+  # skips these packages
+  - skip: four
+render_style: entity_list | data_dictionary | default
+section_depth: 2
+ea_extension:
+  - "CityGML_MDG_Technology.xml"
+  - "xmi_definition_for_some_standard.xml"
+----
+
+Where:
+
+* `packages` - required, root element with the list of strings or objects
+
+* `Package *` - pattern matching, specifies lookup condition for packages to
+render.
++
+NOTE: In this example, it is equal to the following regular expression: `/^Package.*$/`
+
+* `skip: four` - object with package name to skip
+
+* `render_style` - what template to use to render packages, can be one of:
+
+** `entity_list`
+
+** `data_dictionary`; or
+
+** `default`
+
+* `section_depth` - what package to use as root package for render.
+e.g., a `section_depth` equal to `2` tells the processor to use the first
+nested package of the first root packages in XMI file.
++
+EXAMPLE: If the XMI file has this package structure, and we have `section_depth`
+equal to 2, root package will be `one-1`.
++
+[source,json]
+----
+[
+  {
+    name: 'One',
+    packages: [{ name: 'one-1' }, { name: 'one-2' }]
+  },
+  {
+    name: 'Two',
+    packages: [{ name: 'two-1' }, { name: 'two-2' }]
+  }
+]
+----
+
+* `ea_extension` - optional, list of EA extensions to load. Some XMI files may
+contain elements that cannot be resolved by default, for example CityGML
+elements.  You can use `ea_extension` to load the definition of these elements
+in XML format (`CityGML_MDG_Technology.xml`) in order to resolve them.  The
+location of the xml files is relative to the config YAML file.
+
+Usage with command:
+
+[source,adoc]
+--
+[lutaml_uml_datamodel_description, path/to/example.xmi, path/to/config.yml]
+----
+[.diagram_include_block, base_path="models/Images", format="png"]
+...
+...
+----
+--
+
+The processor will read the supplied YAML config file (`path/to/config.yml`),
+and iterate through packages according to the order supplied in the file. All
+packages that matches `skip` in the YAML config file will be skipped during
+render.

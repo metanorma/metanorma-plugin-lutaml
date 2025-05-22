@@ -1,0 +1,299 @@
+
+== Usage with EXPRESS
+
+=== General
+
+The LutaML plugin supports working with EXPRESS schema files to render EXPRESS
+models and definitions.
+
+LutaML supports accessing EXPRESS models via the
+https://github.com/lutaml/expressir[Expressir] parser.
+
+
+=== Document attribute `:lutaml-express-index:`
+
+This attribute allows specifying one or more EXPRESS files to defined names
+for later use with `lutaml_express` command.
+
+Syntax:
+
+[source,adoc]
+----
+:lutaml-express-index: shortname_of_index; name_of_schemas_listing_file.yml;
+----
+
+Where:
+
+`shortname_of_index`:: is name of the parsed EXPRESS files context for the later
+use.
+
+`name_of_schemas_listing_file.yml`:: location of the YAML index file to parse
+all EXPRESS files listed within.
+
+
+[example]
+.Define an index in the document and use it in the `lutaml_express` command
+====
+[source,adoc]
+-----
+:lutaml-express-index: my_custom_name; /path/to/schemas.yml
+
+[lutaml_express,my_custom_name,context]
+----
+{% for schema in context.schemas %}
+== {{schema.id}}
+
+{% for entity in schema.entities %}
+=== {{entity.id}}
+{% endfor %}
+
+{% endfor %}
+-----
+
+Where the `schemas.yml` file contains:
+
+[source,yaml]
+----
+---
+schemas:
+  action_schema:
+    path: "../../schemas/resources/action_schema/action_schema.exp"
+  application_context_schema:
+    path: "../../schemas/resources/application_context_schema/application_context_schema.exp"
+----
+====
+
+
+=== Schemas listing file
+
+The schemas listing file is a YAML file that lists all EXPRESS files to be
+parsed. The file should have the following structure:
+
+[source,yaml]
+----
+---
+schemas:
+  schema_name:
+    path: path/to/schema_file.exp
+  schema_name_2:
+    path: path/to/schema_file_2.exp
+----
+
+Where:
+
+`schema_name`:: is the name of the EXPRESS schema.
+
+`path`:: (optional) path to the EXPRESS schema file. When the path is not
+specified, the command will look for the schema file in the directory where the
+YAML file is located using the filename pattern `{schema_name}.exp`. The path
+can be relative to the YAML file or an absolute path.
+
+
+=== Usage of the `lutaml_express` command
+
+Given an `example.exp` EXPRESS file with content:
+
+[source,exp]
+----
+SCHEMA test_schema 'test';
+
+(* Need select elements for measure_value *)
+ REFERENCE FROM measure_schema
+   (measure_value);
+
+  TYPE my_type1 = EXTENSIBLE SELECT;
+  END_TYPE;
+
+  TYPE my_type2 = EXTENSIBLE ENUMERATION;
+  END_TYPE;
+
+  TYPE my_type3 = EXTENSIBLE ENUMERATION;
+  END_TYPE;
+
+  TYPE my_type4 = EXTENSIBLE ENUMERATION;
+  END_TYPE;
+
+  TYPE my_type5 = EXTENSIBLE ENUMERATION;
+  END_TYPE;
+END_SCHEMA;
+----
+
+And the `lutaml_express` block:
+
+[source,adoc]
+-----
+[lutaml_express_liquid,example.exp,my_context]
+----
+{% for schema in my_context.schemas %}
+== {{schema.id}}
+
+{% for entity in schema.entities %}
+=== {{entity.id}}
+{% endfor %}
+
+{% endfor %}
+----
+-----
+
+NOTE: The `lutaml` command can auto-detect the EXPRESS schema file type by the
+file extension. If the file extension is `.exp`, the command will use the
+`Expressir` parser to parse the file. If the file extension is `.lutaml`, the
+command will use the `Lutaml` parser to parse the file.
+
+Where:
+
+* content within the block is called the "`template`";
+
+* `{example.exp}` is the location of the EXPRESS schema file (`*.exp`) that
+contains data to be loaded. Location of the file is computed relative to the
+source directory that `[lutaml_express_liquid]` is used (e.g., if
+`[lutaml_express_liquid,example.exp,my_context]` is invoked in an `.adoc` file
+located at `/foo/bar/doc.adoc`, the data file is expected to be found at
+`/foo/bar/example.exp`);
+
+* `{my_context}` is the name where the EXPRESS Repository read from the `.exp`
+file can be accessed with.
+
+** The `context` object is a serialized `Expressir::Model::Repository` object
+with all variable names available. See
+https://github.com/lutaml/expressir[Expressir] docs for reference.
+`{my_context}` has `schemas` method to access Expressir
+https://github.com/lutaml/expressir/blob/master/lib/expressir/model/schema.rb[schemas]
+
+Will produce this output:
+
+____
+== test_schema
+
+=== my_type1
+=== my_type2
+=== my_type3
+=== my_type4
+=== my_type5
+____
+
+
+Instead of using the direct path to the file one can use `:lutaml-express-index:`
+document attribute to supply directory with express files or YAML index file to
+parse as well as the cache file location.
+
+Syntax:
+
+[source,adoc]
+----
+:lutaml-express-index: my_custom_name; dir_or_index_path[; cache=cache_path]
+----
+
+Where:
+
+`my_custom_name`:: is name of the parsed EXPRESS files context for the later
+use with lutaml command
+
+`dir_or_index_path`:: location of directory with EXPRESS files or path to the
+YAML index file to parse
+
+`cache_path`:: (optional) location of the Expressir cache file to use
+
+Example of usage:
+
+[source,adoc]
+-----
+= Document title
+Author
+:lutaml-express-index: index_name; /path/to/express_files; cache=/path/to/cache_file.yaml
+
+[lutaml_express_liquid,index_name,context]
+----
+{% for schema in context.schemas %}
+== {{schema.id}}
+{% endfor %}
+----
+-----
+
+* The `lutaml_express_liquid` macro processes the EXPRESS files specified by
+  the `index_name` and makes them available in the `context` as
+  Liquid Drops object.
+
+* The Liquid template inside the macro block iterates over the `schemas` in
+  the `context` and renders the attributes of each schema such as `id`.
+
+=== Using `config_yaml`
+
+This functionality allows `[lutaml_express_liquid]` blocks to load a full set of
+EXPRESS schemas in one index, and then provide a select ("filter") option
+per-block via a separate YAML file.
+
+[source,adoc]
+-----
+:lutaml-express-index: all_schemas; ../schemas_all.yaml;
+
+[lutaml_express_liquid,all_schemas,context,config_yaml=schemas.yaml]
+---
+{% assign all_schemas = repo.schemas  %}
+{% render "templates/resources/schema" for ordered_schemas as schema %}
+----
+-----
+
+Where `schemas_all.yml` provides all schemas:
+
+[source,yaml]
+----
+---
+schemas:
+  action_schema:
+    path: "../../schemas/resources/action_schema/action_schema.exp"
+  application_context_schema:
+    path: "../../schemas/resources/application_context_schema/application_context_schema.exp"
+  approval_schema:
+    path: "../../schemas/resources/approval_schema/approval_schema.exp"
+...
+----
+
+And `schemas.yaml` only selects 2 schemas:
+
+[source,yaml]
+----
+---
+schemas:
+  action_schema:
+    anything: ...
+  application_context_schema:
+    anything: ...
+----
+
+The resulting block adds the `ordered_schemas` context to allows you to filter
+out the schemas you want to render according to the order in the config_yaml.
+
+[source,liquid]
+----
+[lutaml_express_liquid,schemas_1,repo,config_yaml=select.yaml]
+---
+{% assign all_schemas = repo.schemas  %}
+{% render "templates/resources/schema" for ordered_schemas as schema %}
+...
+---
+----
+
+NOTE: This functionality is used in the ISO 10303 SRL to load the full schema
+set at once but only render the selected schemas in individual documents.
+
+=== Using `include_path`
+
+This functionality allows `[lutaml_express_liquid]` blocks to load templates
+from the paths other than the location of the document.
+
+[source,adoc]
+-----
+:lutaml-express-index: all_schemas; ../schemas_all.yaml;
+
+[lutaml_express_liquid,all_schemas,context,config_yaml=schemas.yaml,include_path=../templates]
+---
+{% assign all_schemas = repo.schemas  %}
+{% render "templates/resources/schema" for ordered_schemas as schema %}
+...
+----
+-----
+
+The resulting block adds the `include_path` to the Liquid renderer.  The path is
+resolved based on the location of the document.  You can add multiple paths by
+separating them with commas.
