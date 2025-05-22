@@ -18,6 +18,8 @@ module Metanorma
         BLOCK_START_REGEXP = /\{(.+?)\.\*,(.+),(.+)\}/.freeze
         BLOCK_END_REGEXP = /\A\{[A-Z]+\}\z/.freeze
         LOAD_FILE_REGEXP = /{% assign (.*) = (.*) \| load_file %}/.freeze
+        INCLUDE_PATH_OPTION = "include_path"
+        TEMPLATE_OPTION = "template"
 
         def process(document, reader)
           r = Asciidoctor::PreprocessorNoIfdefsReader
@@ -43,16 +45,15 @@ module Metanorma
 
         def process_text_blocks(document, input_lines)
           line = input_lines.next
-          block_match = line.match(/^\[#{config[:block_name]},(.+?),(.+?)\]/) ||
-            line.match(/^\[#{config[:block_name]},(.+?)\]/)
+          block_match = line.match(/^\[#{config[:block_name]},(.+?)\]/)
           return [line] if block_match.nil?
 
           end_mark = input_lines.next
-          parse_template(document,
-                         collect_internal_block_lines(document,
-                                                      input_lines,
-                                                      end_mark),
-                         block_match)
+          parse_template(
+            document,
+            collect_internal_block_lines(document, input_lines, end_mark),
+            block_match,
+          )
         end
 
         def collect_internal_block_lines(document, input_lines, end_mark) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
@@ -105,44 +106,44 @@ module Metanorma
           contexts = if block_match[1].include?("=")
                        multiple_contexts, include_path, template_path =
                          content_from_multiple_contexts(
-                           document, block_match
+                           document, block_match[1].split(",")
                          )
                        multiple_contexts
                      elsif block_match[1].start_with?("#")
+                       anchor = block_match[1].split(",").first.strip[1..-1]
                        {
-                         block_match[2].strip =>
-                           content_from_anchor(document, block_match[1][1..-1]),
+                         block_match[1].split(",").last.strip =>
+                           content_from_anchor(document, anchor),
                        }
                      else
+                       path = block_match[1].split(",").first.strip
                        {
-                         block_match[2].strip =>
-                           content_from_file(document, block_match[1]),
+                         block_match[1].split(",").last.strip =>
+                           content_from_file(document, path),
                        }
                      end
           [contexts, include_path, template_path]
         end
 
-        def content_from_multiple_contexts(document, block_match) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+        def content_from_multiple_contexts(document, context_and_paths) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
           contexts = {}
           include_path = nil
           template_path = nil
 
-          (1..block_match.size - 1).each do |i|
-            context_and_paths = block_match[i].strip
-            context_and_paths.split(",").each do |context_and_path|
-              context_and_path.strip!
-              context_name, path = context_and_path.split("=")
+          context_and_paths.each do |context_and_path|
+            context_and_path.strip!
+            context_name, path = context_and_path.split("=")
 
-              if context_name == "include_path"
-                include_path = path
-              elsif context_name == "template"
-                template_path = path
-              else
-                context_items = content_from_file(document, path)
-                contexts[context_name] = context_items
-              end
+            if context_name == INCLUDE_PATH_OPTION
+              include_path = path
+            elsif context_name == TEMPLATE_OPTION
+              template_path = path
+            else
+              context_items = content_from_file(document, path)
+              contexts[context_name] = context_items
             end
           end
+
           [contexts, include_path, template_path]
         end
 
