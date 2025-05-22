@@ -1,0 +1,1034 @@
+
+== Usage with JSON or YAML files
+
+=== General
+
+The plugin provides the following block commands:
+
+`data2text`:: Loads one or more JSON/YAML files and makes them available for
+use in a Metanorma template context.
+
+`yaml2text`:: Identical to `data2text`, but only loads YAML files.
+
+`json2text`:: Identical to `data2text`, but only loads JSON files.
+
+
+=== Liquid syntax
+
+These block commands make specified data available in the context of a template
+block that supports Liquid. Liquid is a template language that allows you to
+create dynamic content through templating.
+
+Liquid supports many templating features, including:
+
+* variables, variable assignment
+* flow control (if/case)
+* filters
+* loops
+
+NOTE: See the introduction to the
+https://shopify.github.io/liquid/basics/introduction/[Liquid language] for
+reference.
+
+In the following sections, we will use `data2text` as an example, but the
+same applies to `yaml2text` and `json2text`.
+
+
+[[defining_syntax]]
+=== Defining a block
+
+A `data2text` block is created by specifying the block name `[data2text]`
+followed by a comma and the file paths of the JSON/YAML file and the assigned
+context name.
+
+Syntax:
+
+[source,adoc]
+--
+[data2text,{self-defined-context-name}={data-file-path}{, ...}] <1>
+----
+Liquid template content
+----
+--
+
+Where:
+
+* `[data2text]` is the block name;
+* `{self-defined-context-name}` is the name of the context where the data
+  will be loaded into;
+* `{data-file-path}` is the path to the JSON/YAML file to be loaded;
+* `{, ...}` is optional and can be used to load multiple files in the same pattern;
+* content within the block is called the "`template`". `Liquid template content`
+  is the content of the block where Liquid expressions can be used.
+
+NOTE: The block opening and closing is demarcated by a `[source]` block syntax
+(`----` or more `-`) or an open block delimiter (`--`).
+
+`data-file-path` can be a relative or absolute path to the JSON/YAML file. If it is
+a relative path, it is computed relative to the source where the block is
+invoked.
+
+[example]
+====
+When `[data2text,data=data.yaml]` is invoked from the `foo/bar/doc.adoc` file,
+then the data file `foo/bar/data.yaml` is loaded.
+====
+
+
+=== Template environment
+
+Within the template environment, the data loaded from the JSON/YAML file can be
+accessed by using the data context name defined in the block.
+
+In addition to the typical Liquid syntax, the following features are available:
+
+* `load_file` filter: loads a data file (of file types supported by `data2text`)
+and makes its content available in the template context.
+
+
+It is important to note that the Liquid template is rendered into a Metanorma
+AsciiDoc block. This means that while AsciiDoc syntax can be used within the
+template, the Liquid syntax is evaluated first.
+
+[source]
+----
+┌──────────────────────┐
+│                      │
+│   JSON/YAML files    │
+│                      │
+└──────────┬───────────┘
+           │
+           │ loaded into
+           ▼
+┌──────────────────────┐        ┌──────────────────────┐
+│                      │        │                      │
+│  data2text context   │        │  Metanorma Document  │
+│                      │        │  (with AsciiDoc      │
+└──────────┬───────────┘        │   attributes)        │
+           │                    │                      │
+           │ available in       └──────────┬───────────┘
+           ▼                               │
+┌──────────────────────┐                   │
+│                      │                   │
+│   Liquid Template    │                   │
+│   Evaluation         │                   │
+│                      │                   │
+└──────────┬───────────┘                   │
+           │                               │
+           │ renders into                  │
+           ▼                               │
+┌──────────────────────┐                   │
+│                      │                   │
+│  Rendered Liquid as  │                   │
+│  Metanorma AsciiDoc  │                   │
+│                      │                   │
+└──────────┬───────────┘                   │
+           │                               │
+           │ becomes                       │
+           ▼                               │
+┌──────────────────────┐                   │
+│                      │◄──────────────────┘
+│  Metanorma AsciiDoc  │  evaluated as
+│  Content             │  Metanorma AsciiDoc
+│                      │
+└──────────────────────┘
+----
+
+
+
+=== AsciiDoc usage within the template
+
+The Liquid template is rendered into a Metanorma AsciiDoc document.
+This means that the following AsciiDoc syntax can be used within the template
+as Liquid does not interfere with AsciiDoc syntax:
+
+. `{variable}`: as in AsciiDoc syntax;
+
+In `{variable}`(`{{variable}}`), `variable` is the name of the variable or
+AsciiDoc attribute.
+
+
+=== Liquid syntax within the template
+
+As with normal Liquid, you can use the following syntax to access variables
+and attributes:
+
+. Rendered variables: `{{ variable }}`
+
+. Control syntaxes: `{% if/else/for/case %}`
+
+. Filters: `{{ variable | filter_name: arg1, arg2 }}`
+
+. Assignments: `{% assign variable = value %}`
+
+. Comments: `{% comment %} ... {% endcomment %}`
+
+. Raw content: `{% raw %} ... {% endraw %}`
+
+. Multi-line Liquid code:
++
+[source]
+----
+{% liquid
+assign variable = value
+if condition
+  ...
+else
+  ...
+endif
+%}
+{{ variable }}
+----
+
+
+=== Accessing object values
+
+Object values can be accessed via:
+
+* the `.` (dot) separator
+* the `[]` (bracket) operator
+
+Syntax:
+
+[source,adoc]
+----
+{{object_name.key}} <1>
+{{object_name["key"]}} <2>
+----
+<1> `object_name` is the name of the context where the data is loaded,
+`key` is the key name in the object.
+
+<2> The bracket syntax can be used when the key name contains special characters
+or spaces or when the key name is a variable.
+
+
+[example]
+====
+Given:
+
+`strings.yaml`
+[source,yaml]
+----
+---
+foo: bar
+dead: beef
+----
+
+And the block:
+
+[source,asciidoc]
+------
+[data2text,data=strings.yaml]
+----
+I'm heading to the {{data.foo}} for {{data.dead}}.
+----
+------
+
+The file path is `strings.yaml`, and context name is `data`.
+`{{data.foo}}` evaluates to the value of the key `foo` in `data`.
+
+Will render as:
+
+[source,asciidoc]
+----
+I'm heading to the bar for beef.
+----
+====
+
+
+When the key name is interpolated, the bracket syntax can be used.
+
+[example]
+====
+Given:
+
+`strings.yaml`
+[source,yaml]
+----
+---
+foo: bar
+dead: beef
+----
+
+And the block:
+
+[source,asciidoc]
+------
+[data2text,data=strings.yaml]
+----
+{% assign key = "foo" %}
+I'm heading to the {{data[key]}} for {{data["dead"]}}.
+----
+------
+
+The file path is `strings.yaml`, and context name is `data`.
+`{{data[key]}}` evaluates to the value of the key `foo` in `data`.
+`{{data["dead"]}}` evaluates to the value of the key `dead` in `data`.
+
+Will render as:
+
+[source,asciidoc]
+----
+I'm heading to the bar for beef.
+----
+====
+
+
+=== Accessing arrays
+
+==== Length
+
+The length of an array can be obtained by `{{arrayname.size}}`.
+
+[example]
+====
+Given:
+
+`strings.yaml`
+[source,yaml]
+----
+---
+- lorem
+- ipsum
+- dolor
+----
+
+And the block:
+[source,asciidoc]
+------
+[data2text,data=strings.yaml]
+----
+The length of the YAML array is {{data.size}}.
+----
+------
+
+The file path is `strings.yaml`, and context name is `data`.
+
+`{{data.size}}` evaluates to the length of the array using liquid `size`
+https://shopify.github.io/liquid/filters/size/[filter].
+
+Will render as:
+[source,asciidoc]
+----
+The length of the YAML array is 3.
+----
+====
+
+==== Enumeration and context
+
+The following syntax is used to enumerate items within an array:
+
+[source,liquid]
+--
+{% for item in array_name %} <1>
+  ...content... <2>
+{% endfor %}
+--
+<1> `array_name` is the name of the existing context that contains array data,
+`item` is the current item within the array.
+<2> `...content...` is the content of the block within the for-loop.
+
+Within a Liquid
+https://shopify.dev/docs/themes/liquid/reference/objects/for-loops[for-loop],
+the following expressions can be used:
+
+* `{{forloop.index0}}`: the zero-based position of the item `item_name` within
+the parent array
+
+* `{{forloop.length}}`: the total number of iterations of the loop.
+
+* `{{forloop.first}}`: returns `true` if it's the first iteration of the for loop. Returns `false` if it is not the first iteration.
+
+* `{{forloop.last}}`: returns `true` if it's the last iteration of the for loop.
+Returns `false` if it is not the last iteration.
+
+* `{{array_name.size}}`: the length of the array `array_name`
+
+* `{{array_name[i]}}`: provides the value at index `i` (this is zero-based:
+starts with `0`) in the array `array_name`; `array_name[-1]` can be used to
+refer to the last item, `array_name[-2]` the second last item, and so on.
+
+
+[example]
+====
+Given:
+
+strings.yaml
+[source,yaml]
+----
+---
+- lorem
+- ipsum
+- dolor
+----
+
+And the block:
+[source,asciidoc]
+------
+[data2text,arr=strings.yaml]
+----
+{% for item in arr %}
+=== {{forloop.index0}} {item}
+
+This section is about {item}.
+
+{endfor}
+----
+------
+
+Where:
+
+* file path is `strings.yaml`
+* current context within the enumerator is called `item`
+* `{{forloop.index0}}` gives the zero-based position of item `item` in the parent array `arr`.
+
+Will render as:
+[source,text]
+----
+=== 0 lorem
+
+This section is about lorem.
+
+=== 1 ipsum
+
+This section is about ipsum.
+
+=== 2 dolor
+
+This section is about dolor.
+----
+====
+
+
+=== Accessing objects
+
+==== Size
+
+Similar to arrays, the number of key-value pairs within an object can be
+obtained by `{{objectname.size}}`.
+
+[example]
+====
+Given:
+
+object.yaml
+[source,yaml]
+----
+---
+name: Lorem ipsum
+desc: dolor sit amet
+----
+
+And the block:
+[source,asciidoc]
+------
+[data2text,data=object.yaml]
+----
+=== {{data.name}}
+
+{{data.desc}}
+----
+------
+
+The file path is `object.yaml`, and context name is `data`.
+`{{data.size}}` evaluates to the size of the object.
+
+Will render as:
+[source,asciidoc]
+----
+=== Lorem ipsum
+
+dolor sit amet
+----
+====
+
+==== Enumeration and context
+
+The following syntax is used to enumerate key-value pairs within an object:
+
+[source,liquid]
+--
+{% for item in object_name %} <1>
+  {{item[0]}}, {{item[1]}} <2>
+{% endfor %} <3>
+--
+
+<1> `object_name` is the name of the existing context that contains the object
+<2> `{{item[0]}}` contains the key of the current enumerated object, `{{item[1]}}` contains the value
+<3> `{% endfor %}` indicates where the object enumeration block ends
+
+
+[example]
+====
+Given:
+
+object.yaml
+[source,yaml]
+----
+---
+name: Lorem ipsum
+desc: dolor sit amet
+----
+
+And the block:
+[source,asciidoc]
+------
+[data2text,my_item=object.yaml]
+----
+{% for item in my_item %}
+=== {{item[0]}}
+
+{{item[1]}}
+
+{% endfor %}
+----
+------
+
+Where:
+
+* file path is `object.yaml`
+* current key within the enumerator is called `item[0]`
+* `{{item[0]}}` gives the key name in the current iteration
+* `{{item[1]}}` gives the value in the current iteration
+
+Will render as:
+[source,text]
+----
+=== name
+
+Lorem ipsum
+
+=== desc
+
+dolor sit amet
+----
+====
+
+
+Moreover, the `keys` and `values` attributes can also be used in object enumerators.
+
+
+[example]
+====
+Given:
+
+object.yaml
+[source,yaml]
+----
+---
+name: Lorem ipsum
+desc: dolor sit amet
+----
+
+And the block:
+[source,asciidoc]
+------
+[data2text,item=object.yaml]
+----
+.{{item.values[1]}}
+[%noheader,cols="h,1"]
+|===
+{% for elem in item %}
+| {{elem[0]}} | {{elem[1]}}
+
+{% endfor %}
+|===
+----
+------
+
+Where:
+
+* file path is `object.yaml`
+* current key within the enumerator is called `key`
+* `{{item[1]}}` gives the value of key in the current iteration the parent array `my_item`.
+* `{{item.values[1]}}` gives the value located at the second key within `item`
+
+Will render as:
+[source,text]
+----
+.dolor sit amet
+
+[%noheader,cols="h,1"]
+|===
+| name | Lorem ipsum
+| desc | dolor sit amet
+|===
+----
+====
+
+There are several optional arguments to the `for` tag that can influence which
+items you receive in your loop and what order they appear in:
+
+* limit:<INTEGER> lets you restrict how many items you get.
+* offset:<INTEGER> lets you start the collection with the nth item.
+* reversed iterates over the collection from last to first.
+
+[example]
+====
+Given:
+
+strings.yaml
+[source,yaml]
+----
+---
+- lorem
+- ipsum
+- dolor
+- sit
+- amet
+----
+
+And the block:
+[source,asciidoc]
+------
+[data2text,items=strings.yaml]
+----
+{% for elem in items limit:2 offset:2 %}
+{{item}}
+{% endfor %}
+----
+------
+
+Where:
+
+* file path is `strings.yaml`
+* `limit` - how many items we should take from the array
+* `offset` - zero-based offset of item from which start the loop
+* `{{item}}` gives the value of item in the array
+
+Will render as:
+[source,text]
+----
+dolor sit
+----
+====
+
+
+=== Advanced usage
+
+==== General
+
+The `data2text` block supports a variety of advanced features, including:
+
+* array of objects
+* array of arrays
+* nested loading of data file paths
+* interpolated file names
+* multiple contexts
+* multiple contexts with mixed file formats
+
+==== Array of objects
+
+[example]
+====
+Given:
+
+array_of_objects.yaml
+[source,yaml]
+----
+---
+- name: Lorem
+  desc: ipsum
+  nums: [2]
+- name: dolor
+  desc: sit
+  nums: []
+- name: amet
+  desc: lorem
+  nums: [2, 4, 6]
+----
+
+And the block:
+[source,asciidoc]
+------
+[data2text,ar=array_of_objects.yaml]
+----
+{% for item in ar %}
+
+{{item.name}}:: {{item.desc}}
+
+{% for num in item.nums %}
+- {{item.name}}: {{num}}
+{% endfor %}
+
+{% endfor %}
+----
+------
+
+Notice we are now defining multiple contexts:
+
+* using different context names: `ar`, `item`, and `num`
+
+Will render as:
+[source,asciidoc]
+----
+Lorem:: ipsum
+
+- Lorem: 2
+
+dolor:: sit
+
+amet:: lorem
+
+- amet: 2
+- amet: 4
+- amet: 6
+----
+====
+
+
+==== Interpolated file names
+
+`data2text` blocks can be used for pre-processing document elements for AsciiDoc
+consumption.
+
+[example]
+====
+Given:
+
+strings.yaml
+[source,yaml]
+----
+---
+prefix: doc-
+items:
+- lorem
+- ipsum
+- dolor
+----
+
+And the block:
+
+[source,asciidoc]
+--------
+[data2text,yaml=strings.yaml]
+------
+First item is {{yaml.items.first}}.
+Last item is {{yaml.items.last}}.
+
+{% for s in yaml.items %}
+=== {{forloop.index0}} -> {{forloop.index0 | plus: 1}} {{s}} == {{yaml.items[forloop.index0]}}
+
+[source,ruby]
+----
+\include::{{yaml.prefix}}{{forloop.index0}}.rb[]
+----
+
+{% endfor %}
+------
+--------
+
+
+Will render as:
+[source,asciidoc]
+------
+First item is lorem.
+Last item is dolor.
+
+=== 0 -> 1 lorem == lorem
+
+[source,ruby]
+----
+\include::doc-0.rb[]
+----
+
+=== 1 -> 2 ipsum == ipsum
+
+[source,ruby]
+----
+\include::doc-1.rb[]
+----
+
+=== 2 -> 3 dolor == dolor
+
+[source,ruby]
+----
+\include::doc-2.rb[]
+----
+------
+
+This block instructs Metanorma to include the file `doc-0.rb`, `doc-1.rb`, and
+`doc-2.rb` in the resulting document.
+====
+
+
+==== Multiple contexts
+
+Multiple contexts can be defined in a single block.
+
+[example]
+====
+Given:
+
+strings1.yaml
+[source,yaml]
+----
+---
+foo: bar
+dead: beef
+----
+
+strings2.yaml
+[source,yaml]
+----
+---
+hello: world
+color: red
+shape: square
+----
+
+And the block:
+[source,asciidoc]
+------
+[data2text,data1=strings1.yaml,data2=strings2.yaml]
+----
+I'm heading to the {{data1.foo}} for {{data1.dead}}.
+
+This is hello {{data2.hello}}.
+The color is {{data2.color}} and the shape is {{data2.shape}}.
+----
+------
+
+The file path is `strings1.yaml`, and context name is `data1`.
+`{{data1.foo}}` evaluates to the value of the key `foo` in `data1`.
+
+The file path is `strings2.yaml`, and context name is `data2`.
+`{{data2.hello}}` evaluates to the value of the key `hello` in `data2`.
+
+Will render as:
+[source,asciidoc]
+----
+I'm heading to the bar for beef.
+
+This is hello world.
+The color is red and the shape is square.
+----
+====
+
+
+==== Multiple contexts with mixed file formats
+
+When the file formats are mixed, use the `data2text` block to load multiple
+files of different formats.
+
+NOTE: The file format is determined by the file extension of the file path.
+
+[example]
+====
+Given:
+
+`strings1.json`
+[source,json]
+----
+{
+  "foo": "bar",
+  "dead": "beef"
+}
+----
+
+`strings2.yaml`
+[source,yaml]
+----
+---
+hello: world
+color: red
+shape: square
+----
+
+And the block:
+[source,asciidoc]
+------
+[data2text,my_json=strings1.json,my_yaml=strings2.yaml]
+----
+I'm heading to the {{my_json.foo}} for {{my_json.dead}}.
+
+This is hello {{my_yaml.hello}}.
+The color is {{my_yaml.color}} and the shape is {{my_yaml.shape}}.
+----
+------
+
+The file path is `strings1.json`, and context name is `my_json`.
+`{{my_json.foo}}` evaluates to the value of the key `foo` in `my_json`.
+
+The file path is `strings2.yaml`, and context name is `my_yaml`.
+`{{my_yaml.hello}}` evaluates to the value of the key `hello` in `my_yaml`.
+
+Will render as:
+[source,asciidoc]
+----
+I'm heading to the bar for beef.
+
+This is hello world.
+The color is red and the shape is square.
+----
+====
+
+
+==== Options in multiple contexts
+
+When using the `data2text` block, you can use `include_path` option or
+`template` option.
+
+The `include_path` option add the path of the template files for
+rendering liquid templates other than the location of the document.
+
+[example]
+====
+Given:
+
+`strings1.json`
+[source,json]
+----
+{
+  "foo": "bar",
+  "dead": "beef"
+}
+----
+
+`strings2.yaml`
+[source,yaml]
+----
+---
+hello: world
+color: red
+shape: square
+----
+
+`_my_template.liquid` in `templates` folder:
+[source,liquid]
+----
+I'm heading to the {{my_json.foo}} for {{my_json.dead}}.
+----
+
+And the block:
+[source,asciidoc]
+------
+[data2text,my_json=strings1.json,my_yaml=strings2.yaml,include_path=templates]
+----
+Hello {{my_yaml.hello}}.
+
+{% render 'my_template' my_json: my_json %}
+----
+------
+
+Will render as:
+[source,asciidoc]
+----
+Hello world.
+
+I'm heading to the bar for beef.
+----
+====
+
+
+The `template` option can be used to specify the liquid template file to be
+used.
+
+[example]
+====
+Given:
+
+`strings1.json`
+[source,json]
+----
+{
+  "foo": "bar",
+  "dead": "beef"
+}
+----
+
+`_my_template.liquid` in `templates` folder
+[source,liquid]
+----
+I'm heading to the {{my_json.foo}} for {{myjson.dead}}.
+----
+
+And the block:
+[source,asciidoc]
+------
+[data2text,my_json=strings1.json,template=templates/_my_template.liquid]
+----
+----
+------
+
+Will render as:
+[source,asciidoc]
+----
+I'm heading to the bar for beef.
+----
+====
+
+
+==== Nested loading of data file paths
+
+There are cases where the data file paths are not known in advance or are
+provided via a variable. In such cases, you can use the Metanorma-specific
+`load_file` filter to load the data file paths dynamically.
+
+This is useful when the data file paths are provided as part of the data
+structure itself or when you want to load data files based on certain
+conditions.
+
+[example]
+====
+Given:
+
+`strings1.json`
+[source,json]
+----
+{
+  "foo": "bar",
+  "paths": ["a.yaml", "b.yaml"]
+}
+----
+
+Where:
+
+* `paths` is an array of filepaths relative to the Metanorma document
+
+`a.yaml`
+[source,yaml]
+----
+---
+shape: circle
+color: red
+----
+
+`b.yaml`
+[source,yaml]
+----
+---
+shape: square
+color: blue
+corners: 4
+----
+
+And the block:
+[source,asciidoc]
+------
+[data2text,my_context=strings1.json]
+----
+I'm heading to the {{my_context.foo}}.
+
+{% for path in my_context.paths %}
+{% assign data = path | loadfile: "." %}
+This is {{ data.shape }} with color {{ data.color }}.
+{% endfor %}
+----
+------
+
+Where:
+
+* `loadfile:` is a liquid filter that loads the file content based on `path`
+  with argument `.`. The argument is the path of the parent folder, which is the
+  current directory of the Metanorma document.
+
+Will render as:
+[source,asciidoc]
+----
+I'm heading to the bar.
+
+This is circle with color red.
+This is square with color blue.
+----
+====
