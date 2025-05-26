@@ -853,5 +853,34 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
         end
       end
     end
+
+    context "when loading invalid file" do
+      let(:example_file) { datastruct_fixtures_path("invalid.#{extension}") }
+      let(:input) do
+        <<~TEXT
+          = Document title
+          Author
+          :docfile: test.adoc
+          :nodoc:
+          :novalid:
+          :no-isobib:
+          :imagesdir: spec/assets
+
+          [#{extension}2text,data=#{example_file}]
+          ----
+          == Nicaragua
+
+          Test {{ data.groups.amateur }}
+
+          ----
+        TEXT
+      end
+
+      it "raises error" do
+        expect do
+          metanorma_convert(input)
+        end.to raise_error(Metanorma::Plugin::Lutaml::ParseError)
+      end
+    end
   end
 end
