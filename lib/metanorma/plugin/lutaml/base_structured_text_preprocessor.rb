@@ -93,10 +93,6 @@ module Metanorma
             include_path: include_path,
             template_path: template_path,
           )
-        rescue StandardError => e
-          ::Metanorma::Util.log("Failed to parse #{config[:block_name]} \
-              block: #{e.message}", :error)
-          []
         end
 
         def resolve_context(document, block_match) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
