@@ -882,5 +882,36 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
         end.to raise_error(Metanorma::Plugin::Lutaml::ParseError)
       end
     end
+
+    context "when file is not found" do
+      let(:example_file) do
+        datastruct_fixtures_path("file_not_found.#{extension}")
+      end
+      let(:input) do
+        <<~TEXT
+          = Document title
+          Author
+          :docfile: test.adoc
+          :nodoc:
+          :novalid:
+          :no-isobib:
+          :imagesdir: spec/assets
+
+          [#{extension}2text,data=#{example_file}]
+          ----
+          == Nicaragua
+
+          Test {{ data.groups }}
+
+          ----
+        TEXT
+      end
+
+      it "raises error" do
+        expect do
+          metanorma_convert(input)
+        end.to raise_error(Metanorma::Plugin::Lutaml::FileNotFoundError)
+      end
+    end
   end
 end

@@ -614,6 +614,11 @@ error when the document is processed. The error will be:
 
 Detailed error messages will also be provided for troubleshooting.
 
+==== Invalid path of file
+
+If the specified file path does not exist, the block will raise an
+error when the document is processed. The error will be:
+`Metanorma::Plugin::Lutaml::FileNotFoundError`.
 
 === Advanced usage
 
