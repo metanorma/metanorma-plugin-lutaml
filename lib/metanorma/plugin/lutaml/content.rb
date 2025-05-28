@@ -27,7 +27,7 @@ module Metanorma
             aliases: true,
           )
         rescue StandardError => e
-          raise_paring_error(e, resolved_file_path, type: :yaml, from: :file)
+          raise_parsing_error(e, resolved_file_path, type: :yaml, from: :file)
         end
 
         def yaml_content_from_anchor(document, anchor)
@@ -38,22 +38,22 @@ module Metanorma
             aliases: true,
           )
         rescue StandardError => e
-          raise_paring_error(e, resolved_file_path, type: :yaml, from: :anchor)
+          raise_parsing_error(e, resolved_file_path, type: :yaml, from: :anchor)
         end
 
         def json_content_from_file(resolved_file_path)
           JSON.parse(File.read(resolved_file_path, encoding: "UTF-8"))
         rescue StandardError => e
-          raise_paring_error(e, resolved_file_path, type: :json, from: :file)
+          raise_parsing_error(e, resolved_file_path, type: :json, from: :file)
         end
 
         def json_content_from_anchor(document, anchor)
           JSON.parse(document.attributes["source_blocks"][anchor])
         rescue StandardError => e
-          raise_paring_error(e, resolved_file_path, type: :json, from: :anchor)
+          raise_parsing_error(e, resolved_file_path, type: :json, from: :anchor)
         end
 
-        def raise_paring_error(error, file_or_anchor, type: :json, from: :file)
+        def raise_parsing_error(error, file_or_anchor, type: :json, from: :file)
           err_msg = "Error parsing #{type} from #{from} " \
                     "#{file_or_anchor}: #{error.message}"
           ::Metanorma::Util.log(err_msg, :error)
