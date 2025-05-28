@@ -604,6 +604,17 @@ dolor sit
 ====
 
 
+=== Error Handling
+
+==== Invalid JSON or YAML file
+
+If the specified file is an invalid JSON or YAML file, the block will raise an
+error when the document is processed. The error will be:
+`Metanorma::Plugin::Lutaml::ParseError`.
+
+Detailed error messages will also be provided for troubleshooting.
+
+
 === Advanced usage
 
 ==== General
