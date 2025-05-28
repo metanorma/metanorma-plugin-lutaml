@@ -2,6 +2,7 @@
 
 require "json"
 require "yaml"
+require_relative "file_not_found_error"
 require_relative "parse_error"
 
 module Metanorma
@@ -11,15 +12,7 @@ module Metanorma
         protected
 
         # https://ruby-doc.org/stdlib-2.5.1/libdoc/psych/rdoc/Psych.html#method-c-safe_load
-        def yaml_content_from_file(resolved_file_path) # rubocop:disable Metrics/MethodLength
-          unless File.exist?(resolved_file_path)
-            ::Metanorma::Util.log(
-              "YAML file referenced in [yaml2text] block not found: " \
-              "#{resolved_file_path}", :error
-            )
-            return
-          end
-
+        def yaml_content_from_file(resolved_file_path)
           YAML.safe_load(
             File.read(resolved_file_path, encoding: "UTF-8"),
             permitted_classes: [Date, Time, Symbol],
@@ -60,6 +53,13 @@ module Metanorma
           raise ::Metanorma::Plugin::Lutaml::ParseError.new err_msg
         end
 
+        def raise_file_not_found_error(file_path)
+          err_msg = "File referenced in [{data|yaml|json}2text] block " \
+                    "not found: #{file_path}"
+          ::Metanorma::Util.log(err_msg, :error)
+          raise ::Metanorma::Plugin::Lutaml::FileNotFoundError.new err_msg
+        end
+
         def content_from_file(document, file_path)
           resolved_file_path = relative_file_path(document, file_path)
           load_content_from_file(resolved_file_path)
@@ -67,9 +67,7 @@ module Metanorma
 
         def load_content_from_file(resolved_file_path)
           unless File.exist?(resolved_file_path)
-            ::Metanorma::Util
-              .log("Failed to load content from file: #{resolved_file_path}",
-                   :error)
+            raise_file_not_found_error(resolved_file_path)
           end
 
           if json_file?(resolved_file_path)
