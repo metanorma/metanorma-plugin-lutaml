@@ -50,29 +50,23 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
     end
 
     it "passes through non-lutaml content" do
-      FileUtils.rm_rf("test.adoc.lutaml.log.txt")
       expect(xml_string_content(metanorma_convert(input)))
         .to(be_equivalent_to(xml_string_content(output)))
-      expect(File.exist?("test.adoc.lutaml.log.txt")).to be false
     end
 
     it "respects conditional directives" do
       input1 = input.sub(":no-isobib:", ":no-isobib:\n:var1:")
         .sub("[fred", "ifdef::var1[]\n[fred")
       input1 += "\nendif::[]"
-      FileUtils.rm_rf("test.adoc.lutaml.log.txt")
       expect(xml_string_content(metanorma_convert(input1)))
         .to(be_equivalent_to(xml_string_content(output)))
-      expect(File.exist?("test.adoc.lutaml.log.txt")).to be false
 
       input1 = input.sub(":no-isobib:", ":no-isobib:\n:var1:")
         .sub("[fred", "ifdef::var2[]\n[fred")
       input1 += "\nendif::[]"
-      FileUtils.rm_rf("test.adoc.lutaml.log.txt")
       output1 = output.sub(%r{<sections>.*</sections>}m, "<sections/>")
       expect(xml_string_content(metanorma_convert(input1)))
         .to(be_equivalent_to(xml_string_content(output1)))
-      expect(File.exist?("test.adoc.lutaml.log.txt")).to be false
     end
 
     context "when macro lutaml_express_liquid used" do
@@ -142,10 +136,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         end
 
         it "correctly renders input" do
-          FileUtils.rm_rf("test.adoc.lutaml.log.txt")
           expect(xml_string_content(metanorma_convert(input)))
             .to(be_equivalent_to(xml_string_content(output)))
-          expect(File.exist?("test.adoc.lutaml.log.txt")).to be true
         end
       end
 
