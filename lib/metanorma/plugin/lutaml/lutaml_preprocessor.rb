@@ -33,8 +33,6 @@ module Metanorma
                                                           reader.lines)
           input_lines = r.readlines.to_enum
 
-          has_lutaml_liquid = input_lines.any? { |line| lutaml_liquid?(line) }
-
           express_indexes = Utils.parse_document_express_indexes(
             document,
             input_lines,
@@ -46,18 +44,10 @@ module Metanorma
             express_indexes: express_indexes,
           )
 
-          log(document, result_content) if has_lutaml_liquid
-
           Asciidoctor::PreprocessorNoIfdefsReader.new(document, result_content)
         end
 
         protected
-
-        def log(doc, text)
-          File.open("#{doc.attr('docfile')}.lutaml.log.txt", "w:UTF-8") do |f|
-            f.write(text.join("\n"))
-          end
-        end
 
         def lutaml_liquid?(line)
           line.match(EXPRESS_PREPROCESSOR_REGEX)
