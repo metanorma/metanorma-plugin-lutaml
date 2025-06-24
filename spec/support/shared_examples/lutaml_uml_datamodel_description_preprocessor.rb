@@ -89,15 +89,15 @@ end
 
 RSpec.shared_examples "should contain table headers" do
   it "should contain table headers" do
-    %w[
-      Name
-      Definition
-      Stereotype
-      Abstract
-      Associations
-      Public attributes
-      Constraints
-      Values
+    [
+      "Name",
+      "Definition",
+      "Stereotype",
+      "Abstract",
+      "Associations",
+      "Attributes|Public attributes",
+      "Constraints",
+      "Values",
     ].each do |th|
       expect(subject).to have_tag("th", text: /#{th}/)
     end

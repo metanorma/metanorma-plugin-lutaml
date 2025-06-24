@@ -65,15 +65,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::Data2TextPreprocessor do
         #{BLANK_HDR}
         <sections>
           <clause id="_" inline-header="false" obligation="normative">
-            <title>Lorem ipsum</title>
+            <title id="_">Lorem ipsum</title>
             <p id="_">dolor sit amet</p>
           </clause>
           <clause id="_" inline-header="false" obligation="normative">
-            <title>spaghetti</title>
+            <title id="_">spaghetti</title>
             <p id="_">wheat noodles of 9mm diameter</p>
           </clause>
           <clause id="_" inline-header="false" obligation="normative">
-            <title>red</title>
+            <title id="_">red</title>
             <p id="_">circle</p>
           </clause>
         </sections>
@@ -144,15 +144,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::Data2TextPreprocessor do
         #{BLANK_HDR}
         <sections>
           <clause id="_" inline-header="false" obligation="normative">
-            <title>Lorem ipsum</title>
+            <title id="_">Lorem ipsum</title>
             <p id="_">dolor sit amet</p>
           </clause>
           <clause id="_" inline-header="false" obligation="normative">
-            <title>spaghetti</title>
+            <title id="_">spaghetti</title>
             <p id="_">wheat noodles of 9mm diameter</p>
           </clause>
           <clause id="_" inline-header="false" obligation="normative">
-            <title>red</title>
+            <title id="_">red</title>
             <p id="_">circle</p>
           </clause>
         </sections>
@@ -218,15 +218,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::Data2TextPreprocessor do
         #{BLANK_HDR}
         <sections>
           <clause id="_" inline-header="false" obligation="normative">
-            <title>Lorem ipsum</title>
+            <title id="_">Lorem ipsum</title>
             <p id="_">dolor sit amet</p>
           </clause>
           <clause id="_" inline-header="false" obligation="normative">
-            <title>spaghetti</title>
+            <title id="_">spaghetti</title>
             <p id="_">wheat noodles of 9mm diameter</p>
           </clause>
           <clause id="_" inline-header="false" obligation="normative">
-            <title>red</title>
+            <title id="_">red</title>
             <p id="_">circle</p>
           </clause>
         </sections>
