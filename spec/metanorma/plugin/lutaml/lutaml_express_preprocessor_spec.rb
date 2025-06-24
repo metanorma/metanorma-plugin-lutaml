@@ -34,7 +34,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             <<~TEXT
               #{BLANK_HDR}<sections>
                 <clause id="_" unnumbered="true" inline-header="false" obligation="normative">
-                <title>Activity_method_assignment_arm</title>
+                <title id="_">Activity_method_assignment_arm</title>
                 <sourcecode id="_" unnumbered="true">
                 <body>SCHEMA Activity_method_assignment_arm;
 
@@ -101,7 +101,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             <<~TEXT
                  #{BLANK_HDR}<sections>
                    <clause id="_" unnumbered="true" type="express" inline-header="false" obligation="normative">
-                       <title>
+                       <title id="_">
                           <bookmark id="_" anchor="_funds"/>
                           [[.types]][[.activity_method_item]][[.entities]][[.Activity_method_relationship]][[.Applied_activity_method_assignment]]
                        </title>
@@ -252,7 +252,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             <<~TEXT
               #{BLANK_HDR}<sections>
                 <clause id="_" unnumbered="true" inline-header="false" obligation="normative">
-                <title>Activity_method_assignment_arm</title>
+                <title id="_">Activity_method_assignment_arm</title>
                 <sourcecode id="_" unnumbered="true">
                 <body>SCHEMA Activity_method_assignment_arm;
 
@@ -333,7 +333,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               #{BLANK_HDR}
                 <sections>
                   <clause id="_" inline-header="false" obligation="normative">
-                    <title>annotated_3d_model_data_quality_criteria_schema</title>
+                    <title id="_">annotated_3d_model_data_quality_criteria_schema</title>
                     <p id="_">Mine text</p>
                     <svgmap id="_">
                       <figure id="_">
@@ -351,7 +351,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                     </svgmap>
                   </clause>
                   <clause id="_" inline-header="false" obligation="normative">
-                    <title>annotated_3d_model_data_quality_criteria_schema</title>
+                    <title id="_">annotated_3d_model_data_quality_criteria_schema</title>
                     <p id="_">Mine text</p>
                     <svgmap id="_">
                       <figure id="_">

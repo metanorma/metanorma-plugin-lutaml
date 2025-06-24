@@ -28,7 +28,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDiagramBlock do
           #{BLANK_HDR}
           <sections>
           <figure id="_">
-          <name>my diagram</name>
+          <name id="_">my diagram</name>
           <image src="_" id="_" mimetype="image/png" height="auto" width="auto"></image>
           </figure>
           </sections>
