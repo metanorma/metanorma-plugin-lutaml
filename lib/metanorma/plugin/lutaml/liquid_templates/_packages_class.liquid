@@ -28,22 +28,28 @@ h|Abstract 7+| {% if klass.is_abstract %}True{% else %}False{% endif %}
 {% assign aggregations = klass.associations | where: "member_end_type", "aggregation" %}
 {% if aggregations.size > 0 %}
 .{{aggregations.size | plus: 1}}+h|Associations
-4+h| _Name_
-h| _Source cardinality_
-h| _Target cardinality_
-h| _Type_
+2+h| _Name_
+2+h| _Type_
+3+h| _Definition_
 
 {% for assoc in aggregations %}
 
 {% if assoc.member_end_cardinality %}
-{% assign min_size = assoc.member_end_cardinality.min | size %}
-{% assign max_size = assoc.member_end_cardinality.max | size %}
+{% capture cardinality %}[{{ assoc.member_end_cardinality.min }}..{{ assoc.member_end_cardinality.max }}]{% endcapture %}
+{% if cardinality == "*..*" or cardinality == "0..*" %}
+{% assign cardinality = "[*]" %}
+{% endif %}
+{% if cardinality == "1..1" %}
+{% assign cardinality = "[1]" %}
+{% endif %}
+{% if cardinality == ".." %}
+{% assign cardinality = "[none]" %}
+{% endif %}
 {% endif %}
 
-4+| {{assoc.member_end}}
-| {% if assoc.member_end_cardinality %}{{ assoc.member_end_cardinality.min }}{% if min_size == 0 %}not set{% endif %}{% endif %}
-| {% if assoc.member_end_cardinality %}{{ assoc.member_end_cardinality.max }}{% if max_size == 0 %}not set{% endif %}{% endif %}
-| {{ assoc.member_end_attribute_name }}
+2+| {{assoc.member_end}}
+2+| {{ assoc.member_end_attribute_name }} {{ cardinality }}
+3+| {{ assoc.member_end.definition | html2adoc }}
 
 {% endfor %}
 {% else %}
@@ -52,23 +58,25 @@ h| Associations 7+| (none)
 
 {% if klass.attributes.size > 0 %}
 .{{klass.attributes.size | plus: 1}}+h|Attributes
-h| _Name_
-2+h| _Definition_
-h| _Derived_
-2+h| _Cardinality_
-h| _Type_
+2+h| _Name_
+2+h| _Type_
+3+h| _Definition_
 
 {% for attr in klass.attributes %}
-{% capture attr_cardinality %}{{attr.cardinality.min}}..{{attr.cardinality.max}}{% endcapture %}
+{% capture attr_cardinality %}[{{attr.cardinality.min}}..{{attr.cardinality.max}}]{% endcapture %}
 {% if attr_cardinality == "*..*" or attr_cardinality == "0..*" %}
-{% assign attr_cardinality = "*" %}
+{% assign attr_cardinality = "[*]" %}
+{% endif %}
+{% if attr_cardinality == "1..1" %}
+{% assign attr_cardinality = "[1]" %}
+{% endif %}
+{% if attr_cardinality == ".." %}
+{% assign attr_cardinality = "[none]" %}
 {% endif %}
 
-| {{attr.name}}
-2+| {{ attr.definition | html2adoc }}
-| {{ attr.is_derived }}
-2+| {{attr_cardinality}}
-| {{attr.type}}
+2+| {{attr.name}}
+2+| {{attr.type}} {{attr_cardinality}}
+3+| {{ attr.definition | html2adoc }}
 
 {% endfor %}
 {% else %}
