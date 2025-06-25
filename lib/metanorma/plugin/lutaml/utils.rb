@@ -7,6 +7,7 @@ require "metanorma/plugin/lutaml/liquid/custom_filters/html2adoc"
 require "metanorma/plugin/lutaml/liquid/custom_filters/values"
 require "metanorma/plugin/lutaml/liquid/custom_filters/replace_regex"
 require "metanorma/plugin/lutaml/liquid/custom_filters/loadfile"
+require "metanorma/plugin/lutaml/liquid/custom_filters/file_exist"
 
 module Metanorma
   module Plugin
