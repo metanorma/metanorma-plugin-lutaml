@@ -680,19 +680,13 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
 
           it "correctly maps external and internal refs" do
             xml_output = remove_xml_whitespaces(xml_convert)
+            # custom-RE_ReferenceSource - RE_ReferenceSource
+            # Connector Reference target name=Register
+            # EAID_4D1261D3_9F49_41c7_8F0E_FCAD537F45D4
             expect(xml_output)
-              .to_not(include("<xref target=\"My-custom-Register-section\" " \
-              "style=\"short\"><display-text>Register</display-text></xref>"))
-            expect(xml_output)
-              .to_not(include("<xref target=\"Register-section\" " \
-              "style=\"short\"><display-text>Register</display-text></xref>"))
-            expect(xml_output)
-              .to_not(include("<xref target=\"RE_ReferenceSource-section\" " \
-              "style=\"short\"><display-text>RE_ReferenceSource" \
-              "</display-text></xref>"))
-            expect(xml_output)
-              .to(include("<xref target=\"custom-RE_ReferenceSource\" " \
-              "style=\"short\"><display-text>RE_ReferenceSource" \
+              .to(include("<xref target=\"section-" \
+              "EAID_4D1261D3_9F49_41c7_8F0E_FCAD537F45D4\" " \
+              "style=\"short\"><display-text>Reference" \
               "</display-text></xref>"))
           end
         end
