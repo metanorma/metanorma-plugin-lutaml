@@ -1423,5 +1423,77 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
         include_examples "should contain Used and Guidance"
       end
     end
+
+    context "when `skip_unrecognized_connector: true`" do
+      let(:example_file) { fixtures_path("ISOCD 19135 Edition 2.xmi") }
+      let(:config_file) { fixtures_path("19135_config.yml") }
+      let (:input) do
+        <<~TEXT
+          = Document title
+          Author
+          :nodoc:
+          :novalid:
+          :no-isobib:
+          :imagesdir: spec/assets
+
+          [lutaml_ea_xmi,#{example_file},#{config_file}]
+          --
+          [.diagram_include_block, base_path="spec/fixtures/lutaml/"]
+          ...
+          Diagram text
+          ...
+          --
+        TEXT
+      end
+
+      subject (:output) { metanorma_convert(input) }
+      it "should not contain unrecognized connectors" do
+        description = "data quality measures contained in the ISO 19157-3 " \
+                      "data quality measure register are ISO 19135 " \
+                      "compliant register items"
+
+        expect(subject).to have_tag("tr") do
+          without_tag "td", text: "modifies"
+          without_tag "td", text: "Association (Unspecified)"
+          without_tag "td", text: description
+        end
+      end
+    end
+
+    context "when `skip_unrecognized_connector: false`" do
+      let(:example_file) { fixtures_path("ISOCD 19135 Edition 2.xmi") }
+      let(:config_file) { fixtures_path("19135_skip_false_config.yml") }
+      let (:input) do
+        <<~TEXT
+          = Document title
+          Author
+          :nodoc:
+          :novalid:
+          :no-isobib:
+          :imagesdir: spec/assets
+
+          [lutaml_ea_xmi,#{example_file},#{config_file}]
+          --
+          [.diagram_include_block, base_path="spec/fixtures/lutaml/"]
+          ...
+          Diagram text
+          ...
+          --
+        TEXT
+      end
+
+      subject (:output) { metanorma_convert(input) }
+      it "should contain unrecognized connectors" do
+        description = "data quality measures contained in the ISO 19157-3 " \
+                      "data quality measure register are ISO 19135 " \
+                      "compliant register items"
+
+        expect(subject).to have_tag("tr") do
+          with_tag "td", text: "modifies"
+          with_tag "td", text: "Association (Unspecified)"
+          with_tag "td", text: description
+        end
+      end
+    end
   end
 end

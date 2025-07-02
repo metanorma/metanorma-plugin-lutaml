@@ -1,0 +1,241 @@
+{% for package in context.packages %}
+{% assign package_name = package.name | downcase | replace: ":", "" | replace: " ", "_" | replace: "-", "_" %}
+{% if additional_context.before and additional_context.before.size > 0 %}
+{% for before in additional_context.before %}
+{% if before.text %}
+
+{% if before.liquid %}
+{{ before.text | interpolate }}
+{% else %}
+{{ before.text }}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% assign is_package_spare = package.name | slice: 0,5 %}
+{% if is_package_spare == 'old: ' %}{% continue %}
+{% elsif is_package_spare == 'Spare' %}{% continue %}
+{% endif %}
+
+{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}{{equalsigns}} {{ package.name }} package
+{% if klass.xmi_id %}
+[[section-{{ package.xmi_id }}]]
+{% endif %}
+{{equalsigns}}= {{ package.name }} overview
+
+{% if additional_context.all_macros.size > 0 %}
+{% assign sorted_all_macros = additional_context.all_macros | where: "position", "before" | sort: 'index' %}
+{% for block in sorted_all_macros %}
+{% case block.type %}
+{% when 'include_block' %}
+{% unless block.package and block.package != package.name %}
+{% capture block_filename %}{{ block.base_path }}{{ package_name }}{% endcapture %}
+{% capture block_content %}{% include block_filename %}{% endcapture %}
+{% unless block_content contains "Liquid error" %}
+{% if block.text %}
+
+{% if block.liquid %}
+{{ block.text | interpolate }}
+{% else %}
+{{ block.text }}
+{% endif %}
+{% endif %}
+
+{{ block_content }}
+{% endunless %}
+{% endunless %}
+{% when 'package_text' %}
+{% unless block.package and block.package != package.name %}
+
+{% if block.liquid %}
+{{ block.text | interpolate }}
+{% else %}
+{{ block.text }}
+{% endif %}
+{% endunless %}
+{% else %}
+{% endcase %}
+{% endfor %}
+{% endif %}
+
+{% assign before_package_key = 'before;' | append: package.name %}
+{% if additional_context[before_package_key] and additional_context[before_package_key].size > 0 %}
+{% for before in additional_context[before_package_key] %}
+{% if before.text %}
+
+{% if before.liquid %}
+{{ before.text | interpolate }}
+{% else %}
+{{ before.text }}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if additional_context.diagram_include_block %}
+{% for diagram_include_block in additional_context.diagram_include_block %}
+{% include "diagrams_block", package_name: package_name, image_base_path: diagram_include_block.base_path, text: diagram_include_block.text, format: diagram_include_block.format %}
+{% endfor %}
+{% endif %}
+
+{% if package.packages.size > 0 %}The {{ package.name }} package is organized into
+{{ package.packages.size }} packages{% assign modules_nested_size = 0 %}{% for module in package.packages %}{% assign modules_nested_size = modules_nested_size | plus: module.packages.size %}{% endfor %}{% if modules_nested_size > 0 %} with {{modules_nested_size}} modules{% endif %}:
+{% endif %}
+
+{% for module in package.packages %}
+{% if module.packages.length > 0 %}
+. {{ module.name }} package comprises:
+{% for nested_module in module.packages %}
+.. {{nested_module.name}} module
+{% endfor %}
+{% else %}
+. {{ module.name }} package
+{% endif %}
+{% endfor %}
+
+{% if package.classes.size > 0 or package.enums.size > 0 or package.data_types.size > 0 %}
+
+{{equalsigns}}= Defining tables
+
+{% for klass in package.classes %}
+{% assign is_klass_spare = klass.name | slice: 0,5 %}
+{% if is_klass_spare == 'old: ' %}{% continue %}
+{% elsif is_klass_spare == 'Spare' %}{% continue %}
+{% endif %}
+{% assign klass_name = klass.name | downcase | replace: ':', '' | replace: ' ', '_' %}
+[[section-{{ klass.xmi_id }}]]
+.Elements of &#8220;{{ package.name }}::{{ klass.name }}&#8221; ({{ klass.stereotype }})
+
+{% endfor %}
+{% for enum in package.enums %}
+{% assign is_enum_spare = enum.name | slice: 0,5 %}
+{% if is_enum_spare == 'old: ' %}{% continue %}
+{% elsif is_enum_spare == 'Spare' %}{% continue %}
+{% endif %}
+{% assign enum_name = enum.name | downcase | replace: ':', '' | replace: ' ', '_' %}
+[[section-{{ enum.xmi_id }}]]
+.Elements of &#8220;{{ package.name }}::{{ enum.name }}&#8221; ({{ enum.stereotype }})
+
+{% endfor %}
+{% for data_type in package.data_types %}
+{% assign is_data_type_spare = data_type.name | slice: 0,5 %}
+{% if is_data_type_spare == 'old: ' %}{% continue %}
+{% elsif is_data_type_spare == 'Spare' %}{% continue %}
+{% endif %}
+{% assign data_type_name = data_type.name | downcase | replace: ':', '' | replace: ' ', '_' %}
+[[section-{{ data_type.xmi_id }}]]
+.Elements of &#8220;{{ package.name }}::{{ data_type.name }}&#8221; ({{ data_type.stereotype }})
+
+{% endfor %}
+
+{% for klass in package.classes %}
+{% include "packages_class" %}
+{% endfor %}
+
+{% for klass in package.enums %}
+{% include "packages_enum" %}
+{% endfor %}
+
+{% for klass in package.data_types %}
+{% include "packages_data_type" %}
+{% endfor %}
+
+{% endif %}
+
+{% if additional_context.include_block and additional_context.include_block.size > 0 %}
+{% for block in additional_context.include_block %}
+{% capture block_filename %}{{ block.base_path }}{{ package_name }}{% endcapture %}
+{% capture block_content %}{% include block_filename %}{% endcapture %}
+{% unless block_content contains "Liquid error" %}
+{% if block.text %}
+{{ block.text }}
+{% endif %}
+{{ block_content }}
+{% endunless %}
+{% endfor %}
+{% endif %}
+
+{% assign include_block_package_key = 'include_block;' | append: package.name %}
+{% if additional_context[include_block_package_key] and additional_context[include_block_package_key].size > 0 %}
+{% for block in additional_context[include_block_package_key] %}
+{% capture block_filename %}{{ block.base_path }}{{ package_name }}{% endcapture %}
+{% capture block_content %}{% include block_filename %}{% endcapture %}
+{% unless block_content contains "Liquid error" %}
+{% if block.text %}
+
+{% if block.liquid %}
+{{ block.text | interpolate }}
+{% else %}
+{{ block.text }}
+{% endif %}
+{% endif %}
+{{ block_content }}
+{% endunless %}
+{% endfor %}
+{% endif %}
+
+{% if additional_context.all_macros.size > 0 %}
+{% assign sorted_all_macros = additional_context.all_macros | where: "position", "after" | sort: 'index' %}
+{% for block in sorted_all_macros %}
+{% case block.type %}
+{% when 'include_block' %}
+{% unless block.package and block.package != package.name %}
+{% capture block_filename %}{{ block.base_path }}{{ package_name }}{% endcapture %}
+{% capture block_content %}{% include block_filename %}{% endcapture %}
+{% unless block_content contains "Liquid error" %}
+{% if block.text %}
+
+{% if block.liquid %}
+{{ block.text | interpolate }}
+{% else %}
+{{ block.text }}
+{% endif %}
+{% endif %}
+
+{{ block_content }}
+{% endunless %}
+{% endunless %}
+{% when 'package_text' %}
+{% unless block.package and block.package != package.name %}
+
+{% if block.liquid %}
+{{ block.text | interpolate }}
+{% else %}
+{{ block.text }}
+{% endif %}
+{% endunless %}
+{% else %}
+{% endcase %}
+{% endfor %}
+{% endif %}
+
+{% assign after_package_key = 'after;' | append: package.name %}
+{% if additional_context[after_package_key] %}
+{{equalsigns}}= Additional information
+{% for after in additional_context[after_package_key] %}
+{% if after.text %}
+
+{% if after.liquid %}
+{{ after.text | interpolate }}
+{% else %}
+{{ after.text }}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if package.packages.size > 0 and render_nested_packages %}
+{% assign nested_depth = depth | plus: 1 %}{% include "packages", depth: nested_depth, context: package %}
+{% endif %}
+{% endfor %}
+
+{% if additional_context.after and additional_context.after.size > 0 %}
+{% for after in additional_context.after %}
+{% if after.text %}
+
+{% if after.liquid %}
+{{ after.text | interpolate }}
+{% else %}
+{{ after.text }}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}

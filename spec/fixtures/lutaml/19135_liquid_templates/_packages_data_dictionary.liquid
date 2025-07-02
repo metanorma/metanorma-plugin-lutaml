@@ -1,0 +1,349 @@
+{% for package in context.packages %}
+{% assign package_name = package.name | downcase | replace: ":", "" | replace: " ", "_" %}
+{% assign nested_depth = depth | plus: 1 %}
+{% if additional_context.before and additional_context.before.size > 0 %}
+{% for before in additional_context.before %}
+{% if before.text %}
+
+{% if before.liquid %}
+{{ before.text | interpolate }}
+{% else %}
+{{ before.text }}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
+{{equalsigns}} {{ package.name }}
+{%comment%}(package: depth is {{ depth }}, nested_depth is {{ nested_depth }}){%endcomment%}
+
+{% if additional_context.all_macros.size > 0 %}
+{% assign sorted_all_macros = additional_context.all_macros | where: "position", "before" | sort: 'index' %}
+{% for block in sorted_all_macros %}
+{% case block.type %}
+{% when 'include_block' %}
+{% unless block.package and block.package != package.name %}
+{% capture block_filename %}{{ block.base_path }}{{ package_name }}{% endcapture %}
+{% capture block_content %}{% include block_filename %}{% endcapture %}
+{% unless block_content contains "Liquid error" %}
+{% if block.text %}
+
+{% if block.liquid %}
+{{ block.text | interpolate }}
+{% else %}
+{{ block.text }}
+{% endif %}
+{% endif %}
+
+{{ block_content }}
+{% endunless %}
+{% endunless %}
+{% when 'package_text' %}
+{% unless block.package and block.package != package.name %}
+
+{% if block.liquid %}
+{{ block.text | interpolate }}
+{% else %}
+{{ block.text }}
+{% endif %}
+{% endunless %}
+{% else %}
+{% endcase %}
+{% endfor %}
+{% endif %}
+
+{% assign before_package_key = 'before;' | append: package.name %}
+{% if additional_context[before_package_key] and additional_context[before_package_key].size > 0 %}
+{% for before in additional_context[before_package_key] %}
+{% if before.text %}
+
+{% if before.liquid %}
+{{ before.text | interpolate }}
+{% else %}
+{{ before.text }}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+.Metadata of {{ package.name }} {% if package.stereotype %}(«{{package.stereotype}}»){% endif %}
+[cols="1a,4a"]
+|===
+
+h|Description:    | {{ package.definition | replace: '|', '\|' | html2adoc }}
+h|Parent package: | {{ context.name }}
+h|Stereotype:     | {% if package.stereotype %}«{{package.stereotype}}»{% else %}None{% endif %}
+
+|===
+
+{% assign inner_depth = depth | plus: 2 %}
+{% assign basic_types = package.classes | where: "stereotype", "BasicType" %}
+{% assign unions = package.data_types | where: "stereotype", "Union" %}
+{% assign code_lists = package.classes | where: "stereotype", "CodeList" %}
+{% assign not_classes_length = basic_types.size | plus: code_lists.size %}
+{% assign not_classes_stereotypes = 'DataType,BasicType,Enumeration,CodeList' | split: ','%}
+{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
+{{equalsigns}}= Classes
+{%comment%}(class: depth is {{ depth }}, nested_depth is {{ nested_depth }}){%endcomment%}
+
+{% unless not_classes_length == package.classes.size %}
+
+{% for klass in package.classes %}
+{% unless not_classes_stereotypes contains klass.stereotype  %}
+{% include "packages_data_dictionary_class", depth: inner_depth %}
+{% endunless %}
+{% endfor %}
+{% else %}
+None.
+{% endunless %}
+
+{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
+{{equalsigns}}= Basic types
+{%comment%}(class: depth is {{ depth }}, inner_depth is {{ inner_depth }}){%endcomment%}
+
+{% if basic_types.size > 0 %}
+{% include "packages_data_dictionary_classes", classes: basic_types, depth: inner_depth %}
+{% else %}
+None.
+{% endif %}
+
+{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
+{{equalsigns}}= Unions
+{%comment%}(class: depth is {{ depth }}, inner_depth is {{ inner_depth }}){%endcomment%}
+
+{% if unions.size > 0 %}
+{% include "packages_data_dictionary_classes", classes: unions, depth: inner_depth %}
+{% else %}
+None.
+{% endif %}
+
+{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
+{{equalsigns}}= Code lists
+{%comment%}(class: depth is {{ depth }}, inner_depth is {{ inner_depth }}){%endcomment%}
+
+{% if code_lists.size > 0 %}
+{% include "packages_data_dictionary_classes", classes: code_lists, depth: inner_depth %}
+{% else %}
+None.
+{% endif %}
+
+{% capture equalsigns %}{% for count in (1..depth) %}={% endfor %}{% endcapture %}
+{{equalsigns}}= Data types
+{%comment%}(class: depth is {{ depth }}, inner_depth is {{ inner_depth }}){%endcomment%}
+
+{% assign non_unions = package.data_types | where: "stereotype", "DataType"  %}
+{% if non_unions.size > 0 %}
+{% for data_type in non_unions %}
+{% capture generalizations %}{% assign inheritance = klass.associations | where: "member_end_type", "inheritance" %}{% for assoc in inheritance %}{% if additional_context.external_classes[assoc.member_end] %}<<{{ additional_context.external_classes[assoc.member_end] }},{{ assoc.member_end }}>>{% else %}<<section-{{ additional_context.external_classes[assoc.member_end] }},{{ assoc.member_end_xmi_id }}>>{% endif %}{% endfor %}{% endcapture %}
+[[section-{{ data_type.xmi_id }}]]
+{{equalsigns}}== {{ data_type.name }}
+
+.Metadata of {{ data_type.name }} {% if data_type.stereotype %}(«{{data_type.stereotype}}»){% endif %}
+[cols="1a,4a"]
+|===
+h|Definition:  | {{ data_type.definition | replace: '|', '\|' | html2adoc }}
+h|Subclass of: | {% if generalizations.size > 0 %}{{ generalizations }}{% else %}None{% endif %}
+h|Stereotype:  | {% if data_type.stereotype %}«{{data_type.stereotype}}»{% else %}None{% endif %}
+
+{% if data_type.constraints.size > 0 %}
+{% for constraint in data_type.constraints %}
+h| Constraint:
+| `{{ constraint.body }}`:
+
+[source,ocl,%unnumbered]
+------
+{{ constraint.definition | replace: '|', '\|' }}
+------
+{% endfor %}
+{% endif %}
+
+|===
+
+{% if data_type.associations.size > 0 %}
+{% capture rendered_associations %}
+{% for assoc in data_type.associations %}
+{% if assoc.member_end_attribute_name.size > 0 %}
+{% capture cardinality %}&#91;{% case assoc.member_end_cardinality.min %}{% when "C" %}0{% when "M" %}1{% else %}{{assoc.member_end_cardinality.min}}{% endcase %}..{{ assoc.member_end_cardinality.max }}&#93;{% endcapture %}
+| {{ assoc.member_end_attribute_name }}
+{% if additional_context.external_classes[assoc.member_end] %}| <<{{ additional_context.external_classes[assoc.member_end] }},{{assoc.member_end}}>> {{ cardinality }}{% else %}| <<section-{{ assoc.member_end_xmi_id }},{{assoc.member_end}}>> {{ cardinality }}{% endif %}
+| {{ assoc.definition | replace: '|', '\|' | html2adoc }}
+{% endif %}
+{% endfor %}
+{% endcapture %}
+
+{% assign associations_stripped = rendered_associations | strip_newlines | strip %}
+
+{% if associations_stripped.size > 0 %}
+.Associations of {{ data_type.name }} ({{ data_type.stereotype }})
+[cols="15a,20a,60a",options="header"]
+|===
+| Role name | Target class and multiplicity | Definition
+
+{{ rendered_associations }}
+
+|===
+{% endif %}
+{% endif %}
+
+{% if data_type.attributes.size > 0 %}
+.Attributes of {{ data_type.name }} ({{ data_type.stereotype }})
+[cols="15a,20a,60a",options="header"]
+|===
+| Attribute | Value type and multiplicity | Definition
+
+{% for attr in data_type.attributes %}
+{% capture cardinality %}&#91;{% case attr.cardinality.min %}{% when 'C' %}0{% when 'M' %}1{% else %}{{ attr.cardinality.min }}{% endcase %}..{{ attr.cardinality.max }}&#93;{% endcapture %}
+| {{ attr.name }}
+{% if additional_context.external_classes[attr.type] %}| <<{{ additional_context.external_classes[attr.type] }},{{ attr.type }}>> {{ cardinality }}{% else %}| <<section-{{ attr.xmi_id }},{{ attr.type }}>> {{ cardinality }}{% endif %}
+| {{ attr.definition | replace: '|', '\|' | html2adoc }}
+
+{% endfor %}
+|===
+
+[NOTE,keep-separate=true]
+====
+Unless otherwise specified, all attributes and role names have the stereotype
+«Property».
+====
+{% endif %}
+
+{% endfor %}
+{% else %}
+None.
+{% endif %}
+
+{{equalsigns}}= Enumerations
+
+{% if package.enums.size > 0 %}
+{% for enum in package.enums %}
+[[section-{{ enum.xmi_id }}]]
+{{equalsigns}}== {{ enum.name }}
+
+.Metadata of {{ enum.name }} (Enumeration)
+[cols="1a,4a"]
+|===
+h|Definition: | {{ enum.definition | replace: '|', '\|' | html2adoc }}
+h|Stereotype: | «Enumeration»
+|===
+
+{% if enum.values.size > 0 %}
+.Values of {{ enum.name }} (Enumeration)
+[cols="1a,4a",options="header"]
+|===
+| Literal value | Definition
+
+{% for val in enum.values %}
+| {{ val.name }}
+| {{ val.definition | replace: '|', '\|' | html2adoc }}
+
+{% endfor %}
+
+|===
+{% endif %}
+
+{% endfor %}
+{% else %}
+None.
+{% endif %}
+
+{% if additional_context.include_block and additional_context.include_block.size > 0 %}
+{% for block in additional_context.include_block %}
+{% capture block_filename %}{{ block.base_path }}{{ package_name }}{% endcapture %}
+{% capture block_content %}{% include block_filename %}{% endcapture %}
+{% unless block_content contains "Liquid error" %}
+{% if block.text %}
+{{ block.text }}
+{% endif %}
+{{ block_content }}
+{% endunless %}
+{% endfor %}
+{% endif %}
+
+{% assign include_block_package_key = 'include_block;' | append: package.name %}
+{% if additional_context[include_block_package_key] and additional_context[include_block_package_key].size > 0 %}
+{% for block in additional_context[include_block_package_key] %}
+{% capture block_filename %}{{ block.base_path }}{{ package_name }}{% endcapture %}
+{% capture block_content %}{% include block_filename %}{% endcapture %}
+{% unless block_content contains "Liquid error" %}
+{% if block.text %}
+
+{% if block.liquid %}
+{{ block.text | interpolate }}
+{% else %}
+{{ block.text }}
+{% endif %}
+{% endif %}
+{{ block_content }}
+{% endunless %}
+{% endfor %}
+{% endif %}
+
+{% if additional_context.all_macros.size > 0 %}
+{% assign sorted_all_macros = additional_context.all_macros | where: "position", "after" | sort: 'index' %}
+{% for block in sorted_all_macros %}
+{% case block.type %}
+{% when 'include_block' %}
+{% unless block.package and block.package != package.name %}
+{% capture block_filename %}{{ block.base_path }}{{ package_name }}{% endcapture %}
+{% capture block_content %}{% include block_filename %}{% endcapture %}
+{% unless block_content contains "Liquid error" %}
+{% if block.text %}
+
+{% if block.liquid %}
+{{ block.text | interpolate }}
+{% else %}
+{{ block.text }}
+{% endif %}
+{% endif %}
+
+{{ block_content }}
+{% endunless %}
+{% endunless %}
+{% when 'package_text' %}
+{% unless block.package and block.package != package.name %}
+
+{% if block.liquid %}
+{{ block.text | interpolate }}
+{% else %}
+{{ block.text }}
+{% endif %}
+{% endunless %}
+{% else %}
+{% endcase %}
+{% endfor %}
+{% endif %}
+
+
+{% assign after_package_key = 'after;' | append: package.name %}
+{% if additional_context[after_package_key] %}
+{{equalsigns}}= Additional information
+{% for after in additional_context[after_package_key] %}
+{% if after.text %}
+
+{% if after.liquid %}
+{{ after.text | interpolate }}
+{% else %}
+{{ after.text }}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if package.packages.size > 0 and render_nested_packages %}
+{% include "packages_data_dictionary", depth: nested_depth, context: package %}
+{% endif %}
+{% endfor %}
+
+{% if additional_context.after and additional_context.after.size > 0 %}
+{% for after in additional_context.after %}
+{% if after.text %}
+
+{% if after.liquid %}
+{{ after.text | interpolate }}
+{% else %}
+{{ after.text }}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}

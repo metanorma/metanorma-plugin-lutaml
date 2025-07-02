@@ -303,6 +303,9 @@ module Metanorma
               .merge("external_classes" => options.external_classes),
           }
 
+          contexts[context_name]["skip_unrecognized_connector"] =
+            !!options.skip_unrecognized_connector
+
           if options.packages.nil?
             contexts[context_name]["render_nested_packages"] = true
             contexts[context_name]["packages"] = root_package["packages"]
