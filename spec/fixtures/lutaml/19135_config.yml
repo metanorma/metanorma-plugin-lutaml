@@ -1,0 +1,12 @@
+---
+packages:
+  - "Components"
+  # - "Identifiers"
+  # - "Statuses"
+  # - "Relationships"
+  # - "Proposal and appeal"
+section_depth: 3
+ea_extension:
+  - ISO19103MDG v1.0.0-beta.xml
+template_path: "spec/fixtures/lutaml/19135_liquid_templates"
+skip_unrecognized_connector: true

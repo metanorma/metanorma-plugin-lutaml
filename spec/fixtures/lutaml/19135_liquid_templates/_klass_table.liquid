@@ -1,0 +1,77 @@
+{% assign root = klass.generalization %}
+
+{%- capture upper_klass_name -%}
+{{ root.general.upper_klass }}:{{ root.general.name }}
+{%- endcapture -%}
+{%- if upper_klass_name == ":" -%}
+  {%- assign upper_klass_name = "-" -%}
+{%- endif -%}
+{%- capture stereotype -%}<< {{ root.stereotype }} >>{%- endcapture -%}
+{%- if stereotype == "<<  >>" -%}
+  {%- assign stereotype = " " -%}
+{%- endif -%}
+
+[cols="1a,1a,2a"]
+|===
+| Definition of Type
+2+| {{ root.definition }}
+
+h| Upper Type 2+| {{ upper_klass_name }}
+h| Stereotype 2+| {{ stereotype }}
+
+3+h| Inherited Properties
+h| Property Name h| Property Type and Multiplicity h| Definition
+{% for attr in root.inherited_props %}
+  {%- if attr.has_association? == false -%}
+    {%- capture name_col -%}
+      {{ attr.name_ns }}:{{ attr.name }}
+      ({{ attr.gen_name }})
+    {%- endcapture -%}
+    | {{ name_col | newline_to_br }}
+    | {{ attr.type }} [{{ attr.cardinality.min }}..{{ attr.cardinality.max }}]
+    | {{ attr.definition }}
+  {%- endif -%}
+{% endfor %}
+
+3+h| Self-defined Properties
+h| Property Name h| Property Type and Multiplicity h| Definition
+{% for attr in root.owned_props %}
+  {%- if attr.has_association? == false -%}
+    {%- capture name_col -%}
+      {{ attr.name_ns }}:{{ attr.name }}
+      ({{ attr.gen_name }})
+    {%- endcapture -%}
+    | {{ name_col | newline_to_br }}
+    | {{ attr.type }} [{{ attr.cardinality.min }}..{{ attr.cardinality.max }}]
+    | {{ attr.definition }}
+  {%- endif -%}
+{% endfor %}
+
+3+h| Properties Inherited from Association
+h| Property Name h| Property Type and Multiplicity h| Definition
+{% for attr in root.inherited_assoc_props %}
+  {%- if attr.has_association? == true -%}
+    {%- capture name_col -%}
+      {{ attr.name_ns }}:{{ attr.name }}
+      ({{ attr.gen_name }})
+    {%- endcapture -%}
+    | {{ name_col | newline_to_br }}
+    | {{ attr.type_ns }}:{{ attr.type }} [{{ attr.cardinality.min }}..{{ attr.cardinality.max }}]
+    | {{ attr.definition }}
+  {%- endif -%}
+{% endfor %}
+
+3+h| Properties Defined in Association
+h| Property Name h| Property Type and Multiplicity h| Definition
+{% for attr in root.assoc_props %}
+  {%- if attr.has_association? == true -%}
+    {%- capture name_col -%}
+      {{ attr.name_ns }}:{{ attr.name }}
+      ({{ attr.gen_name }})
+    {%- endcapture -%}
+    | {{ name_col | newline_to_br }}
+    | {{ attr.type_ns }}:{{ attr.type }} [{{ attr.cardinality.min }}..{{ attr.cardinality.max }}]
+    | {{ attr.definition }}
+  {%- endif -%}
+{% endfor %}
+|===

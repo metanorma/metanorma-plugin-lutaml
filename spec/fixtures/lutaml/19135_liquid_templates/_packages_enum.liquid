@@ -1,0 +1,118 @@
+{% assign is_klass_spare = klass.name | slice: 0,5 %}
+{% if is_klass_spare == 'old: ' %}{% continue %}
+{% elsif is_klass_spare == 'Spare' %}{% continue %}
+{% endif %}
+{% assign klass_name = klass.name | downcase | replace: ':', '' | replace: ' ', '_' %}
+[[section-{{ klass.type }}-{{ klass.xmi_id }}]]
+.Definition table of &#8220;{{ package.name }}::{{ klass.name }}&#8221; ({{ klass.stereotype }})
+[width="100%",cols="a,a,a,a,a,a,a,a"]
+|===
+
+h|Name
+7+| {{ klass.name }}
+
+h|Definition
+7+| {{ klass.definition | html2adoc }}
+
+h|Stereotype
+7+| {{ klass.stereotype | default: 'interface' }}
+
+{% assign inherited = klass.associations | where: "member_end_type", "inheritance" %}
+{% if inherited.size > 0 %}
+h|Inherits from
+7+| {{ inherited | map: 'member_end' | join: ", " }}
+{% endif %}
+
+{% assign generalizations = klass.associations | where: "member_end_type", "generalization" %}
+{% if generalizations.size > 0 %}
+h|Generalization of
+7+| {{ generalizations | map: 'member_end' | join: ", " }}
+{% endif %}
+
+h|Abstract
+7+| {% if klass.is_abstract %}True{% else %}False{% endif %}
+{% assign aggregations = klass.associations | where: "member_end_type", "aggregation" %}
+
+{% if aggregations.size > 0 %}
+
+{% assign associations_colspan = 1 %}
+{% for assoc in aggregations %}
+
+{% if context.skip_unrecognized_connector != true or assoc.connector.recognized? == true %}
+{% assign associations_colspan = associations_colspan | plus: 3 %}
+{% endif %}
+
+{% endfor %}
+
+.{{associations_colspan}}+h|Associations
+2+h| _Name_
+2+h| _Type_
+3+h| _Documentation_
+
+{% for assoc in aggregations %}
+
+{% if context.skip_unrecognized_connector != true or assoc.connector.recognized? == true %}
+
+{% assign connector_documentation_size = assoc.connector.documentation | size %}
+{% capture connector_documentation %}{% if connector_documentation_size > 0 %}{{ assoc.connector.documentation }}{% endif %}{% endcapture %}
+
+{% assign connector_direction_size = assoc.connector.direction | size %}
+{% capture connector_direction %}{% if connector_direction_size > 0 %}({{ assoc.connector.direction }}){% endif %}{% endcapture %}
+
+{% capture type_and_direction %}{% if assoc.connector %}{{ assoc.connector.ea_type }} {{ connector_direction }}{% endif %}{% endcapture %}
+
+2+| {{ assoc.member_end }}
+2+| {{ type_and_direction }}
+3+| {{ connector_documentation | html2adoc }}
+
+{% if assoc.connector && assoc.connector.source %}
+{% assign source_name_size = assoc.connector.source.name | size %}
+{% capture source_name %}{% if source_name_size > 0 %}{{ assoc.connector.source.name }}{% else %}{unspecified}{% endif %}{% endcapture %}
+{% assign source_documentation_size = assoc.connector.source.documentation | size %}
+{% capture source_documentation %}{% if source_documentation_size > 0 %}{{ assoc.connector.source.documentation }}{% endif %}{% endcapture %}
+{% assign source_multiplicity_size = assoc.connector.source.multiplicity | size %}
+{% capture source_multiplicity %}{% if source_multiplicity_size > 0 %}[{{ assoc.connector.source.multiplicity }}]{% else %}{% endif %}{% endcapture %}
+
+| _Source_
+| {{ source_name }}
+2+| {{ assoc.connector.source.type }} {{ source_multiplicity }}
+3+| {{ source_documentation | html2adoc }}
+{% endif %}
+
+{% if assoc.connector && assoc.connector.target %}
+{% assign target_name_size = assoc.connector.target.name | size %}
+{% capture target_name %}{% if target_name_size > 0 %}{{ assoc.connector.target.name }}{% else %}{unspecified}{% endif %}{% endcapture %}
+{% assign target_documentation_size = assoc.connector.target.documentation | size %}
+{% capture target_documentation %}{% if target_documentation_size > 0 %}{{ assoc.connector.target.documentation }}{% endif %}{% endcapture %}
+{% assign target_multiplicity_size = assoc.connector.target.multiplicity | size %}
+{% capture target_multiplicity %}{% if target_multiplicity_size > 0 %}[{{ assoc.connector.target.multiplicity }}]{% else %}{% endif %}{% endcapture %}
+
+| _Target_
+| {{ target_name }}
+2+| {{ assoc.connector.target.type }} {{ target_multiplicity }}
+3+| {{ target_documentation | html2adoc }}
+{% endif %}
+{% endif %}
+
+{% endfor %}
+{% else %}
+h| Associations
+7+| N/A
+{% endif %}
+
+{% if klass.values.size > 0 %}
+.{{klass.values.size | plus: 1}}+h| Values
+| _Name_
+6+| _Definition_
+
+{% for value in klass.values %}
+| {{value.name}}
+6+| {{ value.definition | html2adoc }}
+
+{% endfor %}
+{% else %}
+h| Values
+7+| N/A
+{% endif %}
+
+|===

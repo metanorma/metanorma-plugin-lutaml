@@ -81,6 +81,20 @@ RSpec.describe Metanorma::Plugin::Lutaml::Config::Root do
       )
     end
 
+    it "does not contain skip_unrecognized_connector" do
+      expect(subject.skip_unrecognized_connector).not_to eq(true)
+    end
+
+    it "contains skip_unrecognized_connector" do
+      updated_yaml = <<~YAML
+        #{yaml}
+        skip_unrecognized_connector: true
+      YAML
+
+      test_subject = described_class.from_yaml(updated_yaml)
+      expect(test_subject.skip_unrecognized_connector).to eq(true)
+    end
+
     it "contains packages with skip_tables" do
       subject.packages.each do |package|
         if package.name == "Wrapper nested package"
