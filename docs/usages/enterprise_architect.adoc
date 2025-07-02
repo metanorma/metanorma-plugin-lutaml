@@ -212,15 +212,15 @@ guidance in `guidance`.
 
 === Usage of `lutaml_ea_xmi` command
 
-The `lutaml_ea_xmi` command supersedes the `lutaml_uml_datamodel_description`
-command which it is functionally equivalent to.
+The `lutaml_ea_xmi` command performs the same function as the
+`lutaml_uml_datamodel_description` command starting from version 0.7.21.
 
 This command renders data model packages and its dependent objects for supplied
 XMI file, by using Liquid Drop objects.
 
 NOTE: The performance of `lutaml_ea_xmi` exceeds
-`lutaml_uml_datamodel_description` by 10~20 times (Tested with a 10.6MB XMI file
-with 120,000+ lines).
+`lutaml_uml_datamodel_description` by 10~20 times when tested with a 10.6MB XMI
+file with 120,000+ lines at version 0.7.20.
 
 NOTE: To migrate to this command from `lutaml_uml_datamodel_description`, just
 replace the command `lutaml_uml_datamodel_description` by `lutaml_ea_xmi`.
@@ -514,6 +514,8 @@ packages:
   - skip: four
 render_style: entity_list | data_dictionary | default
 section_depth: 2
+template_path: "path/to/custom/liquid/templates"
+skip_unrecognized_connector: true
 ea_extension:
   - "CityGML_MDG_Technology.xml"
   - "xmi_definition_for_some_standard.xml"
@@ -557,6 +559,32 @@ equal to 2, root package will be `one-1`.
     packages: [{ name: 'two-1' }, { name: 'two-2' }]
   }
 ]
+----
+
+* `template_path` - optional, path to custom Liquid templates directory for
+rendering the output. When specified, the processor will use custom templates
+from this directory instead of the default built-in templates. This allows for
+complete customization of the rendered output format and structure.
+
+* `skip_unrecognized_connector` - optional, boolean flag that shows in liquid
+templates as context variable `context.skip_unrecognized_connector`, which
+allows to control whether the associations with unrecognized connectors should
+be included in the output.  By making use of this context variable and
+`association.connector.recognized?` in the liquid templates, you can
+conditionally skip rendering of associations that have unrecognized connectors.
++
+EXAMPLE: Given that `associations` is a list of association objects of a class
+named `klass`, if you want to skip rendering of associations that have
+unrecognized connectors when `skip_unrecognized_connector` is set to `true`,
+then in the liquid template you can use:
++
+[source,liquid]
+----
+{% for assoc in klass.associations %}
+{% if context.skip_unrecognized_connector != true or assoc.connector.recognized? == true %}
+...do something with association that has recognized connector...
+{% endif %}
+{% endfor %}
 ----
 
 * `ea_extension` - optional, list of EA extensions to load. Some XMI files may
