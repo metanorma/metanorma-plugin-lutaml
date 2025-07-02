@@ -295,16 +295,9 @@ module Metanorma
         )
           root_package = package_level(lutaml_document.to_liquid,
                                        options.package_root_level || 1)
-          contexts = {}
-          contexts[context_name] = {
-            "name" => root_package["name"],
-            "root_packages" => [root_package],
-            "additional_context" => additional_context
-              .merge("external_classes" => options.external_classes),
-          }
-
-          contexts[context_name]["skip_unrecognized_connector"] =
-            !!options.skip_unrecognized_connector
+          contexts = create_default_context_object(
+            context_name, root_package, additional_context, options
+          )
 
           if options.packages.nil?
             contexts[context_name]["render_nested_packages"] = true
@@ -319,11 +312,25 @@ module Metanorma
               "packages" => sort_and_filter_out_packages(all_packages, options),
               "package_entities" => package_hash(options, "render_entities"),
               "package_skip_sections" => package_hash(options, "skip_tables"),
-              "render_nested_packages" => options.render_nested_packages ||
-                false,
+              "render_nested_packages" => !!options.render_nested_packages,
             },
           )
 
+          contexts
+        end
+
+        def create_default_context_object(
+          context_name, root_package, additional_context, options
+        )
+          contexts = {}
+          contexts[context_name] = {
+            "name" => root_package["name"],
+            "root_packages" => [root_package],
+            "additional_context" => additional_context
+              .merge("external_classes" => options.external_classes),
+            "skip_unrecognized_connector" => !!options
+              .skip_unrecognized_connector,
+          }
           contexts
         end
 
