@@ -12,7 +12,7 @@ Enterprise Architect XMI files.
 
 === Document attribute `:lutaml-xmi-index:`
 
-This attribute allows specifying one or more XMI files to defined names
+This attribute allows specifying one or more XMI files to define names
 for later use with `lutaml_ea_*` commands.
 
 Syntax:
@@ -56,10 +56,10 @@ The command `lutaml_ea_diagram` will load the XMI file from the path
 ====
 
 
-=== Rendering a Enterprise Architect diagram from XMI: `lutaml_ea_diagram`
+=== Rendering an Enterprise Architect diagram from XMI: `lutaml_ea_diagram`
 
-This command allows to quickly render a LutaML diagram as an image file by
-specifying the name of diagram.
+This command allows you to quickly render a LutaML diagram as an image file by
+specifying the name of the diagram.
 
 Syntax:
 
@@ -110,7 +110,7 @@ where the EA images exported with the XMI file are at `/path/to/xmi-images`.
 lutaml_ea_diagram::[name="DiagramName",package="PackageA",base_path="/path/to/xmi-images"]
 ----
 
-The search wil be restricted to the diagrams named `DiagramName` in the
+The search will be restricted to the diagrams named `DiagramName` in the
 `PackageA` package.
 ====
 
@@ -135,7 +135,7 @@ the XMI file defined in the index `index_name`.
 
 === Generating a class definition table for a class: `lutaml_klass_table`
 
-This command allows to render a LutaML table of a class by using Liquid Drop.
+This command allows you to render a LutaML table of a class by using Liquid Drop.
 
 The table will show:
 
@@ -153,27 +153,27 @@ lutaml_klass_table::/path/to/example.xmi[name="NameOfClass",template="/path/to/t
 
 The command accepts the options listed below:
 
-* `/path/to/example.xmi` specifies the path of xmi file.
+* `/path/to/example.xmi` specifies the path of the XMI file.
 
 * `name` option only, `name` option with `package` option or `path` option.
   One of 3 forms of options can be used to specify the name of the class.
 
 ** `name="NameOfClass"` specifies the name of the `class`.
    (e.g. `name="Building"`)
-   If there are multiple classes with the same name, other form of options
+   If there are multiple classes with the same name, other forms of options
    are recommended to specify the class.
 
-** `package="NameOfPackage"name="NameOfClass"` specifies the name of the
+** `package="NameOfPackage",name="NameOfClass"` specifies the name of the
    `class` (specified by `name` option) inside the `package`
    (specified by `package` option).
    The `package` option must be used with the `name` option.
    (e.g. `package="uro",name="_BoundarySurface"`)
 
 ** `path="PathOfClass"` specifies the `absolute` path of the `class`
-   which is started with `::`
+   which starts with `::`
    (e.g. `path="::EA_Model::Conceptual Models::i-UR::Urban Planning ADE 3.
    1::uro::_BoundarySurface"`)
-   or `relative` path of the `class` which is not started with `::`
+   or `relative` path of the `class` which does not start with `::`
    (e.g. `path="uro::_BoundarySurface"`).
    The last part of the path separated by `::` is the name of the `class`.
    The other parts of the path are the names of the `packages`.
@@ -215,12 +215,12 @@ guidance in `guidance`.
 The `lutaml_ea_xmi` command performs the same function as the
 `lutaml_uml_datamodel_description` command starting from version 0.7.21.
 
-This command renders data model packages and its dependent objects for supplied
+This command renders data model packages and their dependent objects for the supplied
 XMI file, by using Liquid Drop objects.
 
 NOTE: The performance of `lutaml_ea_xmi` exceeds
 `lutaml_uml_datamodel_description` by 10~20 times when tested with a 10.6MB XMI
-file with 120,000+ lines at version 0.7.20.
+file with 120,000+ lines using version 0.7.20 of the plugin.
 
 NOTE: To migrate to this command from `lutaml_uml_datamodel_description`, just
 replace the command `lutaml_uml_datamodel_description` by `lutaml_ea_xmi`.
@@ -242,7 +242,7 @@ By:
 ----
 
 You can define guidance in the configuration file as well. The configuration
-file will looks like:
+file will look like:
 
 [source,yaml]
 ----
@@ -271,7 +271,7 @@ under `classes`.  Then define which `attributes` you want to add guidance by the
 `name`. Set `used` to show the attribute is used or not. Drop the message of
 guidance in `guidance`.
 
-The `name` of class can be defined in the following ways:
+The `name` of the class can be defined in the following ways:
 
 * `name: "NameOfClass"` specifies the name of the `class`.
   (e.g. `name: "Building"`)
@@ -285,8 +285,8 @@ The `name` of class can be defined in the following ways:
 
 === Usage of `lutaml_uml_datamodel_description` command
 
-This command allows to quickly render data model packages and its dependent
-objects for supplied XMI file.
+This command allows you to quickly render data model packages and their dependent
+objects for the supplied XMI file.
 
 Given an Enterprise Architect `example.xmi` file with 2 packages:
 
@@ -346,17 +346,17 @@ Where:
 
 * `path/to/example.xmi` - required, path to the XMI file to render
 
-* `[.before]` - block text that adds additional text before the rendered output, can be used only once, additional occurrences of command will overwrite text, not that `literal` block style must be used in there(eg `....`)
+* `[.before]` - block text that adds additional text before the rendered output, can be used only once, additional occurrences of the command will overwrite text, note that `literal` block style must be used there (e.g. `....`)
 
-* `[.after]` - block text that adds additional text after the rendered output, can be used only once, additional occurrences of command will overwrite text
+* `[.after]` - block text that adds additional text after the rendered output, can be used only once, additional occurrences of the command will overwrite text
 
-* `[.after, package="Another"]` - block text to be inserted before(after in case of `.before` name) the package
+* `[.after, package="Another"]` - block text to be inserted after the package (before in case of `.before` name)
 
-* `[.package_text, position="after", package="Another"]` - include custom adoc code into package rendered body, `position` is a a required attribute which tells where to insert the code.
+* `[.package_text, position="after", package="Another"]` - include custom adoc code into the package rendered body, `position` is a required attribute which tells where to insert the code.
 
-* `[.package_text, package="Another"]` - same as above, but include block will be included only for supplied package name
+* `[.package_text, package="Another"]` - same as above, but the include block will be included only for the supplied package name
 
-* `[.diagram_include_block]` - block text to automatically include diagram images. Attribute `base_path` is a required attribute to supply path prefix where to look for a diagram image. `format` is an optional attribute that tells what file extension to use when including diagram file.
+* `[.diagram_include_block]` - block text to automatically include diagram images. Attribute `base_path` is a required attribute to supply the path prefix where to look for a diagram image. `format` is an optional attribute that tells what file extension to use when including the diagram file.
 +
 The logic is as follows:
 [source,adoc]
@@ -372,16 +372,16 @@ image::{{ image_base_path }}/{{ diagram.xmi_id }}.{{ format | default: 'png' }}[
 {% endfor %}
 ----
 
-For instance, the script will take package diagrams supplied in the XMI file and will try to include `image` with the name equal to diagram' xmi_id attribute plus `.png`. Also one can add any text to the command text, it will be added as paragraph before each image include.
+For instance, the script will take package diagrams supplied in the XMI file and will try to include `image` with the name equal to the diagram's xmi_id attribute plus `.png`. Also one can add any text to the command text, it will be added as paragraph before each image include.
 
-* `[.diagram_include_block, package="Another"]` - same as above, but diagram will be included only for supplied package name
+* `[.diagram_include_block, package="Another"]` - same as above, but the diagram will be included only for the supplied package name
 
-* `[.include_block, base_path="spec/fixtures"]` - command to include files (`*.adoc` or `*.liquid`) for each package name. Attribute `base_path` is a required attribute to supply path prefix where to look for file to include. command will look for a file called `base_path` + `/` `_package_name`(downcase, replace : -> '', ' ' -> '_') + `.adoc`[`.liquid`], eg for package 'My Package name' and `base_path` eq to `my/path`, command will look for the following file path: `my/path/_my_package_name.adoc`.
+* `[.include_block, base_path="spec/fixtures"]` - command to include files (`*.adoc` or `*.liquid`) for each package name. Attribute `base_path` is a required attribute to supply the path prefix where to look for file to include. The command will look for a file called `base_path` + `/` `_package_name`(downcase, replace : -> '', ' ' -> '_') + `.adoc`[`.liquid`], e.g. for package 'My Package name' and `base_path` eq to `my/path`, the command will look for the following file path: `my/path/_my_package_name.adoc`.
 
-* `[.include_block, package="Another", base_path="spec/fixtures"]` - same as above, but include block will be included only for supplied package name
+* `[.include_block, package="Another", base_path="spec/fixtures"]` - same as above, but the include block will be included only for the supplied package name
 
 
-NOTE: .after, .before, package_text and include_block commandses all can be used with additional option - `liquid`, if this option is supplied then the code inside block will be interpolated in liquid context
+NOTE: .after, .before, package_text and include_block commands all can be used with additional option - `liquid`, if this option is supplied then the code inside block will be interpolated in liquid context
 
 
 === Referencing objects generated by LutaML
@@ -410,7 +410,7 @@ This is lutaml_table::[package="Wrapper root package", enum="my name"] enumerati
 This is lutaml_table::[package="Wrapper root package", data_type="my name"] data type
 ----
 
-This code will be transformed into `<<figure-{diagram.xmi_id}>>` and will point to diagram figure. One can only use this command when document rendered `lutaml_uml_datamodel_description` command as it needs diagram lookup table in order to reference package diagram.
+This code will be transformed into `<<figure-{diagram.xmi_id}>>` and will point to diagram figure. One can only use this command when the document has rendered `lutaml_uml_datamodel_description` command as it needs diagram lookup table in order to reference package diagram.
 
 Will produce this output:
 
@@ -607,5 +607,5 @@ Usage with command:
 
 The processor will read the supplied YAML config file (`path/to/config.yml`),
 and iterate through packages according to the order supplied in the file. All
-packages that matches `skip` in the YAML config file will be skipped during
+packages that match `skip` in the YAML config file will be skipped during
 render.
