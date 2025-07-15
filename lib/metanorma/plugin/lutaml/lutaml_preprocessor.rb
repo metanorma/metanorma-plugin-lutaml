@@ -18,6 +18,7 @@ module Metanorma
           ^                            # Start of line
           \[                           # Opening bracket
           (?:\blutaml\b|               # Match lutaml or
+            \blutaml_xsd\b|            # lutaml_xsd or
             \blutaml_express\b|        # lutaml_express or
             \blutaml_express_liquid\b) # lutaml_express_liquid
           ,                            # Comma separator
@@ -53,12 +54,13 @@ module Metanorma
           line.match(EXPRESS_PREPROCESSOR_REGEX)
         end
 
-        def load_express_lutaml_file(document, file_path)
+        def load_lutaml_file(document, file_path, options)
           ::Lutaml::Parser.parse(
             File.new(
               Utils.relative_file_path(document, file_path),
               encoding: "UTF-8",
             ),
+            options: options,
           )
         end
 
@@ -123,7 +125,7 @@ module Metanorma
                   "the full path.",
                 )
               end
-              repo = load_express_lutaml_file(document, path)
+              repo = load_lutaml_file(document, path, options)
               repo = update_repo(options, repo)
               indexes[path] = {
                 liquid_drop: repo.to_liquid,
@@ -137,6 +139,7 @@ module Metanorma
         def update_repo(options, repo)
           # Unwrap repo if it's a cache
           repo = repo.content if repo.is_a? Expressir::Model::Cache
+          return repo unless repo.respond_to?(:schemas)
 
           # Process each schema
           repo.schemas.each do |schema|
@@ -245,6 +248,7 @@ module Metanorma
         end
 
         def reorder_schemas(repo_liquid, options)
+          return repo_liquid unless repo_liquid.respond_to?(:schemas)
           return repo_liquid.schemas unless options["selected_schemas"]
 
           ordered_schemas = []
