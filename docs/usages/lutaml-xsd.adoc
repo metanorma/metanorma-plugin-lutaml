@@ -1,0 +1,79 @@
+
+== Usage with LutaML XSD
+
+=== Overview
+
+The `lutaml_xsd` macro allows you to render and process *XML Schema (XSD)* files using *Liquid* templates.
+
+=== Syntax
+
+[source,adoc]
+----
+  [lutaml_xsd,<path_to_xsd>,<context_name>[, option1=value1, option2=value2, ...]]
+  ----
+    <your Liquid template here>
+  ----
+----
+
+* `<path_to_xsd>`: Path to the XSD file to be processed.
+* `<context_name>`: The name of the context variable to use in the template.
+* `option1=value1, ...`: Optional parameters (<<options,supported options>>).
+
+[[options]]
+=== Options
+
+* `location`: (optional) Base URL or path for resolving `<xs:import>` and `<xs:include>` statements in the XSD.  
+  For more details, see https://github.com/lutaml/lutaml-xsd?tab=readme-ov-file#include-and-import-handling
+
+=== Liquid Template Context
+
+The context variable (e.g., `unitsml`) exposes the following attributes for use in your Liquid template:
+
+* `element`: List of elements defined in the XSD.
+* `complex_type`: List of complex types defined in the XSD.
+* Each `element` and `complex_type` exposes its own attributes, such as `name`, `type`, and `annotation`.
+
+=== Example: Listing Elements and Complex Types
+
+[source,adoc]
+----
+= Elements
+[lutaml_xsd,path/to/unitsml.xsd,unitsml]
+----
+{% for element in unitsml.element %}
+Name: *{{ element.name }}*
+Type: *{{ element.type }}*
+{% endfor %}
+----
+
+= ComplexTypes
+[lutaml_xsd,path/to/unitsml.xsd,unitsml]
+----
+{% for complex_type in unitsml.complex_type %}
+Name: *{{ complex_type.name }}*
+Description: {{ complex_type.annotation }}
+{% endfor %}
+----
+
+=== Example: Using with Remote XSD and Options
+
+[source,adoc]
+----
+[lutaml_xsd,path/to/omml.xsd,unitsml, location=https://raw.githubusercontent.com/t-yuki/ooxml-xsd/refs/heads/master]
+----
+{% for element in unitsml.element %}
+Name: *{{ element.name }}*
+Type: *{{ element.type }}*
+{% endfor %}
+----
+
+=== Use Cases
+
+* Generate documentation for XML schemas.
+* Extract and list schema elements and types or other details.
+* Customize output using Liquid templates.
+
+=== Notes
+
+* The macro supports local file at <path_to_xsd> place.
+* You can use all standard *Liquid* template features for formatting and logic.
