@@ -676,9 +676,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             = Document title
 
             = Elements
-            [lutaml_xsd,#{fixtures_path('xsd_schemas/omml.xsd')},unitsml, location=https://raw.githubusercontent.com/t-yuki/ooxml-xsd/refs/heads/master]
+            [lutaml_xsd,#{fixtures_path('xsd_schemas/omml.xsd')},omml, location=https://raw.githubusercontent.com/t-yuki/ooxml-xsd/refs/heads/master]
             ----
-            {% for element in unitsml.element %}
+            {% for element in omml.element %}
 
             Name: *{{ element.name }}*
             Type: *{{ element.type }}*
@@ -686,9 +686,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             ----
 
             = ComplexTypes
-            [lutaml_xsd,#{fixtures_path('xsd_schemas/omml.xsd')},unitsml]
+            [lutaml_xsd,#{fixtures_path('xsd_schemas/omml.xsd')},omml]
             ----
-            {% for complex_type in unitsml.complex_type %}
+            {% for complex_type in omml.complex_type %}
 
             Name: *{{ complex_type.name }}*
             Description: {{ complex_type.annotation.documentation.first.content }}
