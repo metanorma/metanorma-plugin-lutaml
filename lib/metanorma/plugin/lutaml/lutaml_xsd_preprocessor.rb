@@ -4,13 +4,11 @@ module Metanorma
   module Plugin
     module Lutaml
       # Class for processing Lutaml files
-      class LutamlPreprocessor < BasePreprocessor
-        EXPRESS_PREPROCESSOR_REGEX = %r{
+      class LutamlXsdPreprocessor < BasePreprocessor
+        XSD_PREPROCESSOR_REGEX = %r{
           ^                            # Start of line
           \[                           # Opening bracket
-          (?:\blutaml\b|               # Match lutaml or
-            \blutaml_express\b|        # lutaml_express or
-            \blutaml_express_liquid\b) # lutaml_express_liquid
+          (?:\blutaml_xsd\b)           # lutaml_xsd
           ,                            # Comma separator
           (?<index_names>[^,]+)?       # Optional index names
           ,?                           # Optional comma
@@ -22,7 +20,17 @@ module Metanorma
         protected
 
         def lutaml_liquid?(line)
-          line.match(EXPRESS_PREPROCESSOR_REGEX)
+          line.match(XSD_PREPROCESSOR_REGEX)
+        end
+
+        private
+
+        def reorder_schemas(repo_liquid, _options)
+          repo_liquid
+        end
+
+        def update_repo(_options, repo)
+          repo
         end
       end
     end
