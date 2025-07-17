@@ -670,7 +670,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
         end
       end
 
-      context "with content Elements and ComplexTypes of UnitsML schema" do
+      context "with content Elements and ComplexTypes of OMML schema" do
         let(:input) do
           <<~TEXT
             = Document title
