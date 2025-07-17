@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
+RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
   describe "#process" do
     context "with macro: lutaml_xsd" do
       context "with content Elements and ComplexTypes of UnitsML schema" do
