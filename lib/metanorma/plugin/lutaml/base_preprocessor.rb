@@ -36,10 +36,6 @@ module Metanorma
 
         protected
 
-        def lutaml_liquid?(line)
-          line.match(BASE_PREPROCESSOR_REGEX)
-        end
-
         def load_lutaml_file(document, file_path, options)
           ::Lutaml::Parser.parse(
             File.new(

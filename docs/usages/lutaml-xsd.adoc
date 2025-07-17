@@ -38,7 +38,7 @@ The context variable (e.g., `unitsml`) exposes the following attributes for use 
 [source,adoc]
 ----
 = Elements
-[lutaml_xsd,path/to/unitsml.xsd,unitsml]
+[lutaml_xsd, path/to/unitsml.xsd, unitsml]
 ----
 {% for element in unitsml.element %}
 Name: *{{ element.name }}*
@@ -59,9 +59,9 @@ Description: {{ complex_type.annotation }}
 
 [source,adoc]
 ----
-[lutaml_xsd,path/to/omml.xsd,unitsml, location=https://raw.githubusercontent.com/t-yuki/ooxml-xsd/refs/heads/master]
+[lutaml_xsd, path/to/omml.xsd,omml, location=https://raw.githubusercontent.com/t-yuki/ooxml-xsd/refs/heads/master]
 ----
-{% for element in unitsml.element %}
+{% for element in omml.element %}
 Name: *{{ element.name }}*
 Type: *{{ element.type }}*
 {% endfor %}
