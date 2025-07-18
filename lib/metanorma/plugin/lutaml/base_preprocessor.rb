@@ -209,7 +209,7 @@ module Metanorma
             .new(include_paths, ["%s.liquid", "_%s.liquid", "_%s.adoc"])
 
           # Parse template once outside the loop
-          template = ::Liquid::Template.parse(lines.join("\n"))
+          template = template(lines)
           template.registers[:file_system] = file_system
 
           # Render for each item
@@ -226,6 +226,10 @@ module Metanorma
             .log("[LutamlPreprocessor] Failed to parse LutaML block: " \
                  "#{e.message}", :error)
           raise e
+        end
+
+        def template(lines)
+          ::Liquid::Template.parse(lines.join("\n"))
         end
 
         def reorder_schemas(repo_liquid, options)
