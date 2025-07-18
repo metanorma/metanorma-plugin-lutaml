@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
+require_relative "liquid/custom_filters/xsd/used_by"
+
 module Metanorma
   module Plugin
     module Lutaml
-      # Class for processing Lutaml files
       class LutamlXsdPreprocessor < BasePreprocessor
         XSD_PREPROCESSOR_REGEX = %r{
           ^                            # Start of line
@@ -24,6 +25,18 @@ module Metanorma
         end
 
         private
+
+        def template(lines)
+          ::Liquid::Template.parse(lines.join("\n"), environment: liquid_environment)
+        end
+
+        def liquid_environment
+          ::Liquid::Environment.new.tap do |env|
+            env.register_filter(
+              ::Metanorma::Plugin::Lutaml::Liquid::Xsd::CustomFilters,
+            )
+          end
+        end
 
         def reorder_schemas(repo_liquid, _options)
           repo_liquid
