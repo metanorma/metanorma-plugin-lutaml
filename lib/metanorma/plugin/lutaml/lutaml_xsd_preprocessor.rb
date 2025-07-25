@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 require_relative "liquid/custom_filters/xsd/used_by"
+require_relative "liquid/custom_filters/xsd/attributes"
+require_relative "liquid/custom_filters/xsd/xml_element"
+require_relative "liquid/custom_filters/xsd/class_name_end_with"
 
 module Metanorma
   module Plugin
