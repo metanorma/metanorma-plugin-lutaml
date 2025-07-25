@@ -20,6 +20,25 @@ module Metanorma
               end.map { |object| linkify_object(object) }
             end
 
+            def resolved_element_order(object)
+              return [] if object&.element_order.nil?
+
+              object.element_order.each_with_object(object.element_order.dup) do |xml_element, array|
+                if xml_element.text? || ELEMENT_ORDER_IGNORABLE.include?(xml_element.name)
+                  next array.delete_if { |instance| instance == xml_element }
+                end
+
+                index = 0
+                array.each_with_index do |element, i|
+                  next unless element == xml_element
+
+                  method_name = ::Lutaml::Model::Utils.snake_case(xml_element.name)
+                  array[i] = Array(object.send(method_name))[index]
+                  index += 1
+                end
+              end
+            end
+
             private
 
             def value_of(object)
@@ -35,7 +54,7 @@ module Metanorma
               id_prefix = id_prefix(object)
               href = %(href="##{id_prefix}_#{name}")
               title = %(title="Jump to '#{name}' #{TITLE_SUFFIX[id_prefix]}.")
-              %(pass:[<a #{title} #{href}>#{name}</a>])
+              %(<<#{id_prefix}_#{name}, #{name}>>)
             end
 
             def id_prefix(object)
@@ -66,25 +85,6 @@ module Metanorma
               end
               used_by_elements.concat(schema.group.select { |group| find_used_by(group, complex_type) })
               used_by_elements
-            end
-
-            def resolved_element_order(object)
-              return [] if object.element_order.nil?
-
-              object.element_order.each_with_object(object.element_order.dup) do |xml_element, array|
-                if xml_element.text? || ELEMENT_ORDER_IGNORABLE.include?(xml_element.name)
-                  next array.delete_if { |instance| instance == xml_element }
-                end
-
-                index = 0
-                array.each_with_index do |element, i|
-                  next unless element == xml_element
-
-                  method_name = ::Lutaml::Model::Utils.snake_case(xml_element.name)
-                  array[i] = Array(object.send(method_name))[index]
-                  index += 1
-                end
-              end
             end
           end
         end
