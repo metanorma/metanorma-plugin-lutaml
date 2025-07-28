@@ -32,6 +32,26 @@ module Metanorma
               end
             end
 
+            def min_max_arg(attr)
+              case attr.use
+              when "optional" then "0..1"
+              when "required" then "1"
+              end
+            end
+
+            def attr_type(attr)
+              return attr.fixed if attr.fixed
+              return if attr.ref
+              return attr.type if attr.type
+
+              simple_type = attr.simple_type
+              if union = simple_type.union
+                %(union of: [ #{union_str(union)} ])
+              elsif restriction = simple_type.restriction
+                restriction_str(restriction)
+              end
+            end
+
             private
 
             def simple_content_attributes(simple_content, schema)
@@ -47,28 +67,8 @@ module Metanorma
               end
             end
 
-            def min_max_arg(attr)
-              case attr.use
-              when "optional" then "0..1"
-              when "required" then "1"
-              end
-            end
-
             def attr_name(attr)
               attr.name || attr.ref
-            end
-
-            def attr_type(attr)
-              return attr.fixed if attr.fixed
-              return if attr.ref
-              return attr.type if attr.type
-
-              simple_type = attr.simple_type
-              if union = simple_type.union
-                %(union of: [ #{union_str(union)} ])
-              elsif restriction = simple_type.restriction
-                restriction_str(restriction)
-              end
             end
 
             def union_str(union)
