@@ -208,6 +208,37 @@ under `classes`.  Then define which `attributes` you want to add guidance by the
 guidance in `guidance`.
 
 
+=== Generating a definition table for an enumeration: `lutaml_enum_table`
+
+This command allows you to render a LutaML table of a class by using Liquid Drop.
+
+The table will show:
+
+* Enumeration Name
+* Enumeration Definition
+* Subtype of superclass
+* Enumeration Stereotype
+* Enumeration Values
+** Code
+** Value
+** Definition
+
+[source,adoc]
+----
+lutaml_enum_table::/path/to/example.xmi[name="NameOfEnum",template="/path/to/templates/_my_enum_table.liquid"]
+----
+
+The command accepts the options listed below:
+
+* `/path/to/example.xmi` specifies the path of the XMI file.
+
+* `name` of the name of the enumeration.
+
+* `template="/path/to/templates/_my_enum_table.liquid"` specifies the path of
+  the liquid template. (Optional)
+  By default, it will look for the template `_enum_table.liquid` defined in
+  `lib/metanorma/plugin/lutaml/templates`.  This template can be customized by
+  changing the template path in the `template` option.
 
 
 === Usage of `lutaml_ea_xmi` command
