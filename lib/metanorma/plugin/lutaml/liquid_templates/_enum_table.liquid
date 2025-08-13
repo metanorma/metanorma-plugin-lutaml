@@ -1,0 +1,24 @@
+{% capture enum_stereotype -%}&#x00AB;{{ enum.stereotype }}&#x00BB;{%- endcapture -%}
+{%- if enum_stereotype == "&#x00AB;&#x00BB;" -%}
+  {%- assign enum_stereotype = " " -%}
+{%- endif %}
+
+[cols="29,195,535"]
+|===
+3+^h| Enumeration: {{ enum.name }}
+3+| Definition: {{ enum.definition }}
+3+| Subtype of: {{ enum.upper_packaged_element }}
+3+| Stereotypes: {{ enum_stereotype }}
+
+{% if enum.values.size > 0 %}
+{% assign code_num = 0 %}
+
+h| Code h| Value h| Definition
+
+{% for value in enum.values %}
+{% assign code_num = code_num | plus: 1 %}
+| {{ code_num }} | {{ value.name }} | {{ value.definition }}
+{% endfor %}
+
+{% endif %}
+|===

@@ -15,6 +15,7 @@ require "metanorma/plugin/lutaml/lutaml_gml_dictionary_base"
 require "metanorma/plugin/lutaml/lutaml_gml_dictionary_block_macro"
 require "metanorma/plugin/lutaml/lutaml_gml_dictionary_block"
 require "metanorma/plugin/lutaml/lutaml_klass_table_block_macro"
+require "metanorma/plugin/lutaml/lutaml_enum_table_block_macro"
 
 module Metanorma
   module Plugin
