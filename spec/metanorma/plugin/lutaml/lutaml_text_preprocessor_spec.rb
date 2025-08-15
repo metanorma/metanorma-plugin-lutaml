@@ -335,7 +335,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             yaml_compressed = File.binread(cache_path)
             yaml = Zlib::Inflate.inflate(yaml_compressed)
             cache = Expressir::Model::Cache.from_yaml(yaml)
-            cache.version = "2.1.24"
+
+            expressir_gem_spec = Gem::Specification.find_by_name("expressir")
+            expressir_gem_ver_str = expressir_gem_spec.version.version
+            cache.version = expressir_gem_ver_str || "2.1.24"
+
             yaml = cache.to_yaml
             yaml_compressed = Zlib::Deflate.deflate(yaml)
             File.binwrite(cache_path, yaml_compressed)
