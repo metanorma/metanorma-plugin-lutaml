@@ -61,11 +61,8 @@ module Metanorma
 
             def find_used_by(object, element)
               resolved_element_order(object).any? do |xml_element|
-                if value_of(xml_element) == element.name
-                  true
-                else
+                value_of(xml_element) == element.name ||
                   find_used_by(xml_element, element)
-                end
               end
             end
 
@@ -75,11 +72,8 @@ module Metanorma
 
             def complex_type_used_by(schema, complex_type)
               used_by_elements = schema.element.select do |element|
-                if element.type == complex_type.name
-                  true
-                else
+                element.type == complex_type.name ||
                   find_used_by(element, complex_type)
-                end
               end
               used_by_elements.concat(schema.group.select { |group| find_used_by(group, complex_type) })
               used_by_elements
