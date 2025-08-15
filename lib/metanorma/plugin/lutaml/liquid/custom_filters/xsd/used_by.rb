@@ -52,8 +52,6 @@ module Metanorma
             def linkify_object(object)
               name = object.name
               id_prefix = id_prefix(object)
-              href = %(href="##{id_prefix}_#{name}")
-              title = %(title="Jump to '#{name}' #{TITLE_SUFFIX[id_prefix]}.")
               %(<<#{id_prefix}_#{name}, #{name}>>)
             end
 

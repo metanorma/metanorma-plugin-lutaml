@@ -5,7 +5,7 @@ module Metanorma
         module Xsd
           module CustomFilters
             def child_elements(schema, element)
-              objects = resolved_element_order(resolve_complex_type(element))
+              objects = resolved_element_order(resolve_complex_type(element, schema))
               objects.filter_map do |object|
                 if object.respond_to?(:element)
                   object.element
@@ -57,10 +57,10 @@ module Metanorma
 
             private
 
-            def resolve_complex_type(object)
+            def resolve_complex_type(object, schema)
               return object if object.is_a?(::Lutaml::Xsd::ComplexType::ComplexTypeDrop)
 
-              complex_type(object)
+              complex_type(schema, object)
             end
 
             def simple_content_children(object)
