@@ -15,13 +15,6 @@ module Metanorma
               end.flatten
             end
 
-            def element_representations(elements, schema)
-              elements.map.with_index(1) do |element, index|
-                element = schema.element.find { |e| e.name == element.name } unless element.instance_of?(::Lutaml::Xsd::Element::ElementDrop)
-                %(\n <#{element.name} type="#{element.type}" [#{min_max_arg(element)}]#{"\n" if index == elements.count})
-              end
-            end
-
             def attributes_xml_representation_for(object)
               case object
               when ::Lutaml::Xsd::AttributeGroup::AttributeGroupDrop
@@ -37,11 +30,15 @@ module Metanorma
               end
             end
 
-            def children_xml_representation_for(object)
-              case object
-              when ::Lutaml::Xsd::SimpleContent::SimpleContentDrop
-                simple_content_children(object)
-              end
+            def simple_content_children(object)
+              return unless object.is_a?(::Lutaml::Xsd::SimpleContent::SimpleContentDrop)
+
+              tag_name = object.extension ? "extension" : "restriction"
+              [
+                xsd_open_tag(tag_name, { base: object.public_send(tag_name).base }),
+                resolved_element_order(instance).map { |child| "  #{simple_content_child(child)}" },
+                "</xsd:#{tag_name}>",
+              ].flatten
             end
 
             def cardinality_representation(element)
@@ -63,17 +60,6 @@ module Metanorma
               complex_type(schema, object)
             end
 
-            def simple_content_children(object)
-              tag_name = object.extension ? "extension" : "restriction"
-              instance = object.extension || object.restriction
-              base_tag_attrs = { base: instance.base }
-              [
-                xsd_open_tag(tag_name, base_tag_attrs),
-                resolved_element_order(instance).map { |child| "  #{simple_content_child(child)}" },
-                xsd_close_tag(tag_name),
-              ].flatten
-            end
-
             def simple_content_child(child)
               case child
               when ::Lutaml::Xsd::Attribute::AttributeDrop
@@ -86,10 +72,6 @@ module Metanorma
             def xsd_open_tag(tag_name, attributes = {}, closed: false)
               attrs = attributes.map { |k, v| %(#{k}="#{v}") }.join(" ")
               %(<xsd:#{tag_name} #{attrs}#{"/" if closed}>)
-            end
-
-            def xsd_close_tag(tag_name)
-              "</xsd:#{tag_name}>"
             end
 
             def attr_attrs(object)

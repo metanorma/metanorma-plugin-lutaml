@@ -19,7 +19,9 @@ gem "lutaml",
     github: "lutaml/lutaml",
     branch: "update/xsd_support_metanorma_plugin"
 gem "metanorma"
-gem "metanorma-standoc", "~> 3.0.8"
+# gem "metanorma-standoc", "~> 3.0.8"
+# TODO: Remove the next line when the PR#1086 is merged and un-comment the above line.
+gem "metanorma-standoc", github: "metanorma/metanorma-standoc", branch: "update/lutaml_xsd_preprocessor_support"
 gem "rake", "~> 13"
 gem "rspec", "~> 3.6"
 gem "rspec-html-matchers"
