@@ -26,8 +26,9 @@ module Metanorma
             end
 
             def groups_attributes(schema, groups)
-              groups.map do |group|
+              groups.flat_map do |group|
                 group = schema.attribute_group.find { |g| g.name == group.ref } if group.ref
+
                 group.attribute
               end
             end
@@ -40,8 +41,8 @@ module Metanorma
             end
 
             def attr_type(attr)
-              return attr.fixed if attr.fixed
               return if attr.ref
+              return attr.fixed if attr.fixed
               return attr.type if attr.type
 
               simple_type = attr.simple_type

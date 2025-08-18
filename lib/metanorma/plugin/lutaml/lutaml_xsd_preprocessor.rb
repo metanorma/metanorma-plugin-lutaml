@@ -4,6 +4,7 @@ require_relative "liquid/custom_filters/xsd/used_by"
 require_relative "liquid/custom_filters/xsd/attributes"
 require_relative "liquid/custom_filters/xsd/xml_element"
 require_relative "liquid/custom_filters/xsd/class_name_end_with"
+require_relative "liquid/custom_filters/xsd/resolved_element_order"
 
 module Metanorma
   module Plugin
