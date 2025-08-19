@@ -337,7 +337,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                     <p id="_">Mine text</p>
                     <svgmap id="_">
                       <figure id="_">
-                        <image id="_" src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" mimetype="image/svg+xml" height="auto" width="auto"/>
+                        <image id="_" src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" mimetype="image/svg+xml" height="auto" width="auto" filename="_"/>
                       </figure>
                       <target href="1">
                         <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
@@ -355,7 +355,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                     <p id="_">Mine text</p>
                     <svgmap id="_">
                       <figure id="_">
-                        <image id="_" src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" mimetype="image/svg+xml" height="auto" width="auto"/>
+                        <image id="_" src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" mimetype="image/svg+xml" height="auto" width="auto" filename="_"/>
                       </figure>
                       <target href="1">
                         <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
@@ -384,8 +384,10 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           end
 
           it "correctly renders input" do
-            output = remove_xml_whitespaces(
-              xml_string_content(metanorma_convert(input)),
+            output = strip_filename(
+              remove_xml_whitespaces(
+                xml_string_content(metanorma_convert(input)),
+              ),
             )
             expect(output)
               .to(be_equivalent_to(remove_xml_whitespaces(expected_output)))
