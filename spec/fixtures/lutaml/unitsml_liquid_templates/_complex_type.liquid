@@ -52,7 +52,7 @@ Description pass:[{{ complex_type.annotation.documentation.first.content }}]
 {%- if attribute_drop %}
   <xsd:attribute{{ object | attributes_xml_representation_for: }}{% unless object.simple_type %}/{% endunless %}>
   {%- if object.simple_type %}
-    {%- render "xsd_templates/simple_type", simple_type: object.simple_type, indent: "    " %}
+    {%- render "spec/fixtures/lutaml/unitsml_liquid_templates/simple_type", simple_type: object.simple_type, indent: "    " %}
   </xsd:attribute>
   {%- endif %}
 {%- endif %}

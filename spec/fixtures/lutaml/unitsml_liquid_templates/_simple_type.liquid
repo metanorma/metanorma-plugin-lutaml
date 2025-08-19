@@ -12,7 +12,7 @@
   {%- assign union = simple_type.union %}
 {{simple_type_indent}}<xsd:union memberTypes="{{ union.member_types }}"{% unless union.simple_type %}/{% endunless %}>
   {%- for union_simple_type in union.simple_type %}
-  {%- render "xsd_templates/simple_type", simple_type: union_simple_type, indent: extended_indent %}
+  {%- render "spec/fixtures/lutaml/unitsml_liquid_templates/simple_type", simple_type: union_simple_type, indent: extended_indent %}
 {{simple_type_indent}}</xsd:union>
   {%- endfor %}
 {%- endif %}
