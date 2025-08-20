@@ -182,7 +182,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             #{BLANK_HDR}<sections><clause id="_" inline-header="false" obligation="normative"><title id="_">annotated_3d_model_data_quality_criteria_schema</title>
             <p id="_">Mine text</p>
             <svgmap id="_"><figure id="_">
-            <image src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
+            <image src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" id="_" mimetype="image/svg+xml" height="auto" width="auto" filename="_"></image>
             </figure>
             <target href="1">
               <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
@@ -201,7 +201,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               <figure id="_">
                 <image
                   src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}"
-                  id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
+                  id="_" mimetype="image/svg+xml" height="auto" width="auto" filename="_"></image>
               </figure>
               <target href="1">
                 <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
@@ -225,7 +225,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         end
 
         it "correctly renders input" do
-          expect(xml_string_content(metanorma_convert(input)))
+          expect(strip_filename(xml_string_content(metanorma_convert(input))))
             .to(be_equivalent_to(output))
         end
       end
@@ -387,7 +387,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 <svgmap id="_">
                   <figure id="_">
                     <image src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" id="_" mimetype="image/svg+xml"
-                      height="auto" width="auto"></image>
+                      height="auto" width="auto" filename="_"></image>
                   </figure>
                   <target href="1">
                     <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
@@ -413,7 +413,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         end
 
         it "correctly renders input" do
-          expect(xml_string_content(metanorma_convert(input)))
+          expect(strip_filename(xml_string_content(metanorma_convert(input))))
             .to(be_equivalent_to(output))
         end
       end
@@ -729,7 +729,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                   <figure id="_">
                     <image
                       src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}"
-                      id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
+                      id="_" mimetype="image/svg+xml" height="auto" width="auto" filename="_"></image>
                   </figure>
                   <target
                     href="1">
@@ -752,7 +752,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                   <figure id="_">
                     <image
                       src="#{File.expand_path(fixtures_path('expressir_index_1/measure_schemaexpg5.svg'))}"
-                      id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
+                      id="_" mimetype="image/svg+xml" height="auto" width="auto" filename="_"></image>
                   </figure>
                   <target
                     href="1">
@@ -784,7 +784,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         end
 
         it "correctly renders input" do
-          expect(xml_string_content(metanorma_convert(input)))
+          expect(strip_filename(xml_string_content(metanorma_convert(input))))
             .to(be_equivalent_to(output))
         end
       end

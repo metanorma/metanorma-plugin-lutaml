@@ -71,6 +71,9 @@ BLANK_HDR = <<~"HDR".freeze
       </ext>
     </bibdata>
     <metanorma-extension>
+      <semantic-metadata>
+        <stage-published>true</stage-published>
+      </semantic-metadata>
       <presentation-metadata>
         <name>TOC Heading Levels</name>
         <value>2</value>
@@ -132,4 +135,8 @@ end
 
 def strip_src(xml)
   xml.gsub(/\ssrc="[^"]+"/, ' src="_"')
+end
+
+def strip_filename(xml)
+  xml.gsub(/\sfilename="[^"]+"/, ' filename="_"')
 end
