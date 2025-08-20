@@ -3612,7 +3612,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
 
         let(:output) { File.read("spec/fixtures/lutaml/unitsml_expected.xml") }
         let(:text_regex) do
-          %r(Element containing various unit symbols\.\s+\w+ \(ASCII\),)
+          %r(Element containing various unit symbols\.[^\(]+ \(ASCII\),)
         end
 
         it "correctly renders input" do
