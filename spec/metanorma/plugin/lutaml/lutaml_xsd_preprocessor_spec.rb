@@ -3570,16 +3570,19 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <hr/>
                 </clause>
-            </sections>
-          </metanorma>
+              </sections>
+            </metanorma>
           TEXT
         end
 
+        let(:text_regex) do
+          %r(Element containing various unit symbols\. Examples[^\.]+\.)
+        end
+
         it "correctly renders input" do
-          text_regex = %r(Element containing various unit symbols\. Examples[^\.]+\.)
           processed_input = xml_string_content(metanorma_convert(input))
           expect(processed_input).to match(text_regex)
-          processed_input.sub!(/\s+#{text_regex}\s+/, '')
+          processed_input.sub!(/\s+#{text_regex}\s+/, "")
           expect(processed_input).to(be_equivalent_to(output))
         end
       end
@@ -3587,33 +3590,35 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
       context "with UnitsML XSD documentation generation" do
         let(:input) do
           <<~TEXT
-          [#top]
-          = XSD Templates
+            [#top]
+            = XSD Templates
 
-          [lutaml_xsd, spec/fixtures/lutaml/xsd_schemas/unitsml-v1.0-csd04.xsd, schema]
-          ----
-          == Elements
+            [lutaml_xsd, spec/fixtures/lutaml/xsd_schemas/unitsml-v1.0-csd04.xsd, schema]
+            ----
+            == Elements
 
-          include::spec/fixtures/lutaml/unitsml_liquid_templates/_elements.liquid[]
+            include::spec/fixtures/lutaml/unitsml_liquid_templates/_elements.liquid[]
 
-          == Complex Types
+            == Complex Types
 
-          include::spec/fixtures/lutaml/unitsml_liquid_templates/_complex_type.liquid[]
+            include::spec/fixtures/lutaml/unitsml_liquid_templates/_complex_type.liquid[]
 
-          == Attribute Groups
+            == Attribute Groups
 
-          include::spec/fixtures/lutaml/unitsml_liquid_templates/_attribute_groups.liquid[]
-          ----
+            include::spec/fixtures/lutaml/unitsml_liquid_templates/_attribute_groups.liquid[]
+            ----
           TEXT
         end
 
         let(:output) { File.read("spec/fixtures/lutaml/unitsml_expected.xml") }
+        let(:text_regex) do
+          %r(Element containing various unit symbols\.\s+\w+ \(ASCII\),)
+        end
 
         it "correctly renders input" do
-          text_regex = %r(Element containing various unit symbols\.  Examples include Aring \(ASCII\)\,)
           processed_input = xml_string_content(metanorma_convert(input))
           expect(processed_input).to have_tag("strong", text_regex)
-          processed_input.sub!(/<strong>#{text_regex}[^<]+<\/strong>/, '')
+          processed_input.sub!(/<strong>#{text_regex}[^<]+<\/strong>/, "")
           expect(processed_input).to(be_equivalent_to(output))
         end
       end

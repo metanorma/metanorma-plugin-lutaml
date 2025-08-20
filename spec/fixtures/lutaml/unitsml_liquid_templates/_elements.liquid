@@ -3,7 +3,7 @@
 [#element_{{element.name}}]
 === Element: *{{ element.name }}*
 
-==== Type <<complex_type_{{element.type}}, {{ element.type }}>>
+==== Type <<complex_type_{{ element.type }}, {{ element.type }}>>
 {% assign used_by_elements = schema | used_by: element %}
 {% if used_by_elements.size > 0 %}==== *Used By* {{ used_by_elements | join: ", " }}{% endif %}
 

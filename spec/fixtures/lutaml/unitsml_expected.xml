@@ -2344,11 +2344,11 @@
                   <name id="_">Schema Component Representation </name>
                   <body>&lt;xsd:complexType name="UnitsMLType"&gt;
   &lt;xsd:sequence&gt;
-    &lt;xsd:element ref="UnitSet" minOccurs="0""/&gt;
-    &lt;xsd:element ref="CountedItemSet" minOccurs="0""/&gt;
-    &lt;xsd:element ref="QuantitySet" minOccurs="0""/&gt;
-    &lt;xsd:element ref="DimensionSet" minOccurs="0""/&gt;
-    &lt;xsd:element ref="PrefixSet" minOccurs="0""/&gt;
+    &lt;xsd:element ref="UnitSet" minOccurs="0"/&gt;
+    &lt;xsd:element ref="CountedItemSet" minOccurs="0"/&gt;
+    &lt;xsd:element ref="QuantitySet" minOccurs="0"/&gt;
+    &lt;xsd:element ref="DimensionSet" minOccurs="0"/&gt;
+    &lt;xsd:element ref="PrefixSet" minOccurs="0"/&gt;
   &lt;/xsd:sequence&gt;
 &lt;/xsd:complexType&gt;</body>
                </sourcecode>
@@ -2378,7 +2378,7 @@
                   <name id="_">Schema Component Representation </name>
                   <body>&lt;xsd:complexType name="UnitSetType"&gt;
   &lt;xsd:sequence&gt;
-    &lt;xsd:element ref="Unit" maxOccurs="unbounded""/&gt;
+    &lt;xsd:element ref="Unit" maxOccurs="unbounded"/&gt;
   &lt;/xsd:sequence&gt;
 &lt;/xsd:complexType&gt;</body>
                </sourcecode>
@@ -2422,17 +2422,17 @@
                   <name id="_">Schema Component Representation </name>
                   <body>&lt;xsd:complexType name="UnitType"&gt;
   &lt;xsd:sequence&gt;
-    &lt;xsd:element ref="UnitSystem" minOccurs="0" maxOccurs="unbounded""/&gt;
-    &lt;xsd:element ref="UnitName" maxOccurs="unbounded""/&gt;
-    &lt;xsd:element ref="UnitSymbol" minOccurs="0" maxOccurs="unbounded""/&gt;
-    &lt;xsd:element ref="CodeListValue" minOccurs="0" maxOccurs="unbounded""/&gt;
-    &lt;xsd:element ref="RootUnits" minOccurs="0""/&gt;
-    &lt;xsd:element ref="Conversions" minOccurs="0""/&gt;
-    &lt;xsd:element ref="QuantityReference" minOccurs="0" maxOccurs="unbounded""/&gt;
-    &lt;xsd:element ref="UnitVersionHistory" minOccurs="0" maxOccurs="unbounded""/&gt;
-    &lt;xsd:element ref="UnitDefinition" minOccurs="0" maxOccurs="unbounded""/&gt;
-    &lt;xsd:element ref="UnitHistory" minOccurs="0" maxOccurs="unbounded""/&gt;
-    &lt;xsd:element ref="UnitRemark" minOccurs="0" maxOccurs="unbounded""/&gt;
+    &lt;xsd:element ref="UnitSystem" minOccurs="0" maxOccurs="unbounded"/&gt;
+    &lt;xsd:element ref="UnitName" maxOccurs="unbounded"/&gt;
+    &lt;xsd:element ref="UnitSymbol" minOccurs="0" maxOccurs="unbounded"/&gt;
+    &lt;xsd:element ref="CodeListValue" minOccurs="0" maxOccurs="unbounded"/&gt;
+    &lt;xsd:element ref="RootUnits" minOccurs="0"/&gt;
+    &lt;xsd:element ref="Conversions" minOccurs="0"/&gt;
+    &lt;xsd:element ref="QuantityReference" minOccurs="0" maxOccurs="unbounded"/&gt;
+    &lt;xsd:element ref="UnitVersionHistory" minOccurs="0" maxOccurs="unbounded"/&gt;
+    &lt;xsd:element ref="UnitDefinition" minOccurs="0" maxOccurs="unbounded"/&gt;
+    &lt;xsd:element ref="UnitHistory" minOccurs="0" maxOccurs="unbounded"/&gt;
+    &lt;xsd:element ref="UnitRemark" minOccurs="0" maxOccurs="unbounded"/&gt;
   &lt;/xsd:sequence&gt;
   &lt;xsd:attribute ref="xml:id" use="required"/&gt;
   &lt;xsd:attribute name="timeStamp" type="xsd:dateTime" use="optional"/&gt;
@@ -2506,8 +2506,8 @@
                   <name id="_">Schema Component Representation </name>
                   <body>&lt;xsd:complexType name="RootUnitsType"&gt;
   &lt;xsd:sequence&gt;
-    &lt;xsd:element ref="EnumeratedRootUnit" minOccurs="0" maxOccurs="unbounded""/&gt;
-    &lt;xsd:element ref="ExternalRootUnit" minOccurs="0" maxOccurs="unbounded""/&gt;
+    &lt;xsd:element ref="EnumeratedRootUnit" minOccurs="0" maxOccurs="unbounded"/&gt;
+    &lt;xsd:element ref="ExternalRootUnit" minOccurs="0" maxOccurs="unbounded"/&gt;
   &lt;/xsd:sequence&gt;
 &lt;/xsd:complexType&gt;</body>
                </sourcecode>
@@ -2868,9 +2868,9 @@
                   <name id="_">Schema Component Representation </name>
                   <body>&lt;xsd:complexType name="ConversionsType"&gt;
   &lt;xsd:sequence&gt;
-    &lt;xsd:element ref="Float64ConversionFrom" minOccurs="0" maxOccurs="unbounded""/&gt;
-    &lt;xsd:element ref="SpecialConversionFrom" minOccurs="0" maxOccurs="unbounded""/&gt;
-    &lt;xsd:element ref="WSDLConversionFrom" minOccurs="0" maxOccurs="unbounded""/&gt;
+    &lt;xsd:element ref="Float64ConversionFrom" minOccurs="0" maxOccurs="unbounded"/&gt;
+    &lt;xsd:element ref="SpecialConversionFrom" minOccurs="0" maxOccurs="unbounded"/&gt;
+    &lt;xsd:element ref="WSDLConversionFrom" minOccurs="0" maxOccurs="unbounded"/&gt;
   &lt;/xsd:sequence&gt;
 &lt;/xsd:complexType&gt;</body>
                </sourcecode>
@@ -2912,7 +2912,7 @@
                   <name id="_">Schema Component Representation </name>
                   <body>&lt;xsd:complexType name="Float64ConversionFromType"&gt;
   &lt;xsd:sequence&gt;
-    &lt;xsd:element ref="ConversionNote" minOccurs="0" maxOccurs="unbounded""/&gt;
+    &lt;xsd:element ref="ConversionNote" minOccurs="0" maxOccurs="unbounded"/&gt;
   &lt;/xsd:sequence&gt;
   &lt;xsd:attribute ref="xml:id" use="required"/&gt;
   &lt;xsd:attributeGroup ref="initialUnit"/&gt;
@@ -2957,7 +2957,7 @@
                   <name id="_">Schema Component Representation </name>
                   <body>&lt;xsd:complexType name="SpecialConversionFromType"&gt;
   &lt;xsd:sequence&gt;
-    &lt;xsd:element ref="ConversionDescription" minOccurs="0" maxOccurs="unbounded""/&gt;
+    &lt;xsd:element ref="ConversionDescription" minOccurs="0" maxOccurs="unbounded"/&gt;
   &lt;/xsd:sequence&gt;
   &lt;xsd:attribute ref="xml:id" use="required"/&gt;
   &lt;xsd:attribute name="conversionURL" type="xsd:anyURI" use="optional"/&gt;
@@ -2994,7 +2994,7 @@
                   <name id="_">Schema Component Representation </name>
                   <body>&lt;xsd:complexType name="WSDLConversionFromType"&gt;
   &lt;xsd:sequence&gt;
-    &lt;xsd:element ref="WSDLDescription" minOccurs="0" maxOccurs="unbounded""/&gt;
+    &lt;xsd:element ref="WSDLDescription" minOccurs="0" maxOccurs="unbounded"/&gt;
   &lt;/xsd:sequence&gt;
   &lt;xsd:attribute ref="xml:id" use="required"/&gt;
   &lt;xsd:attributeGroup ref="initialUnit"/&gt;
@@ -3027,7 +3027,7 @@
                   <name id="_">Schema Component Representation </name>
                   <body>&lt;xsd:complexType name="CountedItemSetType"&gt;
   &lt;xsd:sequence&gt;
-    &lt;xsd:element ref="CountedItem" maxOccurs="unbounded""/&gt;
+    &lt;xsd:element ref="CountedItem" maxOccurs="unbounded"/&gt;
   &lt;/xsd:sequence&gt;
 &lt;/xsd:complexType&gt;</body>
                </sourcecode>
@@ -3064,12 +3064,12 @@
                   <name id="_">Schema Component Representation </name>
                   <body>&lt;xsd:complexType name="CountedItemType"&gt;
   &lt;xsd:sequence&gt;
-    &lt;xsd:element ref="ItemName" maxOccurs="unbounded""/&gt;
-    &lt;xsd:element ref="ItemSymbol" minOccurs="0" maxOccurs="unbounded""/&gt;
-    &lt;xsd:element ref="ItemVersionHistory" minOccurs="0" maxOccurs="unbounded""/&gt;
-    &lt;xsd:element ref="ItemDefinition" minOccurs="0" maxOccurs="unbounded""/&gt;
-    &lt;xsd:element ref="ItemHistory" minOccurs="0" maxOccurs="unbounded""/&gt;
-    &lt;xsd:element ref="ItemRemark" minOccurs="0" maxOccurs="unbounded""/&gt;
+    &lt;xsd:element ref="ItemName" maxOccurs="unbounded"/&gt;
+    &lt;xsd:element ref="ItemSymbol" minOccurs="0" maxOccurs="unbounded"/&gt;
+    &lt;xsd:element ref="ItemVersionHistory" minOccurs="0" maxOccurs="unbounded"/&gt;
+    &lt;xsd:element ref="ItemDefinition" minOccurs="0" maxOccurs="unbounded"/&gt;
+    &lt;xsd:element ref="ItemHistory" minOccurs="0" maxOccurs="unbounded"/&gt;
+    &lt;xsd:element ref="ItemRemark" minOccurs="0" maxOccurs="unbounded"/&gt;
   &lt;/xsd:sequence&gt;
   &lt;xsd:attribute ref="xml:id" use="required"/&gt;
 &lt;/xsd:complexType&gt;</body>
@@ -3100,7 +3100,7 @@
                   <name id="_">Schema Component Representation </name>
                   <body>&lt;xsd:complexType name="QuantitySetType"&gt;
   &lt;xsd:sequence&gt;
-    &lt;xsd:element ref="Quantity" maxOccurs="unbounded""/&gt;
+    &lt;xsd:element ref="Quantity" maxOccurs="unbounded"/&gt;
   &lt;/xsd:sequence&gt;
 &lt;/xsd:complexType&gt;</body>
                </sourcecode>
@@ -3140,13 +3140,13 @@
                   <name id="_">Schema Component Representation </name>
                   <body>&lt;xsd:complexType name="QuantityType"&gt;
   &lt;xsd:sequence&gt;
-    &lt;xsd:element ref="QuantityName" maxOccurs="unbounded""/&gt;
-    &lt;xsd:element ref="QuantitySymbol" minOccurs="0" maxOccurs="unbounded""/&gt;
-    &lt;xsd:element ref="UnitReference" minOccurs="0" maxOccurs="unbounded""/&gt;
-    &lt;xsd:element ref="QuantityVersionHistory" minOccurs="0" maxOccurs="unbounded""/&gt;
-    &lt;xsd:element ref="QuantityDefinition" minOccurs="0" maxOccurs="unbounded""/&gt;
-    &lt;xsd:element ref="QuantityHistory" minOccurs="0" maxOccurs="unbounded""/&gt;
-    &lt;xsd:element ref="QuantityRemark" minOccurs="0" maxOccurs="unbounded""/&gt;
+    &lt;xsd:element ref="QuantityName" maxOccurs="unbounded"/&gt;
+    &lt;xsd:element ref="QuantitySymbol" minOccurs="0" maxOccurs="unbounded"/&gt;
+    &lt;xsd:element ref="UnitReference" minOccurs="0" maxOccurs="unbounded"/&gt;
+    &lt;xsd:element ref="QuantityVersionHistory" minOccurs="0" maxOccurs="unbounded"/&gt;
+    &lt;xsd:element ref="QuantityDefinition" minOccurs="0" maxOccurs="unbounded"/&gt;
+    &lt;xsd:element ref="QuantityHistory" minOccurs="0" maxOccurs="unbounded"/&gt;
+    &lt;xsd:element ref="QuantityRemark" minOccurs="0" maxOccurs="unbounded"/&gt;
   &lt;/xsd:sequence&gt;
   &lt;xsd:attribute ref="xml:id" use="required"/&gt;
   &lt;xsd:attribute name="quantityType" use="optional"&gt;
@@ -3187,7 +3187,7 @@
                   <name id="_">Schema Component Representation </name>
                   <body>&lt;xsd:complexType name="DimensionSetType"&gt;
   &lt;xsd:sequence&gt;
-    &lt;xsd:element ref="Dimension" maxOccurs="unbounded""/&gt;
+    &lt;xsd:element ref="Dimension" maxOccurs="unbounded"/&gt;
   &lt;/xsd:sequence&gt;
 &lt;/xsd:complexType&gt;</body>
                </sourcecode>
@@ -3228,15 +3228,15 @@
                   <name id="_">Schema Component Representation </name>
                   <body>&lt;xsd:complexType name="DimensionType"&gt;
   &lt;xsd:sequence maxOccurs="unbounded"&gt;
-    &lt;xsd:element ref="Length" minOccurs="0""/&gt;
-    &lt;xsd:element ref="Mass" minOccurs="0""/&gt;
-    &lt;xsd:element ref="Time" minOccurs="0""/&gt;
-    &lt;xsd:element ref="ElectricCurrent" minOccurs="0""/&gt;
-    &lt;xsd:element ref="ThermodynamicTemperature" minOccurs="0""/&gt;
-    &lt;xsd:element ref="AmountOfSubstance" minOccurs="0""/&gt;
-    &lt;xsd:element ref="LuminousIntensity" minOccurs="0""/&gt;
-    &lt;xsd:element ref="PlaneAngle" minOccurs="0""/&gt;
-    &lt;xsd:element ref="Item" minOccurs="0" maxOccurs="unbounded""/&gt;
+    &lt;xsd:element ref="Length" minOccurs="0"/&gt;
+    &lt;xsd:element ref="Mass" minOccurs="0"/&gt;
+    &lt;xsd:element ref="Time" minOccurs="0"/&gt;
+    &lt;xsd:element ref="ElectricCurrent" minOccurs="0"/&gt;
+    &lt;xsd:element ref="ThermodynamicTemperature" minOccurs="0"/&gt;
+    &lt;xsd:element ref="AmountOfSubstance" minOccurs="0"/&gt;
+    &lt;xsd:element ref="LuminousIntensity" minOccurs="0"/&gt;
+    &lt;xsd:element ref="PlaneAngle" minOccurs="0"/&gt;
+    &lt;xsd:element ref="Item" minOccurs="0" maxOccurs="unbounded"/&gt;
   &lt;/xsd:sequence&gt;
   &lt;xsd:attribute ref="xml:id" use="required"/&gt;
   &lt;xsd:attribute name="dimensionless" type="xsd:boolean" use="optional" default="0"/&gt;
@@ -3549,7 +3549,7 @@
                   <name id="_">Schema Component Representation </name>
                   <body>&lt;xsd:complexType name="PrefixSetType"&gt;
   &lt;xsd:sequence&gt;
-    &lt;xsd:element ref="Prefix" maxOccurs="unbounded""/&gt;
+    &lt;xsd:element ref="Prefix" maxOccurs="unbounded"/&gt;
   &lt;/xsd:sequence&gt;
 &lt;/xsd:complexType&gt;</body>
                </sourcecode>
@@ -3584,8 +3584,8 @@
                   <name id="_">Schema Component Representation </name>
                   <body>&lt;xsd:complexType name="PrefixType"&gt;
   &lt;xsd:sequence&gt;
-    &lt;xsd:element ref="PrefixName" maxOccurs="unbounded""/&gt;
-    &lt;xsd:element ref="PrefixSymbol" minOccurs="0" maxOccurs="unbounded""/&gt;
+    &lt;xsd:element ref="PrefixName" maxOccurs="unbounded"/&gt;
+    &lt;xsd:element ref="PrefixSymbol" minOccurs="0" maxOccurs="unbounded"/&gt;
   &lt;/xsd:sequence&gt;
   &lt;xsd:attribute ref="xml:id" use="required"/&gt;
   &lt;xsd:attribute name="prefixBase" use="optional" default="10"&gt;

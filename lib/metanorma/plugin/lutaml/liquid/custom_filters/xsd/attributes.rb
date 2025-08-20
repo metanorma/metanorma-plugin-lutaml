@@ -11,23 +11,31 @@ module Metanorma
                              when ::Lutaml::Xsd::ComplexType::ComplexTypeDrop
                                element
                              end
-              complex_type.attribute
-                .concat(groups_attributes(schema, complex_type.attribute_group))
-                .concat(simple_content_attributes(complex_type.simple_content, schema))
-                .flatten
-                .compact
+              [
+                complex_type.attribute,
+                groups_attributes(schema, complex_type.attribute_group),
+                simple_content_attributes(complex_type.simple_content, schema),
+              ].flatten.compact
             end
 
             def xml_representations(attr_instances, schema)
               attr_instances.map.with_index(1) do |attribute, index|
                 attr = attr_instance(schema, attribute) || attribute
-                %(\n #{attr_name(attr)}="#{attr_type(attr)}" [#{min_max_arg(attr)}]#{"\n" if index == attr_instances.count})
+                name_value = %( #{attr_name(attr)}="#{attr_type(attr)}")
+                min_max = %( [#{min_max_arg(attr)}])
+                [
+                  "\n",
+                  name_value,
+                  min_max,
+                  ("\n" if index == attr_instances.count),
+                ].compact.join
               end
             end
 
             def groups_attributes(schema, groups)
+              attr_group = schema.attribute_group
               groups.flat_map do |group|
-                group = schema.attribute_group.find { |g| g.name == group.ref } if group.ref
+                group = attr_group.find { |g| g.name == group.ref } if group.ref
 
                 group.attribute
               end
@@ -56,9 +64,15 @@ module Metanorma
             private
 
             def simple_content_attributes(simple_content, schema)
-              resolved_element_order(simple_content).filter_map.with_object([]) do |object, array|
+              content = resolved_element_order(simple_content)
+              content.each_with_object([]) do |object, array|
                 array.concat(object.attribute) if object.respond_to?(:attribute)
-                array.concat(groups_attributes(schema, object.attribute_group)) if object.respond_to?(:attribute_group)
+
+                if object.respond_to?(:attribute_group)
+                  array.concat(
+                    groups_attributes(schema, object.attribute_group),
+                  )
+                end
               end
             end
 
@@ -73,14 +87,17 @@ module Metanorma
             end
 
             def union_str(union)
-              simple_type = union.simple_type
-              restrictions = simple_type.map { |st| restriction_str(st.restriction) }
-              %(#{union.member_types}, [ #{restrictions.join(", ")} ])
+              restrictions = union.simple_type.map do |st|
+                restriction_str(st.restriction)
+              end.join(", ")
+              %(#{union.member_types}, [ #{restrictions} ])
             end
 
             def restriction_str(restriction)
               if restriction.enumeration
-                %(#{restriction.base} (value comes from list: {'#{restriction.enumeration.map(&:value).join("'|'")}'}))
+                enum_values = restriction.enumeration.map(&:value)
+                values_str = %({'#{enum_values.join("'|'")}'})
+                %(#{restriction.base} (value comes from list: #{values_str}))
               end
             end
 

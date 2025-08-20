@@ -4,22 +4,36 @@ module Metanorma
       module Liquid
         module Xsd
           module CustomFilters
+            ELEMENT_ORDER_IGNORABLE = %w[import include].freeze
+
             def resolved_element_order(object)
-              return [] if object&.element_order.nil?
+              elem_order = Array(object&.element_order)
+              elem_order.each_with_object(elem_order.dup) do |element, array|
+                next delete_deletables(array, element) if deletable?(element)
 
-              object.element_order.each_with_object(object.element_order.dup) do |xml_element, array|
-                if xml_element.text? || ELEMENT_ORDER_IGNORABLE.include?(xml_element.name)
-                  next array.delete_if { |instance| instance == xml_element }
-                end
+                update_element_array(array, object, element)
+              end
+            end
 
-                index = 0
-                array.each_with_index do |element, i|
-                  next unless element == xml_element
+            private
 
-                  method_name = ::Lutaml::Model::Utils.snake_case(xml_element.name)
-                  array[i] = Array(object.send(method_name))[index]
-                  index += 1
-                end
+            def deletable?(instance)
+              instance.text? ||
+                ELEMENT_ORDER_IGNORABLE.include?(instance.name)
+            end
+
+            def delete_deletables(array, instance)
+              array.delete_if { |ins| ins == instance }
+            end
+
+            def update_element_array(array, object, instance)
+              index = 0
+              array.each_with_index do |element, i|
+                next unless element == instance
+
+                method_name = ::Lutaml::Model::Utils.snake_case(instance.name)
+                array[i] = Array(object.send(method_name))[index]
+                index += 1
               end
             end
           end

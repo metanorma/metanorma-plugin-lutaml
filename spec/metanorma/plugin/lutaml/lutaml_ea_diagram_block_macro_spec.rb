@@ -67,8 +67,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaDiagramBlockMacro do
         end
 
         it "correctly renders input" do
-          expect(strip_filename(strip_guid(strip_src(metanorma_convert(input)))))
-            .to(include(output.join("\n")))
+          expect(
+            strip_filename(
+              strip_guid(
+                strip_src(
+                  metanorma_convert(input),
+                ),
+              ),
+            ),
+          ).to(include(output.join("\n")))
         end
       end
 
@@ -100,8 +107,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaDiagramBlockMacro do
         end
 
         it "correctly renders input" do
-          expect(strip_filename(strip_guid(strip_src(metanorma_convert(input)))))
-            .to(include(output.join("\n")))
+          expect(
+            strip_filename(
+              strip_guid(
+                strip_src(
+                  metanorma_convert(input),
+                ),
+              ),
+            ),
+          ).to(include(output.join("\n")))
         end
       end
 
@@ -133,8 +147,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaDiagramBlockMacro do
         end
 
         it "correctly renders input" do
-          expect(strip_filename(strip_guid(strip_src(metanorma_convert(input)))))
-            .to(include(output.join("\n")))
+          expect(
+            strip_filename(
+              strip_guid(
+                strip_src(
+                  metanorma_convert(input),
+                ),
+              ),
+            ),
+          ).to(include(output.join("\n")))
         end
       end
     end
