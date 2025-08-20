@@ -31,7 +31,10 @@ module Metanorma
         private
 
         def template(lines)
-          ::Liquid::Template.parse(lines.join("\n"), environment: liquid_environment)
+          ::Liquid::Template.parse(
+            lines.join("\n"),
+            environment: liquid_environment,
+          )
         end
 
         def liquid_environment

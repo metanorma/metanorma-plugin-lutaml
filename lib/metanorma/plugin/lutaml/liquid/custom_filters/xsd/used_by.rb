@@ -4,16 +4,15 @@ module Metanorma
       module Liquid
         module Xsd
           module CustomFilters
-            ELEMENT_ORDER_IGNORABLE = %w[import include].freeze
             TITLE_SUFFIX = {
               "element" => "element declaration",
-              "complex_type" => "type definition"
+              "complex_type" => "type definition",
             }.freeze
 
             def used_by(schema, instance)
               case instance
               when ::Lutaml::Xsd::Element::ElementDrop,
-                   ::Lutaml::Xsd::AttributeGroup::AttributeGroupDrop
+                  ::Lutaml::Xsd::AttributeGroup::AttributeGroupDrop
                 used_by_complex_type(schema, instance)
               when ::Lutaml::Xsd::ComplexType::ComplexTypeDrop
                 complex_type_used_by(schema, instance)
@@ -32,11 +31,11 @@ module Metanorma
 
             def linkify_object(object)
               name = object.name
-              id_prefix = id_prefix(object)
+              id_prefix = drop_class_name(object)
               %(<<#{id_prefix}_#{name}, #{name}>>)
             end
 
-            def id_prefix(object)
+            def drop_class_name(object)
               ::Lutaml::Model::Utils
                 .base_class_snake_case(object.class.name)
                 .delete_suffix("_drop")
@@ -50,7 +49,13 @@ module Metanorma
             end
 
             def used_by_complex_type(schema, element)
-              schema.complex_type.select { |complex_type| find_used_by(complex_type, element) }
+              schema.complex_type.select do |complex_type|
+                find_used_by(complex_type, element)
+              end
+            end
+
+            def extract_groups(schema, complex_type)
+              schema.group.select { |group| find_used_by(group, complex_type) }
             end
 
             def complex_type_used_by(schema, complex_type)
@@ -58,7 +63,7 @@ module Metanorma
                 element.type == complex_type.name ||
                   find_used_by(element, complex_type)
               end
-              used_by_elements.concat(schema.group.select { |group| find_used_by(group, complex_type) })
+              used_by_elements.concat(extract_groups(schema, complex_type))
               used_by_elements
             end
           end
