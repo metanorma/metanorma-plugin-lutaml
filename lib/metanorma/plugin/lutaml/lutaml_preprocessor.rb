@@ -24,6 +24,10 @@ module Metanorma
         def lutaml_liquid?(line)
           line.match(EXPRESS_PREPROCESSOR_REGEX)
         end
+
+        def assign_options_in_liquid(template, _options = {})
+          template
+        end
       end
     end
   end

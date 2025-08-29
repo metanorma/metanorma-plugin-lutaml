@@ -4,6 +4,7 @@ require_relative "liquid/custom_filters/xsd/used_by"
 require_relative "liquid/custom_filters/xsd/attributes"
 require_relative "liquid/custom_filters/xsd/xml_element"
 require_relative "liquid/custom_filters/xsd/class_name_end_with"
+require_relative "liquid/custom_filters/xsd/to_xml_representation"
 require_relative "liquid/custom_filters/xsd/resolved_element_order"
 
 module Metanorma
@@ -43,6 +44,10 @@ module Metanorma
               ::Metanorma::Plugin::Lutaml::Liquid::Xsd::CustomFilters,
             )
           end
+        end
+
+        def assign_options_in_liquid(template, options = {})
+          options.each { |opt_key, opt_value| template.assigns[opt_key] = opt_value }
         end
 
         def reorder_schemas(repo_liquid, _options)
