@@ -5,7 +5,7 @@ module Metanorma
         module Xsd
           module CustomFilters
             def to_xml_representation(element, skip_rendering = [])
-              ruby_object(element).to_xml(except: Array(skip_rendering))
+              ruby_object(element).to_xml(except: Array(skip_rendering&.to_sym))
             end
 
             private
