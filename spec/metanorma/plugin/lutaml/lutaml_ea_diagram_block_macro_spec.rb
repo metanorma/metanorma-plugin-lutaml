@@ -25,12 +25,12 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaDiagramBlockMacro do
         [
           "<name id=\"_\">Fig B1 Full model</name>",
           "<image id=\"_\" src=\"_\" mimetype=\"image/png\" " \
-          "height=\"auto\" width=\"auto\"/>",
+          "height=\"auto\" width=\"auto\" filename=\"_\"/>",
         ]
       end
 
       it "correctly renders input" do
-        expect(strip_guid(strip_src(metanorma_convert(input))))
+        expect(strip_filename(strip_guid(strip_src(metanorma_convert(input)))))
           .to(include(output.join("\n")))
       end
     end
@@ -62,13 +62,20 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaDiagramBlockMacro do
           [
             "<name id=\"_\">Fig B1 Full model</name>",
             "<image id=\"_\" src=\"_\" mimetype=\"image/png\" " \
-            "height=\"auto\" width=\"auto\"/>",
+            "height=\"auto\" width=\"auto\" filename=\"_\"/>",
           ]
         end
 
         it "correctly renders input" do
-          expect(strip_guid(strip_src(metanorma_convert(input))))
-            .to(include(output.join("\n")))
+          expect(
+            strip_filename(
+              strip_guid(
+                strip_src(
+                  metanorma_convert(input),
+                ),
+              ),
+            ),
+          ).to(include(output.join("\n")))
         end
       end
 
@@ -95,13 +102,20 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaDiagramBlockMacro do
           [
             "<name id=\"_\">CityGML Package Diagram</name>",
             "<image id=\"_\" src=\"_\" mimetype=\"image/png\" " \
-            "height=\"auto\" width=\"auto\"/>",
+            "height=\"auto\" width=\"auto\" filename=\"_\"/>",
           ]
         end
 
         it "correctly renders input" do
-          expect(strip_guid(strip_src(metanorma_convert(input))))
-            .to(include(output.join("\n")))
+          expect(
+            strip_filename(
+              strip_guid(
+                strip_src(
+                  metanorma_convert(input),
+                ),
+              ),
+            ),
+          ).to(include(output.join("\n")))
         end
       end
 
@@ -128,13 +142,20 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaDiagramBlockMacro do
           [
             "<name id=\"_\">CityGML Package Diagram</name>",
             "<image id=\"_\" src=\"_\" mimetype=\"image/png\" " \
-            "height=\"auto\" width=\"auto\"/>",
+            "height=\"auto\" width=\"auto\" filename=\"_\"/>",
           ]
         end
 
         it "correctly renders input" do
-          expect(strip_guid(strip_src(metanorma_convert(input))))
-            .to(include(output.join("\n")))
+          expect(
+            strip_filename(
+              strip_guid(
+                strip_src(
+                  metanorma_convert(input),
+                ),
+              ),
+            ),
+          ).to(include(output.join("\n")))
         end
       end
     end

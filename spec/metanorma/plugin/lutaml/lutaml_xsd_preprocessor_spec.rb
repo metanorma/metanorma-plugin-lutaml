@@ -1116,8 +1116,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
             *Type:* <<complex_type_{{element.type}},{{ element.type }}>>
 
             *Description:* {{ element.annotation.documentation.first.content }}
-            {% assign used_by_elements = unitsml | used_by: element %}
-            {% if used_by_elements.size > 0 %}*Used By:* {{ used_by_elements | join: ", " }}{% endif %}
+            {% assign element_used_by = unitsml | used_by: element %}
+            {% if element_used_by.size > 0 %}*Used By:* {{ element_used_by | join: ", " }}{% endif %}
 
             <<#top, &#x2303;>>
 
@@ -1204,7 +1204,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitsMLType' type definition." href="#complex_type_UnitsMLType">UnitsMLType</a>
+                      <xref target="complex_type_UnitsMLType" style="short">
+                        <display-text>UnitsMLType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1228,7 +1230,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitSetType' type definition." href="#complex_type_UnitSetType">UnitSetType</a>
+                      <xref target="complex_type_UnitSetType" style="short">
+                        <display-text>UnitSetType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1252,7 +1256,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitType' type definition." href="#complex_type_UnitType">UnitType</a>
+                      <xref target="complex_type_UnitType" style="short">
+                        <display-text>UnitType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1276,7 +1282,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitType' type definition." href="#complex_type_UnitType">UnitType</a>
+                      <xref target="complex_type_UnitType" style="short">
+                        <display-text>UnitType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1296,11 +1304,12 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Description:</strong>
-                      Element containing various unit symbols. Examples include Aring (ASCII), Ã (HTML).
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitType' type definition." href="#complex_type_UnitType">UnitType</a>
+                      <xref target="complex_type_UnitType" style="short">
+                        <display-text>UnitType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1324,7 +1333,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitType' type definition." href="#complex_type_UnitType">UnitType</a>
+                      <xref target="complex_type_UnitType" style="short">
+                        <display-text>UnitType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1348,7 +1359,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitType' type definition." href="#complex_type_UnitType">UnitType</a>
+                      <xref target="complex_type_UnitType" style="short">
+                        <display-text>UnitType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1372,7 +1385,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitType' type definition." href="#complex_type_UnitType">UnitType</a>
+                      <xref target="complex_type_UnitType" style="short">
+                        <display-text>UnitType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1396,7 +1411,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'RootUnitsType' type definition." href="#complex_type_RootUnitsType">RootUnitsType</a>
+                      <xref target="complex_type_RootUnitsType" style="short">
+                        <display-text>RootUnitsType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1420,7 +1437,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'RootUnitsType' type definition." href="#complex_type_RootUnitsType">RootUnitsType</a>
+                      <xref target="complex_type_RootUnitsType" style="short">
+                        <display-text>RootUnitsType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1444,7 +1463,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitType' type definition." href="#complex_type_UnitType">UnitType</a>
+                      <xref target="complex_type_UnitType" style="short">
+                        <display-text>UnitType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1471,7 +1492,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'ConversionsType' type definition." href="#complex_type_ConversionsType">ConversionsType</a>
+                      <xref target="complex_type_ConversionsType" style="short">
+                        <display-text>ConversionsType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1495,7 +1518,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'Float64ConversionFromType' type definition." href="#complex_type_Float64ConversionFromType">Float64ConversionFromType</a>
+                      <xref target="complex_type_Float64ConversionFromType" style="short">
+                        <display-text>Float64ConversionFromType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1519,7 +1544,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'ConversionsType' type definition." href="#complex_type_ConversionsType">ConversionsType</a>
+                      <xref target="complex_type_ConversionsType" style="short">
+                        <display-text>ConversionsType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1543,7 +1570,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'ConversionsType' type definition." href="#complex_type_ConversionsType">ConversionsType</a>
+                      <xref target="complex_type_ConversionsType" style="short">
+                        <display-text>ConversionsType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1567,7 +1596,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'WSDLConversionFromType' type definition." href="#complex_type_WSDLConversionFromType">WSDLConversionFromType</a>
+                      <xref target="complex_type_WSDLConversionFromType" style="short">
+                        <display-text>WSDLConversionFromType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1591,7 +1622,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'SpecialConversionFromType' type definition." href="#complex_type_SpecialConversionFromType">SpecialConversionFromType</a>
+                      <xref target="complex_type_SpecialConversionFromType" style="short">
+                        <display-text>SpecialConversionFromType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1615,7 +1648,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitType' type definition." href="#complex_type_UnitType">UnitType</a>
+                      <xref target="complex_type_UnitType" style="short">
+                        <display-text>UnitType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1639,7 +1674,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitType' type definition." href="#complex_type_UnitType">UnitType</a>
+                      <xref target="complex_type_UnitType" style="short">
+                        <display-text>UnitType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1663,7 +1700,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitType' type definition." href="#complex_type_UnitType">UnitType</a>
+                      <xref target="complex_type_UnitType" style="short">
+                        <display-text>UnitType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1687,7 +1726,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitType' type definition." href="#complex_type_UnitType">UnitType</a>
+                      <xref target="complex_type_UnitType" style="short">
+                        <display-text>UnitType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1711,7 +1752,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitsMLType' type definition." href="#complex_type_UnitsMLType">UnitsMLType</a>
+                      <xref target="complex_type_UnitsMLType" style="short">
+                        <display-text>UnitsMLType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1735,7 +1778,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'CountedItemSetType' type definition." href="#complex_type_CountedItemSetType">CountedItemSetType</a>
+                      <xref target="complex_type_CountedItemSetType" style="short">
+                        <display-text>CountedItemSetType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1759,7 +1804,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'CountedItemType' type definition." href="#complex_type_CountedItemType">CountedItemType</a>
+                      <xref target="complex_type_CountedItemType" style="short">
+                        <display-text>CountedItemType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1783,7 +1830,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'CountedItemType' type definition." href="#complex_type_CountedItemType">CountedItemType</a>
+                      <xref target="complex_type_CountedItemType" style="short">
+                        <display-text>CountedItemType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1807,7 +1856,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'CountedItemType' type definition." href="#complex_type_CountedItemType">CountedItemType</a>
+                      <xref target="complex_type_CountedItemType" style="short">
+                        <display-text>CountedItemType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1831,7 +1882,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'CountedItemType' type definition." href="#complex_type_CountedItemType">CountedItemType</a>
+                      <xref target="complex_type_CountedItemType" style="short">
+                        <display-text>CountedItemType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1855,7 +1908,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'CountedItemType' type definition." href="#complex_type_CountedItemType">CountedItemType</a>
+                      <xref target="complex_type_CountedItemType" style="short">
+                        <display-text>CountedItemType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1879,7 +1934,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'CountedItemType' type definition." href="#complex_type_CountedItemType">CountedItemType</a>
+                      <xref target="complex_type_CountedItemType" style="short">
+                        <display-text>CountedItemType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1903,7 +1960,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitsMLType' type definition." href="#complex_type_UnitsMLType">UnitsMLType</a>
+                      <xref target="complex_type_UnitsMLType" style="short">
+                        <display-text>UnitsMLType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1927,7 +1986,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'QuantitySetType' type definition." href="#complex_type_QuantitySetType">QuantitySetType</a>
+                      <xref target="complex_type_QuantitySetType" style="short">
+                        <display-text>QuantitySetType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1951,7 +2012,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'QuantityType' type definition." href="#complex_type_QuantityType">QuantityType</a>
+                      <xref target="complex_type_QuantityType" style="short">
+                        <display-text>QuantityType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1975,7 +2038,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'QuantityType' type definition." href="#complex_type_QuantityType">QuantityType</a>
+                      <xref target="complex_type_QuantityType" style="short">
+                        <display-text>QuantityType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -1999,7 +2064,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'QuantityType' type definition." href="#complex_type_QuantityType">QuantityType</a>
+                      <xref target="complex_type_QuantityType" style="short">
+                        <display-text>QuantityType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2023,7 +2090,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'QuantityType' type definition." href="#complex_type_QuantityType">QuantityType</a>
+                      <xref target="complex_type_QuantityType" style="short">
+                        <display-text>QuantityType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2047,7 +2116,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'QuantityType' type definition." href="#complex_type_QuantityType">QuantityType</a>
+                      <xref target="complex_type_QuantityType" style="short">
+                        <display-text>QuantityType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2071,7 +2142,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'QuantityType' type definition." href="#complex_type_QuantityType">QuantityType</a>
+                      <xref target="complex_type_QuantityType" style="short">
+                        <display-text>QuantityType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2095,7 +2168,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'QuantityType' type definition." href="#complex_type_QuantityType">QuantityType</a>
+                      <xref target="complex_type_QuantityType" style="short">
+                        <display-text>QuantityType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2119,7 +2194,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitsMLType' type definition." href="#complex_type_UnitsMLType">UnitsMLType</a>
+                      <xref target="complex_type_UnitsMLType" style="short">
+                        <display-text>UnitsMLType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2143,7 +2220,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'DimensionSetType' type definition." href="#complex_type_DimensionSetType">DimensionSetType</a>
+                      <xref target="complex_type_DimensionSetType" style="short">
+                        <display-text>DimensionSetType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2167,7 +2246,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'DimensionType' type definition." href="#complex_type_DimensionType">DimensionType</a>
+                      <xref target="complex_type_DimensionType" style="short">
+                        <display-text>DimensionType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2191,7 +2272,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'DimensionType' type definition." href="#complex_type_DimensionType">DimensionType</a>
+                      <xref target="complex_type_DimensionType" style="short">
+                        <display-text>DimensionType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2215,7 +2298,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'DimensionType' type definition." href="#complex_type_DimensionType">DimensionType</a>
+                      <xref target="complex_type_DimensionType" style="short">
+                        <display-text>DimensionType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2239,7 +2324,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'DimensionType' type definition." href="#complex_type_DimensionType">DimensionType</a>
+                      <xref target="complex_type_DimensionType" style="short">
+                        <display-text>DimensionType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2263,7 +2350,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'DimensionType' type definition." href="#complex_type_DimensionType">DimensionType</a>
+                      <xref target="complex_type_DimensionType" style="short">
+                        <display-text>DimensionType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2287,7 +2376,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'DimensionType' type definition." href="#complex_type_DimensionType">DimensionType</a>
+                      <xref target="complex_type_DimensionType" style="short">
+                        <display-text>DimensionType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2311,7 +2402,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'DimensionType' type definition." href="#complex_type_DimensionType">DimensionType</a>
+                      <xref target="complex_type_DimensionType" style="short">
+                        <display-text>DimensionType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2335,7 +2428,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'DimensionType' type definition." href="#complex_type_DimensionType">DimensionType</a>
+                      <xref target="complex_type_DimensionType" style="short">
+                        <display-text>DimensionType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2359,7 +2454,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'DimensionType' type definition." href="#complex_type_DimensionType">DimensionType</a>
+                      <xref target="complex_type_DimensionType" style="short">
+                        <display-text>DimensionType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2383,7 +2480,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitsMLType' type definition." href="#complex_type_UnitsMLType">UnitsMLType</a>
+                      <xref target="complex_type_UnitsMLType" style="short">
+                        <display-text>UnitsMLType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2407,7 +2506,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'PrefixSetType' type definition." href="#complex_type_PrefixSetType">PrefixSetType</a>
+                      <xref target="complex_type_PrefixSetType" style="short">
+                        <display-text>PrefixSetType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2431,7 +2532,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'PrefixType' type definition." href="#complex_type_PrefixType">PrefixType</a>
+                      <xref target="complex_type_PrefixType" style="short">
+                        <display-text>PrefixType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2455,7 +2558,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'PrefixType' type definition." href="#complex_type_PrefixType">PrefixType</a>
+                      <xref target="complex_type_PrefixType" style="short">
+                        <display-text>PrefixType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2476,7 +2581,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitsML' element declaration." href="#element_UnitsML">UnitsML</a>
+                      <xref target="element_UnitsML" style="short">
+                        <display-text>UnitsML</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2494,7 +2601,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitSet' element declaration." href="#element_UnitSet">UnitSet</a>
+                      <xref target="element_UnitSet" style="short">
+                        <display-text>UnitSet</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2512,7 +2621,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'Unit' element declaration." href="#element_Unit">Unit</a>
+                      <xref target="element_Unit" style="short">
+                        <display-text>Unit</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2530,7 +2641,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'CodeListValue' element declaration." href="#element_CodeListValue">CodeListValue</a>
+                      <xref target="element_CodeListValue" style="short">
+                        <display-text>CodeListValue</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2548,7 +2661,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'RootUnits' element declaration." href="#element_RootUnits">RootUnits</a>
+                      <xref target="element_RootUnits" style="short">
+                        <display-text>RootUnits</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2566,7 +2681,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'EnumeratedRootUnit' element declaration." href="#element_EnumeratedRootUnit">EnumeratedRootUnit</a>
+                      <xref target="element_EnumeratedRootUnit" style="short">
+                        <display-text>EnumeratedRootUnit</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2584,7 +2701,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'ExternalRootUnit' element declaration." href="#element_ExternalRootUnit">ExternalRootUnit</a>
+                      <xref target="element_ExternalRootUnit" style="short">
+                        <display-text>ExternalRootUnit</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2602,7 +2721,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'Conversions' element declaration." href="#element_Conversions">Conversions</a>
+                      <xref target="element_Conversions" style="short">
+                        <display-text>Conversions</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2623,7 +2744,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'Float64ConversionFrom' element declaration." href="#element_Float64ConversionFrom">Float64ConversionFrom</a>
+                      <xref target="element_Float64ConversionFrom" style="short">
+                        <display-text>Float64ConversionFrom</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2641,7 +2764,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'SpecialConversionFrom' element declaration." href="#element_SpecialConversionFrom">SpecialConversionFrom</a>
+                      <xref target="element_SpecialConversionFrom" style="short">
+                        <display-text>SpecialConversionFrom</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2659,7 +2784,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'WSDLConversionFrom' element declaration." href="#element_WSDLConversionFrom">WSDLConversionFrom</a>
+                      <xref target="element_WSDLConversionFrom" style="short">
+                        <display-text>WSDLConversionFrom</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2677,7 +2804,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'CountedItemSet' element declaration." href="#element_CountedItemSet">CountedItemSet</a>
+                      <xref target="element_CountedItemSet" style="short">
+                        <display-text>CountedItemSet</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2695,7 +2824,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'CountedItem' element declaration." href="#element_CountedItem">CountedItem</a>
+                      <xref target="element_CountedItem" style="short">
+                        <display-text>CountedItem</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2713,7 +2844,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'QuantitySet' element declaration." href="#element_QuantitySet">QuantitySet</a>
+                      <xref target="element_QuantitySet" style="short">
+                        <display-text>QuantitySet</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2731,7 +2864,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'Quantity' element declaration." href="#element_Quantity">Quantity</a>
+                      <xref target="element_Quantity" style="short">
+                        <display-text>Quantity</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2749,7 +2884,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'DimensionSet' element declaration." href="#element_DimensionSet">DimensionSet</a>
+                      <xref target="element_DimensionSet" style="short">
+                        <display-text>DimensionSet</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2767,7 +2904,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'Dimension' element declaration." href="#element_Dimension">Dimension</a>
+                      <xref target="element_Dimension" style="short">
+                        <display-text>Dimension</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2785,7 +2924,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'Length' element declaration." href="#element_Length">Length</a>
+                      <xref target="element_Length" style="short">
+                        <display-text>Length</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2803,7 +2944,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'Mass' element declaration." href="#element_Mass">Mass</a>
+                      <xref target="element_Mass" style="short">
+                        <display-text>Mass</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2821,7 +2964,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'Time' element declaration." href="#element_Time">Time</a>
+                      <xref target="element_Time" style="short">
+                        <display-text>Time</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2839,7 +2984,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'ElectricCurrent' element declaration." href="#element_ElectricCurrent">ElectricCurrent</a>
+                      <xref target="element_ElectricCurrent" style="short">
+                        <display-text>ElectricCurrent</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2857,7 +3004,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'ThermodynamicTemperature' element declaration." href="#element_ThermodynamicTemperature">ThermodynamicTemperature</a>
+                      <xref target="element_ThermodynamicTemperature" style="short">
+                        <display-text>ThermodynamicTemperature</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2875,7 +3024,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'AmountOfSubstance' element declaration." href="#element_AmountOfSubstance">AmountOfSubstance</a>
+                      <xref target="element_AmountOfSubstance" style="short">
+                        <display-text>AmountOfSubstance</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2893,7 +3044,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'LuminousIntensity' element declaration." href="#element_LuminousIntensity">LuminousIntensity</a>
+                      <xref target="element_LuminousIntensity" style="short">
+                        <display-text>LuminousIntensity</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2911,7 +3064,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'PlaneAngle' element declaration." href="#element_PlaneAngle">PlaneAngle</a>
+                      <xref target="element_PlaneAngle" style="short">
+                        <display-text>PlaneAngle</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2929,7 +3084,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'Item' element declaration." href="#element_Item">Item</a>
+                      <xref target="element_Item" style="short">
+                        <display-text>Item</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2947,7 +3104,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'PrefixSet' element declaration." href="#element_PrefixSet">PrefixSet</a>
+                      <xref target="element_PrefixSet" style="short">
+                        <display-text>PrefixSet</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2965,7 +3124,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'Prefix' element declaration." href="#element_Prefix">Prefix</a>
+                      <xref target="element_Prefix" style="short">
+                        <display-text>Prefix</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -2983,13 +3144,21 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitName' element declaration." href="#element_UnitName">UnitName</a>
+                      <xref target="element_UnitName" style="short">
+                        <display-text>UnitName</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'ItemName' element declaration." href="#element_ItemName">ItemName</a>
+                      <xref target="element_ItemName" style="short">
+                        <display-text>ItemName</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'QuantityName' element declaration." href="#element_QuantityName">QuantityName</a>
+                      <xref target="element_QuantityName" style="short">
+                        <display-text>QuantityName</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'PrefixName' element declaration." href="#element_PrefixName">PrefixName</a>
+                      <xref target="element_PrefixName" style="short">
+                        <display-text>PrefixName</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -3007,7 +3176,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitSystem' element declaration." href="#element_UnitSystem">UnitSystem</a>
+                      <xref target="element_UnitSystem" style="short">
+                        <display-text>UnitSystem</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -3025,13 +3196,21 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitSymbol' element declaration." href="#element_UnitSymbol">UnitSymbol</a>
+                      <xref target="element_UnitSymbol" style="short">
+                        <display-text>UnitSymbol</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'ItemSymbol' element declaration." href="#element_ItemSymbol">ItemSymbol</a>
+                      <xref target="element_ItemSymbol" style="short">
+                        <display-text>ItemSymbol</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'QuantitySymbol' element declaration." href="#element_QuantitySymbol">QuantitySymbol</a>
+                      <xref target="element_QuantitySymbol" style="short">
+                        <display-text>QuantitySymbol</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'PrefixSymbol' element declaration." href="#element_PrefixSymbol">PrefixSymbol</a>
+                      <xref target="element_PrefixSymbol" style="short">
+                        <display-text>PrefixSymbol</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -3049,17 +3228,29 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitVersionHistory' element declaration." href="#element_UnitVersionHistory">UnitVersionHistory</a>
+                      <xref target="element_UnitVersionHistory" style="short">
+                        <display-text>UnitVersionHistory</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'ConversionNote' element declaration." href="#element_ConversionNote">ConversionNote</a>
+                      <xref target="element_ConversionNote" style="short">
+                        <display-text>ConversionNote</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'WSDLDescription' element declaration." href="#element_WSDLDescription">WSDLDescription</a>
+                      <xref target="element_WSDLDescription" style="short">
+                        <display-text>WSDLDescription</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'ConversionDescription' element declaration." href="#element_ConversionDescription">ConversionDescription</a>
+                      <xref target="element_ConversionDescription" style="short">
+                        <display-text>ConversionDescription</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'ItemVersionHistory' element declaration." href="#element_ItemVersionHistory">ItemVersionHistory</a>
+                      <xref target="element_ItemVersionHistory" style="short">
+                        <display-text>ItemVersionHistory</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'QuantityVersionHistory' element declaration." href="#element_QuantityVersionHistory">QuantityVersionHistory</a>
+                      <xref target="element_QuantityVersionHistory" style="short">
+                        <display-text>QuantityVersionHistory</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -3077,11 +3268,17 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitDefinition' element declaration." href="#element_UnitDefinition">UnitDefinition</a>
+                      <xref target="element_UnitDefinition" style="short">
+                        <display-text>UnitDefinition</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'ItemDefinition' element declaration." href="#element_ItemDefinition">ItemDefinition</a>
+                      <xref target="element_ItemDefinition" style="short">
+                        <display-text>ItemDefinition</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'QuantityDefinition' element declaration." href="#element_QuantityDefinition">QuantityDefinition</a>
+                      <xref target="element_QuantityDefinition" style="short">
+                        <display-text>QuantityDefinition</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -3099,11 +3296,17 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitHistory' element declaration." href="#element_UnitHistory">UnitHistory</a>
+                      <xref target="element_UnitHistory" style="short">
+                        <display-text>UnitHistory</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'ItemHistory' element declaration." href="#element_ItemHistory">ItemHistory</a>
+                      <xref target="element_ItemHistory" style="short">
+                        <display-text>ItemHistory</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'QuantityHistory' element declaration." href="#element_QuantityHistory">QuantityHistory</a>
+                      <xref target="element_QuantityHistory" style="short">
+                        <display-text>QuantityHistory</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -3121,11 +3324,17 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'UnitRemark' element declaration." href="#element_UnitRemark">UnitRemark</a>
+                      <xref target="element_UnitRemark" style="short">
+                        <display-text>UnitRemark</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'ItemRemark' element declaration." href="#element_ItemRemark">ItemRemark</a>
+                      <xref target="element_ItemRemark" style="short">
+                        <display-text>ItemRemark</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'QuantityRemark' element declaration." href="#element_QuantityRemark">QuantityRemark</a>
+                      <xref target="element_QuantityRemark" style="short">
+                        <display-text>QuantityRemark</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -3143,9 +3352,13 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'QuantityReference' element declaration." href="#element_QuantityReference">QuantityReference</a>
+                      <xref target="element_QuantityReference" style="short">
+                        <display-text>QuantityReference</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'UnitReference' element declaration." href="#element_UnitReference">UnitReference</a>
+                      <xref target="element_UnitReference" style="short">
+                        <display-text>UnitReference</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -3166,11 +3379,17 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'Float64ConversionFromType' type definition." href="#complex_type_Float64ConversionFromType">Float64ConversionFromType</a>
+                      <xref target="complex_type_Float64ConversionFromType" style="short">
+                        <display-text>Float64ConversionFromType</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'SpecialConversionFromType' type definition." href="#complex_type_SpecialConversionFromType">SpecialConversionFromType</a>
+                      <xref target="complex_type_SpecialConversionFromType" style="short">
+                        <display-text>SpecialConversionFromType</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'WSDLConversionFromType' type definition." href="#complex_type_WSDLConversionFromType">WSDLConversionFromType</a>
+                      <xref target="complex_type_WSDLConversionFromType" style="short">
+                        <display-text>WSDLConversionFromType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -3188,11 +3407,17 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'DefinitionType' type definition." href="#complex_type_DefinitionType">DefinitionType</a>
+                      <xref target="complex_type_DefinitionType" style="short">
+                        <display-text>DefinitionType</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'HistoryType' type definition." href="#complex_type_HistoryType">HistoryType</a>
+                      <xref target="complex_type_HistoryType" style="short">
+                        <display-text>HistoryType</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'RemarkType' type definition." href="#complex_type_RemarkType">RemarkType</a>
+                      <xref target="complex_type_RemarkType" style="short">
+                        <display-text>RemarkType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -3210,15 +3435,25 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'EnumeratedRootUnitType' type definition." href="#complex_type_EnumeratedRootUnitType">EnumeratedRootUnitType</a>
+                      <xref target="complex_type_EnumeratedRootUnitType" style="short">
+                        <display-text>EnumeratedRootUnitType</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'ExternalRootUnitType' type definition." href="#complex_type_ExternalRootUnitType">ExternalRootUnitType</a>
+                      <xref target="complex_type_ExternalRootUnitType" style="short">
+                        <display-text>ExternalRootUnitType</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'DefinitionType' type definition." href="#complex_type_DefinitionType">DefinitionType</a>
+                      <xref target="complex_type_DefinitionType" style="short">
+                        <display-text>DefinitionType</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'HistoryType' type definition." href="#complex_type_HistoryType">HistoryType</a>
+                      <xref target="complex_type_HistoryType" style="short">
+                        <display-text>HistoryType</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'RemarkType' type definition." href="#complex_type_RemarkType">RemarkType</a>
+                      <xref target="complex_type_RemarkType" style="short">
+                        <display-text>RemarkType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -3236,27 +3471,49 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                   </p>
                   <p id="_">
                       <strong>Used By:</strong>
-                      <a title="Jump to 'EnumeratedRootUnitType' type definition." href="#complex_type_EnumeratedRootUnitType">EnumeratedRootUnitType</a>
+                      <xref target="complex_type_EnumeratedRootUnitType" style="short">
+                        <display-text>EnumeratedRootUnitType</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'ExternalRootUnitType' type definition." href="#complex_type_ExternalRootUnitType">ExternalRootUnitType</a>
+                      <xref target="complex_type_ExternalRootUnitType" style="short">
+                        <display-text>ExternalRootUnitType</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'LengthType' type definition." href="#complex_type_LengthType">LengthType</a>
+                      <xref target="complex_type_LengthType" style="short">
+                        <display-text>LengthType</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'MassType' type definition." href="#complex_type_MassType">MassType</a>
+                      <xref target="complex_type_MassType" style="short">
+                        <display-text>MassType</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'TimeType' type definition." href="#complex_type_TimeType">TimeType</a>
+                      <xref target="complex_type_TimeType" style="short">
+                        <display-text>TimeType</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'ElectricCurrentType' type definition." href="#complex_type_ElectricCurrentType">ElectricCurrentType</a>
+                      <xref target="complex_type_ElectricCurrentType" style="short">
+                        <display-text>ElectricCurrentType</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'ThermodynamicTemperatureType' type definition." href="#complex_type_ThermodynamicTemperatureType">ThermodynamicTemperatureType</a>
+                      <xref target="complex_type_ThermodynamicTemperatureType" style="short">
+                        <display-text>ThermodynamicTemperatureType</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'AmountOfSubstanceType' type definition." href="#complex_type_AmountOfSubstanceType">AmountOfSubstanceType</a>
+                      <xref target="complex_type_AmountOfSubstanceType" style="short">
+                        <display-text>AmountOfSubstanceType</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'LuminousIntensityType' type definition." href="#complex_type_LuminousIntensityType">LuminousIntensityType</a>
+                      <xref target="complex_type_LuminousIntensityType" style="short">
+                        <display-text>LuminousIntensityType</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'PlaneAngleType' type definition." href="#complex_type_PlaneAngleType">PlaneAngleType</a>
+                      <xref target="complex_type_PlaneAngleType" style="short">
+                        <display-text>PlaneAngleType</display-text>
+                      </xref>
                       ,
-                      <a title="Jump to 'ItemType' type definition." href="#complex_type_ItemType">ItemType</a>
+                      <xref target="complex_type_ItemType" style="short">
+                        <display-text>ItemType</display-text>
+                      </xref>
                   </p>
                   <p id="_">
                       <xref target="top" style="short">
@@ -3269,39 +3526,47 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
                       prefix
                   </p>
                   <p id="_">
-                      <strong>Description:</strong>
-                      Prefix identifier; e.g., m, k, M, G. [Enumeration order is by prefix magnitude (Y to y) followed by binary prefixes.]
+                    <strong>Description:</strong>
+                    Prefix identifier; e.g., m, k, M, G. [Enumeration order is by prefix magnitude (Y to y) followed by binary prefixes.]
                   </p>
                   <p id="_">
-                      <strong>Used By:</strong>
-                      <a title="Jump to 'EnumeratedRootUnitType' type definition." href="#complex_type_EnumeratedRootUnitType">EnumeratedRootUnitType</a>
-                      ,
-                      <a title="Jump to 'ExternalRootUnitType' type definition." href="#complex_type_ExternalRootUnitType">ExternalRootUnitType</a>
+                    <strong>Used By:</strong>
+                    <xref target="complex_type_EnumeratedRootUnitType" style="short">
+                      <display-text>EnumeratedRootUnitType</display-text>
+                    </xref>
+                    ,
+                    <xref target="complex_type_ExternalRootUnitType" style="short">
+                      <display-text>ExternalRootUnitType</display-text>
+                    </xref>
                   </p>
                   <p id="_">
-                      <xref target="top" style="short">
-                        <display-text>⌃</display-text>
-                      </xref>
+                    <xref target="top" style="short">
+                      <display-text>⌃</display-text>
+                    </xref>
                   </p>
                   <hr/>
                   <p id="_" anchor="attribute_group_dimensionURL">
-                      <strong>Attribute Group:</strong>
-                      dimensionURL
+                    <strong>Attribute Group:</strong>
+                    dimensionURL
                   </p>
                   <p id="_">
-                      <strong>Description:</strong>
-                      URL to a representation of the unit or quantity in terms of the 7 SI base dimensions.
+                    <strong>Description:</strong>
+                    URL to a representation of the unit or quantity in terms of the 7 SI base dimensions.
                   </p>
                   <p id="_">
-                      <strong>Used By:</strong>
-                      <a title="Jump to 'UnitType' type definition." href="#complex_type_UnitType">UnitType</a>
-                      ,
-                      <a title="Jump to 'QuantityType' type definition." href="#complex_type_QuantityType">QuantityType</a>
+                    <strong>Used By:</strong>
+                    <xref target="complex_type_UnitType" style="short">
+                      <display-text>UnitType</display-text>
+                    </xref>
+                    ,
+                    <xref target="complex_type_QuantityType" style="short">
+                      <display-text>QuantityType</display-text>
+                    </xref>
                   </p>
                   <p id="_">
-                      <xref target="top" style="short">
-                        <display-text>⌃</display-text>
-                      </xref>
+                    <xref target="top" style="short">
+                      <display-text>⌃</display-text>
+                    </xref>
                   </p>
                   <hr/>
                 </clause>
@@ -3310,9 +3575,51 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
           TEXT
         end
 
+        let(:text_regex) do
+          %r(Element containing various unit symbols\. Examples[^\.]+\.)
+        end
+
         it "correctly renders input" do
-          expect(xml_string_content(metanorma_convert(input)))
-            .to(be_equivalent_to(output))
+          processed_input = xml_string_content(metanorma_convert(input))
+          expect(processed_input).to match(text_regex)
+          processed_input.sub!(/\s+#{text_regex}\s+/, "")
+          expect(processed_input).to(be_equivalent_to(output))
+        end
+      end
+
+      context "with UnitsML XSD documentation generation" do
+        let(:input) do
+          <<~TEXT
+            [#top]
+            = XSD Templates
+
+            [lutaml_xsd, spec/fixtures/lutaml/xsd_schemas/unitsml-v1.0-csd04.xsd, schema, skip_rendering_of=annotation]
+            ----
+            == Elements
+
+            include::spec/fixtures/lutaml/unitsml_liquid_templates/_elements.liquid[]
+
+            == Complex Types
+
+            include::spec/fixtures/lutaml/unitsml_liquid_templates/_complex_type.liquid[]
+
+            == Attribute Groups
+
+            include::spec/fixtures/lutaml/unitsml_liquid_templates/_attribute_groups.liquid[]
+            ----
+          TEXT
+        end
+
+        let(:output) { File.read("spec/fixtures/lutaml/unitsml_expected.xml") }
+        let(:text_regex) do
+          %r(Element containing various unit symbols\.[^\(]+ \(ASCII\),)
+        end
+
+        it "correctly renders input" do
+          processed_input = xml_string_content(metanorma_convert(input))
+          expect(processed_input).to have_tag("strong", text_regex)
+          processed_input.sub!(/<strong>#{text_regex}[^<]+<\/strong>/, "")
+          expect(processed_input).to(be_equivalent_to(output))
         end
       end
     end

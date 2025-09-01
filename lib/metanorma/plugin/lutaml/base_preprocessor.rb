@@ -219,6 +219,7 @@ module Metanorma
               item[:liquid_drop], options
             )
             template.assigns["schemas_order"] = options["selected_schemas"]
+            assign_options_in_liquid(template, options)
             template.render
           end.flatten
         rescue StandardError => e
