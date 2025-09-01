@@ -3593,7 +3593,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
             [#top]
             = XSD Templates
 
-            [lutaml_xsd, spec/fixtures/lutaml/xsd_schemas/unitsml-v1.0-csd04.xsd, schema]
+            [lutaml_xsd, spec/fixtures/lutaml/xsd_schemas/unitsml-v1.0-csd04.xsd, schema, skip_rendering_of=annotation]
             ----
             == Elements
 
