@@ -15,6 +15,9 @@ end
 gem "byebug"
 gem "debug"
 gem "equivalent-xml"
+gem "lutaml",
+    github: "lutaml/lutaml",
+    branch: "update/xsd_support_metanorma_plugin"
 gem "metanorma"
 gem "metanorma-standoc", "~> 3.0.8"
 gem "rake", "~> 13"
@@ -27,3 +30,4 @@ gem "timecop", "~> 0.9"
 gem "vcr", "~> 6.1.0"
 gem "webmock"
 gem "xml-c14n"
+gem "lutaml-model", github: "lutaml/lutaml-model", branch: "update/liquid_element_order"
