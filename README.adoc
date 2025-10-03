@@ -24,15 +24,15 @@ $ gem install metanorma-plugin-lutaml
 
 == Usages
 
-link:docs/usages/express.adoc[Usage with EXPRESS]
+link:docs/usages/express.adoc[Usage with EXPRESS files by lutaml_express]
 
-link:docs/usages/lutaml-uml.adoc[Usage with LutaML-UML]
+link:docs/usages/lutaml-uml.adoc[Usage with LutaML files by lutaml_diagram]
 
-link:docs/usages/enterprise_architect.adoc[Usage with Enterprise Architect (UML in XMI)]
+link:docs/usages/enterprise_architect.adoc[Usage with Enterprise Architect XMI files by lutaml_ea_xmi, lutaml_ea_diagram, lutaml_klass_table or lutaml_enum_table]
 
-link:docs/usages/lutaml-gml.adoc[Usage with LutaML GML Dictionary]
+link:docs/usages/lutaml-gml.adoc[Usage with LutaML GML Dictionary by lutaml_gml_dictionary]
 
-link:docs/usages/json_yaml.adoc[Usage with JSON or YAML files]
+link:docs/usages/json_yaml.adoc[Usage with JSON or YAML files by data2text, yaml2text or json2text]
 
 == Documentation
 

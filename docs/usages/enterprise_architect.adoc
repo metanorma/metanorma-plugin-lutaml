@@ -1,5 +1,5 @@
 
-== Usage with Enterprise Architect (UML in XMI)
+== Usage with Enterprise Architect XMI files by lutaml_ea_xmi, lutaml_ea_diagram, lutaml_klass_table or lutaml_enum_table
 
 === General
 
