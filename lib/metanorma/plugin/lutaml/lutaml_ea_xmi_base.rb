@@ -244,14 +244,20 @@ module Metanorma
             .merge(children_pks_diags)
         end
 
-        def collect_additional_context(document, input_lines, end_mark) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-          additional_context = Hash.new { |hash, key| hash[key] = [] }
-          additional_context["all_macros"] = []
+        def collect_block_lines(input_lines, end_mark)
           block_lines = []
 
           while (block_line = input_lines.next) != end_mark
             block_lines.push(block_line)
           end
+
+          block_lines
+        end
+
+        def collect_additional_context(document, input_lines, end_mark) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+          additional_context = Hash.new { |hash, key| hash[key] = [] }
+          additional_context["all_macros"] = []
+          block_lines = collect_block_lines(input_lines, end_mark)
 
           processed_lines = process(
             document,

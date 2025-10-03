@@ -1,0 +1,17 @@
+
+[cols="1a,3a"]
+|===
+2+h| Associations
+h| Name h| Value
+{% for assoc in associations %}
+| xmi_id: | {{ assoc.xmi_id }}
+| member_end:  | {{ assoc.member_end }}
+| member_end_type:  | {{ assoc.member_end_type }}
+| member_end_cardinality: | {{ assoc.member_end_cardinality.min }}..{{ assoc.member_end_cardinality.max }}
+| member_end_attribute_name: | {{ assoc.member_end_attribute_name }}
+| member_end_xmi_id: | {{ assoc.member_end_xmi_id }}
+| owner_end: | {{ assoc.owner_end }}
+| owner_end_xmi_id: | {{ assoc.owner_end_xmi_id }}
+| definition: | {{ assoc.definition }}
+{% endfor %}
+|===
