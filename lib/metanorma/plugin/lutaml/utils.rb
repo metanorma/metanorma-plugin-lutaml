@@ -39,8 +39,8 @@ module Metanorma
         end
 
         def render_liquid_string( # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
-          template_string:, contexts:, document:,
-          include_path: nil, template_path: nil
+          contexts:, document:,
+          template_string: nil, include_path: nil, template_path: nil
         )
           # Allow includes for the template
           include_paths = [
