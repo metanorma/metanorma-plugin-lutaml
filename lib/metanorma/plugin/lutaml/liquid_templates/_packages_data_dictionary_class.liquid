@@ -4,20 +4,20 @@
 {{equalsigns}} {{ klass.name }}
 {%comment%}(inside class: depth is {{ depth }}, equalsigns {{equalsigns}}){%endcomment%}
 
-.Metadata of {{ klass.name }} {% if klass.stereotype %}(«{{klass.stereotype}}»){% endif %}
+.{{ klass.name }} {% if klass.stereotype %}(«{{klass.stereotype}}»){% endif %}的元数据
 [cols="1a,4a"]
 |===
-h| Definition:
+h| 定义:
 |
 {% if klass.definition %}
 {{ klass.definition | replace: '|', '\|' | html2adoc }}
 {% endif %}
 
-h| Subclass of:
+h| 是谁的子类:
 |
 {% if generalizations.size > 0 %}{{ generalizations }}{% else %}None{% endif %}
 
-h| Stereotype:
+h| 构造型:
 |
 {% if klass.stereotype %}
 «{{ klass.stereotype }}»
@@ -53,10 +53,10 @@ h| Constraint:
 {% assign associations_stripped = rendered_associations | strip_newlines | strip %}
 
 {% if associations_stripped.size > 0 %}
-.Associations of {{ klass.name }} ({{ klass.stereotype }})
+.{{ klass.name }} ({{ klass.stereotype }})的关联
 [cols="15a,20a,60a",options="header"]
 |===
-| Role name | Target class and multiplicity | Definition
+| 角色名称 | 目标类型和多重度 | 定义
 
 {{ rendered_associations }}
 
@@ -65,10 +65,10 @@ h| Constraint:
 {% endif %}
 
 {% if klass.attributes.size > 0 %}
-.Attributes of {{ klass.name }} ({{klass.stereotype}})
+.{{ klass.name }} ({{klass.stereotype}})的属性
 [cols="15a,20a,60a",options="header"]
 |===
-| Attribute | Value type and multiplicity | Definition
+| 属性 | 值类型和多重度 | 定义
 
 {% for attr in klass.attributes %}
 {% capture cardinality %}&#91;{% case attr.cardinality.min %}{% when 'C' %}0{% when 'M' %}1{% else %}{{ attr.cardinality.min }}{% endcase %}..{{ attr.cardinality.max }}&#93;{% endcapture %}
@@ -81,7 +81,7 @@ h| Constraint:
 
 [NOTE,keep-separate=true]
 ====
-Unless otherwise specified, all attributes and role names have the stereotype
+除非另有说明，否则所有属性和角色名称都具有构造型
 «Property».
 ====
 {% endif %}

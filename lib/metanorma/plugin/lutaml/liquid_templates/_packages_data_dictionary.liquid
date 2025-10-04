@@ -67,13 +67,13 @@
 {% endfor %}
 {% endif %}
 
-.Metadata of {{ package.name }} {% if package.stereotype %}(«{{package.stereotype}}»){% endif %}
+.{{ package.name }} {% if package.stereotype %}(«{{package.stereotype}}»){% endif %}的元数据
 [cols="1a,4a"]
 |===
 
-h|Description:    | {{ package.definition | replace: '|', '\|' | html2adoc }}
-h|Parent package: | {{ context.name }}
-h|Stereotype:     | {% if package.stereotype %}«{{package.stereotype}}»{% else %}None{% endif %}
+h|描述:    | {{ package.definition | replace: '|', '\|' | html2adoc }}
+h|父包: | {{ context.name }}
+h|构造型:     | {% if package.stereotype %}«{{package.stereotype}}»{% else %}None{% endif %}
 
 |===
 
@@ -139,12 +139,12 @@ None.
 [[section-{{ data_type.xmi_id }}]]
 {{equalsigns}}== {{ data_type.name }}
 
-.Metadata of {{ data_type.name }} {% if data_type.stereotype %}(«{{data_type.stereotype}}»){% endif %}
+.{{ data_type.name }} {% if data_type.stereotype %}(«{{data_type.stereotype}}»){% endif %}的元数据
 [cols="1a,4a"]
 |===
-h|Definition:  | {{ data_type.definition | replace: '|', '\|' | html2adoc }}
-h|Subclass of: | {% if generalizations.size > 0 %}{{ generalizations }}{% else %}None{% endif %}
-h|Stereotype:  | {% if data_type.stereotype %}«{{data_type.stereotype}}»{% else %}None{% endif %}
+h|定义:  | {{ data_type.definition | replace: '|', '\|' | html2adoc }}
+h|是谁的子类: | {% if generalizations.size > 0 %}{{ generalizations }}{% else %}None{% endif %}
+h|构造型:  | {% if data_type.stereotype %}«{{data_type.stereotype}}»{% else %}None{% endif %}
 
 {% if data_type.constraints.size > 0 %}
 {% for constraint in data_type.constraints %}
@@ -175,7 +175,7 @@ h| Constraint:
 {% assign associations_stripped = rendered_associations | strip_newlines | strip %}
 
 {% if associations_stripped.size > 0 %}
-.Associations of {{ data_type.name }} ({{ data_type.stereotype }})
+.{{ data_type.name }} ({{ data_type.stereotype }})的关联
 [cols="15a,20a,60a",options="header"]
 |===
 | Role name | Target class and multiplicity | Definition
@@ -187,7 +187,7 @@ h| Constraint:
 {% endif %}
 
 {% if data_type.attributes.size > 0 %}
-.Attributes of {{ data_type.name }} ({{ data_type.stereotype }})
+.{{ data_type.name }} ({{ data_type.stereotype }})的属性
 [cols="15a,20a,60a",options="header"]
 |===
 | Attribute | Value type and multiplicity | Definition
@@ -203,7 +203,7 @@ h| Constraint:
 
 [NOTE,keep-separate=true]
 ====
-Unless otherwise specified, all attributes and role names have the stereotype
+除非另有说明，否则所有属性和角色名称都具有构造型
 «Property».
 ====
 {% endif %}
@@ -220,15 +220,15 @@ None.
 [[section-{{ enum.xmi_id }}]]
 {{equalsigns}}== {{ enum.name }}
 
-.Metadata of {{ enum.name }} (Enumeration)
+.{{ enum.name }} (Enumeration)的元数据
 [cols="1a,4a"]
 |===
-h|Definition: | {{ enum.definition | replace: '|', '\|' | html2adoc }}
-h|Stereotype: | «Enumeration»
+h|定义: | {{ enum.definition | replace: '|', '\|' | html2adoc }}
+h|构造型: | «Enumeration»
 |===
 
 {% if enum.values.size > 0 %}
-.Values of {{ enum.name }} (Enumeration)
+.{{ enum.name }} (Enumeration)的值
 [cols="1a,4a",options="header"]
 |===
 | Literal value | Definition

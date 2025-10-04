@@ -844,12 +844,12 @@ Content for CityGML package
 .Elements of &#8220;Another::AbstractAtomicTimeseries&#8221; (class)
 [width="100%",cols="a,a,a,a,a,a,a,a"]
 |===
-h|Name: 7+| AbstractAtomicTimeseries
-h|Definition: 7+|
-h|Stereotype: 7+| interface
-h|Abstract: 7+|
-h|Associations: 7+| (none)
-.4+h|Public attributes:
+h|名称: 7+| AbstractAtomicTimeseries
+h|定义: 7+|
+h|构造型: 7+| interface
+h|抽象: 7+|
+h|关联: 7+| (none)
+.4+h|公有属性:
 | _Name_
 2+| _Definition_
 | _Derived_

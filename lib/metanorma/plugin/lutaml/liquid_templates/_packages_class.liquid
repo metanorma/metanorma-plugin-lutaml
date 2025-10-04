@@ -8,11 +8,11 @@
 [width="100%",cols="a,a,a,a,a,a,a,a"]
 |===
 
-h|Name: 7+| {{ klass.name }}
+h|名称: 7+| {{ klass.name }}
 
-h|Definition: 7+| {{ klass.definition | html2adoc }}
+h|定义: 7+| {{ klass.definition | html2adoc }}
 
-h|Stereotype: 7+| {{ klass.stereotype | default: 'interface' }}
+h|构造型: 7+| {{ klass.stereotype | default: 'interface' }}
 
 {% assign inherited = klass.associations | where: "member_end_type", "inheritance" %}
 {% if inherited.size > 0 %}
