@@ -205,12 +205,9 @@ module Metanorma
             include_paths.push(Utils.relative_file_path(document, path))
           end
 
-          file_system = ::Metanorma::Plugin::Lutaml::Liquid::LocalFileSystem
-            .new(include_paths, ["%s.liquid", "_%s.liquid", "_%s.adoc"])
-
           # Parse template once outside the loop
           template = template(lines)
-          template.registers[:file_system] = file_system
+          template.registers[:file_system] = file_system(include_paths)
 
           # Render for each item
           all_items.map do |item|
@@ -227,6 +224,11 @@ module Metanorma
             .log("[LutamlPreprocessor] Failed to parse LutaML block: " \
                  "#{e.message}", :error)
           raise e
+        end
+
+        def file_system(include_paths)
+          ::Metanorma::Plugin::Lutaml::Liquid::LocalFileSystem
+            .new(include_paths, ["%s.liquid", "%s.adoc.liquid", "%s.liquid.adoc", "_%s.liquid", "_%s.adoc", "_%s.liquid.adoc", "_%s.adoc.liquid"])
         end
 
         def template(lines)
