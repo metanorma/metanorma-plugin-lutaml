@@ -14,10 +14,6 @@ module Metanorma
       module LutamlEaXmiBase
         include Utils
 
-        LIQUID_INCLUDE_PATH = File.join(
-          Gem.loaded_specs["metanorma-plugin-lutaml"].full_gem_path,
-          "lib", "metanorma", "plugin", "lutaml", "liquid_templates"
-        )
         DEFAULT_RENDER_INCLUDE = "packages"
         RENDER_STYLES_INCLUDES = {
           "default" => "packages",
@@ -416,7 +412,7 @@ module Metanorma
         end
 
         def template_path(document, template_path)
-          return LIQUID_INCLUDE_PATH if template_path.nil?
+          return Utils::LIQUID_INCLUDE_PATH if template_path.nil?
 
           Utils.relative_file_path(document, template_path)
         end

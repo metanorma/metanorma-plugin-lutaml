@@ -14,6 +14,11 @@ module Metanorma
       # Class for processing Lutaml files
       class BasePreprocessor < ::Asciidoctor::Extensions::Preprocessor
         REMARKS_ATTRIBUTE = "remarks"
+        FILE_SYSTEM_PATTERNS = [
+          "%s.liquid",
+          "_%s.liquid",
+          "_%s.adoc",
+        ].freeze
 
         def process(document, reader) # rubocop:disable Metrics/MethodLength
           r = Asciidoctor::PreprocessorNoIfdefsReader.new(document,
@@ -205,9 +210,12 @@ module Metanorma
             include_paths.push(Utils.relative_file_path(document, path))
           end
 
+          file_system = ::Metanorma::Plugin::Lutaml::Liquid::LocalFileSystem
+            .new(include_paths, FILE_SYSTEM_PATTERNS)
+
           # Parse template once outside the loop
           template = template(lines)
-          template.registers[:file_system] = file_system(include_paths)
+          template.registers[:file_system] = file_system
 
           # Render for each item
           all_items.map do |item|
@@ -224,11 +232,6 @@ module Metanorma
             .log("[LutamlPreprocessor] Failed to parse LutaML block: " \
                  "#{e.message}", :error)
           raise e
-        end
-
-        def file_system(include_paths)
-          ::Metanorma::Plugin::Lutaml::Liquid::LocalFileSystem
-            .new(include_paths, ["%s.liquid", "%s.adoc.liquid", "%s.liquid.adoc", "_%s.liquid", "_%s.adoc", "_%s.liquid.adoc", "_%s.adoc.liquid"])
         end
 
         def template(lines)
