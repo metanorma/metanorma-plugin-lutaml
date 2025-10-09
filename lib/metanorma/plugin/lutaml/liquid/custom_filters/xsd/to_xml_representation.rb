@@ -6,7 +6,7 @@ module Metanorma
           module CustomFilters
             def to_xml_representation(element, skip_rendering = nil)
               element.instance_variable_get(:@object).to_formatted_xml(
-                except: Array(skip_rendering&.to_sym),
+                except: Array(skip_rendering),
               )
             end
           end

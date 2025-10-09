@@ -51,18 +51,29 @@ module Metanorma
 
         private
 
+        def template_file(document, options)
+          File.new(
+            Utils.relative_file_path(
+              document,
+              options[:template]&.strip,
+            ),
+            encoding: "UTF-8",
+          ).read
+        end
+
         def process_direct_block(document, line, express_indexes)
           block_header_match = line.match(XSD_LIQUID_BLOCK_REGEX)
           context_name = block_header_match[:context_name].strip
           index_name = block_header_match[:index_names].strip
           options = options_hash(block_header_match[:options])
-          template_file = File.new(
-            Utils.relative_file_path(document, block_header_match[:template]&.strip),
-            encoding: "UTF-8",
+          liquid_template = template(template_file(document, block_header_match))
+          liquid_template.registers[:file_system] = file_system(options, document)
+          assign_options_in_liquid(liquid_template, options)
+          liquid_template.assigns[context_name] = gather_context_liquid_item(
+            document,
+            index_name,
+            options,
           )
-          liquid_template = template(template_file.read)
-          liquid_template.registers[:file_system] = file_system([Utils.relative_file_path(document, "")])
-          liquid_template.assigns[context_name] = gather_context_liquid_item(document, index_name, options)
           [liquid_template.render]
         end
 
@@ -80,7 +91,12 @@ module Metanorma
         end
 
         def assign_options_in_liquid(template, options = {})
-          options.each { |opt_key, opt_value| template.assigns[opt_key] = opt_value }
+          options.each do |opt_key, opt_value|
+            opt_value = if opt_key == "skip_rendering_of"
+                          opt_value.to_s.strip.delete("'").split(";")
+                        end
+            template.assigns[opt_key] = opt_value
+          end
         end
 
         def reorder_schemas(repo_liquid, _options)
@@ -108,12 +124,25 @@ module Metanorma
           load_lutaml_file(document, path, options).to_liquid
         end
 
+        def file_system(options, document)
+          include_paths = [
+            Utils.relative_file_path(document, ""),
+            template_path(document, options),
+          ]
+          ::Metanorma::Plugin::Lutaml::Liquid::LocalFileSystem.new(
+            include_paths,
+            FILE_SYSTEM_PATTERNS,
+          )
+        end
+
+        def template_path(document, options)
+          return Utils::LIQUID_INCLUDE_PATH unless options.dig("template_path")
+
+          Utils.relative_file_path(document, options.dig("template_path"))
+        end
+
         def parse_options_string(str)
-          str
-            .to_s
-            .scan(/,\s*([^=]+?)=(\s*[^,]+)/)
-            .group_by(&:first)
-            .transform_values { |items| items.map(&:last) }
+          str.to_s.scan(/,\s*([^=]+?)=(\s*[^,]+)/).to_h
         end
       end
     end
