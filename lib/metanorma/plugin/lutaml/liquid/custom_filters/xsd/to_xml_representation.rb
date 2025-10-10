@@ -5,9 +5,11 @@ module Metanorma
         module Xsd
           module CustomFilters
             def to_xml_representation(element, skip_rendering = nil)
-              element.instance_variable_get(:@object).to_formatted_xml(
-                except: Array(skip_rendering),
-              )
+              element
+                .instance_variable_get(:@object)
+                .to_formatted_xml(
+                  except: Array(skip_rendering).map(&:to_sym),
+                )
             end
           end
         end
