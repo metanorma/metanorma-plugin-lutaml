@@ -84,9 +84,7 @@ module Metanorma
 
         def liquid_environment
           ::Liquid::Environment.new.tap do |env|
-            env.register_filter(
-              ::Metanorma::Plugin::Lutaml::Liquid::Xsd::CustomFilters,
-            )
+            env.register_filter(Liquid::Xsd::CustomFilters)
           end
         end
 
@@ -129,20 +127,24 @@ module Metanorma
             Utils.relative_file_path(document, ""),
             template_path(document, options),
           ]
-          ::Metanorma::Plugin::Lutaml::Liquid::LocalFileSystem.new(
-            include_paths,
-            FILE_SYSTEM_PATTERNS,
-          )
+          Liquid::LocalFileSystem.new(include_paths, FILE_SYSTEM_PATTERNS)
         end
 
         def template_path(document, options)
-          return Utils::LIQUID_INCLUDE_PATH unless options.dig("template_path")
+          template_path = options&.dig("include_path")
+          return Utils::LIQUID_INCLUDE_PATH unless template_path
 
-          Utils.relative_file_path(document, options.dig("template_path"))
+          Utils.relative_file_path(
+            document,
+            template_path,
+          )
         end
 
         def parse_options_string(str)
-          str.to_s.scan(/,\s*([^=]+?)=(\s*[^,]+)/).to_h
+          str
+            .to_s
+            .scan(/,\s*([^=]+?)=(\s*[^,]+)/)
+            .to_h
         end
       end
     end
