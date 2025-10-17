@@ -64,6 +64,38 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEnumTableBlockMacro do
           end
         end
       end
+
+      context "with user-specific template and external_data" do
+        let(:input) do
+          <<~TEXT
+            = Document title
+            Author
+            :nodoc:
+            :novalid:
+            :no-isobib:
+            :imagesdir: spec/assets
+
+            TextureTypeType
+
+            lutaml_enum_table::#{example_file}[name="TextureTypeType",template="spec/fixtures/lutaml/liquid_templates_external_data/_enum_table.liquid",external_data="my_data:spec/fixtures/lutaml/external_data/my_data.yaml;second_data:spec/fixtures/lutaml/external_data/my_second_data.yaml"]
+          TEXT
+        end
+
+        it "should render table" do
+          expect(output).to have_tag("table") do
+            with_tag "th", text: "NewClass: TextureTypeType"
+            with_tag "td", text: "Package: app"
+            with_tag "td", text: "Stereotypes: «Enumeration»"
+            with_tag "td", text: "specific"
+            with_tag "td", text: "typical"
+            with_tag "td", text: "unknown"
+          end
+
+          expect(output).to have_tag("tr") do
+            with_tag "td", text: /External Data:\sAdministration-test/
+          end
+        end
+      end
     end
   end
 end
