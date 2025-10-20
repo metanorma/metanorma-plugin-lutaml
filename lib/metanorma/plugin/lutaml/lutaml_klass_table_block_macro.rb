@@ -14,6 +14,8 @@ module Metanorma
           "_klass_table.liquid"
         )
 
+        CONTEXT_NAME = "klass"
+
         use_dsl
         named :lutaml_klass_table
 
@@ -30,16 +32,10 @@ module Metanorma
             xmi_path, path, guidance
           )
 
-          render(klass, parent, attrs)
+          render_table(klass, CONTEXT_NAME, parent, attrs)
         end
 
         private
-
-        def render(klass, parent, attrs)
-          rendered_table = render_table(klass, "klass", parent, attrs)
-          block = create_open_block(parent, "", attrs)
-          parse_content(block, rendered_table, attrs)
-        end
 
         def get_default_template
           DEFAULT_TEMPLATE

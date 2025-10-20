@@ -14,6 +14,8 @@ module Metanorma
           "_enum_table.liquid"
         )
 
+        CONTEXT_NAME = "enum"
+
         use_dsl
         named :lutaml_enum_table
 
@@ -25,16 +27,10 @@ module Metanorma
             xmi_path, path
           )
 
-          render(enum, parent, attrs)
+          render_table(enum, CONTEXT_NAME, parent, attrs)
         end
 
         private
-
-        def render(enum, parent, attrs)
-          rendered_table = render_table(enum, "enum", parent, attrs)
-          block = create_open_block(parent, "", attrs)
-          parse_content(block, rendered_table, attrs)
-        end
 
         def get_default_template
           DEFAULT_TEMPLATE
