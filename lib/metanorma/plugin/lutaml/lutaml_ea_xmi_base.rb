@@ -450,7 +450,9 @@ module Metanorma
             end
           end
 
-          table_tmpl.render
+          rendered_table = table_tmpl.render
+          block = create_open_block(parent, "", attrs)
+          parse_content(block, rendered_table, attrs)
         end
 
         def get_template(document, attrs)
