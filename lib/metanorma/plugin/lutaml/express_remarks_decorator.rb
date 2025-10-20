@@ -9,7 +9,7 @@ module Metanorma
           (link|image|video|audio|include) # Capture group 1: content type
           (:+)?                            # Capture group 2: optional colons
           (?!                              # Negative lookahead
-            [^\/:]+://|                    # Don't match URLs (http://, etc.)
+            [^/:]+://|                     # Don't match URLs (http://, etc.)
             [A-Z]:/|                       # Don't match Windows paths
             /                              # Don't match absolute paths
           )                                # End negative lookahead
