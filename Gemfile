@@ -20,7 +20,7 @@ gem "lutaml",
     branch: "update/xsd_support_metanorma_plugin"
 gem "lutaml-model",
     github: "lutaml/lutaml-model",
-    branch: "update/liquid_element_order"
+    branch: "main"
 gem "metanorma"
 # gem "metanorma-standoc", "~> 3.0.8"
 # TODO: Remove the line below after PR#1086 is merged
@@ -38,4 +38,3 @@ gem "timecop", "~> 0.9"
 gem "vcr", "~> 6.1.0"
 gem "webmock"
 gem "xml-c14n"
-gem "lutaml-model", github: "lutaml/lutaml-model", branch: "main"
