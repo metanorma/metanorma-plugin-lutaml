@@ -20,7 +20,7 @@ module Metanorma
         XSD_LIQUID_BLOCK_REGEX = %r{
           ^                            # Start of line
           (?:\blutaml_xsd\b)::         # lutaml_xsd
-          (?<index_names>[^\[]+)       # Index names
+          (?<index_name>[^\[]+)        # Index names
           \[                           # Opening bracket
             (?<context_name>[^,]+)     # Context name
             ,                          # Comma separator
@@ -30,13 +30,11 @@ module Metanorma
         }x.freeze
 
         def process_text_blocks(document, input_lines, express_indexes)
-          return super unless liquid_block?(input_lines.peek)
-
-          process_direct_block(
-            document,
-            input_lines.next,
-            express_indexes,
-          )
+          if lutaml_xsd_block?(input_lines.peek)
+            process_direct_block(document, input_lines.next, express_indexes)
+          else
+            super
+          end
         end
 
         protected
@@ -45,8 +43,8 @@ module Metanorma
           line.match(XSD_PREPROCESSOR_REGEX)
         end
 
-        def liquid_block?(line)
-          line.match?(XSD_LIQUID_BLOCK_REGEX)
+        def lutaml_xsd_block?(line)
+          line.match(XSD_LIQUID_BLOCK_REGEX)
         end
 
         private
@@ -62,18 +60,19 @@ module Metanorma
         end
 
         def process_direct_block(document, line, express_indexes)
-          block_header_match = line.match(XSD_LIQUID_BLOCK_REGEX)
-          context_name = block_header_match[:context_name].strip
-          index_name = block_header_match[:index_names].strip
-          options = options_hash(block_header_match[:options])
-          liquid_template = template(template_file(document, block_header_match))
+          block_match     = lutaml_xsd_block?(line)
+          index_name      = block_match[:index_name].strip
+          context_name    = block_match[:context_name].strip
+          options         = options_hash(block_match[:options])
+          liquid_template = template(template_file(document, block_match))
+
           liquid_template.registers[:file_system] = file_system(options, document)
-          assign_options_in_liquid(liquid_template, options)
           liquid_template.assigns[context_name] = gather_context_liquid_item(
             document,
             index_name,
             options,
           )
+          assign_options_in_liquid(liquid_template, options)
           [liquid_template.render]
         end
 
@@ -131,7 +130,7 @@ module Metanorma
         end
 
         def template_path(document, options)
-          template_path = options&.dig("include_path")
+          template_path = options&.dig("templates_dir")
           return Utils::LIQUID_INCLUDE_PATH unless template_path
 
           Utils.relative_file_path(
