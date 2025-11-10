@@ -28,6 +28,7 @@ gem "metanorma"
 gem "metanorma-standoc",
     github: "metanorma/metanorma-standoc",
     branch: "update/lutaml_xsd_preprocessor_support"
+gem "metanorma-utils", github: "metanorma/metanorma-utils", branch: "main"
 gem "rake", "~> 13"
 gem "rspec", "~> 3.6"
 gem "rspec-html-matchers"
