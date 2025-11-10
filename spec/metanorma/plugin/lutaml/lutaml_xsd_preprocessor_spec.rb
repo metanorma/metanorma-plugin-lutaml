@@ -154,7 +154,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
             [#top]
             = XSD Templates
 
-            lutaml_xsd::spec/fixtures/lutaml/xsd_schemas/unitsml-v1.0-csd04.xsd[schema, spec/fixtures/lutaml/unitsml_liquid_templates/schema.adoc, templates_dir=spec/fixtures/lutaml/unitsml_liquid_templates]
+            lutaml_xsd::spec/fixtures/lutaml/xsd_schemas/unitsml-v1.0-csd04.xsd[schema, spec/fixtures/lutaml/unitsml_liquid_templates/schema.adoc, include_path=spec/fixtures/lutaml/unitsml_liquid_templates]
           TEXT
         end
 

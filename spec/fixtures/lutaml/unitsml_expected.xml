@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
-<metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="3.1.8" flavor="standoc">
+<metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="3.2.0" flavor="standoc">
    <bibdata type="standard">
       <title language="en" type="main">XSD Templates</title>
       <language>en</language>

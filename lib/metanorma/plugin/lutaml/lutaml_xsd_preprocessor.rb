@@ -130,7 +130,7 @@ module Metanorma
         end
 
         def template_path(document, options)
-          template_path = options&.dig("templates_dir")
+          template_path = options&.dig("include_path")
           return Utils::LIQUID_INCLUDE_PATH unless template_path
 
           Utils.relative_file_path(
