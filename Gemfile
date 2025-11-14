@@ -13,7 +13,7 @@ rescue StandardError
 end
 
 gem "byebug"
-gem "canon"
+gem "canon", "0.1.3"
 gem "debug"
 gem "equivalent-xml"
 gem "lutaml",
