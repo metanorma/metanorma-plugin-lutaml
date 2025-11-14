@@ -57,7 +57,7 @@ BLANK_HDR = <<~"HDR".freeze
   <?xml version="1.0" encoding="UTF-8"?>
   <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="#{Metanorma::Standoc::VERSION}" flavor="standoc">
     <bibdata type="standard">
-      <title language="en" format="text/plain">Document title</title>
+      <title language="en" type="main">Document title</title>
       <language>en</language>
       <script>Latn</script>
       <status>
@@ -72,6 +72,9 @@ BLANK_HDR = <<~"HDR".freeze
       </ext>
     </bibdata>
     <metanorma-extension>
+      <semantic-metadata>
+        <stage-published>true</stage-published>
+      </semantic-metadata>
       <presentation-metadata>
         <name>TOC Heading Levels</name>
         <value>2</value>
@@ -133,4 +136,8 @@ end
 
 def strip_src(xml)
   xml.gsub(/\ssrc="[^"]+"/, ' src="_"')
+end
+
+def strip_filename(xml)
+  xml.gsub(/\sfilename="[^"]+"/, ' filename="_"')
 end

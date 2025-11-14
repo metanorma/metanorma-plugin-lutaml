@@ -1,0 +1,964 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="3.2.0" flavor="standoc">
+   <bibdata type="standard">
+      <title language="en" type="main">XSD Templates</title>
+      <language>en</language>
+      <script>Latn</script>
+      <status>
+         <stage>published</stage>
+      </status>
+      <copyright>
+         <from>2025</from>
+      </copyright>
+      <ext>
+         <doctype>standard</doctype>
+         <flavor>standoc</flavor>
+      </ext>
+   </bibdata>
+   <metanorma-extension>
+      <semantic-metadata>
+         <stage-published>true</stage-published>
+      </semantic-metadata>
+      <presentation-metadata>
+         <name>TOC Heading Levels</name>
+         <value>2</value>
+      </presentation-metadata>
+      <presentation-metadata>
+         <name>HTML TOC Heading Levels</name>
+         <value>2</value>
+      </presentation-metadata>
+      <presentation-metadata>
+         <name>DOC TOC Heading Levels</name>
+         <value>2</value>
+      </presentation-metadata>
+      <presentation-metadata>
+         <name>PDF TOC Heading Levels</name>
+         <value>2</value>
+      </presentation-metadata>
+   </metanorma-extension>
+   <sections>
+      <clause id="_" inline-header="false" obligation="normative">
+         <title id="_">Elements</title>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>UnitsML</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>UnitSet</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>Unit</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>UnitSystem</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>UnitName</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>UnitSymbol</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>UnitVersionHistory</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>CodeListValue</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>RootUnits</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>EnumeratedRootUnit</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>ExternalRootUnit</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>Conversions</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>Float64ConversionFrom</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>ConversionNote</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>SpecialConversionFrom</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>WSDLConversionFrom</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>WSDLDescription</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>ConversionDescription</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>QuantityReference</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>UnitDefinition</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>UnitHistory</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>UnitRemark</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>CountedItemSet</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>CountedItem</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>ItemName</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>ItemSymbol</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>ItemVersionHistory</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>ItemDefinition</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>ItemHistory</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>ItemRemark</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>QuantitySet</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>Quantity</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>QuantityName</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>QuantitySymbol</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>UnitReference</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>QuantityVersionHistory</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>QuantityDefinition</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>QuantityHistory</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>QuantityRemark</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>DimensionSet</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>Dimension</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>Length</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>Mass</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>Time</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>ElectricCurrent</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>ThermodynamicTemperature</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>AmountOfSubstance</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>LuminousIntensity</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>PlaneAngle</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>Item</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>PrefixSet</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>Prefix</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>PrefixName</strong>
+            </title>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Element:
+               <strong>PrefixSymbol</strong>
+            </title>
+         </clause>
+      </clause>
+      <clause id="_" inline-header="false" obligation="normative">
+         <title id="_">Complex Types</title>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>UnitsMLType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">UnitsML</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>UnitSetType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">UnitSet</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>UnitType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">Unit</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>CodeListValueType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">CodeListValue</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>RootUnitsType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">RootUnits</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>EnumeratedRootUnitType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">EnumeratedRootUnit</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>ExternalRootUnitType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">ExternalRootUnit</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>ConversionsType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">Conversions</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>Float64ConversionFromType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">Float64ConversionFrom</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>SpecialConversionFromType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">SpecialConversionFrom</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>WSDLConversionFromType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">WSDLConversionFrom</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>CountedItemSetType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">CountedItemSet</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>CountedItemType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">CountedItem</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>QuantitySetType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">QuantitySet</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>QuantityType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">Quantity</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>DimensionSetType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">DimensionSet</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>DimensionType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">Dimension</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>LengthType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">Length</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>MassType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">Mass</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>TimeType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">Time</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>ElectricCurrentType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">ElectricCurrent</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>ThermodynamicTemperatureType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">ThermodynamicTemperature</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>AmountOfSubstanceType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">AmountOfSubstance</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>LuminousIntensityType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">LuminousIntensity</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>PlaneAngleType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">PlaneAngle</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>ItemType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">Item</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>PrefixSetType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">PrefixSet</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>PrefixType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">Prefix</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>NameType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">UnitName, ItemName, QuantityName, PrefixName</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>SystemType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">UnitSystem</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>SymbolType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">UnitSymbol, ItemSymbol, QuantitySymbol, PrefixSymbol</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>NoteType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">UnitVersionHistory, ConversionNote, WSDLDescription, ConversionDescription, ItemVersionHistory, QuantityVersionHistory</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>DefinitionType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">UnitDefinition, ItemDefinition, QuantityDefinition</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>HistoryType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">UnitHistory, ItemHistory, QuantityHistory</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>RemarkType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">UnitRemark, ItemRemark, QuantityRemark</p>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">
+               Complex Type:
+               <strong>ReferenceType</strong>
+            </title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">QuantityReference, UnitReference</p>
+               </dd>
+            </dl>
+         </clause>
+      </clause>
+      <clause id="_" inline-header="false" obligation="normative">
+         <title id="_">Attribute Groups</title>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">initialUnit</title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">Float64ConversionFromType, SpecialConversionFromType, WSDLConversionFromType</p>
+                  <figure id="_">
+                     <pre id="_"/>
+                  </figure>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">sourceName</title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">DefinitionType, HistoryType, RemarkType</p>
+                  <figure id="_">
+                     <pre id="_"/>
+                  </figure>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">sourceURL</title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">EnumeratedRootUnitType, ExternalRootUnitType, DefinitionType, HistoryType, RemarkType</p>
+                  <figure id="_">
+                     <pre id="_"/>
+                  </figure>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">powerRational</title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">EnumeratedRootUnitType, ExternalRootUnitType, LengthType, MassType, TimeType, ElectricCurrentType, ThermodynamicTemperatureType, AmountOfSubstanceType, LuminousIntensityType, PlaneAngleType, ItemType</p>
+                  <figure id="_">
+                     <pre id="_"/>
+                  </figure>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">prefix</title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">EnumeratedRootUnitType, ExternalRootUnitType</p>
+                  <figure id="_">
+                     <pre id="_"/>
+                  </figure>
+               </dd>
+            </dl>
+         </clause>
+         <clause id="_" inline-header="false" obligation="normative">
+            <title id="_">dimensionURL</title>
+            <dl id="_">
+               <dt>
+                  <strong>Used By</strong>
+               </dt>
+               <dd id="_">
+                  <p id="_">UnitType, QuantityType</p>
+                  <figure id="_">
+                     <pre id="_"/>
+                  </figure>
+               </dd>
+            </dl>
+         </clause>
+      </clause>
+   </sections>
+</metanorma>

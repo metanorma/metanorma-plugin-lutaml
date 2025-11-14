@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="3.2.0" flavor="standoc">
+   <bibdata type="standard">
+      <title language="en" type="main">Document title</title>
+      <language>en</language>
+      <script>Latn</script>
+      <status>
+         <stage>published</stage>
+      </status>
+      <copyright>
+         <from>2025</from>
+      </copyright>
+      <ext>
+         <doctype>standard</doctype>
+         <flavor>standoc</flavor>
+      </ext>
+   </bibdata>
+   <metanorma-extension>
+      <semantic-metadata>
+         <stage-published>true</stage-published>
+      </semantic-metadata>
+      <presentation-metadata>
+         <name>TOC Heading Levels</name>
+         <value>2</value>
+      </presentation-metadata>
+      <presentation-metadata>
+         <name>HTML TOC Heading Levels</name>
+         <value>2</value>
+      </presentation-metadata>
+      <presentation-metadata>
+         <name>DOC TOC Heading Levels</name>
+         <value>2</value>
+      </presentation-metadata>
+      <presentation-metadata>
+         <name>PDF TOC Heading Levels</name>
+         <value>2</value>
+      </presentation-metadata>
+   </metanorma-extension>
+   <sections>
+      <clause id="_" inline-header="false" obligation="normative">
+         <title id="_">Elements</title>
+         <p id="_">
+            Name:
+            <strong>mathPr</strong>
+            Type:
+            <strong>CT_MathPr</strong>
+         </p>
+         <p id="_">
+            Name:
+            <strong>oMathPara</strong>
+            Type:
+            <strong>CT_OMathPara</strong>
+         </p>
+         <p id="_">
+            Name:
+            <strong>oMath</strong>
+            Type:
+            <strong>CT_OMath</strong>
+         </p>
+      </clause>
+      <clause id="_" inline-header="false" obligation="normative">
+         <title id="_">ComplexTypes</title>
+         <p id="_">
+            Name:
+            <strong>CT_Integer255</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_Integer2</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_SpacingRule</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_UnSignedInteger</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_Char</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_OnOff</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_String</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_XAlign</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_YAlign</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_Shp</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_FType</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_LimLoc</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_TopBot</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_Script</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_Style</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_ManualBreak</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_RPR</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_Text</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_R</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_CtrlPr</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_AccPr</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_Acc</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_BarPr</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_Bar</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_BoxPr</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_Box</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_BorderBoxPr</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_BorderBox</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_DPr</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_D</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_EqArrPr</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_EqArr</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_FPr</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_F</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_FuncPr</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_Func</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_GroupChrPr</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_GroupChr</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_LimLowPr</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_LimLow</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_LimUppPr</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_LimUpp</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_MCPr</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_MC</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_MCS</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_MPr</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_MR</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_M</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_NaryPr</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_Nary</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_PhantPr</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_Phant</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_RadPr</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_Rad</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_SPrePr</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_SPre</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_SSubPr</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_SSub</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_SSubSupPr</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_SSubSup</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_SSupPr</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_SSup</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_OMathArgPr</strong>
+            Description: Math Argument Properties
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_OMathArg</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_OMathJc</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_OMathParaPr</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_TwipsMeasure</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_BreakBin</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_BreakBinSub</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_MathPr</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_OMathPara</strong>
+            Description:
+         </p>
+         <p id="_">
+            Name:
+            <strong>CT_OMath</strong>
+            Description:
+         </p>
+      </clause>
+   </sections>
+</metanorma>

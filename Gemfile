@@ -13,13 +13,26 @@ rescue StandardError
 end
 
 gem "byebug"
+gem "canon", "0.1.3"
 gem "debug"
 gem "equivalent-xml"
 gem "lutaml",
     github: "lutaml/lutaml",
     branch: "update/xsd_support_metanorma_plugin"
+gem "lutaml-model",
+    github: "lutaml/lutaml-model",
+    branch: "main"
+gem "lutaml-xsd",
+    github: "lutaml/lutaml-xsd",
+    branch: "update/liquid_drop_methods"
 gem "metanorma"
-gem "metanorma-standoc", "~> 3.0.8"
+# gem "metanorma-standoc", "~> 3.0.8"
+# TODO: Remove the line below after PR#1086 is merged
+# and then un-comment the above line.
+gem "metanorma-standoc",
+    github: "metanorma/metanorma-standoc",
+    branch: "update/lutaml_xsd_preprocessor_support"
+gem "metanorma-utils", github: "metanorma/metanorma-utils", branch: "main"
 gem "rake", "~> 13"
 gem "rspec", "~> 3.6"
 gem "rspec-html-matchers"
@@ -30,4 +43,3 @@ gem "timecop", "~> 0.9"
 gem "vcr", "~> 6.1.0"
 gem "webmock"
 gem "xml-c14n"
-gem "lutaml-model", github: "lutaml/lutaml-model", branch: "main"

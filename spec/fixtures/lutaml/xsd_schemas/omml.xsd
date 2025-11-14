@@ -1271,6 +1271,9 @@
     </xsd:choice>
   </xsd:group>
   <xsd:complexType name="CT_OMathArgPr">
+    <xsd:annotation>
+      <xsd:documentation>Math Argument Properties</xsd:documentation>
+    </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="argSz" type="CT_Integer2" minOccurs="0">
         <xsd:annotation>

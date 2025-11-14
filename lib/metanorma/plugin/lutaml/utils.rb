@@ -26,6 +26,10 @@ module Metanorma
           )?                      # End of optional group
           $                       # End of the pattern
         }x.freeze
+        LIQUID_INCLUDE_PATH = File.join(
+          Gem.loaded_specs["metanorma-plugin-lutaml"].full_gem_path,
+          "lib", "metanorma", "plugin", "lutaml", "liquid_templates"
+        )
 
         module_function
 

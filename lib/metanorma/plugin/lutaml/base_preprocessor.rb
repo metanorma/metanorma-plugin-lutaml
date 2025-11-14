@@ -14,6 +14,11 @@ module Metanorma
       # Class for processing Lutaml files
       class BasePreprocessor < ::Asciidoctor::Extensions::Preprocessor
         REMARKS_ATTRIBUTE = "remarks"
+        FILE_SYSTEM_PATTERNS = [
+          "%s.liquid",
+          "_%s.liquid",
+          "_%s.adoc",
+        ].freeze
 
         def process(document, reader) # rubocop:disable Metrics/MethodLength
           r = Asciidoctor::PreprocessorNoIfdefsReader.new(document,
@@ -198,15 +203,7 @@ module Metanorma
             options: options.merge("document" => document)
           )
 
-          # Setup include paths for liquid templates
-          include_paths = [Utils.relative_file_path(document, "")]
-          options["include_path"]&.split(",")&.each do |path|
-            # resolve include_path relative to the document
-            include_paths.push(Utils.relative_file_path(document, path))
-          end
-
-          file_system = ::Metanorma::Plugin::Lutaml::Liquid::LocalFileSystem
-            .new(include_paths, ["%s.liquid", "_%s.liquid", "_%s.adoc"])
+          file_system = file_system(options, document)
 
           # Parse template once outside the loop
           template = template(lines)
@@ -219,6 +216,7 @@ module Metanorma
               item[:liquid_drop], options
             )
             template.assigns["schemas_order"] = options["selected_schemas"]
+            assign_options_in_liquid(template, options)
             template.render
           end.flatten
         rescue StandardError => e
@@ -226,6 +224,17 @@ module Metanorma
             .log("[LutamlPreprocessor] Failed to parse LutaML block: " \
                  "#{e.message}", :error)
           raise e
+        end
+
+        def file_system(options, document)
+          # Setup include paths for liquid templates
+          include_paths = [Utils.relative_file_path(document, "")]
+          options["include_path"]&.split(",")&.each do |path|
+            # resolve include_path relative to the document
+            include_paths.push(Utils.relative_file_path(document, path))
+          end
+          ::Metanorma::Plugin::Lutaml::Liquid::LocalFileSystem
+            .new(include_paths, FILE_SYSTEM_PATTERNS)
         end
 
         def template(lines)

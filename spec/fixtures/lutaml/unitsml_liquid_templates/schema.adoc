@@ -1,0 +1,11 @@
+== Elements
+
+{% render "elements", schema: schema %}
+
+== Complex Types
+
+{% render "complex_type", schema: schema %}
+
+== Attribute Groups
+
+{% render "attribute_groups", schema: schema %}

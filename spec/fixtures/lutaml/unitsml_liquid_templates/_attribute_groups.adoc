@@ -1,0 +1,11 @@
+{% for attribute_group in schema.attribute_group %}
+
+=== {{ attribute_group.name }}
+
+{% capture used_by %}
+  {% for attr in attribute_group.used_by %}{{ attr.name | default: attr.ref }}{% unless forloop.last %}, {% endunless %}{% endfor %}
+{% endcapture %}
+
+*Used By*:: {{ used_by }}
+  
+{% endfor %}
