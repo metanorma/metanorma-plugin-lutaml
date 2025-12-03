@@ -28,7 +28,7 @@ module Metanorma
             guidance = get_guidance(parent.document, attrs["guidance"])
           end
 
-          klass = ::Lutaml::XMI::Parsers::XML.serialize_generalization_by_name(
+          klass = ::Lutaml::Xmi::Parsers::Xml.serialize_generalization_by_name(
             xmi_path, path, guidance
           )
 
