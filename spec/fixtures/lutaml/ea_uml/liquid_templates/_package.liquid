@@ -1,0 +1,10 @@
+Name of package: {{ package.name }}
+
+Number of classes in package {{ package.name }}: {{ package.classes | size }}
+{% for klass in package.classes %}
+{% render "klass", klass: klass %}
+{% endfor %}
+
+{% for sub_package in package.packages %}
+{% render "package", package: sub_package %}
+{% endfor %}

@@ -55,6 +55,8 @@ module Metanorma
                "lutaml_uml_datamodel_description_preprocessor"
       autoload :LutamlXmiUmlPreprocessor,
                "metanorma/plugin/lutaml/lutaml_xmi_uml_preprocessor"
+      autoload :LutamlEaUmlPreprocessor,
+               "metanorma/plugin/lutaml/lutaml_ea_uml_preprocessor"
       autoload :LutamlXsdPreprocessor,
                "metanorma/plugin/lutaml/lutaml_xsd_preprocessor"
       autoload :ParseError, "metanorma/plugin/lutaml/parse_error"

@@ -39,6 +39,63 @@ module Metanorma
 
         private
 
+        def lutaml_document_from_file_or_cache(document, file_path, yaml_config, yaml_config_path = nil) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Metrics/CyclomaticComplexity,Layout/LineLength,Metrics/PerceivedComplexity
+          full_path = Utils.relative_file_path(document, file_path)
+          if document.attributes["lutaml_xmi_cache"] &&
+              document.attributes["lutaml_xmi_cache"][full_path]
+            return document.attributes["lutaml_xmi_cache"][full_path]
+          end
+
+          guidance = get_guidance(document, yaml_config.guidance)
+          result_document = parse_result_document(full_path, guidance)
+
+          if File.extname(file_path).downcase == ".xmi"
+            # load EA extensions for Xmi::EaRoot
+            yaml_config.ea_extension&.each do |ea_extension_path|
+              # resolve paths of ea extensions based on the location of
+              # config yaml file
+              ea_extension_full_path = File.expand_path(
+                ea_extension_path, File.dirname(yaml_config_path)
+              )
+
+              # unload the extension if it is already loaded
+              xmi_doc = Nokogiri::XML(File.read(ea_extension_full_path))
+              extension_id = Xmi::EaRoot.get_module_name(xmi_doc)
+              if Xmi::EaRoot.extension_loaded?(extension_id)
+                Xmi::EaRoot.unload_extension(extension_id)
+              end
+
+              Xmi::EaRoot.load_extension(ea_extension_full_path)
+            end
+
+            # store in document.attributes as cache
+            document.attributes["lutaml_xmi_cache"] ||= {}
+            document.attributes["lutaml_xmi_cache"][full_path] = result_document
+          end
+
+          result_document
+        end
+
+        def get_guidance(document, guidance_config)
+          return unless guidance_config
+
+          guidance_yaml = Utils.relative_file_path(document, guidance_config)
+          guidance = Metanorma::Plugin::Lutaml::Config::Guidance.from_yaml(
+            File.read(guidance_yaml, encoding: "UTF-8"),
+          )
+          guidance.to_yaml_hash
+        end
+
+        def parse_yaml_config_file(document, file_path)
+          return Metanorma::Plugin::Lutaml::Config::Root.new if file_path.nil?
+
+          relative_file_path = Utils.relative_file_path(document, file_path)
+
+          Metanorma::Plugin::Lutaml::Config::Root.from_yaml(
+            File.read(relative_file_path, encoding: "UTF-8"),
+          )
+        end
+
         def get_xmi_path(parent, target, attrs)
           return get_path_from_index(parent, attrs["index"]) if attrs["index"]
 
@@ -106,8 +163,8 @@ module Metanorma
           )
         end
 
-        def load_lutaml_doc_and_config(document, xmi_or_index, config_yaml_path) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-          index = xmi_or_index.match(/index=(.*)/)
+        def load_lutaml_doc_and_config(document, filepath_or_index, config_yaml_path) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Layout/LineLength
+          index = filepath_or_index.match(/index=(.*)/)
 
           if index
             index_name = index[1]
@@ -121,7 +178,7 @@ module Metanorma
               )
             end
 
-            xmi_or_index = document
+            filepath_or_index = document
               .attributes["lutaml_xmi_index"][index_name][:path]
             config_yaml_path = document
               .attributes["lutaml_xmi_index"][index_name][:config]
@@ -130,7 +187,7 @@ module Metanorma
           yaml_config = parse_yaml_config_file(document, config_yaml_path)
           lutaml_document = lutaml_document_from_file_or_cache(
             document,
-            xmi_or_index,
+            filepath_or_index,
             yaml_config,
             Utils.relative_file_path(document, config_yaml_path),
           )

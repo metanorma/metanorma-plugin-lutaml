@@ -17,6 +17,7 @@ Asciidoctor::Extensions.register do
   preprocessor Metanorma::Plugin::Lutaml::LutamlPreprocessor
   preprocessor Metanorma::Plugin::Lutaml::LutamlXmiUmlPreprocessor
   preprocessor Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor
+  preprocessor Metanorma::Plugin::Lutaml::LutamlEaUmlPreprocessor
 
   block_macro Metanorma::Plugin::Lutaml::LutamlDiagramBlockMacro
   block Metanorma::Plugin::Lutaml::LutamlDiagramBlock
@@ -27,10 +28,12 @@ Asciidoctor::Extensions.register do
   block_macro Metanorma::Plugin::Lutaml::LutamlEnumTableBlockMacro
 end
 
-require "metanorma-standoc"
+require "tempfile"
 require "rspec/matchers"
 require "metanorma-core"
 require "metanorma/standoc"
+require "metanorma/standoc/version"
+require "metanorma-standoc"
 require "xml-c14n"
 require "canon"
 
