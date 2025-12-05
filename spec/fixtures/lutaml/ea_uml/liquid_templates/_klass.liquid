@@ -1,0 +1,11 @@
+[cols="1a,1a,1a,2a"]
+|===
+h| Name of Class 3+| {{ klass.name }}
+h| Definition 3+| {{ klass.definition }}
+|===
+
+{% render "attributes", attributes: klass.attributes %}
+
+{% comment %} {% render "inherited_attributes", attributes: klass.inheritedAttributes %} {% endcomment %}
+
+{% render "associations", associations: klass.associations %}

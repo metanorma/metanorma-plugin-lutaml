@@ -27,3 +27,7 @@ gem "timecop", "~> 0.9"
 gem "vcr", "~> 6.1.0"
 gem "webmock"
 gem "xml-c14n"
+
+# gem "lutaml", path: "../../lutaml/lutaml"
+gem "lutaml", git: "https://github.com/lutaml/lutaml.git",
+              branch: "rt-new-features"
