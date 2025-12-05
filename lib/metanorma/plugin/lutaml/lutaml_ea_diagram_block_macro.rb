@@ -33,7 +33,7 @@ module Metanorma
           )
         end
 
-        def get_original_document(parent, index = nil)
+        def get_original_document(parent, index = nil) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
           path = get_path_from_index(parent, index) if index
 
           if index && path
@@ -43,11 +43,27 @@ module Metanorma
             )
           end
 
-          first_path = parent.document.attributes["lutaml_xmi_paths"]&.first
-          return unless first_path
+          # get the first document from lutaml_xmi_cache
+          first_path = parent
+            .document.attributes["lutaml_xmi_cache"]&.keys&.first
+          if first_path
+            return lutaml_document_from_file_or_cache(
+              parent.document, first_path,
+              Metanorma::Plugin::Lutaml::Config::Root.new
+            )
+          end
+
+          # get the first document from the first lutaml_xmi_index
+          first_index = parent
+            .document.attributes["lutaml_xmi_index"]&.keys&.first
+
+          return unless first_index
+
+          path_from_index = get_path_from_index(parent, first_index)
+          return unless path_from_index
 
           lutaml_document_from_file_or_cache(
-            parent.document, first_path,
+            parent.document, path_from_index,
             Metanorma::Plugin::Lutaml::Config::Root.new
           )
         end

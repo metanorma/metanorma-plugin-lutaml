@@ -4,6 +4,7 @@ require_relative "../../../../lib/metanorma/plugin/lutaml/yaml2_text_preprocesso
 RSpec.describe Metanorma::Plugin::Lutaml::Yaml2TextPreprocessor do
   it_behaves_like "structured data 2 text preprocessor" do
     let(:extension) { "yaml" }
+
     def transform_to_type(data)
       data.to_yaml
     end

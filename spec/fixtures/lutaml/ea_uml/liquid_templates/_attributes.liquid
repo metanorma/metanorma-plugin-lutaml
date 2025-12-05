@@ -1,0 +1,13 @@
+
+[cols="1a,1a,1a,1a,2a"]
+|===
+5+h| Attributes {{ attributes.size }}
+h| Name h| Type h| Multiplicity h| Definition h| Association ID
+{% for attr in attributes %}
+| {{ attr.name }}
+| {{ attr.type }}
+| {{ attr.cardinality.min }}..{{ attr.cardinality.max }}
+| {{ attr.definition }}
+| {{ attr.association }}
+{% endfor %}
+|===
