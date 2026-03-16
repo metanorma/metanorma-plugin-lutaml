@@ -35,7 +35,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "liquid"
   spec.add_dependency "lutaml", "~> 0.9"
   spec.add_dependency "ogc-gml", "~>1.0.0"
-  spec.add_dependency "ostruct"
   spec.add_dependency "relaton-cli"
 
   spec.add_development_dependency "metanorma-standoc"
