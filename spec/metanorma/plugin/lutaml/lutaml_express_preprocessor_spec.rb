@@ -40,7 +40,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
                 USE FROM Activity_method_arm;
 
-                TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT;
+                TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT
+                  ();
                 END_TYPE;
 
                 ENTITY Activity_method_relationship;
@@ -66,7 +67,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
           it "correctly renders input" do
             expect(xml_string_content(metanorma_convert(input)))
-              .to(be_equivalent_to(output))
+              .to(be_xml_equivalent_to(output))
           end
         end
 
@@ -110,7 +111,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
               USE FROM Activity_method_arm;
 
-              TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT;
+              TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT
+                ();
               END_TYPE;
 
               ENTITY Activity_method_relationship;
@@ -217,7 +219,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
           it "correctly renders input" do
             expect(xml_string_content(metanorma_convert(input)))
-              .to(be_equivalent_to(output))
+              .to(be_xml_equivalent_to(output))
           end
         end
 
@@ -258,7 +260,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
                 USE FROM Activity_method_arm;
 
-                TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT;
+                TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT
+                  ();
                 END_TYPE;
 
                 ENTITY Activity_method_relationship;
@@ -284,7 +287,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
           it "correctly renders input" do
             expect(xml_string_content(metanorma_convert(input)))
-              .to(be_equivalent_to(output))
+              .to(be_xml_equivalent_to(output))
           end
         end
 
@@ -337,16 +340,16 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                     <p id="_">Mine text</p>
                     <svgmap id="_">
                       <figure id="_">
-                        <image id="_" src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" mimetype="image/svg+xml" height="auto" width="auto"/>
+                        <image id="_" src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" mimetype="image/svg+xml" height="auto" width="auto" filename="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}"/>
                       </figure>
                       <target href="1">
-                        <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
+                        <eref  bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
                       </target>
                       <target href="2">
-                        <eref style="short" bibitemid="express_measure_schemaexpg4" citeas=""><display-text>measure_schemaexpg4</display-text></eref>
+                        <eref  bibitemid="express_measure_schemaexpg4" citeas=""><display-text>measure_schemaexpg4</display-text></eref>
                       </target>
                       <target href="3">
-                        <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
+                        <eref  bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
                       </target>
                     </svgmap>
                   </clause>
@@ -355,16 +358,16 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                     <p id="_">Mine text</p>
                     <svgmap id="_">
                       <figure id="_">
-                        <image id="_" src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" mimetype="image/svg+xml" height="auto" width="auto"/>
+                        <image id="_" src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" mimetype="image/svg+xml" height="auto" width="auto"  filename="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}"/>
                       </figure>
                       <target href="1">
-                        <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
+                        <eref  bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
                       </target>
                       <target href="2">
-                        <eref style="short" bibitemid="express_measure_schemaexpg4" citeas=""><display-text>measure_schemaexpg4</display-text></eref>
+                        <eref  bibitemid="express_measure_schemaexpg4" citeas=""><display-text>measure_schemaexpg4</display-text></eref>
                       </target>
                       <target href="3">
-                        <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
+                        <eref  bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
                       </target>
                     </svgmap>
                   </clause>
@@ -388,7 +391,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               xml_string_content(metanorma_convert(input)),
             )
             expect(output)
-              .to(be_equivalent_to(remove_xml_whitespaces(expected_output)))
+              .to(be_xml_equivalent_to(remove_xml_whitespaces(expected_output)))
           end
         end
       end

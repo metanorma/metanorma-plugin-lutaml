@@ -30,12 +30,15 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "asciidoctor"
   spec.add_dependency "coradoc", "~> 1.1"
-  spec.add_dependency "expressir", "~> 2.1"
+  spec.add_dependency "expressir", "~> 2.3"
   spec.add_dependency "isodoc"
   spec.add_dependency "liquid"
-  spec.add_dependency "lutaml", "~> 0.9"
+  spec.add_dependency "lutaml", "~> 0.8"
   spec.add_dependency "ogc-gml", "~>1.0.0"
   spec.add_dependency "relaton-cli"
+
+  spec.add_development_dependency "metanorma-standoc"
+  spec.add_development_dependency "canon"
 
   spec.metadata["rubygems_mfa_required"] = "false"
 end

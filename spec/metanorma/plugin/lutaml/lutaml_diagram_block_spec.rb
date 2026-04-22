@@ -29,7 +29,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDiagramBlock do
           <sections>
           <figure id="_">
           <name id="_">my diagram</name>
-          <image src="_" id="_" mimetype="image/png" height="auto" width="auto"></image>
+          <image src="_" id="_" mimetype="image/png" height="auto" width="auto" filename="_"></image>
           </figure>
           </sections>
           </metanorma>
@@ -38,7 +38,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDiagramBlock do
 
       it "correctly renders input" do
         expect(strip_src(xml_string_content(metanorma_convert(input))))
-          .to(be_equivalent_to(output))
+          .to(be_xml_equivalent_to(output))
       end
     end
 
@@ -62,7 +62,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDiagramBlock do
           #{BLANK_HDR}
           <sections>
           <figure id="_">
-          <image src="_" id="_" mimetype="image/png" height="auto" width="auto"></image>
+          <image src="_" id="_" mimetype="image/png" height="auto" width="auto" filename="_"></image>
           </figure>
           </sections>
           </metanorma>
@@ -71,7 +71,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDiagramBlock do
 
       it "correctly renders input" do
         expect(strip_src(xml_string_content(metanorma_convert(input))))
-          .to(be_equivalent_to(output))
+          .to(be_xml_equivalent_to(output))
       end
     end
   end
