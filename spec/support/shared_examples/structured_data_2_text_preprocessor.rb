@@ -56,7 +56,7 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
         it "correctly renders input" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
 
@@ -108,7 +108,7 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
         it "correctly renders input" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
 
@@ -149,7 +149,7 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
         it "correctly renders input" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
 
@@ -197,7 +197,7 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
         it "correctly renders input" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
 
@@ -272,7 +272,7 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
         it "correctly renders input" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
 
@@ -344,7 +344,7 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
         it "correctly renders input" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
 
@@ -391,7 +391,7 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
         it "correctly renders input" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
 
@@ -480,7 +480,7 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
         it "correctly renders input" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
 
@@ -524,7 +524,7 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
         it "renders liquid markup" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
 
@@ -566,7 +566,7 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
         it "renders liquid markup" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
 
@@ -651,7 +651,7 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
         it "renders liquid markup" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
 
@@ -715,7 +715,7 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
         it "correctly renders input" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
 
@@ -759,7 +759,7 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
         it "renders liquid markup" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
     end
@@ -849,7 +849,7 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
           file_content = File.read("main.adoc")
           actual_output = xml_string_content(metanorma_process(file_content))
 
-          expect(actual_output).to(be_equivalent_to(expected_output))
+          expect(actual_output).to(be_xml_equivalent_to(expected_output))
         end
       end
     end

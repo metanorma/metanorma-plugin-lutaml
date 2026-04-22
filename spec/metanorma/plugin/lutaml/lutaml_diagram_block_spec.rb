@@ -38,7 +38,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDiagramBlock do
 
       it "correctly renders input" do
         expect(strip_src(xml_string_content(metanorma_convert(input))))
-          .to(be_equivalent_to(output))
+          .to(be_xml_equivalent_to(output))
       end
     end
 
@@ -71,7 +71,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDiagramBlock do
 
       it "correctly renders input" do
         expect(strip_src(xml_string_content(metanorma_convert(input))))
-          .to(be_equivalent_to(output))
+          .to(be_xml_equivalent_to(output))
       end
     end
   end
