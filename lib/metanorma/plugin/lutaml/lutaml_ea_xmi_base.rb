@@ -244,14 +244,20 @@ module Metanorma
             .merge(children_pks_diags)
         end
 
-        def collect_additional_context(document, input_lines, end_mark) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-          additional_context = Hash.new { |hash, key| hash[key] = [] }
-          additional_context["all_macros"] = []
+        def collect_block_lines(input_lines, end_mark)
           block_lines = []
 
           while (block_line = input_lines.next) != end_mark
             block_lines.push(block_line)
           end
+
+          block_lines
+        end
+
+        def collect_additional_context(document, input_lines, end_mark) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+          additional_context = Hash.new { |hash, key| hash[key] = [] }
+          additional_context["all_macros"] = []
+          block_lines = collect_block_lines(input_lines, end_mark)
 
           processed_lines = process(
             document,
@@ -427,6 +433,45 @@ module Metanorma
           result + <<~LIQUID
             {% include "#{include_name}", depth: #{section_depth}, package_skip_sections: context.package_skip_sections, package_entities: context.package_entities, context: context, additional_context: context.additional_context, render_nested_packages: context.render_nested_packages %}
           LIQUID
+        end
+
+        def render_table(context, context_name, parent, attrs) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+          table_tmpl = get_template(parent.document, attrs)
+          table_tmpl.assigns[context_name] = context
+
+          if attrs["external_data"]
+            data_array = attrs["external_data"].split(";")
+            data_array.each do |data_item|
+              context_name, external_data_path = data_item.split(":")
+              external_data = content_from_file(
+                parent.document, external_data_path.strip
+              )
+              table_tmpl.assigns[context_name.strip] = external_data
+            end
+          end
+
+          rendered_table = table_tmpl.render
+          block = create_open_block(parent, "", attrs)
+          parse_content(block, rendered_table, attrs)
+        end
+
+        def get_template(document, attrs)
+          template = get_default_template
+          template = attrs["template"] if attrs["template"]
+
+          rel_tmpl_path = Utils.relative_file_path(
+            document, template
+          )
+
+          ::Liquid::Template.parse(File.read(rel_tmpl_path))
+        end
+
+        def get_name_path(attrs)
+          return attrs["path"] if attrs["path"]
+
+          return "#{attrs['package']}::#{attrs['name']}" if attrs["package"]
+
+          attrs["name"]
         end
       end
     end

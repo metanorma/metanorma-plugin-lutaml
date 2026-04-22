@@ -17,6 +17,7 @@ module Metanorma
           attribute :render_nested_packages, :boolean
           attribute :external_classes, :hash
           attribute :skip_unrecognized_connector, :boolean
+          attribute :context_name, :string
 
           yaml do
             map "packages", to: :packages,
@@ -34,6 +35,7 @@ module Metanorma
             map "render_nested_packages", to: :render_nested_packages
             map "external_classes", to: :external_classes
             map "skip_unrecognized_connector", to: :skip_unrecognized_connector
+            map "context_name", to: :context_name
           end
 
           def packages_from_yaml(model, values) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity

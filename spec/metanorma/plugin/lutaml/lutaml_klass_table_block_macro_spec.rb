@@ -453,6 +453,50 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
         include_examples "should contain Used and Guidance"
       end
 
+      context "with user-specific templates and external_data" do
+        let(:example_file) do
+          fixtures_path("plateau_all_packages_export.xmi")
+        end
+        let(:input) do
+          <<~TEXT
+            = Document title
+            Author
+            :nodoc:
+            :novalid:
+            :no-isobib:
+            :imagesdir: spec/assets
+
+            lutaml_klass_table::#{example_file}[name="Building",template="spec/fixtures/lutaml/liquid_templates_external_data/_klass_table.liquid",external_data="my_data:spec/fixtures/lutaml/external_data/my_data.yaml;second_data:spec/fixtures/lutaml/external_data/my_second_data.yaml"]
+          TEXT
+        end
+
+        it "should render table" do
+          expect(output).to have_tag("table") do
+            with_tag "colgroup"
+            with_tag "tbody"
+          end
+
+          expect(output).to have_tag("tr") do
+            with_tag "td", text: /Administration-test/
+          end
+        end
+
+        context "should render inherited properties" do
+          include_examples "should contain name, type, definition",
+                           building_inherited_properties
+        end
+
+        context "should render inherited properties from generalization" do
+          include_examples "should contain name, type, definition",
+                           building_gen
+        end
+
+        context "should render table headers" do
+          include_examples "should contain properties related headers",
+                           building_headers_with_guidance
+        end
+      end
+
       context "with name and package options" do
         let(:example_file) do
           fixtures_path("plateau_all_packages_export.xmi")

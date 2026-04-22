@@ -1,0 +1,7 @@
+---
+data:
+  - name: "bldg"
+    value: "Building"
+  - name: "admin"
+    value: "Administration"
+    
