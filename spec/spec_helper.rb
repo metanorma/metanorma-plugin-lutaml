@@ -29,7 +29,7 @@ end
 require "metanorma-standoc"
 require "rspec/matchers"
 require "equivalent-xml"
-require "metanorma"
+require "metanorma-core"
 require "metanorma/standoc"
 require "byebug"
 require "xml-c14n"
