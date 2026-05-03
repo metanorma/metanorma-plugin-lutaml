@@ -66,7 +66,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
       # @note datamodel_description_sections.xml
       context "correctly renders input" do
         # expect(xml_string_content(metanorma_convert(input)))
-        #     .to(be_equivalent_to(xml_string_content(output)))
+        #     .to(be_xml_equivalent_to(xml_string_content(output)))
 
         include_examples "should contain preface"
         include_examples "should contain sections"
