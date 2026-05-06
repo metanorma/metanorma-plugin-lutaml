@@ -1,3 +1,2 @@
-gem "lutaml", git: "https://github.com/lutaml/lutaml", branch: "fix/expressir-2.2.x"
-
-
+gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "fix/lutaml-model-0.8.0"
+gem "metanorma-core", git: "https://github.com/metanorma/metanorma-core", branch: "main"
