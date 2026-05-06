@@ -32,7 +32,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::Config::Root do
 
     it "correctly renders input" do
       expect(YAML.safe_load(subject.to_yaml))
-        .to(be_equivalent_to(YAML.safe_load(yaml)))
+        .to(be_xml_equivalent_to(YAML.safe_load(yaml)))
     end
 
     it "contains packages" do
