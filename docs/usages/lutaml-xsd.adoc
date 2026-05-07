@@ -1,19 +1,19 @@
-
 == Usage with LutaML XSD
 
 === Overview
 
-The `lutaml_xsd` macro allows you to render and process *XML Schema (XSD)* files using *Liquid* templates.
+The `lutaml_xsd` macro parses *XML Schema (XSD)* files through `lutaml-model`
+and exposes the parsed schema object to *Liquid* templates.
 
 === Syntax
 
 [source,adoc]
+-----
+[lutaml_xsd,<path_to_xsd>,<context_name>[, option1=value1, option2=value2, ...]]
 ----
-  [lutaml_xsd,<path_to_xsd>,<context_name>[, option1=value1, option2=value2, ...]]
-  ----
-    <your Liquid template here>
-  ----
+<your Liquid template here>
 ----
+-----
 
 * `<path_to_xsd>`: Path to the XSD file to be processed.
 * `<context_name>`: The name of the context variable to use in the template.
@@ -22,50 +22,65 @@ The `lutaml_xsd` macro allows you to render and process *XML Schema (XSD)* files
 [[options]]
 === Options
 
-* `location`: (optional) Base URL or path for resolving `<xs:import>` and `<xs:include>` statements in the XSD.  
-  For more details, see https://github.com/lutaml/lutaml-xsd?tab=readme-ov-file#include-and-import-handling
+* `location`: Base URL or path for resolving `<xs:import>` and `<xs:include>`
+  statements in the XSD. When omitted, the directory of `<path_to_xsd>` is used.
 
 === Liquid Template Context
 
-The context variable (e.g., `unitsml`) exposes the following attributes for use in your Liquid template:
+The context variable (e.g., `unitsml`) exposes the parsed
+`Lutaml::Xml::Schema::Xsd::Schema` object through its Liquid drop.
+
+Commonly used schema collections:
 
 * `element`: List of elements defined in the XSD.
 * `complex_type`: List of complex types defined in the XSD.
-* Each `element` and `complex_type` exposes its own attributes, such as `name`, `type`, and `annotation`.
+* `simple_type`, `attribute`, `attribute_group`, `group`, `import`, and
+  `include`: Other schema components exposed by `lutaml-model`.
+
+Commonly used helpers:
+
+* `elements_sorted_by_name`, `complex_types_sorted_by_name`,
+  `attribute_groups_sorted_by_name`: Sorted schema collections.
+* `used_by`, `child_elements`, `attribute_elements`, and `referenced_type`:
+  Component helpers exposed by parsed XSD objects.
 
 === Example: Listing Elements and Complex Types
 
 [source,adoc]
-----
+-----
 = Elements
-[lutaml_xsd, path/to/unitsml.xsd, unitsml]
+[lutaml_xsd,path/to/unitsml.xsd,unitsml]
 ----
-{% for element in unitsml.element %}
+{% for element in unitsml.elements_sorted_by_name %}
 Name: *{{ element.name }}*
 Type: *{{ element.type }}*
+Used by: {{ element.used_by | map: "name" | join: ", " }}
 {% endfor %}
 ----
 
 = ComplexTypes
 [lutaml_xsd,path/to/unitsml.xsd,unitsml]
 ----
-{% for complex_type in unitsml.complex_type %}
+{% for complex_type in unitsml.complex_types_sorted_by_name %}
 Name: *{{ complex_type.name }}*
-Description: {{ complex_type.annotation }}
+Children: {{ complex_type.child_elements | map: "name" | join: ", " }}
+Attributes: {{ complex_type.attribute_elements | map: "name" | join: ", " }}
 {% endfor %}
 ----
+-----
 
 === Example: Using with Remote XSD and Options
 
 [source,adoc]
-----
-[lutaml_xsd, path/to/omml.xsd,omml, location=https://raw.githubusercontent.com/t-yuki/ooxml-xsd/refs/heads/master]
+-----
+[lutaml_xsd,path/to/omml.xsd,omml, location=https://raw.githubusercontent.com/t-yuki/ooxml-xsd/refs/heads/master]
 ----
 {% for element in omml.element %}
 Name: *{{ element.name }}*
 Type: *{{ element.type }}*
 {% endfor %}
 ----
+-----
 
 === Use Cases
 
@@ -75,5 +90,5 @@ Type: *{{ element.type }}*
 
 === Notes
 
-* The macro supports local file at <path_to_xsd> place.
+* The macro supports local files at `<path_to_xsd>`.
 * You can use all standard *Liquid* template features for formatting and logic.

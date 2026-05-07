@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "liquid/custom_filters/xsd/to_xml_representation"
+require "lutaml/model"
+require "lutaml/xml/schema/xsd"
 
 module Metanorma
   module Plugin
@@ -43,23 +44,44 @@ module Metanorma
           line.match(XSD_PREPROCESSOR_REGEX)
         end
 
+        def load_lutaml_file(document, file_path, options)
+          full_path = Utils.relative_file_path(document, file_path)
+
+          ::Lutaml::Xml::Schema::Xsd.parse(
+            File.read(full_path, encoding: "UTF-8"),
+            location: xsd_location(full_path, options),
+          )
+        end
+
+        def index_type_name
+          "XSD"
+        end
+
+        def index_missing_message(path)
+          "Unable to load XSD file for `#{path}`, please specify the full path."
+        end
+
         def lutaml_xsd_block?(line)
           line.match(XSD_LIQUID_BLOCK_REGEX)
         end
 
         private
 
-        def template_file(document, options)
-          File.new(
-            Utils.relative_file_path(
-              document,
-              options[:template]&.strip,
-            ),
-            encoding: "UTF-8",
-          ).read
+        def xsd_location(full_path, options)
+          options["location"] || File.dirname(full_path)
         end
 
-        def process_direct_block(document, line, express_indexes)
+        def template_file(document, block_match)
+          File.read(
+            Utils.relative_file_path(
+              document,
+              block_match[:template]&.strip,
+            ),
+            encoding: "UTF-8",
+          )
+        end
+
+        def process_direct_block(document, line, _express_indexes)
           block_match     = lutaml_xsd_block?(line)
           index_name      = block_match[:index_name].strip
           context_name    = block_match[:context_name].strip
@@ -78,21 +100,17 @@ module Metanorma
 
         def template(lines)
           lines = lines.join("\n") if lines.respond_to?(:join)
-          ::Liquid::Template.parse(lines, environment: liquid_environment)
-        end
-
-        def liquid_environment
-          ::Liquid::Environment.new.tap do |env|
-            env.register_filter(Liquid::Xsd::CustomFilters)
-          end
+          ::Liquid::Template.parse(lines)
         end
 
         def assign_options_in_liquid(template, options = {})
           options.each do |opt_key, opt_value|
-            opt_value = if opt_key == "skip_rendering_of"
-                          opt_value.to_s.strip.delete("'").split(";")
-                        end
-            template.assigns[opt_key] = opt_value
+            value = if opt_key == "skip_rendering_of"
+                      opt_value.to_s.strip.delete("'").split(";")
+                    else
+                      opt_value
+                    end
+            template.assigns[opt_key] = value
           end
         end
 
@@ -107,16 +125,12 @@ module Metanorma
         def options_hash(options_string)
           return {} if options_string.nil?
 
-          parse_options_string(options_string.strip)
+          parse_options(options_string.strip)
         end
 
         def gather_context_liquid_item(document, path, options = {})
           unless File.file?(Utils.relative_file_path(document, path))
-            raise StandardError.new(
-              "Unable to load EXPRESS index for `#{path}`, " \
-              "please define it at `:lutaml-express-index:` or specify " \
-              "the full path.",
-            )
+            raise StandardError.new(index_missing_message(path))
           end
           load_lutaml_file(document, path, options).to_liquid
         end
@@ -126,7 +140,10 @@ module Metanorma
             Utils.relative_file_path(document, ""),
             template_path(document, options),
           ]
-          Liquid::LocalFileSystem.new(include_paths, FILE_SYSTEM_PATTERNS)
+          ::Metanorma::Plugin::Lutaml::Liquid::LocalFileSystem.new(
+            include_paths,
+            FILE_SYSTEM_PATTERNS,
+          )
         end
 
         def template_path(document, options)
@@ -137,13 +154,6 @@ module Metanorma
             document,
             template_path,
           )
-        end
-
-        def parse_options_string(str)
-          str
-            .to_s
-            .scan(/,\s*([^=]+?)=(\s*[^,]+)/)
-            .to_h
         end
       end
     end

@@ -42,13 +42,22 @@ module Metanorma
         protected
 
         def load_lutaml_file(document, file_path, options)
-          ::Lutaml::Parser.parse(
-            File.new(
-              Utils.relative_file_path(document, file_path),
-              encoding: "UTF-8",
-            ),
-            options: options,
-          )
+          File.open(
+            Utils.relative_file_path(document, file_path),
+            encoding: "UTF-8",
+          ) do |file|
+            ::Lutaml::Parser.parse(file, options: options)
+          end
+        end
+
+        def index_type_name
+          "EXPRESS"
+        end
+
+        def index_missing_message(path)
+          "Unable to load #{index_type_name} index for `#{path}`, " \
+            "please define it at `:lutaml-express-index:` or specify " \
+            "the full path."
         end
 
         private
@@ -106,11 +115,7 @@ module Metanorma
             else
               full_path = Utils.relative_file_path(document, path)
               unless File.file?(full_path)
-                raise StandardError.new(
-                  "Unable to load EXPRESS index for `#{path}`, " \
-                  "please define it at `:lutaml-express-index:` or specify " \
-                  "the full path.",
-                )
+                raise StandardError.new(index_missing_message(path))
               end
               repo = load_lutaml_file(document, path, options)
               repo = update_repo(options, repo)

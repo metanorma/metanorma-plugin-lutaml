@@ -21,10 +21,7 @@ gem "lutaml",
     branch: "update/xsd_support_metanorma_plugin"
 gem "lutaml-model",
     github: "lutaml/lutaml-model",
-    branch: "main"
-gem "lutaml-xsd",
-    github: "lutaml/lutaml-xsd",
-    branch: "update/liquid_drop_methods"
+    branch: "fix/xsd-target-namespace-prefix"
 gem "metanorma"
 # gem "metanorma-standoc", "~> 3.0.8"
 # TODO: Remove the line below after PR#1086 is merged
