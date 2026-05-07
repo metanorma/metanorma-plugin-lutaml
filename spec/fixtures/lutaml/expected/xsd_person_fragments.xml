@@ -1,0 +1,14 @@
+<title id="_">Elements</title>
+<p id="_">Name: <strong>Person</strong></p>
+<p id="_">Type: <strong>person:Person</strong></p>
+<p id="_">Target prefix: person</p>
+<title id="_">Complex Types</title>
+<p id="_">Name: <strong>Address</strong></p>
+<p id="_">Children: City, PostalCode</p>
+<p id="_">Attributes: kind</p>
+<p id="_">Used by: Address</p>
+<p id="_">Name: <strong>Person</strong></p>
+<p id="_">Children: FirstName, LastName, Address</p>
+<p id="_">Used by: Person</p>
+<title id="_">Attribute Groups</title>
+<p id="_">Attribute Group: <strong>CommonAttributes</strong></p>

@@ -1,0 +1,27 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:person="https://example.com/person"
+           targetNamespace="https://example.com/person"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+  <xs:attributeGroup name="CommonAttributes">
+    <xs:attribute name="kind" type="xs:string"/>
+  </xs:attributeGroup>
+
+  <xs:complexType name="Address">
+    <xs:sequence>
+      <xs:element name="City" type="xs:string"/>
+      <xs:element name="PostalCode" type="xs:string"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="person:CommonAttributes"/>
+  </xs:complexType>
+
+  <xs:complexType name="Person">
+    <xs:sequence>
+      <xs:element name="FirstName" type="xs:string"/>
+      <xs:element name="LastName" type="xs:string"/>
+      <xs:element name="Address" type="person:Address"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="Person" type="person:Person"/>
+</xs:schema>

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "liquid/custom_filters/xsd/used_by"
+require "lutaml/model"
+require "lutaml/xml/schema/xsd"
 
 module Metanorma
   module Plugin
@@ -24,18 +25,27 @@ module Metanorma
           line.match(XSD_PREPROCESSOR_REGEX)
         end
 
-        private
+        def load_lutaml_file(document, file_path, options)
+          full_path = Utils.relative_file_path(document, file_path)
 
-        def template(lines)
-          ::Liquid::Template.parse(lines.join("\n"), environment: liquid_environment)
+          ::Lutaml::Xml::Schema::Xsd.parse(
+            File.read(full_path, encoding: "UTF-8"),
+            location: xsd_location(full_path, options),
+          )
         end
 
-        def liquid_environment
-          ::Liquid::Environment.new.tap do |env|
-            env.register_filter(
-              ::Metanorma::Plugin::Lutaml::Liquid::Xsd::CustomFilters,
-            )
-          end
+        def index_type_name
+          "XSD"
+        end
+
+        def index_missing_message(path)
+          "Unable to load XSD file for `#{path}`, please specify the full path."
+        end
+
+        private
+
+        def xsd_location(full_path, options)
+          options["location"] || File.dirname(full_path)
         end
 
         def reorder_schemas(repo_liquid, _options)
