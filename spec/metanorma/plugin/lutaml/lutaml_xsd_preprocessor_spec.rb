@@ -40,6 +40,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
 
         it "renders schema components through lutaml-model Liquid methods" do
           rendered_xml = xml_string_content(metanorma_convert(input))
+            .gsub(/\s+/, " ")
 
           expected_fragments.each do |fragment|
             expect(rendered_xml).to(include(fragment))
@@ -145,18 +146,22 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
         let(:file_name) { "first-unitsml-expected-output-v1.0-csd04.xml" }
 
         it "correctly renders input" do
-          expect(xml_string_content(metanorma_convert(input)))
-            .to(be_equivalent_to(output))
+          expect_equivalent_document(
+            xml_string_content(metanorma_convert(input)),
+            output,
+          )
         end
       end
 
       context "with content Elements and ComplexTypes of OMML schema" do
+        let(:schema_path) { fixtures_path("xsd_schemas/omml.xsd") }
+        let(:schema_dir) { File.dirname(schema_path) }
         let(:input) do
           <<~TEXT
             = Document title
 
             = Elements
-            [lutaml_xsd,#{fixtures_path('xsd_schemas/omml.xsd')},omml, location=https://raw.githubusercontent.com/t-yuki/ooxml-xsd/refs/heads/master]
+            [lutaml_xsd,#{schema_path},omml, location=#{schema_dir}]
             ----
             {% for element in omml.element %}
 
@@ -166,7 +171,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
             ----
 
             = ComplexTypes
-            [lutaml_xsd,#{fixtures_path('xsd_schemas/omml.xsd')},omml]
+            [lutaml_xsd,#{schema_path},omml]
             ----
             {% for complex_type in omml.complex_type %}
 
@@ -180,8 +185,10 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
         let(:file_name) { "minimal-unitsml-expected-output-v1.0-csd04.xml" }
 
         it "correctly renders input" do
-          expect(xml_string_content(metanorma_convert(input)))
-            .to(be_equivalent_to(output))
+          expect_equivalent_document(
+            xml_string_content(metanorma_convert(input)),
+            output,
+          )
         end
       end
 
@@ -252,7 +259,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
           processed_input = xml_string_content(metanorma_convert(input))
           expect(processed_input).to match(text_regex)
           processed_input.sub!(/\s+#{text_regex}\s+/, "")
-          expect(processed_input).to(be_equivalent_to(output))
+          expect_equivalent_document(processed_input, output)
         end
       end
 
@@ -279,8 +286,19 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
 
         it "correctly renders input" do
           processed_input = xml_string_content(metanorma_convert(input))
-          expect(processed_input).to(be_equivalent_to(output))
+          expect_equivalent_document(processed_input, output)
         end
+      end
+
+      def expect_equivalent_document(actual, expected)
+        expect(normalize_metanorma_header(actual))
+          .to(be_equivalent_to(normalize_metanorma_header(expected)))
+      end
+
+      def normalize_metanorma_header(xml)
+        xml
+          .sub(/(<metanorma\b[^>]*\bversion=)"[^"]+"/, '\1"_"')
+          .sub(%r{(<copyright>\s*<from>)\d{4}(</from>)}, '\1_\2')
       end
 
       def expected_fragments
@@ -290,6 +308,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
             chomp: true,
           )
           .reject(&:empty?)
+          .map { |fragment| fragment.gsub(/\s+/, " ") }
       end
     end
   end

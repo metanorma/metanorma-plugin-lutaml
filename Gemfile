@@ -16,20 +16,11 @@ gem "byebug"
 gem "canon", "0.1.3"
 gem "debug"
 gem "equivalent-xml"
-gem "lutaml",
-    github: "lutaml/lutaml",
-    branch: "update/xsd_support_metanorma_plugin"
-gem "lutaml-model",
-    github: "lutaml/lutaml-model",
-    branch: "fix/xsd-target-namespace-prefix"
-gem "metanorma"
-# gem "metanorma-standoc", "~> 3.0.8"
-# TODO: Remove the line below after PR#1086 is merged
-# and then un-comment the above line.
-gem "metanorma-standoc",
-    github: "metanorma/metanorma-standoc",
-    branch: "update/lutaml_xsd_preprocessor_support"
-gem "metanorma-utils", github: "metanorma/metanorma-utils", branch: "main"
+gem "html2doc", github: "metanorma/html2doc", branch: "fix/lutaml-model-0-8-dependencies"
+gem "lutaml", github: "lutaml/lutaml", branch: "update/xsd_support_metanorma_plugin"
+gem "lutaml-model", github: "lutaml/lutaml-model", branch: "fix/xsd-target-namespace-prefix"
+gem "metanorma", github: "metanorma/metanorma", branch: "fix/lutaml-model-0-8-xml-adapter"
+gem "metanorma-standoc", github: "metanorma/metanorma-standoc", branch: "fix/lutaml-model-0-8-dependencies"
 gem "rake", "~> 13"
 gem "rspec", "~> 3.6"
 gem "rspec-html-matchers"
