@@ -15,6 +15,8 @@ end
 gem "byebug"
 gem "debug"
 gem "equivalent-xml"
+gem "metanorma"
+#gem "metanorma-standoc", "~> 3.0.8"
 gem "rake", "~> 13"
 gem "rspec", "~> 3.6"
 gem "rspec-html-matchers"

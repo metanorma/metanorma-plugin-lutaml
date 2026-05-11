@@ -233,40 +233,40 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
         end
         let(:output) do
           <<~TEXT
-              #{BLANK_HDR}
-              <sections>
-              <dl id='_'>
-              <dt>Lorem</dt>
-              <dd id="_">
-                <p id='_'>ipsum</p>
-                <ul id='_'>
-                  <li>
-                    <p id='_'>Lorem: 2</p>
-                  </li>
-                </ul>
-              </dd>
-              <dt>dolor</dt>
-              <dd id="_">
-                <p id='_'>sit</p>
-              </dd>
-              <dt>amet</dt>
-              <dd id="_">
-                <p id='_'>lorem</p>
-                <ul id='_'>
-                  <li>
-                    <p id='_'>amet: 2</p>
-                  </li>
-                  <li>
-                    <p id='_'>amet: 4</p>
-                  </li>
-                  <li>
-                    <p id='_'>amet: 6</p>
-                  </li>
-                </ul>
-              </dd>
+            #{BLANK_HDR}
+            <sections>
+            <dl id='_'>
+            <dt>Lorem</dt>
+            <dd id="_">
+              <p id='_'>ipsum</p>
+              <ul id='_'>
+                <li>
+                  <p id='_'>Lorem: 2</p>
+                </li>
+              </ul>
+            </dd>
+            <dt>dolor</dt>
+            <dd id="_">
+              <p id='_'>sit</p>
+            </dd>
+            <dt>amet</dt>
+            <dd id="_">
+              <p id='_'>lorem</p>
+              <ul id='_'>
+                <li>
+                  <p id='_'>amet: 2</p>
+                </li>
+                <li>
+                  <p id='_'>amet: 4</p>
+                </li>
+                <li>
+                  <p id='_'>amet: 6</p>
+                </li>
+              </ul>
+            </dd>
             </dl>
-              </sections>
-              </metanorma>
+            </sections>
+            </metanorma>
           TEXT
         end
 
@@ -557,8 +557,8 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
           <<~TEXT
             #{BLANK_HDR}
             <sections>
-              <p id='_'>1889-09-28</p>
               <p id='_'>2020-10-15 05:34:00 UTC</p>
+              <p id='_'>1889-09-28</p>
             </sections>
             </metanorma>
           TEXT
@@ -836,8 +836,8 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
           <<~XML
             #{BLANK_HDR}
               <sections>
-                <sourcecode id="_" anchor="abc"><body>#{abc_content}</body></sourcecode>
-                <sourcecode id="_" anchor="def" lang="json"><body>#{def_content}</body></sourcecode>
+                <sourcecode id="_" anchor="abc"><body>#{abc_content.chomp}</body></sourcecode>
+                <sourcecode id="_" anchor="def" lang="json"><body>#{def_content.chomp}</body></sourcecode>
                 <p id="_">The length of the array is 3.</p>
                 <p id="_">a: b</p>
               </sections>

@@ -40,31 +40,31 @@ RSpec.describe Metanorma::Plugin::Lutaml::Yaml2TextPreprocessor do
     end
     let(:output) do
       <<~TEXT
-         #{BLANK_HDR}
-                   <sections>
-              <clause id="_" inline-header="false" obligation="normative">
-                 <title id="_">Nicaragua</title>
-                 <dl id="_">
-                    <dt>Amateur stations</dt>
-                    <dd id="_">
-                       <p id="_">O[F-J][:digit:][0-9A-Z]{3}[:upper:]{1}</p>
-                    </dd>
-                 </dl>
-              </clause>
-              <clause id="_" inline-header="false" obligation="normative">
-                 <title id="_">Niger</title>
-                 <dl id="_">
-                    <dt>Amateur stations</dt>
-                    <dd id="_">
-                       <p id="_">O[F-J][:upper:]{5,10}</p>
-                    </dd>
-                    <dt>Experimental</dt>
-                    <dd id="_">
-                       <p id="_">{”regex”⇒”O[F-J][:upper:]{5,10}”}</p>
-                    </dd>
-                 </dl>
-              </clause>
-           </sections>
+        #{BLANK_HDR}
+        <sections>
+        <clause id="_" inline-header="false" obligation="normative">
+        <title id="_">Nicaragua</title>
+        <dl id="_">
+        <dt>Amateur stations</dt>
+        <dd id="_">
+        <p id="_">O[F-J][:digit:][0-9A-Z]{3}[:upper:]{1}</p>
+        </dd>
+        </dl>
+        </clause>
+        <clause id="_" inline-header="false" obligation="normative">
+        <title id="_">Niger</title>
+        <dl id="_">
+        <dt>Amateur stations</dt>
+        <dd id="_">
+        <p id="_">O[F-J][:upper:]{5,10}</p>
+        </dd>
+        <dt>Experimental</dt>
+        <dd id="_">
+        <p id="_">{”regex”⇒”O[F-J][:upper:]{5,10}”}</p>
+        </dd>
+        </dl>
+        </clause>
+        </sections>
         </metanorma>
       TEXT
     end
@@ -106,31 +106,31 @@ RSpec.describe Metanorma::Plugin::Lutaml::Yaml2TextPreprocessor do
     end
     let(:output) do
       <<~TEXT
-         #{BLANK_HDR}
-           <sections>
-              <clause id="_" inline-header="false" obligation="normative">
-                 <title id="_">Nicaragua</title>
-                 <dl id="_">
-                    <dt>Amateur stations</dt>
-                    <dd id="_">
-                       <p id="_">O[F-J][:digit:][0-9A-Z]{3}[:upper:]{1}</p>
-                    </dd>
-                 </dl>
-              </clause>
-              <clause id="_" inline-header="false" obligation="normative">
-                 <title id="_">Niger</title>
-                 <dl id="_">
-                    <dt>Amateur stations</dt>
-                    <dd id="_">
-                       <p id="_">O[F-J][:upper:]{5,10}</p>
-                    </dd>
-                    <dt>Experimental</dt>
-                    <dd id="_">
-                       <p id="_">{”regex”⇒”O[F-J][:upper:]{5,10}”}</p>
-                    </dd>
-                 </dl>
-              </clause>
-           </sections>
+        #{BLANK_HDR}
+        <sections>
+        <clause id="_" inline-header="false" obligation="normative">
+        <title id="_">Nicaragua</title>
+        <dl id="_">
+        <dt>Amateur stations</dt>
+        <dd id="_">
+        <p id="_">O[F-J][:digit:][0-9A-Z]{3}[:upper:]{1}</p>
+        </dd>
+        </dl>
+        </clause>
+        <clause id="_" inline-header="false" obligation="normative">
+        <title id="_">Niger</title>
+        <dl id="_">
+        <dt>Amateur stations</dt>
+        <dd id="_">
+        <p id="_">O[F-J][:upper:]{5,10}</p>
+        </dd>
+        <dt>Experimental</dt>
+        <dd id="_">
+        <p id="_">{”regex”⇒”O[F-J][:upper:]{5,10}”}</p>
+        </dd>
+        </dl>
+        </clause>
+        </sections>
         </metanorma>
       TEXT
     end

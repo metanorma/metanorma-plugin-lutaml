@@ -68,7 +68,9 @@ module Metanorma
             ea_extension_full_path = File.expand_path(
               ea_extension_path, File.dirname(yaml_config_path)
             )
-            Xmi::EaRoot.load_extension(ea_extension_full_path)
+            unless Xmi::EaRoot.loaded_extensions.value?(ea_extension_full_path)
+              Xmi::EaRoot.load_extension(ea_extension_full_path)
+            end
           end
 
           guidance = get_guidance(document, yaml_config.guidance)
@@ -292,7 +294,7 @@ module Metanorma
         def package_level(lutaml_document, level)
           return lutaml_document if level <= 0
 
-          package_level(lutaml_document["packages"].first, level - 1)
+          package_level(lutaml_document.packages.first, level - 1)
         end
 
         def create_context_object( # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
@@ -307,12 +309,12 @@ module Metanorma
 
           if options.packages.nil?
             contexts[context_name]["render_nested_packages"] = true
-            contexts[context_name]["packages"] = root_package["packages"]
+            contexts[context_name]["packages"] = root_package.packages
 
             return contexts
           end
 
-          all_packages = [root_package, *root_package["children_packages"]]
+          all_packages = [root_package, *root_package.children_packages]
           contexts[context_name].merge!(
             {
               "packages" => sort_and_filter_out_packages(all_packages, options),
@@ -330,7 +332,7 @@ module Metanorma
         )
           contexts = {}
           contexts[context_name] = {
-            "name" => root_package["name"],
+            "name" => root_package.name,
             "root_packages" => [root_package],
             "additional_context" => additional_context
               .merge("external_classes" => options.external_classes),
@@ -370,7 +372,7 @@ module Metanorma
           options.skip.each do |skip_package|
             entity_regexp = config_entity_regexp(skip_package)
             all_packages.delete_if do |package|
-              package["name"] =~ entity_regexp
+              package.name =~ entity_regexp
             end
           end
 
@@ -381,10 +383,10 @@ module Metanorma
           options.packages.each do |package|
             entity_regexp = config_entity_regexp(package.name)
             all_packages.each do |p|
-              if p["name"]&.match?(entity_regexp)
+              if p.name&.match?(entity_regexp)
                 result.push(p)
                 all_packages.delete_if do |nest_package|
-                  nest_package["name"] == p["name"]
+                  nest_package.name == p.name
                 end
               end
             end
@@ -472,6 +474,101 @@ module Metanorma
           return "#{attrs['package']}::#{attrs['name']}" if attrs["package"]
 
           attrs["name"]
+        end
+
+        # The class methods `serialize_generalization_by_name` and
+        # `serialize_enumeration_by_name` were removed from
+        # `Lutaml::Xmi::Parsers::Xml` in lutaml 0.10. The replacements below
+        # rebuild the same shape of result by reusing the still-available
+        # path-aware finders on the parser instance and the new
+        # `XmiLookupService`, then bridging to the UML object that the
+        # current `KlassDrop` / `EnumDrop` constructors expect.
+        def serialize_klass_drop_by_name(xmi_path, name, guidance = nil)
+          parser, uml_doc = build_uml_document(xmi_path)
+          raw_klass = find_packaged_klass(parser.xmi_index, name)
+          warn "Class not found for name: #{name}" if raw_klass.nil?
+          klass = raw_klass && find_uml_node_by_xmi_id(
+            uml_doc, raw_klass.id, :classes
+          )
+          ::Lutaml::Xmi::LiquidDrops::KlassDrop.new(
+            klass, guidance, build_drop_options(parser),
+          )
+        end
+
+        def serialize_enum_drop_by_name(xmi_path, name)
+          parser, uml_doc = build_uml_document(xmi_path)
+          raw_enum = find_packaged_enum(parser.xmi_index, name)
+          warn "Enumeration not found for name: #{name}" if raw_enum.nil?
+          enum = raw_enum && find_uml_node_by_xmi_id(
+            uml_doc, raw_enum.id, :enums
+          )
+          ::Lutaml::Xmi::LiquidDrops::EnumDrop.new(
+            enum, build_drop_options(parser),
+          )
+        end
+
+        def build_uml_document(xmi_path)
+          xmi_model = ::Xmi::Sparx::Root.parse_xml(File.read(xmi_path))
+          parser = ::Lutaml::Xmi::Parsers::Xml.new
+          [parser, parser.parse(xmi_model)]
+        end
+
+        def build_drop_options(parser)
+          lookup = ::Lutaml::Xmi::XmiLookupService.new(
+            parser.xmi_root_model, parser.id_name_mapping
+          )
+          {
+            xmi_root_model: parser.xmi_root_model,
+            id_name_mapping: parser.id_name_mapping,
+            lookup: lookup,
+            with_gen: true,
+            with_absolute_path: true,
+          }
+        end
+
+        def find_uml_node_by_xmi_id(container, xmi_id, collection)
+          found = container.public_send(collection)
+            .find { |node| node.xmi_id == xmi_id }
+          return found if found
+
+          container.packages.each do |pkg|
+            nested = find_uml_node_by_xmi_id(pkg, xmi_id, collection)
+            return nested if nested
+          end
+          nil
+        end
+
+        def find_packaged_klass(index, path)
+          segments = path.split("::")
+          if segments.one?
+            index.find_packaged_by_name_and_types(
+              path, ["uml:Class", "uml:AssociationClass"],
+            )
+          else
+            find_packaged_klass_by_path(index, segments)
+          end
+        end
+
+        def find_packaged_klass_by_path(index, segments)
+          klass_name = segments.pop
+          klass = index.find_packaged_by_name_and_types(
+            klass_name, ["uml:Class", "uml:AssociationClass"],
+          )
+          return unless klass
+
+          # Verify the path by walking up the parent chain
+          current = klass
+          segments.reverse_each do |pkg_name|
+            parent = index.find_parent(current.id)
+            return unless parent && parent.name == pkg_name
+            current = parent
+          end
+          klass
+        end
+
+        def find_packaged_enum(index, name)
+          index.packaged_elements_of_type("uml:Enumeration")
+            .find { |e| e.name == name }
         end
       end
     end

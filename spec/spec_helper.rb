@@ -29,10 +29,13 @@ end
 require "metanorma-standoc"
 require "rspec/matchers"
 require "equivalent-xml"
-require "metanorma"
+require "metanorma-core"
 require "metanorma/standoc"
 require "byebug"
 require "xml-c14n"
+require "canon"
+
+Canon::Config.instance.profile = :metanorma
 
 Dir[File.expand_path("./support/**/**/*.rb", __dir__)].sort.each do |f|
   require f
