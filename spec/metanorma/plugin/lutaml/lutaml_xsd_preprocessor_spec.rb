@@ -4,9 +4,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
   describe "#process" do
     let(:schema_path) { fixtures_path("xsd_schemas/person.xsd") }
     let(:schema_dir) { File.dirname(schema_path) }
-    let(:rendered_xml) do
-      xml_string_content(metanorma_convert(input)).gsub(/\s+/, " ")
-    end
+    let(:rendered_xml) { xml_string_content(metanorma_convert(input)) }
 
     context "with macro: lutaml_xsd" do
       let(:input) do
@@ -99,7 +97,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
         File
           .readlines(fixtures_path("expected/xsd_person_fragments.xml"), chomp: true)
           .reject(&:empty?)
-          .map { |fragment| fragment.gsub(/\s+/, " ") }
       end
     end
   end

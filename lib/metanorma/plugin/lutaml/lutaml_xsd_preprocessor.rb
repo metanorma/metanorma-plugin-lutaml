@@ -48,6 +48,10 @@ module Metanorma
           options["location"] || File.dirname(full_path)
         end
 
+        def template(lines)
+          ::Liquid::Template.parse(lines.join("\n\n"))
+        end
+
         def reorder_schemas(repo_liquid, _options)
           repo_liquid
         end
