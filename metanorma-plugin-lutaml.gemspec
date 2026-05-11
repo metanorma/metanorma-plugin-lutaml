@@ -38,5 +38,4 @@ Gem::Specification.new do |spec|
   spec.add_dependency "relaton-cli"
 
   spec.metadata["rubygems_mfa_required"] = "false"
-  spec.metadata["rubygems_mfa_required"] = "true"
 end
