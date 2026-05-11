@@ -16,7 +16,7 @@ module Metanorma
           ([^:\[]+)                        # Capture group 3: the path/name
           (\[.*\])?                        # Capture group 4: optional attribute
           $                                # End of line
-        }x.freeze
+        }x
 
         attr_reader :remark, :options
 

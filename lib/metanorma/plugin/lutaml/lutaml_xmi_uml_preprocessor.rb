@@ -15,7 +15,7 @@ module Metanorma
       class LutamlXmiUmlPreprocessor < ::Asciidoctor::Extensions::Preprocessor
         include LutamlEaXmiBase
 
-        MACRO_REGEXP = /\[lutaml_xmi_uml,([^,]+),?(.+)?\]/.freeze
+        MACRO_REGEXP = /\[lutaml_xmi_uml,([^,]+),?(.+)?\]/
 
         private
 

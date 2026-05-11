@@ -28,7 +28,7 @@ module Metanorma
           (?<context_name>[^,]+)?      # Optional context name
           (?<options>,.*)?             # Optional options
           \]                           # Closing bracket
-        }x.freeze
+        }x
 
         def process(document, reader) # rubocop:disable Metrics/MethodLength
           r = Asciidoctor::PreprocessorNoIfdefsReader.new(document,
@@ -85,8 +85,8 @@ module Metanorma
           index_names = block_header_match[:index_names].split(";").map(&:strip)
           context_name = block_header_match[:context_name].strip
 
-          options = block_header_match[:options] &&
-            parse_options(block_header_match[:options].to_s.strip) || {}
+          options = (block_header_match[:options] &&
+            parse_options(block_header_match[:options].to_s.strip)) || {}
 
           end_mark = input_lines.next
 
@@ -277,8 +277,7 @@ module Metanorma
           options_string
             .to_s
             .scan(/,\s*([^=]+?)=(\s*[^,]+)/)
-            .map { |elem| elem.map(&:strip) }
-            .to_h
+            .to_h { |elem| elem.map(&:strip) }
         end
       end
     end

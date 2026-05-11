@@ -3,6 +3,7 @@ require "metanorma/plugin/lutaml/yaml2_text_preprocessor"
 
 RSpec.describe Metanorma::Plugin::Lutaml::SourceExtractor do
   subject { described_class.new(document, input_lines) }
+
   let(:document) { Asciidoctor::Document.new }
   let(:input_lines) { "" }
 
@@ -37,7 +38,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::SourceExtractor do
           }
         end
 
-        it "should extract all the anchors and their corresponding data" do
+        it "extracts all the anchors and their corresponding data" do
           subject.extract
 
           expect(document.attributes["source_blocks"]).to eq(expected_output)
@@ -74,14 +75,14 @@ RSpec.describe Metanorma::Plugin::Lutaml::SourceExtractor do
           end
         end
 
-        it "should extract all the anchors and their corresponding data" do
+        after do
+          FileUtils.rm_rf("file.adoc")
+        end
+
+        it "extracts all the anchors and their corresponding data" do
           subject.extract
 
           expect(document.attributes["source_blocks"]).to eq(expected_output)
-        end
-
-        after do
-          FileUtils.rm_rf("file.adoc")
         end
       end
     end

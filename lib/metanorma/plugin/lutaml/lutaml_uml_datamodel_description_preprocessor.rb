@@ -20,7 +20,7 @@ module Metanorma
         include LutamlEaXmiBase
 
         MACRO_REGEXP =
-          /\[lutaml_uml_datamodel_description,([^,]+),?(.+)?\]/.freeze
+          /\[lutaml_uml_datamodel_description,([^,]+),?(.+)?\]/
 
         private
 

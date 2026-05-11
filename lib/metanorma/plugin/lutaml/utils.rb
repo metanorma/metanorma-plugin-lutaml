@@ -25,7 +25,7 @@ module Metanorma
             (?<cache_path>.+)     # Capture cache path
           )?                      # End of optional group
           $                       # End of the pattern
-        }x.freeze
+        }x
 
         module_function
 
@@ -89,7 +89,8 @@ module Metanorma
           errors.each do |error_obj|
             ::Metanorma::Util.log(
               "[metanorma-plugin-lutaml] Liquid render error: " \
-              "#{error_obj.message}",
+              "#{error_obj.class}: #{error_obj.message}\n" \
+              "#{error_obj.backtrace&.first(5)&.join("\n")}",
               :error,
             )
           end
@@ -166,7 +167,7 @@ module Metanorma
 
         # TODO: Refactor this using Suma::SchemaConfig
         def load_express_from_index(_document, path) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-          yaml_content = YAML.safe_load(File.read(path))
+          yaml_content = YAML.safe_load_file(path)
           schema_yaml_base_path = Pathname.new(File.dirname(path))
 
           # If there is a global root path set, all subsequent paths are

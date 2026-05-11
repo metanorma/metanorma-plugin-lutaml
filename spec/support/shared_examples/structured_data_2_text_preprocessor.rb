@@ -276,8 +276,7 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
         end
       end
 
-      context "An array with interpolated file names, etc. \
-                for Asciidoc's consumption" do
+      context "An array with interpolated file names, etc. for Asciidoc's consumption" do
         let(:example_content) do
           { "prefix" => "doc-", "items" => ["lorem", "ipsum", "dolor"] }
         end
@@ -350,9 +349,8 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
       context "Array of language codes" do
         let(:example_content) do
-          YAML.safe_load(
-            File.read(File.expand_path("../../assets/codes.yml", __dir__)),
-          )
+          YAML.safe_load_file(File.expand_path("../../assets/codes.yml",
+                                               __dir__))
         end
         let(:input) do
           <<~TEXT
@@ -657,17 +655,6 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
       context "Multiple contexts" do
         let(:example_file2) { "example2.#{extension}" }
-
-        before do
-          File.open(example_file2, "w") do |n|
-            n.puts(transform_to_type(example_content2))
-          end
-        end
-
-        after do
-          FileUtils.rm_rf(example_file2)
-        end
-
         let(:example_content) do
           { "name" => "Lorem ipsum", "desc" => "dolor sit amet" }
         end
@@ -711,6 +698,16 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
             </sections>
             </metanorma>
           TEXT
+        end
+
+        before do
+          File.open(example_file2, "w") do |n|
+            n.puts(transform_to_type(example_content2))
+          end
+        end
+
+        after do
+          FileUtils.rm_rf(example_file2)
         end
 
         it "correctly renders input" do
