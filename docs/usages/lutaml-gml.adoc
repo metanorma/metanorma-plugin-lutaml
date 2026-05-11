@@ -1,5 +1,5 @@
 
-== Usage with LutaML GML Dictionary
+== Usage with LutaML GML Dictionary by lutaml_gml_dictionary
 
 === Rendering a LutaML GML Dictionary: `lutaml_gml_dictionary`
 

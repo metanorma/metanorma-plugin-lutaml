@@ -1,0 +1,213 @@
+
+== Usage with Enterprise Architect XMI files by lutaml_xmi_uml
+
+=== General
+
+The LutaML plugin supports working with Enterprise Architect exported XMI files
+to render them as LutaML UML documents.
+
+The command is prefixed as `lutaml_xmi_uml` to denote their specific use.
+
+=== Usage of `lutaml_xmi_uml` command
+
+The `lutaml_xmi_uml` command renders Lutaml UML document and its dependent
+objects for the supplied XMI file.
+
+[example]
+.Specify the path of a XMI file by `lutaml_xmi_uml` command
+====
+[source,adoc]
+----
+[lutaml_xmi_uml,/path/to/first.xmi]
+--
+Name of the Lutaml UML Document: {{ context.name }}
+
+Number of packages: {{ context.packages | size }}
+--
+----
+
+By default, the command will parse the XMI file and render it as a
+Lutaml::Uml::Document via `context`.
+====
+
+=== Usage of `lutaml_xmi_uml` command with configuration file
+
+You can use the `lutaml_xmi_uml` command with a configuration file.
+The configuration file is a YAML file that looks like:
+
+[example]
+.Configuration file for `lutaml_xmi_uml` command
+====
+[source,yaml]
+----
+ea_extension:
+  - "ISO19103MDG v1.0.0-beta.xml"
+  - "CityGML_MDG_Technology.xml"
+context_name: my_uml_document
+template_path: "path/to/liquid_templates"
+----
+
+where:
+
+`ea_extension`:: optional, list of EA extensions to load. Some XMI files may
+contain elements that cannot be resolved by default, for example CityGML
+elements.  You can use `ea_extension` to load the definition of these elements
+in XML format (`CityGML_MDG_Technology.xml`) in order to resolve them.  The
+location of the xml files is relative to the config YAML file.
+
+`context_name`:: optional, name of the context for the rendered output.
+This can be used to customize the output further by providing a specific
+context name.
+
+`template_path`:: optional, path to custom Liquid templates directory for
+rendering the output. When specified, the processor will use custom templates
+from this directory. This allows for complete customization of the rendered
+output format and structure.
+
+To use the configuration file, you can specify it in the command:
+
+[source,adoc]
+----
+[lutaml_xmi_uml,/path/to/first.xmi,path/to/config.yml]
+--
+Name of the Lutaml UML Document: {{ context.name }}
+
+Number of packages: {{ context.packages | size }}
+--
+----
+====
+
+=== Document attribute `:lutaml-xmi-index:`
+
+This attribute allows specifying one or more XMI files to define names
+for later use with `lutaml_xmi_uml` commands.
+
+Syntax:
+
+[source,adoc]
+----
+:lutaml-xmi-index: index_name; index_path[; config=config_path]
+----
+
+where:
+
+`index_name`:: name of index
+`index_path`:: path to XMI file for the later use with `lutaml_xmi_uml` command
+`config_path`:: optional, location of YAML configuration file that specifies
+what packages to include in the render, what render style is desired and
+location of the root package.
+
+[example]
+.Define an index in the document and use it in the `lutaml_xmi_uml` command
+====
+[source,adoc]
+----
+:lutaml-xmi-index: first-xmi-index; /path/to/first.xmi
+
+[lutaml_xmi_uml,index=first-xmi-index]
+--
+...
+--
+----
+
+The command `lutaml_xmi_uml` will load the XMI file from the path
+`/path/to/first.xmi` which is specified by the `index`: `first-xmi-index`.
+====
+
+=== Advanced example usage of `lutaml_xmi_uml` command
+
+The following is an advanced example of using the `lutaml_xmi_uml` command
+with a configuration file and custom Liquid templates to render a UML class
+table.
+
+[example]
+.Advanced example usage of `lutaml_xmi_uml` command
+====
+
+Assume you have the following configuration file `config.yml`:
+
+[source,yaml]
+----
+ea_extension:
+  - "ISO19103MDG v1.0.0-beta.xml"
+  - "CityGML_MDG_Technology.xml"
+context_name: my_uml_document
+template_path: "path/to/my_liquid_templates"
+----
+
+And the following Liquid template `_klass.liquid` in the directory
+`path/to/my_liquid_templates`:
+
+[source,liquid]
+----
+[cols="1a,1a,1a,2a"]
+|===
+| Name of Class 3+| {{ klass.name }}
+| Definition 3+| {{ klass.definition }}
+|===
+
+{% render "attributes", attributes: klass.attributes %}
+----
+
+And the following Liquid template `_attributes.liquid` in the directory
+`path/to/my_liquid_templates`:
+
+[source,liquid]
+----
+[cols="1a,1a,1a,2a"]
+|===
+4+| Attributes
+| Name | Type | Multiplicity | Definition
+{% for attr in attributes %}
+| {{ attr.name }}
+| {{ attr.type }}
+| {{ attr.cardinality.min }}..{{ attr.cardinality.max }}
+| {{ attr.definition }}
+{% endfor %}
+|===
+----
+
+You can use the command to render a specific class
+`RootPackage::MySubPackage::MyClass` by liquid filters:
+
+[source,adoc]
+----
+[lutaml_xmi_uml,example.xmi,config.yml]
+--
+Name of the Lutaml UML Document: {{ my_uml_document.name }}
+
+{% assign root_package = my_uml_document.packages.first %}
+
+{% assign sub_package = root_package.packages | where: "name", "MySubPackage" | first %}
+
+{% assign klass = sub_package.classes | where: "name", "MyClass" | first %}
+
+{% render "klass", klass: klass %}
+----
+
+The output will be a formatted table of the class `MyClass` with its attributes
+looks like:
+
+[source]
+----
+Name of the Lutaml UML Document: `My document`
+
+--------------------------------------------------
+| Name of Class | MyClass                        |
+--------------------------------------------------
+| Definition    | My class definition            |
+--------------------------------------------------
+
+--------------------------------------------------
+| Attributes                                     |
+--------------------------------------------------
+| Name       | Type  | Multiplicity | Definition |
+--------------------------------------------------
+| Attribute1 | Type1 | 0..*         | Def1       |
+--------------------------------------------------
+| Attribute2 | Type2 | 0..1         | Def2       |
+--------------------------------------------------
+| Attribute3 | Type3 | 1..*         | Def3       |
+--------------------------------------------------
+----
+====

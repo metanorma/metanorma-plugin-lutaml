@@ -1,5 +1,5 @@
 
-== Usage with Enterprise Architect (UML in XMI)
+== Usage with Enterprise Architect XMI files by lutaml_ea_xmi, lutaml_ea_diagram, lutaml_klass_table or lutaml_enum_table
 
 === General
 
@@ -184,6 +184,15 @@ The command accepts the options listed below:
   `lib/metanorma/plugin/lutaml/templates`.  This template can be customized by
   changing the template path in the `template` option.
 
+* `external_data="context_name:/path/to/my_data.yml"` specifies the path of
+  the YAML/JSON file of the external data to be used in the liquid template.
+  (Optional)
+  You can specify multiple external data by separating them with `;`.
+  (e.g. `external_data="my_data:/path/to/my_data.yml;second_data:/path/to/my_second_data.yml"`)
+  In the liquid template, you can access the data by using `context_name`.
+  (e.g. `my_data` or `second_data` in the above example)
+  The external data file should be in YAML/JSON format.
+
 * `guidance="/path/to/my_guidance.yml"` specifies the path of
   the yaml file of the guidance. (Optional)
 
@@ -240,6 +249,14 @@ The command accepts the options listed below:
   `lib/metanorma/plugin/lutaml/templates`.  This template can be customized by
   changing the template path in the `template` option.
 
+* `external_data="context_name:/path/to/my_data.yml"` specifies the path of
+  the YAML/JSON file of the external data to be used in the liquid template.
+  (Optional)
+  You can specify multiple external data by separating them with `;`.
+  (e.g. `external_data="my_data:/path/to/my_data.yml;second_data:/path/to/my_second_data.yml"`)
+  In the liquid template, you can access the data by using `context_name`.
+  (e.g. `my_data` or `second_data` in the above example)
+  The external data file should be in YAML/JSON format.
 
 === Usage of `lutaml_ea_xmi` command
 

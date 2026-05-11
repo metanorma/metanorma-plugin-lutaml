@@ -15,6 +15,7 @@ Asciidoctor::Extensions.register do
   preprocessor Metanorma::Plugin::Lutaml::Yaml2TextPreprocessor
   preprocessor Metanorma::Plugin::Lutaml::Data2TextPreprocessor
   preprocessor Metanorma::Plugin::Lutaml::LutamlPreprocessor
+  preprocessor Metanorma::Plugin::Lutaml::LutamlXmiUmlPreprocessor
 
   block_macro Metanorma::Plugin::Lutaml::LutamlDiagramBlockMacro
   block Metanorma::Plugin::Lutaml::LutamlDiagramBlock

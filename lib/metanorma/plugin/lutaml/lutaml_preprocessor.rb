@@ -13,6 +13,8 @@ module Metanorma
     module Lutaml
       # Class for processing Lutaml files
       class LutamlPreprocessor < ::Asciidoctor::Extensions::Preprocessor
+        include Utils
+
         REMARKS_ATTRIBUTE = "remarks"
         EXPRESS_PREPROCESSOR_REGEX = %r{
           ^                            # Start of line
@@ -225,7 +227,8 @@ module Metanorma
             .new(include_paths, ["%s.liquid", "_%s.liquid", "_%s.adoc"])
 
           # Parse template once outside the loop
-          template = ::Liquid::Template.parse(lines.join("\n"))
+          template = ::Liquid::Template
+            .parse(lines.join("\n"), environment: create_liquid_environment)
           template.registers[:file_system] = file_system
 
           # Render for each item

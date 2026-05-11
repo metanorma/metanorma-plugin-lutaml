@@ -1,5 +1,5 @@
 
-== Usage with EXPRESS
+== Usage with EXPRESS files by lutaml_express
 
 === General
 
@@ -297,3 +297,58 @@ from the paths other than the location of the document.
 The resulting block adds the `include_path` to the Liquid renderer.  The path is
 resolved based on the location of the document.  You can add multiple paths by
 separating them with commas.
+
+=== Using `loadfile` filter in templates
+
+This functionality allows `[lutaml_express_liquid]` blocks to load data from
+a yaml or json file from the specified path.
+
+For example, you have the Metanorma document file (.adoc) with the following
+content:
+
+[source,adoc]
+-----
+:lutaml-express-index: all_schemas; ../schemas_all.yaml;
+
+[lutaml_express_liquid,all_schemas,context,config_yaml=schemas.yaml,include_path=../templates]
+---
+{% assign all_schemas = repo.schemas  %}
+{% render "templates/resources/schema" for ordered_schemas as schema %}
+...
+----
+-----
+
+You have the liquid template file
+`templates/resources/schema.liquid` with the following content:
+
+[source,liquid]
+-----
+{% assign data = "my_file.yaml" | loadfile: "." %}
+This is {{ data.shape }} with color {{ data.color }}.
+-----
+
+Where:
+
+* `loadfile:` is a liquid filter that loads the file content based on the path
+  `my_file.yaml` with argument `.`.
+  The argument is the path of the parent folder, which is the
+  current directory of the Metanorma document.
+
+And the content of the yaml file `my_file.yaml` looks like:
+
+[source,yaml]
+----
+---
+shape: square
+color: blue
+corners: 4
+----
+
+Will render as:
+[source,asciidoc]
+----
+...
+This is square with color blue.
+...
+----
+
