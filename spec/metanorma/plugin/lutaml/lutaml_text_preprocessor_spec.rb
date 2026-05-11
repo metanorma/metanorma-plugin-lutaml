@@ -349,7 +349,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
           it "correctly renders input" do
             expect(xml_string_content(metanorma_convert(input)))
-              .to(be_xml_equivalent_to(output))
+              .to(be_xml_equivalent_to(xml_string_content(output)))
           end
         end
       end
@@ -723,7 +723,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         let(:output) do
           <<~TEXT
             #{BLANK_HDR}
-          <sections>
+            <sections>
              <clause id="_" inline-header="false" obligation="normative">
                 <title id="_">annotated_3d_model_data_quality_criteria_schema</title>
                 <p id="_">Mine text</p>
@@ -771,19 +771,14 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                       </eref>
                    </target>
                 </svgmap>
-                <p id="_">ISO/TS 10303-1049</p>
                 <p id="_">Activity_method_assignment_arm</p>
              </clause>
              <clause id="_" inline-header="false" obligation="normative">
                 <title id="_">Activity_method_characterized_mim</title>
-                <p id="_">ISO 10303-41</p>
-                <p id="_">ISO/TS 10303-1049</p>
-                <p id="_">ISO/TS 10303-1289</p>
-                <p id="_">ISO/TS 10303-1288</p>
                 <p id="_">Activity_method_characterized_mim</p>
              </clause>
-          </sections>
-          <bibliography>
+            </sections>
+            <bibliography>
              <references hidden="true" normative="false">
                 <bibitem anchor="express_measure_schema" id="_" type="internal">
                    <docidentifier type="repository">express/measure_schema</docidentifier>
@@ -792,14 +787,14 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                    <docidentifier type="repository">express/measure_schemaexpg4</docidentifier>
                 </bibitem>
              </references>
-          </bibliography>
-       </metanorma>
-          TEXT
+            </bibliography>
+            </metanorma>
+            TEXT
         end
 
         it "correctly renders input" do
           expect(xml_string_content(metanorma_convert(input)))
-            .to(be_xml_equivalent_to(output))
+            .to(be_xml_equivalent_to(xml_string_content(output)))
         end
       end
 

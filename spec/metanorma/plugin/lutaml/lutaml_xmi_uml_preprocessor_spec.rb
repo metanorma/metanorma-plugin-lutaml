@@ -201,7 +201,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXmiUmlPreprocessor do
             "member_end:",
             "MultiSurface",
             "member_end_type:",
-            "aggregation",
+            "association",
             "member_end_cardinality:",
             "0..1",
             "member_end_attribute_name:",

@@ -38,26 +38,26 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 <sourcecode id="_" unnumbered="true">
                 <body>SCHEMA Activity_method_assignment_arm;
 
-                USE FROM Activity_method_arm;
+              USE FROM Activity_method_arm;
 
-                TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT
-                  ();
-                END_TYPE;
+              TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT
+                ();
+              END_TYPE;
 
-                ENTITY Activity_method_relationship;
-                  name : STRING;
-                  description : OPTIONAL STRING;
-                  relating_method : Activity_method;
-                  related_method : Activity_method;
-                END_ENTITY;
+              ENTITY Activity_method_relationship;
+                name : STRING;
+                description : OPTIONAL STRING;
+                relating_method : Activity_method;
+                related_method : Activity_method;
+              END_ENTITY;
 
-                ENTITY Applied_activity_method_assignment;
-                  assigned_activity_method : Activity_method;
-                  items : SET [1:?] OF activity_method_item;
-                  role : STRING;
-                END_ENTITY;
+              ENTITY Applied_activity_method_assignment;
+                assigned_activity_method : Activity_method;
+                items : SET [1:?] OF activity_method_item;
+                role : STRING;
+              END_ENTITY;
 
-                END_SCHEMA;</body>
+              END_SCHEMA;</body>
                   </sourcecode>
                 </clause>
               </sections>
@@ -100,7 +100,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
           let(:output) do
             <<~TEXT
-                 #{BLANK_HDR}<sections>
+         #{BLANK_HDR}<sections>
                    <clause id="_" unnumbered="true" type="express" inline-header="false" obligation="normative">
                        <title id="_">
                           <bookmark id="_" anchor="_funds"/>
@@ -109,26 +109,26 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                        <sourcecode id="_" unnumbered="true">
                        <body>SCHEMA Activity_method_assignment_arm;
 
-              USE FROM Activity_method_arm;
+         USE FROM Activity_method_arm;
 
-              TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT
-                ();
-              END_TYPE;
+         TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT
+           ();
+         END_TYPE;
 
-              ENTITY Activity_method_relationship;
-                name : STRING;
-                description : OPTIONAL STRING;
-                relating_method : Activity_method;
-                related_method : Activity_method;
-              END_ENTITY;
+         ENTITY Activity_method_relationship;
+           name : STRING;
+           description : OPTIONAL STRING;
+           relating_method : Activity_method;
+           related_method : Activity_method;
+         END_ENTITY;
 
-              ENTITY Applied_activity_method_assignment;
-                assigned_activity_method : Activity_method;
-                items : SET [1:?] OF activity_method_item;
-                role : STRING;
-              END_ENTITY;
+         ENTITY Applied_activity_method_assignment;
+           assigned_activity_method : Activity_method;
+           items : SET [1:?] OF activity_method_item;
+           role : STRING;
+         END_ENTITY;
 
-              END_SCHEMA;</body>
+         END_SCHEMA;</body>
                       </sourcecode>
                     </clause>
                  </sections>
@@ -258,26 +258,26 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 <sourcecode id="_" unnumbered="true">
                 <body>SCHEMA Activity_method_assignment_arm;
 
-                USE FROM Activity_method_arm;
+              USE FROM Activity_method_arm;
 
-                TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT
-                  ();
-                END_TYPE;
+              TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT
+                ();
+              END_TYPE;
 
-                ENTITY Activity_method_relationship;
-                  name : STRING;
-                  description : OPTIONAL STRING;
-                  relating_method : Activity_method;
-                  related_method : Activity_method;
-                END_ENTITY;
+              ENTITY Activity_method_relationship;
+                name : STRING;
+                description : OPTIONAL STRING;
+                relating_method : Activity_method;
+                related_method : Activity_method;
+              END_ENTITY;
 
-                ENTITY Applied_activity_method_assignment;
-                  assigned_activity_method : Activity_method;
-                  items : SET [1:?] OF activity_method_item;
-                  role : STRING;
-                END_ENTITY;
+              ENTITY Applied_activity_method_assignment;
+                assigned_activity_method : Activity_method;
+                items : SET [1:?] OF activity_method_item;
+                role : STRING;
+              END_ENTITY;
 
-                END_SCHEMA;</body>
+              END_SCHEMA;</body>
                   </sourcecode>
                 </clause>
               </sections>
