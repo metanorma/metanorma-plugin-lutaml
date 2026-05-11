@@ -31,7 +31,7 @@ h|Generalization of
 
 h|Abstract
 7+| {% if klass.is_abstract %}True{% else %}False{% endif %}
-{% assign aggregations = klass.associations | where: "member_end_type", "aggregation" %}
+{% assign aggregations = klass.associations | where: "member_end_type", "association" %}
 
 {% if aggregations.size > 0 %}
 

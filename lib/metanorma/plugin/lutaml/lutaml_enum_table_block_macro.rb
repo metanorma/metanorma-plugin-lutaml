@@ -23,9 +23,7 @@ module Metanorma
           xmi_path = get_xmi_path(parent, target, attrs)
           path = get_name_path(attrs)
 
-          enum = ::Lutaml::XMI::Parsers::XML.serialize_enumeration_by_name(
-            xmi_path, path
-          )
+          enum = serialize_enum_drop_by_name(xmi_path, path)
 
           render_table(enum, CONTEXT_NAME, parent, attrs)
         end

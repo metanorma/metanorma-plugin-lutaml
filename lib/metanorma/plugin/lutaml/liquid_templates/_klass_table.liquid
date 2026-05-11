@@ -22,7 +22,7 @@ h| Stereotype 2+| {{ stereotype }}
 3+h| Inherited Properties
 h| Property Name h| Property Type and Multiplicity h| Definition
 {% for attr in root.inherited_props %}
-  {%- if attr.has_association? == false -%}
+  {%- unless attr.has_association? -%}
     {%- capture name_col -%}
       {{ attr.name_ns }}:{{ attr.name }}
       ({{ attr.gen_name }})
@@ -30,13 +30,13 @@ h| Property Name h| Property Type and Multiplicity h| Definition
     | {{ name_col | newline_to_br }}
     | {{ attr.type }} [{{ attr.cardinality.min }}..{{ attr.cardinality.max }}]
     | {{ attr.definition }}
-  {%- endif -%}
+  {%- endunless -%}
 {% endfor %}
 
 3+h| Self-defined Properties
 h| Property Name h| Property Type and Multiplicity h| Definition
 {% for attr in root.owned_props %}
-  {%- if attr.has_association? == false -%}
+  {%- unless attr.has_association? -%}
     {%- capture name_col -%}
       {{ attr.name_ns }}:{{ attr.name }}
       ({{ attr.gen_name }})
@@ -44,13 +44,13 @@ h| Property Name h| Property Type and Multiplicity h| Definition
     | {{ name_col | newline_to_br }}
     | {{ attr.type }} [{{ attr.cardinality.min }}..{{ attr.cardinality.max }}]
     | {{ attr.definition }}
-  {%- endif -%}
+  {%- endunless -%}
 {% endfor %}
 
 3+h| Properties Inherited from Association
 h| Property Name h| Property Type and Multiplicity h| Definition
 {% for attr in root.inherited_assoc_props %}
-  {%- if attr.has_association? == true -%}
+  {%- if attr.has_association? -%}
     {%- capture name_col -%}
       {{ attr.name_ns }}:{{ attr.name }}
       ({{ attr.gen_name }})
@@ -64,7 +64,7 @@ h| Property Name h| Property Type and Multiplicity h| Definition
 3+h| Properties Defined in Association
 h| Property Name h| Property Type and Multiplicity h| Definition
 {% for attr in root.assoc_props %}
-  {%- if attr.has_association? == true -%}
+  {%- if attr.has_association? -%}
     {%- capture name_col -%}
       {{ attr.name_ns }}:{{ attr.name }}
       ({{ attr.gen_name }})
