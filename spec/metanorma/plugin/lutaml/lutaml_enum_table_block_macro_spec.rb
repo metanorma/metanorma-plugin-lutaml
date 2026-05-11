@@ -25,7 +25,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEnumTableBlockMacro do
           TEXT
         end
 
-        it "should render table" do
+        it "renders table" do
           expect(output).to have_tag("table") do
             with_tag "th", text: "Enumeration: TextureTypeType"
             with_tag "td", text: "Subtype of:"
@@ -53,7 +53,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEnumTableBlockMacro do
           TEXT
         end
 
-        it "should render table" do
+        it "renders table" do
           expect(output).to have_tag("table") do
             with_tag "th", text: "NewClass: TextureTypeType"
             with_tag "td", text: "Package: app"
@@ -81,7 +81,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEnumTableBlockMacro do
           TEXT
         end
 
-        it "should render table" do
+        it "renders table" do
           expect(output).to have_tag("table") do
             with_tag "th", text: "NewClass: TextureTypeType"
             with_tag "td", text: "Package: app"

@@ -40,7 +40,7 @@ module Metanorma
             (?<config_path>.+) # Capture config path
           )?                   # End of optional group
           $                    # End of the pattern
-        }x.freeze
+        }x
 
         # search document for block `lutaml_ea_xmi`
         # or `lutaml_uml_datamodel_description`
@@ -205,8 +205,8 @@ module Metanorma
           all_children_packages = lutaml_document.packages
             .map(&:children_packages).flatten
           package_flat_packages = lambda do |pks|
-            pks.each_with_object({}) do |package, res|
-              res[package.name] = package.xmi_id
+            pks.to_h do |package|
+              [package.name, package.xmi_id]
             end
           end
           children_pks = package_flat_packages.call(all_children_packages)
@@ -348,7 +348,7 @@ module Metanorma
           result = {}
           packages = options.packages.reject { |p| p.send(key.to_sym).nil? }
           packages.each do |p|
-            result[p.name] = p.send(key.to_sym).map { |n| [n, true] }.to_h
+            result[p.name] = p.send(key.to_sym).to_h { |n| [n, true] }
           end
           result
         end
@@ -491,7 +491,7 @@ module Metanorma
             uml_doc, raw_klass.id, :classes
           )
           ::Lutaml::Xmi::LiquidDrops::KlassDrop.new(
-            klass, guidance, build_drop_options(parser),
+            klass, guidance, build_drop_options(parser)
           )
         end
 
@@ -503,7 +503,7 @@ module Metanorma
             uml_doc, raw_enum.id, :enums
           )
           ::Lutaml::Xmi::LiquidDrops::EnumDrop.new(
-            enum, build_drop_options(parser),
+            enum, build_drop_options(parser)
           )
         end
 
@@ -542,7 +542,7 @@ module Metanorma
           segments = path.split("::")
           if segments.one?
             index.find_packaged_by_name_and_types(
-              path, ["uml:Class", "uml:AssociationClass"],
+              path, ["uml:Class", "uml:AssociationClass"]
             )
           else
             find_packaged_klass_by_path(index, segments)
@@ -552,7 +552,7 @@ module Metanorma
         def find_packaged_klass_by_path(index, segments)
           klass_name = segments.pop
           klass = index.find_packaged_by_name_and_types(
-            klass_name, ["uml:Class", "uml:AssociationClass"],
+            klass_name, ["uml:Class", "uml:AssociationClass"]
           )
           return unless klass
 
@@ -561,6 +561,7 @@ module Metanorma
           segments.reverse_each do |pkg_name|
             parent = index.find_parent(current.id)
             return unless parent && parent.name == pkg_name
+
             current = parent
           end
           klass
