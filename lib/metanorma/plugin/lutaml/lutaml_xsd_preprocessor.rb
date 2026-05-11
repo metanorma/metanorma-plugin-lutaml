@@ -99,7 +99,7 @@ module Metanorma
         end
 
         def template(lines)
-          lines = lines.join("\n") if lines.respond_to?(:join)
+          lines = lines.join("\n\n") if lines.respond_to?(:join)
           ::Liquid::Template.parse(lines)
         end
 

@@ -40,7 +40,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
 
         it "renders schema components through lutaml-model Liquid methods" do
           rendered_xml = xml_string_content(metanorma_convert(input))
-            .gsub(/\s+/, " ")
 
           expected_fragments.each do |fragment|
             expect(rendered_xml).to(include(fragment))
@@ -308,7 +307,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
             chomp: true,
           )
           .reject(&:empty?)
-          .map { |fragment| fragment.gsub(/\s+/, " ") }
       end
     end
   end
