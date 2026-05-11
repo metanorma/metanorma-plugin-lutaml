@@ -28,16 +28,16 @@ end
 
 require "metanorma-standoc"
 require "rspec/matchers"
-require "equivalent-xml"
 require "metanorma-core"
 require "metanorma/standoc"
-require "byebug"
 require "xml-c14n"
 require "canon"
 
-Canon::Config.instance.profile = :metanorma
+Canon::Config.configure do |config|
+  config.profile = :metanorma
+end
 
-Dir[File.expand_path("./support/**/**/*.rb", __dir__)].sort.each do |f|
+Dir[File.expand_path("./support/**/**/*.rb", __dir__)].each do |f|
   require f
 end
 
@@ -95,7 +95,7 @@ def strip_guid(xml)
 end
 
 def remove_xml_whitespaces(xml)
-  xml.gsub(/\\n/, "").gsub(/>\s*/, ">").gsub(/\s*</, "<")
+  xml.gsub("\\n", "").gsub(/>\s*/, ">").gsub(/\s*</, "<")
 end
 
 def xml_string_content(xml)
@@ -127,5 +127,6 @@ def datastruct_fixtures_path(path)
 end
 
 def strip_src(xml)
-  xml.gsub(/\ssrc="[^"]+"/, ' src="_"').gsub(/\sfilename="[^"]+"/, ' filename="_"')
+  xml.gsub(/\ssrc="[^"]+"/, ' src="_"').gsub(/\sfilename="[^"]+"/,
+                                             ' filename="_"')
 end

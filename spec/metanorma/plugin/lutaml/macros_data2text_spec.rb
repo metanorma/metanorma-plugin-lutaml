@@ -4,27 +4,6 @@ require "metanorma/plugin/lutaml/data2_text_preprocessor"
 RSpec.describe Metanorma::Plugin::Lutaml::Data2TextPreprocessor do
   context "Multiple contexts (without any options)" do
     let(:example_json_file) { "example.json" }
-    let(:example_yaml_file) { "example2.yaml" }
-    let(:example_yaml_file3) { "example3.yaml" }
-
-    before do
-      File.open(example_json_file, "w") do |n|
-        n.puts(example_content.to_json)
-      end
-      File.open(example_yaml_file, "w") do |n|
-        n.puts(example_content2.to_yaml)
-      end
-      File.open(example_yaml_file3, "w") do |n|
-        n.puts(example_content3.to_yaml)
-      end
-    end
-
-    after do
-      FileUtils.rm_rf(example_json_file)
-      FileUtils.rm_rf(example_yaml_file)
-      FileUtils.rm_rf(example_yaml_file3)
-    end
-
     let(:example_content) do
       { "name" => "Lorem ipsum", "desc" => "dolor sit amet" }
     end
@@ -80,15 +59,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::Data2TextPreprocessor do
         </metanorma>
       TEXT
     end
-
-    it "correctly renders input" do
-      expect(xml_string_content(metanorma_convert(input)))
-        .to(be_xml_equivalent_to(output))
-    end
-  end
-
-  context "Multiple contexts with include_path option" do
-    let(:example_json_file) { "example.json" }
     let(:example_yaml_file) { "example2.yaml" }
     let(:example_yaml_file3) { "example3.yaml" }
 
@@ -110,6 +80,14 @@ RSpec.describe Metanorma::Plugin::Lutaml::Data2TextPreprocessor do
       FileUtils.rm_rf(example_yaml_file3)
     end
 
+    it "correctly renders input" do
+      expect(xml_string_content(metanorma_convert(input)))
+        .to(be_xml_equivalent_to(output))
+    end
+  end
+
+  context "Multiple contexts with include_path option" do
+    let(:example_json_file) { "example.json" }
     let(:example_content) do
       { "name" => "Lorem ipsum", "desc" => "dolor sit amet" }
     end
@@ -159,15 +137,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::Data2TextPreprocessor do
         </metanorma>
       TEXT
     end
-
-    it "correctly renders input" do
-      expect(xml_string_content(metanorma_convert(input)))
-        .to(be_xml_equivalent_to(output))
-    end
-  end
-
-  context "Multiple contexts with template option" do
-    let(:example_json_file) { "example.json" }
     let(:example_yaml_file) { "example2.yaml" }
     let(:example_yaml_file3) { "example3.yaml" }
 
@@ -189,6 +158,14 @@ RSpec.describe Metanorma::Plugin::Lutaml::Data2TextPreprocessor do
       FileUtils.rm_rf(example_yaml_file3)
     end
 
+    it "correctly renders input" do
+      expect(xml_string_content(metanorma_convert(input)))
+        .to(be_xml_equivalent_to(output))
+    end
+  end
+
+  context "Multiple contexts with template option" do
+    let(:example_json_file) { "example.json" }
     let(:example_content) do
       { "name" => "Lorem ipsum", "desc" => "dolor sit amet" }
     end
@@ -232,6 +209,26 @@ RSpec.describe Metanorma::Plugin::Lutaml::Data2TextPreprocessor do
         </sections>
         </metanorma>
       TEXT
+    end
+    let(:example_yaml_file) { "example2.yaml" }
+    let(:example_yaml_file3) { "example3.yaml" }
+
+    before do
+      File.open(example_json_file, "w") do |n|
+        n.puts(example_content.to_json)
+      end
+      File.open(example_yaml_file, "w") do |n|
+        n.puts(example_content2.to_yaml)
+      end
+      File.open(example_yaml_file3, "w") do |n|
+        n.puts(example_content3.to_yaml)
+      end
+    end
+
+    after do
+      FileUtils.rm_rf(example_json_file)
+      FileUtils.rm_rf(example_yaml_file)
+      FileUtils.rm_rf(example_yaml_file3)
     end
 
     it "correctly renders input" do

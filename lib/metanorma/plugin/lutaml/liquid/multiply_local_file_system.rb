@@ -52,8 +52,8 @@ module Metanorma
 
             if result_path.nil?
               raise ::Liquid::FileSystemError,
-                    "No documents in template path: " \
-                    " #{File.expand_path(template_path)}"
+                    "No documents in template path:  " \
+                    "#{File.expand_path(template_path)}"
             end
 
             unless roots.any? do |root|

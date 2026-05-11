@@ -8,6 +8,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
     end
 
     context "when there is an options file" do
+      subject (:output) { metanorma_convert(input) }
+
       let(:input) do
         <<~TEXT
           = Document title
@@ -61,29 +63,28 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           --
         TEXT
       end
-      subject (:output) { metanorma_convert(input) }
 
       # @note datamodel_description_sections.xml
       context "correctly renders input" do
         # expect(xml_string_content(metanorma_convert(input)))
         #     .to(be_xml_equivalent_to(xml_string_content(output)))
 
-        include_examples "should contain preface"
-        include_examples "should contain sections"
-        include_examples "should contain text", "Diagram text"
-        include_examples "should contain text", "my text"
-        include_examples "should contain text", "mine text"
-        include_examples "should contain package content", "Another"
-        include_examples "should contain table title"
-        include_examples "should contain table headers"
-        include_examples "should contain package content", "CityGML"
-        include_examples "should contain text after package",
-                         "Additional information",
-                         "text after Another package"
-        include_examples "should contain text after package",
-                         "Additional information",
-                         "text after CityGML package"
-        include_examples "should contain footer text"
+        it_behaves_like "should contain preface"
+        it_behaves_like "should contain sections"
+        it_behaves_like "should contain text", "Diagram text"
+        it_behaves_like "should contain text", "my text"
+        it_behaves_like "should contain text", "mine text"
+        it_behaves_like "should contain package content", "Another"
+        it_behaves_like "should contain table title"
+        it_behaves_like "should contain table headers"
+        it_behaves_like "should contain package content", "CityGML"
+        it_behaves_like "should contain text after package",
+                        "Additional information",
+                        "text after Another package"
+        it_behaves_like "should contain text after package",
+                        "Additional information",
+                        "text after CityGML package"
+        it_behaves_like "should contain footer text"
 
         table = [
           {
@@ -177,7 +178,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
             name: "Definition table of(.*)Another::TimeValuePair",
           },
         ]
-        include_examples "should contain table", table
+        it_behaves_like "should contain table", table
 
         figure = [
           {
@@ -211,10 +212,12 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
                  "EAID_938AE961_1C57_4052_B964_997D1894A58D.png",
           },
         ]
-        include_examples "should contain figure", figure
+        it_behaves_like "should contain figure", figure
       end
 
       context "when there is an section_depth option supplied" do
+        subject (:output) { metanorma_convert(input) }
+
         let(:config_file) do
           fixtures_path(
             "lutaml_uml_datamodel_description_config_section_depth.yml",
@@ -273,30 +276,29 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
             --
           TEXT
         end
-        subject (:output) { metanorma_convert(input) }
 
         # @note datamodel_description_sections_section_depth.xml
         context "correctly renders input" do
-          include_examples "should contain preface"
-          include_examples "should contain sections"
-          include_examples "should contain text", "Diagram text"
-          include_examples "should contain text", "my text"
-          include_examples "should contain text", "mine text"
+          it_behaves_like "should contain preface"
+          it_behaves_like "should contain sections"
+          it_behaves_like "should contain text", "Diagram text"
+          it_behaves_like "should contain text", "my text"
+          it_behaves_like "should contain text", "mine text"
 
-          include_examples "should contain package content", "Another"
-          include_examples "should contain table title"
-          include_examples "should contain table headers"
-          include_examples "should contain package content", "CityGML"
-          include_examples "should contain text after package",
-                           "Additional information",
-                           "text after Another package"
-          include_examples "should contain text after package",
-                           "Additional information",
-                           "text after CityGML package"
-          include_examples "should contain footer text"
+          it_behaves_like "should contain package content", "Another"
+          it_behaves_like "should contain table title"
+          it_behaves_like "should contain table headers"
+          it_behaves_like "should contain package content", "CityGML"
+          it_behaves_like "should contain text after package",
+                          "Additional information",
+                          "text after Another package"
+          it_behaves_like "should contain text after package",
+                          "Additional information",
+                          "text after CityGML package"
+          it_behaves_like "should contain footer text"
 
-          include_examples "should contain package content",
-                           "Wrapper nested package"
+          it_behaves_like "should contain package content",
+                          "Wrapper nested package"
 
           table = [
             {
@@ -339,50 +341,52 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
             {
               id: "EAID_0DBF7AD4_080D_4238_9949_1CDB34142A59",
               name: "Definition table of(.*)" \
-              "Dynamizer::ADEOfCompositeTimeseries",
+                    "Dynamizer::ADEOfCompositeTimeseries",
             },
           ]
-          include_examples "should contain table", table
+          it_behaves_like "should contain table", table
 
           figure = [
             {
               id: "EAID_ACBB5EE3_3428_40f5_9C7C_E41923419F29",
               name: "CityGML Package Diagram",
               src: "spec/assets/requirements//" \
-              "EAID_ACBB5EE3_3428_40f5_9C7C_E41923419F29.png",
+                   "EAID_ACBB5EE3_3428_40f5_9C7C_E41923419F29.png",
             },
             {
               id: "EAID_938AE961_1C57_4052_B964_997D1894A58D",
               name: "Use of ISO and OASIS standards in CityGML",
               src: "spec/assets/requirements//" \
-              "EAID_938AE961_1C57_4052_B964_997D1894A58D.png",
+                   "EAID_938AE961_1C57_4052_B964_997D1894A58D.png",
             },
             {
               id: "EAID_74DB2087_E1FC_42a7_A349_2D89BED649A5",
               name: "Dynamizer",
               src: "spec/assets/requirements//" \
-              "EAID_74DB2087_E1FC_42a7_A349_2D89BED649A5.png",
+                   "EAID_74DB2087_E1FC_42a7_A349_2D89BED649A5.png",
             },
             {
               id: "EAID_BE0D44C2_C28B_4b5e_B937_1CA5152CAA6D",
               name: "Dynamizer - Code lists",
               src: "spec/assets/requirements//" \
-              "EAID_BE0D44C2_C28B_4b5e_B937_1CA5152CAA6D.png",
+                   "EAID_BE0D44C2_C28B_4b5e_B937_1CA5152CAA6D.png",
             },
             {
               id: "EAID_05A815AC_1EAE_4c98_A8F7_C178E3C1DF9C",
               name: "Construction - Code lists",
               src: "spec/assets/requirements//" \
-              "EAID_05A815AC_1EAE_4c98_A8F7_C178E3C1DF9C.png",
+                   "EAID_05A815AC_1EAE_4c98_A8F7_C178E3C1DF9C.png",
             },
           ]
-          include_examples "should contain figure", figure
+          it_behaves_like "should contain figure", figure
         end
       end
 
       context "when there is an render_style option supplied" do
         %w[random entity_list data_dictionary].each do |style|
           context "when #{style}" do
+            subject(:output) { metanorma_convert(input) }
+
             let(:config_file) do
               fixtures_path("temporary_datamodel_description_config.yml")
             end
@@ -400,7 +404,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
                 --
               TEXT
             end
-            subject(:output) { metanorma_convert(input) }
 
             context "when render_style" do
               around do |example|
@@ -413,15 +416,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
 
               # @note datamodel_description_sections_render_style_#{style}.xml
               context "correctly renders input (render_style: #{style})" do
-                include_examples "should contain sections"
+                it_behaves_like "should contain sections"
                 case style
                 when "random"
-                  include_examples "should contain table title"
-                  include_examples "should contain table headers"
-                  include_examples "should contain package content", "CityGML"
-                  include_examples "should contain package content", "Another"
-                  include_examples "should contain package content",
-                                   "Wrapper nested package"
+                  it_behaves_like "should contain table title"
+                  it_behaves_like "should contain table headers"
+                  it_behaves_like "should contain package content", "CityGML"
+                  it_behaves_like "should contain package content", "Another"
+                  it_behaves_like "should contain package content",
+                                  "Wrapper nested package"
 
                   table = [
                     {
@@ -523,26 +526,26 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
                       name: "Definition table of(.*)Another::TimeValuePair",
                     },
                   ]
-                  include_examples "should contain table", table
+                  it_behaves_like "should contain table", table
                 when "entity_list"
                   clause_title = [
                     {
                       clause_id: "section-" \
-                      "EAPK_9C96A88B_E98B_490b_8A9C_24AEDAC64293",
+                                 "EAPK_9C96A88B_E98B_490b_8A9C_24AEDAC64293",
                       title: "Wrapper nested package",
                     },
                     {
                       clause_id: "section-" \
-                      "EAPK_369E0123_00FC_4098_BEF2_3BB506B2012A",
+                                 "EAPK_369E0123_00FC_4098_BEF2_3BB506B2012A",
                       title: "CityGML",
                     },
                     {
                       clause_id: "section-" \
-                      "EAPK_15C00628_ED51_4a92_8216_10ADF1613D98",
+                                 "EAPK_15C00628_ED51_4a92_8216_10ADF1613D98",
                       title: "Another",
                     },
                   ]
-                  include_examples "should contain clause title", clause_title
+                  it_behaves_like "should contain clause title", clause_title
 
                   xref = [
                     {
@@ -566,9 +569,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
                       name: "AbstractConstruction",
                     },
                   ]
-                  include_examples "should contain xref objects", xref
+                  it_behaves_like "should contain xref objects", xref
                 when "data_dictionary"
-                  it "should contain table headers" do
+                  it "contains table headers" do
                     [ # rubocop:disable Performance/CollectionLiteralInLoop
                       "Description",
                       "Parent package",
@@ -579,14 +582,14 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
                     end
                   end
 
-                  it "should contain name - Metadata" do
+                  it "contains name - Metadata" do
                     expect(subject).to have_tag("table") do
                       with_tag "name", text:
                         /Metadata\ of\ Wrapper\ nested\ package/
                     end
                   end
 
-                  it "should contain notes" do
+                  it "contains notes" do
                     expect(subject).to have_tag("note")
                   end
 
@@ -612,7 +615,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
                       name: "ADEOfCompositeTimeseries",
                     },
                   ]
-                  include_examples "should contain xref objects", xref
+                  it_behaves_like "should contain xref objects", xref
                 end
               end
             end
@@ -685,9 +688,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
             # EAID_4D1261D3_9F49_41c7_8F0E_FCAD537F45D4
             expect(xml_output)
               .to(include("<xref target=\"section-" \
-              "EAID_4D1261D3_9F49_41c7_8F0E_FCAD537F45D4\" " \
-              "style=\"short\"><display-text>Reference" \
-              "</display-text></xref>"))
+                          "EAID_4D1261D3_9F49_41c7_8F0E_FCAD537F45D4\" " \
+                          "style=\"short\"><display-text>Reference" \
+                          "</display-text></xref>"))
           end
         end
 
@@ -705,18 +708,20 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
             xml_output = remove_xml_whitespaces(xml_convert)
             expect(xml_output)
               .to(include("<xref target=\"My-custom-RE_Register-section\" " \
-              "style=\"short\"><display-text>RE_Register</display-text>" \
-              "</xref>"))
+                          "style=\"short\"><display-text>RE_Register</display-text>" \
+                          "</xref>"))
             expect(xml_output)
-              .to_not(include("<xref target=\"RE_Register-section\" " \
-              "style=\"short\"><display-text>RE_Register</display-text>" \
-              "</xref>"))
+              .not_to(include("<xref target=\"RE_Register-section\" " \
+                              "style=\"short\"><display-text>RE_Register</display-text>" \
+                              "</xref>"))
           end
         end
       end
     end
 
     context "when there is no options file" do
+      subject(:output) { metanorma_convert(input) }
+
       let(:input) do
         <<~TEXT
           = Document title
@@ -770,24 +775,23 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           --
         TEXT
       end
-      subject(:output) { metanorma_convert(input) }
 
       # @note datamodel_description_sections_tree.xml
       context "correctly renders input" do
-        include_examples "should contain sections"
-        include_examples "should contain text", "my text"
-        include_examples "should contain text", "mine text"
-        include_examples "should contain package content", "Another"
-        include_examples "should contain table title"
-        include_examples "should contain table headers"
-        include_examples "should contain package content", "CityGML"
-        include_examples "should contain text after package",
-                         "Additional information",
-                         "text after Another package"
-        include_examples "should contain text after package",
-                         "Additional information",
-                         "text after CityGML package"
-        include_examples "should contain footer text"
+        it_behaves_like "should contain sections"
+        it_behaves_like "should contain text", "my text"
+        it_behaves_like "should contain text", "mine text"
+        it_behaves_like "should contain package content", "Another"
+        it_behaves_like "should contain table title"
+        it_behaves_like "should contain table headers"
+        it_behaves_like "should contain package content", "CityGML"
+        it_behaves_like "should contain text after package",
+                        "Additional information",
+                        "text after Another package"
+        it_behaves_like "should contain text after package",
+                        "Additional information",
+                        "text after CityGML package"
+        it_behaves_like "should contain footer text"
 
         table = [
           {
@@ -866,7 +870,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           {
             id: "EAID_A197050C_E2CB_4d86_B69E_5B5E96E37FDE",
             name: "Definition table of(.*)" \
-            "Another::ADEOfTabulatedFileTimeseries",
+                  "Another::ADEOfTabulatedFileTimeseries",
           },
           {
             id: "EAID_084E218B_32C6_41f2_A710_ADA8A5A8462C",
@@ -881,7 +885,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
             name: "Definition table of(.*)Another::TimeValuePair",
           },
         ]
-        include_examples "should contain table", table
+        it_behaves_like "should contain table", table
 
         figure = [
           {
@@ -915,11 +919,13 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
                  "EAID_938AE961_1C57_4052_B964_997D1894A58D.png",
           },
         ]
-        include_examples "should contain figure", figure
+        it_behaves_like "should contain figure", figure
       end
     end
 
     context "when there nested tags" do
+      subject(:output) { metanorma_convert(input) }
+
       let(:example_file) { fixtures_path("test.xmi") }
       let(:nested_config_file) do
         fixtures_path("temporary_datamodel_description_config.yml")
@@ -968,7 +974,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           --
         TEXT
       end
-      subject(:output) { metanorma_convert(input) }
 
       around do |example|
         File.open(nested_config_file, "w") do |file|
@@ -980,7 +985,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
 
       # @note datamodel_description_sections_nested_macroses.xml
       context "correctly renders input" do
-        include_examples "should contain preface"
+        it_behaves_like "should contain preface"
         clause_title = [
           {
             clause_id: "section-EAPK_9C96A88B_E98B_490b_8A9C_24AEDAC64293",
@@ -991,8 +996,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
             title: "ISO 19135 Procedures for item registration XML",
           },
         ]
-        include_examples "should contain clause title", clause_title
-        include_examples "should contain table headers"
+        it_behaves_like "should contain clause title", clause_title
+        it_behaves_like "should contain table headers"
 
         xref = [
           {
@@ -1004,7 +1009,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
             name: "RE_Register_enum",
           },
         ]
-        include_examples "should contain xref objects", xref
+        it_behaves_like "should contain xref objects", xref
 
         table = [
           {
@@ -1018,11 +1023,13 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
                   "registration",
           },
         ]
-        include_examples "should contain table", table
+        it_behaves_like "should contain table", table
       end
     end
 
     context "when `render_entities` option supplied" do
+      subject(:output) { metanorma_convert(input) }
+
       let(:example_file) { fixtures_path("test_2.xmi") }
       let(:config_file) do
         fixtures_path(
@@ -1044,18 +1051,17 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           ---
         TEXT
       end
-      subject(:output) { metanorma_convert(input) }
 
       # @note datamodel_description_sections_package_entities.xml
       context "correctly renders input" do
-        include_examples "should contain sections"
-        it "should contain table name" do
+        it_behaves_like "should contain sections"
+        it "contains table name" do
           expect(subject).to have_tag("table") do
             with_tag "name", text: /Classes in test2/
           end
         end
 
-        it "should contain table headers" do
+        it "contains table headers" do
           %w[Class Description].each do |th|
             expect(subject).to have_tag("th", text: th.to_s)
           end
@@ -1064,6 +1070,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
     end
 
     context "when `skip_tables` option supplied" do
+      subject(:output) { metanorma_convert(input) }
+
       let(:example_file) { fixtures_path("test_2.xmi") }
       let(:config_file) do
         fixtures_path(
@@ -1085,20 +1093,19 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
           ---
         TEXT
       end
-      subject(:output) { metanorma_convert(input) }
 
       # @note datamodel_description_sections_skip_tables.xml
       context "correctly renders input" do
-        include_examples "should contain sections"
+        it_behaves_like "should contain sections"
 
-        it "should contain table name" do
+        it "contains table name" do
           expect(subject).to have_tag("table") do
             with_tag "name", text:
               /Enumerated classes defined in Another Wrapper nested package/
           end
         end
 
-        it "should contain table headers" do
+        it "contains table headers" do
           %w[Name Description].each do |th|
             expect(subject).to have_tag("th", text: th)
           end
@@ -1110,7 +1117,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlUmlDatamodelDescriptionPreproces
             name: "RE_Register_enum",
           },
         ]
-        include_examples "should contain xref objects", xref
+        it_behaves_like "should contain xref objects", xref
       end
     end
   end

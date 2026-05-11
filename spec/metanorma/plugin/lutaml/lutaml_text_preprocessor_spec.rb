@@ -332,7 +332,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           end
 
           before do
-            puts "Recreate cache file to latest version..."
             yaml_compressed = File.binread(cache_path)
             yaml = Zlib::Inflate.inflate(yaml_compressed)
             cache = Expressir::Model::Cache.from_yaml(yaml)
@@ -344,7 +343,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             yaml = cache.to_yaml
             yaml_compressed = Zlib::Deflate.deflate(yaml)
             File.binwrite(cache_path, yaml_compressed)
-            puts "Recreate cache file to latest version...done!"
           end
 
           it "correctly renders input" do
@@ -485,7 +483,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         it "creates a valid cache file for supplied path" do
           expect { metanorma_convert(input) }
             .to(change { File.file?(cache_file_path) }.from(false).to(true))
-          expect(::Lutaml::Parser
+          expect(Lutaml::Parser
                   .parse(File.new(cache_file_path),
                          Lutaml::Parser::EXPRESS_CACHE_PARSE_TYPE)
                   .to_liquid["schemas"]
@@ -789,7 +787,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
              </references>
             </bibliography>
             </metanorma>
-            TEXT
+          TEXT
         end
 
         it "correctly renders input" do

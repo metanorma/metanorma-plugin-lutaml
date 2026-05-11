@@ -10,17 +10,17 @@ module Metanorma
 
         # example:
         #   - [[abc]]
-        ANCHOR_REGEX_1 = /^\[\[(?<id>[^\]]*)\]\]\s*$/.freeze
+        ANCHOR_REGEX_1 = /^\[\[(?<id>[^\]]*)\]\]\s*$/
 
         # examples:
         #   - [#abc]
         #   - [source#abc,ruby]
-        ANCHOR_REGEX_2 = /^\[[^#,]*#(?<id>[^,\]]*)[,\]]/.freeze
+        ANCHOR_REGEX_2 = /^\[[^#,]*#(?<id>[^,\]]*)[,\]]/
 
         # examples:
         #   - [id=abc]
         #   - [source,id="abc"]
-        ANCHOR_REGEX_3 = /^\[(?:.+,)?id=['"]?(?<id>[^,\]'"]*)['"]?[,\]]/.freeze
+        ANCHOR_REGEX_3 = /^\[(?:.+,)?id=['"]?(?<id>[^,\]'"]*)['"]?[,\]]/
 
         def initialize(document, input_lines)
           @document = document

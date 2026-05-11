@@ -36,7 +36,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlGmlDictionaryBlock do
         TEXT
       end
 
-      it "should render table" do
+      it "renders table" do
         expect(subject).to have_tag("table") do
           with_tag "colgroup"
           with_tag "thead"
@@ -73,11 +73,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlGmlDictionaryBlock do
         end
       end
 
-      it "should contain link" do
+      it "contains link" do
         expect(subject).to have_tag("link[target='https://www.geospatial.jp/iur/codelists/3.1/Building_class.xml']")
       end
 
-      it "should contain source" do
+      it "contains source" do
         expect(subject).to have_tag("origin[bibitemid='gsi_map_level_dps']")
       end
     end
@@ -150,7 +150,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlGmlDictionaryBlock do
         TEXT
       end
 
-      it "should render table" do
+      it "renders table" do
         expect(subject).to have_tag("table") do
           with_tag "colgroup"
           with_tag "thead"
@@ -173,7 +173,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlGmlDictionaryBlock do
         end
       end
 
-      it "should render categories in table" do
+      it "renders categories in table" do
         [
           { tag: "td[rowspan='8']", text: "1000" },
           { tag: "td[rowspan='8']", text: "車道部" },
@@ -215,11 +215,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlGmlDictionaryBlock do
         end
       end
 
-      it "should contain link" do
+      it "contains link" do
         expect(subject).to have_tag("link[target='https://www.geospatial.jp/iur/codelists/3.1/TrafficArea_function.xml']")
       end
 
-      it "should contain source" do
+      it "contains source" do
         expect(subject).to have_tag("origin[bibitemid='gsi_map_level_dps']")
       end
     end

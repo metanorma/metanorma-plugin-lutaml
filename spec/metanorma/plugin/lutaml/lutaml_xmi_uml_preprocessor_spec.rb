@@ -2,9 +2,10 @@ require "spec_helper"
 
 RSpec.describe Metanorma::Plugin::Lutaml::LutamlXmiUmlPreprocessor do
   describe "#process" do
+    subject(:output) { metanorma_process(input) }
+
     let(:example_file) { fixtures_path("large_test.xmi") }
     let(:config_file) { fixtures_path("lutaml_xmi_uml_config.yml") }
-    subject(:output) { metanorma_process(input) }
 
     context "when there is no config file" do
       let (:input) do
@@ -270,9 +271,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXmiUmlPreprocessor do
         it "shows owned_props" do
           [
             "uro:appearanceSrcDescLod0",
-            "\[DataQualityAttribute\]",
+            "[DataQualityAttribute]",
             "gml::CodeType",
-            "\[0\.\.\*\]",
+            "[0..*]",
             "LOD0の幾何オブジェクトのアピアランスに使用した原典資料の種類。コードリスト",
             "uro:appearanceSrcDescLod1",
             "LOD1の幾何オブジェクトのアピアランスに使用した原典資料の種類。コードリスト",
@@ -286,9 +287,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXmiUmlPreprocessor do
         it "shows assoc_props" do
           [
             "uro:publicSurveyDataQualityAttribute",
-            "\[DataQualityAttribute\]",
+            "[DataQualityAttribute]",
             "uro:PublicSuveyDataQualityAttribute",
-            "\[0\.\.1\]",
+            "[0..1]",
             "使用した公共測量成果の地図情報レベルと種類。各LODの幾何オブジェクトの作成",
           ].each do |td|
             expect(output).to have_tag("td", text: /#{td}/)
@@ -349,9 +350,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXmiUmlPreprocessor do
         it "shows owned_props" do
           [
             "urf:areaType",
-            "\[SedimentDisasterProneArea\]",
+            "[SedimentDisasterProneArea]",
             "gml::CodeType",
-            "\[1\.\.1\]",
+            "[1..1]",
           ].each do |td|
             expect(output).to have_tag("td", text: /#{td}/)
           end
@@ -360,16 +361,16 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXmiUmlPreprocessor do
         it "shows inherited_props" do
           [
             "gml:boundedBy",
-            "\[_Feature\]",
+            "[_Feature]",
             "gml::Envelope",
-            "\[0\.\.1\]",
+            "[0..1]",
             "建築物の範囲及び適用される空間参照系",
             "core:creationDate",
-            "\[_CityObject\]",
+            "[_CityObject]",
             "xs::date",
             "データが作成された日。運用上必須とする。",
             "urf:areaClassificationType",
-            "\[_UrbanFunction\]",
+            "[_UrbanFunction]",
             "gml::CodeType",
           ].each do |td|
             expect(output).to have_tag("td", text: /#{td}/)
@@ -379,12 +380,12 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXmiUmlPreprocessor do
         it "shows inherited_assoc_props" do
           [
             "core:core::外部参照",
-            "\[_CityObject\]",
+            "[_CityObject]",
             "core:外部参照",
-            "\[0\.\.\*\]",
+            "[0..*]",
             "gen:_genericAttribute",
             "urf:lod0MultiCurve",
-            "\[_UrbanFunction\]",
+            "[_UrbanFunction]",
             "gml:MultiCurve",
           ].each do |td|
             expect(output).to have_tag("td", text: /#{td}/)
