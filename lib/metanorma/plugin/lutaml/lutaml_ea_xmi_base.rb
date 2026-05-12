@@ -63,8 +63,6 @@ module Metanorma
           end
 
           yaml_config.ea_extension&.each do |ea_extension_path|
-            # resolve paths of ea extensions based on the location of
-            # config yaml file
             ea_extension_full_path = File.expand_path(
               ea_extension_path, File.dirname(yaml_config_path)
             )
@@ -74,7 +72,13 @@ module Metanorma
           end
 
           guidance = get_guidance(document, yaml_config.guidance)
-          result_document = parse_result_document(full_path, guidance)
+          cache_key = [full_path, guidance]
+
+          @@lutaml_doc_cache ||= {}
+          result_document = @@lutaml_doc_cache[cache_key] ||= parse_result_document(
+            full_path, guidance
+          )
+
           document.attributes["lutaml_xmi_cache"] ||= {}
           document.attributes["lutaml_xmi_cache"][full_path] = result_document
           result_document
@@ -483,8 +487,9 @@ module Metanorma
         # path-aware finders on the parser instance and the new
         # `XmiLookupService`, then bridging to the UML object that the
         # current `KlassDrop` / `EnumDrop` constructors expect.
-        def serialize_klass_drop_by_name(xmi_path, name, guidance = nil)
-          parser, uml_doc = build_uml_document(xmi_path)
+        def serialize_klass_drop_by_name(xmi_path, name, document = nil,
+guidance = nil)
+          parser, uml_doc = build_uml_document(xmi_path, document)
           raw_klass = find_packaged_klass(parser.xmi_index, name)
           warn "Class not found for name: #{name}" if raw_klass.nil?
           klass = raw_klass && find_uml_node_by_xmi_id(
@@ -495,8 +500,8 @@ module Metanorma
           )
         end
 
-        def serialize_enum_drop_by_name(xmi_path, name)
-          parser, uml_doc = build_uml_document(xmi_path)
+        def serialize_enum_drop_by_name(xmi_path, name, document = nil)
+          parser, uml_doc = build_uml_document(xmi_path, document)
           raw_enum = find_packaged_enum(parser.xmi_index, name)
           warn "Enumeration not found for name: #{name}" if raw_enum.nil?
           enum = raw_enum && find_uml_node_by_xmi_id(
@@ -507,10 +512,17 @@ module Metanorma
           )
         end
 
-        def build_uml_document(xmi_path)
+        def build_uml_document(xmi_path, _document = nil)
+          @@uml_doc_cache ||= {}
+          if @@uml_doc_cache[xmi_path]
+            return @@uml_doc_cache[xmi_path]
+          end
+
           xmi_model = ::Xmi::Sparx::Root.parse_xml(File.read(xmi_path))
           parser = ::Lutaml::Xmi::Parsers::Xml.new
-          [parser, parser.parse(xmi_model)]
+          result = [parser, parser.parse(xmi_model)]
+          @@uml_doc_cache[xmi_path] = result
+          result
         end
 
         def build_drop_options(parser)
