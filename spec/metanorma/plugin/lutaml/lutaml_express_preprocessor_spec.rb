@@ -38,25 +38,26 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 <sourcecode id="_" unnumbered="true">
                 <body>SCHEMA Activity_method_assignment_arm;
 
-                USE FROM Activity_method_arm;
+              USE FROM Activity_method_arm;
 
-                TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT;
-                END_TYPE;
+              TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT
+                ();
+              END_TYPE;
 
-                ENTITY Activity_method_relationship;
-                  name : STRING;
-                  description : OPTIONAL STRING;
-                  relating_method : Activity_method;
-                  related_method : Activity_method;
-                END_ENTITY;
+              ENTITY Activity_method_relationship;
+                name : STRING;
+                description : OPTIONAL STRING;
+                relating_method : Activity_method;
+                related_method : Activity_method;
+              END_ENTITY;
 
-                ENTITY Applied_activity_method_assignment;
-                  assigned_activity_method : Activity_method;
-                  items : SET [1:?] OF activity_method_item;
-                  role : STRING;
-                END_ENTITY;
+              ENTITY Applied_activity_method_assignment;
+                assigned_activity_method : Activity_method;
+                items : SET [1:?] OF activity_method_item;
+                role : STRING;
+              END_ENTITY;
 
-                END_SCHEMA;</body>
+              END_SCHEMA;</body>
                   </sourcecode>
                 </clause>
               </sections>
@@ -66,7 +67,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
           it "correctly renders input" do
             expect(xml_string_content(metanorma_convert(input)))
-              .to(be_equivalent_to(output))
+              .to(be_xml_equivalent_to(output))
           end
         end
 
@@ -99,18 +100,19 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
           let(:output) do
             <<~TEXT
-                 #{BLANK_HDR}<sections>
-                   <clause id="_" unnumbered="true" type="express" inline-header="false" obligation="normative">
-                       <title id="_">
-                          <bookmark id="_" anchor="_funds"/>
-                          [[.types]][[.activity_method_item]][[.entities]][[.Activity_method_relationship]][[.Applied_activity_method_assignment]]
-                       </title>
-                       <sourcecode id="_" unnumbered="true">
-                       <body>SCHEMA Activity_method_assignment_arm;
+              #{BLANK_HDR}<sections>
+                        <clause id="_" unnumbered="true" type="express" inline-header="false" obligation="normative">
+                            <title id="_">
+                               <bookmark id="_" anchor="_funds"/>
+                               [[.types]][[.activity_method_item]][[.entities]][[.Activity_method_relationship]][[.Applied_activity_method_assignment]]
+                            </title>
+                            <sourcecode id="_" unnumbered="true">
+                            <body>SCHEMA Activity_method_assignment_arm;
 
               USE FROM Activity_method_arm;
 
-              TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT;
+              TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT
+                ();
               END_TYPE;
 
               ENTITY Activity_method_relationship;
@@ -127,15 +129,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               END_ENTITY;
 
               END_SCHEMA;</body>
-                      </sourcecode>
-                    </clause>
-                 </sections>
-                 </metanorma>
+                           </sourcecode>
+                         </clause>
+                      </sections>
+                      </metanorma>
             TEXT
           end
 
           def bookmark(anchor)
-            a = anchor.gsub(/\}\}/, ' | replace: "\", "-"}}')
+            a = anchor.gsub("}}", ' | replace: "\", "-"}}')
             "[[#{@id}.#{a}]]"
           end
 
@@ -217,7 +219,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
           it "correctly renders input" do
             expect(xml_string_content(metanorma_convert(input)))
-              .to(be_equivalent_to(output))
+              .to(be_xml_equivalent_to(output))
           end
         end
 
@@ -256,25 +258,26 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 <sourcecode id="_" unnumbered="true">
                 <body>SCHEMA Activity_method_assignment_arm;
 
-                USE FROM Activity_method_arm;
+              USE FROM Activity_method_arm;
 
-                TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT;
-                END_TYPE;
+              TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT
+                ();
+              END_TYPE;
 
-                ENTITY Activity_method_relationship;
-                  name : STRING;
-                  description : OPTIONAL STRING;
-                  relating_method : Activity_method;
-                  related_method : Activity_method;
-                END_ENTITY;
+              ENTITY Activity_method_relationship;
+                name : STRING;
+                description : OPTIONAL STRING;
+                relating_method : Activity_method;
+                related_method : Activity_method;
+              END_ENTITY;
 
-                ENTITY Applied_activity_method_assignment;
-                  assigned_activity_method : Activity_method;
-                  items : SET [1:?] OF activity_method_item;
-                  role : STRING;
-                END_ENTITY;
+              ENTITY Applied_activity_method_assignment;
+                assigned_activity_method : Activity_method;
+                items : SET [1:?] OF activity_method_item;
+                role : STRING;
+              END_ENTITY;
 
-                END_SCHEMA;</body>
+              END_SCHEMA;</body>
                   </sourcecode>
                 </clause>
               </sections>
@@ -284,7 +287,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
           it "correctly renders input" do
             expect(xml_string_content(metanorma_convert(input)))
-              .to(be_equivalent_to(output))
+              .to(be_xml_equivalent_to(output))
           end
         end
 
@@ -337,16 +340,16 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                     <p id="_">Mine text</p>
                     <svgmap id="_">
                       <figure id="_">
-                        <image id="_" src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" mimetype="image/svg+xml" height="auto" width="auto" filename="_"/>
+                        <image id="_" src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" mimetype="image/svg+xml" height="auto" width="auto" filename="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}"/>
                       </figure>
                       <target href="1">
-                        <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
+                        <eref  bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
                       </target>
                       <target href="2">
-                        <eref style="short" bibitemid="express_measure_schemaexpg4" citeas=""><display-text>measure_schemaexpg4</display-text></eref>
+                        <eref  bibitemid="express_measure_schemaexpg4" citeas=""><display-text>measure_schemaexpg4</display-text></eref>
                       </target>
                       <target href="3">
-                        <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
+                        <eref  bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
                       </target>
                     </svgmap>
                   </clause>
@@ -355,16 +358,16 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                     <p id="_">Mine text</p>
                     <svgmap id="_">
                       <figure id="_">
-                        <image id="_" src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" mimetype="image/svg+xml" height="auto" width="auto" filename="_"/>
+                        <image id="_" src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" mimetype="image/svg+xml" height="auto" width="auto" filename="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}"/>
                       </figure>
                       <target href="1">
-                        <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
+                        <eref  bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
                       </target>
                       <target href="2">
-                        <eref style="short" bibitemid="express_measure_schemaexpg4" citeas=""><display-text>measure_schemaexpg4</display-text></eref>
+                        <eref  bibitemid="express_measure_schemaexpg4" citeas=""><display-text>measure_schemaexpg4</display-text></eref>
                       </target>
                       <target href="3">
-                        <eref style="short" bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
+                        <eref  bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
                       </target>
                     </svgmap>
                   </clause>
@@ -384,13 +387,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           end
 
           it "correctly renders input" do
-            output = strip_filename(
-              remove_xml_whitespaces(
-                xml_string_content(metanorma_convert(input)),
-              ),
+            output = remove_xml_whitespaces(
+              xml_string_content(metanorma_convert(input)),
             )
             expect(output)
-              .to(be_equivalent_to(remove_xml_whitespaces(expected_output)))
+              .to(be_xml_equivalent_to(remove_xml_whitespaces(expected_output)))
           end
         end
       end

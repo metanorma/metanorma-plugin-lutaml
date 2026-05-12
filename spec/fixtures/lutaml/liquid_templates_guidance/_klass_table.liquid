@@ -20,45 +20,45 @@ h| Stereotype 4+| {{ stereotype }}
 5+h| Inherited Properties
 h| Property Name h| Property Type and Multiplicity h| Definition h| Used h| Guidance
 {% for attr in root.inherited_props %}
-  {%- if attr.has_association? == false -%}
+  {%- unless attr.has_association? -%}
     {%- capture name_col -%}
       {{ attr.name_ns }}:{{ attr.name }}
       ({{ attr.gen_name }})
     {%- endcapture -%}
     | {{ name_col | newline_to_br }}
-    | {{ attr.type }} [{{ attr.cardinality.min }}..{{ attr.cardinality.max }}] 
+    | {{ attr.type }} [{{ attr.cardinality.min }}..{{ attr.cardinality.max }}]
     | {{ attr.definition }}
     | {{ attr.used? }}
     | {{ attr.guidance }}
-  {%- endif -%}
+  {%- endunless -%}
 {% endfor %}
 
 5+h| Self-defined Properties
 h| Property Name h| Property Type and Multiplicity h| Definition h| Used h| Guidance
 {% for attr in root.owned_props %}
-  {%- if attr.has_association? == false -%}
+  {%- unless attr.has_association? -%}
     {%- capture name_col -%}
       {{ attr.name_ns }}:{{ attr.name }}
       ({{ attr.gen_name }})
     {%- endcapture -%}
     | {{ name_col | newline_to_br }}
-    | {{ attr.type }} [{{ attr.cardinality.min }}..{{ attr.cardinality.max }}] 
+    | {{ attr.type }} [{{ attr.cardinality.min }}..{{ attr.cardinality.max }}]
     | {{ attr.definition }}
     | {{ attr.used? }}
     | {{ attr.guidance }}
-  {%- endif -%}
+  {%- endunless -%}
 {% endfor %}
 
 5+h| Properties Inherited from Association
 h| Property Name h| Property Type and Multiplicity h| Definition h| Used h| Guidance
 {% for attr in root.inherited_assoc_props %}
-  {%- if attr.has_association? == true -%}
+  {%- if attr.has_association? -%}
     {%- capture name_col -%}
       {{ attr.name_ns }}:{{ attr.name }}
       ({{ attr.gen_name }})
     {%- endcapture -%}
     | {{ name_col | newline_to_br }}
-    | {{ attr.type_ns }}:{{ attr.type }} [{{ attr.cardinality.min }}..{{ attr.cardinality.max }}] 
+    | {{ attr.type_ns }}:{{ attr.type }} [{{ attr.cardinality.min }}..{{ attr.cardinality.max }}]
     | {{ attr.definition }}
     | {{ attr.used? }}
     | {{ attr.guidance }}
@@ -68,13 +68,13 @@ h| Property Name h| Property Type and Multiplicity h| Definition h| Used h| Guid
 5+h| Properties Defined in Association
 h| Property Name h| Property Type and Multiplicity h| Definition h| Used h| Guidance
 {% for attr in root.assoc_props %}
-  {%- if attr.has_association? == true -%}
+  {%- if attr.has_association? -%}
     {%- capture name_col -%}
       {{ attr.name_ns }}:{{ attr.name }}
       ({{ attr.gen_name }})
     {%- endcapture -%}
     | {{ name_col | newline_to_br }}
-    | {{ attr.type_ns }}:{{ attr.type }} [{{ attr.cardinality.min }}..{{ attr.cardinality.max }}] 
+    | {{ attr.type_ns }}:{{ attr.type }} [{{ attr.cardinality.min }}..{{ attr.cardinality.max }}]
     | {{ attr.definition }}
     | {{ attr.used? }}
     | {{ attr.guidance }}

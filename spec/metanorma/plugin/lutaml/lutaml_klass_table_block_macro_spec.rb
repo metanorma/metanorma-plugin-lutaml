@@ -47,11 +47,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
         name: "bldg:usage",
         type: "gml::CodeType [0..*]",
         def: "建築物の主な使い道。 コードリスト()より選択する。 用途の区分は、都市計画" \
-          "基礎調査実施要領(国土交通省都市局)による区分とする。複数の建築物で一体の施設" \
-          "を構成しているものについては、一体としての用途とする。店舗等併用住宅、同共同" \
-          "住宅、作業所併用住宅は、1/3 以上が住宅のものとする。複合用途の建築物(商業系" \
-          "複合施設及び併用住宅を除く)については、主たる用途により分類する。複数の用途を" \
-          "記述する場合は、主たる用途を最初に記載する。",
+             "基礎調査実施要領(国土交通省都市局)による区分とする。複数の建築物で一体の施設" \
+             "を構成しているものについては、一体としての用途とする。店舗等併用住宅、同共同" \
+             "住宅、作業所併用住宅は、1/3 以上が住宅のものとする。複合用途の建築物(商業系" \
+             "複合施設及び併用住宅を除く)については、主たる用途により分類する。複数の用途を" \
+             "記述する場合は、主たる用途を最初に記載する。",
       },
       {
         name: "bldg:yearOfConstruction",
@@ -314,7 +314,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
           TEXT
         end
 
-        it "should render table" do
+        it "renders table" do
           expect(output).to have_tag("table") do
             with_tag "colgroup"
             with_tag "tbody"
@@ -322,43 +322,43 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
         end
 
         context "should render default table headers" do
-          include_examples "should contain properties related headers",
-                           building_headers
+          it_behaves_like "should contain properties related headers",
+                          building_headers
         end
 
         context "render Building table" do
           context "should render inherited properties" do
-            include_examples "should contain name, type, definition",
-                             building_inherited_properties
+            it_behaves_like "should contain name, type, definition",
+                            building_inherited_properties
           end
 
           context "should render inherited properties from generalization" do
-            include_examples "should contain name, type, definition",
-                             building_gen
+            it_behaves_like "should contain name, type, definition",
+                            building_gen
           end
         end
 
         context "render BuildingFurniture table" do
           context "should render inherited properties" do
-            include_examples "should contain name, type, definition",
-                             building_furniture_inherited_properties
+            it_behaves_like "should contain name, type, definition",
+                            building_furniture_inherited_properties
           end
 
           context "should render inherited properties from generalization" do
-            include_examples "should contain name, type, definition",
-                             building_furniture_gen
+            it_behaves_like "should contain name, type, definition",
+                            building_furniture_gen
           end
         end
 
         context "render BuildingInstallation table" do
           context "should render inherited properties" do
-            include_examples "should contain name, type, definition",
-                             building_installation_inherited_properties
+            it_behaves_like "should contain name, type, definition",
+                            building_installation_inherited_properties
           end
 
           context "should render inherited properties from generalization" do
-            include_examples "should contain name, type, definition",
-                             building_installation_gen
+            it_behaves_like "should contain name, type, definition",
+                            building_installation_gen
           end
         end
       end
@@ -380,7 +380,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
           TEXT
         end
 
-        it "should render table" do
+        it "renders table" do
           expect(output).to have_tag("table") do
             with_tag "colgroup"
             with_tag "tbody"
@@ -388,13 +388,13 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
         end
 
         context "should render inherited properties" do
-          include_examples "should contain name, type, definition",
-                           building_inherited_properties
+          it_behaves_like "should contain name, type, definition",
+                          building_inherited_properties
         end
 
         context "should render inherited properties from generalization" do
-          include_examples "should contain name, type, definition",
-                           building_gen
+          it_behaves_like "should contain name, type, definition",
+                          building_gen
         end
 
         context "should render table headers" do
@@ -407,7 +407,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
             関連役割の型及び多重度
             定義
           ]
-          include_examples "should contain properties related headers", headers
+          it_behaves_like "should contain properties related headers", headers
         end
       end
 
@@ -428,7 +428,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
           TEXT
         end
 
-        it "should render table" do
+        it "renders table" do
           expect(output).to have_tag("table") do
             with_tag "colgroup"
             with_tag "tbody"
@@ -436,21 +436,21 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
         end
 
         context "should render inherited properties" do
-          include_examples "should contain name, type, definition",
-                           building_inherited_properties
+          it_behaves_like "should contain name, type, definition",
+                          building_inherited_properties
         end
 
         context "should render inherited properties from generalization" do
-          include_examples "should contain name, type, definition",
-                           building_gen
+          it_behaves_like "should contain name, type, definition",
+                          building_gen
         end
 
         context "should render table headers" do
-          include_examples "should contain properties related headers",
-                           building_headers_with_guidance
+          it_behaves_like "should contain properties related headers",
+                          building_headers_with_guidance
         end
 
-        include_examples "should contain Used and Guidance"
+        it_behaves_like "should contain Used and Guidance"
       end
 
       context "with user-specific templates and external_data" do
@@ -470,7 +470,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
           TEXT
         end
 
-        it "should render table" do
+        it "renders table" do
           expect(output).to have_tag("table") do
             with_tag "colgroup"
             with_tag "tbody"
@@ -482,18 +482,18 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
         end
 
         context "should render inherited properties" do
-          include_examples "should contain name, type, definition",
-                           building_inherited_properties
+          it_behaves_like "should contain name, type, definition",
+                          building_inherited_properties
         end
 
         context "should render inherited properties from generalization" do
-          include_examples "should contain name, type, definition",
-                           building_gen
+          it_behaves_like "should contain name, type, definition",
+                          building_gen
         end
 
         context "should render table headers" do
-          include_examples "should contain properties related headers",
-                           building_headers_with_guidance
+          it_behaves_like "should contain properties related headers",
+                          building_headers_with_guidance
         end
       end
 
@@ -514,7 +514,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
           TEXT
         end
 
-        it "should render table" do
+        it "renders table" do
           expect(output).to have_tag("table") do
             with_tag "colgroup"
             with_tag "tbody"
@@ -522,13 +522,13 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
         end
 
         context "should render inherited properties" do
-          include_examples "should contain name, type, definition",
-                           door_inherited_properties
+          it_behaves_like "should contain name, type, definition",
+                          door_inherited_properties
         end
 
         context "should render default table headers" do
-          include_examples "should contain properties related headers",
-                           building_headers
+          it_behaves_like "should contain properties related headers",
+                          building_headers
         end
       end
 
@@ -549,7 +549,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
           TEXT
         end
 
-        it "should render table" do
+        it "renders table" do
           expect(output).to have_tag("table") do
             with_tag "colgroup"
             with_tag "tbody"
@@ -557,13 +557,13 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
         end
 
         context "should render inherited properties" do
-          include_examples "should contain name, type, definition",
-                           door_inherited_properties
+          it_behaves_like "should contain name, type, definition",
+                          door_inherited_properties
         end
 
         context "should render default table headers" do
-          include_examples "should contain properties related headers",
-                           building_headers
+          it_behaves_like "should contain properties related headers",
+                          building_headers
         end
       end
 
@@ -584,7 +584,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
           TEXT
         end
 
-        it "should render table" do
+        it "renders table" do
           expect(output).to have_tag("table") do
             with_tag "colgroup"
             with_tag "tbody"
@@ -592,13 +592,13 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
         end
 
         context "should render inherited properties" do
-          include_examples "should contain name, type, definition",
-                           door_inherited_properties
+          it_behaves_like "should contain name, type, definition",
+                          door_inherited_properties
         end
 
         context "should render default table headers" do
-          include_examples "should contain properties related headers",
-                           building_headers
+          it_behaves_like "should contain properties related headers",
+                          building_headers
         end
       end
     end
@@ -632,7 +632,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
           TEXT
         end
 
-        it "should render table" do
+        it "renders table" do
           expect(output).to have_tag("table") do
             with_tag "colgroup"
             with_tag "tbody"
@@ -640,43 +640,43 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
         end
 
         context "should render default table headers" do
-          include_examples "should contain properties related headers",
-                           building_headers
+          it_behaves_like "should contain properties related headers",
+                          building_headers
         end
 
         context "render Building table" do
           context "should render inherited properties" do
-            include_examples "should contain name, type, definition",
-                             building_inherited_properties
+            it_behaves_like "should contain name, type, definition",
+                            building_inherited_properties
           end
 
           context "should render inherited properties from generalization" do
-            include_examples "should contain name, type, definition",
-                             building_gen
+            it_behaves_like "should contain name, type, definition",
+                            building_gen
           end
         end
 
         context "render BuildingFurniture table" do
           context "should render inherited properties" do
-            include_examples "should contain name, type, definition",
-                             building_furniture_inherited_properties
+            it_behaves_like "should contain name, type, definition",
+                            building_furniture_inherited_properties
           end
 
           context "should render inherited properties from generalization" do
-            include_examples "should contain name, type, definition",
-                             building_furniture_gen
+            it_behaves_like "should contain name, type, definition",
+                            building_furniture_gen
           end
         end
 
         context "render BuildingInstallation table" do
           context "should render inherited properties" do
-            include_examples "should contain name, type, definition",
-                             building_installation_inherited_properties
+            it_behaves_like "should contain name, type, definition",
+                            building_installation_inherited_properties
           end
 
           context "should render inherited properties from generalization" do
-            include_examples "should contain name, type, definition",
-                             building_installation_gen
+            it_behaves_like "should contain name, type, definition",
+                            building_installation_gen
           end
         end
       end

@@ -8,6 +8,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
 
     context "when using lutaml-xmi-index" do
       context "with lutaml_ea_xmi" do
+        subject(:output) { metanorma_convert(input) }
+
         let(:input) do
           <<~TEXT
             = Document title
@@ -75,24 +77,23 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
             --
           TEXT
         end
-        subject(:output) { metanorma_convert(input) }
 
         context "correctly renders" do
           context "data in first-xmi-index" do
-            include_examples "should contain sections"
-            include_examples "should contain text", "my text"
-            include_examples "should contain text", "mine text"
-            include_examples "should contain package content", "Another"
-            include_examples "should contain table title"
-            include_examples "should contain table headers"
-            include_examples "should contain package content", "CityGML"
-            include_examples "should contain text after package",
-                             "Additional information",
-                             "text after Another package"
-            include_examples "should contain text after package",
-                             "Additional information",
-                             "text after CityGML package"
-            include_examples "should contain footer text"
+            it_behaves_like "should contain sections"
+            it_behaves_like "should contain text", "my text"
+            it_behaves_like "should contain text", "mine text"
+            it_behaves_like "should contain package content", "Another"
+            it_behaves_like "should contain table title"
+            it_behaves_like "should contain table headers"
+            it_behaves_like "should contain package content", "CityGML"
+            it_behaves_like "should contain text after package",
+                            "Additional information",
+                            "text after Another package"
+            it_behaves_like "should contain text after package",
+                            "Additional information",
+                            "text after CityGML package"
+            it_behaves_like "should contain footer text"
 
             table = [
               {
@@ -171,7 +172,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
               {
                 id: "EAID_A197050C_E2CB_4d86_B69E_5B5E96E37FDE",
                 name: "Definition table of(.*)" \
-                "Another::ADEOfTabulatedFileTimeseries",
+                      "Another::ADEOfTabulatedFileTimeseries",
               },
               {
                 id: "EAID_084E218B_32C6_41f2_A710_ADA8A5A8462C",
@@ -186,7 +187,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
                 name: "Definition table of(.*)Another::TimeValuePair",
               },
             ]
-            include_examples "should contain table", table
+            it_behaves_like "should contain table", table
 
             figure = [
               {
@@ -220,16 +221,16 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
                      "EAID_938AE961_1C57_4052_B964_997D1894A58D.png",
               },
             ]
-            include_examples "should contain figure", figure
+            it_behaves_like "should contain figure", figure
           end
 
           context "data in second-xmi-index" do
             table = [
-              name: "Metadata of Wrapper nested package",
+              { name: "Metadata of Wrapper nested package" },
             ]
-            include_examples "should contain table", table
+            it_behaves_like "should contain table", table
 
-            it "should contain data in table" do
+            it "contains data in table" do
               expect(subject).to have_tag("th", text: /Parent package/)
               expect(subject).to have_tag("td", text: /Wrapper root package/)
             end

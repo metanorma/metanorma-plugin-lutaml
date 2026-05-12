@@ -31,8 +31,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::Config::Root do
     subject(:subject) { root.from_yaml(yaml) }
 
     it "correctly renders input" do
-      expect(YAML.safe_load(subject.to_yaml))
-        .to(be_equivalent_to(YAML.safe_load(yaml)))
+      expect(subject.to_yaml)
+        .to(be_yaml_equivalent_to(yaml))
     end
 
     it "contains packages" do
@@ -82,7 +82,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::Config::Root do
     end
 
     it "does not contain skip_unrecognized_connector" do
-      expect(subject.skip_unrecognized_connector).not_to eq(true)
+      expect(subject.skip_unrecognized_connector).not_to be(true)
     end
 
     it "contains skip_unrecognized_connector" do
@@ -92,7 +92,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::Config::Root do
       YAML
 
       test_subject = described_class.from_yaml(updated_yaml)
-      expect(test_subject.skip_unrecognized_connector).to eq(true)
+      expect(test_subject.skip_unrecognized_connector).to be(true)
     end
 
     it "contains packages with skip_tables" do

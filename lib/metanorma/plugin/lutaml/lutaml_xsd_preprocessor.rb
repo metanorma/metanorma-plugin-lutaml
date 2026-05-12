@@ -100,8 +100,11 @@ module Metanorma
         end
 
         def template(lines)
-          lines = lines.join("\n\n") if lines.respond_to?(:join)
-          ::Liquid::Template.parse(lines)
+          template_source = lines.respond_to?(:join) ? lines.join("\n\n") : lines
+          ::Liquid::Template.parse(
+            template_source,
+            environment: create_liquid_environment,
+          )
         end
 
         def assign_options_in_liquid(template, options = {})
@@ -110,7 +113,7 @@ module Metanorma
                       opt_value.to_s.strip.delete("'").split(";")
                     else
                       opt_value
-                    end
+            end
             template.assigns[opt_key] = value
           end
         end

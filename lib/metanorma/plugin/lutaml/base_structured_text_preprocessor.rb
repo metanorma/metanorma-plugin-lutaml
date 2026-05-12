@@ -15,9 +15,9 @@ module Metanorma
         ::Asciidoctor::Extensions::Preprocessor
         include Utils
 
-        BLOCK_START_REGEXP = /\{(.+?)\.\*,(.+),(.+)\}/.freeze
-        BLOCK_END_REGEXP = /\A\{[A-Z]+\}\z/.freeze
-        LOAD_FILE_REGEXP = /{% assign (.*) = (.*) \| load_file %}/.freeze
+        BLOCK_START_REGEXP = /\{(.+?)\.\*,(.+),(.+)\}/
+        BLOCK_END_REGEXP = /\A\{[A-Z]+\}\z/
+        LOAD_FILE_REGEXP = /{% assign (.*) = (.*) \| load_file %}/
         INCLUDE_PATH_OPTION = "include_path"
         TEMPLATE_OPTION = "template"
 
@@ -63,7 +63,7 @@ module Metanorma
               load_file_match = block_line.match(LOAD_FILE_REGEXP)
 
               # Add parent folder as argument to loadfile filter
-              block_line = "{% assign #{load_file_match[1]} = "\
+              block_line = "{% assign #{load_file_match[1]} = " \
                            "#{load_file_match[2]} | loadfile: " \
                            "\"#{document.attributes['docdir']}\" %}"
             end
@@ -106,7 +106,7 @@ module Metanorma
                          )
                        multiple_contexts
                      elsif block_match[1].start_with?("#")
-                       anchor = block_match[1].split(",").first.strip[1..-1]
+                       anchor = block_match[1].split(",").first.strip[1..]
                        {
                          block_match[1].split(",").last.strip =>
                            content_from_anchor(document, anchor),
