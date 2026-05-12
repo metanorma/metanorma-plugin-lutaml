@@ -14,6 +14,22 @@ module Metanorma
     module Lutaml
       # Helpers for lutaml macros
       module Utils
+        # Prepended to Liquid::Context to log the original exception before
+        # Liquid 5.x wraps it as InternalError (which hides the real cause).
+        module LiquidErrorCapturer
+          def handle_error(e, line_number = nil)
+            unless e.is_a?(::Liquid::Error)
+              ::Metanorma::Util.log(
+                "[metanorma-plugin-lutaml] Liquid original error: " \
+                "#{e.class}: #{e.message}\n" \
+                "#{e.backtrace&.first(10)&.join("\n")}",
+                :error,
+              )
+            end
+            super
+          end
+        end
+
         LUTAML_EXP_IDX_TAG = %r{
           ^:lutaml-express-index: # Start of the pattern
           (?<index_name>.+?)      # Capture index name
@@ -42,6 +58,10 @@ module Metanorma
           contexts:, document:,
           template_string: nil, include_path: nil, template_path: nil
         )
+          unless ::Liquid::Context.ancestors.include?(LiquidErrorCapturer)
+            ::Liquid::Context.prepend(LiquidErrorCapturer)
+          end
+
           # Allow includes for the template
           include_paths = [
             Utils.relative_file_path(document, ""),
