@@ -15,9 +15,9 @@ module Metanorma
         ::Asciidoctor::Extensions::Preprocessor
         include Utils
 
-        BLOCK_START_REGEXP = /\{(.+?)\.\*,(.+),(.+)\}/
+        BLOCK_START_REGEXP = /\{([^}]+?)\.\*,([^}]+),([^}]+)\}/
         BLOCK_END_REGEXP = /\A\{[A-Z]+\}\z/
-        LOAD_FILE_REGEXP = /{% assign (.*) = (.*) \| load_file %}/
+        LOAD_FILE_REGEXP = /{% assign ([^%}]+) = ([^%}]+) \| load_file %}/
         INCLUDE_PATH_OPTION = "include_path"
         TEMPLATE_OPTION = "template"
 
