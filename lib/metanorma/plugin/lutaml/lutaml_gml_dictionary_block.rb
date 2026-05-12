@@ -5,6 +5,7 @@ module Metanorma
     module Lutaml
       class LutamlGmlDictionaryBlock < ::Asciidoctor::Extensions::BlockProcessor
         include LutamlGmlDictionaryBase
+
         use_dsl
         named :lutaml_gml_dictionary
         on_context :open

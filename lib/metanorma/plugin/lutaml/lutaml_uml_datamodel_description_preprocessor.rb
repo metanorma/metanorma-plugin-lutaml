@@ -20,12 +20,12 @@ module Metanorma
         include LutamlEaXmiBase
 
         MACRO_REGEXP =
-          /\[lutaml_uml_datamodel_description,([^,]+),?(.+)?\]/.freeze
+          /\[lutaml_uml_datamodel_description,([^,]+),?(.+)?\]/
 
         private
 
         def parse_result_document(full_path, guidance)
-          ::Lutaml::XMI::Parsers::XML.serialize_xmi_to_liquid(
+          ::Lutaml::Xmi::Parsers::Xml.serialize_xmi_to_liquid(
             File.new(full_path, encoding: "UTF-8"),
             guidance,
           )

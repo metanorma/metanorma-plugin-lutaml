@@ -50,7 +50,10 @@ module Metanorma
         end
 
         def template(lines)
-          ::Liquid::Template.parse(lines.join("\n\n"))
+          ::Liquid::Template.parse(
+            lines.join("\n\n"),
+            environment: create_liquid_environment,
+          )
         end
 
         def reorder_schemas(repo_liquid, _options)

@@ -6,6 +6,7 @@ module Metanorma
       class LutamlTableInlineMacro <
         ::Asciidoctor::Extensions::InlineMacroProcessor
         include LutamlDiagramBase
+
         SUPPORTED_OPTIONS = %w[class enum data_type].freeze
 
         use_dsl

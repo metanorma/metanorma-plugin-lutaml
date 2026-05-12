@@ -8,6 +8,7 @@ module Metanorma
     module Lutaml
       class Data2TextPreprocessor < BaseStructuredTextPreprocessor
         include Content
+
         # search document for block `data2text`
         #   after that take template from block and read file into this template
         #   example:

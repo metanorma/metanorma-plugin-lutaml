@@ -56,7 +56,7 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
         it "correctly renders input" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
 
@@ -108,7 +108,7 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
         it "correctly renders input" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
 
@@ -149,7 +149,7 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
         it "correctly renders input" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
 
@@ -197,7 +197,7 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
         it "correctly renders input" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
 
@@ -233,51 +233,50 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
         end
         let(:output) do
           <<~TEXT
-              #{BLANK_HDR}
-              <sections>
-              <dl id='_'>
-              <dt>Lorem</dt>
-              <dd id="_">
-                <p id='_'>ipsum</p>
-                <ul id='_'>
-                  <li>
-                    <p id='_'>Lorem: 2</p>
-                  </li>
-                </ul>
-              </dd>
-              <dt>dolor</dt>
-              <dd id="_">
-                <p id='_'>sit</p>
-              </dd>
-              <dt>amet</dt>
-              <dd id="_">
-                <p id='_'>lorem</p>
-                <ul id='_'>
-                  <li>
-                    <p id='_'>amet: 2</p>
-                  </li>
-                  <li>
-                    <p id='_'>amet: 4</p>
-                  </li>
-                  <li>
-                    <p id='_'>amet: 6</p>
-                  </li>
-                </ul>
-              </dd>
+            #{BLANK_HDR}
+            <sections>
+            <dl id='_'>
+            <dt>Lorem</dt>
+            <dd id="_">
+              <p id='_'>ipsum</p>
+              <ul id='_'>
+                <li>
+                  <p id='_'>Lorem: 2</p>
+                </li>
+              </ul>
+            </dd>
+            <dt>dolor</dt>
+            <dd id="_">
+              <p id='_'>sit</p>
+            </dd>
+            <dt>amet</dt>
+            <dd id="_">
+              <p id='_'>lorem</p>
+              <ul id='_'>
+                <li>
+                  <p id='_'>amet: 2</p>
+                </li>
+                <li>
+                  <p id='_'>amet: 4</p>
+                </li>
+                <li>
+                  <p id='_'>amet: 6</p>
+                </li>
+              </ul>
+            </dd>
             </dl>
-              </sections>
-              </metanorma>
+            </sections>
+            </metanorma>
           TEXT
         end
 
         it "correctly renders input" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
 
-      context "An array with interpolated file names, etc. \
-                for Asciidoc's consumption" do
+      context "An array with interpolated file names, etc. for Asciidoc's consumption" do
         let(:example_content) do
           { "prefix" => "doc-", "items" => ["lorem", "ipsum", "dolor"] }
         end
@@ -344,15 +343,14 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
         it "correctly renders input" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
 
       context "Array of language codes" do
         let(:example_content) do
-          YAML.safe_load(
-            File.read(File.expand_path("../../assets/codes.yml", __dir__)),
-          )
+          YAML.safe_load_file(File.expand_path("../../assets/codes.yml",
+                                               __dir__))
         end
         let(:input) do
           <<~TEXT
@@ -391,7 +389,7 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
         it "correctly renders input" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
 
@@ -480,7 +478,7 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
         it "correctly renders input" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
 
@@ -524,7 +522,7 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
         it "renders liquid markup" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
 
@@ -557,8 +555,8 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
           <<~TEXT
             #{BLANK_HDR}
             <sections>
-              <p id='_'>1889-09-28</p>
               <p id='_'>2020-10-15 05:34:00 UTC</p>
+              <p id='_'>1889-09-28</p>
             </sections>
             </metanorma>
           TEXT
@@ -566,7 +564,7 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
         it "renders liquid markup" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
 
@@ -651,23 +649,12 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
         it "renders liquid markup" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
 
       context "Multiple contexts" do
         let(:example_file2) { "example2.#{extension}" }
-
-        before do
-          File.open(example_file2, "w") do |n|
-            n.puts(transform_to_type(example_content2))
-          end
-        end
-
-        after do
-          FileUtils.rm_rf(example_file2)
-        end
-
         let(:example_content) do
           { "name" => "Lorem ipsum", "desc" => "dolor sit amet" }
         end
@@ -713,9 +700,19 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
           TEXT
         end
 
+        before do
+          File.open(example_file2, "w") do |n|
+            n.puts(transform_to_type(example_content2))
+          end
+        end
+
+        after do
+          FileUtils.rm_rf(example_file2)
+        end
+
         it "correctly renders input" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
 
@@ -759,7 +756,7 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
 
         it "renders liquid markup" do
           expect(xml_string_content(metanorma_process(input)))
-            .to(be_equivalent_to(output))
+            .to(be_xml_equivalent_to(output))
         end
       end
     end
@@ -836,8 +833,8 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
           <<~XML
             #{BLANK_HDR}
               <sections>
-                <sourcecode id="_" anchor="abc"><body>#{abc_content}</body></sourcecode>
-                <sourcecode id="_" anchor="def" lang="json"><body>#{def_content}</body></sourcecode>
+                <sourcecode id="_" anchor="abc"><body>#{abc_content.chomp}</body></sourcecode>
+                <sourcecode id="_" anchor="def" lang="json"><body>#{def_content.chomp}</body></sourcecode>
                 <p id="_">The length of the array is 3.</p>
                 <p id="_">a: b</p>
               </sections>
@@ -849,7 +846,7 @@ RSpec.shared_examples "structured data 2 text preprocessor" do
           file_content = File.read("main.adoc")
           actual_output = xml_string_content(metanorma_process(file_content))
 
-          expect(actual_output).to(be_equivalent_to(expected_output))
+          expect(actual_output).to(be_xml_equivalent_to(expected_output))
         end
       end
     end

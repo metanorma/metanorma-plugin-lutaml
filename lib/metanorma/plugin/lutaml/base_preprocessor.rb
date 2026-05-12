@@ -13,6 +13,8 @@ module Metanorma
     module Lutaml
       # Class for processing Lutaml files
       class BasePreprocessor < ::Asciidoctor::Extensions::Preprocessor
+        include Utils
+
         REMARKS_ATTRIBUTE = "remarks"
 
         def process(document, reader) # rubocop:disable Metrics/MethodLength
@@ -234,7 +236,10 @@ module Metanorma
         end
 
         def template(lines)
-          ::Liquid::Template.parse(lines.join("\n"))
+          ::Liquid::Template.parse(
+            lines.join("\n"),
+            environment: create_liquid_environment,
+          )
         end
 
         def reorder_schemas(repo_liquid, options)
@@ -267,8 +272,7 @@ module Metanorma
           options_string
             .to_s
             .scan(/,\s*([^=]+?)=(\s*[^,]+)/)
-            .map { |elem| elem.map(&:strip) }
-            .to_h
+            .to_h { |elem| elem.map(&:strip) }
         end
       end
     end

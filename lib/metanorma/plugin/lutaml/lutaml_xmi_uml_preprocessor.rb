@@ -15,12 +15,12 @@ module Metanorma
       class LutamlXmiUmlPreprocessor < ::Asciidoctor::Extensions::Preprocessor
         include LutamlEaXmiBase
 
-        MACRO_REGEXP = /\[lutaml_xmi_uml,([^,]+),?(.+)?\]/.freeze
+        MACRO_REGEXP = /\[lutaml_xmi_uml,([^,]+),?(.+)?\]/
 
         private
 
         def parse_result_document(full_path, _guidance)
-          ::Lutaml::XMI::Parsers::XML.parse(
+          ::Lutaml::Xmi::Parsers::Xml.parse(
             File.new(full_path, encoding: "UTF-8"),
           )
         end
