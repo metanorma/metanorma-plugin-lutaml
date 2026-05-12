@@ -33,7 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "expressir", "~> 2.3", ">= 2.3.4"
   spec.add_dependency "isodoc"
   spec.add_dependency "liquid"
-  spec.add_dependency "lutaml", "~> 0.10"
+  spec.add_dependency "lutaml", "~> 0.10", ">= 0.10.12"
   spec.add_dependency "ogc-gml", "~> 1.1"
   spec.add_dependency "relaton-cli"
 
