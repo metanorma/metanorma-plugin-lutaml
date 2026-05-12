@@ -14,19 +14,21 @@ module Metanorma
     module Lutaml
       # Helpers for lutaml macros
       module Utils
-        # Prepended to Liquid::Context to log the original exception before
-        # Liquid 5.x wraps it as InternalError (which hides the real cause).
+        # Prepended to Liquid::Context to preserve the original exception
+        # that Liquid 5.x wraps as InternalError (discarding the cause).
         module LiquidErrorCapturer
           def handle_error(e, line_number = nil)
-            unless e.is_a?(::Liquid::Error)
-              ::Metanorma::Util.log(
-                "[metanorma-plugin-lutaml] Liquid original error: " \
-                "#{e.class}: #{e.message}\n" \
-                "#{e.backtrace&.first(10)&.join("\n")}",
-                :error,
-              )
+            if e.is_a?(::Liquid::Error)
+              super
+            else
+              ie = ::Liquid::InternalError.new("internal")
+              ie.set_backtrace(e.backtrace)
+              ie.define_singleton_method(:original_error) { e }
+              ie.template_name ||= template_name
+              ie.line_number ||= line_number
+              errors.push(ie)
+              exception_renderer.call(ie).to_s
             end
-            super
           end
         end
 
@@ -58,7 +60,7 @@ module Metanorma
           contexts:, document:,
           template_string: nil, include_path: nil, template_path: nil
         )
-          unless ::Liquid::Context.ancestors.include?(LiquidErrorCapturer)
+          unless ::Liquid::Context <= LiquidErrorCapturer
             ::Liquid::Context.prepend(LiquidErrorCapturer)
           end
 
@@ -105,15 +107,36 @@ module Metanorma
           result
         end
 
+        @seen_liquid_errors = Set.new
+
         def notify_render_errors(_document, errors)
-          errors.each do |error_obj|
-            ::Metanorma::Util.log(
-              "[metanorma-plugin-lutaml] Liquid render error: " \
-              "#{error_obj.class}: #{error_obj.message}\n" \
-              "#{error_obj.backtrace&.first(5)&.join("\n")}",
-              :error,
-            )
+          return if errors.empty?
+
+          grouped = errors.group_by { |e| error_signature(e) }
+          grouped.each do |sig, errs|
+            total = errs.size
+            already_seen = @seen_liquid_errors.include?(sig)
+            @seen_liquid_errors << sig
+            next if already_seen
+
+            err = errs.first
+            backtrace = err.backtrace&.first(3)&.join("\n").to_s
+            count_label = total > 1 ? " (#{total}x)" : ""
+            parts = ["[metanorma-plugin-lutaml] Liquid render error#{count_label}:"]
+            parts << "  #{err.class}: #{err.message}"
+            if err.respond_to?(:original_error) && err.original_error
+              orig = err.original_error
+              parts << "  Caused by: #{orig.class}: #{orig.message}"
+            end
+            parts << backtrace unless backtrace.empty?
+            ::Metanorma::Util.log(parts.join("\n"), :error)
           end
+        end
+
+        def error_signature(err)
+          orig = err.respond_to?(:original_error) && err.original_error
+          base = "#{err.class}: #{err.message}"
+          orig ? "#{base} (#{orig.class}: #{orig.message})" : base
         end
 
         def load_express_repositories( # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
