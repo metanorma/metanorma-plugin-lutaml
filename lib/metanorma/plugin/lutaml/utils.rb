@@ -14,17 +14,20 @@ module Metanorma
     module Lutaml
       # Helpers for lutaml macros
       module Utils
-        # Prepended to Liquid::Context to log the original exception before
-        # Liquid 5.x wraps it as InternalError (which hides the real cause).
+        # Prepended to Liquid::Context to preserve original exceptions before
+        # Liquid wraps non-Liquid errors as InternalError (which hides the
+        # real cause, backtrace, and class).
         module LiquidErrorCapturer
           def handle_error(e, line_number = nil)
             unless e.is_a?(::Liquid::Error)
-              ::Metanorma::Util.log(
-                "[metanorma-plugin-lutaml] Liquid original error: " \
-                "#{e.class}: #{e.message}\n" \
-                "#{e.backtrace&.first(10)&.join("\n")}",
-                :error,
-              )
+              tname = template_name || registers[:template_path]
+              entry = {
+                exception: e,
+                template_name: tname,
+                line_number: line_number,
+              }
+              registers[:original_errors] ||= []
+              registers[:original_errors] << entry
             end
             super
           end
@@ -74,6 +77,12 @@ module Metanorma
 
           liquid_template = ::Liquid::Template
             .parse(template_string, environment: create_liquid_environment)
+          # Liquid 5.x Template has a name attr; 4.x does not.
+          # Setting name propagates to context.template_name during render.
+          liquid_template.name = template_path if template_path && liquid_template.respond_to?(:name=)
+          # For Liquid 4.x (or when template_path is nil), store in registers
+          # so LiquidErrorCapturer can still report the template.
+          liquid_template.registers[:template_path] = template_path
           liquid_template.registers[:file_system] =
             ::Metanorma::Plugin::Lutaml::Liquid::LocalFileSystem
               .new(include_paths, ["%s.liquid", "_%s.liquid", "_%s.adoc"])
@@ -82,7 +91,9 @@ module Metanorma
                     strict_variables: false,
                     error_mode: :warn)
 
-          [rendered_string, liquid_template.errors]
+          original_errors = liquid_template.registers[:original_errors] || []
+
+          [rendered_string, liquid_template.errors, original_errors]
         end
 
         def create_liquid_environment
@@ -105,15 +116,38 @@ module Metanorma
           result
         end
 
-        def notify_render_errors(_document, errors)
+        def notify_render_errors(_document, errors, original_errors = [])
           errors.each do |error_obj|
+            loc = format_error_location(error_obj.template_name,
+                                        error_obj.line_number)
             ::Metanorma::Util.log(
-              "[metanorma-plugin-lutaml] Liquid render error: " \
-              "#{error_obj.class}: #{error_obj.message}\n" \
-              "#{error_obj.backtrace&.first(5)&.join("\n")}",
+              "[metanorma-plugin-lutaml] Liquid error#{loc}: " \
+              "#{error_obj.class}: #{error_obj.message}",
               :error,
             )
           end
+
+          original_errors.each do |err_info|
+            e = err_info[:exception]
+            loc = format_error_location(err_info[:template_name],
+                                        err_info[:line_number])
+            drop_frame = e.backtrace&.find { |l| l.include?("liquid_drops/") }
+            extra = drop_frame ? " (in #{drop_frame})" : ""
+
+            ::Metanorma::Util.log(
+              "[metanorma-plugin-lutaml] Liquid original error#{loc}#{extra}: " \
+              "#{e.class}: #{e.message}\n" \
+              "#{e.backtrace&.first(5)&.join("\n")}",
+              :error,
+            )
+          end
+        end
+
+        def format_error_location(template_name, line_number)
+          parts = []
+          parts << template_name if template_name
+          parts << "line #{line_number}" if line_number
+          parts.empty? ? "" : " (#{parts.join(' ')})"
         end
 
         def load_express_repositories( # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity

@@ -34,6 +34,36 @@ link:docs/usages/lutaml-gml.adoc[Usage with LutaML GML Dictionary by lutaml_gml_
 
 link:docs/usages/json_yaml.adoc[Usage with JSON or YAML files by data2text, yaml2text or json2text]
 
+== Troubleshooting
+
+All Liquid template rendering goes through `Utils.render_liquid_string`,
+which captures two kinds of errors:
+
+Liquid-native errors::
+These are `Liquid::Error` subclasses (syntax errors, undefined variables,
+etc.). They carry `template_name` and `line_number` attributes set by
+Liquid itself. Example log message:
++
+----
+[metanorma-plugin-lutaml] Liquid error (templates/model.liquid line 42): Liquid::UndefinedVariable: undefined variable foo
+----
+
+Original Ruby errors from Liquid Drops::
+When a Liquid Drop method raises a non-Liquid exception (e.g.
+`NoMethodError`), Liquid wraps it as `Liquid::InternalError` which
+hides the real cause. The `LiquidErrorCapturer` module (prepended to
+`Liquid::Context`) preserves the original exception before wrapping and
+stores it alongside the template path and template line number. Example
+log message:
++
+----
+[metanorma-plugin-lutaml] Liquid original error (templates/model.liquid line 42) (in lutaml/xmi/liquid_drops/klass_drop.rb:84:in 'associations'): NoMethodError: undefined method `filter_map' for nil
+----
+
+When diagnosing errors, look for the `Liquid original error` line first —
+it contains the real exception class, message, the Liquid template file
+and line, and the Drop method that failed.
+
 == Documentation
 
 Please refer to https://www.metanorma.org.

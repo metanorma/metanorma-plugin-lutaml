@@ -43,7 +43,7 @@ module Metanorma
 
           block_lines = collect_block_lines(input_lines, input_lines.next)
 
-          render_result, errors = Utils.render_liquid_string(
+          render_result, errors, original_errors = Utils.render_liquid_string(
             template_string: block_lines.join("\n"),
             contexts: create_default_context_object(
               lutaml_document, yaml_config
@@ -51,7 +51,7 @@ module Metanorma
             document: document,
             include_path: template_path(document, yaml_config.template_path),
           )
-          Utils.notify_render_errors(document, errors)
+          Utils.notify_render_errors(document, errors, original_errors)
 
           render_result.split("\n")
         end

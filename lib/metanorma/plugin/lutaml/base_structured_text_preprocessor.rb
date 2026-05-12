@@ -172,14 +172,14 @@ module Metanorma
             template_path = relative_file_path(document, template_path)
           end
 
-          render_result, errors = render_liquid_string(
+          render_result, errors, original_errors = render_liquid_string(
             template_string: context_lines.join("\n"),
             contexts: contexts,
             document: document,
             include_path: include_path,
             template_path: template_path,
           )
-          notify_render_errors(document, errors)
+          notify_render_errors(document, errors, original_errors)
           render_result.split("\n")
         end
       end
