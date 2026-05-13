@@ -208,7 +208,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::SourceExtractor do
       subject.send(:relative_file_path, document, "file.adoc")
     end
 
-    let(:expected_output) { "/metanorma-plugin-lutaml/file.adoc" }
+    let(:expected_output) { "/#{File.basename(Dir.pwd)}/file.adoc" }
 
     it { expect(relative_file_path).to include(expected_output) }
   end

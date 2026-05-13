@@ -39,10 +39,12 @@ All extensions follow the Asciidoctor extension API. The two main extension type
 
 ### Preprocessor Inheritance Hierarchy
 
-- `LutamlPreprocessor` — handles `[lutaml]`, `[lutaml_express]`, `[lutaml_express_liquid]` blocks. Parses EXPRESS files via the `lutaml`/`expressir` gems, builds Liquid contexts, and renders templates.
+- `BasePreprocessor` — abstract base for EXPRESS and XSD preprocessors. Uses Template Method pattern: subclasses implement `lutaml_liquid?`, `load_lutaml_file`, `index_type_name` and may override `update_repo`, `template`, `reorder_schemas`.
+- `LutamlPreprocessor` < `BasePreprocessor` — handles `[lutaml]`, `[lutaml_express]`, `[lutaml_express_liquid]` blocks. Adds EXPRESS-specific `update_repo` (cache unwrap, remark decoration), Liquid environment with custom tags/filters, schema reordering.
+- `LutamlXsdPreprocessor` < `BasePreprocessor` — handles `[lutaml_xsd]` blocks. Parses XSD files via `lutaml-model`, double-newline template joins for Asciidoctor paragraph breaks.
 - `LutamlUmlDatamodelDescriptionPreprocessor` and `LutamlEaXmiPreprocessor` — both include `LutamlEaXmiBase`, which handles XMI parsing via `lutaml` gem and renders using bundled Liquid templates.
 - `LutamlXmiUmlPreprocessor` — another XMI-based preprocessor with its own macro regex.
-- `BaseStructuredTextPreprocessor` — base for `[yaml2text]`, `[json2text]`, `[data2text]` blocks. Its subclasses (`Yaml2TextPreprocessor`, `Json2TextPreprocessor`, `Data2TextPreprocessor`) differ only in how they load content (YAML vs JSON vs auto-detect). The `Content` module provides the actual parsing logic.
+- `BaseStructuredTextPreprocessor` — base for `[yaml2text]`, `[json2text]`, `[data2text]` blocks. Its subclasses (`Yaml2TextPreprocessor`, `Json2TextPreprocessor`, `Data2TextPreprocessor`) differ only in how they load content (YAML vs JSON vs auto-detect).
 
 ### Key Shared Modules
 
@@ -71,8 +73,10 @@ Tests use `metanorma-standoc` as the backend. The spec helper registers all exte
 
 ## Key Dependencies
 
-- `lutaml` — core LutaML parser/model library (EXPRESS, UML, XMI formats)
+- `lutaml` — core LutaML parser/model library (EXPRESS, UML, XMI, XSD formats)
+- `lutaml-model` — LutaML serialization framework (provides XSD parsing, Liquid drops)
 - `expressir` — EXPRESS schema parser
 - `ogc-gml` — OGC GML dictionary parser
 - `liquid` — template rendering engine
 - `asciidoctor` — document processing framework
+- `canon` — semantic XML comparison for test assertions
