@@ -16,6 +16,7 @@ Asciidoctor::Extensions.register do
   preprocessor Metanorma::Plugin::Lutaml::Data2TextPreprocessor
   preprocessor Metanorma::Plugin::Lutaml::LutamlPreprocessor
   preprocessor Metanorma::Plugin::Lutaml::LutamlXmiUmlPreprocessor
+  preprocessor Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor
 
   block_macro Metanorma::Plugin::Lutaml::LutamlDiagramBlockMacro
   block Metanorma::Plugin::Lutaml::LutamlDiagramBlock
@@ -73,17 +74,27 @@ BLANK_HDR = <<~"HDR".freeze
         <flavor>standoc</flavor>
       </ext>
     </bibdata>
-           <metanorma-extension>
-              <semantic-metadata>
-                 <stage-published>true</stage-published>
-              </semantic-metadata>
-              <presentation-metadata>
-                 <toc-heading-levels>2</toc-heading-levels>
-                 <html-toc-heading-levels>2</html-toc-heading-levels>
-                 <doc-toc-heading-levels>2</doc-toc-heading-levels>
-                 <pdf-toc-heading-levels>2</pdf-toc-heading-levels>
-              </presentation-metadata>
-           </metanorma-extension>
+    <metanorma-extension>
+      <semantic-metadata>
+          <stage-published>true</stage-published>
+      </semantic-metadata>
+      <presentation-metadata>
+        <name>TOC Heading Levels</name>
+        <value>2</value>
+      </presentation-metadata>
+      <presentation-metadata>
+        <name>HTML TOC Heading Levels</name>
+        <value>2</value>
+      </presentation-metadata>
+      <presentation-metadata>
+        <name>DOC TOC Heading Levels</name>
+        <value>2</value>
+      </presentation-metadata>
+      <presentation-metadata>
+        <name>PDF TOC Heading Levels</name>
+        <value>2</value>
+      </presentation-metadata>
+    </metanorma-extension>
 HDR
 
 def strip_guid(xml)
@@ -99,7 +110,7 @@ def remove_xml_whitespaces(xml)
 end
 
 def xml_string_content(xml)
-  strip_guid(Xml::C14n.format(Nokogiri::XML(xml).to_s))
+  strip_guid(Nokogiri::XML(xml).to_s)
 end
 
 def metanorma_convert(input)
