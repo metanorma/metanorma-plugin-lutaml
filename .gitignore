@@ -2,6 +2,9 @@ Gemfile.lock
 .rspec_status
 spec/assets/lutaml
 test.err
+test.err.html
+TODO.cleanup/
+pkg/
 
 .rubocop-https--*
 .DS_Store

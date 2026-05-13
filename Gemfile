@@ -28,4 +28,3 @@ gem "simplecov"
 gem "timecop"
 gem "vcr"
 gem "webmock"
-

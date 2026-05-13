@@ -9,6 +9,10 @@ module Metanorma
       # lutaml-model's XSD parser and exposes the schema object to Liquid
       # templates.
       #
+      # Two syntaxes are supported:
+      #   Block:  [lutaml_xsd, path, context, options] .... ----
+      #   Direct: lutaml_xsd::path[context, template, options]
+      #
       # Caching: parsed XSD results are cached at two levels:
       # - Class-level (@@xsd_cache) persists across document invocations
       # - Document-level (document.attributes["lutaml_xsd_cache"]) within a
@@ -24,6 +28,19 @@ module Metanorma
           (?<context_name>[^,]+)?      # Optional context name
           (?<options>,.*)?             # Optional options
           \]                           # Closing bracket
+        }x
+
+        XSD_DIRECT_REGEX = %r{
+          ^\s*                         # Start of line
+          lutaml_xsd::                 # Macro prefix
+          (?<file_path>[^\[]+?)        # XSD file path
+          \[                           # Opening bracket
+          (?<context_name>[^,]+)       # Context name
+          ,\s*                         # Comma separator
+          (?<template>[^,\]]+)         # Template file path
+          (?<options>,[^\]]+)?         # Optional options
+          \]                           # Closing bracket
+          \s*$                         # End of line
         }x
 
         def initialize(_config = {})
@@ -70,6 +87,43 @@ module Metanorma
         end
 
         private
+
+        def process_text_blocks(document, input_lines, express_indexes)
+          match = xsd_direct?(input_lines.peek)
+          return handle_direct_block(document, input_lines, match) if match
+
+          super
+        end
+
+        def xsd_direct?(line)
+          line.match(XSD_DIRECT_REGEX)
+        end
+
+        def handle_direct_block(document, input_lines, match)
+          input_lines.next # consume the matched line
+
+          file_path = match[:file_path].strip
+          context_name = match[:context_name].strip
+          template_file = Utils.relative_file_path(document,
+                                                   match[:template].strip)
+          options = match[:options] ? parse_options(match[:options].strip) : {}
+
+          schema = load_lutaml_file(document, file_path, options)
+          schema_drop = update_repo(options, schema).to_liquid
+
+          template_source = File.read(template_file, encoding: "UTF-8")
+          tmpl = template([template_source])
+          tmpl.registers[:file_system] = build_file_system(document, options)
+          tmpl.assigns[context_name] = schema_drop
+
+          tmpl.render.split("\n", -1)
+        rescue StandardError => e
+          ::Metanorma::Util.log(
+            "[#{self.class.name}] Failed to parse LutaML block: #{e.message}",
+            :error,
+          )
+          raise e
+        end
 
         def parse_xsd_file(full_path, location)
           File.open(full_path, "r:UTF-8") do |file|

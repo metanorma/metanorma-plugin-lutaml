@@ -24,6 +24,8 @@ module Metanorma
       class BasePreprocessor < ::Asciidoctor::Extensions::Preprocessor
         include Utils
 
+        FILE_SYSTEM_PATTERNS = ["%s.liquid", "_%s.liquid", "_%s.adoc"].freeze
+
         def process(document, reader)
           input_lines = Asciidoctor::PreprocessorNoIfdefsReader
             .new(document, reader.lines).readlines.to_enum
@@ -73,6 +75,15 @@ module Metanorma
         def index_missing_message(path)
           "Unable to load #{index_type_name} file for `#{path}`, " \
             "please specify the full path."
+        end
+
+        def build_file_system(document, options)
+          include_paths = [Utils.relative_file_path(document, "")]
+          options["include_path"]&.split(",")&.each do |path|
+            include_paths.push(Utils.relative_file_path(document, path))
+          end
+          ::Metanorma::Plugin::Lutaml::Liquid::LocalFileSystem
+            .new(include_paths, FILE_SYSTEM_PATTERNS)
         end
 
         private
@@ -151,16 +162,9 @@ module Metanorma
             options: options.merge("document" => document)
           )
 
-          include_paths = [Utils.relative_file_path(document, "")]
-          options["include_path"]&.split(",")&.each do |path|
-            include_paths.push(Utils.relative_file_path(document, path))
-          end
-
-          file_system = ::Metanorma::Plugin::Lutaml::Liquid::LocalFileSystem
-            .new(include_paths, ["%s.liquid", "_%s.liquid", "_%s.adoc"])
-
           parsed_template = template(lines)
-          parsed_template.registers[:file_system] = file_system
+          parsed_template.registers[:file_system] =
+            build_file_system(document, options)
 
           all_items.map do |item|
             parsed_template.assigns[context_name] = item[:liquid_drop]

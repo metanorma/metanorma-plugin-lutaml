@@ -1,0 +1,11 @@
+{% for complex_type in schema.complex_type %}
+
+=== Complex Type: *{{ complex_type.name }}*
+
+{% capture complex_type_used_by %}
+  {% for used_by in complex_type.used_by %}{{ used_by.name | default: used_by.ref }}{% unless forloop.last %}, {% endunless %}{% endfor %}
+{% endcapture %}
+
+*Used By*:: {{ complex_type_used_by }}
+
+{% endfor %}
