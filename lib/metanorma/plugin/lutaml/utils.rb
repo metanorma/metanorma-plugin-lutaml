@@ -183,8 +183,7 @@ module Metanorma
         end
 
         def load_express_repo_from_cache(path)
-          ::Lutaml::Parser
-            .parse(File.new(path), ::Lutaml::Parser::EXPRESS_CACHE_PARSE_TYPE)
+          ::Lutaml::Express::Parsers::Exp.parse_cache(path)
         end
 
         def save_express_repo_to_cache(path, repository, document)
@@ -202,10 +201,8 @@ module Metanorma
         end
 
         def load_express_from_folder(folder)
-          files = Dir["#{folder}/*.exp"].map do |nested_path|
-            File.new(nested_path, encoding: "UTF-8")
-          end
-          ::Lutaml::Parser.parse(files)
+          file_paths = Dir["#{folder}/*.exp"]
+          ::Expressir::Express::Parser.from_files(file_paths)
         end
 
         # TODO: Refactor this using Suma::SchemaConfig
@@ -220,16 +217,12 @@ module Metanorma
             schema_yaml_base_path = schema_yaml_base_path + root_schema_path
           end
 
-          files_to_load = yaml_content["schemas"].map do |key, value|
-            # If there is no path: set for a schema, we assume it uses the
-            # schema name as the #{filename}.exp.
+          file_paths = yaml_content["schemas"].map do |key, value|
             schema_path = Pathname.new(value["path"] || "#{key}.exp")
-
-            real_schema_path = schema_yaml_base_path + schema_path
-            File.new(real_schema_path.cleanpath.to_s, encoding: "UTF-8")
+            (schema_yaml_base_path + schema_path).cleanpath.to_s
           end
 
-          ::Lutaml::Parser.parse(files_to_load)
+          ::Expressir::Express::Parser.from_files(file_paths)
         end
 
         def parse_document_express_indexes(document, input_lines) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
