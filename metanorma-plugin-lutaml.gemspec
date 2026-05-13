@@ -26,14 +26,15 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.required_ruby_version = ">= 2.7.0" # rubocop:disable Gemspec/RequiredRubyVersion
+  spec.required_ruby_version = ">= 3.0.0" # rubocop:disable Gemspec/RequiredRubyVersion
 
   spec.add_dependency "asciidoctor"
   spec.add_dependency "coradoc", "~> 1.1.8"
-  spec.add_dependency "expressir", "~> 2.3", ">= 2.3.4"
+  spec.add_dependency "expressir", "~> 2.3", ">= 2.3.5"
   spec.add_dependency "isodoc"
   spec.add_dependency "liquid"
   spec.add_dependency "lutaml", "~> 0.10", ">= 0.10.12"
+  spec.add_dependency "lutaml-model", "~> 0.8.4"
   spec.add_dependency "ogc-gml", "~> 1.1"
   spec.add_dependency "relaton-cli"
 

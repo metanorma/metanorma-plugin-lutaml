@@ -14,6 +14,7 @@ within a Metanorma document:
 * Enterprise Architect exported UML files in XMI format (`*.xmi`)
 * LutaML GML Dictionary files (`*.xml`)
 * JSON or YAML files (`*.json|*.yml|*.yaml`)
+* XML Schema files (`*.xsd`)
 
 == Installation
 
@@ -33,6 +34,8 @@ link:docs/usages/enterprise_architect.adoc[Usage with Enterprise Architect XMI f
 link:docs/usages/lutaml-gml.adoc[Usage with LutaML GML Dictionary by lutaml_gml_dictionary]
 
 link:docs/usages/json_yaml.adoc[Usage with JSON or YAML files by data2text, yaml2text or json2text]
+
+link:docs/usages/lutaml-xsd.adoc[Usage with XML Schema files by lutaml_xsd]
 
 == Documentation
 
