@@ -490,7 +490,9 @@ module Metanorma
         def serialize_klass_drop_by_name(xmi_path, name, document = nil,
 guidance = nil)
           parser, uml_doc = build_uml_document(xmi_path, document)
-          raw_klass = find_packaged_klass(parser.xmi_index, name)
+          root_model_name = parser.xmi_root_model.model.name
+          raw_klass = find_packaged_klass(parser.xmi_index, name,
+                                          root_model_name: root_model_name)
           warn "Class not found for name: #{name}" if raw_klass.nil?
           klass = raw_klass && find_uml_node_by_xmi_id(
             uml_doc, raw_klass.id, :classes
@@ -550,11 +552,14 @@ guidance = nil)
           nil
         end
 
-        def find_packaged_klass(index, path)
-          segments = path.split("::")
+        def find_packaged_klass(index, path, root_model_name: nil)
+          segments = path.split("::").reject(&:empty?)
+          if root_model_name && segments.first == root_model_name
+            segments.shift
+          end
           if segments.one?
             index.find_packaged_by_name_and_types(
-              path, ["uml:Class", "uml:AssociationClass"]
+              segments.first, ["uml:Class", "uml:AssociationClass"]
             )
           else
             find_packaged_klass_by_path(index, segments)
@@ -563,20 +568,25 @@ guidance = nil)
 
         def find_packaged_klass_by_path(index, segments)
           klass_name = segments.pop
-          klass = index.find_packaged_by_name_and_types(
-            klass_name, ["uml:Class", "uml:AssociationClass"]
-          )
-          return unless klass
 
-          # Verify the path by walking up the parent chain
-          current = klass
-          segments.reverse_each do |pkg_name|
+          candidates = ["uml:Class", "uml:AssociationClass"]
+            .flat_map { |t| index.packaged_elements_of_type(t) }
+            .select { |e| e.name == klass_name }
+
+          candidates.find do |klass|
+            match_parent_chain?(index, klass, segments)
+          end
+        end
+
+        def match_parent_chain?(index, element, parent_segments)
+          current = element
+          parent_segments.reverse_each do |pkg_name|
             parent = index.find_parent(current.id)
-            return unless parent && parent.name == pkg_name
+            return false unless parent && parent.name == pkg_name
 
             current = parent
           end
-          klass
+          true
         end
 
         def find_packaged_enum(index, name)
