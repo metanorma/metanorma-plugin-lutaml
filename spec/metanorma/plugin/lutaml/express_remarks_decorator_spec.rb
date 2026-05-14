@@ -6,15 +6,19 @@ require_relative "../../../../lib/metanorma/plugin/lutaml/express_remarks_decora
 RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarksDecorator do
   subject(:result) { described_class.call(remark, options) }
 
-  let(:prefix) { "/project/schemas" }
+  let(:prefix) { File.expand_path("/project/schemas") }
   let(:options) { { "relative_path_prefix" => prefix } }
+
+  def expanded_path(filename)
+    File.expand_path(File.join(prefix, filename))
+  end
 
   describe "prefixing relative paths" do
     context "with image:: macro" do
       let(:remark) { "image::diagram.svg[]" }
 
       it "prefixes the path" do
-        expect(result).to eq("image::/project/schemas/diagram.svg[]")
+        expect(result).to eq("image::#{expanded_path('diagram.svg')}[]")
       end
     end
 
@@ -22,7 +26,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarksDecorator do
       let(:remark) { "image:photo.png[alt text]" }
 
       it "prefixes the path" do
-        expect(result).to eq("image:/project/schemas/photo.png[alt text]")
+        expect(result).to eq("image:#{expanded_path('photo.png')}[alt text]")
       end
     end
 
@@ -30,7 +34,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarksDecorator do
       let(:remark) { "link:details.html[Details]" }
 
       it "prefixes the path" do
-        expect(result).to eq("link:/project/schemas/details.html[Details]")
+        expect(result).to eq("link:#{expanded_path('details.html')}[Details]")
       end
     end
 
@@ -38,7 +42,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarksDecorator do
       let(:remark) { "include::snippet.adoc[]" }
 
       it "prefixes the path" do
-        expect(result).to eq("include::/project/schemas/snippet.adoc[]")
+        expect(result).to eq("include::#{expanded_path('snippet.adoc')}[]")
       end
     end
 
@@ -46,7 +50,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarksDecorator do
       let(:remark) { "video::demo.mp4[]" }
 
       it "prefixes the path" do
-        expect(result).to eq("video::/project/schemas/demo.mp4[]")
+        expect(result).to eq("video::#{expanded_path('demo.mp4')}[]")
       end
     end
 
@@ -54,7 +58,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarksDecorator do
       let(:remark) { "audio::sound.mp3[]" }
 
       it "prefixes the path" do
-        expect(result).to eq("audio::/project/schemas/sound.mp3[]")
+        expect(result).to eq("audio::#{expanded_path('sound.mp3')}[]")
       end
     end
 
@@ -63,7 +67,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarksDecorator do
 
       it "prefixes the path including subdirectory" do
         expect(result)
-          .to eq("image::/project/schemas/images/action_schemaexpg1.xml[]")
+          .to eq("image::#{expanded_path('images/action_schemaexpg1.xml')}[]")
       end
     end
   end
@@ -120,9 +124,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarksDecorator do
       it "only prefixes relative paths" do
         expect(result).to eq(
           "See the diagram below:\n" \
-          "image::/project/schemas/local.svg[]\n" \
+          "image::#{expanded_path('local.svg')}[]\n" \
           "image::http://example.com/remote.svg[]\n" \
-          "image::/project/schemas/other.svg[]",
+          "image::#{expanded_path('other.svg')}[]",
         )
       end
     end
@@ -135,7 +139,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarksDecorator do
       it "preserves non-macro lines unchanged" do
         expect(result).to eq(
           "This is a note.\n" \
-          "image::/project/schemas/diagram.svg[]\n" \
+          "image::#{expanded_path('diagram.svg')}[]\n" \
           "End of note.",
         )
       end
