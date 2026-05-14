@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "metanorma/plugin/lutaml/express_remarks_decorator"
-
 module Metanorma
   module Plugin
     module Lutaml
@@ -23,6 +21,30 @@ module Metanorma
           (?<options>,.*)?             # Optional options
           \]                           # Closing bracket
         }x
+
+        def update_remarks(model, options)
+          model.remarks = decorate_remarks(options, model.remarks)
+          decorate_remark_items(model, options)
+
+          model.children.each do |child|
+            next unless traversable_model_element?(child)
+
+            update_remarks(child, options)
+          end
+        end
+
+        def traversable_model_element?(child)
+          child.is_a?(Expressir::Model::ModelElement) &&
+            !child.is_a?(Expressir::Model::Declarations::RemarkItem)
+        end
+
+        def decorate_remark_items(model, options)
+          return unless model.is_a?(Expressir::Model::HasRemarkItems)
+
+          model.remark_items&.each do |ri|
+            ri.remarks = decorate_remarks(options, ri.remarks)
+          end
+        end
 
         protected
 
@@ -82,32 +104,6 @@ module Metanorma
           end
         end
 
-        private
-
-        def update_remarks(model, options)
-          model.remarks = decorate_remarks(options, model.remarks)
-          decorate_remark_items(model, options)
-
-          model.children.each do |child|
-            next unless traversable_model_element?(child)
-
-            update_remarks(child, options)
-          end
-        end
-
-        def traversable_model_element?(child)
-          child.is_a?(Expressir::Model::ModelElement) &&
-            !child.is_a?(Expressir::Model::Declarations::RemarkItem)
-        end
-
-        def decorate_remark_items(model, options)
-          return unless model.is_a?(Expressir::Model::HasRemarkItems)
-
-          model.remark_items&.each do |ri|
-            ri.remarks = decorate_remarks(options, ri.remarks)
-          end
-        end
-
         def relative_path_prefix(options, model)
           return if options.nil? || options["document"].nil?
 
@@ -116,7 +112,9 @@ module Metanorma
           docfile_directory = File.dirname(
             document.attributes["docfile"] || ".",
           )
-          document.path_resolver.system_path(file_path, docfile_directory)
+          resolved = document.path_resolver
+            .system_path(file_path, docfile_directory)
+          File.expand_path(resolved, docfile_directory)
         end
 
         def decorate_remarks(options, remarks)

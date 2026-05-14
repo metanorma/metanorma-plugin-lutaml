@@ -1,5 +1,5 @@
 require "spec_helper"
-require "metanorma/plugin/lutaml/yaml2_text_preprocessor"
+require_relative "../../../../lib/metanorma/plugin/lutaml/yaml2_text_preprocessor"
 
 RSpec.describe Metanorma::Plugin::Lutaml::SourceExtractor do
   subject { described_class.new(document, input_lines) }
@@ -89,7 +89,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::SourceExtractor do
   end
 
   describe "#match_anchor" do
-    let(:match_anchor) { subject.send(:match_anchor, line) }
+    let(:match_anchor) { subject.match_anchor(line) }
 
     anchors = [
       "[[anchor_name]]",
@@ -110,7 +110,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::SourceExtractor do
   end
 
   describe "#readlines_safe" do
-    let(:readlines_safe) { subject.send(:readlines_safe, file) }
+    let(:readlines_safe) { subject.readlines_safe(file) }
     let(:file) { Tempfile.new(["tmpfile", ".adoc"]) }
 
     context "when file is empty" do
@@ -128,7 +128,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::SourceExtractor do
   end
 
   describe "#read" do
-    let(:read) { subject.send(:read, file.path) }
+    let(:read) { subject.read(file.path) }
     let(:file) { Tempfile.new(["tmpfile", ".adoc"]) }
 
     context "when file is empty" do
@@ -146,7 +146,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::SourceExtractor do
   end
 
   describe "#filename" do
-    let(:filename) { subject.send(:filename, document, line) }
+    let(:filename) { subject.filename(document, line) }
 
     context "when line is neither included nor embedded" do
       let(:line) { "some random text in file" }
@@ -205,7 +205,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::SourceExtractor do
     end
 
     let(:relative_file_path) do
-      subject.send(:relative_file_path, document, "file.adoc")
+      Metanorma::Plugin::Lutaml::Utils.relative_file_path(document, "file.adoc")
     end
 
     let(:expected_output) { "/#{File.basename(Dir.pwd)}/file.adoc" }
@@ -214,7 +214,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::SourceExtractor do
   end
 
   describe "#read_section" do
-    let(:read_section) { subject.send(:read_section, lines) }
+    let(:read_section) { subject.read_section(lines) }
     let(:lines) do
       <<~SECTION.split("\n").to_enum
         ----

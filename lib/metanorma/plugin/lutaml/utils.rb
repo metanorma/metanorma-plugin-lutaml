@@ -1,13 +1,6 @@
 require "expressir"
 require "expressir/express/parser"
 require "expressir/express/cache"
-require "metanorma/plugin/lutaml/liquid/multiply_local_file_system"
-require "metanorma/plugin/lutaml/liquid/custom_blocks/key_iterator"
-require "metanorma/plugin/lutaml/liquid/custom_filters/html2adoc"
-require "metanorma/plugin/lutaml/liquid/custom_filters/values"
-require "metanorma/plugin/lutaml/liquid/custom_filters/replace_regex"
-require "metanorma/plugin/lutaml/liquid/custom_filters/loadfile"
-require "metanorma/plugin/lutaml/liquid/custom_filters/file_exist"
 
 module Metanorma
   module Plugin
@@ -17,12 +10,15 @@ module Metanorma
         # Prepended to Liquid::Context to preserve the original exception
         # that Liquid 5.x wraps as InternalError (discarding the cause).
         module LiquidErrorCapturer
+          module WithOriginal; end
+
           def handle_error(e, line_number = nil)
             if e.is_a?(::Liquid::Error)
               super
             else
               ie = ::Liquid::InternalError.new("internal")
               ie.set_backtrace(e.backtrace)
+              ie.extend(WithOriginal)
               ie.define_singleton_method(:original_error) { e }
               ie.template_name ||= template_name
               ie.line_number ||= line_number
@@ -124,7 +120,7 @@ module Metanorma
             count_label = total > 1 ? " (#{total}x)" : ""
             parts = ["[metanorma-plugin-lutaml] Liquid render error#{count_label}:"]
             parts << "  #{err.class}: #{err.message}"
-            if err.respond_to?(:original_error) && err.original_error
+            if err.is_a?(LiquidErrorCapturer::WithOriginal) && err.original_error
               orig = err.original_error
               parts << "  Caused by: #{orig.class}: #{orig.message}"
             end
@@ -134,7 +130,7 @@ module Metanorma
         end
 
         def error_signature(err)
-          orig = err.respond_to?(:original_error) && err.original_error
+          orig = err.is_a?(LiquidErrorCapturer::WithOriginal) && err.original_error
           base = "#{err.class}: #{err.message}"
           orig ? "#{base} (#{orig.class}: #{orig.message})" : base
         end
@@ -163,7 +159,7 @@ module Metanorma
           end
 
           lutaml_doc
-        rescue Expressir::Error
+        rescue Expressir::Error, Expressir::Express::Error::ExpressError
           FileUtils.rm_rf(cache_full_path)
 
           load_express_repositories(
