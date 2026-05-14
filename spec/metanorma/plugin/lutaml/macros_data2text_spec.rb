@@ -1,5 +1,5 @@
 require "spec_helper"
-require "metanorma/plugin/lutaml/data2_text_preprocessor"
+require_relative "../../../../lib/metanorma/plugin/lutaml/data2_text_preprocessor"
 
 RSpec.describe Metanorma::Plugin::Lutaml::Data2TextPreprocessor do
   context "Multiple contexts (without any options)" do

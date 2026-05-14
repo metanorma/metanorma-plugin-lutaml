@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "content"
-require_relative "base_structured_text_preprocessor"
-
 module Metanorma
   module Plugin
     module Lutaml

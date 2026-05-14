@@ -3,16 +3,17 @@
 require "yaml"
 require "lutaml"
 require "lutaml/model"
-require_relative "config/package"
-require_relative "config/root"
-require_relative "config/guidance_attribute"
-require_relative "config/guidance_klass"
-require_relative "config/guidance"
 
 module Metanorma
   module Plugin
     module Lutaml
       module Config
+        autoload :Guidance, "metanorma/plugin/lutaml/config/guidance"
+        autoload :GuidanceAttribute,
+                 "metanorma/plugin/lutaml/config/guidance_attribute"
+        autoload :GuidanceKlass, "metanorma/plugin/lutaml/config/guidance_klass"
+        autoload :Package, "metanorma/plugin/lutaml/config/package"
+        autoload :Root, "metanorma/plugin/lutaml/config/root"
       end
     end
   end

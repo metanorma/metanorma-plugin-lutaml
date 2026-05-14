@@ -4,9 +4,6 @@ require "liquid"
 require "asciidoctor"
 require "asciidoctor/reader"
 require "lutaml"
-require_relative "utils"
-require "metanorma/plugin/lutaml/asciidoctor/preprocessor"
-require "metanorma/plugin/lutaml/lutaml_ea_xmi_base"
 
 module Metanorma
   module Plugin

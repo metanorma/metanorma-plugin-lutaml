@@ -1,6 +1,6 @@
 lib = File.expand_path("lib", __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "metanorma/plugin/lutaml/version"
+require_relative "lib/metanorma/plugin/lutaml/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "metanorma-plugin-lutaml"
