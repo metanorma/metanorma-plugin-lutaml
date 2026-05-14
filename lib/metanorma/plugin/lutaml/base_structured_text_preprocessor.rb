@@ -3,9 +3,6 @@
 require "liquid"
 require "asciidoctor"
 require "asciidoctor/reader"
-require_relative "source_extractor"
-require_relative "utils"
-require "metanorma/plugin/lutaml/asciidoctor/preprocessor"
 
 module Metanorma
   module Plugin

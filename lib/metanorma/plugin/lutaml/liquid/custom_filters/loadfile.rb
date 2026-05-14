@@ -1,4 +1,4 @@
-require_relative "../../content"
+# frozen_string_literal: true
 
 module Metanorma
   module Plugin

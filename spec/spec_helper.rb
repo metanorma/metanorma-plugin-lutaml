@@ -1,6 +1,6 @@
 require "bundler/setup"
 require "asciidoctor"
-require "metanorma-plugin-lutaml"
+require_relative "../lib/metanorma-plugin-lutaml"
 require "rspec-html-matchers"
 
 # Register lutaml blocks as first preprocessors in line in order

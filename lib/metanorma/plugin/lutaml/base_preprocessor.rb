@@ -3,8 +3,6 @@
 require "liquid"
 require "asciidoctor"
 require "asciidoctor/reader"
-require "metanorma/plugin/lutaml/utils"
-require "metanorma/plugin/lutaml/asciidoctor/preprocessor"
 
 module Metanorma
   module Plugin
@@ -173,7 +171,7 @@ module Metanorma
             )
             parsed_template.assigns["schemas_order"] =
               options["selected_schemas"]
-            parsed_template.render
+            parsed_template.render.split("\n", -1)
           end.flatten
         rescue StandardError => e
           ::Metanorma::Util.log(

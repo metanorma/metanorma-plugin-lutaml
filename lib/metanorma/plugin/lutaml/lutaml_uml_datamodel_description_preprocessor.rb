@@ -6,9 +6,6 @@ require "asciidoctor/reader"
 require "lutaml"
 require "lutaml/uml"
 require "lutaml/xmi"
-require "metanorma/plugin/lutaml/utils"
-require "metanorma/plugin/lutaml/asciidoctor/preprocessor"
-require "metanorma/plugin/lutaml/lutaml_ea_xmi_base"
 
 module Metanorma
   module Plugin

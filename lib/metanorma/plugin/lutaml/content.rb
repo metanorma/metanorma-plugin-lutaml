@@ -2,8 +2,6 @@
 
 require "json"
 require "yaml"
-require_relative "file_not_found_error"
-require_relative "parse_error"
 
 module Metanorma
   module Plugin

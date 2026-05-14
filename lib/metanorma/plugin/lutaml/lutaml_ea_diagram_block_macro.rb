@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "metanorma/plugin/lutaml/lutaml_diagram_base"
-
 module Metanorma
   module Plugin
     module Lutaml
