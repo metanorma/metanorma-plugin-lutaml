@@ -831,5 +831,40 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         end
       end
     end
+
+    describe "#update_remarks" do
+      let(:preprocessor) { described_class.new }
+
+      it "does not raise when a RemarkItem appears in children" do
+        schema = Expressir::Model::Declarations::Schema.new(
+          id: "test_schema",
+          remarks: [],
+        )
+        remark_item = Expressir::Model::Declarations::RemarkItem.new(
+          remarks: ["some remark"],
+        )
+        allow(schema).to receive(:children).and_return([remark_item])
+
+        expect do
+          preprocessor.send(:update_remarks, schema, {})
+        end.not_to raise_error
+      end
+
+      it "decorates remark_items on models that include HasRemarkItems" do
+        entity = Expressir::Model::Declarations::Entity.new(
+          id: "test_entity",
+          remarks: [],
+        )
+        ri = Expressir::Model::Declarations::RemarkItem.new(
+          remarks: ["original"],
+        )
+        allow(entity).to receive_messages(remark_items: [ri], children: [])
+
+        preprocessor.send(:update_remarks, entity,
+                          { "remark_format" => "prefix" })
+
+        expect(ri.remarks).not_to be_empty
+      end
+    end
   end
 end

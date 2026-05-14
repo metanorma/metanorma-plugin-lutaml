@@ -86,14 +86,25 @@ module Metanorma
 
         def update_remarks(model, options)
           model.remarks = decorate_remarks(options, model.remarks)
-          model.remark_items&.each do |ri|
-            ri.remarks = decorate_remarks(options, ri.remarks)
-          end
+          decorate_remark_items(model, options)
 
           model.children.each do |child|
-            next unless child.is_a?(Expressir::Model::ModelElement)
+            next unless traversable_model_element?(child)
 
             update_remarks(child, options)
+          end
+        end
+
+        def traversable_model_element?(child)
+          child.is_a?(Expressir::Model::ModelElement) &&
+            !child.is_a?(Expressir::Model::Declarations::RemarkItem)
+        end
+
+        def decorate_remark_items(model, options)
+          return unless model.is_a?(Expressir::Model::HasRemarkItems)
+
+          model.remark_items&.each do |ri|
+            ri.remarks = decorate_remarks(options, ri.remarks)
           end
         end
 
