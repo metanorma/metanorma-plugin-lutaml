@@ -417,7 +417,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         end
       end
 
-      xcontext "when lutaml-express-index keyword used with folder path" do
+      context "when lutaml-express-index keyword used with folder path" do
         let(:cache_file_path) do
           fixtures_path("express_temp_cache_#{SecureRandom.uuid}.yaml")
         end
@@ -453,10 +453,10 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 <title id="_">Activity_method_assignment_arm</title>
               </clause>
               <clause id="_" inline-header="false" obligation="normative">
-                <title id="_">Activity_method_assignment_mim</title>
+                <title id="_">Activity_method_assignment_arm</title>
               </clause>
               <clause id="_" inline-header="false" obligation="normative">
-                <title id="_">Activity_method_assignment_arm</title>
+                <title id="_">Activity_method_assignment_mim</title>
               </clause>
               <clause id="_" inline-header="false" obligation="normative">
                 <title id="_">Activity_method_characterized_arm</title>
@@ -483,12 +483,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         it "creates a valid cache file for supplied path" do
           expect { metanorma_convert(input) }
             .to(change { File.file?(cache_file_path) }.from(false).to(true))
-          expect(Lutaml::Parser
-                  .parse(File.new(cache_file_path),
-                         Lutaml::Parser::EXPRESS_CACHE_PARSE_TYPE)
-                  .to_liquid["schemas"]
-                  .map { |n| n["id"] }
-                  .sort)
+          cached = Lutaml::Express::Parsers::Exp.parse_cache(cache_file_path)
+          schema_ids = cached.content.schemas.map(&:id).sort
+          expect(schema_ids)
             .to(eq(["Activity_method_characterized_arm",
                     "Activity_method_characterized_mim"]))
         end
@@ -592,14 +589,12 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             it "recreates the cache file with the correct data" do
               expect { xml_string_content(metanorma_convert(input)) }
                 .to(change do
-                  wraper = begin
-                    Metanorma::Plugin::Lutaml::Utils
-                      .express_from_cache(cache_path)
-                  rescue StandardError
-                    nil
-                  end
-                  wraper&.to_liquid&.length
-                end.from(nil).to(2))
+                  cached = Lutaml::Express::Parsers::Exp
+                    .parse_cache(cache_path)
+                  cached.content.schemas.map(&:id).sort
+                rescue StandardError
+                  nil
+                end.from(nil).to(["annotated_3d_model_data_quality_criteria_schema"]))
             end
           end
         end
@@ -832,6 +827,37 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
       end
     end
 
+    context "with multi-line Liquid output" do
+      let(:example_file) { fixtures_path("test.exp") }
+
+      let(:input) do
+        <<~TEXT
+          = Document title
+          Author
+          :nodoc:
+          :novalid:
+          :no-isobib:
+
+          [lutaml_express_liquid,#{example_file},my_context]
+          ----
+          {% for schema in my_context.schemas %}
+          == {{schema.id}}
+
+          paragraph one
+
+          paragraph two
+          {% endfor %}
+          ----
+        TEXT
+      end
+
+      it "produces distinct paragraphs from Liquid template" do
+        rendered = xml_string_content(metanorma_convert(input))
+        expect(rendered).to include("<p id=\"_\">paragraph one</p>")
+        expect(rendered).to include("<p id=\"_\">paragraph two</p>")
+      end
+    end
+
     describe "#update_remarks" do
       let(:preprocessor) { described_class.new }
 
@@ -846,7 +872,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         allow(schema).to receive(:children).and_return([remark_item])
 
         expect do
-          preprocessor.send(:update_remarks, schema, {})
+          preprocessor.update_remarks(schema, {})
         end.not_to raise_error
       end
 
@@ -860,8 +886,10 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         )
         allow(entity).to receive_messages(remark_items: [ri], children: [])
 
-        preprocessor.send(:update_remarks, entity,
-                          { "remark_format" => "prefix" })
+        preprocessor.update_remarks(
+          entity,
+          { "remark_format" => "prefix" },
+        )
 
         expect(ri.remarks).not_to be_empty
       end

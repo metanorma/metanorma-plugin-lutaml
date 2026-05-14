@@ -6,7 +6,6 @@ require "asciidoctor/reader"
 require "lutaml"
 require "lutaml/uml"
 require "lutaml/formatter"
-require "metanorma/plugin/lutaml/utils"
 
 module Metanorma
   module Plugin
@@ -33,7 +32,7 @@ module Metanorma
         def abort(parent, reader, attrs, msg)
           warn(msg)
           attrs["language"] = "lutaml"
-          source = reader.respond_to?(:source) ? reader.source : reader
+          source = reader.is_a?(::Asciidoctor::Reader) ? reader.source : reader
           create_listing_block(
             parent,
             source,

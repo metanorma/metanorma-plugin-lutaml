@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "utils"
-
 module Metanorma
   module Plugin
     module Lutaml
@@ -47,8 +45,6 @@ module Metanorma
             end
           end
         end
-
-        private
 
         def match_anchor(line)
           line.match(ANCHOR_REGEX_1) ||
