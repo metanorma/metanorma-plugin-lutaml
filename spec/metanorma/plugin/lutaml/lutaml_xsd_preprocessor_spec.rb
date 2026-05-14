@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
   before do
-    described_class.class_variable_set(:@@xsd_cache, {})
+    described_class::CACHE.clear
   end
 
   describe "#process" do

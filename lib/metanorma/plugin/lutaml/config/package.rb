@@ -14,6 +14,14 @@ module Metanorma
             map "skip_tables", to: :skip_tables
             map "render_entities", to: :render_entities
           end
+
+          def collection_for(key)
+            case key
+            when "render_entities" then render_entities
+            when "skip_tables" then skip_tables
+            else raise ArgumentError, "Unknown collection key: #{key}"
+            end
+          end
         end
       end
     end
