@@ -40,8 +40,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
               USE FROM Activity_method_arm;
 
-              TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT
-                ();
+              TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT;
               END_TYPE;
 
               ENTITY Activity_method_relationship;
@@ -111,8 +110,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
               USE FROM Activity_method_arm;
 
-              TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT
-                ();
+              TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT;
               END_TYPE;
 
               ENTITY Activity_method_relationship;
@@ -260,8 +258,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
 
               USE FROM Activity_method_arm;
 
-              TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT
-                ();
+              TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT;
               END_TYPE;
 
               ENTITY Activity_method_relationship;
