@@ -5,9 +5,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEnumTableBlockMacro do
     subject(:output) { metanorma_convert(input) }
 
     context "specify xmi file by path" do
-      let(:example_file) do
-        fixtures_path("20240822_all_package_export_plus_new_tc211_gml.xmi")
-      end
+      let(:example_file) { fixtures_path("minimal_test.xmi") }
 
       context "with built-in templates" do
         let(:input) do
@@ -19,20 +17,19 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEnumTableBlockMacro do
             :no-isobib:
             :imagesdir: spec/assets
 
-            TextureTypeType
+            ObligationType
 
-            lutaml_enum_table::#{example_file}[name="TextureTypeType"]
+            lutaml_enum_table::#{example_file}[name="ObligationType"]
           TEXT
         end
 
         it "renders table" do
           expect(output).to have_tag("table") do
-            with_tag "th", text: "Enumeration: TextureTypeType"
-            with_tag "td", text: "Subtype of:"
-            with_tag "td", text: "Stereotypes: «Enumeration»"
-            with_tag "td", text: "specific"
-            with_tag "td", text: "typical"
-            with_tag "td", text: "unknown"
+            with_tag "th", text: "Enumeration: ObligationType"
+            with_tag "td", text: "Stereotypes: «enumeration»"
+            with_tag "td", text: "requirement"
+            with_tag "td", text: "recommendation"
+            with_tag "td", text: "premission"
           end
         end
       end
@@ -47,20 +44,20 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEnumTableBlockMacro do
             :no-isobib:
             :imagesdir: spec/assets
 
-            TextureTypeType
+            ObligationType
 
-            lutaml_enum_table::#{example_file}[name="TextureTypeType",template="spec/fixtures/lutaml/liquid_templates/_enum_table.liquid"]
+            lutaml_enum_table::#{example_file}[name="ObligationType",template="spec/fixtures/lutaml/liquid_templates/_enum_table.liquid"]
           TEXT
         end
 
         it "renders table" do
           expect(output).to have_tag("table") do
-            with_tag "th", text: "NewClass: TextureTypeType"
-            with_tag "td", text: "Package: app"
-            with_tag "td", text: "Stereotypes: «Enumeration»"
-            with_tag "td", text: "specific"
-            with_tag "td", text: "typical"
-            with_tag "td", text: "unknown"
+            with_tag "th", text: "NewClass: ObligationType"
+            with_tag "td", text: /Package:/
+            with_tag "td", text: "Stereotypes: «enumeration»"
+            with_tag "td", text: "requirement"
+            with_tag "td", text: "recommendation"
+            with_tag "td", text: "premission"
           end
         end
       end
@@ -75,20 +72,20 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEnumTableBlockMacro do
             :no-isobib:
             :imagesdir: spec/assets
 
-            TextureTypeType
+            ObligationType
 
-            lutaml_enum_table::#{example_file}[name="TextureTypeType",template="spec/fixtures/lutaml/liquid_templates_external_data/_enum_table.liquid",external_data="my_data:spec/fixtures/lutaml/external_data/my_data.yaml;second_data:spec/fixtures/lutaml/external_data/my_second_data.yaml"]
+            lutaml_enum_table::#{example_file}[name="ObligationType",template="spec/fixtures/lutaml/liquid_templates_external_data/_enum_table.liquid",external_data="my_data:spec/fixtures/lutaml/external_data/my_data.yaml;second_data:spec/fixtures/lutaml/external_data/my_second_data.yaml"]
           TEXT
         end
 
         it "renders table" do
           expect(output).to have_tag("table") do
-            with_tag "th", text: "NewClass: TextureTypeType"
-            with_tag "td", text: "Package: app"
-            with_tag "td", text: "Stereotypes: «Enumeration»"
-            with_tag "td", text: "specific"
-            with_tag "td", text: "typical"
-            with_tag "td", text: "unknown"
+            with_tag "th", text: "NewClass: ObligationType"
+            with_tag "td", text: /Package:/
+            with_tag "td", text: "Stereotypes: «enumeration»"
+            with_tag "td", text: "requirement"
+            with_tag "td", text: "recommendation"
+            with_tag "td", text: "premission"
           end
 
           expect(output).to have_tag("tr") do

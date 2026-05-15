@@ -37,14 +37,19 @@ module Metanorma
           path = get_path_from_index(parent, index) if index
 
           if index && path
-            doc = lutaml_document_from_file_or_cache(
+            return lutaml_document_from_file_or_cache(
               parent.document, path,
               Metanorma::Plugin::Lutaml::Config::Root.new
             )
           end
 
-          doc ||= parent.document.attributes["lutaml_xmi_cache"].values.first
-          doc
+          first_path = parent.document.attributes["lutaml_xmi_paths"]&.first
+          return unless first_path
+
+          lutaml_document_from_file_or_cache(
+            parent.document, first_path,
+            Metanorma::Plugin::Lutaml::Config::Root.new
+          )
         end
 
         def img_src_path(document, attrs, diagram)

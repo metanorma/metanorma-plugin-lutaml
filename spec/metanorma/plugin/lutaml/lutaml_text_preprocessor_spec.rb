@@ -858,9 +858,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
       end
     end
 
-    describe "#update_remarks" do
-      let(:preprocessor) { described_class.new }
-
+    describe "#update_remarks via ExpressRemarkAdapter" do
       it "does not raise when a RemarkItem appears in children" do
         schema = Expressir::Model::Declarations::Schema.new(
           id: "test_schema",
@@ -872,7 +870,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         allow(schema).to receive(:children).and_return([remark_item])
 
         expect do
-          preprocessor.update_remarks(schema, {})
+          Metanorma::Plugin::Lutaml::ExpressRemarkAdapter.for(schema)
+            .decorate_remarks({})
         end.not_to raise_error
       end
 
@@ -886,10 +885,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         )
         allow(entity).to receive_messages(remark_items: [ri], children: [])
 
-        preprocessor.update_remarks(
-          entity,
-          { "remark_format" => "prefix" },
-        )
+        Metanorma::Plugin::Lutaml::ExpressRemarkAdapter.for(entity)
+          .decorate_remarks({ "remark_format" => "prefix" })
 
         expect(ri.remarks).not_to be_empty
       end

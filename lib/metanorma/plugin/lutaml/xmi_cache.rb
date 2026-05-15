@@ -1,41 +1,24 @@
 # frozen_string_literal: true
 
-require "lutaml"
-require "lutaml/uml"
-require "lutaml/formatter"
-
 module Metanorma
   module Plugin
     module Lutaml
       module XmiCache
-        LUTAML_DOC_CACHE = CacheStore.new
-        UML_DOC_CACHE = CacheStore.new
+        XMI_PARSE_CACHE = XmiParseCache.new
 
-        def lutaml_document_from_file_or_cache(document, file_path, yaml_config, yaml_config_path = nil) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Layout/LineLength
+        def lutaml_document_from_file_or_cache(document, file_path, yaml_config,
+yaml_config_path = nil)
           full_path = Utils.relative_file_path(document, file_path)
-          cached = document.attributes.dig("lutaml_xmi_cache", full_path)
-          return cached if cached
-
           load_ea_extensions(yaml_config, yaml_config_path)
-
           guidance = get_guidance(document, yaml_config.guidance)
-          cache_key = [full_path, guidance]
-
-          result_document = LUTAML_DOC_CACHE.fetch_or_store(cache_key) do
-            parse_result_document(full_path, guidance)
-          end
-
-          document.attributes["lutaml_xmi_cache"] ||= {}
-          document.attributes["lutaml_xmi_cache"][full_path] = result_document
-          result_document
+          paths = (document.attributes["lutaml_xmi_paths"] ||= [])
+          paths << full_path unless paths.include?(full_path)
+          XMI_PARSE_CACHE.fetch_drop(full_path, guidance: guidance)
         end
 
         def build_uml_document(xmi_path, _document = nil)
-          UML_DOC_CACHE.fetch_or_store(xmi_path) do
-            xmi_model = ::Xmi::Sparx::Root.parse_xml(File.read(xmi_path))
-            parser = ::Lutaml::Xmi::Parsers::Xml.new
-            [parser, parser.parse(xmi_model)]
-          end
+          parsed = XMI_PARSE_CACHE.fetch(xmi_path)
+          [parsed.parser, parsed.uml_document]
         end
 
         def load_ea_extensions(yaml_config, yaml_config_path)

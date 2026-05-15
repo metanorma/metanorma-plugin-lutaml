@@ -24,6 +24,12 @@ module Metanorma
           new(remark, options).call
         end
 
+        def self.decorate_array(remarks, options)
+          return [] unless remarks
+
+          remarks.map { |remark| call(remark, options) }
+        end
+
         def initialize(remark, options)
           @remark = remark
           @options = options

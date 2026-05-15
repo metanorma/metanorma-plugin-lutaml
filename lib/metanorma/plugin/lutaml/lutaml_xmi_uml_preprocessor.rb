@@ -16,9 +16,10 @@ module Metanorma
 
         private
 
-        def parse_result_document(full_path, _guidance)
-          ::Lutaml::Xmi::Parsers::Xml.parse(
+        def parse_result_document(full_path, guidance)
+          ::Lutaml::Xmi::Parsers::Xml.serialize_xmi_to_liquid(
             File.new(full_path, encoding: "UTF-8"),
+            guidance,
           )
         end
 

@@ -11,12 +11,15 @@ module Metanorma
       autoload :BaseStructuredTextPreprocessor,
                "metanorma/plugin/lutaml/base_structured_text_preprocessor"
       autoload :CacheStore, "metanorma/plugin/lutaml/cache_store"
+      autoload :CacheRegistry, "metanorma/plugin/lutaml/cache_registry"
       autoload :Config, "metanorma/plugin/lutaml/config"
       autoload :Content, "metanorma/plugin/lutaml/content"
       autoload :Data2TextPreprocessor,
                "metanorma/plugin/lutaml/data2_text_preprocessor"
       autoload :ExpressRemarksDecorator,
                "metanorma/plugin/lutaml/express_remarks_decorator"
+      autoload :ExpressRemarkAdapter,
+               "metanorma/plugin/lutaml/express_remark_adapter"
       autoload :FileNotFoundError,
                "metanorma/plugin/lutaml/file_not_found_error"
       autoload :Json2TextPreprocessor,
@@ -55,6 +58,7 @@ module Metanorma
       autoload :LutamlXsdPreprocessor,
                "metanorma/plugin/lutaml/lutaml_xsd_preprocessor"
       autoload :ParseError, "metanorma/plugin/lutaml/parse_error"
+      autoload :XmiParseCache, "metanorma/plugin/lutaml/xmi_parse_cache"
       autoload :SourceExtractor, "metanorma/plugin/lutaml/source_extractor"
       autoload :Utils, "metanorma/plugin/lutaml/utils"
       autoload :Yaml2TextPreprocessor,
