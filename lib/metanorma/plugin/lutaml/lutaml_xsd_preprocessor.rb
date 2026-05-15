@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "lutaml/xml/parsers/xsd"
+require "lutaml/model"
 
 module Metanorma
   module Plugin
@@ -127,9 +127,8 @@ module Metanorma
         end
 
         def parse_xsd_file(full_path, location)
-          File.open(full_path, "r:UTF-8") do |file|
-            ::Lutaml::Xml::Parsers::Xsd.parse(file, location: location)
-          end
+          content = File.read(full_path, encoding: "UTF-8")
+          ::Lutaml::Xml::Schema::Xsd.parse(content, location: location)
         end
 
         def xsd_location(full_path, options)

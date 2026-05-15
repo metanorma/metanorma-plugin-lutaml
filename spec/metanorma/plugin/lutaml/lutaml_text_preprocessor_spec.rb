@@ -286,7 +286,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         context "when loaded from a cache file" do
           let(:cache_path) do
             fixtures_path(
-              "expressir_relative_paths/test_relative_includes_cache.yaml",
+              "expressir_relative_paths/test_relative_includes_cache.exp.cache",
             )
           end
           let(:input) do
