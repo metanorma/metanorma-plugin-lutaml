@@ -12,11 +12,6 @@ module Metanorma
       # Two syntaxes are supported:
       #   Block:  [lutaml_xsd, path, context, options] .... ----
       #   Direct: lutaml_xsd::path[context, template, options]
-      #
-      # Caching: parsed XSD results are cached at two levels:
-      # - Class-level (CACHE) persists across document invocations
-      # - Document-level (document.attributes["lutaml_xsd_cache"]) within a
-      #   single document's processing
       class LutamlXsdPreprocessor < BasePreprocessor
         CACHE = CacheStore.new
         XSD_PREPROCESSOR_REGEX = %r{
@@ -59,15 +54,9 @@ module Metanorma
           location = xsd_location(full_path, options)
           cache_key = [full_path, location]
 
-          cached = document_cache_entry(document, cache_key)
-          return cached if cached
-
-          result = CACHE.fetch_or_store(cache_key) do
+          CACHE.fetch_or_store(cache_key) do
             parse_xsd_file(full_path, location)
           end
-
-          set_document_cache_entry(document, cache_key, result)
-          result
         end
 
         def index_type_name
@@ -133,15 +122,6 @@ module Metanorma
 
         def xsd_location(full_path, options)
           options["location"] || File.dirname(full_path)
-        end
-
-        def document_cache_entry(document, cache_key)
-          document.attributes["lutaml_xsd_cache"]&.[](cache_key)
-        end
-
-        def set_document_cache_entry(document, cache_key, result)
-          document.attributes["lutaml_xsd_cache"] ||= {}
-          document.attributes["lutaml_xsd_cache"][cache_key] = result
         end
       end
     end

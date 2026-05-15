@@ -54,6 +54,10 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  config.before(:suite) do
+    Metanorma::Plugin::Lutaml::CacheRegistry.clear_all
+  end
 end
 
 BLANK_HDR = <<~"HDR".freeze

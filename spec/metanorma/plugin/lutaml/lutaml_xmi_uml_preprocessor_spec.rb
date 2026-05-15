@@ -169,7 +169,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXmiUmlPreprocessor do
         end
       end
 
-      context "renders associations" do
+      context "renders associations", :slow do
         let(:example_file) do
           fixtures_path("20240822_all_package_export_plus_new_tc211_gml.xmi")
         end
@@ -219,7 +219,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXmiUmlPreprocessor do
         end
       end
 
-      context "renders a specific class" do
+      context "renders a specific class", :slow do
         let(:example_file) do
           fixtures_path("20240822_all_package_export_plus_new_tc211_gml.xmi")
         end
@@ -297,7 +297,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXmiUmlPreprocessor do
         end
       end
 
-      context "renders a specific class with generalization" do
+      context "renders a specific class with generalization", :slow do
         let(:example_file) do
           fixtures_path("20240822_all_package_export_plus_new_tc211_gml.xmi")
         end

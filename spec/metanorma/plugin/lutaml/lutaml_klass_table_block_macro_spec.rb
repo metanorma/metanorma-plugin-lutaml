@@ -287,7 +287,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
     subject(:output) { metanorma_convert(input) }
 
     context "specify xmi file by path" do
-      context "with built-in templates" do
+      context "with built-in templates", :slow do
         let(:example_file) do
           fixtures_path("20240822_all_package_export_plus_new_tc211_gml.xmi")
         end
@@ -363,7 +363,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
         end
       end
 
-      context "with user-specific templates" do
+      context "with user-specific templates", :slow do
         let(:example_file) do
           fixtures_path("20240822_all_package_export_plus_new_tc211_gml.xmi")
         end
@@ -411,7 +411,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
         end
       end
 
-      context "with user-specific templates and guidance" do
+      context "with user-specific templates and guidance", :slow do
         let(:example_file) do
           fixtures_path("plateau_all_packages_export.xmi")
         end
@@ -453,7 +453,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
         it_behaves_like "should contain Used and Guidance"
       end
 
-      context "with user-specific templates and external_data" do
+      context "with user-specific templates and external_data", :slow do
         let(:example_file) do
           fixtures_path("plateau_all_packages_export.xmi")
         end
@@ -497,7 +497,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
         end
       end
 
-      context "with name and package options" do
+      context "with name and package options", :slow do
         let(:example_file) do
           fixtures_path("plateau_all_packages_export.xmi")
         end
@@ -532,7 +532,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
         end
       end
 
-      context "with relative path option" do
+      context "with relative path option", :slow do
         let(:example_file) do
           fixtures_path("plateau_all_packages_export.xmi")
         end
@@ -567,7 +567,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
         end
       end
 
-      context "with absolute path option" do
+      context "with absolute path option", :slow do
         let(:example_file) do
           fixtures_path("plateau_all_packages_export.xmi")
         end
@@ -604,7 +604,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
     end
 
     context "specify xmi file by index" do
-      context "with built-in templates" do
+      context "with built-in templates", :slow do
         let(:example_file) do
           fixtures_path("20240822_all_package_export_plus_new_tc211_gml.xmi")
         end
