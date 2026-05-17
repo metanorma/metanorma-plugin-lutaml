@@ -56,7 +56,27 @@ RSpec.configure do |config|
   end
 
   config.before(:suite) do
-    Metanorma::Plugin::Lutaml::CacheRegistry.clear_all
+    require "lutaml/converter/xmi_to_uml_generalization"
+    require "lutaml/uml"
+    require "lutaml/xmi"
+
+    cache = Metanorma::Plugin::Lutaml::CacheRegistry.xmi_cache
+    cache.clear
+
+    fixtures_dir = File.expand_path("./fixtures/lutaml", __dir__)
+    large_xmi_files = [
+      File.join(
+        fixtures_dir,
+        "20240822_all_package_export_plus_new_tc211_gml.xmi",
+      ),
+      File.join(fixtures_dir, "plateau_all_packages_export.xmi"),
+    ]
+
+    large_xmi_files.each do |path|
+      next unless File.exist?(path)
+
+      cache.fetch(path)
+    end
   end
 end
 
