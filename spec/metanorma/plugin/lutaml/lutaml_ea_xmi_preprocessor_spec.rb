@@ -715,6 +715,91 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
           end
         end
       end
+
+      context "when a referenced model is outside the rendered package set" do
+        subject(:xml_output) do
+          remove_xml_whitespaces(xml_string_content(metanorma_convert(input)))
+        end
+
+        let(:example_file) { fixtures_path("large_test.xmi") }
+        let(:config_file) do
+          fixtures_path("temporary_datamodel_description_config.yml")
+        end
+        let(:external_classes) { nil }
+        let(:template_path) { nil }
+        let(:config) do
+          {
+            "packages" => ["Another"],
+            "render_style" => "data_dictionary",
+          }.tap do |options|
+            options["external_classes"] = external_classes if external_classes
+            options["template_path"] = template_path if template_path
+          end
+        end
+        let(:input) do
+          <<~TEXT
+            = Document title
+            Author
+            :nodoc:
+            :novalid:
+            :no-isobib:
+            :imagesdir: spec/assets
+
+            [lutaml_ea_xmi,#{example_file},#{config_file}]
+            --
+            --
+          TEXT
+        end
+
+        around do |example|
+          File.open(config_file, "w") do |file|
+            file.puts(config.to_yaml)
+          end
+          example.run
+          FileUtils.rm_f(config_file)
+        end
+
+        it "does not create internal xrefs for unrendered targets" do
+          expect(xml_output)
+            .to(include("target=\"section-" \
+                        "EAID_1D8715F2_4E4A_4f36_A414_1326B6DC1EDD\""))
+          expect(xml_output)
+            .not_to(include("target=\"section-" \
+                            "EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1\""))
+          expect(xml_output)
+            .to(include("<p id=\"_\">CharacterString [1..1]</p>"))
+        end
+
+        context "when a custom template emits direct model xrefs" do
+          let(:template_path) { "spec/fixtures/lutaml/liquid_templates" }
+
+          it "still suppresses xrefs for unrendered targets" do
+            expect(xml_output)
+              .to(include("target=\"section-" \
+                          "EAID_1D8715F2_4E4A_4f36_A414_1326B6DC1EDD\""))
+            expect(xml_output)
+              .not_to(include("target=\"section-" \
+                              "EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1\""))
+            expect(xml_output)
+              .to(include("<p id=\"_\">CharacterString [1..1]</p>"))
+          end
+        end
+
+        context "when external_classes supplies the target" do
+          let(:external_classes) do
+            {
+              "CharacterString" => "_characterstring",
+            }
+          end
+
+          it "uses the configured external anchor" do
+            expect(xml_output)
+              .to(include("<xref target=\"_characterstring\" " \
+                          "style=\"short\"><display-text>CharacterString" \
+                          "</display-text></xref> [1..1]"))
+          end
+        end
+      end
     end
 
     context "when there is no options file" do

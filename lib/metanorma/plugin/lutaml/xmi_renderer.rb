@@ -18,22 +18,56 @@ module Metanorma
           "data_dictionary" => "packages_data_dictionary",
         }.freeze
         RENDER_STYLE_ATTRIBUTE = "render_style"
+        MODEL_SECTION_XREF = /
+          <<section-(?<xmi_id>[^,>\s]+)(?:,(?<text>[^>\n]+))?>>
+        /x.freeze
 
-        def model_representation(lutaml_doc, document, add_context, options) # rubocop:disable Metrics/MethodLength
+        def model_representation( # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+          lutaml_doc, document, add_context, options
+        )
           fill_in_entities_refs_attributes(document, lutaml_doc, options)
+          contexts = create_context_object(lutaml_doc, add_context, options,
+                                           "context")
           render_result, errors = Utils.render_liquid_string(
             template_string: template(options.section_depth || 2,
                                       options.render_style,
                                       options.include_root),
-            contexts: create_context_object(lutaml_doc,
-                                            add_context,
-                                            options,
-                                            "context"),
+            contexts: contexts,
             document: document,
             include_path: template_path(document, options.template_path),
           )
           Utils.notify_render_errors(document, errors)
+          render_result = normalize_model_xrefs(
+            render_result,
+            contexts.fetch("context").fetch("additional_context", {}),
+          )
           render_result.split("\n")
+        end
+
+        def normalize_model_xrefs(render_result, additional_context)
+          model_anchors = additional_context["model_anchors"] || {}
+          rendered_model_anchors =
+            additional_context["rendered_model_anchors"] || {}
+          external_classes = additional_context["external_classes"] || {}
+
+          render_result.gsub(MODEL_SECTION_XREF) do |xref|
+            normalize_model_xref(Regexp.last_match, xref, model_anchors,
+                                 rendered_model_anchors, external_classes)
+          end
+        end
+
+        def normalize_model_xref(
+          match, xref, model_anchors, rendered_model_anchors, external_classes
+        )
+          xmi_id = match[:xmi_id]
+          model_name = model_anchors[xmi_id]
+          return xref unless model_name
+
+          text = match[:text] || model_name
+          external_anchor = external_classes[text] || external_classes[model_name]
+          return "<<#{external_anchor},#{text}>>" if external_anchor
+
+          rendered_model_anchors[xmi_id] ? xref : text
         end
 
         def template_path(document, tmpl_path)

@@ -17,6 +17,8 @@ module Metanorma
           if options.packages.nil?
             contexts[context_name]["render_nested_packages"] = true
             contexts[context_name]["packages"] = root_package.packages
+            add_model_anchor_context(contexts[context_name], root_package,
+                                     options)
 
             return contexts
           end
@@ -30,6 +32,8 @@ module Metanorma
               "render_nested_packages" => !!options.render_nested_packages,
             },
           )
+          add_model_anchor_context(contexts[context_name], root_package,
+                                   options)
 
           contexts
         end
@@ -93,6 +97,61 @@ module Metanorma
           document.attributes["lutaml_figure_id"] = package_flat_diagrams
             .call(lutaml_document.packages)
             .merge(children_pks_diags)
+        end
+
+        def add_model_anchor_context(context, root_package, options)
+          context["additional_context"]["model_anchors"] =
+            model_anchors(model_packages(root_package))
+          context["additional_context"]["rendered_model_anchors"] =
+            model_anchors(rendered_packages(context, options))
+        end
+
+        def model_packages(root_package)
+          packages_tree(root_package)
+            .compact
+            .uniq { |package| package.xmi_id || package.name }
+        end
+
+        def rendered_packages(context, options)
+          packages = []
+          packages.concat(Array(context["root_packages"])) if options.include_root
+          packages.concat(Array(context["packages"]))
+          if context["render_nested_packages"]
+            packages = packages.flat_map { |package| packages_tree(package) }
+          end
+          packages.compact.uniq { |package| package.xmi_id || package.name }
+        end
+
+        def packages_tree(package)
+          [package, *child_packages(package).flat_map do |child|
+            packages_tree(child)
+          end]
+        end
+
+        def child_packages(package)
+          children = []
+          if package.respond_to?(:children_packages)
+            children.concat(Array(package.children_packages))
+          end
+          children.concat(Array(package.packages)) if package.respond_to?(:packages)
+          children.compact.uniq { |child| child.xmi_id || child.name }
+        end
+
+        def model_anchors(packages)
+          packages.each_with_object({}) do |package, anchors|
+            add_model_anchor(anchors, package.xmi_id, package.name)
+            %w[classes enums data_types].each do |collection|
+              next unless package.respond_to?(collection)
+
+              Array(package.public_send(collection)).each do |entity|
+                add_model_anchor(anchors, entity.xmi_id, entity.name)
+              end
+            end
+          end
+        end
+
+        def add_model_anchor(anchors, xmi_id, name)
+          anchors[xmi_id] = name if xmi_id && !xmi_id.empty?
         end
       end
     end
