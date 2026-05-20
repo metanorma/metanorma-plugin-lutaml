@@ -16,11 +16,6 @@ yaml_config_path = nil)
           XMI_PARSE_CACHE.fetch_drop(full_path, guidance: guidance)
         end
 
-        def build_uml_document(xmi_path, _document = nil)
-          parsed = XMI_PARSE_CACHE.fetch(xmi_path)
-          [parsed.parser, parsed.uml_document]
-        end
-
         def load_ea_extensions(yaml_config, yaml_config_path)
           yaml_config.ea_extension&.each do |ea_extension_path|
             ea_extension_full_path = File.expand_path(
@@ -32,29 +27,20 @@ yaml_config_path = nil)
           end
         end
 
-        def build_drop_options(parser)
-          lookup = ::Lutaml::Xmi::XmiLookupService.new(
-            parser.xmi_root_model, parser.id_name_mapping
-          )
-          {
-            xmi_root_model: parser.xmi_root_model,
-            id_name_mapping: parser.id_name_mapping,
-            lookup: lookup,
-            with_gen: true,
-            with_absolute_path: true,
-          }
+        def find_class_by_xmi_id(container, xmi_id)
+          container.classes.find { |node| node.xmi_id == xmi_id } ||
+            container.packages
+              .lazy
+              .filter_map { |pkg| find_class_by_xmi_id(pkg, xmi_id) }
+              .first
         end
 
-        def find_uml_node_by_xmi_id(container, xmi_id, collection)
-          found = container.public_send(collection)
-            .find { |node| node.xmi_id == xmi_id }
-          return found if found
-
-          container.packages.each do |pkg|
-            nested = find_uml_node_by_xmi_id(pkg, xmi_id, collection)
-            return nested if nested
-          end
-          nil
+        def find_enum_by_xmi_id(container, xmi_id)
+          container.enums.find { |node| node.xmi_id == xmi_id } ||
+            container.packages
+              .lazy
+              .filter_map { |pkg| find_enum_by_xmi_id(pkg, xmi_id) }
+              .first
         end
 
         def find_packaged_klass(index, path, root_model_name: nil)
@@ -99,30 +85,38 @@ yaml_config_path = nil)
             .find { |e| e.name == name }
         end
 
-        def serialize_klass_drop_by_name(xmi_path, name, document = nil,
+        def serialize_klass_drop_by_name(xmi_path, name, _document = nil,
 guidance = nil)
-          parser, uml_doc = build_uml_document(xmi_path, document)
-          root_model_name = parser.xmi_root_model.model.name
-          raw_klass = find_packaged_klass(parser.xmi_index, name,
-                                          root_model_name: root_model_name)
-          warn "Class not found for name: #{name}" if raw_klass.nil?
-          klass = raw_klass && find_uml_node_by_xmi_id(
-            uml_doc, raw_klass.id, :classes
-          )
+          parsed = XMI_PARSE_CACHE.fetch(xmi_path)
+          klass = resolve_packaged_klass(parsed, name)
+          warn "Class not found for name: #{name}" if klass.nil?
           ::Lutaml::Xmi::LiquidDrops::KlassDrop.new(
-            klass, guidance, build_drop_options(parser)
+            klass, guidance, parsed.drop_options
           )
         end
 
-        def serialize_enum_drop_by_name(xmi_path, name, document = nil)
-          parser, uml_doc = build_uml_document(xmi_path, document)
-          raw_enum = find_packaged_enum(parser.xmi_index, name)
+        def serialize_enum_drop_by_name(xmi_path, name, _document = nil)
+          parsed = XMI_PARSE_CACHE.fetch(xmi_path)
+          raw_enum = find_packaged_enum(parsed.parser.xmi_index, name)
           warn "Enumeration not found for name: #{name}" if raw_enum.nil?
-          enum = raw_enum && find_uml_node_by_xmi_id(
-            uml_doc, raw_enum.id, :enums
+          enum = raw_enum && find_enum_by_xmi_id(
+            parsed.uml_document, raw_enum.id
           )
           ::Lutaml::Xmi::LiquidDrops::EnumDrop.new(
-            enum, build_drop_options(parser)
+            enum, parsed.drop_options
+          )
+        end
+
+        private
+
+        def resolve_packaged_klass(parsed, name)
+          root_model_name = parsed.parser.xmi_root_model.model.name
+          raw_klass = find_packaged_klass(
+            parsed.parser.xmi_index, name,
+            root_model_name: root_model_name
+          )
+          raw_klass && find_class_by_xmi_id(
+            parsed.uml_document, raw_klass.id
           )
         end
       end
