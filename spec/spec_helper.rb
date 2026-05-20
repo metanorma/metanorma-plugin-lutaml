@@ -63,16 +63,29 @@ RSpec.configure do |config|
     cache = Metanorma::Plugin::Lutaml::CacheRegistry.xmi_cache
     cache.clear
 
+    # Pre-warm large XMI fixtures only when running the full suite,
+    # not when running individual files that don't need XMI.
+    # RSpec.configuration.files_to_run contains the spec files being executed.
+    xmi_heavy_specs = %w[
+      lutaml_ea_xmi_preprocessor_spec
+      lutaml_klass_table_block_macro_spec
+      lutaml_xmi_uml_preprocessor_spec
+    ]
+    running_full_suite = xmi_heavy_specs.any? do |name|
+      RSpec.configuration.files_to_run
+        .any? { |f| File.basename(f, ".rb") == name }
+    end
+
+    next unless running_full_suite
+
     fixtures_dir = File.expand_path("./fixtures/lutaml", __dir__)
-    large_xmi_files = [
+    [
       File.join(
         fixtures_dir,
         "20240822_all_package_export_plus_new_tc211_gml.xmi",
       ),
       File.join(fixtures_dir, "plateau_all_packages_export.xmi"),
-    ]
-
-    large_xmi_files.each do |path|
+    ].each do |path|
       next unless File.exist?(path)
 
       cache.fetch(path)
