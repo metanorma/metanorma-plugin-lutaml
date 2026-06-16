@@ -49,29 +49,27 @@ module Metanorma
           guidance = get_guidance(document, yaml_config.guidance)
           result_document = parse_result_document(full_path, guidance)
 
-          if File.extname(file_path).downcase == ".xmi"
-            # load EA extensions for Xmi::EaRoot
-            yaml_config.ea_extension&.each do |ea_extension_path|
-              # resolve paths of ea extensions based on the location of
-              # config yaml file
-              ea_extension_full_path = File.expand_path(
-                ea_extension_path, File.dirname(yaml_config_path)
-              )
+          # load EA extensions for Xmi::EaRoot
+          yaml_config.ea_extension&.each do |ea_extension_path|
+            # resolve paths of ea extensions based on the location of
+            # config yaml file
+            ea_extension_full_path = File.expand_path(
+              ea_extension_path, File.dirname(yaml_config_path)
+            )
 
-              # unload the extension if it is already loaded
-              xmi_doc = Nokogiri::XML(File.read(ea_extension_full_path))
-              extension_id = Xmi::EaRoot.get_module_name(xmi_doc)
-              if Xmi::EaRoot.extension_loaded?(extension_id)
-                Xmi::EaRoot.unload_extension(extension_id)
-              end
-
-              Xmi::EaRoot.load_extension(ea_extension_full_path)
+            # unload the extension if it is already loaded
+            xmi_doc = Nokogiri::XML(File.read(ea_extension_full_path))
+            extension_id = Xmi::EaRoot.get_module_name(xmi_doc)
+            if Xmi::EaRoot.extension_loaded?(extension_id)
+              Xmi::EaRoot.unload_extension(extension_id)
             end
 
-            # store in document.attributes as cache
-            document.attributes["lutaml_xmi_cache"] ||= {}
-            document.attributes["lutaml_xmi_cache"][full_path] = result_document
+            Xmi::EaRoot.load_extension(ea_extension_full_path)
           end
+
+          # store in document.attributes as cache
+          document.attributes["lutaml_xmi_cache"] ||= {}
+          document.attributes["lutaml_xmi_cache"][full_path] = result_document
 
           result_document
         end
