@@ -1,0 +1,173 @@
+
+== Usage with Enterprise Architect UML files (XMI, QEA, LUR) by lutaml_ea_uml
+
+=== General
+
+The `lutaml_ea_uml` command renders UML data models from Enterprise Architect
+files using custom Liquid templates. It supports three file formats:
+
+* XMI (`*.xmi`) -- Enterprise Architect XML Metadata Interchange export
+* QEA (`*.qea`) -- Enterprise Architect native database format
+* LUR (`*.lur`) -- Enterprise Architect model exchange format
+
+The command parses the file into a Liquid template context, allowing full
+control over the rendered output through custom Liquid templates.
+
+
+=== Basic usage
+
+[source,adoc]
+----
+[lutaml_ea_uml,path/to/example.xmi]
+--
+Name of the Lutaml UML Document: {{ context.name }}
+
+Number of packages: {{ context.packages | size }}
+--
+----
+
+Where:
+
+* `path/to/example.xmi` -- path to the XMI, QEA, or LUR file to render.
+
+The content between `--` delimiters is a Liquid template. The parsed UML
+document is available as `context` by default.
+
+
+=== Usage with a configuration file
+
+[source,adoc]
+----
+[lutaml_ea_uml,path/to/example.xmi,path/to/config.yml]
+--
+Name of the Lutaml UML Document: {{ my_uml_document.name }}
+
+Number of packages: {{ my_uml_document.packages | size }}
+
+{% render "package", package: my_uml_document.packages.first %}
+--
+----
+
+Where:
+
+* `path/to/example.xmi` -- path to the XMI, QEA, or LUR file.
+* `path/to/config.yml` -- path to the YAML configuration file.
+
+
+=== Configuration file format
+
+[source,yaml]
+----
+---
+ea_extension:
+  - "CityGML_MDG_Technology.xml"
+  - "ISO19103MDG v1.0.0-beta.xml"
+context_name: my_uml_document
+template_path: "path/to/liquid/templates"
+guidance: "path/to/guidance.yml"
+----
+
+Where:
+
+* `ea_extension` -- optional, list of EA extension XML files to load. Some
+  XMI/QEA/LUR files contain elements that cannot be resolved by default (e.g.
+  CityGML elements). Load their definitions here. Paths are relative to the
+  config YAML file.
+
+* `context_name` -- optional, the Liquid context variable name for the parsed
+  document. Defaults to `context`. When set, the document is accessible as
+  `{{ my_uml_document }}` instead of `{{ context }}`.
+
+* `template_path` -- optional, path to a directory containing custom Liquid
+  templates. When specified, `render` tags in the block content will use
+  templates from this directory.
+
+* `guidance` -- optional, path to a YAML guidance file for adding annotations
+  to rendered output.
+
+
+=== Usage with document index
+
+You can define an XMI/QEA/LUR file index at the document level and reference
+it by name:
+
+[source,adoc]
+----
+:lutaml-xmi-index: my-model; /path/to/example.qea
+
+[lutaml_ea_uml,index=my-model]
+--
+Name: {{ context.name }}
+--
+----
+
+Syntax for the index attribute:
+
+[source,adoc]
+----
+:lutaml-xmi-index: index_name; file_path[; config=config_path]
+----
+
+Where:
+
+* `index_name` -- name to reference later with `index=`.
+* `file_path` -- path to the XMI, QEA, or LUR file.
+* `config_path` -- optional, path to the configuration YAML file.
+
+
+=== Liquid template context
+
+The parsed UML document is exposed to Liquid templates with the following
+structure:
+
+* `context.name` -- name of the root UML model.
+* `context.packages` -- array of packages in the model.
+* `context.packages.first.name` -- name of a package.
+* `context.packages.first.packages` -- nested sub-packages.
+* `context.packages.first.classes` -- array of classes in a package.
+* `context.packages.first.classes.first.name` -- name of a class.
+* `context.packages.first.classes.first.attributes` -- array of attributes.
+* `context.packages.first.classes.first.associations` -- array of associations.
+
+When `context_name` is set in the configuration, replace `context` with the
+configured name (e.g. `my_uml_document`).
+
+
+=== Example: rendering class tables with a custom template
+
+Given a custom template at `templates/_klass.liquid`:
+
+[source,liquid]
+----
+{% for package in context.packages %}
+== {{ package.name }}
+
+{% for klass in package.classes %}
+=== {{ klass.name }}
+
+{{ klass.definition | html2adoc }}
+
+[cols="a,a"]
+|===
+| Attribute | Type
+
+{% for attr in klass.owned_props %}
+| {{ attr.name }} | {{ attr.type }}
+{% endfor %}
+
+|===
+{% endfor %}
+{% endfor %}
+----
+
+The AsciiDoc block would be:
+
+[source,adoc]
+----
+[lutaml_ea_uml,path/to/example.xmi,path/to/config.yml]
+--
+{% render "klass", context: context %}
+--
+----
+
+Where the config specifies `template_path` pointing to the templates directory.
