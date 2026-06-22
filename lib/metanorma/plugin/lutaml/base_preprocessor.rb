@@ -171,7 +171,7 @@ module Metanorma
             )
             parsed_template.assigns["schemas_order"] =
               options["selected_schemas"]
-            parsed_template.render.split("\n", -1)
+            parsed_template.render
           end.flatten
         rescue StandardError => e
           ::Metanorma::Util.log(
