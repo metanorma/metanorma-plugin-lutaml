@@ -3,7 +3,7 @@
 require "liquid"
 require "asciidoctor"
 require "asciidoctor/reader"
-require "lutaml"
+require "lutaml/uml"
 require "metanorma/plugin/lutaml/utils"
 require "metanorma/plugin/lutaml/asciidoctor/preprocessor"
 require "metanorma/plugin/lutaml/express_remarks_decorator"

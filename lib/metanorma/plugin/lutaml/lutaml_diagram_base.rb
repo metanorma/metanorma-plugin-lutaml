@@ -3,9 +3,9 @@
 require "liquid"
 require "asciidoctor"
 require "asciidoctor/reader"
-require "lutaml"
 require "lutaml/uml"
-require "lutaml/formatter"
+require "lutaml/uml"
+require "lutaml/lml"
 require "metanorma/plugin/lutaml/utils"
 
 module Metanorma
@@ -13,7 +13,7 @@ module Metanorma
     module Lutaml
       module LutamlDiagramBase
         def process(parent, reader, attrs)
-          uml_document = ::Lutaml::Uml::Parsers::Dsl
+          uml_document = ::Lutaml::Lml::Parser
             .parse(lutaml_file(parent.document, reader))
           filename = generate_file(parent, reader, uml_document)
           through_attrs = generate_attrs(attrs)

@@ -3,9 +3,9 @@
 require "liquid"
 require "asciidoctor"
 require "asciidoctor/reader"
-require "lutaml"
 require "lutaml/uml"
-require "lutaml/formatter"
+require "lutaml/uml"
+require "lutaml/lml"
 require_relative "utils"
 
 module Metanorma
@@ -13,6 +13,10 @@ module Metanorma
     module Lutaml
       module LutamlEaXmiBase
         include Utils
+
+        # Process-level XMI model cache, keyed by [path, mtime].
+        # Avoids re-parsing 10MB+ XMI files for every document/macro.
+        XMI_MODEL_CACHE = {} # rubocop:disable Style/MutableConstant
 
         LIQUID_INCLUDE_PATH = File.join(
           Gem.loaded_specs["metanorma-plugin-lutaml"].full_gem_path,
@@ -57,14 +61,14 @@ module Metanorma
 
         def lutaml_document_from_file_or_cache(document, file_path, yaml_config, yaml_config_path = nil) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Layout/LineLength
           full_path = Utils.relative_file_path(document, file_path)
+
+          # Check per-document cache first (fast path)
           if document.attributes["lutaml_xmi_cache"] &&
               document.attributes["lutaml_xmi_cache"][full_path]
             return document.attributes["lutaml_xmi_cache"][full_path]
           end
 
           yaml_config.ea_extension&.each do |ea_extension_path|
-            # resolve paths of ea extensions based on the location of
-            # config yaml file
             ea_extension_full_path = File.expand_path(
               ea_extension_path, File.dirname(yaml_config_path)
             )
@@ -74,7 +78,17 @@ module Metanorma
           end
 
           guidance = get_guidance(document, yaml_config.guidance)
-          result_document = parse_result_document(full_path, guidance)
+          cache_key = [full_path, guidance&.hash]
+          mtime = File.mtime(full_path)
+
+          cached = XMI_MODEL_CACHE[cache_key]
+          if cached && cached[:mtime] == mtime
+            result_document = cached[:document]
+          else
+            result_document = parse_result_document(full_path, guidance)
+            XMI_MODEL_CACHE[cache_key] = { mtime: mtime, document: result_document }
+          end
+
           document.attributes["lutaml_xmi_cache"] ||= {}
           document.attributes["lutaml_xmi_cache"][full_path] = result_document
           result_document
@@ -478,7 +492,7 @@ module Metanorma
 
         # The class methods `serialize_generalization_by_name` and
         # `serialize_enumeration_by_name` were removed from
-        # `Lutaml::Xmi::Parsers::Xml` in lutaml 0.10. The replacements below
+        # `Ea::Xmi::Parser` in lutaml 0.10. The replacements below
         # rebuild the same shape of result by reusing the still-available
         # path-aware finders on the parser instance and the new
         # `XmiLookupService`, then bridging to the UML object that the
@@ -509,7 +523,7 @@ module Metanorma
 
         def build_uml_document(xmi_path)
           xmi_model = ::Xmi::Sparx::Root.parse_xml(File.read(xmi_path))
-          parser = ::Lutaml::Xmi::Parsers::Xml.new
+          parser = ::Ea::Xmi::Parser.new
           [parser, parser.parse(xmi_model)]
         end
 

@@ -3,7 +3,7 @@
 require "liquid"
 require "asciidoctor"
 require "asciidoctor/reader"
-require "lutaml"
+require "lutaml/uml"
 require_relative "utils"
 require "metanorma/plugin/lutaml/asciidoctor/preprocessor"
 require "metanorma/plugin/lutaml/lutaml_ea_xmi_base"
@@ -20,7 +20,7 @@ module Metanorma
         private
 
         def parse_result_document(full_path, _guidance)
-          ::Lutaml::Xmi::Parsers::Xml.parse(
+          ::Ea::Xmi::Parser.parse(
             File.new(full_path, encoding: "UTF-8"),
           )
         end

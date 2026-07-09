@@ -3,9 +3,9 @@
 require "liquid"
 require "asciidoctor"
 require "asciidoctor/reader"
-require "lutaml"
 require "lutaml/uml"
-require "lutaml/xmi"
+require "lutaml/uml"
+require "ea/xmi"
 require "metanorma/plugin/lutaml/utils"
 require "metanorma/plugin/lutaml/asciidoctor/preprocessor"
 require "metanorma/plugin/lutaml/lutaml_ea_xmi_base"
@@ -25,7 +25,7 @@ module Metanorma
         private
 
         def parse_result_document(full_path, guidance)
-          ::Lutaml::Xmi::Parsers::Xml.serialize_xmi_to_liquid(
+          ::Ea::Xmi::Parser.serialize_to_liquid(
             File.new(full_path, encoding: "UTF-8"),
             guidance,
           )

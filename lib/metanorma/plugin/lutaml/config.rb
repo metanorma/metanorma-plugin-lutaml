@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "yaml"
-require "lutaml"
+require "lutaml/uml"
 require "lutaml/model"
 require_relative "config/package"
 require_relative "config/root"
