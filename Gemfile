@@ -14,7 +14,6 @@ end
 
 gem "canon"
 gem "html2doc", github: "metanorma/html2doc", branch: "main"
-gem "lutaml"
 gem "metanorma", github: "metanorma/metanorma", branch: "main"
 gem "metanorma-standoc", github: "metanorma/metanorma-standoc", branch: "main"
 gem "rake"

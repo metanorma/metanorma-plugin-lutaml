@@ -59,9 +59,8 @@ RSpec.configure do |config|
   end
 
   config.before(:suite) do
-    require "lutaml/converter/xmi_to_uml_generalization"
     require "lutaml/uml"
-    require "lutaml/xmi"
+    require "ea/xmi"
 
     cache = Metanorma::Plugin::Lutaml::CacheRegistry.xmi_cache
     cache.clear

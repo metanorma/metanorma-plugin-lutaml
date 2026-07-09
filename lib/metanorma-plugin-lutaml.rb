@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 require_relative "metanorma/plugin/lutaml/version"
+require "lutaml/uml"
+require "lutaml/lml"
+require "lutaml/model"
+require "ea"
 require_relative "metanorma/plugin/lutaml"
 
 module Metanorma

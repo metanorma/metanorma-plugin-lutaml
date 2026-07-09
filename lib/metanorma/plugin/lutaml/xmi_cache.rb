@@ -90,7 +90,7 @@ guidance = nil)
           parsed = XMI_PARSE_CACHE.fetch(xmi_path)
           klass = resolve_packaged_klass(parsed, name)
           warn "Class not found for name: #{name}" if klass.nil?
-          ::Lutaml::Xmi::LiquidDrops::KlassDrop.new(
+          ::Ea::Xmi::LiquidDrops::KlassDrop.new(
             klass, guidance, parsed.drop_options
           )
         end
@@ -102,7 +102,7 @@ guidance = nil)
           enum = raw_enum && find_enum_by_xmi_id(
             parsed.uml_document, raw_enum.id
           )
-          ::Lutaml::Xmi::LiquidDrops::EnumDrop.new(
+          ::Ea::Xmi::LiquidDrops::EnumDrop.new(
             enum, parsed.drop_options
           )
         end

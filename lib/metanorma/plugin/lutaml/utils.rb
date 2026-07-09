@@ -179,7 +179,7 @@ module Metanorma
         end
 
         def load_express_repo_from_cache(path)
-          ::Lutaml::Express::Parsers::Exp.parse_cache(path)
+          ::Expressir::Express::Cache.from_file(path)
         end
 
         def save_express_repo_to_cache(path, repository, document)
