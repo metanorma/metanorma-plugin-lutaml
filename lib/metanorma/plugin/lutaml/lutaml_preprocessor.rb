@@ -29,9 +29,9 @@ module Metanorma
 
           file = File.new(full_path, encoding: "UTF-8")
           if full_path.end_with?(".exp")
-            ::Lutaml::Express::Parsers::Exp.parse(file)
+            ::Expressir::Express::Parser.from_file(file)
           else
-            ::Lutaml::Uml::Parsers::Dsl.parse(file)
+            ::Lutaml::Lml::Parser.parse(file)
           end
         end
 

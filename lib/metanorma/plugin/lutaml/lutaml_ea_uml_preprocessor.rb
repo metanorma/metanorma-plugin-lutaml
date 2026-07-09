@@ -3,7 +3,7 @@
 require "liquid"
 require "asciidoctor"
 require "asciidoctor/reader"
-require "lutaml"
+require "lutaml/uml"
 require_relative "utils"
 require "metanorma/plugin/lutaml/asciidoctor/preprocessor"
 require "metanorma/plugin/lutaml/lutaml_ea_xmi_base"
@@ -23,9 +23,9 @@ module Metanorma
         def parse_result_document(full_path, _guidance)
           case File.extname(full_path).downcase
           when ".xmi"
-            ::Lutaml::Xmi::Parsers::Xml.parse(full_path)
+            ::Ea::Xmi::Parser.parse(full_path)
           when ".qea"
-            ::Lutaml::Qea.parse(full_path)
+            ::Ea.to_uml(full_path)
           when ".lur"
             repo = ::Lutaml::UmlRepository::Repository.from_file(full_path)
             repo.document

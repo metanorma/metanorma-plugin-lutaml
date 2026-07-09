@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "xmi"
-require "lutaml/xmi"
+require "ea/xmi"
 
 module Metanorma
   module Plugin
@@ -18,7 +18,7 @@ module Metanorma
         def fetch(full_path)
           @parse_cache.fetch_or_store(full_path) do
             xmi_model = ::Xmi::Sparx::Root.parse_xml(File.read(full_path))
-            parser = ::Lutaml::Xmi::Parsers::Xml.new
+            parser = ::Ea::Xmi::Parser.new
             uml_document = parser.parse(xmi_model)
             ParsedXmi.new(
               parser: parser,
@@ -31,7 +31,7 @@ module Metanorma
         def fetch_drop(full_path, guidance: nil)
           parsed = fetch(full_path)
           @drop_cache.fetch_or_store([full_path, guidance]) do
-            ::Lutaml::Xmi::LiquidDrops::RootDrop.new(
+            ::Ea::Xmi::LiquidDrops::RootDrop.new(
               parsed.uml_document, guidance, parsed.drop_options
             )
           end
@@ -45,9 +45,7 @@ module Metanorma
         private
 
         def build_drop_options(parser)
-          lookup = ::Lutaml::Xmi::XmiLookupService.new(
-            parser.xmi_root_model, parser.id_name_mapping
-          )
+          lookup = ::Ea::Xmi::LookupService.new(parser)
           {
             xmi_root_model: parser.xmi_root_model,
             id_name_mapping: parser.id_name_mapping,
