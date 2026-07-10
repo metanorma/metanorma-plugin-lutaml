@@ -483,7 +483,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         it "creates a valid cache file for supplied path" do
           expect { metanorma_convert(input) }
             .to(change { File.file?(cache_file_path) }.from(false).to(true))
-          cached = Lutaml::Express::Parsers::Exp.parse_cache(cache_file_path)
+          cached = Expressir::Express::Cache.from_file(cache_file_path)
           schema_ids = cached.content.schemas.map(&:id).sort
           expect(schema_ids)
             .to(eq(["Activity_method_characterized_arm",
@@ -589,8 +589,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             it "recreates the cache file with the correct data" do
               expect { xml_string_content(metanorma_convert(input)) }
                 .to(change do
-                  cached = Lutaml::Express::Parsers::Exp
-                    .parse_cache(cache_path)
+                  cached = Expressir::Express::Cache
+                    .from_file(cache_path)
                   cached.content.schemas.map(&:id).sort
                 rescue StandardError
                   nil
