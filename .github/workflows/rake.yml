@@ -1,0 +1,24 @@
+# Formerly cimas-managed. Now consumer-owned per metanorma/cimas#68
+# (workflow-file conversion from cimas-synced copied stubs to reusable-workflow
+# references). Pins metanorma/ci reusable at @v1 (moving major, three-tier
+# tagging discipline per metanorma/ci#372).
+name: rake
+
+on:
+  push:
+    branches: [ master, main ]
+    tags: [ v* ]
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  rake:
+    uses: metanorma/ci/.github/workflows/generic-rake.yml@v1
+    with:
+      setup-tools: graphviz
+      submodules: true
+      choco-cache: true
+    secrets:
+      pat_token: ${{ secrets.METANORMA_CI_PAT_TOKEN }}
