@@ -51,6 +51,7 @@ module Metanorma
             id_name_mapping: parser.id_name_mapping,
             lookup: lookup,
             with_gen: true,
+            with_assoc: true,
             with_absolute_path: true,
           }
         end
