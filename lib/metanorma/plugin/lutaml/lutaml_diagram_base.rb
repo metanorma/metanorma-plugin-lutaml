@@ -11,7 +11,7 @@ module Metanorma
     module Lutaml
       module LutamlDiagramBase
         def process(parent, reader, attrs)
-          uml_document = ::Lutaml::Lml::Parser
+          uml_document = ::Lutaml::Lml
             .parse(lutaml_file(parent.document, reader))
           filename = generate_file(parent, reader, uml_document)
           through_attrs = generate_attrs(attrs)

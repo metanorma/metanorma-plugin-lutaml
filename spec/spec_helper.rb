@@ -95,7 +95,7 @@ RSpec.configure do |config|
   end
 end
 
-BLANK_HDR = <<~"HDR".freeze
+BLANK_HDR = <<~HDR.freeze
   <?xml version="1.0" encoding="UTF-8"?>
   <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="#{Metanorma::Standoc::VERSION}" flavor="standoc">
     <bibdata type="standard">
