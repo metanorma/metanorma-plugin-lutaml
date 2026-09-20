@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "liquid"
   spec.add_dependency "lutaml-lml"
   spec.add_dependency "lutaml-model", "~> 0.8.4"
-  spec.add_dependency "lutaml-uml", "~> 0.5"
+  spec.add_dependency "lutaml-uml", ">= 0.5", "< 2"
   spec.add_dependency "ogc-gml", "~> 1.1"
   spec.add_dependency "relaton-cli"
 
