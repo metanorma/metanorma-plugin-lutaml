@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 require_relative "metanorma/plugin/lutaml/version"
-require "lutaml/uml"
+begin
+  require "lutaml/uml"
+rescue LoadError # LOCAL: express-only build without the UML stack
+end
 require "lutaml/lml"
 require "lutaml/model"
 require "ea"
