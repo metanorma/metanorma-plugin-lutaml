@@ -141,6 +141,14 @@ module Metanorma
           cache_full_path = cache_path &&
             Utils.relative_file_path(document, cache_path)
 
+          if express_artifact?(
+            Utils.relative_file_path(document, path),
+          )
+            return load_express_repo_from_path(
+              document, Utils.relative_file_path(document, path)
+            )
+          end
+
           # If there is cache and "force read" not set.
           if !force_read && cache_full_path && File.file?(cache_full_path)
             return load_express_repo_from_cache(cache_full_path)
@@ -191,9 +199,22 @@ module Metanorma
         end
 
         def load_express_repo_from_path(document, path)
+          return load_express_from_artifact(path) if express_artifact?(path)
           return load_express_from_folder(path) if File.directory?(path)
 
           load_express_from_index(document, path)
+        end
+
+        def express_artifact?(path)
+          path.to_s.end_with?(".exscs")
+        end
+
+        # Compiled-set artifacts (EXSCS1) hydrate per file on first
+        # touch: rendering one schema's page costs one hydration, not
+        # the whole repository. The artifact already carries content
+        # digests, so the expressir Cache layer does not apply.
+        def load_express_from_artifact(path)
+          Expressir::Express::LazyRepository.new(path.to_s)
         end
 
         def load_express_from_folder(folder)
