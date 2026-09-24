@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "asciidoctor"
   spec.add_dependency "coradoc", "~> 1.1.8"
-  spec.add_dependency "ea", "~> 0.2"
+  spec.add_dependency "ea"
   spec.add_dependency "expressir", "~> 2.3", ">= 2.3.5"
   spec.add_dependency "isodoc"
   spec.add_dependency "liquid"
