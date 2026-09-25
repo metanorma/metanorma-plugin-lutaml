@@ -7,3 +7,7 @@ gem "metanorma", github: "metanorma/metanorma", ref: "a899a9a6fc933dca0a53166d66
 # metanorma-document components)
 gem "relaton", github: "relaton/relaton", ref: "65742ac31bce9e006072e1ace440c984352201f3"
 gem "relaton-cli", github: "relaton/relaton-cli", branch: "feat/allow-relaton-v3-v2line"
+
+# lutaml-lml 0.1.5 adds Lutaml::Lml.parse + Formatter::Graphviz used by
+# the lutaml_diagram renderer; 0.1.1 (previously resolved) lacks them
+gem "lutaml-lml", ">= 0.1.5"
