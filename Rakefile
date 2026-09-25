@@ -1,8 +1,11 @@
 require "bundler/gem_tasks"
 require "rspec/core/rake_task"
 
+# The EA XMI fixture is the heaviest parse in the suite (minutes per
+# example on ruby 3.3); it runs in its own process via `rake xmi_ea`.
+EA_XMI_SPEC_FILE = "spec/metanorma/plugin/lutaml/lutaml_ea_xmi_preprocessor_spec.rb"
+
 XMI_SPEC_FILES = %w[
-  spec/metanorma/plugin/lutaml/lutaml_ea_xmi_preprocessor_spec.rb
   spec/metanorma/plugin/lutaml/lutaml_uml_datamodel_description_preprocessor_spec.rb
   spec/metanorma/plugin/lutaml/lutaml_klass_table_block_macro_spec.rb
   spec/metanorma/plugin/lutaml/lutaml_enum_table_block_macro_spec.rb
@@ -18,6 +21,10 @@ end
 
 RSpec::Core::RakeTask.new(:xmi) do |t|
   t.pattern = FileList[XMI_SPEC_FILES]
+end
+
+RSpec::Core::RakeTask.new(:xmi_ea) do |t|
+  t.pattern = FileList[EA_XMI_SPEC_FILE]
 end
 
 # The full suite in one process accumulates enough parse memory to be
