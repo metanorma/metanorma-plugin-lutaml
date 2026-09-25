@@ -6,6 +6,9 @@ require "expressir"
 
 RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
   describe "compiled-set artifact index (.exscs)" do
+    before do
+      skip "native extension not compiled" unless Expressir::Express::Core::NATIVE_AVAILABLE
+    end
     let(:schemas) do
       {
         "alpha" => <<~EXP,
