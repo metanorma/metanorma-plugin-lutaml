@@ -20,4 +20,7 @@ RSpec::Core::RakeTask.new(:xmi) do |t|
   t.pattern = FileList[XMI_SPEC_FILES]
 end
 
-task default: :spec
+# The full suite in one process accumulates enough parse memory to be
+# killed on some runners (metanorma-plugin-lutaml#304); run the two
+# halves as separate rspec processes so memory is reclaimed between.
+task default: %i[fast xmi]

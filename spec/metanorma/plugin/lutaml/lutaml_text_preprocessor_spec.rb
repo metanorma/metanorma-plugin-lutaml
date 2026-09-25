@@ -284,11 +284,17 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
         end
 
         context "when loaded from a cache file" do
-          let(:cache_path) do
+          # Work on a copy: the cache-format the installed expressir
+          # writes must never clobber the committed fixture.
+          let(:cache_fixture) do
             fixtures_path(
               "expressir_relative_paths/test_relative_includes_cache.exp.cache",
             )
           end
+          let(:cache_dir) { Dir.mktmpdir("cache-fixture") }
+          let(:cache_path) { File.join(cache_dir, "test.exp.cache") }
+
+          after { FileUtils.rm_rf(cache_dir) }
           let(:input) do
             <<~TEXT
               = Document title
@@ -332,6 +338,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
           end
 
           before do
+            FileUtils.cp(cache_fixture, cache_path)
             yaml_compressed = File.binread(cache_path)
             yaml = Zlib::Inflate.inflate(yaml_compressed)
             cache = Expressir::Model::Cache.from_yaml(yaml)
