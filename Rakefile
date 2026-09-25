@@ -19,7 +19,8 @@ XMI_SPEC_FILES = %w[
 RSpec::Core::RakeTask.new(:spec)
 
 RSpec::Core::RakeTask.new(:fast) do |t|
-  t.pattern = FileList["spec/**/*_spec.rb"] - XMI_SPEC_FILES
+  t.pattern =
+    FileList["spec/**/*_spec.rb"] - XMI_SPEC_FILES - XMI_HEAVY_SPEC_FILES
 end
 
 RSpec::Core::RakeTask.new(:xmi) do |t|
