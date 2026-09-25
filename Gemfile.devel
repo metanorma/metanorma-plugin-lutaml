@@ -1,7 +1,9 @@
-gem "metanorma-standoc", github: "metanorma/metanorma-standoc", branch: "main"
-gem "metanorma", github: "metanorma/metanorma", branch: "main"
+gem "metanorma-standoc", github: "metanorma/metanorma-standoc", ref: "5ca49c85bbcc1422e48c4b625a66f7f026dc6832"
+gem "metanorma", github: "metanorma/metanorma", ref: "a899a9a6fc933dca0a53166d6633b609311b14e6"
 # relaton v3 prerelease line (rubyzip ~> 3.4, matching lutaml-model);
 # relaton-cli's v2line branch allows relaton 3 while keeping version
-# 2.1.2 for metanorma-standoc's constraint
+# 2.1.2 for metanorma-standoc's constraint; the metanorma/standoc
+# refs are the known-good pair (newer standoc@main needs unreleased
+# metanorma-document components)
 gem "relaton", github: "relaton/relaton", ref: "65742ac31bce9e006072e1ace440c984352201f3"
 gem "relaton-cli", github: "relaton/relaton-cli", branch: "feat/allow-relaton-v3-v2line"
