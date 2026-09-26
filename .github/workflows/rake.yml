@@ -20,30 +20,5 @@ jobs:
       setup-tools: graphviz
       submodules: true
       choco-cache: true
-      # Build the expressir Rust binding for the vendored gem: without
-      # it the pure-Ruby parser path makes the heavy suites exceed the
-      # runner memory ceiling on ruby 3.3 (#304).
-      after-setup-ruby: |
-        case "$(uname -s)" in
-          *MINGW*|*MSYS*)
-            echo "windows: ruby is mingw-built; the binding needs the
-            gnu toolchain - skipping (windows passes without it)"
-            exit 0
-            ;;
-        esac
-        if ! command -v cargo >/dev/null 2>&1; then
-          echo "cargo not available; skipping expressir binding build"
-          exit 0
-        fi
-        gem install rb_sys --no-document
-        gem_path=$(bundle info expressir --path)
-        ext_dir="$gem_path/ext/expressir_core"
-        if [ -f "$ext_dir/extconf.rb" ]; then
-          (cd "$ext_dir" && ruby extconf.rb && make)
-          bundle_path="$ext_dir/expressir_core.bundle"
-          if [ "$(uname)" = "Darwin" ] && [ -f "$bundle_path" ]; then
-            codesign -f -s - "$bundle_path"
-          fi
-        fi
     secrets:
       pat_token: ${{ secrets.METANORMA_CI_PAT_TOKEN }}
