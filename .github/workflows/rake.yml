@@ -24,6 +24,13 @@ jobs:
       # it the pure-Ruby parser path makes the heavy suites exceed the
       # runner memory ceiling on ruby 3.3 (#304).
       after-setup-ruby: |
+        case "$(uname -s)" in
+          *MINGW*|*MSYS*)
+            echo "windows: ruby is mingw-built; the binding needs the
+            gnu toolchain - skipping (windows passes without it)"
+            exit 0
+            ;;
+        esac
         if ! command -v cargo >/dev/null 2>&1; then
           echo "cargo not available; skipping expressir binding build"
           exit 0
