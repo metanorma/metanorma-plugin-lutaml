@@ -28,6 +28,7 @@ jobs:
           echo "cargo not available; skipping expressir binding build"
           exit 0
         fi
+        gem install rb-sys --no-document
         gem_path=$(bundle info expressir --path)
         ext_dir="$gem_path/ext/expressir_core"
         if [ -f "$ext_dir/extconf.rb" ]; then
