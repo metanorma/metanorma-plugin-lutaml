@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "metanorma/plugin/lutaml/gc_budget"
+
 module Metanorma
   module Plugin
     module Lutaml
@@ -127,6 +129,7 @@ yaml_config_path = nil)
 
         def serialize_klass_drop_by_name(xmi_path,
           name, _document = nil, guidance = nil)
+          GcBudget.gc_when_bloated!
           parsed = XMI_PARSE_CACHE.fetch(xmi_path)
           klass = resolve_packaged_klass(parsed, name)
           if klass.nil?
@@ -140,6 +143,7 @@ yaml_config_path = nil)
         end
 
         def serialize_datatype_drop_by_name(xmi_path, name, _document = nil)
+          GcBudget.gc_when_bloated!
           parsed = XMI_PARSE_CACHE.fetch(xmi_path)
           datatype = resolve_packaged_datatype(parsed, name)
           if datatype.nil?
@@ -153,6 +157,7 @@ yaml_config_path = nil)
         end
 
         def serialize_enum_drop_by_name(xmi_path, name, _document = nil)
+          GcBudget.gc_when_bloated!
           parsed = XMI_PARSE_CACHE.fetch(xmi_path)
           raw_enum = find_packaged_enum(parsed.parser.xmi_index, name)
           if raw_enum.nil?

@@ -2,6 +2,8 @@
 
 require "liquid"
 
+require "metanorma/plugin/lutaml/gc_budget"
+
 module Metanorma
   module Plugin
     module Lutaml
@@ -72,6 +74,9 @@ module Metanorma
           end
 
           rendered_table = table_tmpl.render
+          # The asciidoctor ingestion of a rendered table transiently
+          # dwarfs its input; collect the liquid phase's garbage first.
+          GcBudget.gc_when_bloated!
           block = create_open_block(parent, "", attrs)
           parse_content(block, rendered_table, attrs)
         end

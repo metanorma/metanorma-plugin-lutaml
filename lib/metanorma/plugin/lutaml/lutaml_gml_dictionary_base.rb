@@ -3,6 +3,8 @@
 require "ogc/gml"
 require "liquid"
 
+require "metanorma/plugin/lutaml/gc_budget"
+
 module Metanorma
   module Plugin
     module Lutaml
@@ -10,6 +12,7 @@ module Metanorma
         private
 
         def render(tmpl, parent, attrs, orig_gml_path)
+          GcBudget.gc_when_bloated!
           dict = get_gml_dictionary(parent, orig_gml_path)
           tmpl.assigns[attrs["context"]] = GmlDictionaryDrop.new(dict)
           rendered_tmpl = tmpl.render
