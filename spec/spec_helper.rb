@@ -14,6 +14,7 @@ Asciidoctor::Extensions.register do
   preprocessor Metanorma::Plugin::Lutaml::Json2TextPreprocessor
   preprocessor Metanorma::Plugin::Lutaml::Yaml2TextPreprocessor
   preprocessor Metanorma::Plugin::Lutaml::Data2TextPreprocessor
+  preprocessor Metanorma::Plugin::Lutaml::LutamlDataPreprocessor
   preprocessor Metanorma::Plugin::Lutaml::LutamlPreprocessor
   preprocessor Metanorma::Plugin::Lutaml::LutamlXmiUmlPreprocessor
   preprocessor Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor
