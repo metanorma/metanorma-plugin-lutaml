@@ -28,8 +28,8 @@ module Metanorma
             guidance = get_guidance(parent.document, attrs["guidance"])
           end
 
-          klass = serialize_klass_drop_by_name(xmi_path, path, parent.document,
-                                               guidance)
+          klass = serialize_klass_or_datatype_drop_by_name(
+            xmi_path, path, parent.document, guidance)
 
           render_table(klass, CONTEXT_NAME, parent, attrs)
         end

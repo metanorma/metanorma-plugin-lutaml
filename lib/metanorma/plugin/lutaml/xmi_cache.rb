@@ -35,6 +35,14 @@ yaml_config_path = nil)
               .first
         end
 
+        def find_datatype_by_xmi_id(container, xmi_id)
+          container.data_types.find { |node| node.xmi_id == xmi_id } ||
+            container.packages
+              .lazy
+              .filter_map { |pkg| find_datatype_by_xmi_id(pkg, xmi_id) }
+              .first
+        end
+
         def find_enum_by_xmi_id(container, xmi_id)
           container.enums.find { |node| node.xmi_id == xmi_id } ||
             container.packages
@@ -69,6 +77,32 @@ yaml_config_path = nil)
           end
         end
 
+        def find_packaged_datatype(index, path, root_model_name: nil)
+          segments = path.split("::").reject(&:empty?)
+          if root_model_name && segments.first == root_model_name
+            segments.shift
+          end
+          if segments.one?
+            index.find_packaged_by_name_and_types(
+              segments.first, ["uml:DataType"]
+            )
+          else
+            find_packaged_datatype_by_path(index, segments)
+          end
+        end
+
+        def find_packaged_datatype_by_path(index, segments)
+          datatype_name = segments.pop
+
+          candidates = ["uml:DataType"]
+            .flat_map { |t| index.packaged_elements_of_type(t) }
+            .select { |e| e.name == datatype_name }
+
+          candidates.find do |datatype|
+            match_parent_chain?(index, datatype, segments)
+          end
+        end
+
         def match_parent_chain?(index, element, parent_segments)
           current = element
           parent_segments.reverse_each do |pkg_name|
@@ -85,20 +119,47 @@ yaml_config_path = nil)
             .find { |e| e.name == name }
         end
 
-        def serialize_klass_drop_by_name(xmi_path, name, _document = nil,
-guidance = nil)
+        def serialize_klass_or_datatype_drop_by_name(xmi_path,
+          name, _document = nil, guidance = nil)
+          serialize_klass_drop_by_name(xmi_path, name, _document, guidance) ||
+            serialize_datatype_drop_by_name(xmi_path, name, _document)
+        end
+
+        def serialize_klass_drop_by_name(xmi_path,
+          name, _document = nil, guidance = nil)
           parsed = XMI_PARSE_CACHE.fetch(xmi_path)
           klass = resolve_packaged_klass(parsed, name)
-          warn "Class not found for name: #{name}" if klass.nil?
+          if klass.nil?
+            warn "Class not found for name: #{name}"
+            return nil
+          end
+
           ::Ea::Xmi::LiquidDrops::KlassDrop.new(
             klass, guidance, parsed.drop_options
+          )
+        end
+
+        def serialize_datatype_drop_by_name(xmi_path, name, _document = nil)
+          parsed = XMI_PARSE_CACHE.fetch(xmi_path)
+          datatype = resolve_packaged_datatype(parsed, name)
+          if datatype.nil?
+            warn "Datatype not found for name: #{name}"
+            nil
+          end
+
+          ::Ea::Xmi::LiquidDrops::DataTypeDrop.new(
+            datatype, parsed.drop_options
           )
         end
 
         def serialize_enum_drop_by_name(xmi_path, name, _document = nil)
           parsed = XMI_PARSE_CACHE.fetch(xmi_path)
           raw_enum = find_packaged_enum(parsed.parser.xmi_index, name)
-          warn "Enumeration not found for name: #{name}" if raw_enum.nil?
+          if raw_enum.nil?
+            warn "Enumeration not found for name: #{name}"
+            return nil
+          end
+
           enum = raw_enum && find_enum_by_xmi_id(
             parsed.uml_document, raw_enum.id
           )
@@ -117,6 +178,17 @@ guidance = nil)
           )
           raw_klass && find_class_by_xmi_id(
             parsed.uml_document, raw_klass.id
+          )
+        end
+
+        def resolve_packaged_datatype(parsed, name)
+          root_model_name = parsed.parser.xmi_root_model.model.name
+          raw_datatype = find_packaged_datatype(
+            parsed.parser.xmi_index, name,
+            root_model_name: root_model_name
+          )
+          raw_datatype && find_datatype_by_xmi_id(
+            parsed.uml_document, raw_datatype.id
           )
         end
       end
