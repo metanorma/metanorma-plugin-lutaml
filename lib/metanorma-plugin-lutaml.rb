@@ -31,6 +31,8 @@ module Metanorma
       autoload :LutamlDiagramBase, "metanorma/plugin/lutaml/lutaml_diagram_base"
       autoload :LutamlDiagramBlock,
                "metanorma/plugin/lutaml/lutaml_diagram_block"
+      autoload :LutamlDataPreprocessor,
+               "metanorma/plugin/lutaml/lutaml_data_preprocessor"
       autoload :LutamlDiagramBlockMacro,
                "metanorma/plugin/lutaml/lutaml_diagram_block_macro"
       autoload :LutamlEaDiagramBlockMacro,
