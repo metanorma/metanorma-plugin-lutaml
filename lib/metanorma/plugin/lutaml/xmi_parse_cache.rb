@@ -7,7 +7,7 @@ module Metanorma
   module Plugin
     module Lutaml
       ParsedXmi = Struct.new(:parser, :uml_document, :drop_options,
-                             keyword_init: true)
+                             :xmi_id_index, keyword_init: true)
 
       class XmiParseCache
         def initialize(max_size: 50)
@@ -24,6 +24,7 @@ module Metanorma
               parser: parser,
               uml_document: uml_document,
               drop_options: build_drop_options(parser),
+              xmi_id_index: build_xmi_id_index(uml_document),
             )
           end
         end
@@ -43,6 +44,28 @@ module Metanorma
         end
 
         private
+
+        # One xmi_id -> node walk per parse. Macro resolution used to
+        # recurse the whole package tree per lookup — O(nodes) per macro
+        # invocation, hundreds of invocations per document.
+        def build_xmi_id_index(uml_document)
+          index = {}
+          collect = lambda do |container|
+            index[container.xmi_id] ||= container if container.respond_to?(:xmi_id)
+            if container.respond_to?(:classes)
+              container.classes.each { |n| index[n.xmi_id] ||= n }
+            end
+            if container.respond_to?(:data_types)
+              container.data_types.each { |n| index[n.xmi_id] ||= n }
+            end
+            if container.respond_to?(:enums)
+              container.enums.each { |n| index[n.xmi_id] ||= n }
+            end
+            (container.packages || []).each { |p| collect.call(p) } if container.respond_to?(:packages)
+          end
+          collect.call(uml_document)
+          index
+        end
 
         def build_drop_options(parser)
           lookup = ::Ea::Xmi::LookupService.new(parser)
