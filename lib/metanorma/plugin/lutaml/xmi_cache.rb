@@ -29,29 +29,8 @@ yaml_config_path = nil)
           end
         end
 
-        def find_class_by_xmi_id(container, xmi_id)
-          container.classes.find { |node| node.xmi_id == xmi_id } ||
-            container.packages
-              .lazy
-              .filter_map { |pkg| find_class_by_xmi_id(pkg, xmi_id) }
-              .first
-        end
 
-        def find_datatype_by_xmi_id(container, xmi_id)
-          container.data_types.find { |node| node.xmi_id == xmi_id } ||
-            container.packages
-              .lazy
-              .filter_map { |pkg| find_datatype_by_xmi_id(pkg, xmi_id) }
-              .first
-        end
 
-        def find_enum_by_xmi_id(container, xmi_id)
-          container.enums.find { |node| node.xmi_id == xmi_id } ||
-            container.packages
-              .lazy
-              .filter_map { |pkg| find_enum_by_xmi_id(pkg, xmi_id) }
-              .first
-        end
 
         def find_packaged_klass(index, path, root_model_name: nil)
           segments = path.split("::").reject(&:empty?)
@@ -165,9 +144,7 @@ yaml_config_path = nil)
             return nil
           end
 
-          enum = raw_enum && find_enum_by_xmi_id(
-            parsed.uml_document, raw_enum.id
-          )
+          enum = parsed.xmi_id_index[raw_enum.id]
           ::Ea::Xmi::LiquidDrops::EnumDrop.new(
             enum, parsed.drop_options
           )
@@ -181,9 +158,7 @@ yaml_config_path = nil)
             parsed.parser.xmi_index, name,
             root_model_name: root_model_name
           )
-          raw_klass && find_class_by_xmi_id(
-            parsed.uml_document, raw_klass.id
-          )
+          raw_klass && parsed.xmi_id_index[raw_klass.id]
         end
 
         def resolve_packaged_datatype(parsed, name)
@@ -192,9 +167,7 @@ yaml_config_path = nil)
             parsed.parser.xmi_index, name,
             root_model_name: root_model_name
           )
-          raw_datatype && find_datatype_by_xmi_id(
-            parsed.uml_document, raw_datatype.id
-          )
+          raw_datatype && parsed.xmi_id_index[raw_datatype.id]
         end
       end
     end
