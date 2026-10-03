@@ -15,7 +15,9 @@ module Metanorma
           @drop_cache = CacheStore.new(max_size: max_size)
         end
 
-        def fetch(full_path)
+        def fetch(full_path, retain: true)
+          return fetch_unretained(full_path) unless retain
+
           @parse_cache.fetch_or_store(full_path) do
             xmi_model = ::Xmi::Sparx::Root.parse_xml(File.read(full_path))
             parser = ::Ea::Xmi::Parser.new
@@ -27,6 +29,21 @@ module Metanorma
               xmi_id_index: build_xmi_id_index(uml_document),
             )
           end
+        end
+
+        # A slice is consumed exactly once (one macro, one class), so
+        # retaining its parsed model only accumulates garbage; the full
+        # sources keep the memoized path.
+        def fetch_unretained(full_path)
+          xmi_model = ::Xmi::Sparx::Root.parse_xml(File.read(full_path))
+          parser = ::Ea::Xmi::Parser.new
+          uml_document = parser.parse(xmi_model)
+          ParsedXmi.new(
+            parser: parser,
+            uml_document: uml_document,
+            drop_options: build_drop_options(parser),
+            xmi_id_index: build_xmi_id_index(uml_document),
+          )
         end
 
         def fetch_drop(full_path, guidance: nil)
