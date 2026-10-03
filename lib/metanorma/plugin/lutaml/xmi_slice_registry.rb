@@ -39,6 +39,13 @@ module Metanorma
             [slice, bare_name(name_path)]
           end
 
+          def slice?(xmi_path)
+            return false unless @registry
+
+            entry = @registry[xmi_path]
+            !entry.nil? && entry.any?
+          end
+
           def reset!
             @registry = nil
             @dir&.rmtree if @dir&.exist?
