@@ -109,8 +109,9 @@ yaml_config_path = nil)
         def serialize_klass_drop_by_name(xmi_path,
           name, _document = nil, guidance = nil)
           GcBudget.gc_when_bloated!
+          was_slice = XmiSliceRegistry.slice?(xmi_path)
           xmi_path, name = XmiSliceRegistry.rewrite(xmi_path, name)
-          parsed = XMI_PARSE_CACHE.fetch(xmi_path)
+          parsed = XMI_PARSE_CACHE.fetch(xmi_path, retain: !was_slice)
           klass = resolve_packaged_klass(parsed, name)
           if klass.nil?
             warn "Class not found for name: #{name}"
@@ -124,8 +125,9 @@ yaml_config_path = nil)
 
         def serialize_datatype_drop_by_name(xmi_path, name, _document = nil)
           GcBudget.gc_when_bloated!
+          was_slice = XmiSliceRegistry.slice?(xmi_path)
           xmi_path, name = XmiSliceRegistry.rewrite(xmi_path, name)
-          parsed = XMI_PARSE_CACHE.fetch(xmi_path)
+          parsed = XMI_PARSE_CACHE.fetch(xmi_path, retain: !was_slice)
           datatype = resolve_packaged_datatype(parsed, name)
           if datatype.nil?
             warn "Datatype not found for name: #{name}"
@@ -139,8 +141,9 @@ yaml_config_path = nil)
 
         def serialize_enum_drop_by_name(xmi_path, name, _document = nil)
           GcBudget.gc_when_bloated!
+          was_slice = XmiSliceRegistry.slice?(xmi_path)
           xmi_path, name = XmiSliceRegistry.rewrite(xmi_path, name)
-          parsed = XMI_PARSE_CACHE.fetch(xmi_path)
+          parsed = XMI_PARSE_CACHE.fetch(xmi_path, retain: !was_slice)
           raw_enum = find_packaged_enum(parsed.parser.xmi_index, name)
           if raw_enum.nil?
             warn "Enumeration not found for name: #{name}"
