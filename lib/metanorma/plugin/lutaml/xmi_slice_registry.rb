@@ -64,14 +64,28 @@ module Metanorma
             @registry = {}
             require "tmpdir"
             @dir = Pathname.new(Dir.mktmpdir("lutaml_xmi_slices"))
-            groups.each do |path, wanted|
+            groups.each do |path, entries|
               next unless File.size(path) >= MIN_SOURCE_BYTES
 
+              slice_groups = {}
+              macro_keys = {}
+              entries.each do |key, value|
+                if value.is_a?(Array) # group_key => wanted pairs
+                  slice_groups[key] = value
+                else # macro key => group_key
+                  (macro_keys[value] ||= []) << key
+                end
+              end
               slice_paths = ::Ea::Xmi::Slicer.slices(
-                path, wanted, dir: @dir.join(digest(path)).to_s
+                path, slice_groups, dir: @dir.join(digest(path)).to_s
               )
               @registry[path] ||= {}
-              @registry[path].merge!(slice_paths)
+              macro_keys.each do |group_key, keys|
+                slice = slice_paths[group_key]
+                next unless slice
+
+                keys.each { |k| @registry[path][k] = slice }
+              end
             end
           end
 
@@ -82,6 +96,10 @@ module Metanorma
               lines.any? { |l| l.match?(/\A:lutaml-xmi-slices:/) }
           end
 
+          # Slices are grouped per package, not per class: the tables
+          # of classes in one package share most of their closure
+          # (partners, connectors, ancestors), so a package slice
+          # carries each shared subtree once instead of once per class.
           def collect_groups(document, lines)
             groups = Hash.new { |h, k| h[k] = {} }
             lines.each do |line|
@@ -92,7 +110,9 @@ module Metanorma
                 next if name.nil?
 
                 key = package ? "#{package}::#{name}" : name
-                groups[path][key] = [[package, name]]
+                group_key = package || "_"
+                (groups[path][group_key] ||= []) << [package, name]
+                groups[path][key] = group_key
               end
             end
             groups
