@@ -7,7 +7,7 @@ module Metanorma
     module Lutaml
       module XmiCache
         # Bounded parse-once cache: every macro touching a source (the
-        # full file, or its package slice under lutaml-xmi-slices)
+        # full file, or its package slice under lutaml-ea-xmi-load: partial)
         # reuses the one parsed graph; the LRU bound keeps the retained
         # graphs to a few live at once, which the section-ordered
         # macros of a document turn into near-perfect reuse.
@@ -114,8 +114,8 @@ yaml_config_path = nil)
         def serialize_klass_drop_by_name(xmi_path,
           name, _document = nil, guidance = nil)
           GcBudget.gc_when_bloated!
-          xmi_path, name = XmiSliceRegistry.rewrite(xmi_path, name)
-          parsed = XMI_PARSE_CACHE.fetch(xmi_path)
+          xmi_path, name, slice = XmiPartialLoadRegistry.rewrite(xmi_path, name)
+          parsed = XMI_PARSE_CACHE.fetch(xmi_path, slice: slice)
           klass = resolve_packaged_klass(parsed, name)
           if klass.nil?
             warn "Class not found for name: #{name}"
@@ -129,8 +129,8 @@ yaml_config_path = nil)
 
         def serialize_datatype_drop_by_name(xmi_path, name, _document = nil)
           GcBudget.gc_when_bloated!
-          xmi_path, name = XmiSliceRegistry.rewrite(xmi_path, name)
-          parsed = XMI_PARSE_CACHE.fetch(xmi_path)
+          xmi_path, name, slice = XmiPartialLoadRegistry.rewrite(xmi_path, name)
+          parsed = XMI_PARSE_CACHE.fetch(xmi_path, slice: slice)
           datatype = resolve_packaged_datatype(parsed, name)
           if datatype.nil?
             warn "Datatype not found for name: #{name}"
@@ -144,8 +144,8 @@ yaml_config_path = nil)
 
         def serialize_enum_drop_by_name(xmi_path, name, _document = nil)
           GcBudget.gc_when_bloated!
-          xmi_path, name = XmiSliceRegistry.rewrite(xmi_path, name)
-          parsed = XMI_PARSE_CACHE.fetch(xmi_path)
+          xmi_path, name, slice = XmiPartialLoadRegistry.rewrite(xmi_path, name)
+          parsed = XMI_PARSE_CACHE.fetch(xmi_path, slice: slice)
           raw_enum = find_packaged_enum(parsed.parser.xmi_index, name)
           if raw_enum.nil?
             warn "Enumeration not found for name: #{name}"
