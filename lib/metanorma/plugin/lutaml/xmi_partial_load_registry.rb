@@ -6,37 +6,45 @@ require_relative "utils"
 module Metanorma
   module Plugin
     module Lutaml
-      # Prunes large XMI sources to per-class slices before the parse
-      # pipeline ever sees them.
+      # Loads the XMI sources of table macros partially, through
+      # Ea::Xmi.load_graph's partial mode.
       #
       # EA exports of plateau scale reach ~100 MB, more than half of it
       # diagram presentation data, and fully materializing the Xmi tree
       # plus the Ea graph costs 10+ GB of live objects - more than a
-      # standard build runner has. Ea::Xmi::Slicer streams the source
-      # once and emits one standalone slice per referenced class, so
-      # each klass-table macro parses a few MB containing exactly its
-      # class's subgraph, and the existing parse path is unchanged.
+      # standard build runner has. With the `lutaml-ea-xmi-load` document
+      # attribute set to `partial`, every klass and enum table macro's
+      # (package, name) pair seeds a per-package reference closure; one
+      # streaming pass per source assembles the closures in memory and
+      # each macro parses only its own package's slice. Nothing is
+      # written to disk.
       #
-      # Activation is opt-in through the `lutaml-xmi-slices` document
-      # attribute; without it nothing is sliced and behavior is
-      # byte-for-byte the full-file path.
-      module XmiSliceRegistry
+      # Without the attribute nothing is preloaded and behavior is
+      # byte-for-byte the whole-load path.
+      module XmiPartialLoadRegistry
         MACRO_REGEXP = /lutaml_(?:klass|enum)_table::([^\[<]+)\[([^\]]*)\]/
         MIN_SOURCE_BYTES = 2 * 1024 * 1024
 
         class << self
-          # Rewrites (xmi_path, name_path) to the class's slice when one
-          # was prepared, else returns the inputs unchanged.
+          # Rewrites (xmi_path, name_path) to the partial-load form of
+          # the macro's class: [path, bare name, slice token]. The
+          # token is nil when no slice was prepared, in which case the
+          # macro whole-loads the source unchanged.
           def rewrite(xmi_path, name_path)
-            return [xmi_path, name_path] unless @registry
+            return [xmi_path, name_path, nil] unless @registry
 
             entry = @registry[xmi_path]
-            return [xmi_path, name_path] unless entry
+            return [xmi_path, name_path, nil] unless entry
 
-            slice = entry[name_path] || entry[bare_name(name_path)]
-            return [xmi_path, name_path] unless slice
+            group_key = entry[name_path] || entry[bare_name(name_path)]
+            return [xmi_path, name_path, nil] unless group_key
 
-            [slice, bare_name(name_path)]
+            [xmi_path, bare_name(name_path), [xmi_path, group_key]]
+          end
+
+          # The prepared slice for a token from #rewrite.
+          def slice_string(token)
+            @slices[token]
           end
 
           def slice?(xmi_path)
@@ -48,8 +56,7 @@ module Metanorma
 
           def reset!
             @registry = nil
-            @dir&.rmtree if @dir&.exist?
-            @dir = nil
+            @slices = nil
           end
 
           def prepare(document, lines) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
@@ -62,8 +69,7 @@ module Metanorma
             return if groups.empty?
 
             @registry = {}
-            require "tmpdir"
-            @dir = Pathname.new(Dir.mktmpdir("lutaml_xmi_slices"))
+            @slices = {}
             groups.each do |path, entries|
               next unless File.size(path) >= MIN_SOURCE_BYTES
 
@@ -76,24 +82,25 @@ module Metanorma
                   (macro_keys[value] ||= []) << key
                 end
               end
-              slice_paths = ::Ea::Xmi::Slicer.slices(
-                path, slice_groups, dir: @dir.join(digest(path)).to_s
-              )
-              @registry[path] ||= {}
-              macro_keys.each do |group_key, keys|
-                slice = slice_paths[group_key]
-                next unless slice
-
-                keys.each { |k| @registry[path][k] = slice }
+              # one index pass and one write pass over the source; the
+              # slices stay in memory for the parse cache to consume,
+              # so nothing is written to disk
+              ::Ea::Xmi::Slicer.slices(path, slice_groups).each do |group_key, xml|
+                token = [path, group_key]
+                @slices[token] = xml
+                macro_keys[group_key]&.each do |k|
+                  (@registry[path] ||= {})[k] = group_key
+                end
               end
             end
+            @registry = nil if @registry.empty?
           end
 
           private
 
           def enabled?(document, lines)
-            document.attributes["lutaml-xmi-slices"] ||
-              lines.any? { |l| l.match?(/\A:lutaml-xmi-slices:/) }
+            document.attributes["lutaml-ea-xmi-load"] == "partial" ||
+              lines.any? { |l| l.match?(/\A:lutaml-ea-xmi-load:\s*partial\s*$/) }
           end
 
           # Slices are grouped per package, not per class: the tables
@@ -121,23 +128,18 @@ module Metanorma
           def bare_name(name_path)
             name_path.to_s.split("::").last
           end
-
-          def digest(text)
-            require "digest"
-            Digest::SHA256.hexdigest(text.to_s)[0, 16]
-          end
         end
       end
 
       # Scans the fully expanded document source once, before parsing,
-      # and prepares per-class XMI slices for every table macro. The
+      # and prepares the partial-load seeds for every table macro. The
       # lines pass through unchanged; reading them through the incoming
       # reader expands include directives, which is where plateau
       # documents keep their table macros.
-      class XmiSlicesPreprocessor < ::Asciidoctor::Extensions::Preprocessor
+      class XmiPartialLoadPreprocessor < ::Asciidoctor::Extensions::Preprocessor
         def process(document, reader)
           input_lines = reader.readlines
-          XmiSliceRegistry.prepare(document, input_lines)
+          XmiPartialLoadRegistry.prepare(document, input_lines)
           reader.class.new(document, input_lines)
         end
       end
