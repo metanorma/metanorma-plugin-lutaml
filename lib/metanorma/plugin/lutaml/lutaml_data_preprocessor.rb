@@ -117,7 +117,21 @@ module Metanorma
           parsed_template = template(lines)
           parsed_template.registers[:file_system] =
             build_file_system(document, options)
-          parsed_template.render(context_name => instances.to_h)
+          parsed_template.render(context_name => deep_stringify(instances.to_h))
+        end
+
+        # Liquid resolves variable lookups by string keys; the compiled
+        # LML models hash with symbols
+        def deep_stringify(value)
+          case value
+          when Hash
+            value.transform_keys(&:to_s)
+                 .transform_values { |v| deep_stringify(v) }
+          when Array
+            value.map { |v| deep_stringify(v) }
+          else
+            value
+          end
         end
 
         def resolve_data_paths(document, definition_file, instance_file)
