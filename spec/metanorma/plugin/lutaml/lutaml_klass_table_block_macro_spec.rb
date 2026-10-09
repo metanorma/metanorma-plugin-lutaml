@@ -286,6 +286,30 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
 
     subject(:output) { metanorma_convert(input) }
 
+    context "parentless types render their members" do
+      let(:example_file) do
+        fixtures_path("plateau_all_packages_export.xmi")
+      end
+      let(:input) do
+        <<~TEXT
+          = Document title
+          Author
+          :nodoc:
+          :novalid:
+          :no-isobib:
+          :imagesdir: spec/assets
+
+          lutaml_klass_table::#{example_file}[name="NilReason"]
+        TEXT
+      end
+
+      it "renders the Union members of a parentless datatype" do
+        expect(output).to include("nilReasonEnumeration")
+        expect(output).to include("URI")
+        expect(output).to include("Union")
+      end
+    end
+
     context "specify xmi file by path" do
       context "with built-in templates" do
         let(:example_file) do

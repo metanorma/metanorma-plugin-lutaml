@@ -1,4 +1,6 @@
-{%- assign root = klass.generalization -%}
+{%- # parentless types (e.g. Union-stereotyped data types) carry no
+{%- # generalization: render the drop itself so members are not lost -%}
+{%- assign root = klass.generalization | default: klass -%}
 
 {%- capture upper_klass_name -%}
 {{ root.general.upper_klass }}:{{ root.general.name }}
@@ -35,7 +37,8 @@ h| Property Name h| Property Type and Multiplicity h| Definition
 
 3+h| Self-defined Properties
 h| Property Name h| Property Type and Multiplicity h| Definition
-{%- for attr in root.owned_props -%}
+{%- assign self_props = root.owned_props | default: root.owned_attributes -%}
+{%- for attr in self_props -%}
 {%- unless attr.has_association? -%}
 {%- capture name_col -%}
       {{ attr.name_ns }}:{{ attr.name }}
