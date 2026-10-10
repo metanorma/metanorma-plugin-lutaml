@@ -33,7 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "ea", ">= 0.6.41" # Ea::Xmi.load/load_graph (lutaml/ea#86): the partial-load API this gem calls
   spec.add_dependency "expressir", "~> 2.3", ">= 2.3.5"
   spec.add_dependency "isodoc"
-  spec.add_dependency "liquid"
+  spec.add_dependency "liquid", "~> 5"
   spec.add_dependency "lutaml-lml"
   spec.add_dependency "lutaml-model", "~> 0.8.4"
   spec.add_dependency "lutaml-uml", ">= 0.5", "< 2"
