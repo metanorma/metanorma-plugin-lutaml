@@ -288,7 +288,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
 
     context "parentless types render their members" do
       let(:example_file) do
-        fixtures_path("plateau_all_packages_export.xmi")
+        fixtures_path("parentless_union.xmi")
       end
       let(:input) do
         <<~TEXT
@@ -475,6 +475,58 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlKlassTableBlockMacro do
         end
 
         it_behaves_like "should contain Used and Guidance"
+      end
+
+      context "with datatype and guidance" do
+        let(:example_file) do
+          fixtures_path("datatype_guidance.xmi")
+        end
+        let(:input) do
+          <<~TEXT
+            = Document title
+            Author
+            :nodoc:
+            :novalid:
+            :no-isobib:
+            :imagesdir: spec/assets
+
+            lutaml_klass_table::#{example_file}[name="Height",template="spec/fixtures/lutaml/liquid_templates_guidance/_klass_table.liquid",guidance="spec/fixtures/lutaml/guidance/guidance_datatypes.yaml"]
+          TEXT
+        end
+
+        it "renders table" do
+          expect(output).to have_tag("table") do
+            with_tag "colgroup"
+            with_tag "tbody"
+          end
+        end
+
+        it "renders datatype attributes" do
+          expect(output).to include("Root:value")
+          expect(output).to include("Root:status")
+          expect(output).to include("Root:uom")
+        end
+
+        it "renders guidance for matching datatype attributes" do
+          expect(output).to have_tag("tr") do
+            with_tag "td", text: /Root:value/
+            with_tag "td", text: "false"
+            with_tag "td", text: /This attribute is not used/
+          end
+
+          expect(output).to have_tag("tr") do
+            with_tag "td", text: /Root:status/
+            with_tag "td", text: "false"
+            with_tag "td", text: /This attribute is not used/
+          end
+        end
+
+        it "defaults unmatched attributes to used" do
+          expect(output).to have_tag("tr") do
+            with_tag "td", text: /Root:uom/
+            with_tag "td", text: "true"
+          end
+        end
       end
 
       context "with user-specific templates and external_data" do

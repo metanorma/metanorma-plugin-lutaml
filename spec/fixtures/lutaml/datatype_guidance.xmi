@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<xmi:XMI xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.omg.org/spec/UML/20161101" xmlns:umldi="http://www.omg.org/spec/UML/20161101/UMLDI" xmlns:dc="http://www.omg.org/spec/UML/20161101/UMLDC">
+	<xmi:Documentation exporter="Enterprise Architect" exporterVersion="6.5" exporterID="1624"/>
+	<uml:Model xmi:type="uml:Model" name="TestModel">
+		<packagedElement xmi:type="uml:Package" xmi:id="EAPK_ROOT" name="Root">
+			<packagedElement xmi:type="uml:DataType" xmi:id="EAID_DT_ABSTRACT" name="AbstractMeasure" isAbstract="true">
+				<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_ATTR_VALUE" name="value">
+					<type xmi:idref="EAID_DT_STRING"/>
+					<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI_VALUE_MIN" value="1"/>
+					<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI_VALUE_MAX" value="1"/>
+				</ownedAttribute>
+				<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_ATTR_UOM" name="uom">
+					<type xmi:idref="EAID_DT_STRING"/>
+					<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI_UOM_MIN" value="0"/>
+					<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI_UOM_MAX" value="1"/>
+				</ownedAttribute>
+			</packagedElement>
+			<packagedElement xmi:type="uml:DataType" xmi:id="EAID_DT_HEIGHT" name="Height">
+				<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_ATTR_STATUS" name="status">
+					<type xmi:idref="EAID_DT_STRING"/>
+					<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI_STATUS_MIN" value="0"/>
+					<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI_STATUS_MAX" value="1"/>
+				</ownedAttribute>
+				<generalization xmi:type="uml:Generalization" xmi:id="EAID_GEN_HEIGHT" general="EAID_DT_ABSTRACT" isSubstitutable="true"/>
+			</packagedElement>
+			<packagedElement xmi:type="uml:DataType" xmi:id="EAID_DT_STRING" name="String"/>
+		</packagedElement>
+	</uml:Model>
+	<xmi:Extension extender="Enterprise Architect" extenderID="6.5">
+		<elements>
+			<element xmi:idref="EAID_DT_ABSTRACT" xmi:type="uml:DataType" name="AbstractMeasure" scope="public">
+				<model package="EAPK_ROOT" ea_localid="1" ea_eleType="element"/>
+				<properties isSpecification="false" sType="DataType" nType="0" scope="public" abstract="true"/>
+			</element>
+			<element xmi:idref="EAID_ATTR_VALUE" xmi:type="uml:Property" name="value">
+				<model package="EAPK_ROOT" ea_localid="2" ea_eleType="attribute"/>
+				<properties isSpecification="false" sType="Attribute" nType="0" scope="public"/>
+			</element>
+			<element xmi:idref="EAID_ATTR_UOM" xmi:type="uml:Property" name="uom">
+				<model package="EAPK_ROOT" ea_localid="3" ea_eleType="attribute"/>
+				<properties isSpecification="false" sType="Attribute" nType="0" scope="public"/>
+			</element>
+			<element xmi:idref="EAID_DT_HEIGHT" xmi:type="uml:DataType" name="Height" scope="public">
+				<model package="EAPK_ROOT" ea_localid="4" ea_eleType="element"/>
+				<properties isSpecification="false" sType="DataType" nType="0" scope="public"/>
+			</element>
+			<element xmi:idref="EAID_ATTR_STATUS" xmi:type="uml:Property" name="status">
+				<model package="EAPK_ROOT" ea_localid="5" ea_eleType="attribute"/>
+				<properties isSpecification="false" sType="Attribute" nType="0" scope="public"/>
+			</element>
+			<element xmi:idref="EAID_DT_STRING" xmi:type="uml:DataType" name="String">
+				<model package="EAPK_ROOT" ea_localid="6" ea_eleType="element"/>
+				<properties isSpecification="false" sType="DataType" nType="0" scope="public"/>
+			</element>
+		</elements>
+		<connectors/>
+		<tools/>
+	</xmi:Extension>
+</xmi:XMI>
