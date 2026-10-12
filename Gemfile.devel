@@ -11,7 +11,3 @@ gem "relaton-cli", github: "relaton/relaton-cli", branch: "feat/allow-relaton-v3
 # lutaml-lml 0.1.5 adds Lutaml::Lml.parse + Formatter::Graphviz used by
 # the lutaml_diagram renderer; 0.1.1 (previously resolved) lacks them
 gem "lutaml-lml", ">= 0.1.5"
-
-# ea 0.6.76 (feat/datatype-drop-guidance) accepts guidance on DataTypeDrop,
-# matching KlassDrop: needed for lutaml_klass_table datatype guidance
-gem "ea", path: "/Users/koonwa/src/lutaml/ea"
