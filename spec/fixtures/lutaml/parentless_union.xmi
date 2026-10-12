@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<xmi:XMI xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.omg.org/spec/UML/20161101" xmlns:umldi="http://www.omg.org/spec/UML/20161101/UMLDI" xmlns:dc="http://www.omg.org/spec/UML/20161101/UMLDC">
+	<xmi:Documentation exporter="Enterprise Architect" exporterVersion="6.5" exporterID="1624"/>
+	<uml:Model xmi:type="uml:Model" name="TestModel">
+		<packagedElement xmi:type="uml:Package" xmi:id="EAPK_ROOT" name="Root">
+			<packagedElement xmi:type="uml:DataType" xmi:id="EAID_DT_NILREASON" name="NilReason">
+				<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_ATTR_NILREASONENUM" name="nilReasonEnumeration">
+					<type xmi:idref="EAID_DT_STRING"/>
+					<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI_ENUM_MIN" value="0"/>
+					<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI_ENUM_MAX" value="1"/>
+				</ownedAttribute>
+				<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_ATTR_URI" name="URI">
+					<type xmi:idref="EAID_DT_STRING"/>
+					<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI_URI_MIN" value="0"/>
+					<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI_URI_MAX" value="1"/>
+				</ownedAttribute>
+			</packagedElement>
+			<packagedElement xmi:type="uml:DataType" xmi:id="EAID_DT_STRING" name="String"/>
+		</packagedElement>
+	</uml:Model>
+	<xmi:Extension extender="Enterprise Architect" extenderID="6.5">
+		<elements>
+			<element xmi:idref="EAID_DT_NILREASON" xmi:type="uml:DataType" name="NilReason" scope="public">
+				<model package="EAPK_ROOT" ea_localid="1" ea_eleType="element"/>
+				<properties isSpecification="false" sType="DataType" nType="0" scope="public" stereotype="Union"/>
+			</element>
+			<element xmi:idref="EAID_ATTR_NILREASONENUM" xmi:type="uml:Property" name="nilReasonEnumeration">
+				<model package="EAPK_ROOT" ea_localid="2" ea_eleType="attribute"/>
+				<properties isSpecification="false" sType="Attribute" nType="0" scope="public"/>
+			</element>
+			<element xmi:idref="EAID_ATTR_URI" xmi:type="uml:Property" name="URI">
+				<model package="EAPK_ROOT" ea_localid="3" ea_eleType="attribute"/>
+				<properties isSpecification="false" sType="Attribute" nType="0" scope="public"/>
+			</element>
+			<element xmi:idref="EAID_DT_STRING" xmi:type="uml:DataType" name="String">
+				<model package="EAPK_ROOT" ea_localid="4" ea_eleType="element"/>
+				<properties isSpecification="false" sType="DataType" nType="0" scope="public"/>
+			</element>
+		</elements>
+		<connectors/>
+		<tools/>
+	</xmi:Extension>
+</xmi:XMI>

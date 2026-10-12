@@ -34,9 +34,6 @@ yaml_config_path = nil)
           end
         end
 
-
-
-
         def find_packaged_klass(index, path, root_model_name: nil)
           segments = path.split("::").reject(&:empty?)
           if root_model_name && segments.first == root_model_name
@@ -108,7 +105,7 @@ yaml_config_path = nil)
         def serialize_klass_or_datatype_drop_by_name(xmi_path,
           name, _document = nil, guidance = nil)
           serialize_klass_drop_by_name(xmi_path, name, _document, guidance) ||
-            serialize_datatype_drop_by_name(xmi_path, name, _document)
+            serialize_datatype_drop_by_name(xmi_path, name, _document, guidance)
         end
 
         def serialize_klass_drop_by_name(xmi_path,
@@ -127,18 +124,19 @@ yaml_config_path = nil)
           )
         end
 
-        def serialize_datatype_drop_by_name(xmi_path, name, _document = nil)
+        def serialize_datatype_drop_by_name(xmi_path, name, _document = nil,
+          guidance = nil)
           GcBudget.gc_when_bloated!
           xmi_path, name, slice = XmiPartialLoadRegistry.rewrite(xmi_path, name)
           parsed = XMI_PARSE_CACHE.fetch(xmi_path, slice: slice)
           datatype = resolve_packaged_datatype(parsed, name)
           if datatype.nil?
             warn "Datatype not found for name: #{name}"
-            nil
+            return nil
           end
 
           ::Ea::Xmi::LiquidDrops::DataTypeDrop.new(
-            datatype, parsed.drop_options
+            datatype, guidance, parsed.drop_options
           )
         end
 

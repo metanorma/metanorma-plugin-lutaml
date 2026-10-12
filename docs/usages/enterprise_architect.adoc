@@ -208,11 +208,19 @@ classes:
         used: false
         guidance: |
           Drop guidance message here.
+data_types:
+  - name: Name Of Datatype
+    attributes:
+      - name: Name Of Attribute (e.g. Root:value)
+        used: false
+        guidance: |
+          Drop guidance message here.
 ...
 ----
 
 If you want to define the guidance, you can define the `name` of the class
-under `classes`.  Then define which `attributes` you want to add guidance by the
+under `classes` (or the datatype under `data_types`).  Then define which
+`attributes` you want to add guidance by the
 `name`. Set `used` to show the attribute is used or not. Drop the message of
 guidance in `guidance`.
 
@@ -311,11 +319,19 @@ classes:
     used: false
     guidance: |
       Drop guidance message here.
+data_types:
+- name: "NameOfDatatype"
+  attributes:
+  - name: Name Of Attribute (e.g. Root:value)
+    used: false
+    guidance: |
+      Drop guidance message here.
 ...
 ----
 
 If you want to define the guidance, you can define the `name` of the class
-under `classes`.  Then define which `attributes` you want to add guidance by the
+under `classes` (or the datatype under `data_types`).  Then define which
+`attributes` you want to add guidance by the
 `name`. Set `used` to show the attribute is used or not. Drop the message of
 guidance in `guidance`.
 
