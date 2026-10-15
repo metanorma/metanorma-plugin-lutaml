@@ -24,3 +24,8 @@ gem "simplecov"
 gem "timecop"
 gem "vcr"
 gem "webmock"
+
+# pre-release line pins (see metanorma release wave)
+gem "metanorma-standoc", github: "metanorma/metanorma-standoc", branch: "main"
+gem "isodoc", github: "metanorma/isodoc", branch: "main"
+gem "suma", github: "metanorma/suma", branch: "main"

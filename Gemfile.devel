@@ -5,8 +5,8 @@ gem "metanorma", github: "metanorma/metanorma", ref: "a899a9a6fc933dca0a53166d66
 # 2.1.2 for metanorma-standoc's constraint; the metanorma/standoc
 # refs are the known-good pair (newer standoc@main needs unreleased
 # metanorma-document components)
-gem "relaton", github: "relaton/relaton", ref: "65742ac31bce9e006072e1ace440c984352201f3"
-gem "relaton-cli", github: "relaton/relaton-cli", branch: "main"
+gem "relaton", "~> 3.0.0.pre.alpha"
+gem "relaton-cli", "~> 3.0.0.pre.alpha"
 
 # lutaml-lml 0.1.5 adds Lutaml::Lml.parse + Formatter::Graphviz used by
 # the lutaml_diagram renderer; 0.1.1 (previously resolved) lacks them
