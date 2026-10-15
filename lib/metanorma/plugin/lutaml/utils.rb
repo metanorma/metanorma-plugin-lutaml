@@ -219,7 +219,10 @@ module Metanorma
 
         def load_express_from_folder(folder)
           file_paths = Dir["#{folder}/*.exp"]
-          ::Expressir::Express::Parser.from_files(file_paths)
+          ::Expressir::Express::Parser.from_files(
+            file_paths,
+            include_source: true,
+          )
         end
 
         # TODO: Refactor this using Suma::SchemaConfig
@@ -239,7 +242,10 @@ module Metanorma
             (schema_yaml_base_path + schema_path).cleanpath.to_s
           end
 
-          ::Expressir::Express::Parser.from_files(file_paths)
+          ::Expressir::Express::Parser.from_files(
+            file_paths,
+            include_source: true,
+          )
         end
 
         def parse_document_express_indexes(document, input_lines) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
