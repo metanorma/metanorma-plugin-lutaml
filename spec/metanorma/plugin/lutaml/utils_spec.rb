@@ -1,6 +1,32 @@
 require "spec_helper"
 
 RSpec.describe Metanorma::Plugin::Lutaml::Utils do
+  describe ".load_express_from_folder" do
+    it "retains source text when parsing EXPRESS files" do
+      allow(Dir).to receive(:[]).and_return(["schema.exp"])
+
+      expect(Expressir::Express::Parser)
+        .to receive(:from_files)
+        .with(["schema.exp"], include_source: true)
+
+      described_class.load_express_from_folder("schemas")
+    end
+  end
+
+  describe ".load_express_from_index" do
+    it "retains source text when parsing indexed EXPRESS files" do
+      allow(YAML).to receive(:safe_load_file)
+        .with("index.yaml")
+        .and_return("schemas" => { "schema" => { "path" => "schema.exp" } })
+
+      expect(Expressir::Express::Parser)
+        .to receive(:from_files)
+        .with(["schema.exp"], include_source: true)
+
+      described_class.load_express_from_index(nil, "index.yaml")
+    end
+  end
+
   describe ".render_liquid_string" do
     subject(:call) do
       described_class
