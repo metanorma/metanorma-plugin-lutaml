@@ -1,6 +1,7 @@
 require "expressir"
 require "expressir/express/parser"
 require "expressir/express/cache"
+require_relative "express_entity_attributes"
 
 module Metanorma
   module Plugin
