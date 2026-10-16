@@ -25,6 +25,14 @@ gem "timecop"
 gem "vcr"
 gem "webmock"
 
+# leptris 1.9.367.0 is the highest match for standoc's '~> 1.9.361' but
+# publishes only linux prebuilds plus a ruby gem with no vendored
+# libleptris; windows-latest falls back to that ruby gem and dies on
+# require "metanorma-standoc". 1.9.361.1 is the latest that still ships
+# x64-mingw-ucrt (and darwin) binaries. Lift once upstream packs Windows
+# again.
+gem "leptris", "~> 1.9.361.1"
+
 # pre-release line pins (see metanorma release wave)
 gem "metanorma-standoc", github: "metanorma/metanorma-standoc", branch: "main"
 gem "isodoc", github: "metanorma/isodoc", branch: "main"
