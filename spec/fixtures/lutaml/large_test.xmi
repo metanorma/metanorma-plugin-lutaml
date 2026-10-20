@@ -1351,16 +1351,14 @@
 			<element xmi:idref="EAID_0EB5D62C_61E4_46ea_9822_4C2C5B6AD755" xmi:type="uml:Class" name="WaterSurface" scope="public">
 				<model package="EAPK_A5BC15D5_3041_4a84_BA9E_A28E1B43D317" tpos="0" ea_localid="156" ea_eleType="element"/>
 				<properties documentation="A WaterSurface represents the upper exterior interface between a water body and the atmosphere." isSpecification="false" sType="Class" nType="0" scope="public" stereotype="FeatureType" isRoot="false" isLeaf="false" isAbstract="false" isActive="false"/>
-				<project author="ebbinghaus" version="1.0" phase="1.0" created="2012-07-09 14:11:25" modified="2020-05-26 11:39:30" complexity="1" status="Proposed"/>
-				<code product_name="Java" gentype="Java"/>
-				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+
 				<tags>
 					<tag xmi:id="EAID_ED33D65F_A24E_81a2_A0C8_94BBC1FE8469" name="byValuePropertyType" value="false#NOTES#Values: True,False&#xA;Default: false&#xA;Description: Create a property type that requires that the instance is encoded inline.&#xA;" modelElement="EAID_0EB5D62C_61E4_46ea_9822_4C2C5B6AD755"/>
 					<tag xmi:id="EAID_D8E5B7C5_7754_6c77_AF4B_7D841218737C" name="gmlMixin" value="false#NOTES#Values: True,False&#xA;Default: false&#xA;Description: Identifies the feature type as a mixin class.&#xA;" modelElement="EAID_0EB5D62C_61E4_46ea_9822_4C2C5B6AD755"/>
 					<tag xmi:id="EAID_26B33348_1E57_d91e_8638_CCCDB81C5732" name="isCollection" value="false#NOTES#Values: True,False&#xA;Default: false&#xA;Description: Identifies the feature type as a feature collection.&#xA;" modelElement="EAID_0EB5D62C_61E4_46ea_9822_4C2C5B6AD755"/>
 					<tag xmi:id="EAID_F9638764_E613_9ee6_B116_315E172EDBC7" name="noPropertyType" value="false#NOTES#Values: True,False&#xA;Default: false&#xA;Description: Suppress creation of a standard property type that supports inline or by-reference encoding.&#xA;" modelElement="EAID_0EB5D62C_61E4_46ea_9822_4C2C5B6AD755"/>
 				</tags>
-				<xrefs value="$XREFPROP=$XID={42F822B1-C336-47fc-ADDD-2FB2B3245904}$XID;$NAM=Stereotypes$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=FeatureType;FQName=CityGML::FeatureType;@ENDSTEREO;$DES;$CLT={0EB5D62C-61E4-46ea-9822-4C2C5B6AD755}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;$XREFPROP=$XID={BC1BE1C3-239A-43db-92DE-476AF98221F7}$XID;$NAM=CustomProperties$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@PROP=@NAME=isActive@ENDNAME;@TYPE=Boolean@ENDTYPE;@VALU=0@ENDVALU;@PRMT=@ENDPRMT;@ENDPROP;$DES;$CLT={0EB5D62C-61E4-46ea-9822-4C2C5B6AD755}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+				
 				<extendedProperties tagged="0" package_name="WaterBody"/>
 				<attributes>
 					<attribute xmi:idref="EAID_618A4E8A_81FD_409d_94D5_37BB849FC804" name="adeOfWaterSurface" scope="Public">
@@ -1373,7 +1371,7 @@
 						<stereotype stereotype="Property"/>
 						<bounds lower="0" upper="*"/>
 						<options/>
-						<style/>
+						
 						<styleex value="volatile=0;union=0;"/>
 						<tags>
 							<tag xmi:id="EAID_E810E922_58E8_b658_9936_437775DEBDD5" name="sequenceNumber" value="2" notes="Description: Unique integer value for properties of the type used to sort properties.&#xA;"/>
@@ -1381,7 +1379,7 @@
 							<tag xmi:id="EAID_08A8199D_FE63_35fe_9692_EC88798BE442" name="isMetadata" value="false" notes="Values: True,False&#xA;Default: false&#xA;Description: Indicates whether the property is considered metadata about the instance - and not information about the phenomenon in the real world.&#xA;"/>
 							<tag xmi:id="EAID_BCD3CBEE_9454_f194_BFEF_B56F54C01E84" name="xsdEncodingRule" notes="Values: notEncoded,iso19136_2007,gml33,citygml&#xA;"/>
 						</tags>
-						<xrefs value="$XREFPROP=$XID={B22E3E69-E3DA-406d-AF65-A7D10AA9B40C}$XID;$NAM=Stereotypes$NAM;$TYP=attribute property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=Property;FQName=CityGML::Property;@ENDSTEREO;$DES;$CLT={618A4E8A-81FD-409d-94D5-37BB849FC804}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+						
 					</attribute>
 					<attribute xmi:idref="EAID_F5E75355_ED9C_4745_AF47_626D3546875A" name="waterLevel" scope="Public">
 						<initial/>
@@ -1393,7 +1391,7 @@
 						<stereotype stereotype="Property"/>
 						<bounds lower="0" upper="1"/>
 						<options/>
-						<style/>
+						
 						<styleex value="IsLiteral=0;volatile=0;union=0;"/>
 						<tags>
 							<tag xmi:id="EAID_E810E922_58E8_b658_9DAB_CB1E5CB8F82C" name="sequenceNumber" value="1" notes="Description: Unique integer value for properties of the type used to sort properties.&#xA;"/>
@@ -1401,7 +1399,7 @@
 							<tag xmi:id="EAID_08A8199D_FE63_35fe_B8CA_2BA26FD9A62C" name="isMetadata" value="false" notes="Values: True,False&#xA;Default: false&#xA;Description: Indicates whether the property is considered metadata about the instance - and not information about the phenomenon in the real world.&#xA;"/>
 							<tag xmi:id="EAID_BCD3CBEE_9454_f194_8E69_6C6AECA890E1" name="xsdEncodingRule" notes="Values: notEncoded,iso19136_2007,gml33,citygml&#xA;"/>
 						</tags>
-						<xrefs value="$XREFPROP=$XID={36267403-3CCA-4e54-AA89-B47541B3FA29}$XID;$NAM=Stereotypes$NAM;$TYP=attribute property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=Property;FQName=CityGML::Property;@ENDSTEREO;$DES;$CLT={F5E75355-ED9C-4745-AF47-626D3546875A}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+						
 					</attribute>
 				</attributes>
 				<links>
@@ -1411,53 +1409,45 @@
 			<element xmi:idref="EAID_CA9CF2B4_2602_43fd_A0DC_6D8CC6A79AB3" xmi:type="uml:DataType" name="ADEOfAbstractWaterBoundarySurface" scope="public">
 				<model package="EAPK_A5BC15D5_3041_4a84_BA9E_A28E1B43D317" tpos="0" ea_localid="8227" ea_eleType="element"/>
 				<properties documentation="ADEOfAbstractWaterBoundarySurface acts as a hook to define properties within an ADE that are to be added to AbstractWaterBoundarySurface." isSpecification="false" sType="DataType" nType="0" scope="public" stereotype="DataType" isRoot="false" isLeaf="false" isAbstract="true"/>
-				<project author="Tatjana" version="1.0" phase="1.0" created="2020-05-26 11:29:26" modified="2020-05-29 00:38:00" complexity="1" status="Proposed"/>
-				<code gentype="Java"/>
-				<style appearance="BackColor=11796479;BorderColor=-1;BorderWidth=1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+
 				<tags>
 					<tag xmi:id="EAID_F9638764_0401_4b04_AA56_00CD93938FFA" name="noPropertyType" value="false#NOTES#Values: True,False&#xA;Default: false&#xA;Description: Suppress creation of a standard property type that supports inline encoding.&#xA;" modelElement="EAID_CA9CF2B4_2602_43fd_A0DC_6D8CC6A79AB3"/>
 					<tag xmi:id="EAID_BCD3CBEE_E42B_51e4_A480_07B8A38B0431" name="xsdEncodingRule" value="#NOTES#Values: notEncoded,iso19136_2007,gml33,citygml&#xA;" modelElement="EAID_CA9CF2B4_2602_43fd_A0DC_6D8CC6A79AB3"/>
 				</tags>
-				<xrefs value="$XREFPROP=$XID={FE8844E1-611E-475d-BBAC-B03541D08BBE}$XID;$NAM=Stereotypes$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=DataType;FQName=CityGML::DataType;@ENDSTEREO;$DES;$CLT={CA9CF2B4-2602-43fd-A0DC-6D8CC6A79AB3}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+				
 				<extendedProperties tagged="0" package_name="WaterBody"/>
 			</element>
 			<element xmi:idref="EAID_D4D099D4_5536_4269_8D05_8E07FB2FEA83" xmi:type="uml:DataType" name="ADEOfWaterBody" scope="public">
 				<model package="EAPK_A5BC15D5_3041_4a84_BA9E_A28E1B43D317" tpos="0" ea_localid="8226" ea_eleType="element"/>
 				<properties documentation="ADEOfWaterBody acts as a hook to define properties within an ADE that are to be added to a WaterBody." isSpecification="false" sType="DataType" nType="0" scope="public" stereotype="DataType" isRoot="false" isLeaf="false" isAbstract="true"/>
-				<project author="Tatjana" version="1.0" phase="1.0" created="2020-05-26 11:29:18" modified="2020-05-28 23:10:11" complexity="1" status="Proposed"/>
-				<code gentype="Java"/>
-				<style appearance="BackColor=11796479;BorderColor=-1;BorderWidth=1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+
 				<tags>
 					<tag xmi:id="EAID_F9638764_0401_4b04_9788_83B00C07EEC8" name="noPropertyType" value="false#NOTES#Values: True,False&#xA;Default: false&#xA;Description: Suppress creation of a standard property type that supports inline encoding.&#xA;" modelElement="EAID_D4D099D4_5536_4269_8D05_8E07FB2FEA83"/>
 					<tag xmi:id="EAID_BCD3CBEE_E42B_51e4_87AE_9EE362BDE29F" name="xsdEncodingRule" value="#NOTES#Values: notEncoded,iso19136_2007,gml33,citygml&#xA;" modelElement="EAID_D4D099D4_5536_4269_8D05_8E07FB2FEA83"/>
 				</tags>
-				<xrefs value="$XREFPROP=$XID={94B4BE9E-0073-4f90-BC29-F61C4C5D226C}$XID;$NAM=Stereotypes$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=DataType;FQName=CityGML::DataType;@ENDSTEREO;$DES;$CLT={D4D099D4-5536-4269-8D05-8E07FB2FEA83}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+				
 				<extendedProperties tagged="0" package_name="WaterBody"/>
 			</element>
 			<element xmi:idref="EAID_9B5ABB19_3D69_4ec8_A445_6FEBC73E9A2A" xmi:type="uml:DataType" name="ADEOfWaterGroundSurface" scope="public">
 				<model package="EAPK_A5BC15D5_3041_4a84_BA9E_A28E1B43D317" tpos="0" ea_localid="8228" ea_eleType="element"/>
 				<properties documentation="ADEOfWaterGroundSurface acts as a hook to define properties within an ADE that are to be added to a WaterGroundSurface." isSpecification="false" sType="DataType" nType="0" scope="public" stereotype="DataType" isRoot="false" isLeaf="false" isAbstract="true"/>
-				<project author="Tatjana" version="1.0" phase="1.0" created="2020-05-26 11:29:38" modified="2020-05-28 23:10:49" complexity="1" status="Proposed"/>
-				<code gentype="Java"/>
-				<style appearance="BackColor=11796479;BorderColor=-1;BorderWidth=1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+
 				<tags>
 					<tag xmi:id="EAID_F9638764_0401_4b04_A41E_5321021886B9" name="noPropertyType" value="false#NOTES#Values: True,False&#xA;Default: false&#xA;Description: Suppress creation of a standard property type that supports inline encoding.&#xA;" modelElement="EAID_9B5ABB19_3D69_4ec8_A445_6FEBC73E9A2A"/>
 					<tag xmi:id="EAID_BCD3CBEE_E42B_51e4_A8EE_CC1B2D6E28EB" name="xsdEncodingRule" value="#NOTES#Values: notEncoded,iso19136_2007,gml33,citygml&#xA;" modelElement="EAID_9B5ABB19_3D69_4ec8_A445_6FEBC73E9A2A"/>
 				</tags>
-				<xrefs value="$XREFPROP=$XID={F88261D9-873E-489b-B6BD-A921B18AAFEA}$XID;$NAM=Stereotypes$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=DataType;FQName=CityGML::DataType;@ENDSTEREO;$DES;$CLT={9B5ABB19-3D69-4ec8-A445-6FEBC73E9A2A}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+				
 				<extendedProperties tagged="0" package_name="WaterBody"/>
 			</element>
 			<element xmi:idref="EAID_48A3A99A_262F_475f_A48B_729C7A18850F" xmi:type="uml:DataType" name="ADEOfWaterSurface" scope="public">
 				<model package="EAPK_A5BC15D5_3041_4a84_BA9E_A28E1B43D317" tpos="0" ea_localid="8229" ea_eleType="element"/>
 				<properties documentation="ADEOfWaterSurface acts as a hook to define properties within an ADE that are to be added to a WaterSurface." isSpecification="false" sType="DataType" nType="0" scope="public" stereotype="DataType" isRoot="false" isLeaf="false" isAbstract="true"/>
-				<project author="Tatjana" version="1.0" phase="1.0" created="2020-05-26 11:29:47" modified="2020-05-28 23:10:31" complexity="1" status="Proposed"/>
-				<code gentype="Java"/>
-				<style appearance="BackColor=11796479;BorderColor=-1;BorderWidth=1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+
 				<tags>
 					<tag xmi:id="EAID_F9638764_0401_4b04_97FB_05D3E31810BD" name="noPropertyType" value="false#NOTES#Values: True,False&#xA;Default: false&#xA;Description: Suppress creation of a standard property type that supports inline encoding.&#xA;" modelElement="EAID_48A3A99A_262F_475f_A48B_729C7A18850F"/>
 					<tag xmi:id="EAID_BCD3CBEE_E42B_51e4_A407_681A8EF10F7C" name="xsdEncodingRule" value="#NOTES#Values: notEncoded,iso19136_2007,gml33,citygml&#xA;" modelElement="EAID_48A3A99A_262F_475f_A48B_729C7A18850F"/>
 				</tags>
-				<xrefs value="$XREFPROP=$XID={55DCF9F0-2E27-4e14-A489-B357BA87B4FB}$XID;$NAM=Stereotypes$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=DataType;FQName=CityGML::DataType;@ENDSTEREO;$DES;$CLT={48A3A99A-262F-475f-A48B-729C7A18850F}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+				
 				<extendedProperties tagged="0" package_name="WaterBody"/>
 			</element>
 		</elements>
@@ -1469,9 +1459,9 @@
 					<type aggregation="none" containment="Unspecified"/>
 					<constraints/>
 					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
-					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					
 					<documentation/>
-					<xrefs/>
+					
 					<tags/>
 				</source>
 				<target xmi:idref="EAID_BBEF980E_D59E_469d_9164_7A94E1F503C7">
@@ -1480,9 +1470,9 @@
 					<type aggregation="none" containment="Unspecified"/>
 					<constraints/>
 					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
-					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					
 					<documentation/>
-					<xrefs/>
+					
 					<tags/>
 				</target>
 				<model ea_localid="9264"/>
@@ -1492,8 +1482,7 @@
 				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
 				<labels mb="�use�"/>
 				<extendedProperties conditional="�use�" virtualInheritance="0"/>
-				<style/>
-				<xrefs/>
+
 				<tags/>
 			</connector>
 			<connector xmi:idref="EAID_468E7472_1311_4fc6_82C6_FDB829F0341D">
@@ -1503,9 +1492,9 @@
 					<type aggregation="none" containment="Unspecified"/>
 					<constraints/>
 					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
-					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					
 					<documentation/>
-					<xrefs/>
+					
 					<tags/>
 				</source>
 				<target xmi:idref="EAID_8A7B787D_513E_4be9_B65A_4139FC1D63BE">
@@ -1514,9 +1503,9 @@
 					<type aggregation="none" containment="Unspecified"/>
 					<constraints/>
 					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
-					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					
 					<documentation/>
-					<xrefs/>
+					
 					<tags/>
 				</target>
 				<model ea_localid="9261"/>
@@ -1526,415 +1515,19 @@
 				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
 				<labels mb="�use�"/>
 				<extendedProperties conditional="�use�" virtualInheritance="0"/>
-				<style/>
-				<xrefs/>
+
 				<tags/>
 			</connector>
 		</connectors>
 		<primitivetypes>
 			<packagedElement xmi:type="uml:Package" xmi:id="EAPrimitiveTypesPackage" name="EA_PrimitiveTypes_Package"/>
 		</primitivetypes>
-		<profiles>
-			<uml:Profile xmlns:uml="http://www.omg.org/spec/UML/20161101" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmi:id="1BE46C37-5" nsPrefix="GML" name="GML" metamodelReference="mmref01">
-				<ownedComment xmi:type="uml:Comment" xmi:id="comment01" annotatedElement="1BE46C37-5">
-					<body>UML Profile for GML Version:1.0</body>
-				</ownedComment>
-				<packageImport xmi:id="mmref01">
-					<importedPackage href="http://www.omg.org/spec/UML/20110701"/>
-				</packageImport>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="Aggregation" name="Aggregation">
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Aggregation-base_Association" name="base_Association" association="Association_Aggregation">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#Association"/>
-					</ownedAttribute>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="Association_Aggregation" name="A_Association_Aggregation" memberEnd="extension_Aggregation Aggregation-base_Association">
-					<ownedEnd xmi:id="extension_Aggregation" name="extension_Aggregation" type="Aggregation" isComposite="true" lower="0" upper="1" memberEnd="extension_Aggregation Aggregation-base_Association"/>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="Union" name="Union">
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Union-base_Class" name="base_Class" association="Class_Union">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#Class"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Union-noPropertyType" name="noPropertyType">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Union-isCollection" name="isCollection">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="Class_Union" name="A_Class_Union" memberEnd="extension_Union Union-base_Class">
-					<ownedEnd xmi:id="extension_Union" name="extension_Union" type="Union" isComposite="true" lower="0" upper="1" memberEnd="extension_Union Union-base_Class"/>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="CodeList" name="CodeList">
-					<ownedAttribute xmi:type="uml:Property" xmi:id="CodeList-base_Class" name="base_Class" association="Class_CodeList">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#Class"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="CodeList-asDictionary" name="asDictionary">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="CodeList-defaultCodeSpace" name="defaultCodeSpace">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="Class_CodeList" name="A_Class_CodeList" memberEnd="extension_CodeList CodeList-base_Class">
-					<ownedEnd xmi:id="extension_CodeList" name="extension_CodeList" type="CodeList" isComposite="true" lower="0" upper="1" memberEnd="extension_CodeList CodeList-base_Class"/>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="ApplicationSchema" name="ApplicationSchema">
-					<ownedAttribute xmi:type="uml:Property" xmi:id="ApplicationSchema-base_Package" name="base_Package" association="Package_ApplicationSchema">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#Package"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="ApplicationSchema-version" name="version">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="ApplicationSchema-gmlProfileSchema" name="gmlProfileSchema">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="ApplicationSchema-xsdDocument" name="xsdDocument">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="ApplicationSchema-xmlns" name="xmlns">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="ApplicationSchema-targetNamespace" name="targetNamespace">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="Package_ApplicationSchema" name="A_Package_ApplicationSchema" memberEnd="extension_ApplicationSchema ApplicationSchema-base_Package">
-					<ownedEnd xmi:id="extension_ApplicationSchema" name="extension_ApplicationSchema" type="ApplicationSchema" isComposite="true" lower="0" upper="1" memberEnd="extension_ApplicationSchema ApplicationSchema-base_Package"/>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="FeatureType" name="FeatureType">
-					<ownedAttribute xmi:type="uml:Property" xmi:id="FeatureType-base_Class" name="base_Class" association="Class_FeatureType">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#Class"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="FeatureType-noPropertyType" name="noPropertyType">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="FeatureType-isCollection" name="isCollection">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="FeatureType-byValuePropertyType" name="byValuePropertyType">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="Class_FeatureType" name="A_Class_FeatureType" memberEnd="extension_FeatureType FeatureType-base_Class">
-					<ownedEnd xmi:id="extension_FeatureType" name="extension_FeatureType" type="FeatureType" isComposite="true" lower="0" upper="1" memberEnd="extension_FeatureType FeatureType-base_Class"/>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="Leaf" name="Leaf">
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Leaf-base_Package" name="base_Package" association="Package_Leaf">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#Package"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Leaf-xsdDocument" name="xsdDocument">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="Package_Leaf" name="A_Package_Leaf" memberEnd="extension_Leaf Leaf-base_Package">
-					<ownedEnd xmi:id="extension_Leaf" name="extension_Leaf" type="Leaf" isComposite="true" lower="0" upper="1" memberEnd="extension_Leaf Leaf-base_Package"/>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="DataType" name="DataType">
-					<ownedAttribute xmi:type="uml:Property" xmi:id="DataType-base_Class" name="base_Class" association="Class_DataType">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#Class"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="DataType-noPropertyType" name="noPropertyType">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="DataType-isCollection" name="isCollection">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="Class_DataType" name="A_Class_DataType" memberEnd="extension_DataType DataType-base_Class">
-					<ownedEnd xmi:id="extension_DataType" name="extension_DataType" type="DataType" isComposite="true" lower="0" upper="1" memberEnd="extension_DataType DataType-base_Class"/>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="Type" name="Type">
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Type-base_Class" name="base_Class" association="Class_Type">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#Class"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Type-xmlSchemaType" name="xmlSchemaType">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Type-noPropertyType" name="noPropertyType">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Type-isCollection" name="isCollection">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Type-byValuePropertyType" name="byValuePropertyType">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="Class_Type" name="A_Class_Type" memberEnd="extension_Type Type-base_Class">
-					<ownedEnd xmi:id="extension_Type" name="extension_Type" type="Type" isComposite="true" lower="0" upper="1" memberEnd="extension_Type Type-base_Class"/>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="Composition" name="Composition">
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Composition-base_Association" name="base_Association" association="Association_Composition">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#Association"/>
-					</ownedAttribute>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="Association_Composition" name="A_Association_Composition" memberEnd="extension_Composition Composition-base_Association">
-					<ownedEnd xmi:id="extension_Composition" name="extension_Composition" type="Composition" isComposite="true" lower="0" upper="1" memberEnd="extension_Composition Composition-base_Association"/>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="Enumeration" name="Enumeration">
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Enumeration-base_Enumeration" name="base_Enumeration" association="Enumeration_Enumeration">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#Enumeration"/>
-					</ownedAttribute>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="Enumeration_Enumeration" name="A_Enumeration_Enumeration" memberEnd="extension_Enumeration Enumeration-base_Enumeration">
-					<ownedEnd xmi:id="extension_Enumeration" name="extension_Enumeration" type="Enumeration" isComposite="true" lower="0" upper="1" memberEnd="extension_Enumeration Enumeration-base_Enumeration"/>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="property" name="property">
-					<ownedAttribute xmi:type="uml:Property" xmi:id="property-base_AssociationEnd" name="base_AssociationEnd" association="AssociationEnd_property">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#AssociationEnd"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="property-base_Attribute" name="base_Attribute" association="Attribute_property">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#Attribute"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="property-isMetadata" name="isMetadata">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="property-inlineOrByReference" name="inlineOrByReference">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="property-sequenceNumber" name="sequenceNumber">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="AssociationEnd_property" name="A_AssociationEnd_property" memberEnd="extension_property property-base_AssociationEnd">
-					<ownedEnd xmi:id="extension_property" name="extension_property" type="property" isComposite="true" lower="0" upper="1" memberEnd="extension_property property-base_AssociationEnd"/>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="Attribute_property" name="A_Attribute_property" memberEnd="extension_property property-base_Attribute">
-					<ownedEnd xmi:id="extension_property" name="extension_property" type="property" isComposite="true" lower="0" upper="1" memberEnd="extension_property property-base_Attribute"/>
-				</packagedElement>
-			</uml:Profile>
-			<uml:Profile xmlns:uml="http://www.omg.org/spec/UML/20161101" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmi:id="thecustomprofile" nsPrefix="thecustomprofile" name="thecustomprofile" metamodelReference="mmref01">
-				<ownedComment xmi:type="uml:Comment" xmi:id="comment01" annotatedElement="thecustomprofile">
-					<body> Version:1.0</body>
-				</ownedComment>
-				<packageImport xmi:id="mmref01">
-					<importedPackage href="http://www.omg.org/spec/UML/20110701"/>
-				</packageImport>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="invariant" name="invariant">
-					<ownedAttribute xmi:type="uml:Property" xmi:id="invariant-base_Constraint" name="base_Constraint" association="Constraint_invariant">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#Constraint"/>
-					</ownedAttribute>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="Constraint_invariant" name="A_Constraint_invariant" memberEnd="extension_invariant invariant-base_Constraint">
-					<ownedEnd xmi:id="extension_invariant" name="extension_invariant" type="invariant" isComposite="true" lower="0" upper="1" memberEnd="extension_invariant invariant-base_Constraint"/>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="OCL" name="OCL">
-					<ownedAttribute xmi:type="uml:Property" xmi:id="OCL-base_Constraint" name="base_Constraint" association="Constraint_OCL">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#Constraint"/>
-					</ownedAttribute>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="Constraint_OCL" name="A_Constraint_OCL" memberEnd="extension_OCL OCL-base_Constraint">
-					<ownedEnd xmi:id="extension_OCL" name="extension_OCL" type="OCL" isComposite="true" lower="0" upper="1" memberEnd="extension_OCL OCL-base_Constraint"/>
-				</packagedElement>
-			</uml:Profile>
-			<uml:Profile xmlns:uml="http://www.omg.org/spec/UML/20161101" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmi:id="FA5634AC-0" nsPrefix="CityGML" name="CityGML" metamodelReference="mmref01">
-				<ownedComment xmi:type="uml:Comment" xmi:id="comment01" annotatedElement="FA5634AC-0">
-					<body>This profile defines a set of stereotypes and tagged values for defining CityGML application schemas. Version:1.0</body>
-				</ownedComment>
-				<packageImport xmi:id="mmref01">
-					<importedPackage href="http://www.omg.org/spec/UML/20110701"/>
-				</packageImport>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="Version" name="Version">
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Version-base_Property" name="base_Property" association="Property_Version">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#Property"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Version-isMetadata" name="isMetadata">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Version-inlineOrByReference" name="inlineOrByReference">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Version-sequenceNumber" name="sequenceNumber">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="Property_Version" name="A_Property_Version" memberEnd="extension_Version Version-base_Property">
-					<ownedEnd xmi:id="extension_Version" name="extension_Version" type="Version" isComposite="true" lower="0" upper="1" memberEnd="extension_Version Version-base_Property"/>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="Union" name="Union">
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Union-base_DataType" name="base_DataType" association="DataType_Union">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#DataType"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Union-gmlAsGroup" name="gmlAsGroup">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Union-xsdEncodingRule" name="xsdEncodingRule">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Union-noPropertyType" name="noPropertyType">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="DataType_Union" name="A_DataType_Union" memberEnd="extension_Union Union-base_DataType">
-					<ownedEnd xmi:id="extension_Union" name="extension_Union" type="Union" isComposite="true" lower="0" upper="1" memberEnd="extension_Union Union-base_DataType"/>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="CodeList" name="CodeList">
-					<ownedAttribute xmi:type="uml:Property" xmi:id="CodeList-base_Class" name="base_Class" association="Class_CodeList">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#Class"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="CodeList-asDictionary" name="asDictionary">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="CodeList-xsdEncodingRule" name="xsdEncodingRule">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="Class_CodeList" name="A_Class_CodeList" memberEnd="extension_CodeList CodeList-base_Class">
-					<ownedEnd xmi:id="extension_CodeList" name="extension_CodeList" type="CodeList" isComposite="true" lower="0" upper="1" memberEnd="extension_CodeList CodeList-base_Class"/>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="ApplicationSchema" name="ApplicationSchema">
-					<ownedAttribute xmi:type="uml:Property" xmi:id="ApplicationSchema-base_Package" name="base_Package" association="Package_ApplicationSchema">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#Package"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="ApplicationSchema-version" name="version">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="ApplicationSchema-language" name="language">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="ApplicationSchema-gmlProfileSchema" name="gmlProfileSchema">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="ApplicationSchema-xsdDocument" name="xsdDocument">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="ApplicationSchema-xmlns" name="xmlns">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="ApplicationSchema-targetNamespace" name="targetNamespace">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="Package_ApplicationSchema" name="A_Package_ApplicationSchema" memberEnd="extension_ApplicationSchema ApplicationSchema-base_Package">
-					<ownedEnd xmi:id="extension_ApplicationSchema" name="extension_ApplicationSchema" type="ApplicationSchema" isComposite="true" lower="0" upper="1" memberEnd="extension_ApplicationSchema ApplicationSchema-base_Package"/>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="FeatureType" name="FeatureType">
-					<ownedAttribute xmi:type="uml:Property" xmi:id="FeatureType-base_Class" name="base_Class" association="Class_FeatureType">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#Class"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="FeatureType-gmlMixin" name="gmlMixin">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="FeatureType-noPropertyType" name="noPropertyType">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="FeatureType-isCollection" name="isCollection">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="FeatureType-byValuePropertyType" name="byValuePropertyType">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="Class_FeatureType" name="A_Class_FeatureType" memberEnd="extension_FeatureType FeatureType-base_Class">
-					<ownedEnd xmi:id="extension_FeatureType" name="extension_FeatureType" type="FeatureType" isComposite="true" lower="0" upper="1" memberEnd="extension_FeatureType FeatureType-base_Class"/>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="Leaf" name="Leaf">
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Leaf-base_Package" name="base_Package" association="Package_Leaf">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#Package"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Leaf-xsdEncodingRule" name="xsdEncodingRule">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Leaf-xsdDocument" name="xsdDocument">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="Package_Leaf" name="A_Package_Leaf" memberEnd="extension_Leaf Leaf-base_Package">
-					<ownedEnd xmi:id="extension_Leaf" name="extension_Leaf" type="Leaf" isComposite="true" lower="0" upper="1" memberEnd="extension_Leaf Leaf-base_Package"/>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="ObjectType" name="ObjectType">
-					<ownedAttribute xmi:type="uml:Property" xmi:id="ObjectType-base_Class" name="base_Class" association="Class_ObjectType">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#Class"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="ObjectType-noPropertyType" name="noPropertyType">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="ObjectType-isCollection" name="isCollection">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="ObjectType-byValuePropertyType" name="byValuePropertyType">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="Class_ObjectType" name="A_Class_ObjectType" memberEnd="extension_ObjectType ObjectType-base_Class">
-					<ownedEnd xmi:id="extension_ObjectType" name="extension_ObjectType" type="ObjectType" isComposite="true" lower="0" upper="1" memberEnd="extension_ObjectType ObjectType-base_Class"/>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="DataType" name="DataType">
-					<ownedAttribute xmi:type="uml:Property" xmi:id="DataType-base_DataType" name="base_DataType" association="DataType_DataType">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#DataType"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="DataType-xsdEncodingRule" name="xsdEncodingRule">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="DataType-noPropertyType" name="noPropertyType">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="DataType_DataType" name="A_DataType_DataType" memberEnd="extension_DataType DataType-base_DataType">
-					<ownedEnd xmi:id="extension_DataType" name="extension_DataType" type="DataType" isComposite="true" lower="0" upper="1" memberEnd="extension_DataType DataType-base_DataType"/>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="TopLevelFeatureType" name="TopLevelFeatureType">
-					<generalization xmi:type="uml:Generalization" xmi:id="TopLevelFeatureType_FeatureType_generalization" general="FeatureType"/>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="BasicType" name="BasicType">
-					<ownedAttribute xmi:type="uml:Property" xmi:id="BasicType-base_Class" name="base_Class" association="Class_BasicType">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#Class"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="BasicType-rangeMaximum" name="rangeMaximum">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="BasicType-maxLength" name="maxLength">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="BasicType-xsdEncodingRule" name="xsdEncodingRule">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="BasicType-length" name="length">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="BasicType-minLength" name="minLength">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="BasicType-rangeMinimum" name="rangeMinimum">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="BasicType-base" name="base">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="BasicType-itemType" name="itemType">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="Class_BasicType" name="A_Class_BasicType" memberEnd="extension_BasicType BasicType-base_Class">
-					<ownedEnd xmi:id="extension_BasicType" name="extension_BasicType" type="BasicType" isComposite="true" lower="0" upper="1" memberEnd="extension_BasicType BasicType-base_Class"/>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="Property" name="Property">
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Property-base_Property" name="base_Property" association="Property_Property">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#Property"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Property-xsdEncodingRule" name="xsdEncodingRule">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Property-isMetadata" name="isMetadata">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Property-inlineOrByReference" name="inlineOrByReference">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-					<ownedAttribute xmi:type="uml:Property" xmi:id="Property-sequenceNumber" name="sequenceNumber">
-						<type href="http://www.omg.org/spec/UML/20110701/UML.xmi#String"/>
-					</ownedAttribute>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="Property_Property" name="A_Property_Property" memberEnd="extension_Property Property-base_Property">
-					<ownedEnd xmi:id="extension_Property" name="extension_Property" type="Property" isComposite="true" lower="0" upper="1" memberEnd="extension_Property Property-base_Property"/>
-				</packagedElement>
-			</uml:Profile>
-		</profiles>
+		<profiles/>
 		<diagrams>
 			<diagram xmi:id="EAID_ACBB5EE3_3428_40f5_9C7C_E41923419F29">
 				<model package="EAPK_369E0123_00FC_4098_BEF2_3BB506B2012A" localID="3577" owner="EAPK_369E0123_00FC_4098_BEF2_3BB506B2012A"/>
 				<properties name="CityGML Package Diagram" type="Package" documentation="BuildingFurnitureFunctionValue is a code list that enumerates the different purposes of a BuildingFurniture."/>
-				<project author="kolbe/kutzner" version="1.0" created="2017-12-21 00:00:00" modified="2020-06-11 12:43:10"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1130;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=CF06DF2D;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -1979,7 +1572,7 @@
 			<diagram xmi:id="EAID_938AE961_1C57_4052_B964_997D1894A58D">
 				<model package="EAPK_369E0123_00FC_4098_BEF2_3BB506B2012A" localID="3579" owner="EAPK_369E0123_00FC_4098_BEF2_3BB506B2012A"/>
 				<properties name="Use of ISO and OASIS standards in CityGML" type="Package"/>
-				<project author="kolbe/kutzner" version="1.0" created="2017-12-21 00:00:00" modified="2020-09-17 15:55:03"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1130;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=B3E7F1C5;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2014,7 +1607,7 @@
 			<diagram xmi:id="EAID_1D8C3E70_F679_46de_BDBB_ECF383899160">
 				<model package="EAPK_1C8607D1_2967_44ff_948A_2A9256D00A45" localID="3563" owner="EAPK_1C8607D1_2967_44ff_948A_2A9256D00A45"/>
 				<properties name="Construction" type="Logical"/>
-				<project author="kolbe/kutzner" version="1.0" created="2017-11-22 00:00:00" modified="2020-09-10 17:12:58"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1390;DocSize.cy=1969;ShowDetails=0;Orientation=P;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=155;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=627E1BB6;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-16,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2088,7 +1681,7 @@
 			<diagram xmi:id="EAID_05A815AC_1EAE_4c98_A8F7_C178E3C1DF9C">
 				<model package="EAPK_1C8607D1_2967_44ff_948A_2A9256D00A45" localID="3588" owner="EAPK_1C8607D1_2967_44ff_948A_2A9256D00A45"/>
 				<properties name="Construction - Code lists" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2019-09-30 08:49:52" modified="2020-05-30 00:32:00"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=0275D653;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-16,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2111,7 +1704,7 @@
 			<diagram xmi:id="EAID_3C234AFC_60AB_4cb3_A460_F99B1666A108">
 				<model package="EAPK_1C8607D1_2967_44ff_948A_2A9256D00A45" localID="3614" owner="EAPK_1C8607D1_2967_44ff_948A_2A9256D00A45"/>
 				<properties name="Construction - ADE Data types" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2020-05-26 22:19:03" modified="2020-05-30 00:31:56"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=DCC5C322;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2143,7 +1736,7 @@
 			<diagram xmi:id="EAID_74DB2087_E1FC_42a7_A349_2D89BED649A5">
 				<model package="EAPK_15C00628_ED51_4a92_8216_10ADF1613D98" localID="3566" owner="EAPK_15C00628_ED51_4a92_8216_10ADF1613D98"/>
 				<properties name="Dynamizer" type="Logical"/>
-				<project author="kolbe/kutzner" version="1.0" created="2017-12-12 00:00:00" modified="2020-09-02 22:44:27"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1622;DocSize.cy=1138;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=8;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=3AD7FAB3;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2195,7 +1788,7 @@
 			<diagram xmi:id="EAID_BE0D44C2_C28B_4b5e_B937_1CA5152CAA6D">
 				<model package="EAPK_15C00628_ED51_4a92_8216_10ADF1613D98" localID="3597" owner="EAPK_15C00628_ED51_4a92_8216_10ADF1613D98"/>
 				<properties name="Dynamizer - Code lists" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2019-10-25 16:53:30" modified="2020-05-30 00:33:01"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=4DFEE5B5;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2211,7 +1804,7 @@
 			<diagram xmi:id="EAID_904A37DC_3079_4ef4_9DB0_3DC2C3784549">
 				<model package="EAPK_15C00628_ED51_4a92_8216_10ADF1613D98" localID="3611" owner="EAPK_15C00628_ED51_4a92_8216_10ADF1613D98"/>
 				<properties name="Dynamizer - ADE Data types" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2020-05-26 13:29:35" modified="2020-05-30 00:32:58"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=7F7F9CEE;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2230,7 +1823,7 @@
 			<diagram xmi:id="EAID_240E86D5_8B1E_40a5_BA09_BA543AFC0EBE">
 				<model package="EAPK_389F21DC_6F91_41f1_89BB_9D864B7E1E0A" localID="3580" owner="EAPK_389F21DC_6F91_41f1_89BB_9D864B7E1E0A"/>
 				<properties name="PointCloud" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2018-10-16 15:33:28" modified="2020-05-30 00:33:42"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1130;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=DCAD92CD;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2253,7 +1846,7 @@
 			<diagram xmi:id="EAID_4B37E1DE_24F4_4616_9071_A3335F46CD55">
 				<model package="EAPK_389F21DC_6F91_41f1_89BB_9D864B7E1E0A" localID="3608" owner="EAPK_389F21DC_6F91_41f1_89BB_9D864B7E1E0A"/>
 				<properties name="PointCloud - ADE Data types" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2020-05-26 12:52:01" modified="2020-05-30 00:33:46"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=5D77B541;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2266,7 +1859,7 @@
 			<diagram xmi:id="EAID_30A8A476_A964_45dd_9D4D_50B2B425901C">
 				<model package="EAPK_9B83B69F_E472_4e96_A2C2_B48356E8C011" localID="3565" owner="EAPK_9B83B69F_E472_4e96_A2C2_B48356E8C011"/>
 				<properties name="Versioning" type="Logical"/>
-				<project author="kolbe/kutzner" version="1.0" created="2017-12-12 00:00:00" modified="2020-09-17 15:56:52"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1130;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=9BAF5528;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2300,7 +1893,7 @@
 			<diagram xmi:id="EAID_5BBFE610_AF42_47b1_A20C_F4DE8B7E2686">
 				<model package="EAPK_9B83B69F_E472_4e96_A2C2_B48356E8C011" localID="3605" owner="EAPK_9B83B69F_E472_4e96_A2C2_B48356E8C011"/>
 				<properties name="Versioning - ADE Data types" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2020-05-26 11:42:36" modified="2020-05-30 00:34:59"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=632D9961;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2314,7 +1907,7 @@
 			<diagram xmi:id="EAID_9E21C99D_ED51_47f8_90E4_7CDA94BEDAC4">
 				<model package="EAPK_E5331CB6_6DCD_42ba_BAFF_7747D02BBEDD" localID="4" owner="EAPK_E5331CB6_6DCD_42ba_BAFF_7747D02BBEDD"/>
 				<properties name="Appearance" type="Logical"/>
-				<project author="kolbe/kutzner" version="1.0" created="2012-11-27 00:00:00" modified="2020-09-10 16:30:28"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1169;DocSize.cy=1654;ShowDetails=0;Orientation=P;Zoom=66;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=1;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=8;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=0;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=0;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;SuppressedCompartments=;Theme=:119;SaveTag=9448BE72;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=0;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2378,7 +1971,7 @@
 			<diagram xmi:id="EAID_A17F0D0B_2033_46f6_A99B_724B17D018B9">
 				<model package="EAPK_E5331CB6_6DCD_42ba_BAFF_7747D02BBEDD" localID="3600" owner="EAPK_E5331CB6_6DCD_42ba_BAFF_7747D02BBEDD"/>
 				<properties name="Appearance - ADE Data types" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2020-05-25 18:45:36" modified="2020-05-30 00:30:37"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=80215857;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2396,7 +1989,7 @@
 			<diagram xmi:id="EAID_C33CE777_7C88_4956_BBF9_DB85E00F0E48">
 				<model package="EAPK_907C7DFC_E94C_45a2_A3CC_CFC4D25612E3" localID="5" owner="EAPK_907C7DFC_E94C_45a2_A3CC_CFC4D25612E3"/>
 				<properties name="Bridge" type="Logical"/>
-				<project author="kolbe/kutzner" version="1.0" created="2012-11-21 00:00:00" modified="2020-05-30 00:30:45"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1130;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=56;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=1;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=0;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=0;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;SuppressedCompartments=;Theme=:119;SaveTag=22AAE8AE;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=0;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2441,7 +2034,7 @@
 			<diagram xmi:id="EAID_F750F4C3_6D17_4052_BE86_64351FAECB78">
 				<model package="EAPK_907C7DFC_E94C_45a2_A3CC_CFC4D25612E3" localID="3584" owner="EAPK_907C7DFC_E94C_45a2_A3CC_CFC4D25612E3"/>
 				<properties name="Bridge - Code lists" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2019-09-27 18:57:25" modified="2020-05-30 00:30:51"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=7DF30FB2;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-16,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2468,7 +2061,7 @@
 			<diagram xmi:id="EAID_702EFB0B_7AD9_4395_9459_DEA83BC951C5">
 				<model package="EAPK_907C7DFC_E94C_45a2_A3CC_CFC4D25612E3" localID="3601" owner="EAPK_907C7DFC_E94C_45a2_A3CC_CFC4D25612E3"/>
 				<properties name="Bridge - ADE Data types" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2020-05-25 22:20:20" modified="2020-05-30 00:30:48"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=F4B89FB8;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2487,7 +2080,7 @@
 			<diagram xmi:id="EAID_FFF8F094_4A8B_47aa_B223_D755D08C360E">
 				<model package="EAPK_4F2C8A46_ADA6_4d7e_AB59_DF53F7FA0FEA" localID="6" owner="EAPK_4F2C8A46_ADA6_4d7e_AB59_DF53F7FA0FEA"/>
 				<properties name="Building" type="Logical"/>
-				<project author="kolbe/kutzner" version="1.0" created="2012-11-21 00:00:00" modified="2020-09-04 16:43:35"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1614;DocSize.cy=1138;ShowDetails=0;Orientation=L;Zoom=66;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=1;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=8;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;SuppressedCompartments=;Theme=:119;SaveTag=DD10DC2E;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=0;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2549,7 +2142,7 @@
 			<diagram xmi:id="EAID_BB51592F_3B86_47fe_A857_1B1BF4EA1621">
 				<model package="EAPK_4F2C8A46_ADA6_4d7e_AB59_DF53F7FA0FEA" localID="3585" owner="EAPK_4F2C8A46_ADA6_4d7e_AB59_DF53F7FA0FEA"/>
 				<properties name="Building - Code lists" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2019-09-27 19:08:54" modified="2020-05-30 00:31:09"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=844DA047;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-16,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2581,7 +2174,7 @@
 			<diagram xmi:id="EAID_32299DF2_D230_4359_A1C4_F00A995DF27E">
 				<model package="EAPK_4F2C8A46_ADA6_4d7e_AB59_DF53F7FA0FEA" localID="3613" owner="EAPK_4F2C8A46_ADA6_4d7e_AB59_DF53F7FA0FEA"/>
 				<properties name="Building - ADE Data types" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2020-05-26 19:54:58" modified="2020-05-30 00:31:14"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=6C16B348;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2603,7 +2196,7 @@
 			<diagram xmi:id="EAID_31DC5280_C05F_4ed9_AE52_23879253BE57">
 				<model package="EAPK_E1321C0B_B95B_44c0_A3EA_3B507911CD78" localID="7" owner="EAPK_E1321C0B_B95B_44c0_A3EA_3B507911CD78"/>
 				<properties name="CityFurniture" type="Logical"/>
-				<project author="kolbe/kutzner" version="1.0" created="2012-11-27 00:00:00" modified="2020-05-30 00:31:23"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1130;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=131;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=1;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=1;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=0;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;Layout=l=20:c=20:d=0:cr=1:la=2:i=1:it=4:a=0:;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=0;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;SuppressedCompartments=;Theme=:119;SaveTag=BBFFF081;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=0;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2618,7 +2211,7 @@
 			<diagram xmi:id="EAID_CFB28AA3_94FF_46e7_97D6_A5DD9661CDED">
 				<model package="EAPK_E1321C0B_B95B_44c0_A3EA_3B507911CD78" localID="3586" owner="EAPK_E1321C0B_B95B_44c0_A3EA_3B507911CD78"/>
 				<properties name="CityFurniture - Code lists" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2019-09-27 19:21:44" modified="2020-05-30 00:31:31"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=314258C1;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-16,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2633,7 +2226,7 @@
 			<diagram xmi:id="EAID_15D4697F_0070_4bb9_AABF_0A60AB345943">
 				<model package="EAPK_E1321C0B_B95B_44c0_A3EA_3B507911CD78" localID="3602" owner="EAPK_E1321C0B_B95B_44c0_A3EA_3B507911CD78"/>
 				<properties name="CityFurniture - ADE Data types" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2020-05-26 00:08:00" modified="2020-05-30 00:31:26"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=3B9651FF;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2646,7 +2239,7 @@
 			<diagram xmi:id="EAID_BD5F54ED_0A87_4f5e_887F_1D020FAE24EF">
 				<model package="EAPK_E1321C0B_B95B_44c0_A3EA_3B507911CD78" localID="3619" owner="EAPK_E1321C0B_B95B_44c0_A3EA_3B507911CD78"/>
 				<properties name="CityFurniture with code lists and ADE data types" type="Logical"/>
-				<project author="kolbe/kutzner" version="1.0" created="2020-08-03 00:00:00" modified="2020-08-03 13:09:37"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1130;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=131;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=1;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=1;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=0;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;Layout=l=20:c=20:d=0:cr=1:la=2:i=1:it=4:a=0:;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=0;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;SuppressedCompartments=;Theme=:119;SaveTag=A38A93A8;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=0;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2665,7 +2258,7 @@
 			<diagram xmi:id="EAID_CCE69980_0DDD_4975_9104_054B018BAA96">
 				<model package="EAPK_8877ED0D_AFFC_4f03_9B58_F2736F8935AB" localID="8" owner="EAPK_8877ED0D_AFFC_4f03_9B58_F2736F8935AB"/>
 				<properties name="CityObjectGroup" type="Logical"/>
-				<project author="kolbe/kutzner" version="1.0" created="2012-11-27 00:00:00" modified="2020-05-30 00:31:38"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1130;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=103;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=1;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=0;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=0;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;SuppressedCompartments=;Theme=:119;SaveTag=60F3723A;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=0;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2686,7 +2279,7 @@
 			<diagram xmi:id="EAID_CF6A9B9C_BE1C_4f20_9ADF_74BB8CDE8CF8">
 				<model package="EAPK_8877ED0D_AFFC_4f03_9B58_F2736F8935AB" localID="3587" owner="EAPK_8877ED0D_AFFC_4f03_9B58_F2736F8935AB"/>
 				<properties name="CityObjectGroup - Code lists" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2019-09-27 19:23:53" modified="2020-05-30 00:31:44"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1130;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=D7C18D7A;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-16,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2701,7 +2294,7 @@
 			<diagram xmi:id="EAID_3CF03795_809D_464e_915A_578D06D6D0D1">
 				<model package="EAPK_8877ED0D_AFFC_4f03_9B58_F2736F8935AB" localID="3603" owner="EAPK_8877ED0D_AFFC_4f03_9B58_F2736F8935AB"/>
 				<properties name="CityObjectGroup - ADE Data types" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2020-05-26 00:13:41" modified="2020-05-30 00:31:40"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=00800B34;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2714,7 +2307,7 @@
 			<diagram xmi:id="EAID_75EF6666_6265_4572_8AF6_D61387CBC7F4">
 				<model package="EAPK_FDE7D4FC_4EF3_42d1_9A94_D7340DBBD79F" localID="9" owner="EAPK_FDE7D4FC_4EF3_42d1_9A94_D7340DBBD79F"/>
 				<properties name="Core - Overview" type="Logical"/>
-				<project author="kolbe/kutzner" version="1.0" created="2012-07-09 00:00:00" modified="2020-05-30 00:32:31"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1614;DocSize.cy=1138;ShowDetails=0;Orientation=L;Zoom=66;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=1;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=8;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;SuppressedCompartments=;Theme=:119;SaveTag=9DAFFE38;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=0;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2814,7 +2407,7 @@
 			<diagram xmi:id="EAID_840EE6E0_ADF1_4685_B95C_16989A6FAD1C">
 				<model package="EAPK_FDE7D4FC_4EF3_42d1_9A94_D7340DBBD79F" localID="3571" owner="EAPK_FDE7D4FC_4EF3_42d1_9A94_D7340DBBD79F"/>
 				<properties name="Core - City object relations" type="Logical"/>
-				<project author="kolbe/kutzner" version="1.0" created="2017-12-20 00:00:00" modified="2020-08-03 13:14:08"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1130;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=6C261A3D;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2837,7 +2430,7 @@
 			<diagram xmi:id="EAID_0FCA1673_FDB0_45de_875B_F1733FD7FA88">
 				<model package="EAPK_FDE7D4FC_4EF3_42d1_9A94_D7340DBBD79F" localID="3573" owner="EAPK_FDE7D4FC_4EF3_42d1_9A94_D7340DBBD79F"/>
 				<properties name="Core - Space concepts" type="Logical"/>
-				<project author="kolbe/kutzner" version="1.0" created="2017-12-20 00:00:00" modified="2020-09-07 17:19:06"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1654;DocSize.cy=1169;ShowDetails=0;Orientation=L;Zoom=66;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=1;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=8;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;SuppressedCompartments=;Theme=:119;SaveTag=0B3D45D8;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=0;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2869,7 +2462,7 @@
 			<diagram xmi:id="EAID_FC6FE615_3298_45bd_9FB8_1C58C7C406E7">
 				<model package="EAPK_FDE7D4FC_4EF3_42d1_9A94_D7340DBBD79F" localID="3574" owner="EAPK_FDE7D4FC_4EF3_42d1_9A94_D7340DBBD79F"/>
 				<properties name="Core - Basic Types, Enumerations, Code lists" type="Logical"/>
-				<project author="kolbe/kutzner" version="1.0" created="2017-12-20 00:00:00" modified="2020-05-30 00:32:11"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1169;DocSize.cy=827;ShowDetails=0;Orientation=L;Zoom=66;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=1;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=0;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=0;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;SuppressedCompartments=;Theme=:119;SaveTag=635DC38C;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=0;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2925,7 +2518,7 @@
 			<diagram xmi:id="EAID_C65539B4_B895_4eaa_AAC1_2F0C89A0FD1A">
 				<model package="EAPK_FDE7D4FC_4EF3_42d1_9A94_D7340DBBD79F" localID="3575" owner="EAPK_FDE7D4FC_4EF3_42d1_9A94_D7340DBBD79F"/>
 				<properties name="Core - Geometry and LoD concept" type="Logical"/>
-				<project author="kolbe/kutzner" version="1.0" created="2017-12-20 00:00:00" modified="2020-09-11 10:56:26"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1130;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=66;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=1;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=0;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=0;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;SuppressedCompartments=;Theme=:119;SaveTag=309C05CD;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=0;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2975,7 +2568,7 @@
 			<diagram xmi:id="EAID_A8BAC6AD_4B0A_4d48_B401_FB40FB2ECF24">
 				<model package="EAPK_FDE7D4FC_4EF3_42d1_9A94_D7340DBBD79F" localID="3576" owner="EAPK_FDE7D4FC_4EF3_42d1_9A94_D7340DBBD79F"/>
 				<properties name="Core - Miscellaneous" type="Logical"/>
-				<project author="kolbe/kutzner" version="1.0" created="2017-12-21 00:00:00" modified="2020-05-30 00:32:24"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1130;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=66;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=1;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=0;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=0;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;SuppressedCompartments=;Theme=:119;SaveTag=09A05869;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=0;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -2995,7 +2588,7 @@
 			<diagram xmi:id="EAID_AACC1C1A_3CDD_4a4d_B60C_88847416710C">
 				<model package="EAPK_FDE7D4FC_4EF3_42d1_9A94_D7340DBBD79F" localID="3616" owner="EAPK_FDE7D4FC_4EF3_42d1_9A94_D7340DBBD79F"/>
 				<properties name="Core - ADE Data types" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2020-05-27 00:00:00" modified="2020-05-30 00:32:08"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=7135188D;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -3025,7 +2618,7 @@
 			<diagram xmi:id="EAID_BA5AEA2E_A3E5_4795_A5B0_B03879BDAE64">
 				<model package="EAPK_FDE7D4FC_4EF3_42d1_9A94_D7340DBBD79F" localID="3617" owner="EAPK_FDE7D4FC_4EF3_42d1_9A94_D7340DBBD79F"/>
 				<properties name="Core - City models and city objects" type="Logical"/>
-				<project author="kolbe/kutzner" version="1.0" created="2020-05-28 00:00:00" modified="2020-05-30 00:32:15"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1614;DocSize.cy=1138;ShowDetails=0;Orientation=L;Zoom=66;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=1;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=8;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;SuppressedCompartments=;Theme=:119;SaveTag=3F16D575;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=0;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -3060,7 +2653,7 @@
 			<diagram xmi:id="EAID_4FDA5995_0551_4e97_AEC7_FAE00829847E">
 				<model package="EAPK_511CFB07_CCBA_4005_B3CD_B18A5A29767A" localID="3581" owner="EAPK_511CFB07_CCBA_4005_B3CD_B18A5A29767A"/>
 				<properties name="Generics" type="Logical"/>
-				<project author="kolbe/kutzner" version="1.0" created="2018-10-19 00:00:00" modified="2020-09-10 16:53:01"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=827;DocSize.cy=1169;ShowDetails=0;Orientation=P;Zoom=122;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=1;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=0;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=0;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;SuppressedCompartments=;Theme=:119;SaveTag=C5550EF6;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=0;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -3106,7 +2699,7 @@
 			<diagram xmi:id="EAID_CC9C374A_7925_4bc3_BB8A_9EFFDB6C4479">
 				<model package="EAPK_511CFB07_CCBA_4005_B3CD_B18A5A29767A" localID="3589" owner="EAPK_511CFB07_CCBA_4005_B3CD_B18A5A29767A"/>
 				<properties name="Generics - Code lists" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2019-09-30 08:54:03" modified="2020-09-10 16:55:34"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=F457DFC1;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-16,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -3130,7 +2723,7 @@
 			<diagram xmi:id="EAID_06A0E1E6_1E89_4cb3_BA48_93EE05DF1C8B">
 				<model package="EAPK_511CFB07_CCBA_4005_B3CD_B18A5A29767A" localID="3610" owner="EAPK_511CFB07_CCBA_4005_B3CD_B18A5A29767A"/>
 				<properties name="Generics - ADE Data types" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2020-05-26 13:01:20" modified="2020-05-30 00:33:16"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=320969A7;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -3146,7 +2739,7 @@
 			<diagram xmi:id="EAID_CC93EE95_FF75_448b_9449_79C9FD49472F">
 				<model package="EAPK_C1AAF1C3_9E48_468d_A272_EA37B3F35235" localID="11" owner="EAPK_C1AAF1C3_9E48_468d_A272_EA37B3F35235"/>
 				<properties name="LandUse" type="Logical"/>
-				<project author="kolbe/kutzner" version="1.0" created="2012-11-28 00:00:00" modified="2020-05-30 00:33:28"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1130;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=141;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=1;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=0;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=0;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;SuppressedCompartments=;Theme=:119;SaveTag=88A4175C;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=0;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -3161,7 +2754,7 @@
 			<diagram xmi:id="EAID_825D6554_0AC1_4ede_9674_ED8159356C59">
 				<model package="EAPK_C1AAF1C3_9E48_468d_A272_EA37B3F35235" localID="3590" owner="EAPK_C1AAF1C3_9E48_468d_A272_EA37B3F35235"/>
 				<properties name="LandUse - Code lists" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2019-09-30 09:02:43" modified="2020-05-30 00:33:35"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=7A7CA006;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-16,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -3176,7 +2769,7 @@
 			<diagram xmi:id="EAID_79C200FF_46FA_49d8_8E38_0F4F4DF2A99B">
 				<model package="EAPK_C1AAF1C3_9E48_468d_A272_EA37B3F35235" localID="3609" owner="EAPK_C1AAF1C3_9E48_468d_A272_EA37B3F35235"/>
 				<properties name="LandUse - ADE Data types" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2020-05-26 12:57:44" modified="2020-05-30 00:33:31"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=CC4A2FA2;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -3189,7 +2782,7 @@
 			<diagram xmi:id="EAID_D9236E1D_D6D8_4fb3_9AB4_C9105C205DD7">
 				<model package="EAPK_E5C5322E_A142_4812_AD39_C64DA8CBCE6E" localID="12" owner="EAPK_E5C5322E_A142_4812_AD39_C64DA8CBCE6E"/>
 				<properties name="Relief" type="Logical"/>
-				<project author="kolbe/kutzner" version="1.0" created="2012-11-28 00:00:00" modified="2020-05-30 00:33:53"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1130;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=131;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=1;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=0;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=0;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;SuppressedCompartments=;Theme=:119;SaveTag=DC0D4212;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=0;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -3232,7 +2825,7 @@
 			<diagram xmi:id="EAID_1D144F33_D3F1_4efb_9A25_C99109469012">
 				<model package="EAPK_E5C5322E_A142_4812_AD39_C64DA8CBCE6E" localID="3607" owner="EAPK_E5C5322E_A142_4812_AD39_C64DA8CBCE6E"/>
 				<properties name="Relief - ADE Data types" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2020-05-26 11:59:28" modified="2020-05-30 00:33:57"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=DBECBB29;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -3250,7 +2843,7 @@
 			<diagram xmi:id="EAID_DFE39C85_A894_4c08_AD96_612FC7DB12B1">
 				<model package="EAPK_5563BED2_B142_4d7d_9980_CF451817627D" localID="3595" owner="EAPK_5563BED2_B142_4d7d_9980_CF451817627D"/>
 				<properties name="Transportation" type="Logical"/>
-				<project author="kolbe/kutzner" version="1.0" created="2019-10-25 11:23:38" modified="2020-09-10 17:02:24"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1654;DocSize.cy=1169;ShowDetails=0;Orientation=L;Zoom=122;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=1;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=8;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;SuppressedCompartments=;Theme=:119;SaveTag=B4BF40F9;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=0;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -3319,7 +2912,7 @@
 			<diagram xmi:id="EAID_42F1110E_0C67_42bd_96B5_74E582F07598">
 				<model package="EAPK_5563BED2_B142_4d7d_9980_CF451817627D" localID="3596" owner="EAPK_5563BED2_B142_4d7d_9980_CF451817627D"/>
 				<properties name="Transportation - Code list" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2019-10-25 11:23:38" modified="2020-08-03 15:32:16"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=751F9A07;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-16,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -3364,7 +2957,7 @@
 			<diagram xmi:id="EAID_FEAF16C1_C756_4dfd_AB72_183E870F1106">
 				<model package="EAPK_5563BED2_B142_4d7d_9980_CF451817627D" localID="3615" owner="EAPK_5563BED2_B142_4d7d_9980_CF451817627D"/>
 				<properties name="Transportation - ADE Data types" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2020-05-27 14:14:18" modified="2020-05-30 00:34:07"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=CF2D530A;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -3392,7 +2985,7 @@
 			<diagram xmi:id="EAID_B5A63AB0_001F_43a2_927A_9A0CC62BE6FF">
 				<model package="EAPK_070A5649_8282_4ad3_A1DE_A9A41FCB55B8" localID="14" owner="EAPK_070A5649_8282_4ad3_A1DE_A9A41FCB55B8"/>
 				<properties name="Tunnel" type="Logical"/>
-				<project author="kolbe/kutzner" version="1.0" created="2012-11-21 00:00:00" modified="2020-05-30 00:34:25"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1130;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=66;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=1;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=0;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=0;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;SuppressedCompartments=;Theme=:119;SaveTag=1865B74B;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=0;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -3435,7 +3028,7 @@
 			<diagram xmi:id="EAID_C03419BC_6144_4c25_8FD5_4BE6CD660A56">
 				<model package="EAPK_070A5649_8282_4ad3_A1DE_A9A41FCB55B8" localID="3594" owner="EAPK_070A5649_8282_4ad3_A1DE_A9A41FCB55B8"/>
 				<properties name="Tunnel - Code lists" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2019-09-30 11:20:35" modified="2020-05-30 00:34:32"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=FDA34BFC;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -3462,7 +3055,7 @@
 			<diagram xmi:id="EAID_96C4DBD6_4A1E_40dd_9A24_930878F4883D">
 				<model package="EAPK_070A5649_8282_4ad3_A1DE_A9A41FCB55B8" localID="3612" owner="EAPK_070A5649_8282_4ad3_A1DE_A9A41FCB55B8"/>
 				<properties name="Tunnel - ADE Data types" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2020-05-26 15:09:17" modified="2020-05-30 00:34:29"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=B970C159;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -3481,7 +3074,7 @@
 			<diagram xmi:id="EAID_8C11AE50_DCC3_4a5c_96FE_0C7A5A0B9471">
 				<model package="EAPK_D44D446F_8AF9_49d7_BD32_6DA30532A847" localID="15" owner="EAPK_D44D446F_8AF9_49d7_BD32_6DA30532A847"/>
 				<properties name="Vegetation" type="Logical"/>
-				<project author="kolbe/kutzner" version="1.0" created="2012-11-26 00:00:00" modified="2020-05-30 00:34:40"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1130;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=122;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=1;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=0;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=0;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;SuppressedCompartments=;Theme=:119;SaveTag=3DD46F8B;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=0;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -3500,7 +3093,7 @@
 			<diagram xmi:id="EAID_D9A7DB98_676C_4635_AC87_6B6D4F6BB0DD">
 				<model package="EAPK_D44D446F_8AF9_49d7_BD32_6DA30532A847" localID="3593" owner="EAPK_D44D446F_8AF9_49d7_BD32_6DA30532A847"/>
 				<properties name="Vegetation - Code lists" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2019-09-30 00:00:00" modified="2020-05-30 00:34:47"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1130;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=05C346C9;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -3519,7 +3112,7 @@
 			<diagram xmi:id="EAID_11CC0572_7632_4599_8B4E_14FC0B75CAC8">
 				<model package="EAPK_D44D446F_8AF9_49d7_BD32_6DA30532A847" localID="3606" owner="EAPK_D44D446F_8AF9_49d7_BD32_6DA30532A847"/>
 				<properties name="Vegetation - ADE Data types" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2020-05-26 11:53:38" modified="2020-05-30 00:34:44"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=BB135BB7;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -3534,7 +3127,7 @@
 			<diagram xmi:id="EAID_69A26A1E_1FD3_4f32_A18D_3E79F3674D96">
 				<model package="EAPK_A5BC15D5_3041_4a84_BA9E_A28E1B43D317" localID="16" owner="EAPK_A5BC15D5_3041_4a84_BA9E_A28E1B43D317"/>
 				<properties name="WaterBody" type="Logical"/>
-				<project author="kolbe/kutzner" version="1.0" created="2012-11-26 00:00:00" modified="2020-05-30 00:35:06"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1130;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=122;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=1;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=0;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;HideConnStereotype=1;SuppressedCompartments=;Theme=:119;SaveTag=56208305;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=0;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -3559,7 +3152,7 @@
 			<diagram xmi:id="EAID_0365B0D3_2657_49b1_A025_F6A23F0B70EA">
 				<model package="EAPK_A5BC15D5_3041_4a84_BA9E_A28E1B43D317" localID="3592" owner="EAPK_A5BC15D5_3041_4a84_BA9E_A28E1B43D317"/>
 				<properties name="WaterBody - Code lists" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2019-09-30 10:24:54" modified="2020-05-30 00:35:13"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1130;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=04AF6E95;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
@@ -3575,7 +3168,7 @@
 			<diagram xmi:id="EAID_D1905ADE_FE54_42dc_A9C7_FAA9EE7DD1AB">
 				<model package="EAPK_A5BC15D5_3041_4a84_BA9E_A28E1B43D317" localID="3604" owner="EAPK_A5BC15D5_3041_4a84_BA9E_A28E1B43D317"/>
 				<properties name="WaterBody - ADE Data types" type="Logical"/>
-				<project author="Tatjana" version="1.0" created="2020-05-26 11:28:06" modified="2020-05-30 00:35:10"/>
+				
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=1138;DocSize.cy=795;ShowDetails=0;Orientation=L;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
 				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=5AB71D84;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
