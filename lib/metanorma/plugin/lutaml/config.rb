@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 require "yaml"
-require "lutaml/uml"
+begin
+  require "lutaml/uml"
+rescue LoadError
+end
 require "lutaml/model"
 
 module Metanorma

@@ -27,3 +27,7 @@ gem "simplecov"
 gem "timecop"
 gem "vcr"
 gem "webmock"
+# standoc main's block_attributes reference
+# Metanorma::Document::Components::AncillaryBlocks::SvgmapElement, which
+# the released metanorma-document 0.5.1 predates; pin document main
+gem "metanorma-document", github: "metanorma/metanorma-document", ref: "ca4eb4b26f7ab0d2994a4710d0cf158607a832b4"

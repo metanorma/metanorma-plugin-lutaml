@@ -34,6 +34,9 @@ Gem::Specification.new do |spec|
   spec.add_dependency "expressir", "~> 2.3", ">= 2.3.5"
   spec.add_dependency "isodoc"
   spec.add_dependency "liquid"
+  # The plugin requires "lutaml/uml" at load time (preprocessors);
+  # the dependency was missing from the gemspec.
+  spec.add_dependency "lutaml-uml"
   spec.add_dependency "lutaml-lml"
   spec.add_dependency "lutaml-model", "~> 0.8.4"
   spec.add_dependency "ogc-gml", "~> 1.1"

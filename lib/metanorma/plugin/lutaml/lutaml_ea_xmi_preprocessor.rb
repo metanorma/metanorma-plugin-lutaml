@@ -3,7 +3,10 @@
 require "liquid"
 require "asciidoctor"
 require "asciidoctor/reader"
-require "lutaml/uml"
+begin
+  require "lutaml/uml"
+rescue LoadError
+end
 require "xmi"
 require "ea/xmi"
 

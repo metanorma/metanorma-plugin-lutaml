@@ -2,7 +2,10 @@
 
 require_relative "metanorma/plugin/lutaml/version"
 begin
+  begin
   require "lutaml/uml"
+rescue LoadError
+end
 rescue LoadError # LOCAL: express-only build without the UML stack
 end
 require "lutaml/lml"

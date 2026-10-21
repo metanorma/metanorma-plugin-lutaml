@@ -3,7 +3,10 @@
 require "liquid"
 require "asciidoctor"
 require "asciidoctor/reader"
-require "lutaml/uml"
+begin
+  require "lutaml/uml"
+rescue LoadError
+end
 require_relative "utils"
 require "metanorma/plugin/lutaml/asciidoctor/preprocessor"
 require "metanorma/plugin/lutaml/lutaml_ea_xmi_base"
