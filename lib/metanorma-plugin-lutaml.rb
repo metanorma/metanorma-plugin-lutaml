@@ -72,8 +72,10 @@ module Metanorma
       autoload :LutamlXsdPreprocessor,
                "metanorma/plugin/lutaml/lutaml_xsd_preprocessor"
       autoload :ParseError, "metanorma/plugin/lutaml/parse_error"
+      autoload :XmiPartialLoadRegistry,
+               "metanorma/plugin/lutaml/xmi_partial_load_registry"
       autoload :XmiPartialLoadPreprocessor,
-               "metanorma/plugin/lutaml/xmi_partial_load_preprocessor"
+               "metanorma/plugin/lutaml/xmi_partial_load_registry"
       autoload :XmiParseCache, "metanorma/plugin/lutaml/xmi_parse_cache"
       autoload :SourceExtractor, "metanorma/plugin/lutaml/source_extractor"
       autoload :Utils, "metanorma/plugin/lutaml/utils"
