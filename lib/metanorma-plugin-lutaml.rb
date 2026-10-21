@@ -26,6 +26,8 @@ module Metanorma
       autoload :Content, "metanorma/plugin/lutaml/content"
       autoload :Data2TextPreprocessor,
                "metanorma/plugin/lutaml/data2_text_preprocessor"
+      autoload :LutamlDataPreprocessor,
+               "metanorma/plugin/lutaml/lutaml_data_preprocessor"
       autoload :ExpressRemarksDecorator,
                "metanorma/plugin/lutaml/express_remarks_decorator"
       autoload :ExpressRemarkAdapter,
