@@ -597,16 +597,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
                       name: "ADEOfAbstractAtomicTimeseries",
                     },
                     {
-                      id: "EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1",
-                      name: "CharacterString",
-                    },
-                    {
                       id: "EAID_1F4FA76D_0945_46f0_B222_3C4E92196351",
                       name: "ADEOfAbstractTimeseries",
-                    },
-                    {
-                      id: "EAID_2D0C03FB_FF62_4979_A2EB_A40C043B097E",
-                      name: "TM_Position",
                     },
                     {
                       id: "EAID_0DBF7AD4_080D_4238_9949_1CDB34142A59",
@@ -614,6 +606,25 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
                     },
                   ]
                   it_behaves_like "should contain xref objects", xref
+
+                  it "renders unrendered stub value types as text" do
+                    expect(subject).not_to have_tag(
+                      "xref",
+                      with: {
+                        target: "section-" \
+                                "EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1",
+                      },
+                    )
+                    expect(subject).not_to have_tag(
+                      "xref",
+                      with: {
+                        target: "section-" \
+                                "EAID_2D0C03FB_FF62_4979_A2EB_A40C043B097E",
+                      },
+                    )
+                    expect(subject).to include("CharacterString [1..1]")
+                    expect(subject).to include("TM_Position [0..1]")
+                  end
                 end
               end
             end
@@ -793,10 +804,12 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
           end
 
           it "uses the configured external anchor" do
-            expect(xml_output)
-              .to(include("<xref target=\"_characterstring\" " \
-                          "style=\"short\"><display-text>CharacterString" \
-                          "</display-text></xref> [1..1]"))
+            xml = Nokogiri::XML(metanorma_convert(input))
+            xref = xml.at_xpath("//*[local-name()='xref']" \
+                                "[@target='_characterstring']")
+            expect(xref).not_to be_nil
+            expect(xref.at_xpath("./*[local-name()='display-text']").text)
+              .to eq("CharacterString")
           end
         end
       end

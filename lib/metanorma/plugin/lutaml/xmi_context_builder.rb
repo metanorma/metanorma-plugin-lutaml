@@ -8,8 +8,10 @@ module Metanorma
           lutaml_document, additional_context, options,
           context_name = "context"
         )
-          root_package = package_level(lutaml_document.to_liquid,
-                                       options.package_root_level || 1)
+          root_context = lutaml_document.to_liquid
+          root_package = package_level(
+            root_context, options.package_root_level || 1
+          )
           contexts = create_default_context_object(
             context_name, root_package, additional_context, options
           )
@@ -17,8 +19,7 @@ module Metanorma
           if options.packages.nil?
             contexts[context_name]["render_nested_packages"] = true
             contexts[context_name]["packages"] = root_package.packages
-            add_model_anchor_context(contexts[context_name], root_package,
-                                     options)
+            add_model_anchor_context(contexts[context_name], root_context)
 
             return contexts
           end
@@ -32,8 +33,7 @@ module Metanorma
               "render_nested_packages" => !!options.render_nested_packages,
             },
           )
-          add_model_anchor_context(contexts[context_name], root_package,
-                                   options)
+          add_model_anchor_context(contexts[context_name], root_context)
 
           contexts
         end
@@ -99,27 +99,16 @@ module Metanorma
             .merge(children_pks_diags)
         end
 
-        def add_model_anchor_context(context, root_package, options)
+        def add_model_anchor_context(context, root_package)
           context["additional_context"]["model_anchors"] =
             model_anchors(model_packages(root_package))
-          context["additional_context"]["rendered_model_anchors"] =
-            model_anchors(rendered_packages(context, options))
+              .merge(model_stub_anchors(root_package))
         end
 
         def model_packages(root_package)
           packages_tree(root_package)
             .compact
-            .uniq { |package| package.xmi_id || package.name }
-        end
-
-        def rendered_packages(context, options)
-          packages = []
-          packages.concat(Array(context["root_packages"])) if options.include_root
-          packages.concat(Array(context["packages"]))
-          if context["render_nested_packages"]
-            packages = packages.flat_map { |package| packages_tree(package) }
-          end
-          packages.compact.uniq { |package| package.xmi_id || package.name }
+            .uniq { |package| package_key(package) }
         end
 
         def packages_tree(package)
@@ -133,25 +122,45 @@ module Metanorma
           if package.respond_to?(:children_packages)
             children.concat(Array(package.children_packages))
           end
-          children.concat(Array(package.packages)) if package.respond_to?(:packages)
-          children.compact.uniq { |child| child.xmi_id || child.name }
+          if package.respond_to?(:packages)
+            children.concat(Array(package.packages))
+          end
+          children.compact.uniq { |child| package_key(child) }
+        end
+
+        def package_key(package)
+          xmi_id = package.xmi_id if package.respond_to?(:xmi_id)
+          xmi_id || package.name
         end
 
         def model_anchors(packages)
+          collections = %w[classes enums data_types]
           packages.each_with_object({}) do |package, anchors|
-            add_model_anchor(anchors, package.xmi_id, package.name)
-            %w[classes enums data_types].each do |collection|
+            add_model_anchor(anchors, object_xmi_id(package), package.name)
+            collections.each do |collection|
               next unless package.respond_to?(collection)
 
               Array(package.public_send(collection)).each do |entity|
-                add_model_anchor(anchors, entity.xmi_id, entity.name)
+                add_model_anchor(anchors, object_xmi_id(entity), entity.name)
               end
             end
           end
         end
 
+        def object_xmi_id(object)
+          object.xmi_id if object.respond_to?(:xmi_id)
+        end
+
         def add_model_anchor(anchors, xmi_id, name)
           anchors[xmi_id] = name if xmi_id && !xmi_id.empty?
+        end
+
+        def model_stub_anchors(root_package)
+          xmi_root_model = root_package.instance_variable_get(:@xmi_root_model)
+          Array(xmi_root_model&.extension&.ea_stub)
+            .each_with_object({}) do |stub, anchors|
+              add_model_anchor(anchors, stub.id, stub.name)
+            end
         end
       end
     end

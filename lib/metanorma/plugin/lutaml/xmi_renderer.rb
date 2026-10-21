@@ -20,7 +20,7 @@ module Metanorma
         RENDER_STYLE_ATTRIBUTE = "render_style"
         MODEL_SECTION_XREF = /
           <<section-(?<xmi_id>[^,>\s]+)(?:,(?<text>[^>\n]+))?>>
-        /x.freeze
+        /x
 
         def model_representation( # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
           lutaml_doc, document, add_context, options
@@ -37,37 +37,51 @@ module Metanorma
             include_path: template_path(document, options.template_path),
           )
           Utils.notify_render_errors(document, errors)
+          additional_context = contexts.fetch("context")
+            .fetch("additional_context", {})
+          XmiModelReference.register(
+            document, additional_context["model_anchors"] || {}
+          )
           render_result = normalize_model_xrefs(
             render_result,
-            contexts.fetch("context").fetch("additional_context", {}),
+            additional_context,
           )
           render_result.split("\n")
         end
 
         def normalize_model_xrefs(render_result, additional_context)
           model_anchors = additional_context["model_anchors"] || {}
-          rendered_model_anchors =
-            additional_context["rendered_model_anchors"] || {}
           external_classes = additional_context["external_classes"] || {}
 
           render_result.gsub(MODEL_SECTION_XREF) do |xref|
             normalize_model_xref(Regexp.last_match, xref, model_anchors,
-                                 rendered_model_anchors, external_classes)
+                                 external_classes)
           end
         end
 
         def normalize_model_xref(
-          match, xref, model_anchors, rendered_model_anchors, external_classes
+          match, xref, model_anchors, external_classes
         )
           xmi_id = match[:xmi_id]
           model_name = model_anchors[xmi_id]
           return xref unless model_name
 
-          text = match[:text] || model_name
-          external_anchor = external_classes[text] || external_classes[model_name]
-          return "<<#{external_anchor},#{text}>>" if external_anchor
+          text = model_xref_text(match[:text], xmi_id, model_name)
+          external_anchor = external_classes[text] ||
+            external_classes[model_name] ||
+            external_classes[xmi_id]
+          return xref unless external_anchor
 
-          rendered_model_anchors[xmi_id] ? xref : text
+          target = if external_anchor.include?("#")
+                     external_anchor
+                   else
+                     "##{external_anchor}"
+                   end
+          "<<#{target},#{text}>>"
+        end
+
+        def model_xref_text(text, xmi_id, model_name)
+          text.nil? || text == xmi_id ? model_name : text
         end
 
         def template_path(document, tmpl_path)
