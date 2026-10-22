@@ -597,16 +597,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
                       name: "ADEOfAbstractAtomicTimeseries",
                     },
                     {
-                      id: "EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1",
-                      name: "CharacterString",
-                    },
-                    {
                       id: "EAID_1F4FA76D_0945_46f0_B222_3C4E92196351",
                       name: "ADEOfAbstractTimeseries",
-                    },
-                    {
-                      id: "EAID_2D0C03FB_FF62_4979_A2EB_A40C043B097E",
-                      name: "TM_Position",
                     },
                     {
                       id: "EAID_0DBF7AD4_080D_4238_9949_1CDB34142A59",
@@ -614,6 +606,25 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
                     },
                   ]
                   it_behaves_like "should contain xref objects", xref
+
+                  it "renders unrendered stub value types as text" do
+                    expect(subject).not_to have_tag(
+                      "xref",
+                      with: {
+                        target: "section-" \
+                                "EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1",
+                      },
+                    )
+                    expect(subject).not_to have_tag(
+                      "xref",
+                      with: {
+                        target: "section-" \
+                                "EAID_2D0C03FB_FF62_4979_A2EB_A40C043B097E",
+                      },
+                    )
+                    expect(subject).to include("CharacterString [1..1]")
+                    expect(subject).to include("TM_Position [0..1]")
+                  end
                 end
               end
             end
@@ -712,6 +723,158 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
               .not_to(include("<xref target=\"RE_Register-section\" " \
                               "style=\"short\"><display-text>RE_Register" \
                               "</display-text></xref>"))
+          end
+        end
+      end
+
+      context "when a referenced model is outside the rendered package set" do
+        subject(:xml_output) do
+          remove_xml_whitespaces(xml_string_content(metanorma_convert(input)))
+        end
+
+        let(:example_file) { fixtures_path("large_test.xmi") }
+        let(:config_file) do
+          fixtures_path("temporary_datamodel_description_config.yml")
+        end
+        let(:external_classes) { nil }
+        let(:template_path) { nil }
+        let(:config) do
+          {
+            "packages" => ["Another"],
+            "render_style" => "data_dictionary",
+          }.tap do |options|
+            options["external_classes"] = external_classes if external_classes
+            options["template_path"] = template_path if template_path
+          end
+        end
+        let(:input) do
+          <<~TEXT
+            = Document title
+            Author
+            :nodoc:
+            :novalid:
+            :no-isobib:
+            :imagesdir: spec/assets
+
+            [lutaml_ea_xmi,#{example_file},#{config_file}]
+            --
+            --
+          TEXT
+        end
+
+        around do |example|
+          File.open(config_file, "w") do |file|
+            file.puts(config.to_yaml)
+          end
+          example.run
+          FileUtils.rm_f(config_file)
+        end
+
+        it "does not create internal xrefs for unrendered targets" do
+          expect(xml_output)
+            .to(include("target=\"section-" \
+                        "EAID_20B7542F_5EE7_44c6_8AC5_055508241A3B\""))
+          expect(xml_output)
+            .not_to(include("target=\"section-" \
+                            "EAID_1D8715F2_4E4A_4f36_A414_1326B6DC1EDD\""))
+          expect(xml_output)
+            .to(include("<p id=\"_\">ADEOfAbstractAtomicTimeseries " \
+                        "[0..*]</p>"))
+          expect(xml_output)
+            .not_to(include("target=\"section-" \
+                            "EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A\""))
+          expect(xml_output)
+            .not_to(include("target=\"section-" \
+                            "EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1\""))
+          expect(xml_output)
+            .to(include("<p id=\"_\">CharacterString [1..1]</p>"))
+        end
+
+        context "when a custom template emits direct model xrefs" do
+          let(:template_path) { "spec/fixtures/lutaml/liquid_templates" }
+
+          it "still suppresses xrefs for unrendered targets" do
+            expect(xml_output)
+              .to(include("target=\"section-" \
+                          "EAID_20B7542F_5EE7_44c6_8AC5_055508241A3B\""))
+            expect(xml_output)
+              .not_to(include("target=\"section-" \
+                              "EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1\""))
+            expect(xml_output)
+              .to(include("<p id=\"_\">CharacterString [1..1]</p>"))
+          end
+        end
+
+        context "when the target is defined later in the document" do
+          let(:input) do
+            super() + <<~TEXT
+
+              [[section-EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1]]
+              == CharacterString
+
+              A definition authored after the generated model tables.
+            TEXT
+          end
+
+          it "preserves the valid forward reference" do
+            expect(xml_output).to include(
+              'target="section-EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1"',
+            )
+          end
+        end
+
+        context "when a custom template contains literal references" do
+          let(:template_path) do
+            "spec/fixtures/lutaml/model_anchor_templates"
+          end
+          let(:external_classes) do
+            { "CharacterString" => "_characterstring" }
+          end
+
+          it "keeps literal examples while using the external mapping" do
+            xml = Nokogiri::XML(metanorma_convert(input))
+            literal = "<<section-" \
+                      "EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1," \
+                      "CharacterString>>"
+            source = xml.at_xpath("//*[local-name()='sourcecode']")
+            expect(source.text.strip).to eq(literal)
+            paragraphs = xml.xpath("//*[local-name()='p']").map(&:text)
+            expect(paragraphs).to include(literal)
+            expect(xml.at_xpath("//*[local-name()='xref']" \
+                                "[@target='_characterstring']"))
+              .not_to be_nil
+          end
+        end
+
+        context "when external_classes supplies the target" do
+          let(:external_classes) do
+            {
+              "CharacterString" => "_characterstring",
+            }
+          end
+
+          it "uses the configured external anchor" do
+            xml = Nokogiri::XML(metanorma_convert(input))
+            xref = xml.at_xpath("//*[local-name()='xref']" \
+                                "[@target='_characterstring']")
+            expect(xref).not_to be_nil
+            expect(xref.at_xpath("./*[local-name()='display-text']").text)
+              .to eq("CharacterString")
+          end
+
+          context "when an explicit target resembles an internal model ID" do
+            let(:external_classes) do
+              id = "EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1"
+              { "CharacterString" => "section-#{id}" }
+            end
+
+            it "preserves the explicit mapping without a local definition" do
+              xml = Nokogiri::XML(metanorma_convert(input))
+              target = external_classes.fetch("CharacterString")
+              expect(xml.at_xpath("//*[local-name()='xref']" \
+                                  "[@target='#{target}']"))
+                .not_to be_nil
+            end
           end
         end
       end
