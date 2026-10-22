@@ -59,6 +59,35 @@ RSpec.describe Metanorma::Plugin::Lutaml::XmiModelReference do
     expect(output).not_to include("href=")
   end
 
+  it "renders XMI targets with no defining model as text" do
+    output = convert("<<section-undefined,Label>> <<section-undefined>>",
+                     [{ "undefined" => nil }])
+    expect(output).to include("Label undefined")
+    expect(output).not_to include("href=")
+  end
+
+  it "keeps links to undefined XMI targets that have actual anchors" do
+    output = convert(<<~ADOC, [{ "undefined" => nil }])
+      See <<section-undefined,Label>>.
+
+      [[section-undefined]]
+      == Heading
+    ADOC
+    expect(output).to include('href="#section-undefined"')
+  end
+
+  it "keeps a model name when a later macro only references the id" do
+    output = convert("<<section-hidden>>", [
+                       { "hidden" => "Hidden" }, { "hidden" => nil }
+                     ])
+    expect(output).to include("Hidden")
+  end
+
+  it "leaves explicit external mappings to inventory ids linked" do
+    output = convert("<<#section-hidden,Mapped>>\n\n[[section-hidden]]\n== H")
+    expect(output).to include('href="#section-hidden"')
+  end
+
   it "preserves unrelated references" do
     expect(convert("<<section-other,Other>>"))
       .to include('href="#section-other"')

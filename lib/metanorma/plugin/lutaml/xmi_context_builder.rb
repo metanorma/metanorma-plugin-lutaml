@@ -4,6 +4,8 @@ module Metanorma
   module Plugin
     module Lutaml
       module XmiContextBuilder
+        MODEL_COLLECTIONS = %i[classes data_types].freeze
+
         def create_context_object( # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
           lutaml_document, additional_context, options,
           context_name = "context"
@@ -114,9 +116,42 @@ module Metanorma
         end
 
         def add_model_anchor_context(context, root_package)
+          packages = model_packages(root_package)
           context["additional_context"]["model_anchors"] =
-            model_anchors(model_packages(root_package))
+            model_reference_targets(packages)
+              .merge(model_anchors(packages))
               .merge(model_stub_anchors(root_package))
+        end
+
+        # Ids the XMI templates link to (attribute types, association ends),
+        # including ones the XMI never defines. Unnamed; anchors override.
+        def model_reference_targets(packages)
+          model_entities(packages).each_with_object({}) do |entity, targets|
+            Array(entity_list(entity, :attributes)).each do |attribute|
+              add_model_anchor(targets, object_xmi_id(attribute), nil)
+            end
+            Array(entity_list(entity, :associations)).each do |association|
+              add_model_anchor(targets, association_target(association), nil)
+            end
+          end
+        end
+
+        def model_entities(packages)
+          packages.flat_map do |package|
+            MODEL_COLLECTIONS.flat_map do |collection|
+              Array(entity_list(package, collection))
+            end
+          end
+        end
+
+        def entity_list(object, collection)
+          object.public_send(collection) if object.respond_to?(collection)
+        end
+
+        def association_target(association)
+          return unless association.respond_to?(:member_end_xmi_id)
+
+          association.member_end_xmi_id
         end
 
         def model_packages(root_package)
@@ -159,7 +194,7 @@ module Metanorma
         end
 
         def add_model_anchor(anchors, xmi_id, name)
-          anchors[xmi_id] = name if xmi_id && !xmi_id.empty?
+          anchors[xmi_id] = name if xmi_id.is_a?(String) && !xmi_id.empty?
         end
 
         def model_stub_anchors(root_package)
