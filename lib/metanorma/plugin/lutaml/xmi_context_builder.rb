@@ -46,11 +46,25 @@ module Metanorma
             "name" => root_package.name,
             "root_packages" => [root_package],
             "additional_context" => additional_context
-              .merge("external_classes" => options.external_classes),
+              .merge(
+                "external_classes" => external_model_targets(
+                  options.external_classes,
+                ),
+              ),
             "skip_unrecognized_connector" => !!options
               .skip_unrecognized_connector,
           }
           contexts
+        end
+
+        def external_model_targets(external_classes)
+          external_classes&.transform_values do |target|
+            if target.is_a?(String) && target.match?(/\Asection-[^\s#]+\z/)
+              "##{target}"
+            else
+              target
+            end
+          end
         end
 
         def fill_in_entities_refs_attributes(document, # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength
@@ -118,14 +132,7 @@ module Metanorma
         end
 
         def child_packages(package)
-          children = []
-          if package.respond_to?(:children_packages)
-            children.concat(Array(package.children_packages))
-          end
-          if package.respond_to?(:packages)
-            children.concat(Array(package.packages))
-          end
-          children.compact.uniq { |child| package_key(child) }
+          Array(package.packages).compact.uniq { |child| package_key(child) }
         end
 
         def package_key(package)

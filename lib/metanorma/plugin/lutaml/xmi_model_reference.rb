@@ -47,7 +47,7 @@ module Metanorma
         private
 
         def reference_text(parent, text, target, name)
-          return text unless name && (text.nil? || text == target)
+          return text unless name && (text.to_s.empty? || text == target)
 
           parent.sub_specialchars(name)
         end

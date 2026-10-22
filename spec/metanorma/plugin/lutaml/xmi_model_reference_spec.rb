@@ -25,6 +25,12 @@ RSpec.describe Metanorma::Plugin::Lutaml::XmiModelReference do
     expect(output).not_to include("href=")
   end
 
+  it "uses the model name for empty or whitespace-only labels" do
+    output = convert("<<section-hidden,>> <<section-hidden, >>")
+    expect(output).to include("Hidden Hidden")
+    expect(output).not_to include("href=")
+  end
+
   it "preserves forward links to anchors in actual custom output" do
     output = convert(<<~ADOC)
       See <<section-present,Present>>.

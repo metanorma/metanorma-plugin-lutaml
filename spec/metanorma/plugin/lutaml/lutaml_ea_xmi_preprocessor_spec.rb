@@ -796,6 +796,47 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
           end
         end
 
+        context "when the target is defined later in the document" do
+          let(:input) do
+            super() + <<~TEXT
+
+              [[section-EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1]]
+              == CharacterString
+
+              A definition authored after the generated model tables.
+            TEXT
+          end
+
+          it "preserves the valid forward reference" do
+            expect(xml_output).to include(
+              'target="section-EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1"',
+            )
+          end
+        end
+
+        context "when a custom template contains literal references" do
+          let(:template_path) do
+            "spec/fixtures/lutaml/model_anchor_templates"
+          end
+          let(:external_classes) do
+            { "CharacterString" => "_characterstring" }
+          end
+
+          it "keeps literal examples while using the external mapping" do
+            xml = Nokogiri::XML(metanorma_convert(input))
+            literal = "<<section-" \
+                      "EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1," \
+                      "CharacterString>>"
+            source = xml.at_xpath("//*[local-name()='sourcecode']")
+            expect(source.text.strip).to eq(literal)
+            paragraphs = xml.xpath("//*[local-name()='p']").map(&:text)
+            expect(paragraphs).to include(literal)
+            expect(xml.at_xpath("//*[local-name()='xref']" \
+                                "[@target='_characterstring']"))
+              .not_to be_nil
+          end
+        end
+
         context "when external_classes supplies the target" do
           let(:external_classes) do
             {
@@ -810,6 +851,21 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
             expect(xref).not_to be_nil
             expect(xref.at_xpath("./*[local-name()='display-text']").text)
               .to eq("CharacterString")
+          end
+
+          context "when an explicit target resembles an internal model ID" do
+            let(:external_classes) do
+              id = "EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1"
+              { "CharacterString" => "section-#{id}" }
+            end
+
+            it "preserves the explicit mapping without a local definition" do
+              xml = Nokogiri::XML(metanorma_convert(input))
+              target = external_classes.fetch("CharacterString")
+              expect(xml.at_xpath("//*[local-name()='xref']" \
+                                  "[@target='#{target}']"))
+                .not_to be_nil
+            end
           end
         end
       end

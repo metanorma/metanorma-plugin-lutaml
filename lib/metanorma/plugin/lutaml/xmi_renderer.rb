@@ -18,9 +18,6 @@ module Metanorma
           "data_dictionary" => "packages_data_dictionary",
         }.freeze
         RENDER_STYLE_ATTRIBUTE = "render_style"
-        MODEL_SECTION_XREF = /
-          <<section-(?<xmi_id>[^,>\s]+)(?:,(?<text>[^>\n]+))?>>
-        /x
 
         def model_representation( # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
           lutaml_doc, document, add_context, options
@@ -42,46 +39,7 @@ module Metanorma
           XmiModelReference.register(
             document, additional_context["model_anchors"] || {}
           )
-          render_result = normalize_model_xrefs(
-            render_result,
-            additional_context,
-          )
           render_result.split("\n")
-        end
-
-        def normalize_model_xrefs(render_result, additional_context)
-          model_anchors = additional_context["model_anchors"] || {}
-          external_classes = additional_context["external_classes"] || {}
-
-          render_result.gsub(MODEL_SECTION_XREF) do |xref|
-            normalize_model_xref(Regexp.last_match, xref, model_anchors,
-                                 external_classes)
-          end
-        end
-
-        def normalize_model_xref(
-          match, xref, model_anchors, external_classes
-        )
-          xmi_id = match[:xmi_id]
-          model_name = model_anchors[xmi_id]
-          return xref unless model_name
-
-          text = model_xref_text(match[:text], xmi_id, model_name)
-          external_anchor = external_classes[text] ||
-            external_classes[model_name] ||
-            external_classes[xmi_id]
-          return xref unless external_anchor
-
-          target = if external_anchor.include?("#")
-                     external_anchor
-                   else
-                     "##{external_anchor}"
-                   end
-          "<<#{target},#{text}>>"
-        end
-
-        def model_xref_text(text, xmi_id, model_name)
-          text.nil? || text == xmi_id ? model_name : text
         end
 
         def template_path(document, tmpl_path)
