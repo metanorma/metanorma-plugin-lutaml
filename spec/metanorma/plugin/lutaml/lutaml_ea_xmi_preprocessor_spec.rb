@@ -773,7 +773,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
         it "does not create internal xrefs for unrendered targets" do
           expect(xml_output)
             .to(include("target=\"section-" \
-                        "EAID_1D8715F2_4E4A_4f36_A414_1326B6DC1EDD\""))
+                        "EAID_20B7542F_5EE7_44c6_8AC5_055508241A3B\""))
           expect(xml_output)
             .not_to(include("target=\"section-" \
                             "EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1\""))
@@ -787,7 +787,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
           it "still suppresses xrefs for unrendered targets" do
             expect(xml_output)
               .to(include("target=\"section-" \
-                          "EAID_1D8715F2_4E4A_4f36_A414_1326B6DC1EDD\""))
+                          "EAID_20B7542F_5EE7_44c6_8AC5_055508241A3B\""))
             expect(xml_output)
               .not_to(include("target=\"section-" \
                               "EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1\""))
