@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 require_relative "metanorma/plugin/lutaml/version"
+require "lutaml/uml"
+require "lutaml/lml"
+require "lutaml/model"
+require "ea"
 require_relative "metanorma/plugin/lutaml"
 
 module Metanorma
@@ -27,6 +31,8 @@ module Metanorma
       autoload :LutamlDiagramBase, "metanorma/plugin/lutaml/lutaml_diagram_base"
       autoload :LutamlDiagramBlock,
                "metanorma/plugin/lutaml/lutaml_diagram_block"
+      autoload :LutamlDataPreprocessor,
+               "metanorma/plugin/lutaml/lutaml_data_preprocessor"
       autoload :LutamlDiagramBlockMacro,
                "metanorma/plugin/lutaml/lutaml_diagram_block_macro"
       autoload :LutamlEaDiagramBlockMacro,
@@ -55,10 +61,16 @@ module Metanorma
                "lutaml_uml_datamodel_description_preprocessor"
       autoload :LutamlXmiUmlPreprocessor,
                "metanorma/plugin/lutaml/lutaml_xmi_uml_preprocessor"
+      autoload :LutamlEaUmlPreprocessor,
+               "metanorma/plugin/lutaml/lutaml_ea_uml_preprocessor"
       autoload :LutamlXsdPreprocessor,
                "metanorma/plugin/lutaml/lutaml_xsd_preprocessor"
       autoload :ParseError, "metanorma/plugin/lutaml/parse_error"
       autoload :XmiParseCache, "metanorma/plugin/lutaml/xmi_parse_cache"
+      autoload :XmiPartialLoadRegistry,
+               "metanorma/plugin/lutaml/xmi_partial_load_registry"
+      autoload :XmiPartialLoadPreprocessor,
+               "metanorma/plugin/lutaml/xmi_partial_load_registry"
       autoload :SourceExtractor, "metanorma/plugin/lutaml/source_extractor"
       autoload :Utils, "metanorma/plugin/lutaml/utils"
       autoload :Yaml2TextPreprocessor,

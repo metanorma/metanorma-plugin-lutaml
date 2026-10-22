@@ -1,0 +1,141 @@
+{% assign root = klass.generalization %}
+{% assign citygml_ns = "app,bldg,brid,core,dem,frn,gen,grp,luse,tran,tun,veg,wtr" | split: "," %}
+{%- capture upper_klass_name -%}
+{{ root.general.general_upper_klass }}:{{ root.general.general_name }}
+{%- endcapture -%}
+{%- if upper_klass_name == ":" -%}
+  {%- assign upper_klass_name = "&#x2014;" -%}
+{%- endif -%}
+{%- capture stereotype -%}<< {{ root.stereotype }} >>{%- endcapture -%}
+{%- if stereotype == "<<  >>" -%}
+  {%- assign stereotype = " " -%}
+{%- endif -%}
+
+{%- assign cols_format = "1a,1a,2a" -%}
+{%- assign cols_number = 3 -%}
+{%- assign cols_header = 2 -%}
+
+[cols="{{ cols_format }}"]
+|===
+h| 型の定義 {{ cols_header }}+| {{ root.definition }}
+h| 上位の型 {{ cols_header }}+| {{ upper_klass_name }}
+h| ステレオタイプ {{ cols_header }}+| {{ stereotype }}
+
+{% if root.inherited_props.size > 0 %}
+{{ cols_number }}+h| 継承する属性 {{ root.inherited_props.size }}
+h| 属性名 h| 属性の型及び多重度 h| 定義
+{% endif %}
+{% for attr in root.inherited_props %}
+{%- capture name_col -%}
+{{ attr.name_ns }}:{{ attr.name }} [{{ attr.gen_name }}]
+{%- endcapture -%}
+| {{ name_col }}
+| {{ attr.type }} [{{ attr.cardinality.min }}..{{ attr.cardinality.max }}]
+| {{ attr.definition }}
+{% endfor %}
+
+{% if root.owned_props.size > 0 %}
+{{ cols_number }}+h| 自身に定義された属性 {{ root.owned_props.size }}
+h| 属性名 h| 属性の型及び多重度 h| 定義
+{% endif %}
+{% for attr in root.owned_props %}
+{%- capture name_col -%}
+{{ attr.name_ns }}:{{ attr.name }} [{{ attr.gen_name }}]
+{%- endcapture -%}
+| {{ name_col }}
+| {{ attr.type }} [{{ attr.cardinality.min }}..{{ attr.cardinality.max }}]
+| {{ attr.definition }}
+{% endfor %}
+
+{% if root.inherited_assoc_props.size > 0 %}
+{{ cols_number }}+h| 継承する関連役割 {{ root.inherited_assoc_props.size }}
+h| 関連役割名 h| 関連役割の型及び多重度 h| 定義
+{% assign all_gen_names = '' %}
+{% for attr in root.inherited_assoc_props %}
+  {% assign all_gen_names = all_gen_names | append: ',' | append: attr.gen_name %}
+{% endfor %}  
+{% assign all_gens = all_gen_names | split: ',' | uniq %}
+{% endif %}
+{% for cur_gen in all_gens %}
+  {% assign performed = false %}
+  {% for attr in root.inherited_assoc_props %}
+    {% assign props_with_same_gen = root.inherited_assoc_props | where: 'gen_name', cur_gen %}
+    {% unless performed %}
+      {% for attr in props_with_same_gen %}
+        {%- assign name_ns = attr.name_ns -%}
+        {%- capture name_col -%}
+          {{ name_ns }}:{{ attr.name }} +
+          [{{ attr.gen_name }}]
+        {%- endcapture -%}
+        {% if citygml_ns contains attr.name_ns %}
+        {%- capture name_col -%}
+          {{ name_ns }}:{{ attr.name }} +
+          [{{ attr.gen_name }}]
+        {%- endcapture -%}
+        | {{ name_col }}
+        | {{ attr.type_ns }}:{{ attr.type }} [{{ attr.cardinality.min }}..{{ attr.cardinality.max }}]
+        | {{ attr.definition }}
+        {% endif %}
+      {% endfor %}
+      {% for attr in props_with_same_gen %}
+        {%- assign name_ns = attr.name_ns -%}
+        {%- capture name_col -%}
+          {{ name_ns }}:{{ attr.name }} +
+          [{{ attr.gen_name }}]
+        {%- endcapture -%}
+        {% unless citygml_ns contains attr.name_ns %}
+        {%- capture name_col -%}
+          {{ name_ns }}:{{ attr.name }} +
+          [{{ attr.gen_name }}]
+        {%- endcapture -%}
+        | {{ name_col }}
+        | {{ attr.type_ns }}:{{ attr.type }} [{{ attr.cardinality.min }}..{{ attr.cardinality.max }}]
+        | {{ attr.definition }}
+        {% endunless %}
+      {% endfor %}
+      {% assign performed = true %}
+    {% endunless %}
+  {% endfor %}
+{% endfor %}
+
+{% if root.assoc_props.size > 0 %}
+{{ cols_number }}+h| 自身に定義された関連役割 {{ root.assoc_props.size }}
+h| 関連役割名 h| 関連役割の型及び多重度 h| 定義
+{% assign all_gen_names = '' %}
+{% for attr in root.assoc_props %}
+  {% assign all_gen_names = all_gen_names | append: ',' | append: attr.gen_name %}
+{% endfor %}  
+{% assign all_gens = all_gen_names | split: ',' | uniq %}
+{% endif %}
+{% for cur_gen in all_gens %}
+  {% assign performed = false %}
+  {% for attr in root.assoc_props %}
+    {% assign props_with_same_gen = root.assoc_props | where: 'gen_name', cur_gen %}
+    {% unless performed %}
+      {% for attr in props_with_same_gen %}
+        {% if citygml_ns contains attr.name_ns %}
+        {%- capture name_col -%}
+          {{ attr.name_ns }}:{{ attr.name }} +
+          [{{ attr.gen_name }}]
+        {%- endcapture -%}
+        | {{ name_col }}
+        | {{ attr.type_ns }}:{{ attr.type }} [{{ attr.cardinality.min }}..{{ attr.cardinality.max }}]
+        | {{ attr.definition }}
+        {% endif %}
+      {% endfor %}
+      {% for attr in props_with_same_gen %}
+        {% unless citygml_ns contains attr.name_ns %}
+        {%- capture name_col -%}
+          {{ attr.name_ns }}:{{ attr.name }} +
+          [{{ attr.gen_name }}]
+        {%- endcapture -%}
+        | {{ name_col }}
+        | {{ attr.type_ns }}:{{ attr.type }} [{{ attr.cardinality.min }}..{{ attr.cardinality.max }}]
+        | {{ attr.definition }}
+        {% endunless %}
+      {% endfor %}
+      {% assign performed = true %}
+    {% endunless %}
+  {% endfor %}
+{% endfor %}
+|===

@@ -12,6 +12,8 @@ within a Metanorma document:
 * EXPRESS files (`*.exp`)
 * LutaML-UML files (`*.lutaml`)
 * Enterprise Architect exported UML files in XMI format (`*.xmi`)
+* Enterprise Architect QEA files (`*.qea`)
+* Enterprise Architect LUR files (`*.lur`)
 * LutaML GML Dictionary files (`*.xml`)
 * JSON or YAML files (`*.json|*.yml|*.yaml`)
 * XML Schema files (`*.xsd`)
@@ -30,6 +32,8 @@ link:docs/usages/express.adoc[Usage with EXPRESS files by lutaml_express]
 link:docs/usages/lutaml-uml.adoc[Usage with LutaML files by lutaml_diagram]
 
 link:docs/usages/enterprise_architect.adoc[Usage with Enterprise Architect XMI files by lutaml_ea_xmi, lutaml_ea_diagram, lutaml_klass_table or lutaml_enum_table]
+
+link:docs/usages/enterprise_architect_uml.adoc[Usage with Enterprise Architect UML files (XMI, QEA, LUR) by lutaml_ea_uml]
 
 link:docs/usages/lutaml-gml.adoc[Usage with LutaML GML Dictionary by lutaml_gml_dictionary]
 

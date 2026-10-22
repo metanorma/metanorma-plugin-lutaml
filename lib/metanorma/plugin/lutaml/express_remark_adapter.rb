@@ -25,6 +25,11 @@ module Metanorma
             CachedRepoAdapter.new(model)
           when Expressir::Model::Repository, Expressir::Model::ExpFile
             RepoAdapter.new(model)
+          when Expressir::Express::LazyRepository
+            # Remark decoration walks real models; hydrate the lazy
+            # repository up front. The artifact still wins on load —
+            # wire JSON hydrates per file instead of a full re-parse.
+            RepoAdapter.new(model.to_eager)
           when Expressir::Model::ModelElement
             ModelAdapter.new(model)
           else

@@ -1,0 +1,6 @@
+---
+ea_extension:
+  - "ISO19103MDG v1.0.0-beta.xml"
+  - "CityGML_MDG_Technology.xml"
+context_name: my_uml_document
+template_path: "spec/fixtures/lutaml/ea_uml/liquid_templates"

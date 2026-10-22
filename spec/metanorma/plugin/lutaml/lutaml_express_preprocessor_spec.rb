@@ -38,7 +38,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 <sourcecode id="_" unnumbered="true">
                 <body>SCHEMA Activity_method_assignment_arm;
 
-              USE FROM Activity_method_arm;
+              USE FROM Activity_method_arm; -- ISO/TS 10303-1049
 
               TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT;
               END_TYPE;
@@ -56,7 +56,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 role : STRING;
               END_ENTITY;
 
-              END_SCHEMA;</body>
+              END_SCHEMA; -- Activity_method_assignment_arm</body>
                   </sourcecode>
                 </clause>
               </sections>
@@ -108,7 +108,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                             <sourcecode id="_" unnumbered="true">
                             <body>SCHEMA Activity_method_assignment_arm;
 
-              USE FROM Activity_method_arm;
+              USE FROM Activity_method_arm; -- ISO/TS 10303-1049
 
               TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT;
               END_TYPE;
@@ -126,7 +126,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 role : STRING;
               END_ENTITY;
 
-              END_SCHEMA;</body>
+              END_SCHEMA; -- Activity_method_assignment_arm</body>
                            </sourcecode>
                          </clause>
                       </sections>
@@ -256,7 +256,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 <sourcecode id="_" unnumbered="true">
                 <body>SCHEMA Activity_method_assignment_arm;
 
-              USE FROM Activity_method_arm;
+              USE FROM Activity_method_arm; -- ISO/TS 10303-1049
 
               TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT;
               END_TYPE;
@@ -274,7 +274,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 role : STRING;
               END_ENTITY;
 
-              END_SCHEMA;</body>
+              END_SCHEMA; -- Activity_method_assignment_arm</body>
                   </sourcecode>
                 </clause>
               </sections>

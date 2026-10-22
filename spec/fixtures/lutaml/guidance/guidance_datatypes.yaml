@@ -1,0 +1,12 @@
+---
+data_types:
+  - name: Height
+    attributes:
+      - name: Root:value
+        used: false
+        guidance: |
+          This attribute is not used.
+      - name: Root:status
+        used: false
+        guidance: |
+          This attribute is not used.

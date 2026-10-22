@@ -14,9 +14,11 @@ Asciidoctor::Extensions.register do
   preprocessor Metanorma::Plugin::Lutaml::Json2TextPreprocessor
   preprocessor Metanorma::Plugin::Lutaml::Yaml2TextPreprocessor
   preprocessor Metanorma::Plugin::Lutaml::Data2TextPreprocessor
+  preprocessor Metanorma::Plugin::Lutaml::LutamlDataPreprocessor
   preprocessor Metanorma::Plugin::Lutaml::LutamlPreprocessor
   preprocessor Metanorma::Plugin::Lutaml::LutamlXmiUmlPreprocessor
   preprocessor Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor
+  preprocessor Metanorma::Plugin::Lutaml::LutamlEaUmlPreprocessor
 
   block_macro Metanorma::Plugin::Lutaml::LutamlDiagramBlockMacro
   block Metanorma::Plugin::Lutaml::LutamlDiagramBlock
@@ -27,10 +29,12 @@ Asciidoctor::Extensions.register do
   block_macro Metanorma::Plugin::Lutaml::LutamlEnumTableBlockMacro
 end
 
-require "metanorma-standoc"
+require "tempfile"
 require "rspec/matchers"
 require "metanorma-core"
 require "metanorma/standoc"
+require "metanorma/standoc/version"
+require "metanorma-standoc"
 require "xml-c14n"
 require "canon"
 
@@ -56,23 +60,35 @@ RSpec.configure do |config|
   end
 
   config.before(:suite) do
-    require "lutaml/converter/xmi_to_uml_generalization"
     require "lutaml/uml"
-    require "lutaml/xmi"
+    require "ea/xmi"
 
     cache = Metanorma::Plugin::Lutaml::CacheRegistry.xmi_cache
     cache.clear
 
+    # Pre-warm large XMI fixtures only when running the full suite,
+    # not when running individual files that don't need XMI.
+    # RSpec.configuration.files_to_run contains the spec files being executed.
+    xmi_heavy_specs = %w[
+      lutaml_ea_xmi_preprocessor_spec
+      lutaml_klass_table_block_macro_spec
+      lutaml_xmi_uml_preprocessor_spec
+    ]
+    running_full_suite = xmi_heavy_specs.any? do |name|
+      RSpec.configuration.files_to_run
+        .any? { |f| File.basename(f, ".rb") == name }
+    end
+
+    next unless running_full_suite
+
     fixtures_dir = File.expand_path("./fixtures/lutaml", __dir__)
-    large_xmi_files = [
+    [
       File.join(
         fixtures_dir,
         "20240822_all_package_export_plus_new_tc211_gml.xmi",
       ),
       File.join(fixtures_dir, "plateau_all_packages_export.xmi"),
-    ]
-
-    large_xmi_files.each do |path|
+    ].each do |path|
       next unless File.exist?(path)
 
       cache.fetch(path)
@@ -80,7 +96,7 @@ RSpec.configure do |config|
   end
 end
 
-BLANK_HDR = <<~"HDR".freeze
+BLANK_HDR = <<~HDR.freeze
   <?xml version="1.0" encoding="UTF-8"?>
   <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="#{Metanorma::Standoc::VERSION}" flavor="standoc">
     <bibdata type="standard">

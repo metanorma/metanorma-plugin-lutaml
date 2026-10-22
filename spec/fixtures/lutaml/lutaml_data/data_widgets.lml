@@ -1,0 +1,21 @@
+require "widget_models.lml"
+instance AllWidgets {
+  type Widgets
+
+  widgets = [
+    instance WidgetStore::Widget {
+      id = "W1"
+      name = "Gear"
+      mass = 3.5
+      tags = [
+        "metal",
+        "heavy"
+      ]
+    },
+
+    instance WidgetStore::Widget {
+      id = "W2"
+      name = "Spring"
+    }
+  ]
+}
