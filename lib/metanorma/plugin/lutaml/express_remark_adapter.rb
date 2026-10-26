@@ -23,8 +23,11 @@ module Metanorma
           # (metanorma/metanorma-plugin-lutaml#325). A path relative to the
           # docfile resolves to the same schema file at render time and is
           # byte-identical across build directories.
-          Pathname.new(resolved)
-            .relative_path_from(Pathname.new(docfile_directory)).to_s
+          # The docfile directory may be relative ("."): relative_path_from
+          # refuses mixed prefixes, so both sides expand first
+          Pathname.new(File.expand_path(resolved))
+            .relative_path_from(Pathname.new(File.expand_path(docfile_directory)))
+            .to_s
         end
 
         def self.for(model)
