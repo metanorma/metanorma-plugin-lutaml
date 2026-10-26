@@ -51,7 +51,10 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkAdapter do
       )
 
       expect(prefix).to eq("../schemas")
-      expect(File.expand_path(prefix, docfile_directory)).to eq(schema_directory)
+      # the round-trip is platform-relative: on Windows expand_path
+      # drive-letters the fixture paths, so both sides expand here
+      expect(File.expand_path(prefix, docfile_directory))
+        .to eq(File.expand_path(schema_directory))
     end
 
     it "returns nil without a document" do
