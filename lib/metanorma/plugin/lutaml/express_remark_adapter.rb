@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "expressir"
+require "pathname"
 
 module Metanorma
   module Plugin
@@ -16,7 +17,14 @@ module Metanorma
           )
           resolved = document.path_resolver
             .system_path(file_path, docfile_directory)
-          File.expand_path(resolved, docfile_directory)
+          # The prefix lands inside emitted image macros, so it must not
+          # carry the absolute build path: two builds of the same tree in
+          # two directories produced different image/@src values
+          # (metanorma/metanorma-plugin-lutaml#325). A path relative to the
+          # docfile resolves to the same schema file at render time and is
+          # byte-identical across build directories.
+          Pathname.new(resolved)
+            .relative_path_from(Pathname.new(docfile_directory)).to_s
         end
 
         def self.for(model)
