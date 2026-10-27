@@ -10,6 +10,7 @@ XMI_HEAVY_SPEC_FILES = %w[
 ].freeze
 
 XMI_SPEC_FILES = %w[
+  spec/metanorma/plugin/lutaml/lutaml_ea_uml_preprocessor_spec.rb
   spec/metanorma/plugin/lutaml/lutaml_klass_table_block_macro_spec.rb
   spec/metanorma/plugin/lutaml/lutaml_enum_table_block_macro_spec.rb
   spec/metanorma/plugin/lutaml/lutaml_xmi_index_spec.rb

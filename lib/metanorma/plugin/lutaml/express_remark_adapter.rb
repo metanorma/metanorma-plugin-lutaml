@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "expressir"
+require "pathname"
 
 module Metanorma
   module Plugin
@@ -16,7 +17,17 @@ module Metanorma
           )
           resolved = document.path_resolver
             .system_path(file_path, docfile_directory)
-          File.expand_path(resolved, docfile_directory)
+          # The prefix lands inside emitted image macros, so it must not
+          # carry the absolute build path: two builds of the same tree in
+          # two directories produced different image/@src values
+          # (metanorma/metanorma-plugin-lutaml#325). A path relative to the
+          # docfile resolves to the same schema file at render time and is
+          # byte-identical across build directories.
+          # The docfile directory may be relative ("."): relative_path_from
+          # refuses mixed prefixes, so both sides expand first
+          Pathname.new(File.expand_path(resolved))
+            .relative_path_from(Pathname.new(File.expand_path(docfile_directory)))
+            .to_s
         end
 
         def self.for(model)
@@ -47,6 +58,7 @@ module Metanorma
           end
 
           def decorate_remarks(options)
+            promote_schema_prose
             decorate_own_remarks(options)
             decorate_child_remark_items(options)
             traverse_children(options)
@@ -54,7 +66,29 @@ module Metanorma
 
           private
 
+          # A bare (*"Schema_name" ...*) remark is the schema-level prose:
+          # expressir models it in Schema#remarks, not as a RemarkItem, so
+          # renders that walk remark_items (every clause-4 template) drop
+          # it (iso-10303#720). Promote it to a leading RemarkItem keyed
+          # by the schema path, the same way an entity-tagged remark names
+          # its target. The prose stays in Schema#remarks too; templates
+          # that already render it there keep working unchanged.
+          def promote_schema_prose
+            return unless @model.is_a?(Expressir::Model::Declarations::Schema)
+            return if @model.remarks.to_a.empty?
+
+            items = @model.remark_items.to_a
+            return if items.any? { |ri| ri.id == @model.id }
+
+            prose = Expressir::Model::Declarations::RemarkItem.new(
+              id: @model.id,
+              remarks: @model.remarks.dup,
+            )
+            @model.remark_items = [prose] + items
+          end
+
           def decorate_own_remarks(options)
+
             @model.remarks = ExpressRemarksDecorator.decorate_array(
               @model.remarks, options
             )

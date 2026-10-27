@@ -37,9 +37,6 @@ gem "leptris", "~> 1.9.361.1"
 gem "isodoc", github: "metanorma/isodoc", branch: "main"
 gem "metanorma-standoc", github: "metanorma/metanorma-standoc", branch: "main"
 gem "suma", github: "metanorma/suma", branch: "main"
-# standoc main's block_attributes reference
-# Metanorma::Document::Components::AncillaryBlocks::SvgmapElement, which
-# the released metanorma-document 0.5.1 predates; ref-pinned to the
-# document main tree the suite is green against
-gem "metanorma-document", github: "metanorma/metanorma-document",
-                          ref: "ca4eb4b26f7ab0d2994a4710d0cf158607a832b4"
+# standoc main (>= 3.5.1.pre.alpha.2) floors metanorma-document at
+# 0.5.2.pre.alpha.1 (SvgmapElement, metanorma-standoc#1303); main carries it
+gem "metanorma-document", github: "metanorma/metanorma-document", branch: "main"
