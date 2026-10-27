@@ -77,6 +77,24 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDataPreprocessor do
       .to include("Widgets loaded through the configured include path.")
   end
 
+  it "logs and raises on malformed JSON options" do
+    bad_input = input.sub(",store]", ",store,options={bad}]")
+    allow(Metanorma::Util).to receive(:log)
+    expect { metanorma_convert(bad_input) }
+      .to raise_error(JSON::ParserError)
+    expect(Metanorma::Util).to have_received(:log)
+      .with(/Failed to parse LutaML data block: .*bad/, :error)
+  end
+
+  it "accepts a trailing comma after JSON options" do
+    path = fixtures_path("lutaml_data/templates")
+    options_input = input.sub(",store]",
+                              ",store,options={\"include_path\":\"#{path}\"},]")
+      .sub(template, "{% include 'heading' %}\n")
+    expect(convert_to_xml(options_input))
+      .to include("Widgets loaded through the configured include path.")
+  end
+
   it "preserves inline include_path options" do
     path = fixtures_path("lutaml_data/templates")
     options_input = input.sub(",store]", ",store,include_path=#{path}]")

@@ -57,7 +57,7 @@ module Metanorma
           return [line] unless block_header_match
 
           definition_file, instance_file, context_name, options =
-            parse_header(block_header_match)
+            parse_header_logged(block_header_match)
 
           end_mark = input_lines.next
           lines = extract_block_lines(input_lines, end_mark)
@@ -72,6 +72,13 @@ module Metanorma
           )
         end
 
+        def parse_header_logged(match)
+          parse_header(match)
+        rescue StandardError => e
+          log_block_failure(e)
+          raise e
+        end
+
         def parse_header(match)
           definition_file = match[:definition_file].strip
           options, segments = split_options(match[:rest])
@@ -84,7 +91,7 @@ module Metanorma
         end
 
         def split_options(rest)
-          object_options = rest.match(/,\s*options=(\{.*\})\s*\z/)
+          object_options = rest.match(/,\s*options=(\{.*\})\s*,?\s*\z/)
           if object_options
             require "json"
             return [JSON.parse(object_options[1]),
@@ -119,12 +126,16 @@ module Metanorma
 
           [render_liquid(lines, document, options, context_name, instances)]
         rescue StandardError => e
+          log_block_failure(e)
+          raise e
+        end
+
+        def log_block_failure(error)
           ::Metanorma::Util.log(
             "[#{self.class.name}] Failed to parse LutaML data block: " \
-            "#{e.message}",
+            "#{error.message}",
             :error,
           )
-          raise e
         end
 
         def render_liquid(lines, document, options, context_name, instances)
