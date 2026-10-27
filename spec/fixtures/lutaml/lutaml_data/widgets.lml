@@ -1,0 +1,51 @@
+models WidgetStore {
+  class Widgets {
+    attribute widgets {
+      type Widget
+      cardinality 0..n
+    }
+  }
+
+  class Widget {
+    attribute id {
+      type String
+      cardinality 1
+    }
+
+    attribute name {
+      type String
+      cardinality 1
+    }
+
+    attribute mass {
+      type Float
+      cardinality 0..1
+    }
+
+    attribute tags {
+      type String
+      cardinality 0..n
+    }
+  }
+}
+
+instance AllWidgets {
+  type Widgets
+
+  widgets = [
+    instance WidgetStore::Widget {
+      id = "W1"
+      name = "Gear"
+      mass = 3.5
+      tags = [
+        "metal",
+        "heavy"
+      ]
+    },
+
+    instance WidgetStore::Widget {
+      id = "W2"
+      name = "Spring"
+    }
+  ]
+}

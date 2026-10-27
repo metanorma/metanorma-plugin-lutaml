@@ -18,6 +18,10 @@ module Metanorma
       #
       #   [lutaml_data,<definitions.lml>,<context>]
       #
+      # Options can be supplied as a JSON object:
+      #
+      #   [lutaml_data,models.lml,store,options={"include_path":"templates"}]
+      #
       class LutamlDataPreprocessor < BasePreprocessor
         DATA_FILE_EXTENSIONS = %w[.lml .yaml .yml .json].freeze
         DEFAULT_CONTEXT_NAME = "lutaml_data"
@@ -70,8 +74,7 @@ module Metanorma
 
         def parse_header(match)
           definition_file = match[:definition_file].strip
-          segments = match[:rest].split(",").map(&:strip)
-          options, segments = split_options(segments)
+          options, segments = split_options(match[:rest])
 
           data_segments, name_segments = segments
             .reject(&:empty?).partition { |segment| data_file?(segment) }
@@ -80,7 +83,18 @@ module Metanorma
            name_segments.last || DEFAULT_CONTEXT_NAME, options]
         end
 
-        def split_options(segments)
+        def split_options(rest)
+          object_options = rest.match(/,\s*options=(\{.*\})\s*\z/)
+          if object_options
+            require "json"
+            return [JSON.parse(object_options[1]),
+                    rest[0...object_options.begin(0)].split(",").map(&:strip)]
+          end
+
+          split_inline_options(rest.split(",").map(&:strip))
+        end
+
+        def split_inline_options(segments)
           options_start = segments.index { |segment| segment.include?("=") }
           return [{}, segments] unless options_start
 
@@ -126,7 +140,7 @@ module Metanorma
           case value
           when Hash
             value.transform_keys(&:to_s)
-                 .transform_values { |v| deep_stringify(v) }
+              .transform_values { |v| deep_stringify(v) }
           when Array
             value.map { |v| deep_stringify(v) }
           else
