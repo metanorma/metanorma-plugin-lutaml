@@ -7,6 +7,7 @@ module Metanorma
       autoload :XmiCache, "metanorma/plugin/lutaml/xmi_cache"
       autoload :XmiConfig, "metanorma/plugin/lutaml/xmi_config"
       autoload :XmiContextBuilder, "metanorma/plugin/lutaml/xmi_context_builder"
+      autoload :XmiModelReference, "metanorma/plugin/lutaml/xmi_model_reference"
       autoload :XmiPackageFilter, "metanorma/plugin/lutaml/xmi_package_filter"
       autoload :XmiRenderer, "metanorma/plugin/lutaml/xmi_renderer"
     end

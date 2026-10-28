@@ -21,20 +21,26 @@ module Metanorma
         }.freeze
         RENDER_STYLE_ATTRIBUTE = "render_style"
 
-        def model_representation(lutaml_doc, document, add_context, options) # rubocop:disable Metrics/MethodLength
+        def model_representation( # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+          lutaml_doc, document, add_context, options
+        )
           fill_in_entities_refs_attributes(document, lutaml_doc, options)
+          contexts = create_context_object(lutaml_doc, add_context, options,
+                                           "context")
           render_result, errors = Utils.render_liquid_string(
             template_string: template(options.section_depth || 2,
                                       options.render_style,
                                       options.include_root),
-            contexts: create_context_object(lutaml_doc,
-                                            add_context,
-                                            options,
-                                            "context"),
+            contexts: contexts,
             document: document,
             include_path: template_path(document, options.template_path),
           )
           Utils.notify_render_errors(document, errors)
+          additional_context = contexts.fetch("context")
+            .fetch("additional_context", {})
+          XmiModelReference.register(
+            document, additional_context["model_anchors"] || {}
+          )
           render_result.split("\n")
         end
 
