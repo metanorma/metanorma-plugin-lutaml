@@ -46,6 +46,63 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDataPreprocessor do
     expect(output).to include("W2: Spring () []")
   end
 
+  it "renders definitions and instances from the same LML file" do
+    same_file_input = input.sub(
+      "#{fixtures_path('lutaml_data/widget_models.lml')}," \
+      "#{fixtures_path('lutaml_data/data_widgets.lml')}",
+      fixtures_path("lutaml_data/widgets.lml"),
+    )
+    output = convert_to_xml(same_file_input)
+    expect(output).to include("W1: Gear (3.5) [metal heavy ]")
+    expect(output).to include("W2: Spring () []")
+  end
+
+  it "renders JSON data instances" do
+    json_input = input.sub(
+      fixtures_path("lutaml_data/data_widgets.lml"),
+      fixtures_path("lutaml_data/data_widgets.json"),
+    ).gsub("store.AllWidgets", "store.Widgets")
+    output = convert_to_xml(json_input)
+    expect(output).to include("W1: Gear (3.5) [metal heavy ]")
+    expect(output).to include("W2: Spring () []")
+  end
+
+  it "uses options include_path for Liquid includes" do
+    paths = [fixtures_path("lutaml_data"),
+             fixtures_path("lutaml_data/templates")]
+    options = { "include_path" => paths.join(",") }
+    options_input = input.sub(",store]", ",store,options=#{options.to_json}]")
+      .sub(template, "{% include 'heading' %}\n")
+    expect(convert_to_xml(options_input))
+      .to include("Widgets loaded through the configured include path.")
+  end
+
+  it "logs and raises on malformed JSON options" do
+    bad_input = input.sub(",store]", ",store,options={bad}]")
+    allow(Metanorma::Util).to receive(:log)
+    expect { metanorma_convert(bad_input) }
+      .to raise_error(JSON::ParserError)
+    expect(Metanorma::Util).to have_received(:log)
+      .with(/Failed to parse LutaML data block: .*bad/, :error)
+  end
+
+  it "accepts a trailing comma after JSON options" do
+    path = fixtures_path("lutaml_data/templates")
+    options_input = input.sub(",store]",
+                              ",store,options={\"include_path\":\"#{path}\"},]")
+      .sub(template, "{% include 'heading' %}\n")
+    expect(convert_to_xml(options_input))
+      .to include("Widgets loaded through the configured include path.")
+  end
+
+  it "preserves inline include_path options" do
+    path = fixtures_path("lutaml_data/templates")
+    options_input = input.sub(",store]", ",store,include_path=#{path}]")
+      .sub(template, "{% include 'heading' %}\n")
+    expect(convert_to_xml(options_input))
+      .to include("Widgets loaded through the configured include path.")
+  end
+
   it "exposes instances under the default context name" do
     default_context_input = input.gsub(",store]", "]").gsub(
       "store.AllWidgets",
