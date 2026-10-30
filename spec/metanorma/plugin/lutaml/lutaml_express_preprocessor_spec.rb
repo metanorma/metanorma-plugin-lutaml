@@ -337,7 +337,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                     <p id="_">Mine text</p>
                     <svgmap id="_">
                       <figure id="_">
-                        <image id="_" src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" mimetype="image/svg+xml" height="auto" width="auto" filename="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}"/>
+                        <image id="_" src="spec/fixtures/lutaml/measure_schemaexpg5.svg" mimetype="image/svg+xml" height="auto" width="auto" filename="spec/fixtures/lutaml/measure_schemaexpg5.svg"/>
                       </figure>
                       <target href="1">
                         <eref  bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
@@ -355,7 +355,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                     <p id="_">Mine text</p>
                     <svgmap id="_">
                       <figure id="_">
-                        <image id="_" src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" mimetype="image/svg+xml" height="auto" width="auto"  filename="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}"/>
+                        <image id="_" src="spec/fixtures/lutaml/measure_schemaexpg5.svg" mimetype="image/svg+xml" height="auto" width="auto"  filename="spec/fixtures/lutaml/measure_schemaexpg5.svg"/>
                       </figure>
                       <target href="1">
                         <eref  bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
