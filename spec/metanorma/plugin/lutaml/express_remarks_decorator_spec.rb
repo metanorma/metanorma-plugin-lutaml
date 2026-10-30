@@ -22,6 +22,16 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarksDecorator do
       end
     end
 
+    context "with a docfile-relative prefix" do
+      let(:prefix) { "../../schemas/resources/action_schema" }
+      let(:remark) { "image::diagram.svg[]" }
+
+      it "keeps the path relative to the docfile, not the build CWD" do
+        expect(result)
+          .to eq("image::../../schemas/resources/action_schema/diagram.svg[]")
+      end
+    end
+
     context "with image: inline macro" do
       let(:remark) { "image:photo.png[alt text]" }
 
