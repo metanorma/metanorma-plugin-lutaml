@@ -60,13 +60,26 @@ module Metanorma
         end
 
         def prefix_relative_paths(line, path_prefix)
+          # Decorated remarks live on models shared across documents and
+          # preprocess passes: a second pass over an already-decorated line
+          # would stack the prefix again (paths like
+          # ../schemas/schemas/schemas/... rendered unusable). Idempotent:
+          # a line that carries this prefix is left alone.
+          return line if path_prefix && line.include?(path_prefix)
+
           line.gsub(RELATIVE_PREFIX_MACRO_REGEXP) do |_match|
-            # The prefix is docfile-relative (metanorma-plugin-lutaml#325):
-            # expanding it against the process CWD produced absolute image
-            # paths under whatever directory the build was launched from
-            # (e.g. <repo>/../../schemas/...), which then failed to resolve
-            # at render time. An absolute prefix passes through unchanged.
-            full_path = File.join(path_prefix, $3.strip)
+            # Expand against the docfile directory (passed by the adapter
+            # as relative_path_base), NOT the process CWD: a CWD expansion
+            # produced absolute image paths under whatever directory the
+            # build was launched from (e.g. <repo>/../../schemas/...).
+            # The absolute result is deliberate: relative targets are
+            # re-anchored by asciidoctor's imagesdir handling
+            # (images/../../schemas collapses a level), which made every
+            # decorated diagram unresolvable at render time.
+            full_path = File.expand_path(
+              File.join(path_prefix, $3.strip),
+              options["relative_path_base"] || Dir.pwd,
+            )
             "#{$1}#{$2}#{full_path}#{$4}"
           end
         end
