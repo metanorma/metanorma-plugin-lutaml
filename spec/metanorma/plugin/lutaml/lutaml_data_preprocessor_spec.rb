@@ -120,4 +120,44 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDataPreprocessor do
     expect { metanorma_convert(missing_input) }
       .to raise_error(StandardError, /missing_models/)
   end
+
+  context "with S-102 style validation checks (issue #178 example)" do
+    let(:s102_input) do
+      <<~TEXT
+        = Document title
+        Author
+        :docfile: test.adoc
+        :nodoc:
+        :novalid:
+        :no-isobib:
+        :imagesdir: spec/assets
+
+        [lutaml_data,#{fixtures_path('lutaml_data/s102_models.lml')},#{fixtures_path('lutaml_data/s102_checks.lml')},lml]
+        ----
+        {% for check in lml.S158Checks.checks %}
+        S-102 Validation Check `{{ check.dev_id }}`
+
+        classification: {{ check.classification.description }}
+
+        check message: {{ check.check_message }}
+
+        check solution: [{{ check.check_solution }}]
+
+        {% endfor %}
+        ----
+      TEXT
+    end
+
+    it "renders every check with enum descriptions and optional attributes" do
+      expect(convert_to_xml(s102_input)).to include(
+        "S-102 Validation Check <tt>S102_Dev1001</tt>",
+        "classification: Critical Error",
+        "check message: No feature information group",
+        "check solution: [Add feature information group]",
+        "S-102 Validation Check <tt>S102_Dev1002</tt>",
+        "classification: Warning",
+        "check solution: []",
+      )
+    end
+  end
 end

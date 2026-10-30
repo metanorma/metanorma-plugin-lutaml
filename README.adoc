@@ -39,6 +39,8 @@ link:docs/usages/lutaml-gml.adoc[Usage with LutaML GML Dictionary by lutaml_gml_
 
 link:docs/usages/json_yaml.adoc[Usage with JSON or YAML files by data2text, yaml2text or json2text]
 
+link:docs/usages/lutaml-data.adoc[Usage with LutaML data files by lutaml_data]
+
 link:docs/usages/lutaml-xsd.adoc[Usage with XML Schema files by lutaml_xsd]
 
 == Documentation
