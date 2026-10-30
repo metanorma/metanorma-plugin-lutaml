@@ -61,7 +61,12 @@ module Metanorma
 
         def prefix_relative_paths(line, path_prefix)
           line.gsub(RELATIVE_PREFIX_MACRO_REGEXP) do |_match|
-            full_path = File.expand_path(File.join(path_prefix, $3.strip))
+            # The prefix is docfile-relative (metanorma-plugin-lutaml#325):
+            # expanding it against the process CWD produced absolute image
+            # paths under whatever directory the build was launched from
+            # (e.g. <repo>/../../schemas/...), which then failed to resolve
+            # at render time. An absolute prefix passes through unchanged.
+            full_path = File.join(path_prefix, $3.strip)
             "#{$1}#{$2}#{full_path}#{$4}"
           end
         end
