@@ -6,10 +6,14 @@ require_relative "../../../../lib/metanorma/plugin/lutaml/express_remark_adapter
 
 RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkAdapter do
   describe ".relative_path_prefix" do
-    # The prefix lands inside emitted image macros: an absolute build path
-    # made image/@src differ between two builds of the same tree
-    # (metanorma/metanorma-plugin-lutaml#325). It must be relative to the
-    # docfile directory.
+    # The prefix lands inside emitted image macros. metanorma resolves
+    # image targets through AsciiDoc's base-dir asset path (the working
+    # directory), not the docfile: collection renders and CLI compiles run
+    # from other directories, and docfile-relative targets unresolve
+    # there, failing every schema figure with "Image not found"
+    # (metanorma-plugin-lutaml#329). The prefix must stay absolute; the
+    # machine-path-free emission attempted in #325 needs metanorma-side
+    # asset-resolution changes first.
     let(:docfile_directory) { "/build/one/doc" }
     let(:schema_directory) { "/build/one/schemas" }
 
@@ -45,15 +49,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkAdapter do
       model_class.new(File.join(schema_directory, "schema_a.exp"))
     end
 
-    it "returns a path relative to the docfile directory" do
+    it "returns an absolute path to the schema directory" do
       prefix = described_class.relative_path_prefix(
-        { "document" => document }, model,
+        { "document" => document }, model
       )
 
-      expect(prefix).to eq("../schemas")
-      # the round-trip is platform-relative: on Windows expand_path
-      # drive-letters the fixture paths, so both sides expand here
-      expect(File.expand_path(prefix, docfile_directory))
+      # File.expand_path is idempotent only on absolute paths, so this
+      # asserts absoluteness portably
+      expect(File.expand_path(prefix)).to eq(prefix)
+      expect(File.expand_path(prefix))
         .to eq(File.expand_path(schema_directory))
     end
 

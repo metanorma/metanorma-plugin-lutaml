@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "expressir"
-require "pathname"
 
 module Metanorma
   module Plugin
@@ -17,17 +16,16 @@ module Metanorma
           )
           resolved = document.path_resolver
             .system_path(file_path, docfile_directory)
-          # The prefix lands inside emitted image macros, so it must not
-          # carry the absolute build path: two builds of the same tree in
-          # two directories produced different image/@src values
-          # (metanorma/metanorma-plugin-lutaml#325). A path relative to the
-          # docfile resolves to the same schema file at render time and is
-          # byte-identical across build directories.
-          # The docfile directory may be relative ("."): relative_path_from
-          # refuses mixed prefixes, so both sides expand first
-          Pathname.new(File.expand_path(resolved))
-            .relative_path_from(Pathname.new(File.expand_path(docfile_directory)))
-            .to_s
+          # The prefix lands inside image macros, which metanorma resolves
+          # through AsciiDoc's base-dir asset path -- the working
+          # directory, not the docfile: collection renders and CLI
+          # compiles run from other directories, and docfile-relative
+          # targets unresolve there, failing every schema figure with
+          # "Image not found" (metanorma-plugin-lutaml#329). Absolute
+          # targets are the only form AsciiDoc passes through untouched.
+          # The machine-path-free emission attempted in #325 needs
+          # metanorma-side asset-resolution changes first.
+          File.expand_path(resolved, docfile_directory)
         end
 
         def self.for(model)
