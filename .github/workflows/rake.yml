@@ -20,7 +20,7 @@ jobs:
       # svg_conform 0.2.5 was re-pushed with corrected metadata; the
       # compact-index line cached in ~/.bundle still carries the old
       # (lens_core) record and fails every install against it.
-      before-setup-ruby: rm -rf ~/.bundle/cache/compact_index
+      before-setup-ruby: rm -rf ~/.bundle/cache/compact_index vendor/bundle/cache
       setup-tools: graphviz
       submodules: true
       choco-cache: true
