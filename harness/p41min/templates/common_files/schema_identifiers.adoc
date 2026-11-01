@@ -1,0 +1,20 @@
+
+[lutaml, schemas, context]
+---
+{% for schema in context.schemas %}
+
+{% if context.schemas.size > 1 %}
+==== {{ schema.id }} identification
+{% endif %}
+
+To provide for unambiguous identification of the {{ schema.id | replace: "_", "-" }} in an open information system, the object identifier
+
+[%unnumbered]
+----
+{{ schema.version.value }}
+----
+
+is assigned to the *{{ schema.id }}* (see <<{{ schema.id }}>>). The meaning of this value is defined in ISO/IEC 8824-1, and shall be as described in ISO 10303-1.
+
+{% endfor %}
+---

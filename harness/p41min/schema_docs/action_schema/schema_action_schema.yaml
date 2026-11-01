@@ -1,0 +1,4 @@
+---
+schemas:
+  action_schema:
+    path: "../../schemas/resources/action_schema/action_schema.exp"

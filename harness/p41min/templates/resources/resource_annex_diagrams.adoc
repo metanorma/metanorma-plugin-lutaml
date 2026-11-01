@@ -1,0 +1,54 @@
+[[annex_expg]]
+[appendix,obligation=informative]
+== EXPRESS-G diagrams
+
+[lutaml_express, schemas, repo,config_yaml=schemas.yaml]
+---
+{% comment %}
+BOILERPLATE RENDERING
+
+Individual diagrams are referenced as `<<{schema_id}_expg{N}>>`
+where `{schema_id}` is the schema identifier, and `{N}`, the diagram number.
+
+In order to establish a cross-reference range between the first and last diagram,
+the first schema is referenced as `<<{first_schema_id}_expg1>>` and the last schema
+as `<<{last_schema_id}_expg{number_of_diagrams}>>`.
+{% endcomment %}
+
+{% assign first_schema = ordered_schemas | first %}
+{% assign last_schema = ordered_schemas | last %}
+{% assign last_schema_diagrams = last_schema.remark_items | where: "id", "__expressg" %}
+{% assign last_schema_diagrams = last_schema_diagrams[0].remarks %}
+{% assign number_of_diagrams = last_schema_diagrams.size %}
+
+The diagrams in this annex
+(<<{{first_schema.id}}_expg1;to!{{last_schema.id}}_expg{{number_of_diagrams}}>>)
+correspond to the EXPRESS schemas specified in this document.
+The diagrams use the EXPRESS-G graphical notation for the
+EXPRESS language. EXPRESS-G is defined in ISO 10303-11.
+
+
+{% comment %}
+DIAGRAMS RENDERING
+{% endcomment %}
+
+{% for schema in ordered_schemas %}
+
+{% assign schema_id = schema.id %}
+{% assign diagrams = schema.remark_items | where: "id", "__expressg" %}
+{% assign diagrams = diagrams[0].remarks %}
+{% assign number_of_diagrams = diagrams.size %}
+
+{% for diagram in diagrams %}
+
+{% capture caption -%}
+EXPRESS-G diagram of {{ schema_id }} ({{ forloop.index }} of {{ number_of_diagrams }})
+{% endcapture %}
+
+.{{ caption }}
+{{ diagram }}
+
+{% endfor %}
+
+{% endfor %}
+---

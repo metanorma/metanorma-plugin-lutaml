@@ -1,0 +1,14 @@
+
+{% if subtypes.size > 0 %}
+{% for constraint in subtypes %}
+
+{% if constraint.applies_to.id == entity_id %}
+
+[source%unnumbered]
+--
+{{ constraint.source }}
+--
+{% endif %}
+
+{% endfor %}
+{% endif %}

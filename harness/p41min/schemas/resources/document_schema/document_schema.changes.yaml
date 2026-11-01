@@ -1,0 +1,45 @@
+---
+schema: document_schema
+change_edition:
+- version: '2'
+  description: |-
+    The definitions of the following EXPRESS entity data types were modified:
+
+    * action;
+    * action_directive;
+    * action_method;
+    * action_method_relationship;
+    * action_relationship;
+    * action_request_solution;
+    * action_request_status;
+    * action_resource;
+    * action_resource_relationship;
+    * action_resource_type;
+    * action_status;
+    * directed_action;
+    * executed_action;
+    * supported_item;
+    * versioned_action_request.
+  additions:
+  - type: ENTITY
+    name: document_product_association
+  - type: ENTITY
+    name: document_representation_type
+  - type: TYPE
+    name: product_or_formation_or_definition
+  modifications:
+  - type: FUNCTION
+    name: acyclic_document_relationship
+  - type: ENTITY
+    name: document
+  - type: ENTITY
+    name: document_relationship
+- version: '3'
+  description: |-
+    This also incorporates the modifications of Technical Corrigenda 1 and Technical Corrigenda 2.
+
+    The following EXPRESS schemas have been added:
+
+    * experience_schema;
+    * location_schema;
+    * qualifications_schema.

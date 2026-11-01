@@ -1,0 +1,4 @@
+---
+schemas:
+  action_schema:
+    path: /Users/mulgogi/src/mn/iso10303-wt-329h/schemas/resources/action_schema/action_schema.exp

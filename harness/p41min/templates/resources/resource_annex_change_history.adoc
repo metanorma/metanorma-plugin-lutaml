@@ -1,0 +1,132 @@
+[[annex_change_history]]
+[appendix,obligation=informative]
+== Change history
+
+[[general]]
+=== General
+
+This annex documents the history of technical modifications made to this document.
+
+Unless otherwise specified all modifications are upwardly compatible to the previous edition. Modifications to EXPRESS specifications are upwardly compatible if:
+
+* instances encoded according to ISO 10303-21, and that conform to an ISO 10303 application protocol based on the previous edition of this document, also conform to a revision of that application protocol based on this edition of this document;
+
+* interfaces that conform to ISO 10303-22 and to an ISO 10303 application protocol based on the previous edition of this document, also conform to a revision of that application protocol based on this edition of this document;
+
+* the mapping tables of ISO 10303 application protocols based on the previous edition of this document remain valid in a revision of that application protocol based on this edition of this document.
+
+[data2text,context=schemas.yaml]
+------
+{% liquid
+assign path_prefix = "schemas/resources/"
+assign path_suffix = ".changes.yaml"
+
+for schema in context.schemas
+assign change_path = schema[0] | prepend: path_prefix | append: "/" | append: schema[0] | append: path_suffix
+assign changes_paths = changes_paths | append: change_path | append: ", "
+endfor
+
+assign changes_paths = changes_paths | split: ", "
+assign max_version = 2
+%}
+
+{% assign existing_paths = "" %}
+
+{% for path in changes_paths %}
+
+{% assign data = path | loadfile: "." %}
+
+{% liquid
+assign max_change_ver = data.change_edition.last.version | plus: 0
+if max_change_ver > max_version
+assign max_version = max_change_ver
+endif
+
+assign existing_paths = existing_paths | append: " " | append: path
+%}
+
+{% endfor %}
+
+{% assign existing_paths = existing_paths | split: " " %}
+
+{% for ver in (2..max_version) %}
+
+[[changes_{{ver}}]]
+=== Changes made in edition {{ver}}
+
+[[changes_summary_{{ver}}]]
+==== Summary of changes
+
+The edition {{ ver }} of this document incorporated the modifications to the edition {{ ver | minus: 1 }} listed below.
+
+{% for path in existing_paths %}
+
+{% assign data = path | loadfile: "." %}
+
+{% assign ver_str = ver | append: "" %}
+
+{% for ed in data.change_edition %}
+
+// find version
+{% if ed.version == ver_str %}
+
+[[{{data.schema}}.changes{{ver}}]]
+==== Changes made to the {{ data.schema }}
+
+{% if ed.description %}
+{{ ed.description }}
+{% endif %}
+
+{% if ed.additions %}
+The following EXPRESS declarations and interface specifications have been added:
+
+{% for change in ed.additions %}
+* {{change.type}} {{change.name}}; {%- if change.interfaced_item %}(interface from {{change.interfaced_items}}){% endif %}
+{%- if change.description %}
++
+--
+{{ change.description }}
+--
+{% endif %}
+{% endfor %}
+
+{% endif %}
+
+{% if ed.modifications %}
+The following EXPRESS declarations and interface specifications have been modified:
+
+{% for change in ed.modifications %}
+* {{change.type}} {{change.name}}; {%- if change.interfaced_item %}(interface from {{change.interfaced_items}}){% endif %}
+{%- if change.description %}
++
+--
+{{ change.description }}
+--
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if ed.deletions %}
+The following EXPRESS declarations and interface specifications have been deleted:
+
+{% for change in ed.deletions %}
+* {{change.type}} {{change.name}}; {%- if change.interfaced_item %}(interface from {{change.interfaced_items}}){% endif %}
+{%- if change.description %}
++
+--
+{{change.description}}
+--
+{% endif %}
+
+{% endfor %}
+{% endif %}
+
+{% endif %}
+
+{% endfor %}
+
+{% endfor %}
+
+{% endfor %}
+
+------

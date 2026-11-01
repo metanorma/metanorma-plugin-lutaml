@@ -1,0 +1,29 @@
+
+[[mim_express]]
+=== MIM EXPRESS short listing
+
+{% render "templates/modules/boilerplates", fetch: "short_listing_intro" %}
+
+{% render "templates/common_files/source_code", source: schema.source %}
+
+{% render "templates/modules/interface_notes", schema: schema, all_schemas: all_schemas, xref: "annex_mim_expg" %}
+
+{% comment %} The MIM diagram annex is driven by the module's mimexpg SVGs,
+not by __expressg remark items — module schemas carry none (#769), so the
+icon is gated on the schema-level annex anchor only. {% endcomment %}
+{% assign has_expg = true %}
+
+{% render "templates/modules/definitions", definition_type: "MIM type", definitions: schema.types, schema_id: schema.id, depth: 4, has_expg: has_expg %}
+
+{% render "templates/modules/definitions", definition_type: "MIM entity", definitions: schema.entities, schema_id: schema.id, depth: 4, has_expg: has_expg %}
+
+{% render "templates/modules/definitions", definition_type: "MIM function", definitions: schema.functions, schema_id: schema.id, depth: 4, has_expg: has_expg %}
+
+{% render "templates/modules/definitions", definition_type: "MIM rule", definitions: schema.rules, schema_id: schema.id, depth: 4, has_expg: has_expg %}
+
+[source%unnumbered]
+--
+*)
+END_SCHEMA;  -- {{ schema.id }}
+(*
+--

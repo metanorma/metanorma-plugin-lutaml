@@ -1,0 +1,20 @@
+
+{%- liquid
+assign found_arm = false
+assign found_mim = false
+
+assign suffix = schema.id | split: '_' | last
+if suffix == 'arm'
+  assign found_arm = true
+elsif suffix == 'mim'
+  assign found_mim = true
+endif
+
+if found_arm
+render "templates/modules/arm", schema: schema, all_schemas: all_schemas
+endif
+
+if found_mim
+render "templates/modules/mim", schema: schema, all_schemas: all_schemas
+endif
+%}

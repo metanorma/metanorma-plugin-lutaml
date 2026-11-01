@@ -1,0 +1,3172 @@
+(*
+ISO 10303 TC184/SC4/WG12 N9715
+
+EXPRESS Source:
+ISO 10303-41 ed5 Fundamentals of product description and support - Measure schema
+
+The following permission notice and disclaimer shall be included in all copies of this EXPRESS schema ("the Schema"),
+and derivations of the Schema:
+
+Copyright ISO 2017  All rights reserved
+Permission is hereby granted, free of charge in perpetuity, to any person obtaining a copy of the Schema,
+to use, copy, modify, merge and distribute free of charge, copies of the Schema for the purposes of developing,
+implementing, installing and using software based on the Schema, and to permit persons to whom the Schema is furnished to do so,
+subject to the following conditions:
+
+THE SCHEMA IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SCHEMA OR THE
+USE OR OTHER DEALINGS IN THE SCHEMA.
+
+In addition, any modified copy of the Schema shall include the following notice:
+
+THIS SCHEMA HAS BEEN MODIFIED FROM THE SCHEMA DEFINED IN
+ISO 10303-41 ed5 Fundamentals of product description and support - Measure schema
+AND SHOULD NOT BE INTERPRETED AS COMPLYING WITH THAT STANDARD
+*)
+
+SCHEMA measure_schema '{iso standard 10303 part(41) version(8) object(1) measure-schema(15)}';
+
+REFERENCE FROM basic_attribute_schema   -- ISO 10303-41
+  (get_name_value,
+   name_attribute,
+   name_attribute_select);
+REFERENCE FROM representation_schema   -- ISO 10303-43
+  (representation_context);
+
+REFERENCE FROM support_resource_schema;    -- ISO 10303-41
+
+  TYPE s_name_attribute_select = SELECT BASED_ON name_attribute_select WITH (
+    derived_unit);
+  END_TYPE;
+
+  TYPE absorbed_dose_measure = REAL;
+  END_TYPE;
+
+TYPE acceleration_measure = REAL;
+  END_TYPE;
+
+  TYPE radioactivity_measure = REAL;
+  END_TYPE;
+
+TYPE amount_of_substance_measure = REAL;
+  END_TYPE;
+
+  TYPE area_measure = REAL;
+  END_TYPE;
+
+  TYPE celsius_temperature_measure = REAL;
+  END_TYPE;
+
+  TYPE context_dependent_measure = REAL;
+  END_TYPE;
+
+  TYPE count_measure = NUMBER;
+  END_TYPE;
+
+  TYPE descriptive_measure = STRING;
+  END_TYPE;
+
+  TYPE capacitance_measure = REAL;
+  END_TYPE;
+
+  TYPE dose_equivalent_measure = REAL;
+  END_TYPE;
+
+  TYPE electric_charge_measure = REAL;
+  END_TYPE;
+
+  TYPE electric_current_measure = REAL;
+  END_TYPE;
+
+  TYPE conductance_measure = REAL;
+  END_TYPE;
+
+  TYPE electric_potential_measure = REAL;
+  END_TYPE;
+
+  TYPE energy_measure = REAL;
+  END_TYPE;
+
+  TYPE force_measure = REAL;
+  END_TYPE;
+
+  TYPE frequency_measure = REAL;
+  END_TYPE;
+
+  TYPE magnetic_flux_density_measure = REAL;
+  END_TYPE;
+
+  TYPE illuminance_measure = REAL;
+  END_TYPE;
+
+  TYPE inductance_measure = REAL;
+  END_TYPE;
+
+  TYPE length_measure = REAL;
+  END_TYPE;
+
+  TYPE luminous_intensity_measure = REAL;
+  END_TYPE;
+
+  TYPE luminous_flux_measure = REAL;
+  END_TYPE;
+
+  TYPE mass_measure = REAL;
+  END_TYPE;
+
+  TYPE measure_value = SELECT
+    (absorbed_dose_measure,
+     dose_equivalent_measure,
+     radioactivity_measure,
+     acceleration_measure,
+     amount_of_substance_measure,
+     area_measure,
+     celsius_temperature_measure,
+     context_dependent_measure,
+     count_measure,
+     descriptive_measure,
+     capacitance_measure,
+     electric_charge_measure,
+     conductance_measure,
+     electric_current_measure,
+     electric_potential_measure,
+     energy_measure,
+     magnetic_flux_density_measure,
+     force_measure,
+     frequency_measure,
+     illuminance_measure,
+     inductance_measure,
+     length_measure,
+     luminous_flux_measure,
+     luminous_intensity_measure,
+     magnetic_flux_measure,
+     mass_measure,
+     numeric_measure,
+     non_negative_length_measure,
+     parameter_value,
+     plane_angle_measure,
+     positive_length_measure,
+     positive_plane_angle_measure,
+     positive_ratio_measure,
+     power_measure,
+     pressure_measure,
+     ratio_measure,
+     resistance_measure,
+     solid_angle_measure,
+     thermodynamic_temperature_measure,
+     time_measure,
+     velocity_measure,
+     volume_measure);
+  END_TYPE;
+
+  TYPE magnetic_flux_measure = REAL;
+  END_TYPE;
+
+  TYPE non_negative_length_measure = length_measure;
+   WHERE
+    WR1: SELF >= 0.0;
+  END_TYPE;
+
+  TYPE numeric_measure = NUMBER;
+  END_TYPE;
+
+  TYPE parameter_value = REAL;
+  END_TYPE;
+
+  TYPE plane_angle_measure = REAL;
+  END_TYPE;
+
+  TYPE positive_length_measure = non_negative_length_measure;
+    WHERE
+      WR1: SELF > 0.0;
+  END_TYPE;
+
+  TYPE positive_plane_angle_measure = plane_angle_measure;
+    WHERE
+      WR1: SELF > 0.0;
+  END_TYPE;
+
+  TYPE positive_ratio_measure = ratio_measure;
+    WHERE
+      WR1: SELF > 0.0;
+  END_TYPE;
+
+  TYPE power_measure = REAL;
+  END_TYPE;
+
+  TYPE pressure_measure = REAL;
+  END_TYPE;
+
+  TYPE ratio_measure = REAL;
+  END_TYPE;
+
+  TYPE resistance_measure = REAL;
+  END_TYPE;
+
+  TYPE si_prefix = ENUMERATION OF (exa, peta, tera, giga, mega, kilo, hecto, deca, deci, centi, milli, micro, nano, pico, femto, atto);
+  END_TYPE;
+
+  TYPE si_unit_name = ENUMERATION OF (metre, gram, second, ampere, kelvin, mole, candela, radian, steradian, hertz, newton, pascal, joule, watt, coulomb, volt, farad, ohm, siemens, weber, tesla, henry, degree_Celsius, lumen, lux, becquerel, gray, sievert);
+  END_TYPE;
+
+  TYPE solid_angle_measure = REAL;
+  END_TYPE;
+
+  TYPE thermodynamic_temperature_measure = REAL;
+  END_TYPE;
+
+  TYPE time_measure = REAL;
+  END_TYPE;
+
+  TYPE unit = SELECT (derived_unit, named_unit);
+  END_TYPE;
+
+  TYPE velocity_measure = REAL;
+  END_TYPE;
+
+  TYPE volume_measure = REAL;
+  END_TYPE;
+
+ENTITY absorbed_dose_measure_with_unit
+ SUBTYPE OF (measure_with_unit);
+WHERE
+    WR1: 'MEASURE_SCHEMA.ABSORBED_DOSE_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+END_ENTITY;
+
+ENTITY absorbed_dose_unit
+ SUBTYPE OF (derived_unit);
+WHERE
+    WR1: derive_dimensional_exponents(SELF) = dimensions_for_si_unit (si_unit_name.gray);
+END_ENTITY;
+
+  ENTITY si_absorbed_dose_unit
+     SUBTYPE OF (absorbed_dose_unit,si_unit);
+  WHERE
+    WR1: SELF\si_unit.name = si_unit_name.gray;
+    WR2: NOT EXISTS(SELF\derived_unit.name);
+  END_ENTITY;
+
+  ENTITY acceleration_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.ACCELERATION_UNIT' IN TYPEOF (SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY acceleration_unit
+    SUBTYPE OF (derived_unit);
+  WHERE
+    WR1: derive_dimensional_exponents(SELF) =
+       dimensional_exponents ( 1.0, 0.0, -2.0, 0.0, 0.0, 0.0, 0.0 );
+  END_ENTITY;
+
+ENTITY radioactivity_measure_with_unit
+ SUBTYPE OF (measure_with_unit);
+WHERE
+    WR1: 'MEASURE_SCHEMA.RADIOACTIVITY_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+END_ENTITY;
+
+ENTITY radioactivity_unit
+ SUBTYPE OF (derived_unit);
+WHERE
+    WR1: derive_dimensional_exponents(SELF) = dimensions_for_si_unit (si_unit_name.becquerel);
+END_ENTITY;
+
+  ENTITY si_radioactivity_unit
+     SUBTYPE OF (radioactivity_unit,si_unit);
+  WHERE
+    WR1: SELF\si_unit.name = si_unit_name.becquerel;
+    WR2: NOT EXISTS(SELF\derived_unit.name);
+  END_ENTITY;
+
+  ENTITY amount_of_substance_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.AMOUNT_OF_SUBSTANCE_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY amount_of_substance_unit
+    SUBTYPE OF (named_unit);
+  WHERE
+    WR1: (SELF\named_unit.dimensions.length_exponent = 0.0) AND (SELF\named_unit.dimensions.mass_exponent = 0.0) AND (SELF\named_unit.dimensions.time_exponent = 0.0) AND (SELF\named_unit.dimensions.electric_current_exponent = 0.0) AND (SELF\named_unit.dimensions.thermodynamic_temperature_exponent = 0.0) AND (SELF\named_unit.dimensions.amount_of_substance_exponent = 1.0) AND (SELF\named_unit.dimensions.luminous_intensity_exponent = 0.0);
+  END_ENTITY;
+
+  ENTITY area_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.AREA_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY area_unit
+   SUBTYPE OF (derived_unit);
+  WHERE
+  WR1: derive_dimensional_exponents(SELF) =
+      dimensional_exponents ( 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 );
+  END_ENTITY;
+
+  ENTITY celsius_temperature_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.THERMODYNAMIC_TEMPERATURE_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY context_dependent_unit
+    SUBTYPE OF (named_unit);
+    name : label;
+  END_ENTITY;
+
+  ENTITY conversion_based_unit
+    SUBTYPE OF (named_unit);
+     name : label;
+     conversion_factor : measure_with_unit;
+  WHERE
+    WR1: SELF\named_unit.dimensions = derive_dimensional_exponents(conversion_factor\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY derived_unit
+    SUPERTYPE OF (ONEOF(absorbed_dose_unit,
+	acceleration_unit,
+    radioactivity_unit,
+	area_unit,
+    capacitance_unit,
+	dose_equivalent_unit,
+    electric_charge_unit,
+    conductance_unit,
+    electric_potential_unit,
+    energy_unit,
+    magnetic_flux_density_unit,
+    force_unit,
+    frequency_unit,
+    illuminance_unit,
+    inductance_unit,
+    magnetic_flux_unit,
+    power_unit,
+    pressure_unit,
+    resistance_unit,
+    velocity_unit,
+    volume_unit));
+    elements : SET [1:?] OF derived_unit_element;
+  DERIVE
+    name : label := get_name_value(SELF);
+  WHERE
+    WR1: (SIZEOF(elements) > 1) OR ((SIZEOF(elements) = 1) AND (elements[1].exponent <> 1.0));
+    WR2: SIZEOF(USEDIN(SELF, 'BASIC_ATTRIBUTE_SCHEMA.' + 'NAME_ATTRIBUTE.NAMED_ITEM')) <= 1;
+  END_ENTITY;
+
+  ENTITY derived_unit_element;
+    unit : named_unit;
+    exponent : REAL;
+  END_ENTITY;
+
+  ENTITY dimensional_exponents;
+    length_exponent : REAL;
+    mass_exponent : REAL;
+    time_exponent : REAL;
+    electric_current_exponent : REAL;
+    thermodynamic_temperature_exponent : REAL;
+    amount_of_substance_exponent : REAL;
+    luminous_intensity_exponent : REAL;
+  END_ENTITY;
+
+  ENTITY capacitance_unit
+    SUBTYPE OF(derived_unit);
+  WHERE
+    WR1: derive_dimensional_exponents(SELF) = dimensions_for_si_unit (si_unit_name.farad);
+  END_ENTITY;
+
+  ENTITY capacitance_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.CAPACITANCE_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY si_capacitance_unit
+     SUBTYPE OF (capacitance_unit,si_unit);
+  WHERE
+    WR1: SELF\si_unit.name = si_unit_name.farad;
+    WR2: NOT EXISTS(SELF\derived_unit.name);
+  END_ENTITY;
+
+ENTITY dose_equivalent_measure_with_unit
+ SUBTYPE OF (measure_with_unit);
+WHERE
+    WR1: 'MEASURE_SCHEMA.DOSE_EQUIVALENT_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+END_ENTITY;
+
+ENTITY dose_equivalent_unit
+ SUBTYPE OF (derived_unit);
+WHERE
+    WR1: derive_dimensional_exponents(SELF) = dimensions_for_si_unit (si_unit_name.sievert);
+END_ENTITY;
+
+  ENTITY si_dose_equivalent_unit
+     SUBTYPE OF (dose_equivalent_unit,si_unit);
+  WHERE
+    WR1: SELF\si_unit.name = si_unit_name.sievert;
+    WR2: NOT EXISTS(SELF\derived_unit.name);
+  END_ENTITY;
+
+  ENTITY electric_charge_unit
+    SUBTYPE OF(derived_unit);
+  WHERE
+    WR1: derive_dimensional_exponents(SELF) = dimensions_for_si_unit (si_unit_name.coulomb);
+  END_ENTITY;
+
+  ENTITY electric_charge_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.ELECTRIC_CHARGE_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY si_electric_charge_unit
+     SUBTYPE OF (electric_charge_unit,si_unit);
+  WHERE
+    WR1: SELF\si_unit.name = si_unit_name.coulomb;
+    WR2: NOT EXISTS(SELF\derived_unit.name);
+  END_ENTITY;
+
+  ENTITY electric_current_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.ELECTRIC_CURRENT_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY electric_current_unit
+    SUBTYPE OF (named_unit);
+  WHERE
+    WR1: (SELF\named_unit.dimensions.length_exponent = 0.0) AND (SELF\named_unit.dimensions.mass_exponent = 0.0) AND (SELF\named_unit.dimensions.time_exponent = 0.0) AND (SELF\named_unit.dimensions.electric_current_exponent = 1.0) AND (SELF\named_unit.dimensions.thermodynamic_temperature_exponent = 0.0) AND (SELF\named_unit.dimensions.amount_of_substance_exponent = 0.0) AND (SELF\named_unit.dimensions.luminous_intensity_exponent = 0.0);
+  END_ENTITY;
+
+   ENTITY conductance_unit
+    SUBTYPE OF(derived_unit);
+  WHERE
+    WR1: derive_dimensional_exponents(SELF) = dimensions_for_si_unit (si_unit_name.siemens);
+  END_ENTITY;
+
+  ENTITY conductance_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.CONDUCTANCE_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY si_conductance_unit
+     SUBTYPE OF (conductance_unit,si_unit);
+  WHERE
+    WR1: SELF\si_unit.name = si_unit_name.siemens;
+    WR2: NOT EXISTS(SELF\derived_unit.name);
+  END_ENTITY;
+
+  ENTITY electric_potential_unit
+    SUBTYPE OF(derived_unit);
+  WHERE
+    WR1: derive_dimensional_exponents(SELF) = dimensions_for_si_unit (si_unit_name.volt);
+  END_ENTITY;
+
+  ENTITY electric_potential_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.ELECTRIC_POTENTIAL_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY si_electric_potential_unit
+     SUBTYPE OF (electric_potential_unit,si_unit);
+  WHERE
+    WR1: SELF\si_unit.name = si_unit_name.volt;
+    WR2: NOT EXISTS(SELF\derived_unit.name);
+  END_ENTITY;
+
+  ENTITY energy_unit
+    SUBTYPE OF(derived_unit);
+  WHERE
+    WR1: derive_dimensional_exponents(SELF) = dimensions_for_si_unit (si_unit_name.joule);
+  END_ENTITY;
+
+  ENTITY energy_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.ENERGY_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY si_energy_unit
+     SUBTYPE OF (energy_unit,si_unit);
+  WHERE
+    WR1: SELF\si_unit.name = si_unit_name.joule;
+    WR2: NOT EXISTS(SELF\derived_unit.name);
+  END_ENTITY;
+
+  ENTITY magnetic_flux_density_unit
+    SUBTYPE OF(derived_unit);
+  WHERE
+    WR1: derive_dimensional_exponents(SELF) = dimensions_for_si_unit (si_unit_name.tesla);
+  END_ENTITY;
+
+  ENTITY magnetic_flux_density_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.MAGNETIC_FLUX_DENSITY_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY si_magnetic_flux_density_unit
+     SUBTYPE OF (magnetic_flux_density_unit,si_unit);
+  WHERE
+    WR1: SELF\si_unit.name = si_unit_name.tesla;
+    WR2: NOT EXISTS(SELF\derived_unit.name);
+  END_ENTITY;
+
+  ENTITY force_unit
+    SUBTYPE OF(derived_unit);
+  WHERE
+    WR1: derive_dimensional_exponents(SELF) = dimensions_for_si_unit (si_unit_name.newton);
+  END_ENTITY;
+
+  ENTITY force_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.FORCE_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY si_force_unit
+     SUBTYPE OF (force_unit,si_unit);
+  WHERE
+    WR1: SELF\si_unit.name = si_unit_name.newton;
+    WR2: NOT EXISTS(SELF\derived_unit.name);
+  END_ENTITY;
+
+  ENTITY frequency_unit
+    SUBTYPE OF(derived_unit);
+  WHERE
+    WR1: derive_dimensional_exponents(SELF) = dimensions_for_si_unit (si_unit_name.hertz);
+  END_ENTITY;
+
+  ENTITY frequency_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.FREQUENCY_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY si_frequency_unit
+     SUBTYPE OF (frequency_unit,si_unit);
+  WHERE
+    WR1: SELF\si_unit.name = si_unit_name.hertz;
+    WR2: NOT EXISTS(SELF\derived_unit.name);
+  END_ENTITY;
+
+  ENTITY global_unit_assigned_context
+    SUBTYPE OF (representation_context);
+    units : SET [1:?] OF unit;
+  END_ENTITY;
+
+  ENTITY illuminance_unit
+    SUBTYPE OF(derived_unit);
+  WHERE
+    WR1: derive_dimensional_exponents(SELF) = dimensions_for_si_unit (si_unit_name.lux);
+  END_ENTITY;
+
+  ENTITY illuminance_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.ILLUMINANCE_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY si_illuminance_unit
+     SUBTYPE OF (illuminance_unit,si_unit);
+  WHERE
+    WR1: SELF\si_unit.name = si_unit_name.lux;
+    WR2: NOT EXISTS(SELF\derived_unit.name);
+  END_ENTITY;
+
+  ENTITY inductance_unit
+    SUBTYPE OF(derived_unit);
+  WHERE
+    WR1: derive_dimensional_exponents(SELF) = dimensions_for_si_unit (si_unit_name.henry);
+  END_ENTITY;
+
+  ENTITY inductance_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.INDUCTANCE_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY si_inductance_unit
+     SUBTYPE OF (inductance_unit,si_unit);
+  WHERE
+    WR1: SELF\si_unit.name = si_unit_name.henry;
+    WR2: NOT EXISTS(SELF\derived_unit.name);
+  END_ENTITY;
+
+  ENTITY length_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.LENGTH_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY positive_length_measure_with_unit
+    SUBTYPE OF (length_measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.POSITIVE_LENGTH_MEASURE' IN TYPEOF(SELF\measure_with_unit.value_component);
+  END_ENTITY;
+
+  ENTITY length_unit
+    SUBTYPE OF (named_unit);
+  WHERE
+    WR1: (SELF\named_unit.dimensions.length_exponent = 1.0) AND
+    (SELF\named_unit.dimensions.mass_exponent = 0.0) AND
+    (SELF\named_unit.dimensions.time_exponent = 0.0) AND
+    (SELF\named_unit.dimensions.electric_current_exponent = 0.0) AND
+    (SELF\named_unit.dimensions.thermodynamic_temperature_exponent = 0.0) AND
+    (SELF\named_unit.dimensions.amount_of_substance_exponent = 0.0) AND
+    (SELF\named_unit.dimensions.luminous_intensity_exponent = 0.0);
+  END_ENTITY;
+
+  ENTITY luminous_flux_unit
+    SUBTYPE OF(named_unit);
+  WHERE
+    WR1: derive_dimensional_exponents(SELF) = dimensions_for_si_unit (si_unit_name.lumen);
+  END_ENTITY;
+
+  ENTITY luminous_flux_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.LUMINOUS_FLUX_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY luminous_intensity_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.LUMINOUS_INTENSITY_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY luminous_intensity_unit
+    SUBTYPE OF (named_unit);
+  WHERE
+    WR1: (SELF\named_unit.dimensions.length_exponent = 0.0) AND (SELF\named_unit.dimensions.mass_exponent = 0.0) AND (SELF\named_unit.dimensions.time_exponent = 0.0) AND (SELF\named_unit.dimensions.electric_current_exponent = 0.0) AND (SELF\named_unit.dimensions.thermodynamic_temperature_exponent = 0.0) AND (SELF\named_unit.dimensions.amount_of_substance_exponent = 0.0) AND (SELF\named_unit.dimensions.luminous_intensity_exponent = 1.0);
+  END_ENTITY;
+
+  ENTITY magnetic_flux_unit
+    SUBTYPE OF(derived_unit);
+  WHERE
+    WR1: derive_dimensional_exponents(SELF) = dimensions_for_si_unit (si_unit_name.weber);
+  END_ENTITY;
+
+  ENTITY magnetic_flux_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.MAGNETIC_FLUX_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY si_magnetic_flux_unit
+     SUBTYPE OF (magnetic_flux_unit,si_unit);
+  WHERE
+    WR1: SELF\si_unit.name = si_unit_name.weber;
+    WR2: NOT EXISTS(SELF\derived_unit.name);
+  END_ENTITY;
+
+  ENTITY mass_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.MASS_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY mass_unit
+    SUBTYPE OF (named_unit);
+  WHERE
+    WR1: (SELF\named_unit.dimensions.length_exponent = 0.0) AND (SELF\named_unit.dimensions.mass_exponent = 1.0) AND (SELF\named_unit.dimensions.time_exponent = 0.0) AND (SELF\named_unit.dimensions.electric_current_exponent = 0.0) AND (SELF\named_unit.dimensions.thermodynamic_temperature_exponent = 0.0) AND (SELF\named_unit.dimensions.amount_of_substance_exponent = 0.0) AND (SELF\named_unit.dimensions.luminous_intensity_exponent = 0.0);
+  END_ENTITY;
+
+  ENTITY measure_with_unit
+    SUPERTYPE OF (ONEOF(length_measure_with_unit,
+    mass_measure_with_unit,
+	time_measure_with_unit,
+    electric_current_measure_with_unit,
+	thermodynamic_temperature_measure_with_unit,
+    celsius_temperature_measure_with_unit,
+	amount_of_substance_measure_with_unit,
+    luminous_intensity_measure_with_unit,
+	plane_angle_measure_with_unit,
+    solid_angle_measure_with_unit,
+	area_measure_with_unit,
+	volume_measure_with_unit,
+    ratio_measure_with_unit,
+    acceleration_measure_with_unit,
+    capacitance_measure_with_unit,
+    electric_charge_measure_with_unit,
+    conductance_measure_with_unit,
+    electric_potential_measure_with_unit,
+    energy_measure_with_unit,
+    magnetic_flux_density_measure_with_unit,
+    force_measure_with_unit,
+    frequency_measure_with_unit,
+    illuminance_measure_with_unit,
+    inductance_measure_with_unit,
+    luminous_flux_measure_with_unit,
+    magnetic_flux_measure_with_unit,
+    power_measure_with_unit,
+    pressure_measure_with_unit,
+    resistance_measure_with_unit,
+    velocity_measure_with_unit,
+	absorbed_dose_measure_with_unit,
+    radioactivity_measure_with_unit,
+    dose_equivalent_measure_with_unit));
+    value_component : measure_value;
+    unit_component : unit;
+  WHERE
+    WR1: valid_units(SELF);
+  END_ENTITY;
+
+  ENTITY named_unit
+    SUPERTYPE OF (ONEOF(si_unit, conversion_based_unit, context_dependent_unit) ANDOR
+    ONEOF(length_unit, mass_unit, time_unit, electric_current_unit, thermodynamic_temperature_unit,
+    amount_of_substance_unit, luminous_flux_unit, luminous_intensity_unit, plane_angle_unit,
+    solid_angle_unit, ratio_unit));
+    dimensions : dimensional_exponents;
+  END_ENTITY;
+
+  ENTITY plane_angle_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.PLANE_ANGLE_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY positive_plane_angle_measure_with_unit
+    SUBTYPE OF (plane_angle_measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.POSITIVE_PLANE_ANGLE_MEASURE' IN TYPEOF(SELF\measure_with_unit.value_component);
+  END_ENTITY;
+
+  ENTITY plane_angle_unit
+    SUBTYPE OF (named_unit);
+  WHERE
+    WR1: (SELF\named_unit.dimensions.length_exponent = 0.0) AND (SELF\named_unit.dimensions.mass_exponent = 0.0) AND (SELF\named_unit.dimensions.time_exponent = 0.0) AND (SELF\named_unit.dimensions.electric_current_exponent = 0.0) AND (SELF\named_unit.dimensions.thermodynamic_temperature_exponent = 0.0) AND (SELF\named_unit.dimensions.amount_of_substance_exponent = 0.0) AND (SELF\named_unit.dimensions.luminous_intensity_exponent = 0.0);
+  END_ENTITY;
+
+  ENTITY power_unit
+    SUBTYPE OF(derived_unit);
+  WHERE
+    WR1: derive_dimensional_exponents(SELF) = dimensions_for_si_unit (si_unit_name.watt);
+  END_ENTITY;
+
+  ENTITY power_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.POWER_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY si_power_unit
+     SUBTYPE OF (power_unit,si_unit);
+  WHERE
+    WR1: SELF\si_unit.name = si_unit_name.watt;
+    WR2: NOT EXISTS(SELF\derived_unit.name);
+  END_ENTITY;
+
+  ENTITY pressure_unit
+    SUBTYPE OF(derived_unit);
+  WHERE
+    WR1: derive_dimensional_exponents(SELF) = dimensions_for_si_unit (si_unit_name.pascal);
+  END_ENTITY;
+
+  ENTITY pressure_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.PRESSURE_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY si_pressure_unit
+     SUBTYPE OF (pressure_unit,si_unit);
+  WHERE
+    WR1: SELF\si_unit.name = si_unit_name.pascal;
+    WR2: NOT EXISTS(SELF\derived_unit.name);
+  END_ENTITY;
+
+  ENTITY ratio_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.RATIO_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY ratio_unit
+    SUBTYPE OF (named_unit);
+  WHERE
+    WR1: (SELF\named_unit.dimensions.length_exponent = 0.0) AND (SELF\named_unit.dimensions.mass_exponent = 0.0) AND (SELF\named_unit.dimensions.time_exponent = 0.0) AND (SELF\named_unit.dimensions.electric_current_exponent = 0.0) AND (SELF\named_unit.dimensions.thermodynamic_temperature_exponent = 0.0) AND (SELF\named_unit.dimensions.amount_of_substance_exponent = 0.0) AND (SELF\named_unit.dimensions.luminous_intensity_exponent = 0.0);
+  END_ENTITY;
+
+  ENTITY resistance_unit
+    SUBTYPE OF(derived_unit);
+  WHERE
+    WR1: derive_dimensional_exponents(SELF) = dimensions_for_si_unit (si_unit_name.ohm);
+  END_ENTITY;
+
+  ENTITY resistance_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.RESISTANCE_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY si_resistance_unit
+     SUBTYPE OF (resistance_unit,si_unit);
+  WHERE
+    WR1: SELF\si_unit.name = si_unit_name.ohm;
+    WR2: NOT EXISTS(SELF\derived_unit.name);
+  END_ENTITY;
+
+
+  ENTITY si_unit
+    SUBTYPE OF (named_unit);
+    prefix : OPTIONAL si_prefix;
+    name : si_unit_name;
+  DERIVE
+    SELF\named_unit.dimensions : dimensional_exponents := dimensions_for_si_unit(name);
+  WHERE
+    WR1: NOT(('MEASURE_SCHEMA.MASS_UNIT' IN TYPEOF(SELF)) AND
+             (SIZEOF(USEDIN(SELF,'MEASURE_SCHEMA.DERIVED_UNIT_ELEMENT.UNIT')) > 0)) OR
+            (prefix = si_prefix.kilo);
+  END_ENTITY;
+
+  ENTITY solid_angle_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.SOLID_ANGLE_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY solid_angle_unit
+    SUBTYPE OF (named_unit);
+  WHERE
+    WR1: (SELF\named_unit.dimensions.length_exponent = 0.0) AND (SELF\named_unit.dimensions.mass_exponent = 0.0) AND (SELF\named_unit.dimensions.time_exponent = 0.0) AND (SELF\named_unit.dimensions.electric_current_exponent = 0.0) AND (SELF\named_unit.dimensions.thermodynamic_temperature_exponent = 0.0) AND (SELF\named_unit.dimensions.amount_of_substance_exponent = 0.0) AND (SELF\named_unit.dimensions.luminous_intensity_exponent = 0.0);
+  END_ENTITY;
+
+  ENTITY thermodynamic_temperature_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.THERMODYNAMIC_TEMPERATURE_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY thermodynamic_temperature_unit
+    SUBTYPE OF (named_unit);
+  WHERE
+    WR1: (SELF\named_unit.dimensions.length_exponent = 0.0) AND (SELF\named_unit.dimensions.mass_exponent = 0.0) AND (SELF\named_unit.dimensions.time_exponent = 0.0) AND (SELF\named_unit.dimensions.electric_current_exponent = 0.0) AND (SELF\named_unit.dimensions.thermodynamic_temperature_exponent = 1.0) AND (SELF\named_unit.dimensions.amount_of_substance_exponent = 0.0) AND (SELF\named_unit.dimensions.luminous_intensity_exponent = 0.0);
+  END_ENTITY;
+
+  ENTITY time_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.TIME_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY time_unit
+    SUBTYPE OF (named_unit);
+  WHERE
+    WR1: (SELF\named_unit.dimensions.length_exponent = 0.0) AND (SELF\named_unit.dimensions.mass_exponent = 0.0) AND (SELF\named_unit.dimensions.time_exponent = 1.0) AND (SELF\named_unit.dimensions.electric_current_exponent = 0.0) AND (SELF\named_unit.dimensions.thermodynamic_temperature_exponent = 0.0) AND (SELF\named_unit.dimensions.amount_of_substance_exponent = 0.0) AND (SELF\named_unit.dimensions.luminous_intensity_exponent = 0.0);
+  END_ENTITY;
+
+  ENTITY velocity_measure_with_unit
+   SUBTYPE OF (measure_with_unit);
+  WHERE
+   WR1: 'MEASURE_SCHEMA.VELOCITY_UNIT' IN TYPEOF (SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY velocity_unit
+  SUBTYPE OF (derived_unit);
+  WHERE
+  WR1: derive_dimensional_exponents(SELF) =
+       dimensional_exponents ( 1.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0 );
+  END_ENTITY;
+
+  ENTITY volume_measure_with_unit
+    SUBTYPE OF (measure_with_unit);
+  WHERE
+    WR1: 'MEASURE_SCHEMA.VOLUME_UNIT' IN TYPEOF(SELF\measure_with_unit.unit_component);
+  END_ENTITY;
+
+  ENTITY volume_unit
+    SUBTYPE OF (derived_unit);
+   WHERE
+     WR1: derive_dimensional_exponents(SELF) =
+          dimensional_exponents ( 3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 );
+  END_ENTITY;
+
+  FUNCTION derive_dimensional_exponents (x : unit):dimensional_exponents;
+    LOCAL
+      result : dimensional_exponents := dimensional_exponents(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+    END_LOCAL;
+
+    IF 'MEASURE_SCHEMA.DERIVED_UNIT' IN TYPEOF(x) THEN
+      REPEAT i := LOINDEX(x\derived_unit.elements) TO HIINDEX(x\derived_unit.elements);
+        result.length_exponent := result.length_exponent +
+        (x\derived_unit.elements[i]\derived_unit_element.exponent *
+         x\derived_unit.elements[i]\derived_unit_element.unit\named_unit.dimensions.length_exponent);
+        result.mass_exponent := result.mass_exponent +
+        (x\derived_unit.elements[i]\derived_unit_element.exponent *
+         x\derived_unit.elements[i]\derived_unit_element.unit\named_unit.dimensions.mass_exponent);
+        result.time_exponent := result.time_exponent +
+        (x\derived_unit.elements[i]\derived_unit_element.exponent *
+         x\derived_unit.elements[i]\derived_unit_element.unit\named_unit.dimensions.time_exponent);
+        result.electric_current_exponent := result.electric_current_exponent +
+        (x\derived_unit.elements[i]\derived_unit_element.exponent *
+         x\derived_unit.elements[i]\derived_unit_element.unit\named_unit.dimensions.electric_current_exponent);
+        result.thermodynamic_temperature_exponent := result.thermodynamic_temperature_exponent +
+        (x\derived_unit.elements[i]\derived_unit_element.exponent *
+         x\derived_unit.elements[i]\derived_unit_element.unit\named_unit.dimensions.thermodynamic_temperature_exponent);
+        result.amount_of_substance_exponent := result.amount_of_substance_exponent +
+        (x\derived_unit.elements[i]\derived_unit_element.exponent *
+         x\derived_unit.elements[i]\derived_unit_element.unit\named_unit.dimensions.amount_of_substance_exponent);
+        result.luminous_intensity_exponent := result.luminous_intensity_exponent +
+        (x\derived_unit.elements[i]\derived_unit_element.exponent *
+         x\derived_unit.elements[i]\derived_unit_element.unit\named_unit.dimensions.luminous_intensity_exponent);
+      END_REPEAT;
+    ELSE
+      result := x\named_unit.dimensions;
+    END_IF;
+    RETURN (result);
+  END_FUNCTION;
+
+  FUNCTION dimensions_for_si_unit (n : si_unit_name):dimensional_exponents;
+    CASE n OF
+      metre:
+        RETURN (dimensional_exponents(1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
+      gram:
+        RETURN (dimensional_exponents(0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0));
+      second:
+        RETURN (dimensional_exponents(0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0));
+      ampere:
+        RETURN (dimensional_exponents(0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0));
+      kelvin:
+        RETURN (dimensional_exponents(0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0));
+      mole:
+        RETURN (dimensional_exponents(0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0));
+      candela:
+        RETURN (dimensional_exponents(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0));
+      radian:
+        RETURN (dimensional_exponents(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
+      steradian:
+        RETURN (dimensional_exponents(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
+      hertz:
+        RETURN (dimensional_exponents(0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0));
+      newton:
+        RETURN (dimensional_exponents(1.0, 1.0, -2.0, 0.0, 0.0, 0.0, 0.0));
+      pascal:
+        RETURN (dimensional_exponents(-1.0, 1.0, -2.0, 0.0, 0.0, 0.0, 0.0));
+      joule:
+        RETURN (dimensional_exponents(2.0, 1.0, -2.0, 0.0, 0.0, 0.0, 0.0));
+      watt:
+        RETURN (dimensional_exponents(2.0, 1.0, -3.0, 0.0, 0.0, 0.0, 0.0));
+      coulomb:
+        RETURN (dimensional_exponents(0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0));
+      volt:
+        RETURN (dimensional_exponents(2.0, 1.0, -3.0, -1.0, 0.0, 0.0, 0.0));
+      farad:
+        RETURN (dimensional_exponents(-2.0, -1.0, 4.0, 2.0, 0.0, 0.0, 0.0));
+      ohm:
+        RETURN (dimensional_exponents(2.0, 1.0, -3.0, -2.0, 0.0, 0.0, 0.0));
+      siemens:
+        RETURN (dimensional_exponents(-2.0, -1.0, 3.0, 2.0, 0.0, 0.0, 0.0));
+      weber:
+        RETURN (dimensional_exponents(2.0, 1.0, -2.0, -1.0, 0.0, 0.0, 0.0));
+      tesla:
+        RETURN (dimensional_exponents(0.0, 1.0, -2.0, -1.0, 0.0, 0.0, 0.0));
+      henry:
+        RETURN (dimensional_exponents(2.0, 1.0, -2.0, -2.0, 0.0, 0.0, 0.0));
+      degree_Celsius:
+        RETURN (dimensional_exponents(0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0));
+      lumen:
+        RETURN (dimensional_exponents(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0));
+      lux:
+        RETURN (dimensional_exponents(-2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0));
+      becquerel:
+        RETURN (dimensional_exponents(0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0));
+      gray:
+        RETURN (dimensional_exponents(2.0, 0.0, -2.0, 0.0, 0.0, 0.0, 0.0));
+      sievert:
+        RETURN (dimensional_exponents(2.0, 0.0, -2.0, 0.0, 0.0, 0.0, 0.0));
+      OTHERWISE:
+        RETURN (?);
+    END_CASE;
+  END_FUNCTION;
+
+  FUNCTION valid_units (m : measure_with_unit):BOOLEAN;
+    IF 'MEASURE_SCHEMA.LENGTH_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+      dimensional_exponents(1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.MASS_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+      dimensional_exponents(0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.TIME_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+      dimensional_exponents(0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.ELECTRIC_CURRENT_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+      dimensional_exponents(0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.THERMODYNAMIC_TEMPERATURE_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+      dimensional_exponents(0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.CELSIUS_TEMPERATURE_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+      dimensional_exponents(0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.AMOUNT_OF_SUBSTANCE_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+      dimensional_exponents(0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.LUMINOUS_INTENSITY_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+      dimensional_exponents(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.PLANE_ANGLE_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+      dimensional_exponents(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.SOLID_ANGLE_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+      dimensional_exponents(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.AREA_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+      dimensional_exponents(2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.VOLUME_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+      dimensional_exponents(3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.RATIO_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+      dimensional_exponents(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.POSITIVE_LENGTH_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+      dimensional_exponents(1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.POSITIVE_PLANE_ANGLE_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+      dimensional_exponents(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.ACCELERATION_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+        dimensional_exponents( 1.0, 0.0, -2.0, 0.0, 0.0, 0.0, 0.0 ) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+     IF 'MEASURE_SCHEMA.CAPACITANCE_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+        dimensional_exponents( -2.0, -1.0, 4.0, 2.0, 0.0, 0.0, 0.0 ) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.ELECTRIC_CHARGE_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+        dimensional_exponents( 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0 ) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+        IF 'MEASURE_SCHEMA.CONDUCTANCE_MEASURE' IN TYPEOF(m.value_component) THEN
+          IF derive_dimensional_exponents(m.unit_component) <>
+            dimensional_exponents( -2.0, -1.0, 3.0, 2.0, 0.0, 0.0, 0.0 ) THEN
+            RETURN (FALSE);
+          END_IF;
+    END_IF;
+        IF 'MEASURE_SCHEMA.ELECTRIC_POTENTIAL_MEASURE' IN TYPEOF(m.value_component) THEN
+          IF derive_dimensional_exponents(m.unit_component) <>
+            dimensional_exponents( 2.0, 1.0, -3.0, -1.0, 0.0, 0.0, 0.0 ) THEN
+            RETURN (FALSE);
+          END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.ENERGY_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+        dimensional_exponents( 2.0, 1.0, -2.0, 0.0, 0.0, 0.0, 0.0 ) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.FORCE_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+        dimensional_exponents( 1.0, 1.0, -2.0, 0.0, 0.0, 0.0, 0.0 ) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.FREQUENCY_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+        dimensional_exponents( 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0 ) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.ILLUMINANCE_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+        dimensional_exponents( -2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0 ) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+     IF 'MEASURE_SCHEMA.INDUCTANCE_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+        dimensional_exponents( 2.0, 1.0, -2.0, -2.0, 0.0, 0.0, 0.0 ) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.LUMINOUS_FLUX_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+        dimensional_exponents( 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0 ) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.MAGNETIC_FLUX_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+        dimensional_exponents( 2.0, 1.0, -2.0, -1.0, 0.0, 0.0, 0.0 ) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+     IF 'MEASURE_SCHEMA.MAGNETIC_FLUX_DENSITY_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+        dimensional_exponents( 0.0, 1.0, -2.0, -1.0, 0.0, 0.0, 0.0 ) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.POWER_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+        dimensional_exponents( 2.0, 1.0, -3.0, 0.0, 0.0, 0.0, 0.0 ) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.PRESSURE_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+        dimensional_exponents( -1.0, 1.0, -2.0, 0.0, 0.0, 0.0, 0.0 ) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.RESISTANCE_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+        dimensional_exponents( 2.0, 1.0, -3.0, -2.0, 0.0, 0.0, 0.0 ) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.VELOCITY_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+        dimensional_exponents( 1.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0 ) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.RADIOACTIVITY_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+        dimensional_exponents(0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.ABSORBED_DOSE_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+        dimensional_exponents(2.0, 0.0, -2.0, 0.0, 0.0, 0.0, 0.0) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    IF 'MEASURE_SCHEMA.DOSE_EQUIVALENT_MEASURE' IN TYPEOF(m.value_component) THEN
+      IF derive_dimensional_exponents(m.unit_component) <>
+        dimensional_exponents(2.0, 0.0, -2.0, 0.0, 0.0, 0.0, 0.0) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_IF;
+    RETURN (TRUE);
+  END_FUNCTION;
+END_SCHEMA;
+
+(*"measure_schema.__published_in"
+ISO 10303-41:2025 ED8
+*)
+
+(*"measure_schema.__identifier"
+ISO/TC 184/SC 4/WG 12 N9715
+*)
+
+(*"measure_schema.__supersedes"
+ISO/TC 184/SC 4/WG 12 N8369
+*)
+
+(*"measure_schema.__status"
+IS
+*)
+
+(*"measure_schema.__title"
+fundamentals_of_product_description_and_support
+*)
+
+
+(*"measure_schema"
+The subject of the *measure_schema* is the description of physical quantities.
+
+[example]
+====
+Density, length, force, and time are different kinds of physical quantities.
+====
+
+The resource constructs defined in this schema are based upon material in ISO 31 and ISO 1000.
+
+*)
+(*"measure_schema.__fund_cons"
+
+The following requirements are supported by this schema:
+
+* it shall be possible to specify the predefined kinds of physical quantity if the kind of a physical quantity is known at the time when the schema is being specified;
+* it shall be possible to specify non-predefined kinds of physical quantity if the kind of a physical quantity is not known at the time when the schema is being specified.
+
+[example]
+====
+The elements of a list of material properties are physical quantities. Each element may be a different kind of physical quantity. The kind of each element is only decided upon at instantiation time.
+====
+
+*)
+(*"measure_schema.__expressg"
+[[measure_schema_expg1]]
+[.svgmap]
+====
+image::measure_schemaexpg1.svg[]
+
+* <<express:representation_schema>>; 1
+* <<express:measure_schema>>; 2
+* <<express:basic_attribute_schema>>; 3
+* <<express:support_resource_schema>>; 4
+====
+
+*)
+(*"measure_schema.__expressg"
+[[measure_schema_expg2]]
+[.svgmap]
+====
+image::measure_schemaexpg2.svg[]
+
+* <<express:measure_schema.unit>>; 1
+* <<measure_schema_expg4>>; 2
+* <<measure_schema_expg3>>; 3
+* <<measure_schema_expg3>>; 4
+* <<measure_schema_expg3>>; 5
+* <<measure_schema_expg4>>; 6
+* <<measure_schema_expg3>>; 7
+* <<express:representation_schema.representation_context>>; 8
+* <<express:support_resource_schema.label>>; 9
+* <<express:measure_schema.solid_angle_unit>>; 10
+* <<express:measure_schema.amount_of_substance_unit>>; 11
+* <<express:measure_schema.plane_angle_unit>>; 12
+* <<express:measure_schema.time_unit>>; 13
+* <<express:measure_schema.context_dependent_unit>>; 14
+* <<express:measure_schema.length_unit>>; 15
+* <<express:measure_schema.luminous_intensity_unit>>; 16
+* <<express:measure_schema.conversion_based_unit>>; 17
+* <<express:measure_schema.named_unit>>; 18
+* <<express:measure_schema.luminous_flux_unit>>; 19
+* <<express:measure_schema.derived_unit_element>>; 20
+* <<express:measure_schema.global_unit_assigned_context>>; 21
+* <<express:measure_schema.thermodynamic_temperature_unit>>; 22
+* <<express:measure_schema.electric_current_unit>>; 23
+* <<express:measure_schema.dimensional_exponents>>; 24
+* <<express:measure_schema.mass_unit>>; 25
+* <<express:measure_schema.ratio_unit>>; 26
+====
+
+*)
+(*"measure_schema.__expressg"
+[[measure_schema_expg3]]
+[.svgmap]
+====
+image::measure_schemaexpg3.svg[]
+
+* <<express:measure_schema.s_name_attribute_select>>; 1
+* <<measure_schema_expg2>>; 2
+* <<measure_schema_expg2>>; 3
+* <<measure_schema_expg2>>; 4
+* <<measure_schema_expg2>>; 5
+* <<express:support_resource_schema.label>>; 6
+* <<express:basic_attribute_schema.name_attribute_select>>; 7
+* <<express:measure_schema.si_prefix>>; 8
+* <<express:measure_schema.si_unit_name>>; 9
+* <<express:measure_schema.acceleration_unit>>; 10
+* <<express:measure_schema.frequency_unit>>; 11
+* <<express:measure_schema.magnetic_flux_density_unit>>; 12
+* <<express:measure_schema.si_frequency_unit>>; 13
+* <<express:measure_schema.power_unit>>; 14
+* <<express:measure_schema.si_energy_unit>>; 15
+* <<express:measure_schema.si_electric_charge_unit>>; 16
+* <<express:measure_schema.electric_charge_unit>>; 17
+* <<express:measure_schema.si_magnetic_flux_density_unit>>; 18
+* <<express:measure_schema.conductance_unit>>; 19
+* <<express:measure_schema.illuminance_unit>>; 20
+* <<express:measure_schema.si_magnetic_flux_unit>>; 21
+* <<express:measure_schema.derived_unit>>; 22
+* <<express:measure_schema.velocity_unit>>; 23
+* <<express:measure_schema.si_power_unit>>; 24
+* <<express:measure_schema.radioactivity_unit>>; 25
+* <<express:measure_schema.si_illuminance_unit>>; 26
+* <<express:measure_schema.si_inductance_unit>>; 27
+* <<express:measure_schema.resistance_unit>>; 28
+* <<express:measure_schema.volume_unit>>; 29
+* <<express:measure_schema.absorbed_dose_unit>>; 30
+* <<express:measure_schema.force_unit>>; 31
+* <<express:measure_schema.pressure_unit>>; 32
+* <<express:measure_schema.si_unit>>; 33
+* <<express:measure_schema.energy_unit>>; 34
+* <<express:measure_schema.dose_equivalent_unit>>; 35
+* <<express:measure_schema.si_dose_equivalent_unit>>; 36
+* <<express:measure_schema.si_resistance_unit>>; 37
+* <<express:measure_schema.si_force_unit>>; 38
+* <<express:measure_schema.si_electric_potential_unit>>; 39
+* <<express:measure_schema.si_radioactivity_unit>>; 40
+* <<express:measure_schema.magnetic_flux_unit>>; 41
+* <<express:measure_schema.si_pressure_unit>>; 42
+* <<express:measure_schema.si_conductance_unit>>; 43
+* <<express:measure_schema.si_absorbed_dose_unit>>; 44
+* <<express:measure_schema.capacitance_unit>>; 45
+* <<express:measure_schema.si_capacitance_unit>>; 46
+* <<express:measure_schema.inductance_unit>>; 47
+* <<express:measure_schema.electric_potential_unit>>; 48
+* <<express:measure_schema.area_unit>>; 49
+====
+
+*)
+(*"measure_schema.__expressg"
+[[measure_schema_expg4]]
+[.svgmap]
+====
+image::measure_schemaexpg4.svg[]
+
+* <<measure_schema_expg2>>; 1
+* <<measure_schema_expg5>>; 2
+* <<measure_schema_expg2>>; 3
+* <<express:measure_schema.time_measure_with_unit>>; 4
+* <<express:measure_schema.solid_angle_measure_with_unit>>; 5
+* <<express:measure_schema.electric_charge_measure_with_unit>>; 6
+* <<express:measure_schema.pressure_measure_with_unit>>; 7
+* <<express:measure_schema.magnetic_flux_measure_with_unit>>; 8
+* <<express:measure_schema.velocity_measure_with_unit>>; 9
+* <<express:measure_schema.thermodynamic_temperature_measure_with_unit>>; 10
+* <<express:measure_schema.force_measure_with_unit>>; 11
+* <<express:measure_schema.positive_length_measure_with_unit>>; 12
+* <<express:measure_schema.dose_equivalent_measure_with_unit>>; 13
+* <<express:measure_schema.illuminance_measure_with_unit>>; 14
+* <<express:measure_schema.volume_measure_with_unit>>; 15
+* <<express:measure_schema.power_measure_with_unit>>; 16
+* <<express:measure_schema.electric_current_measure_with_unit>>; 17
+* <<express:measure_schema.conductance_measure_with_unit>>; 18
+* <<express:measure_schema.area_measure_with_unit>>; 19
+* <<express:measure_schema.absorbed_dose_measure_with_unit>>; 20
+* <<express:measure_schema.plane_angle_measure_with_unit>>; 21
+* <<express:measure_schema.measure_with_unit>>; 22
+* <<express:measure_schema.mass_measure_with_unit>>; 23
+* <<express:measure_schema.amount_of_substance_measure_with_unit>>; 24
+* <<express:measure_schema.magnetic_flux_density_measure_with_unit>>; 25
+* <<express:measure_schema.luminous_intensity_measure_with_unit>>; 26
+* <<express:measure_schema.length_measure_with_unit>>; 27
+* <<express:measure_schema.celsius_temperature_measure_with_unit>>; 28
+* <<express:measure_schema.radioactivity_measure_with_unit>>; 29
+* <<express:measure_schema.capacitance_measure_with_unit>>; 30
+* <<express:measure_schema.acceleration_measure_with_unit>>; 31
+* <<express:measure_schema.resistance_measure_with_unit>>; 32
+* <<express:measure_schema.energy_measure_with_unit>>; 33
+* <<express:measure_schema.electric_potential_measure_with_unit>>; 34
+* <<express:measure_schema.frequency_measure_with_unit>>; 35
+* <<express:measure_schema.ratio_measure_with_unit>>; 36
+* <<express:measure_schema.positive_plane_angle_measure_with_unit>>; 37
+* <<express:measure_schema.inductance_measure_with_unit>>; 38
+* <<express:measure_schema.luminous_flux_measure_with_unit>>; 39
+====
+
+*)
+(*"measure_schema.__expressg"
+[[measure_schema_expg5]]
+[.svgmap]
+====
+image::measure_schemaexpg5.svg[]
+
+* <<express:measure_schema.measure_value>>; 1
+* <<measure_schema_expg4>>; 2
+* <<express:measure_schema.count_measure>>; 3
+* <<express:measure_schema.electric_potential_measure>>; 4
+* <<express:measure_schema.electric_current_measure>>; 5
+* <<express:measure_schema.numeric_measure>>; 6
+* <<express:measure_schema.capacitance_measure>>; 7
+* <<express:measure_schema.descriptive_measure>>; 8
+* <<express:measure_schema.power_measure>>; 9
+* <<express:measure_schema.magnetic_flux_measure>>; 10
+* <<express:measure_schema.thermodynamic_temperature_measure>>; 11
+* <<express:measure_schema.inductance_measure>>; 12
+* <<express:measure_schema.solid_angle_measure>>; 13
+* <<express:measure_schema.positive_length_measure>>; 14
+* <<express:measure_schema.luminous_flux_measure>>; 15
+* <<express:measure_schema.energy_measure>>; 16
+* <<express:measure_schema.volume_measure>>; 17
+* <<express:measure_schema.force_measure>>; 18
+* <<express:measure_schema.mass_measure>>; 19
+* <<express:measure_schema.non_negative_length_measure>>; 20
+* <<express:measure_schema.conductance_measure>>; 21
+* <<express:measure_schema.dose_equivalent_measure>>; 22
+* <<express:measure_schema.frequency_measure>>; 23
+* <<express:measure_schema.ratio_measure>>; 24
+* <<express:measure_schema.luminous_intensity_measure>>; 25
+* <<express:measure_schema.time_measure>>; 26
+* <<express:measure_schema.pressure_measure>>; 27
+* <<express:measure_schema.area_measure>>; 28
+* <<express:measure_schema.radioactivity_measure>>; 29
+* <<express:measure_schema.acceleration_measure>>; 30
+* <<express:measure_schema.amount_of_substance_measure>>; 31
+* <<express:measure_schema.electric_charge_measure>>; 32
+* <<express:measure_schema.parameter_value>>; 33
+* <<express:measure_schema.celsius_temperature_measure>>; 34
+* <<express:measure_schema.illuminance_measure>>; 35
+* <<express:measure_schema.velocity_measure>>; 36
+* <<express:measure_schema.positive_ratio_measure>>; 37
+* <<express:measure_schema.context_dependent_measure>>; 38
+* <<express:measure_schema.magnetic_flux_density_measure>>; 39
+* <<express:measure_schema.length_measure>>; 40
+* <<express:measure_schema.positive_plane_angle_measure>>; 41
+* <<express:measure_schema.absorbed_dose_measure>>; 42
+* <<express:measure_schema.resistance_measure>>; 43
+* <<express:measure_schema.plane_angle_measure>>; 44
+====
+*)
+
+(*"measure_schema.absorbed_dose_measure"
+An **absorbed_dose_measure** is the value of an absorbed dose of radiation.
+*)
+
+
+(*"measure_schema.acceleration_measure"
+An **acceleration_measure** is the value of the rate of change of velocity.
+*)
+
+
+(*"measure_schema.amount_of_substance_measure"
+An **amount_of_substance_measure** is the value for the quantity of a substance when compared with the number of atoms in 0.012 kilogram of carbon 12.
+*)
+
+
+(*"measure_schema.area_measure"
+An **area_measure** is the value of the extent of a surface.
+*)
+
+
+(*"measure_schema.capacitance_measure"
+A **capacitance_measure** is the value of capacitance.
+*)
+
+
+(*"measure_schema.celsius_temperature_measure"
+A **celsius_temperature_measure** is the value for the degree of heat of a body.
+*)
+
+
+(*"measure_schema.conductance_measure"
+A **conductance_measure** is the value of an electrical conductance.
+*)
+
+
+(*"measure_schema.context_dependent_measure"
+A **context_dependent_measure** is the value of a physical quantity that may be interpreted based on the context in which it is used.
+*)
+
+
+(*"measure_schema.count_measure"
+A **count_measure** is the value of a count.
+*)
+
+
+(*"measure_schema.descriptive_measure"
+A **descriptive_measure** is a textual value of a physical quantity.
+*)
+
+
+(*"measure_schema.dose_equivalent_measure"
+A **dose_equivalent_measure** is the value of the radiation dose equivalent.
+*)
+
+
+(*"measure_schema.electric_charge_measure"
+An **electric_charge_measure** is the value of an electrical charge.
+*)
+
+
+(*"measure_schema.electric_current_measure"
+An **electric_current_measure** is the value for the movement of electrically charged particles.
+*)
+
+
+(*"measure_schema.electric_potential_measure"
+An **electric_potential_measure** is the value of an electrical potential.
+*)
+
+
+(*"measure_schema.energy_measure"
+An **energy_measure** is the value of energy, or work done, in a system.
+*)
+
+
+(*"measure_schema.force_measure"
+A **force_measure** is the value of a force.
+*)
+
+
+(*"measure_schema.frequency_measure"
+A **frequency_measure** is the value of a frequency.
+*)
+
+
+(*"measure_schema.illuminance_measure"
+An **illuminance_measure** is the value of illuminance.
+*)
+
+
+(*"measure_schema.inductance_measure"
+An **inductance_measure** is the value of inductance.
+*)
+
+
+(*"measure_schema.length_measure"
+A **length_measure** is the value of a distance.
+*)
+
+
+(*"measure_schema.luminous_flux_measure"
+A **luminous_flux_measure** is the value of luminous flux.
+*)
+
+
+(*"measure_schema.luminous_intensity_measure"
+A **luminous_intensity_measure** is the value for the brightness of a body.
+*)
+
+
+(*"measure_schema.magnetic_flux_density_measure"
+A **magnetic_flux_density_measure** is the value of magnetic flux density.
+*)
+
+
+(*"measure_schema.magnetic_flux_measure"
+A **magnetic_flux_measure** is the value of magnetic flux.
+*)
+
+
+(*"measure_schema.mass_measure"
+A **mass_measure** is the value of the amount of matter that a body contains.
+*)
+
+
+(*"measure_schema.measure_value"
+A **measure_value** is a value as defined in ISO 31-0.
+*)
+
+
+(*"measure_schema.non_negative_length_measure"
+A **non_negative_length_measure** type is a <<express:measure_schema.length_measure,length_measure>> whose value is greater than or equal to zero.
+*)
+
+
+(*"measure_schema.non_negative_length_measure.wr:WR1"
+A **non_negative_length_measure** shall be positive or zero.
+*)
+
+
+(*"measure_schema.numeric_measure"
+A **numeric_measure** is the numeric value of a physical quantity.
+*)
+
+
+(*"measure_schema.numeric_measure.__note"
+In order to define measure quantities that are not included as specific types in this standard a *numeric_measure* may be used as the <<express:measure_schema.measure_with_unit.value_component,value_component>> of a <<express:measure_schema.measure_with_unit,measure_with_unit>>, the corresponding <<express:measure_schema.measure_with_unit.unit_component,unit_component>> being an <<express:measure_schema.si_unit,si_unit>> or a <<express:measure_schema.derived_unit,derived_unit>>.
+*)
+
+(*"measure_schema.parameter_value"
+A **parameter_value** is the value that specifies the amount of a parameter in a parameter space.
+*)
+
+
+(*"measure_schema.plane_angle_measure"
+A **plane_angle_measure** is the value of an angle in a plane.
+*)
+
+
+(*"measure_schema.positive_length_measure"
+A **positive_length_measure** is a <<express:measure_schema.length_measure,length_measure>> that is greater than zero.
+*)
+
+
+(*"measure_schema.positive_length_measure.wr:WR1"
+The value shall be positive.
+*)
+
+
+(*"measure_schema.positive_plane_angle_measure"
+A **positive_plane_angle_measure** is a <<express:measure_schema.plane_angle_measure,plane_angle_measure>> that is greater than zero.
+*)
+
+
+(*"measure_schema.positive_plane_angle_measure.wr:WR1"
+The value shall be positive.
+*)
+
+
+(*"measure_schema.positive_ratio_measure"
+A **positive_ratio_measure** is a <<express:measure_schema.ratio_measure,ratio_measure>> that is greater than zero.
+*)
+
+
+(*"measure_schema.positive_ratio_measure.wr:WR1"
+The value shall be positive.
+*)
+
+
+(*"measure_schema.power_measure"
+A **power_measure** is the value of power, or the rate of doing work.
+*)
+
+
+(*"measure_schema.pressure_measure"
+A **pressure_measure** is the value of force per unit area.
+*)
+
+
+(*"measure_schema.radioactivity_measure"
+A **radioactivity_measure** is the value of the radioactive disintegration.
+*)
+
+
+(*"measure_schema.ratio_measure"
+A **ratio_measure** is the value of the relation between two physical quantities that are of the same kind.
+*)
+
+
+(*"measure_schema.resistance_measure"
+A **resistance_measure** is the value of electrical resistance.
+*)
+
+
+(*"measure_schema.si_prefix"
+An **si_prefix** is the name of a prefix that may be associated with an <<express:measure_schema.si_unit,si_unit>>. The definitions of SI prefixes are specified in ISO 1000.
+*)
+
+
+(*"measure_schema.si_prefix.exa"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_prefix.peta"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_prefix.tera"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_prefix.giga"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_prefix.mega"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_prefix.kilo"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_prefix.hecto"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_prefix.deca"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_prefix.deci"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_prefix.centi"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_prefix.milli"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_prefix.micro"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_prefix.nano"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_prefix.pico"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_prefix.femto"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_prefix.atto"
+see ISO 1000.
+*)
+
+
+(*"measure_schema.si_unit_name"
+An **si_unit_name** is the name of an SI unit.
+*)
+
+
+(*"measure_schema.si_unit_name.__note"
+The definitions of the names of SI units are specified in ISO 1000.
+*)
+
+(*"measure_schema.si_unit_name.metre"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.gram"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.gram.__note"
+ISO 1000 gives "kilogram" as the SI unit name. This document uses "gram" as the SI unit name.
+*)
+
+(*"measure_schema.si_unit_name.second"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.ampere"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.kelvin"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.mole"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.candela"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.radian"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.steradian"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.hertz"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.newton"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.pascal"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.joule"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.watt"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.coulomb"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.volt"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.farad"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.ohm"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.siemens"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.weber"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.tesla"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.henry"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.degree_Celsius"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.lumen"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.lux"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.becquerel"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.gray"
+see ISO 1000;
+*)
+
+
+(*"measure_schema.si_unit_name.sievert"
+see ISO 1000.
+*)
+
+
+(*"measure_schema.solid_angle_measure"
+A **solid_angle_measure** is the value of a solid angle.
+*)
+
+
+(*"measure_schema.thermodynamic_temperature_measure"
+A **thermodynamic_temperature_measure** is the value for the degree of heat of a body.
+*)
+
+
+(*"measure_schema.time_measure"
+A **time_measure** is the value of the duration of a period.
+*)
+
+
+(*"measure_schema.unit"
+A **unit** is a physical quantity, with a value of one.
+*)
+
+
+(*"measure_schema.unit.__note"
+A *unit* is used to express other physical quantities of the same kind.
+*)
+
+(*"measure_schema.velocity_measure"
+A **velocity_measure** is the value of the rate of change of position.
+*)
+
+
+(*"measure_schema.volume_measure"
+A **volume_measure** is the value of the solid content of a body.
+*)
+
+
+(*"measure_schema.absorbed_dose_measure_with_unit"
+An **absorbed_dose_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the physical quantity is an absorbed dose of radiation as defined in ISO 31.
+*)
+
+
+(*"measure_schema.absorbed_dose_measure_with_unit.wr:WR1"
+The <<express:measure_schema.measure_with_unit.unit_component,unit_component>> be of type <<express:measure_schema.absorbed_dose_unit,absorbed_dose_unit>>.
+*)
+
+
+(*"measure_schema.absorbed_dose_unit"
+An **absorbed_dose_unit** is a type of <<express:measure_schema.derived_unit,derived_unit>> in which the absorbed dose is expressed.
+*)
+
+
+(*"measure_schema.absorbed_dose_unit.wr:WR1"
+The dimensional exponents shall be equal to those of the Gray as defined in ISO 31.
+*)
+
+
+(*"measure_schema.acceleration_measure_with_unit"
+An **acceleration_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the physical quantity is an acceleration.
+*)
+
+
+(*"measure_schema.acceleration_measure_with_unit.wr:WR1"
+The <<express:measure_schema.measure_with_unit.unit_component,unit_component>> be of type <<express:measure_schema.acceleration_unit,acceleration_unit>>.
+*)
+
+
+(*"measure_schema.acceleration_unit"
+An **acceleration_unit** is a type of <<express:measure_schema.derived_unit,derived_unit>> in which the acceleration of an object is expressed.
+*)
+
+
+(*"measure_schema.acceleration_unit.wr:WR1"
+The dimensional exponent of length shall be equal to one, the dimensional exponent of time shall be equal to minus two, and all the other dimensional exponents shall be equal to zero.
+*)
+
+
+(*"measure_schema.amount_of_substance_measure_with_unit"
+An **amount_of_substance_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>>.
+// in which the physical quantity is an
+
+// <express_ref linkend="measure_schema:ir_express:measure_schema.amount_of_substance"/>
+
+// as defined in ISO 31.
+This entity data type shall only be used to characterize a number of particles.
+*)
+
+
+(*"measure_schema.amount_of_substance_measure_with_unit.wr:WR1"
+The unit shall be an <<express:measure_schema.amount_of_substance_unit,amount_of_substance_unit>>.
+*)
+
+
+(*"measure_schema.amount_of_substance_unit"
+An **amount_of_substance_unit** is a type of <<express:measure_schema.named_unit,named_unit>> in which the number of elementary entities of a substance as compared to the number of atoms in 0.012 kilograms of carbon-12 is expressed.
+*)
+
+
+(*"measure_schema.amount_of_substance_unit.__note"
+This definition applies to the SI quantity 'mole'. When the mole is used, the elementary entities, whose quantity is expressed, must be specified. They may be atoms, molecules, ions, electrons or other particles or specified groups of such particles (see ISO 31-8).
+*)
+
+(*"measure_schema.amount_of_substance_unit.__note"
+This unit corresponds to one of the seven fundamental quantities as specified in ISO 1000.
+*)
+
+(*"measure_schema.amount_of_substance_unit.wr:WR1"
+The dimensional exponent of amount of substance shall be equal to one and all the other dimensional exponents shall be equal to zero.
+*)
+
+
+(*"measure_schema.area_measure_with_unit"
+An **area_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the physical quantity is an area as defined in ISO 31.
+*)
+
+
+(*"measure_schema.area_measure_with_unit.wr:WR1"
+The unit shall be an <<express:measure_schema.area_unit,area_unit>>.
+*)
+
+
+(*"measure_schema.area_unit"
+An **area_unit** is a type of <<express:measure_schema.derived_unit,derived_unit>> used to measure the extent of a surface.
+*)
+
+
+(*"measure_schema.area_unit.wr:WR1"
+The dimensional exponent of length shall be equal to two and all the other dimensional exponents shall be equal to zero.
+*)
+
+
+(*"measure_schema.capacitance_measure_with_unit"
+A **capacitance_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the physical quantity is an electric capacitance as defined in ISO 31.
+*)
+
+
+(*"measure_schema.capacitance_measure_with_unit.wr:WR1"
+The <<express:measure_schema.measure_with_unit.unit_component,unit_component>> be of type <<express:measure_schema.capacitance_unit,capacitance_unit>>.
+*)
+
+
+(*"measure_schema.capacitance_unit"
+A **capacitance_unit** is a type of <<express:measure_schema.derived_unit,derived_unit>> in which the capacitance is expressed.
+*)
+
+
+(*"measure_schema.capacitance_unit.wr:WR1"
+The dimensional exponents shall be equal to those of the farad as defined in ISO 31.
+*)
+
+
+(*"measure_schema.celsius_temperature_measure_with_unit"
+A **celsius_temperature_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the physical quantity is a Celsius temperature as defined in ISO 31-4.
+*)
+
+
+(*"measure_schema.celsius_temperature_measure_with_unit.wr:WR1"
+The unit shall be a <<express:measure_schema.thermodynamic_temperature_unit,thermodynamic_temperature_unit>>.
+*)
+
+
+(*"measure_schema.conductance_measure_with_unit"
+A **conductance_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the physical quantity is a conductance as defined in ISO 31.
+*)
+
+
+(*"measure_schema.conductance_measure_with_unit.wr:WR1"
+The <<express:measure_schema.measure_with_unit.unit_component,unit_component>> shall be of type <<express:measure_schema.conductance_unit,conductance_unit>>.
+*)
+
+
+(*"measure_schema.conductance_unit"
+A **conductance_unit** is a type of <<express:measure_schema.derived_unit,derived_unit>> in which the electrical conductance is expressed.
+*)
+
+
+(*"measure_schema.conductance_unit.wr:WR1"
+The dimensional exponents shall be equal to those of the siemens as defined in ISO 31.
+*)
+
+
+(*"measure_schema.context_dependent_unit"
+A **context_dependent_unit** is a type of <<express:measure_schema.named_unit,named_unit>> that is not related to the system of units defined in this document.
+*)
+
+(*"measure_schema.context_dependent_unit.__example"
+The number of parts in an assembly is a physical quantity that may be measured in a unit called "parts". Such a unit cannot be related to an SI unit.
+*)
+
+(*"measure_schema.context_dependent_unit.name"
+the <<express:support_resource_schema.label,label>> by which the **context_dependent_unit** is known.
+*)
+
+
+(*"measure_schema.conversion_based_unit"
+A **conversion_based_unit** is a type of <<express:measure_schema.named_unit,named_unit>> that defines a unit on the basis of a <<express:measure_schema.measure_with_unit,measure_with_unit>>.
+*)
+
+(*"measure_schema.conversion_based_unit.__example"
+An inch is a *conversion_based_unit*. It is from the Imperial system, its name is "inch", and it can be related to the <<express:measure_schema.si_unit,si_unit>>, millimetre, through a <<express:measure_schema.measure_with_unit,measure_with_unit>> whose value is 25.4 millimetre. A foot is also a *conversion_based_unit*. It is from the Imperial system, its name is "foot", and it can be related to an <<express:measure_schema.si_unit,si_unit>>, millimetre, either directly or through the unit called "inch".
+*)
+
+(*"measure_schema.conversion_based_unit.__note"
+The <<express:measure_schema.measure_with_unit.value_component,value_component>> attribute of the <<express:measure_schema.measure_with_unit,measure_with_unit>> defines the conversion factor.
+*)
+
+(*"measure_schema.conversion_based_unit.name"
+the <<express:support_resource_schema.label,label>> by which the **conversion_based_unit** is known.
+*)
+
+
+(*"measure_schema.conversion_based_unit.conversion_factor"
+the <<express:measure_schema.measure_with_unit,measure_with_unit>> that specifies the physical quantity from which the **conversion_based_unit** is derived.
+*)
+
+
+(*"measure_schema.conversion_based_unit.wr:WR1"
+The dimensional exponents shall be equal to those from the <<express:measure_schema.conversion_based_unit.conversion_factor,conversion_factor>>.
+*)
+
+
+(*"measure_schema.derived_unit"
+A **derived_unit** is an expression of units. A **derived_unit** may be either an <<express:measure_schema.absorbed_dose_unit,absorbed_dose_unit>> or an <<express:measure_schema.acceleration_unit,acceleration_unit>>, or a <<express:measure_schema.radioactivity_unit,radioactivity_unit>>, or an <<express:measure_schema.area_unit,area_unit>>, or a <<express:measure_schema.capacitance_unit,capacitance_unit>>, or a <<express:measure_schema.dose_equivalent_unit,dose_equivalent_unit>>, or an <<express:measure_schema.electric_charge_unit,electric_charge_unit>>, or a <<express:measure_schema.conductance_unit,conductance_unit>>, or an <<express:measure_schema.electric_potential_unit,electric_potential_unit>>, or an <<express:measure_schema.energy_unit,energy_unit>>, or a <<express:measure_schema.magnetic_flux_density_unit,magnetic_flux_density_unit>> or a <<express:measure_schema.force_unit,force_unit>>, or a <<express:measure_schema.frequency_unit,frequency_unit>>, or an <<express:measure_schema.illuminance_unit,illuminance_unit>>, or an <<express:measure_schema.inductance_unit,inductance_unit>>, or a <<express:measure_schema.magnetic_flux_unit,magnetic_flux_unit>>, or a <<express:measure_schema.power_unit,power_unit>>, or a <<express:measure_schema.pressure_unit,pressure_unit>>, or a <<express:measure_schema.resistance_unit,resistance_unit>>, or a <<express:measure_schema.velocity_unit,velocity_unit>>, or a <<express:measure_schema.volume_unit,volume_unit>>.
+*)
+
+(*"measure_schema.derived_unit.__example"
+Newtons per square millimetre is a *derived_unit*.
+*)
+
+(*"measure_schema.derived_unit.elements"
+the <<express:measure_schema.derived_unit_element,derived_unit_element>>s and their exponents that define the **derived_unit**.
+*)
+
+
+(*"measure_schema.derived_unit.name"
+the label by which the **derived_unit** is known.
+*)
+
+
+(*"measure_schema.derived_unit.name.__note"
+This attribute is an upwardly compatible addition to *derived_unit* as specified in ISO 10303-41:1994.
+*)
+
+(*"measure_schema.derived_unit.wr:WR1"
+There shall be either more than one member in the elements set or the value of the exponent of the single element of the elements set shall not be equal to one.
+*)
+
+
+(*"measure_schema.derived_unit.wr:WR2"
+Each **derived_unit** shall be the <<express:basic_attribute_schema.name_attribute.named_item,named_item>> in at most one <<express:basic_attribute_schema.name_attribute,name_attribute>>.
+*)
+
+
+(*"measure_schema.derived_unit.wr:WR2.__note"
+The <<express:basic_attribute_schema.name_attribute,name_attribute>> data type is defined in <<express:basic_attribute_schema,basic_attribute_schema>> of this document.
+*)
+
+(*"measure_schema.derived_unit.wr:WR2.__note"
+A template for constraining the population of the entity data types defined in the <<express:basic_attribute_schema,basic_attribute_schema>> is described in annex E.
+*)
+
+(*"measure_schema.derived_unit_element"
+A **derived_unit_element** is the association of a <<express:measure_schema.named_unit,named_unit>> with an exponent.
+*)
+
+(*"measure_schema.derived_unit_element.__example"
+Newtons per square millimetre is a derived unit. It has two elements, Newton whose exponent has a value of 1, and millimetre whose exponent is -2.
+*)
+
+(*"measure_schema.derived_unit_element.__note"
+This entity is used in this document to represent an element of the dimensional expression of a <<express:measure_schema.derived_unit,derived_unit>>.
+*)
+
+(*"measure_schema.derived_unit_element.unit"
+the <<express:measure_schema.named_unit,named_unit>> that specifies the mathematical factor of the element.
+*)
+
+
+(*"measure_schema.derived_unit_element.exponent"
+the power that is applied to the unit attribute.
+*)
+
+
+(*"measure_schema.dimensional_exponents"
+A **dimensional_exponents** is a definition of the powers of the dimensions of the seven base quantities.
+*)
+
+(*"measure_schema.dimensional_exponents.__example"
+A length of 2 millimetres has a length exponent of 1. The remaining exponents are equal to 0.
+*)
+(*"measure_schema.dimensional_exponents.__example"
+A velocity of 2 millimetres per second has a length exponent of 1 and a time exponent of -1. The remaining exponents are 0.
+*)
+
+(*"measure_schema.dimensional_exponents.__note"
+The seven base quantities are defined in ISO 31.
+*)
+
+(*"measure_schema.dimensional_exponents.__note"
+This entity enables the dimensional expression of any physical quantity with respect to these seven base quantities.
+*)
+
+(*"measure_schema.dimensional_exponents.__note"
+Length, mass, time, electric current, thermodynamic temperature, amount of substance, and luminous intensity are the seven base quantities.
+*)
+
+(*"measure_schema.dimensional_exponents.length_exponent"
+the power of the length base quantity.
+*)
+
+
+(*"measure_schema.dimensional_exponents.mass_exponent"
+the power of the mass base quantity.
+*)
+
+
+(*"measure_schema.dimensional_exponents.time_exponent"
+the power of the time base quantity.
+*)
+
+
+(*"measure_schema.dimensional_exponents.electric_current_exponent"
+the power of the electric current base quantity.
+*)
+
+
+(*"measure_schema.dimensional_exponents.thermodynamic_temperature_exponent"
+the power of the thermodynamic temperature base quantity.
+*)
+
+
+(*"measure_schema.dimensional_exponents.amount_of_substance_exponent"
+the power of the amount of substance base quantity.
+*)
+
+
+(*"measure_schema.dimensional_exponents.luminous_intensity_exponent"
+the power of the luminous intensity base quantity.
+*)
+
+
+(*"measure_schema.dose_equivalent_measure_with_unit"
+A **dose_equivalent_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the physical quantity is a radiation dose equivalent as defined in ISO 31.
+*)
+
+
+(*"measure_schema.dose_equivalent_measure_with_unit.wr:WR1"
+The <<express:measure_schema.measure_with_unit.unit_component,unit_component>> shall be of type <<express:measure_schema.dose_equivalent_unit,dose_equivalent_unit>>.
+*)
+
+
+(*"measure_schema.dose_equivalent_unit"
+A **dose_equivalent_unit** is a type of <<express:measure_schema.derived_unit,derived_unit>> in which the radiation dose equivalent is expressed.
+*)
+
+
+(*"measure_schema.dose_equivalent_unit.wr:WR1"
+The dimensional exponents shall be equal to those of the sievert as defined in ISO 31.
+*)
+
+
+(*"measure_schema.electric_charge_measure_with_unit"
+An **electric_charge_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the physical quantity is an electric charge as defined in ISO 31.
+*)
+
+
+(*"measure_schema.electric_charge_measure_with_unit.wr:WR1"
+The <<express:measure_schema.measure_with_unit.unit_component,unit_component>> shall be of type <<express:measure_schema.electric_charge_unit,electric_charge_unit>>.
+*)
+
+
+(*"measure_schema.electric_charge_unit"
+An **electric_charge_unit** is a type of <<express:measure_schema.derived_unit,derived_unit>> in which the electric charge is expressed.
+*)
+
+
+(*"measure_schema.electric_charge_unit.wr:WR1"
+The dimensional exponents shall be equal to those of the coulomb as defined in ISO 31.
+*)
+
+
+(*"measure_schema.electric_current_measure_with_unit"
+An **electric_current_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the physical quantity is an electric current as defined in ISO 31.
+*)
+
+
+(*"measure_schema.electric_current_measure_with_unit.wr:WR1"
+The unit shall be an <<express:measure_schema.electric_current_unit,electric_current_unit>>.
+*)
+
+
+(*"measure_schema.electric_current_unit"
+An **electric_current_unit** is a type of <<express:measure_schema.named_unit,named_unit>> in which the movement of electrically charged particles is expressed.
+*)
+
+
+(*"measure_schema.electric_current_unit.__note"
+This unit corresponds to one of the seven fundamental quantities as specified in ISO 1000.
+*)
+
+(*"measure_schema.electric_current_unit.wr:WR1"
+The dimensional exponent of electric current shall be equal to one and all the other dimensional exponents shall be equal to zero.
+*)
+
+
+(*"measure_schema.electric_potential_measure_with_unit"
+An **electric_potential_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the physical quantity is an electric potential as defined in ISO 31.
+*)
+
+
+(*"measure_schema.electric_potential_measure_with_unit.wr:WR1"
+The <<express:measure_schema.measure_with_unit.unit_component,unit_component>> shall be of type <<express:measure_schema.electric_potential_unit,electric_potential_unit>>.
+*)
+
+
+(*"measure_schema.electric_potential_unit"
+An **electric_potential_unit** is a type of <<express:measure_schema.derived_unit,derived_unit>> in which the electric potential is expressed.
+*)
+
+
+(*"measure_schema.electric_potential_unit.wr:WR1"
+The dimensional exponents shall be equal to those of the volt as defined in ISO 31.
+*)
+
+
+(*"measure_schema.energy_measure_with_unit"
+An **energy_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the physical quantity is energy as defined in ISO 31.
+*)
+
+
+(*"measure_schema.energy_measure_with_unit.wr:WR1"
+The <<express:measure_schema.measure_with_unit.unit_component,unit_component>> shall be of type <<express:measure_schema.energy_unit,energy_unit>>.
+*)
+
+
+(*"measure_schema.energy_unit"
+An **energy_unit** is a type of <<express:measure_schema.derived_unit,derived_unit>> in which the energy is expressed.
+*)
+
+
+(*"measure_schema.energy_unit.wr:WR1"
+The dimensional exponents shall be equal to those of the joule as defined in ISO 31.
+*)
+
+
+(*"measure_schema.force_measure_with_unit"
+A **force_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the physical quantity is force as defined in ISO 31.
+*)
+
+
+(*"measure_schema.force_measure_with_unit.wr:WR1"
+The <<express:measure_schema.measure_with_unit.unit_component,unit_component>> shall be of type <<express:measure_schema.force_unit,force_unit>>.
+*)
+
+
+(*"measure_schema.force_unit"
+A **force_unit** is a type of <<express:measure_schema.derived_unit,derived_unit>> in which the force is expressed.
+*)
+
+
+(*"measure_schema.force_unit.wr:WR1"
+The dimensional exponents shall be equal to those of the newton as defined in ISO 31.
+*)
+
+
+(*"measure_schema.frequency_measure_with_unit"
+A **frequency_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the quantity measured is a frequency as defined in ISO 31.
+*)
+
+
+(*"measure_schema.frequency_measure_with_unit.wr:WR1"
+The <<express:measure_schema.measure_with_unit.unit_component,unit_component>> shall be of type <<express:measure_schema.frequency_unit,frequency_unit>>.
+*)
+
+
+(*"measure_schema.frequency_unit"
+A **frequency_unit** is a type of <<express:measure_schema.derived_unit,derived_unit>> in which the frequency is expressed.
+*)
+
+
+(*"measure_schema.frequency_unit.wr:WR1"
+The dimensional exponents shall be equal to those of the hertz as defined in ISO 31.
+*)
+
+
+(*"measure_schema.global_unit_assigned_context"
+A **global_unit_assigned_context** is a type of <<express:representation_schema.representation_context,representation_context>> in which the units apply to all <<express:measure_schema.measure_value,measure_value>>s of the applicable kind.
+*)
+
+
+(*"measure_schema.global_unit_assigned_context.__note"
+For an example of the use of this entity, see annex F.4.6.
+*)
+
+(*"measure_schema.global_unit_assigned_context.units"
+the units that apply in the <<express:representation_schema.representation_context,representation_context>>.
+*)
+
+
+(*"measure_schema.global_unit_assigned_context.wr:IP1"
+Each unit shall be a different kind of unit.
+*)
+
+
+(*"measure_schema.global_unit_assigned_context.wr:IP1.__note"
+For an example of the use of this entity, see annex F.4.6.
+*)
+
+(*"measure_schema.illuminance_measure_with_unit"
+An **illuminance_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the quantity measured is an illuminance as defined in ISO 31.
+*)
+
+
+(*"measure_schema.illuminance_measure_with_unit.wr:WR1"
+The <<express:measure_schema.measure_with_unit.unit_component,unit_component>> shall be of type <<express:measure_schema.illuminance_unit,illuminance_unit>>.
+*)
+
+
+(*"measure_schema.illuminance_unit"
+An **illuminance_unit** is a type of <<express:measure_schema.derived_unit,derived_unit>> in which the illuminance is expressed.
+*)
+
+
+(*"measure_schema.illuminance_unit.wr:WR1"
+The dimensional exponents shall be equal to those of the lux as defined in ISO 31.
+*)
+
+
+(*"measure_schema.inductance_measure_with_unit"
+An **inductance_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the quantity measured is an inductance as defined in ISO 31.
+*)
+
+
+(*"measure_schema.inductance_measure_with_unit.wr:WR1"
+The <<express:measure_schema.measure_with_unit.unit_component,unit_component>> shall be of type <<express:measure_schema.inductance_unit,inductance_unit>>.
+*)
+
+
+(*"measure_schema.inductance_unit"
+An **inductance_unit** is a type of <<express:measure_schema.derived_unit,derived_unit>> in which the inductance is expressed.
+*)
+
+
+(*"measure_schema.inductance_unit.wr:WR1"
+The dimensional exponents shall be equal to those of the henry as defined in ISO 31.
+*)
+
+
+(*"measure_schema.length_measure_with_unit"
+A **length_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the physical quantity is a length as defined in ISO 31.
+*)
+
+
+(*"measure_schema.length_measure_with_unit.wr:WR1"
+The unit shall be a <<express:measure_schema.length_unit,length_unit>>.
+*)
+
+
+(*"measure_schema.length_unit"
+A **length_unit** is a type of <<express:measure_schema.named_unit,named_unit>> in which distances are expressed.
+*)
+
+
+(*"measure_schema.length_unit.__note"
+This unit corresponds to one of the seven fundamental quantities as specified in ISO 1000.
+*)
+
+(*"measure_schema.length_unit.wr:WR1"
+The dimensional exponent of length shall be equal to one and all the other dimensional exponents shall be equal to zero.
+*)
+
+
+(*"measure_schema.luminous_flux_measure_with_unit"
+A **luminous_flux_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the quantity measured is a luminous flux as defined in ISO 31.
+*)
+
+
+(*"measure_schema.luminous_flux_measure_with_unit.wr:WR1"
+The <<express:measure_schema.measure_with_unit.unit_component,unit_component>> shall be of type <<express:measure_schema.luminous_flux_unit,luminous_flux_unit>>.
+*)
+
+
+(*"measure_schema.luminous_flux_unit"
+A **luminous_flux_unit** is a type of <<express:measure_schema.named_unit,named_unit>> in which the luminous flux is expressed.
+*)
+
+
+(*"measure_schema.luminous_flux_unit.wr:WR1"
+The dimensional exponents shall be equal to those of the lumen as defined in ISO 31.
+*)
+
+
+(*"measure_schema.luminous_intensity_measure_with_unit"
+A **luminous_intensity_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the physical quantity is a luminous intensity as defined in ISO 31.
+*)
+
+
+(*"measure_schema.luminous_intensity_measure_with_unit.wr:WR1"
+The unit shall be a <<express:measure_schema.luminous_intensity_unit,luminous_intensity_unit>>.
+*)
+
+
+(*"measure_schema.luminous_intensity_unit"
+A **luminous_intensity_unit** is a type of <<express:measure_schema.named_unit,named_unit>> in which the brightness of a body is expressed.
+*)
+
+
+(*"measure_schema.luminous_intensity_unit.__note"
+This unit corresponds to one of the seven fundamental quantities as specified in ISO 1000.
+*)
+
+(*"measure_schema.luminous_intensity_unit.wr:WR1"
+The dimensional exponent of luminous intensity shall be equal to one and all the other dimensional exponents shall be equal to zero.
+*)
+
+
+(*"measure_schema.magnetic_flux_density_measure_with_unit"
+A **magnetic_flux_density_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the physical quantity is magnetic flux density as defined in ISO 31.
+*)
+
+
+(*"measure_schema.magnetic_flux_density_measure_with_unit.wr:WR1"
+The <<express:measure_schema.measure_with_unit.unit_component,unit_component>> shall be of type <<express:measure_schema.magnetic_flux_density_unit,magnetic_flux_density_unit>>.
+*)
+
+
+(*"measure_schema.magnetic_flux_density_unit"
+A **magnetic_flux_density_unit** is a type of <<express:measure_schema.derived_unit,derived_unit>> in which the magnetic flux density is expressed.
+*)
+
+
+(*"measure_schema.magnetic_flux_density_unit.wr:WR1"
+The dimensional exponents shall be equal to those of the tesla as defined in ISO 31.
+*)
+
+
+(*"measure_schema.magnetic_flux_measure_with_unit"
+A **magnetic_flux_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the quantity measured is a magnetic flux as defined in ISO 31.
+*)
+
+
+(*"measure_schema.magnetic_flux_measure_with_unit.wr:WR1"
+The <<express:measure_schema.measure_with_unit.unit_component,unit_component>> shall be of type <<express:measure_schema.magnetic_flux_unit,magnetic_flux_unit>>.
+*)
+
+
+(*"measure_schema.magnetic_flux_unit"
+A **magnetic_flux_unit** is a type of <<express:measure_schema.derived_unit,derived_unit>> in which the magnetic flux is expressed.
+*)
+
+
+(*"measure_schema.magnetic_flux_unit.wr:WR1"
+The dimensional exponents shall be equal to those of the weber as defined in ISO 31.
+*)
+
+
+(*"measure_schema.mass_measure_with_unit"
+A **mass_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the physical quantity is a mass as defined in ISO 31.
+*)
+
+
+(*"measure_schema.mass_measure_with_unit.wr:WR1"
+The unit shall be a <<express:measure_schema.mass_unit,mass_unit>>.
+*)
+
+
+(*"measure_schema.mass_unit"
+A **mass_unit** is a type of <<express:measure_schema.named_unit,named_unit>> in which the amount of matter that a body contains is expressed.
+*)
+
+
+(*"measure_schema.mass_unit.__note"
+This unit corresponds to one of the seven fundamental quantities as specified in ISO 1000.
+*)
+
+(*"measure_schema.mass_unit.wr:WR1"
+The dimensional exponent of mass shall be equal to one and all the other dimensional exponents shall be equal to zero.
+*)
+
+
+(*"measure_schema.measure_with_unit"
+A **measure_with_unit** is the specification of a physical quantity as defined in ISO 31. A **measure_with_unit** may be either a <<express:measure_schema.length_measure_with_unit,length_measure_with_unit>> or a <<express:measure_schema.mass_measure_with_unit,mass_measure_with_unit>>, or a <<express:measure_schema.time_measure_with_unit,time_measure_with_unit>>, or an <<express:measure_schema.electric_current_measure_with_unit,electric_current_measure_with_unit>>, or a <<express:measure_schema.thermodynamic_temperature_measure_with_unit,thermodynamic_temperature_measure_with_unit>>, or a <<express:measure_schema.celsius_temperature_measure_with_unit,celsius_temperature_measure_with_unit>>, or an <<express:measure_schema.amount_of_substance_measure_with_unit,amount_of_substance_measure_with_unit>>, or a <<express:measure_schema.luminous_intensity_measure_with_unit,luminous_intensity_measure_with_unit>>, or a <<express:measure_schema.plane_angle_measure_with_unit,plane_angle_measure_with_unit>>, or a <<express:measure_schema.solid_angle_measure_with_unit,solid_angle_measure_with_unit>>, or an <<express:measure_schema.area_measure_with_unit,area_measure_with_unit>>, or a <<express:measure_schema.volume_measure_with_unit,volume_measure_with_unit>>, or a <<express:measure_schema.ratio_measure_with_unit,ratio_measure_with_unit>>, or an <<express:measure_schema.acceleration_measure_with_unit,acceleration_measure_with_unit>>, or a <<express:measure_schema.capacitance_measure_with_unit,capacitance_measure_with_unit>>, or an <<express:measure_schema.electric_charge_measure_with_unit,electric_charge_measure_with_unit>>, or a <<express:measure_schema.conductance_measure_with_unit,conductance_measure_with_unit>>, or an <<express:measure_schema.electric_potential_measure_with_unit,electric_potential_measure_with_unit>>, or an <<express:measure_schema.energy_measure_with_unit,energy_measure_with_unit>>, or a <<express:measure_schema.magnetic_flux_density_measure_with_unit,magnetic_flux_density_measure_with_unit>>, or a <<express:measure_schema.force_measure_with_unit,force_measure_with_unit>>, or a <<express:measure_schema.frequency_measure_with_unit,frequency_measure_with_unit>>, or an <<express:measure_schema.illuminance_measure_with_unit,illuminance_measure_with_unit>>, or an <<express:measure_schema.inductance_measure_with_unit,inductance_measure_with_unit>>, or a <<express:measure_schema.luminous_flux_measure_with_unit,luminous_flux_measure_with_unit>>, or a <<express:measure_schema.magnetic_flux_measure_with_unit,magnetic_flux_measure_with_unit>>, or a <<express:measure_schema.power_measure_with_unit,power_measure_with_unit>>, or a <<express:measure_schema.pressure_measure_with_unit,pressure_measure_with_unit>>, or a <<express:measure_schema.resistance_measure_with_unit,resistance_measure_with_unit>>, or a <<express:measure_schema.velocity_measure_with_unit,velocity_measure_with_unit>>, or an <<express:measure_schema.absorbed_dose_measure_with_unit,absorbed_dose_measure_with_unit>>, or a <<express:measure_schema.radioactivity_measure_with_unit,radioactivity_measure_with_unit>>, or a <<express:measure_schema.dose_equivalent_measure_with_unit,dose_equivalent_measure_with_unit>>.
+*)
+
+
+(*"measure_schema.measure_with_unit.value_component"
+the value of the physical quantity if expressed with respect to the **unit_component**.
+*)
+
+
+(*"measure_schema.measure_with_unit.unit_component"
+the unit in which the physical quantity is expressed.
+*)
+
+
+(*"measure_schema.measure_with_unit.wr:WR1"
+The **unit_component** shall be a valid unit for the kind of measure specified by the **value_component**.
+*)
+
+
+(*"measure_schema.named_unit"
+A **named_unit** is a unit quantity. A **named_unit** may be either a <<express:measure_schema.si_unit,si_unit>> or a <<express:measure_schema.conversion_based_unit,conversion_based_unit>>, or a <<express:measure_schema.context_dependent_unit,context_dependent_unit>>, and additionally may be a <<express:measure_schema.length_unit,length_unit>> or a <<express:measure_schema.mass_unit,mass_unit>>, or a <<express:measure_schema.time_unit,time_unit>>, or an <<express:measure_schema.electric_current_unit,electric_current_unit>>, or a <<express:measure_schema.thermodynamic_temperature_unit,thermodynamic_temperature_unit>>, or an <<express:measure_schema.amount_of_substance_unit,amount_of_substance_unit>>, or a <<express:measure_schema.luminous_flux_unit,luminous_flux_unit>>, or a <<express:measure_schema.luminous_intensity_unit,luminous_intensity_unit>>, or a <<express:measure_schema.plane_angle_unit,plane_angle_unit>>, or a <<express:measure_schema.solid_angle_unit,solid_angle_unit>>, or a <<express:measure_schema.ratio_unit,ratio_unit>>.
+*)
+
+
+(*"measure_schema.named_unit.dimensions"
+the exponents of the base properties by which the **named_unit** is defined.
+*)
+
+
+(*"measure_schema.plane_angle_measure_with_unit"
+A **plane_angle_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the physical quantity is a plane angle as defined in ISO 31.
+*)
+
+
+(*"measure_schema.plane_angle_measure_with_unit.wr:WR1"
+The unit shall be a <<express:measure_schema.plane_angle_unit,plane_angle_unit>>.
+*)
+
+
+(*"measure_schema.plane_angle_unit"
+A **plane_angle_unit** is a type of <<express:measure_schema.named_unit,named_unit>> in which angles in planes are expressed.
+*)
+
+
+(*"measure_schema.plane_angle_unit.wr:WR1"
+All the dimensional exponents shall be equal to zero.
+*)
+
+
+(*"measure_schema.positive_length_measure_with_unit"
+A **positive_length_measure_with_unit** is a type of <<express:measure_schema.length_measure_with_unit,length_measure_with_unit>> of which the value is positive.
+*)
+
+
+(*"measure_schema.positive_length_measure_with_unit.wr:WR1"
+The value of the <<express:measure_schema.measure_with_unit.value_component,value_component>> shall be positive.
+*)
+
+
+(*"measure_schema.positive_plane_angle_measure_with_unit"
+A **positive_plane_angle_measure_with_unit** is a type of <<express:measure_schema.plane_angle_measure_with_unit,plane_angle_measure_with_unit>> of which the value is positive.
+*)
+
+
+(*"measure_schema.positive_plane_angle_measure_with_unit.wr:WR1"
+The value of the <<express:measure_schema.measure_with_unit.value_component,value_component>> shall be positive.
+*)
+
+
+(*"measure_schema.power_measure_with_unit"
+A **power_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the quantity measured is a power as defined in ISO 31.
+*)
+
+
+(*"measure_schema.power_measure_with_unit.wr:WR1"
+The <<express:measure_schema.measure_with_unit.unit_component,unit_component>> shall be of type <<express:measure_schema.power_unit,power_unit>>.
+*)
+
+
+(*"measure_schema.power_unit"
+A **power_unit** is a type of <<express:measure_schema.derived_unit,derived_unit>> in which the power is expressed.
+*)
+
+
+(*"measure_schema.power_unit.wr:WR1"
+The dimensional exponents shall be equal to those of the watt as defined in ISO 31.
+*)
+
+
+(*"measure_schema.pressure_measure_with_unit"
+A **pressure_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the quantity measured is a pressure as defined in ISO 31.
+*)
+
+
+(*"measure_schema.pressure_measure_with_unit.wr:WR1"
+The <<express:measure_schema.measure_with_unit.unit_component,unit_component>> shall be of type <<express:measure_schema.pressure_unit,pressure_unit>>.
+*)
+
+
+(*"measure_schema.pressure_unit"
+A **pressure_unit** is a type of <<express:measure_schema.derived_unit,derived_unit>> in which the pressure is expressed.
+*)
+
+
+(*"measure_schema.pressure_unit.wr:WR1"
+The dimensional exponents shall be equal to those of the pascal as defined in ISO 31.
+*)
+
+
+(*"measure_schema.radioactivity_measure_with_unit"
+A **radioactivity_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the physical quantity is radioactivity as defined in ISO 31.
+*)
+
+
+(*"measure_schema.radioactivity_measure_with_unit.wr:WR1"
+The <<express:measure_schema.measure_with_unit.unit_component,unit_component>> shall be of type <<express:measure_schema.radioactivity_unit,radioactivity_unit>>.
+*)
+
+
+(*"measure_schema.radioactivity_unit"
+A **radioactivity_unit** is a type of <<express:measure_schema.derived_unit,derived_unit>> in which the radioactivity is expressed.
+*)
+
+
+(*"measure_schema.radioactivity_unit.wr:WR1"
+The dimensional exponents shall be equal to those of the becquerel as defined in ISO 31.
+*)
+
+
+(*"measure_schema.ratio_measure_with_unit"
+A **ratio_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the physical quantity is a ratio as defined in ISO 31.
+*)
+
+
+(*"measure_schema.ratio_measure_with_unit.wr:WR1"
+The unit shall be a <<express:measure_schema.ratio_unit,ratio_unit>>.
+*)
+
+
+(*"measure_schema.ratio_unit"
+A **ratio_unit** is a type of <<express:measure_schema.named_unit,named_unit>> in which the ratio between two physical quantities of the same kind is expressed.
+*)
+
+
+(*"measure_schema.ratio_unit.wr:WR1"
+All the dimensional exponents shall be equal to zero.
+*)
+
+
+(*"measure_schema.resistance_measure_with_unit"
+A **resistance_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the quantity measured is an electrical resistance as defined in ISO 31.
+*)
+
+
+(*"measure_schema.resistance_measure_with_unit.wr:WR1"
+The <<express:measure_schema.measure_with_unit.unit_component,unit_component>> shall be of type <<express:measure_schema.resistance_unit,resistance_unit>>.
+*)
+
+
+(*"measure_schema.resistance_unit"
+A **resistance_unit** is a type of <<express:measure_schema.derived_unit,derived_unit>> in which the electrical resistance is expressed.
+*)
+
+
+(*"measure_schema.resistance_unit.wr:WR1"
+The dimensional exponents shall be equal to those of the ohm as defined in ISO 31.
+*)
+
+
+(*"measure_schema.si_absorbed_dose_unit"
+A **si_absorbed_dose_unit** is a type of <<express:measure_schema.absorbed_dose_unit,absorbed_dose_unit>> and a type of <<express:measure_schema.si_unit,si_unit>> in which the absorbed dose is expressed in SI units.
+*)
+
+
+(*"measure_schema.si_absorbed_dose_unit.wr:WR1"
+The <<express:measure_schema.si_unit.name,name>> of the <<express:measure_schema.si_unit,si_unit>> shall be gray.
+*)
+
+
+(*"measure_schema.si_absorbed_dose_unit.wr:WR2"
+No other name shall be assigned to this entity.
+*)
+
+
+(*"measure_schema.si_capacitance_unit"
+A **si_capacitance_unit** is a type of <<express:measure_schema.capacitance_unit,capacitance_unit>> and a type of <<express:measure_schema.si_unit,si_unit>> in which the electric capacitance is expressed in SI units.
+*)
+
+
+(*"measure_schema.si_capacitance_unit.wr:WR1"
+The <<express:measure_schema.si_unit.name,name>> of the <<express:measure_schema.si_unit,si_unit>> shall be farad.
+*)
+
+
+(*"measure_schema.si_capacitance_unit.wr:WR2"
+No other name shall be assigned to this entity.
+*)
+
+
+(*"measure_schema.si_conductance_unit"
+A **si_conductance_unit** is a type of <<express:measure_schema.conductance_unit,conductance_unit>> and a type of <<express:measure_schema.si_unit,si_unit>> in which the electrical conductance is expressed in SI units.
+*)
+
+
+(*"measure_schema.si_conductance_unit.wr:WR1"
+The <<express:measure_schema.si_unit.name,name>> of the <<express:measure_schema.si_unit,si_unit>> shall be siemens.
+*)
+
+
+(*"measure_schema.si_conductance_unit.wr:WR2"
+No other name shall be assigned to this entity.
+*)
+
+
+(*"measure_schema.si_dose_equivalent_unit"
+A **si_dose_equivalent_unit** is a type of <<express:measure_schema.dose_equivalent_unit,dose_equivalent_unit>> and a type of <<express:measure_schema.si_unit,si_unit>> in which the radiation dose equivalent is expressed in SI units.
+*)
+
+
+(*"measure_schema.si_dose_equivalent_unit.wr:WR1"
+The <<express:measure_schema.si_unit.name,name>> of the <<express:measure_schema.si_unit,si_unit>> shall be sievert.
+*)
+
+
+(*"measure_schema.si_dose_equivalent_unit.wr:WR2"
+No other name shall be assigned to this entity.
+*)
+
+
+(*"measure_schema.si_electric_charge_unit"
+A **si_electric_charge_unit** is a type of <<express:measure_schema.electric_charge_unit,electric_charge_unit>> and a type of <<express:measure_schema.si_unit,si_unit>> in which the electric charge is expressed in SI units.
+*)
+
+
+(*"measure_schema.si_electric_charge_unit.wr:WR1"
+The <<express:measure_schema.si_unit.name,name>> of the <<express:measure_schema.si_unit,si_unit>> shall be volt.
+*)
+
+
+(*"measure_schema.si_electric_charge_unit.wr:WR2"
+No other name shall be assigned to this entity.
+*)
+
+
+(*"measure_schema.si_electric_potential_unit"
+A **si_electric_potential_unit** is a type of <<express:measure_schema.electric_potential_unit,electric_potential_unit>> and a type of <<express:measure_schema.si_unit,si_unit>> in which the electric potential is expressed in SI units.
+*)
+
+
+(*"measure_schema.si_electric_potential_unit.wr:WR1"
+The <<express:measure_schema.si_unit.name,name>> of the <<express:measure_schema.si_unit,si_unit>> shall be volt.
+*)
+
+
+(*"measure_schema.si_electric_potential_unit.wr:WR2"
+No other name shall be assigned to this entity.
+*)
+
+
+(*"measure_schema.si_energy_unit"
+A **si_energy_unit** is a type of <<express:measure_schema.energy_unit,energy_unit>> and a type of <<express:measure_schema.si_unit,si_unit>> in which the energy is expressed in SI units.
+*)
+
+
+(*"measure_schema.si_energy_unit.wr:WR1"
+The <<express:measure_schema.si_unit.name,name>> of the <<express:measure_schema.si_unit,si_unit>> shall be joule.
+*)
+
+
+(*"measure_schema.si_energy_unit.wr:WR2"
+No other name shall be assigned to this entity.
+*)
+
+
+(*"measure_schema.si_force_unit"
+A **si_force_unit** is a type of <<express:measure_schema.force_unit,force_unit>> and a type of <<express:measure_schema.si_unit,si_unit>> in which the force is expressed in SI units.
+*)
+
+
+(*"measure_schema.si_force_unit.wr:WR1"
+The <<express:measure_schema.si_unit.name,name>> of the <<express:measure_schema.si_unit,si_unit>> shall be newton.
+*)
+
+
+(*"measure_schema.si_force_unit.wr:WR2"
+No other name shall be assigned to this entity.
+*)
+
+
+(*"measure_schema.si_frequency_unit"
+A **si_frequency_unit** is a type of <<express:measure_schema.frequency_unit,frequency_unit>> and a type of <<express:measure_schema.si_unit,si_unit>> in which the frequency is expressed in SI units.
+*)
+
+
+(*"measure_schema.si_frequency_unit.wr:WR1"
+The <<express:measure_schema.si_unit.name,name>> of the <<express:measure_schema.si_unit,si_unit>> shall be hertz.
+*)
+
+
+(*"measure_schema.si_frequency_unit.wr:WR2"
+No other name shall be assigned to this entity.
+*)
+
+
+(*"measure_schema.si_illuminance_unit"
+A **si_illuminance_unit** is a type of <<express:measure_schema.illuminance_unit,illuminance_unit>> and a type of <<express:measure_schema.si_unit,si_unit>> in which the illuminance is expressed in SI units.
+*)
+
+
+(*"measure_schema.si_illuminance_unit.wr:WR1"
+The <<express:measure_schema.si_unit.name,name>> of the <<express:measure_schema.si_unit,si_unit>> shall be lux.
+*)
+
+
+(*"measure_schema.si_illuminance_unit.wr:WR2"
+No other name shall be assigned to this entity.
+*)
+
+
+(*"measure_schema.si_inductance_unit"
+A **si_inductance_unit** is a type of <<express:measure_schema.inductance_unit,inductance_unit>> and a type of <<express:measure_schema.si_unit,si_unit>> in which the inductance is expressed in SI units.
+*)
+
+
+(*"measure_schema.si_inductance_unit.wr:WR1"
+The <<express:measure_schema.si_unit.name,name>> of the <<express:measure_schema.si_unit,si_unit>> shall be henry.
+*)
+
+
+(*"measure_schema.si_inductance_unit.wr:WR2"
+No other name shall be assigned to this entity.
+*)
+
+
+(*"measure_schema.si_magnetic_flux_density_unit"
+A **si_magnetic_flux_density_unit** is a type of <<express:measure_schema.magnetic_flux_density_unit,magnetic_flux_density_unit>> and a type of <<express:measure_schema.si_unit,si_unit>> in which the magnetic flux density is expressed in SI units.
+*)
+
+
+(*"measure_schema.si_magnetic_flux_density_unit.wr:WR1"
+The <<express:measure_schema.si_unit.name,name>> of the <<express:measure_schema.si_unit,si_unit>> shall be tesla.
+*)
+
+
+(*"measure_schema.si_magnetic_flux_density_unit.wr:WR2"
+No other name shall be assigned to this entity.
+*)
+
+
+(*"measure_schema.si_magnetic_flux_unit"
+A **si_magnetic_flux_unit** is a type of <<express:measure_schema.magnetic_flux_unit,magnetic_flux_unit>> and a type of <<express:measure_schema.si_unit,si_unit>> in which the magnetic flux is expressed in SI units.
+*)
+
+
+(*"measure_schema.si_magnetic_flux_unit.wr:WR1"
+The <<express:measure_schema.si_unit.name,name>> of the <<express:measure_schema.si_unit,si_unit>> shall be weber.
+*)
+
+
+(*"measure_schema.si_magnetic_flux_unit.wr:WR2"
+No other name shall be assigned to this entity.
+*)
+
+
+(*"measure_schema.si_power_unit"
+A **si_power_unit** is a type of <<express:measure_schema.power_unit,power_unit>> and a type of <<express:measure_schema.si_unit,si_unit>> in which the power is expressed in SI units.
+*)
+
+
+(*"measure_schema.si_power_unit.wr:WR1"
+The <<express:measure_schema.si_unit.name,name>> of the <<express:measure_schema.si_unit,si_unit>> shall be watt.
+*)
+
+
+(*"measure_schema.si_power_unit.wr:WR2"
+No other name shall be assigned to this entity.
+*)
+
+
+(*"measure_schema.si_pressure_unit"
+A **si_pressure_unit** is a type of <<express:measure_schema.pressure_unit,pressure_unit>> and a type of <<express:measure_schema.si_unit,si_unit>> in which the pressure is expressed in SI units.
+*)
+
+
+(*"measure_schema.si_pressure_unit.wr:WR1"
+The <<express:measure_schema.si_unit.name,name>> of the <<express:measure_schema.si_unit,si_unit>> shall be pascal.
+*)
+
+
+(*"measure_schema.si_pressure_unit.wr:WR2"
+No other name shall be assigned to this entity.
+*)
+
+
+(*"measure_schema.si_radioactivity_unit"
+A **si_radioactivity_unit** is a type of <<express:measure_schema.radioactivity_unit,radioactivity_unit>> and a type of <<express:measure_schema.si_unit,si_unit>> in which the radioactivity is expressed in SI units.
+*)
+
+
+(*"measure_schema.si_radioactivity_unit.wr:WR1"
+The <<express:measure_schema.si_unit.name,name>> of the <<express:measure_schema.si_unit,si_unit>> shall be becquerel.
+*)
+
+
+(*"measure_schema.si_radioactivity_unit.wr:WR2"
+No other name shall be assigned to this entity.
+*)
+
+
+(*"measure_schema.si_resistance_unit"
+A **si_resistance_unit** is a type of <<express:measure_schema.resistance_unit,resistance_unit>> and a type of <<express:measure_schema.si_unit,si_unit>> in which the resistance is expressed in SI units.
+*)
+
+
+(*"measure_schema.si_resistance_unit.wr:WR1"
+The <<express:measure_schema.si_unit.name,name>> of the <<express:measure_schema.si_unit,si_unit>> shall be ohm.
+*)
+
+
+(*"measure_schema.si_resistance_unit.wr:WR2"
+No other name shall be assigned to this entity.
+*)
+
+
+(*"measure_schema.si_unit"
+An **si_unit** is a type of <<express:measure_schema.named_unit,named_unit>> that defines a unit with respect to the system of units defined in ISO 80000.
+*)
+
+
+(*"measure_schema.si_unit.prefix"
+the <<express:measure_schema.si_prefix,si_prefix>> that specifies the ratio with the unit specified by name. The value of this attribute need not be specified.
+*)
+
+
+(*"measure_schema.si_unit.name"
+the <<express:measure_schema.si_unit_name,si_unit_name>> by which the **si_unit** is known.
+*)
+
+
+(*"measure_schema.si_unit.dimensions"
+the <<express:measure_schema.dimensional_exponents,dimensional_exponents>> for the **si_unit**.
+*)
+
+
+(*"measure_schema.si_unit.wr:WR1"
+If the **si_unit** is a <<express:measure_schema.mass_unit,mass_unit>> it shall not be used by a <<express:measure_schema.derived_unit_element,derived_unit_element>> unless the prefix is <<express:measure_schema.si_prefix.kilo,kilo>>.
+*)
+
+
+(*"measure_schema.solid_angle_measure_with_unit"
+A **solid_angle_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the physical quantity is a solid angle as defined in ISO 31.
+*)
+
+
+(*"measure_schema.solid_angle_measure_with_unit.wr:WR1"
+The unit shall be a <<express:measure_schema.solid_angle_unit,solid_angle_unit>>.
+*)
+
+
+(*"measure_schema.solid_angle_unit"
+A **solid_angle_unit** is a type of <<express:measure_schema.named_unit,named_unit>> in which solid angles are expressed.
+*)
+
+
+(*"measure_schema.solid_angle_unit.wr:WR1"
+All the dimensional exponents shall be equal to zero.
+*)
+
+
+(*"measure_schema.thermodynamic_temperature_measure_with_unit"
+A **thermodynamic_temperature_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the physical quantity is a thermodynamic temperature as defined in ISO 31.
+*)
+
+
+(*"measure_schema.thermodynamic_temperature_measure_with_unit.wr:WR1"
+The unit shall be a <<express:measure_schema.thermodynamic_temperature_unit,thermodynamic_temperature_unit>>.
+*)
+
+
+(*"measure_schema.thermodynamic_temperature_unit"
+A **thermodynamic_temperature_unit** is a type of <<express:measure_schema.named_unit,named_unit>> in which the degree of heat of a body is expressed.
+*)
+
+
+(*"measure_schema.thermodynamic_temperature_unit.__note"
+This unit corresponds to one of the seven fundamental quantities as specified in ISO 1000.
+*)
+
+(*"measure_schema.thermodynamic_temperature_unit.wr:WR1"
+The dimensional exponent of thermodynamic temperature shall be equal to one and the other dimensional exponents shall be equal to zero.
+*)
+
+
+(*"measure_schema.time_measure_with_unit"
+A **time_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the physical quantity is a time as defined in ISO 31.
+*)
+
+
+(*"measure_schema.time_measure_with_unit.wr:WR1"
+The unit shall be a <<express:measure_schema.time_unit,time_unit>>.
+*)
+
+
+(*"measure_schema.time_unit"
+A **time_unit** is a type of <<express:measure_schema.named_unit,named_unit>> in which the duration of periods is expressed.
+*)
+
+
+(*"measure_schema.time_unit.__note"
+This unit corresponds to one of the seven fundamental quantities as specified in ISO 1000.
+*)
+
+(*"measure_schema.time_unit.wr:WR1"
+The dimensional exponent of time shall be equal to one and all the other dimensional exponents shall be equal to zero.
+*)
+
+
+(*"measure_schema.velocity_measure_with_unit"
+A **velocity_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the quantity measured is a velocity.
+*)
+
+
+(*"measure_schema.velocity_measure_with_unit.wr:WR1"
+The <<express:measure_schema.measure_with_unit.unit_component,unit_component>> shall be of type <<express:measure_schema.velocity_unit,velocity_unit>>.
+*)
+
+
+(*"measure_schema.velocity_unit"
+A **velocity_unit** is a type of <<express:measure_schema.derived_unit,derived_unit>> in which the velocity is expressed.
+*)
+
+
+(*"measure_schema.velocity_unit.wr:WR1"
+The dimensional exponent of length shall be equal to one, the dimensional exponent of time shall be equal to minus one, and all the other dimensional exponents shall be equal to zero.
+*)
+
+
+(*"measure_schema.volume_measure_with_unit"
+A **volume_measure_with_unit** is a type of <<express:measure_schema.measure_with_unit,measure_with_unit>> in which the physical quantity is a volume as defined in ISO 31.
+*)
+
+
+(*"measure_schema.volume_measure_with_unit.wr:WR1"
+The unit shall be a <<express:measure_schema.volume_unit,volume_unit>>.
+*)
+
+
+(*"measure_schema.volume_unit"
+A **volume_unit** is a type of <<express:measure_schema.derived_unit,derived_unit>> used to measure the extent of a solid.
+*)
+
+
+(*"measure_schema.volume_unit.wr:WR1"
+The dimensional exponent of length shall be equal to three and all the other dimensional exponents shall be equal to zero.
+*)
+
+
+(*"measure_schema.derive_dimensional_exponents"
+The **derive_dimensional_exponents** function determines the dimensional exponents of a unit. For named units the dimensions attribute is returned and for derived units the dimensional exponents are calculated from its elements.
+*)
+
+
+(*"measure_schema.derive_dimensional_exponents.x"
+(input) the <<express:measure_schema.unit,unit>> that the <<express:measure_schema.dimensional_exponents,dimensional_exponents>> are being derived from.
+*)
+
+
+(*"measure_schema.dimensions_for_si_unit"
+The **dimensions_for_si_unit** function returns the <<express:measure_schema.dimensional_exponents,dimensional_exponents>> of the given <<express:measure_schema.si_unit,si_unit>>.
+*)
+
+
+(*"measure_schema.dimensions_for_si_unit.n"
+(input) the name of the <<express:measure_schema.si_unit_name,si_unit_name>> for which the <<express:measure_schema.dimensional_exponents,dimensional_exponents>> will be returned.
+*)
+
+
+(*"measure_schema.valid_units"
+The **valid_units** function validates a <<express:measure_schema.measure_with_unit,measure_with_unit>>. If the unit of the <<express:measure_schema.measure_with_unit,measure_with_unit>> is valid the function returns TRUE. Otherwise, it returns FALSE.
+*)
+
+
+(*"measure_schema.valid_units.m"
+(input) the candidate <<express:measure_schema.measure_with_unit,measure_with_unit>> that is to be checked.
+*)
+
+
+(*"measure_schema.__schema_file"
+data/resource_docs/fundamentals_of_product_description_and_support/resource.xml
+*)

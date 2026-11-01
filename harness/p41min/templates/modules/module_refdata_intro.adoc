@@ -1,0 +1,54 @@
+Implementations of this document shall make use of the capability to classify an
+entity type using **Classification_assignment** (see ISO 10303-1114), **Class**
+(see ISO 10303-1070) and **External_class** (see ISO 10303-1275). This annex
+contains a subclause for each entity type defined in or used by this document
+for which that capability shall be applied. The specified Uniform Resource
+Identifier (URI) is used to identify each class.
+
+NOTE: A URI can be a HTTP URI. However, the use of a HTTP URI does not
+necessarily mean that a HTTP GET obtains a representation of the specified
+resource. Even if a representation is obtained, that representation is not
+necessarily part of the standard.
+
+For the purpose of diagramming possible classifications of EXPRESS entity types,
+UML 1.4 or later class diagrams with stereotypes are used. The W3C OWL Web
+Ontology Language is used to represent the classes that may be applied to an
+EXPRESS entity type both in the diagrams and as example OWL files.
+
+[NOTE]
+--
+The standards related to the specification of reference data are:
+
+* the http://www.omg.org/technology/documents/formal/uml.htm[UML 2
+specification] is available from the OMG Web site;
+
+* the http://www.omg.org/cgi-bin/doc?formal/05-04-01[ISO UML 1.4.2 specification] published as ISO/IEC 19501:2005(E) is available from the OMG Web site
+and from the http://www.iso.org[ISO] Web site;
+
+* the http://www.w3.org/TR/owl-ref/[OWL Web Ontology Language Reference] is available from the W3C Web site.
+--
+
+The diagram notation is interpreted as follows:
+
+* the `«expressEntityType»` stereotype applied to a UML Class denotes an EXPRESS
+entity type;
+
+* the `«owlClass»` stereotype applied to a UML Class denotes the related
+class(es);
+
+* if all OWL classes on a diagram have the same namespace it may be omitted,
+otherwise the XML namespace of the OWL ontology containing each class is
+represented as the UML Package name which appears under the class name enclosed
+in parentheses;
+
+* the `«classificationAssignment»` stereotype applied to a UML Generalization
+denotes the fact that the EXPRESS entity type can be classified using the more
+specific class;
+
+* the `«disjointWith»` stereotype applied to a UML constraint note is included
+where appropriate to specify the set of OWL classes are mutually exclusive
+
+* the OWL `subClassOf` relationship between OWL classes is denoted using
+unstereotyped generalizations between the stereotyped UML classes;
+
+* no other UML, EXPRESS or OWL concepts appear in these diagrams.

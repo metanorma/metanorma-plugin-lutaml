@@ -1,0 +1,536 @@
+(*
+ISO 10303 TC184/SC4/WG12 N11635
+supersedes ISO 10303 TC184/SC4/WG12 N10231
+
+EXPRESS Source:
+ISO 10303-41 ed8 Fundamentals of product description and support - Application context schema
+
+The following permission notice and disclaimer shall be included in all copies of this EXPRESS schema ("the Schema"),
+and derivations of the Schema:
+
+Copyright ISO 2025  All rights reserved
+Permission is hereby granted, free of charge in perpetuity, to any person obtaining a copy of the Schema,
+to use, copy, modify, merge and distribute free of charge, copies of the Schema for the purposes of developing,
+implementing, installing and using software based on the Schema, and to permit persons to whom the Schema is furnished to do so,
+subject to the following conditions:
+
+THE SCHEMA IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SCHEMA OR THE
+USE OR OTHER DEALINGS IN THE SCHEMA.
+
+In addition, any modified copy of the Schema shall include the following notice:
+
+THIS SCHEMA HAS BEEN MODIFIED FROM THE SCHEMA DEFINED IN
+ISO 10303-41 ed8 Fundamentals of product description and support - Application context schema
+AND SHOULD NOT BE INTERPRETED AS COMPLYING WITH THAT STANDARD
+*)
+
+SCHEMA application_context_schema '{iso standard 10303 part(41) version(9) object(1) application-context-schema(2)}';
+
+  REFERENCE FROM basic_attribute_schema ( -- ISO 10303-41
+    description_attribute,
+    description_attribute_select,
+    get_description_value,
+    get_id_value,
+    id_attribute,
+    id_attribute_select);
+  REFERENCE FROM date_time_schema (	-- ISO 10303-41
+    year_number);
+  REFERENCE FROM language_schema (language);	-- ISO 10303-41
+  REFERENCE FROM management_resources_schema (identification_assignment);	-- ISO 10303-41
+  REFERENCE FROM person_organization_schema (organization);	-- ISO 10303-41
+  REFERENCE FROM support_resource_schema (	-- ISO 10303-41
+    identifier,
+    label,
+    text);
+
+  TYPE acs_description_attribute_select = SELECT BASED_ON description_attribute_select WITH (
+    application_context);
+  END_TYPE;
+
+  TYPE acs_id_attribute_select = SELECT BASED_ON id_attribute_select WITH (
+    application_context);
+  END_TYPE;
+
+   TYPE exchange_identification_context_select  = SELECT (identification_assignment,organization);
+	END_TYPE;
+
+
+
+  ENTITY application_context;
+    application : label;
+  DERIVE
+    description : text := get_description_value(SELF);
+    id : identifier := get_id_value(SELF);
+  INVERSE
+    context_elements : SET [1:?] OF application_context_element FOR frame_of_reference;
+  WHERE
+    WR1: SIZEOF(USEDIN(SELF, 'BASIC_ATTRIBUTE_SCHEMA.' + 'DESCRIPTION_ATTRIBUTE.DESCRIBED_ITEM')) <= 1;
+    WR2: SIZEOF(USEDIN(SELF, 'BASIC_ATTRIBUTE_SCHEMA.' + 'ID_ATTRIBUTE.IDENTIFIED_ITEM')) <= 1;
+  END_ENTITY;
+
+  ENTITY application_context_element
+    SUPERTYPE OF (ONEOF(library_context, product_concept_context, product_context, product_definition_context));
+    name : label;
+    frame_of_reference : application_context;
+  END_ENTITY;
+
+  ENTITY application_context_relationship;
+    name : label;
+    description : OPTIONAL text;
+    relating_context : application_context;
+    related_context : application_context;
+  END_ENTITY;
+
+  ENTITY application_protocol_definition;
+    status : label;
+    application_interpreted_model_schema_name : label;
+    application_protocol_year : year_number;
+    application : application_context;
+  END_ENTITY;
+
+  ENTITY library_context
+    SUBTYPE OF (application_context_element);
+    library_reference : label;
+  END_ENTITY;
+
+  ENTITY product_concept_context
+    SUBTYPE OF (application_context_element);
+    market_segment_type : label;
+  END_ENTITY;
+
+  ENTITY product_context
+    SUBTYPE OF (application_context_element);
+    discipline_type : label;
+  END_ENTITY;
+
+  ENTITY product_definition_context
+    SUBTYPE OF (application_context_element);
+    life_cycle_stage : label;
+  END_ENTITY;
+
+  ENTITY dependent_product_definition_exchange_context
+    ABSTRACT SUPERTYPE
+    SUBTYPE OF (product_definition_context);
+   WHERE
+	  WR1: SIZEOF (TYPEOF(SELF) * ['APPLICATION_CONTEXT_SCHEMA.IDENTIFICATION_DEPENDENT_PRODUCT_DEFINITION_EXCHANGE_CONTEXT','APPLICATION_CONTEXT_SCHEMA.LANGUAGE_DEPENDENT_PRODUCT_DEFINITION_EXCHANGE_CONTEXT']) > 0;
+	END_ENTITY;
+
+	ENTITY identification_dependent_product_definition_exchange_context
+	  SUBTYPE OF (dependent_product_definition_exchange_context);
+	  identification_context   : exchange_identification_context_select;
+	END_ENTITY;
+
+	ENTITY language_dependent_product_definition_exchange_context
+	  SUBTYPE OF (dependent_product_definition_exchange_context);
+	  language              : language;
+	END_ENTITY;
+
+END_SCHEMA;
+
+(*"application_context_schema.__published_in"
+ISO 10303-41:2025 ED8
+*)
+
+(*"application_context_schema.__identifier"
+ISO/TC 184/SC 4/WG 12 N11635
+*)
+
+(*"application_context_schema.__supersedes"
+ISO/TC 184/SC 4/WG 12 N10231
+*)
+
+(*"application_context_schema.__status"
+IS
+*)
+
+(*"application_context_schema.__title"
+fundamentals_of_product_description_and_support
+*)
+
+
+(*"application_context_schema"
+The subject of the *application_context_schema* is the applicable usages of product data. This schema provides a mechanism for application protocols to define a frame of reference or context that applies to particular sets of product data.
+
+This schema also provides a means to identify application protocols.
+
+*)
+(*"application_context_schema.__fund_cons"
+
+The meaningful exchange of product data requires the identification of the application context in which that product data is defined. An application context may have several context elements. Each context element may be referenced by a different set of product data.
+
+*)
+(*"application_context_schema.__expressg"
+[[application_context_schema_expg1]]
+[.svgmap]
+====
+image::application_context_schemaexpg1.svg[]
+
+* <<express:basic_attribute_schema>>; 1
+* <<express:support_resource_schema>>; 2
+* <<express:person_organization_schema>>; 3
+* <<express:language_schema>>; 4
+* <<express:application_context_schema>>; 5
+* <<express:date_time_schema>>; 6
+* <<express:management_resources_schema>>; 7
+====
+
+*)
+(*"application_context_schema.__expressg"
+[[application_context_schema_expg2]]
+[.svgmap]
+====
+image::application_context_schemaexpg2.svg[]
+
+* <<express:application_context_schema.exchange_identification_context_select>>; 1
+* <<express:application_context_schema.acs_description_attribute_select>>; 2
+* <<express:application_context_schema.acs_id_attribute_select>>; 3
+* <<express:support_resource_schema.label>>; 4
+* <<express:support_resource_schema.label>>; 5
+* <<express:support_resource_schema.identifier>>; 6
+* <<express:support_resource_schema.label>>; 7
+* <<express:support_resource_schema.text>>; 8
+* <<express:support_resource_schema.label>>; 9
+* <<express:support_resource_schema.label>>; 10
+* <<express:date_time_schema.year_number>>; 11
+* <<express:management_resources_schema.identification_assignment>>; 12
+* <<express:language_schema.language>>; 13
+* <<express:person_organization_schema.organization>>; 14
+* <<express:basic_attribute_schema.description_attribute_select>>; 15
+* <<express:support_resource_schema.label>>; 16
+* <<express:support_resource_schema.label>>; 17
+* <<express:support_resource_schema.text>>; 18
+* <<express:basic_attribute_schema.id_attribute_select>>; 19
+* <<express:support_resource_schema.label>>; 20
+* <<express:application_context_schema.product_context>>; 21
+* <<express:application_context_schema.application_context_element>>; 22
+* <<express:application_context_schema.dependent_product_definition_exchange_context>>; 23
+* <<express:application_context_schema.application_context_relationship>>; 24
+* <<express:application_context_schema.product_concept_context>>; 25
+* <<express:application_context_schema.library_context>>; 26
+* <<express:application_context_schema.application_protocol_definition>>; 27
+* <<express:application_context_schema.product_definition_context>>; 28
+* <<express:application_context_schema.application_context>>; 29
+* <<express:application_context_schema.identification_dependent_product_definition_exchange_context>>; 30
+* <<express:application_context_schema.language_dependent_product_definition_exchange_context>>; 31
+====
+*)
+
+(*"application_context_schema.exchange_identification_context_select"
+The **exchange_identification_context_select** type allows for the designation of the data types <<express:management_resources_schema.identification_assignment,identification_assignment>> and <<express:person_organization_schema.organization,organization>> .
+*)
+
+
+(*"application_context_schema.application_context"
+An **application_context**, as defined in ISO 10303-1, is a context in which product data is defined and has meaning. An **application_context** represents various types of information that relate to product data and may affect the meaning and usage of that data.
+*)
+
+
+(*"application_context_schema.application_context.application"
+the <<express:support_resource_schema.label,label>> by which the **application_context** is known.
+*)
+
+
+(*"application_context_schema.application_context.application.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"application_context_schema.application_context.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **application_context**.
+*)
+
+
+(*"application_context_schema.application_context.description.__note"
+The description attribute aids in defining the usage of product data in an *application_context*.
+*)
+
+(*"application_context_schema.application_context.description.__note"
+This attribute is an upwardly compatible addition to *application_context* as specified in ISO 10303-41:1994.
+*)
+
+(*"application_context_schema.application_context.id"
+the <<express:support_resource_schema.identifier,identifier>> that distinguishes the **application_context**.
+*)
+
+
+(*"application_context_schema.application_context.id.__note"
+This attribute is an upwardly compatible addition to *application_context* as specified in ISO 10303-41:1994.
+*)
+
+(*"application_context_schema.application_context.id.__note"
+The context in which id is used as a discriminating characteristic can be identified in an annotated Express schema that uses or specializes this entity, or by default, in an agreement of common understanding between partners sharing this information.
+*)
+
+(*"application_context_schema.application_context.context_elements"
+the set of instances of the entity data type <<express:application_context_schema.application_context_element,application_context_element>> that defines the various aspects of the **application_context**.
+*)
+
+
+(*"application_context_schema.application_context.wr:WR1"
+Each **application_context** shall be the <<express:basic_attribute_schema.description_attribute.described_item,described_item>> in at most one <<express:basic_attribute_schema.description_attribute,description_attribute>>.
+*)
+
+
+(*"application_context_schema.application_context.wr:WR1.__note"
+The <<express:basic_attribute_schema.description_attribute,description_attribute>> data type is defined in <<express:basic_attribute_schema,basic_attribute_schema>> of this document.
+*)
+
+(*"application_context_schema.application_context.wr:WR2"
+Each **application_context** shall be the <<express:basic_attribute_schema.id_attribute.identified_item,identified_item>> in at most one <<express:basic_attribute_schema.id_attribute,id_attribute>>.
+*)
+
+
+(*"application_context_schema.application_context.wr:WR2.__note"
+The <<express:basic_attribute_schema.id_attribute,id_attribute>> data type is defined in <<express:basic_attribute_schema,basic_attribute_schema>> of this document.
+*)
+
+(*"application_context_schema.application_context.wr:WR2.__note"
+A template for constraining the population of the entity data types defined in the <<express:basic_attribute_schema,basic_attribute_schema>> is described in annex E.
+*)
+
+(*"application_context_schema.application_context_element"
+An **application_context_element** is an aspect of an application context that contains information about the context in which product data is defined. This aspect contains information about the conditions in which the product data exists.
+
+An **application_context_element** may be either a <<express:application_context_schema.library_context,library_context>> or a <<express:application_context_schema.product_concept_context,product_concept_context>>, or a <<express:application_context_schema.product_context,product_context>>, or a <<express:application_context_schema.product_definition_context,product_definition_context>>.
+*)
+
+
+(*"application_context_schema.application_context_element.name"
+the <<express:support_resource_schema.label,label>> by which the **application_context_element** is known.
+*)
+
+(*"application_context_schema.application_context_element.name.__example"
+'Functional definition', 'physical definition', 'usage occurrence', and 'manufacturable definition' are examples of names.
+*)
+
+(*"application_context_schema.application_context_element.frame_of_reference"
+the <<express:application_context_schema.application_context,application_context>> of which this **application_context_element** is a member.
+*)
+
+
+(*"application_context_schema.application_context_relationship"
+An **application_context_relationship** is a relationship between two instances of <<express:application_context_schema.application_context,application_context>> and provides a description of their relationship.
+*)
+
+
+(*"application_context_schema.application_context_relationship.__note"
+The role of *application_context_relationship* can be defined in the annotated EXPRESS schemas that use or specialize this entity, or by default, in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"application_context_schema.application_context_relationship.__note"
+Without any further specialization, this relationship does not imply that the product data associated with *relating_context* are also associated with the *related_context*.
+*)
+
+(*"application_context_schema.application_context_relationship.__note"
+Relationships represented using this entity may be parent child relationship. Annotated EXPRESS schemas that use or specialize this entity specify whether or not the relationship is directed.
+*)
+
+(*"application_context_schema.application_context_relationship.__note"
+This entity, together with the <<express:application_context_schema.application_context,application_context>> entity, is based on the relationship template that is described in annex E.3.
+*)
+
+(*"application_context_schema.application_context_relationship.name"
+the <<express:support_resource_schema.label,label>> by which the **application_context_relationship** is known.
+*)
+
+
+(*"application_context_schema.application_context_relationship.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **application_context_relationship**. The value of the attribute need not be specified.
+*)
+
+
+(*"application_context_schema.application_context_relationship.relating_context"
+one of the instances of <<express:application_context_schema.application_context,application_context>> that is a part of the relationship.
+*)
+
+
+(*"application_context_schema.application_context_relationship.relating_context.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"application_context_schema.application_context_relationship.related_context"
+the other instance of <<express:application_context_schema.application_context,application_context>> that is a part of the relationship. If one element of the relationship is dependent upon the other, this attribute shall be the dependent one.
+*)
+
+
+(*"application_context_schema.application_context_relationship.related_context.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"application_context_schema.application_protocol_definition"
+An **application_protocol_definition** is the identification of an application protocol.
+*)
+
+
+(*"application_context_schema.application_protocol_definition.status"
+the label that provides a user interpretable designation for the level of completion of the application protocol.
+*)
+
+(*"application_context_schema.application_protocol_definition.status.__example"
+"IS", "DIS", "TS" or "CD" are examples of application protocol states.
+*)
+
+(*"application_context_schema.application_protocol_definition.application_interpreted_model_schema_name"
+the EXPRESS schema name of the application interpreted model.
+*)
+
+
+(*"application_context_schema.application_protocol_definition.application_protocol_year"
+the year when the application protocol attained the status given by the **status** attribute.
+*)
+
+
+(*"application_context_schema.application_protocol_definition.application"
+the application context of the application protocol.
+*)
+
+
+(*"application_context_schema.dependent_product_definition_exchange_context"
+A **dependent_product_definition_exchange_context** is a type of <<express:application_context_schema.product_definition_context,product_definition_context>> and is an abstract entity that describes a specific context for exchange.
+*)
+
+
+(*"application_context_schema.dependent_product_definition_exchange_context.wr:WR1"
+at least one of the entities <<express:application_context_schema.identification_dependent_product_definition_exchange_context,identification_dependent_product_definition_exchange_context>> or <<express:application_context_schema.language_dependent_product_definition_exchange_context,language_dependent_product_definition_exchange_context>> shall be specified.
+*)
+
+
+(*"application_context_schema.identification_dependent_product_definition_exchange_context"
+An **identification_dependent_product_definition_exchange_context** is a type of <<express:application_context_schema.dependent_product_definition_exchange_context,dependent_product_definition_exchange_context>> that establishes the context of the <<express:product_definition_schema.product_definition,product_definition>> exchange.
+*)
+
+
+(*"application_context_schema.identification_dependent_product_definition_exchange_context.identification_context"
+specifies the context of the exchange to be either <<express:management_resources_schema.identification_assignment,identification_assignment>> or <<express:person_organization_schema.organization,organization>> .
+*)
+
+
+(*"application_context_schema.language_dependent_product_definition_exchange_context"
+A **language_dependent_product_definition_exchange_context** is a type of <<express:application_context_schema.dependent_product_definition_exchange_context,dependent_product_definition_exchange_context>> that establishes the specified language of the <<express:product_definition_schema.product_definition,product_definition>> exchange context.
+*)
+
+
+(*"application_context_schema.language_dependent_product_definition_exchange_context.language"
+specifies the default language of the exchange context.
+*)
+
+
+(*"application_context_schema.library_context"
+A **library_context** is a type of <<express:application_context_schema.application_context_element,application_context_element>> that defines a context for elements of a library.
+
+The inherited attribute <<express:application_context_schema.application_context_element.name,name>> identifies or characterizes the type of library.
+*)
+
+(*"application_context_schema.library_context.__example"
+'Dewey Decimal', 'ISO 13584 library', and 'supplier catalogue' are examples of type of library.
+*)
+
+(*"application_context_schema.library_context.__note"
+The name attribute can represent the nature of the source of the library, the nature of the contents of the library, or both.
+*)
+
+(*"application_context_schema.library_context.wr:IP1"
+If a member of <<express:application_context_schema.library_context,library_context>> is provided, then that member shall be referenced by a member of <<express:management_resources_schema.library_assignment,library_assignment>>.
+*)
+
+
+(*"application_context_schema.library_context.wr:IP1.__note"
+A *library_context* is an incompletely modelled entity data type.
+*)
+
+(*"application_context_schema.library_context.library_reference"
+the <<express:support_resource_schema.label,label>> that identifies the library.
+*)
+
+(*"application_context_schema.library_context.library_reference.__example"
+'ACME self-propelled rocket sleds catalogue' is an example of a library reference.
+*)
+
+(*"application_context_schema.product_concept_context"
+A **product_concept_context** is a type of <<express:application_context_schema.application_context_element,application_context_element>> that defines a context for a <<express:product_concept_schema.product_concept,product_concept>> (see ISO 10303-44).
+
+A **product_concept_context** represents information that relates to the characterization of potential purchasers of a product. Such information may affect the meaning and usage of the product data.
+*)
+
+
+(*"application_context_schema.product_concept_context.market_segment_type"
+the <<express:support_resource_schema.label,label>> that identifies the kind of consumer preferences associated with a product.
+*)
+
+(*"application_context_schema.product_concept_context.market_segment_type.__example"
+'Luxury automobiles', 'laptop personal computers', and 'budget personal stereos' are examples of **market_segment_type**s.
+*)
+
+(*"application_context_schema.product_context"
+A **product_context** is a type of <<express:application_context_schema.application_context_element,application_context_element>> that represents life cycle independent information about a <<express:product_definition_schema.product,product>>. This information describes the discipline in which data about the product are created.
+
+The inherited attribute <<express:application_context_schema.application_context_element.name,name>> identifies a particular industry, subject area, or kind of product for which product data is created or used.
+*)
+
+(*"application_context_schema.product_context.__example"
+Two annotated EXPRESS schemas that specify product data structures for design and construction of buildings respectively can each constrain the values of the name attribute to be 'building', and the *discipline_type* attribute to be 'architecture'.
+*)
+(*"application_context_schema.product_context.__example"
+'ship', 'aircraft' and 'building' are examples of names of product contexts.
+*)
+
+(*"application_context_schema.product_context.__note"
+Different annotated EXPRESS schemas that use or specialize this entity data type can make use of common values for the attributes of the *product_context* entity data type in order to establish consistency among schemas that relate to the same types or kinds of products.
+*)
+
+(*"application_context_schema.product_context.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"application_context_schema.product_context.discipline_type"
+the <<express:support_resource_schema.label,label>> that identifies a particular field of practice involved in creating or using product data.
+*)
+
+(*"application_context_schema.product_context.discipline_type.__example"
+'electronics', 'engineering', or 'architecture' are examples of discipline types.
+*)
+
+(*"application_context_schema.product_context.discipline_type.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"application_context_schema.product_definition_context"
+A **product_definition_context** is a type of <<express:application_context_schema.application_context_element,application_context_element>> that represents information about the stage in the product life cycle for which a <<express:product_definition_schema.product_definition,product_definition>> is created or used.
+
+The inherited attribute <<express:application_context_schema.application_context_element.name,name>> identifies a subdivision or characterization of a life cycle stage for which product data is created or used.
+*)
+
+(*"application_context_schema.product_definition_context.__example"
+Two annotated EXPRESS schemas that specify product data structures for conceptual design and detailed design of process plants respectively can each constrain the values of the name attribute to be 'conceptual design' and 'detailed design', and the *life_cycle_stage* attribute to be 'design'.
+*)
+(*"application_context_schema.product_definition_context.__example"
+'required' and 'planned' are examples of names of product definition contexts, used in conjunction with a life cycle stage of 'thermal analysis'.
+*)
+
+(*"application_context_schema.product_definition_context.__note"
+Different annotated EXPRESS schemas that use or specialize this entity data type can make use of common values for the attributes of the *product_definition_context* entity data type in order to maintain consistency between schemas that relate to the same or related life-cycle phases.
+*)
+
+(*"application_context_schema.product_definition_context.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"application_context_schema.product_definition_context.life_cycle_stage"
+the <<express:support_resource_schema.label,label>> that identifies a stage in the life cycle of a product.
+*)
+
+(*"application_context_schema.product_definition_context.life_cycle_stage.__example"
+A 'preliminary design' and 'manufacturing planning' are examples of life cycle stages.
+*)
+
+(*"application_context_schema.product_definition_context.life_cycle_stage.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"application_context_schema.__schema_file"
+data/resource_docs/fundamentals_of_product_description_and_support/resource.xml
+*)
+

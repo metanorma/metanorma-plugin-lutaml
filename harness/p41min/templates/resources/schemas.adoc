@@ -1,0 +1,4 @@
+[lutaml_express, schemas, repo, config_yaml=schemas.yaml, include_path=../../]
+---
+include::../resources/_schemas.liquid[]
+---

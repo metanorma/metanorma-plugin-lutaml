@@ -1,0 +1,41 @@
+
+{% comment %}
+Calculate section level (i.e. number of equal signs)
+based on `depth` parameter
+{% endcomment %}
+{% if depth %}
+{% assign xdepth = depth | plus: 1 %}
+{% if xdepth > 5 %}
+{% capture equalsigns %}====={% endcapture %}
+{% else %}
+{% capture equalsigns %}{% for count in (1..xdepth) %}={% endfor %}{% endcapture %}
+{% endif %}
+{% endif %}
+
+{% comment %}
+Encode section title, containing:
+Anchor, `level` and `type` attributes, xref to expg diagrams, and index tag
+{% endcomment %}
+
+{% comment %} Per-diagram EXPRESS-G target (#769): the first __expressg
+block whose svgmap list contains <<express:<schema>.<thing>>>; the block's
+[[...]] line names that diagram's anchor. Falls back to the schema-level
+diagram (expg1) for section titles and unlisted things. {% endcomment %}
+{% assign expg_target = "" %}
+{% if xdepth == 4 and thing_id and schema %}
+{% capture expg_token %}<<express:{{ schema.id }}.{{ thing_id }}>>{% endcapture %}
+{% for ri in schema.remark_items %}
+{% if ri.id == "__expressg" %}
+{% for diagram in ri.remarks %}
+{% if expg_target == "" and diagram contains expg_token %}
+{% assign expg_first = diagram | newline_to_br | split: "<br />" | first %}
+{% assign expg_target = expg_first | remove: "[" | remove: "]" | strip %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+[[{{thing_prefix}}.{{anchor | replace: "\", "-"}}]]
+[level={{xdepth}},type=express]
+{{equalsigns}} {{ title | replace: "\", "-" }} {% if xdepth == 4 %} <<{% if expg_target != "" %}{{ expg_target }}{% else %}{{ thing_prefix }}_expg1{% endif %},image:../templates/common_files/expg.gif[]>> {% endif %} ((({{ anchor }},Object definition)))

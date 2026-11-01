@@ -1,0 +1,14 @@
+{% assign type_nested_depth = depth %}
+{% capture type_thing_prefix %}{{thing_prefix}}.{{thing.id}}{% endcapture %}
+
+{% render "templates/resources/basic_thing", depth: type_nested_depth, thing_prefix: thing_prefix, thing: thing, object_type: "type" %}
+
+{% render "templates/resources/enumerated_item_definitions", definition: thing, thing_prefix: type_thing_prefix %}
+
+{% render "templates/resources/where_rules", things: thing.where_rules, thing_prefix: type_thing_prefix %}
+
+{% if thing.items.size > 0 %}
+
+{% render "templates/resources/type_items", things: thing.items, thing_prefix: type_thing_prefix, depth: type_nested_depth | plus: 1, schema: schema %}
+
+{% endif %}

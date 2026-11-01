@@ -1,0 +1,44 @@
+
+{% capture EXCEPTIONS %}
+iso13584_generic_expressions_schema
+iso13584_expressions_schema
+{% endcapture %}
+
+{% if object_type == "schema" %}
+
+This clause defines the information requirements to which implementations shall conform using the EXPRESS language as defined in ISO 10303-11. The following EXPRESS declaration begins the *{{ id }}* and identifies the necessary external references.
+
+Each implementation of an AP that uses this schema and that encodes entity names shall use the encoding specified in <<annex_entity_names>>. Each reference to this schema in an open system shall use the identifier encoding specified in <<annex_object_registration>>. This schema is illustrated in <<annex_expg>> using the EXPRESS-G notation. {% unless EXCEPTIONS contains id -%} Publicly available computer interpretable listings that are associated with this document are identified in <<annex_listings>>. {%- endunless %}
+
+The following EXPRESS declaration begins the *{{ id }}* and identifies the necessary external references.
+
+{% endif %}
+
+{% if object_type == "type" %}
+{% assign id = definition.id %}
+{% assign simple_ref = definition.underlying_type.items | where: "_class", "Expressir::Model::References::SimpleReference" %}
+
+{% if definition.underlying_type.extensible == true %}
+
+The *{{ id }}* type is an extensible list of alternate data types. It provides a mechanism to refer to instances of the data types included in the *{{ id }}* type or in its extensions.
+
+NOTE: The list of entity data types will be extended in application resources that use the constructs of this resource.
+
+{% elsif simple_ref.size > 0 and id != "point_cloud_set_or_superset" %}
+{% comment %}
+This is an ad-hoc solution that should be removed after ISO
+apply some corrections to part 42
+{% endcomment %}
+
+The *{{ id }}* type is a list of alternate data types. It provides a mechanism to refer to an instance of one of these data types.
+
+{% endif %}
+{% endif %}
+
+{% if object_type == "subtype_constraint" %}
+
+{% if definition.applies_to %}
+The *{{ definition.id }}* constraint specifies a constraint that applies to instances of subtypes of <<express:{{ definition.applies_to.base_path }},{{ definition.applies_to.id }}>>
+{% endif %}
+
+{% endif %}

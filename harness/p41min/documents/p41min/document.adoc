@@ -1,0 +1,88 @@
+= Industrial automation systems and integration: Product data representation and exchange: Integrated generic resource: Fundamentals of product description and support
+:docnumber: 10303
+:tc-docnumber: ISO/TC 184/SC 4/WG 12 N11559
+:partnumber: 41
+:copyright-year: 2025
+:language: en
+:published-date: 2025
+:edition: 8
+:iso-10303-doc-version: 8
+:title-intro-en: Industrial automation systems and integration
+:title-intro-fr: Systèmes d'automatisation industrielle et intégration
+:title-main-en: Product data representation and exchange
+:title-main-fr: Représentation et échange de données de produits
+:title-part-en: Integrated generic resource: Fundamentals of product description and support
+:title-part-fr: Ressources génériques intégrées: Principes de description et de support de produits
+:doctype: international-standard
+:docstage: 60
+:docsubstage: 60
+:technical-committee-number: 184
+:technical-committee: Industrial automation systems and integration
+:subcommittee-type: SC
+:subcommittee-number: 4
+:subcommittee: Industrial data
+:workgroup-type: WG
+:workgroup-number: 12
+:secretariat: ANSI
+:keywords: STEP, ISO 10303, integrated resource, integrated generic resource, product definition, product property, measure, application context, product property representation, person, organization, experience, identification, qualifications, location and position in organization
+:library-ics: 25.040.40
+:revises: ISO 10303-41:2024
+:supersedes: ISO/TC 184/SC 4/WG 12 N10681
+:semantic-metadata-project-leader-firstname: Max
+:semantic-metadata-project-leader-lastname: Ungerer
+:semantic-metadata-project-leader-address-affiliation: PROSTEP AG
+:semantic-metadata-project-leader-address-street: Dolivostraße 11
+:semantic-metadata-project-leader-address-city: Darmstadt
+:semantic-metadata-project-leader-address-postcode: 64293
+:semantic-metadata-project-leader-address-country: Germany
+:semantic-metadata-project-leader-email: Max.Ungerer@PROSTEP.com
+:semantic-metadata-project-editor-firstname: Darla
+:semantic-metadata-project-editor-lastname: Nettles Edwards
+:semantic-metadata-project-editor-address-affiliation: Liberty Business Associates.
+:semantic-metadata-project-editor-address-street: 3509 Iron Horse Road
+:semantic-metadata-project-editor-address-city: Ladson
+:semantic-metadata-project-editor-address-state: SC
+:semantic-metadata-project-editor-address-postcode: 29456
+:semantic-metadata-project-editor-address-country: USA
+:semantic-metadata-project-editor-phone: +843-819-3263
+:semantic-metadata-project-editor-email: darla.nettles.edwards@gmail.com
+:imagesdir: images
+:mn-document-class: iso
+:mn-output-extensions: xml,html,pdf,rxl
+:local-cache-only:
+:data-uri-image:
+:lutaml-express-index: schemas; ../../schemas-srl.yml;
+
+////
+This document has been reviewed using the internal review checklist (see WG12 N11560), the project leader checklist (see WG12 N11560), and the convener checklist (see WG12 N11560), and has been determined to be ready for publication .
+
+////
+
+include::sections/00-foreword.adoc[]
+
+include::sections/00-introduction.adoc[]
+
+include::sections/01-scope.adoc[]
+
+include::sections/02-norm-refs.adoc[]
+
+include::sections/03-terms.adoc[]
+
+include::../../templates/resources/schemas.adoc[]
+
+include::../../templates/resources/resource_annex_short_names.adoc[]
+
+include::../../templates/resources/resource_annex_identifier.adoc[]
+
+include::../../templates/resources/resource_annex_listings.adoc[]
+
+include::../../templates/resources/resource_annex_diagrams.adoc[]
+
+include::sections/95-tech-discussion.adoc[]
+
+include::sections/96-examples.adoc[]
+
+include::../../templates/resources/resource_annex_change_history.adoc[]
+
+include::sections/99-bibliography.adoc[]
+

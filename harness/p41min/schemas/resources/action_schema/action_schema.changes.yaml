@@ -1,0 +1,112 @@
+---
+schema: action_schema
+change_edition:
+- version: '2'
+  description: |-
+    The definitions of the following EXPRESS entity data types were modified:
+
+    * action;
+    * action_directive;
+    * action_method;
+    * action_method_relationship;
+    * action_relationship;
+    * action_request_solution;
+    * action_request_status;
+    * action_resource;
+    * action_resource_relationship;
+    * action_resource_type;
+    * action_status;
+    * directed_action;
+    * executed_action;
+    * supported_item;
+    * versioned_action_request.
+  modifications:
+  - type: ENTITY
+    name: action
+  - type: ENTITY
+    name: action_directive
+  - type: ENTITY
+    name: action_method
+  - type: ENTITY
+    name: action_method_relationship
+  - type: ENTITY
+    name: action_relationship
+  - type: ENTITY
+    name: action_request_solution
+  - type: ENTITY
+    name: action_resource
+  - type: ENTITY
+    name: action_resource_relationship
+  - type: FUNCTION
+    name: acyclic_action_method_relationship
+  - type: FUNCTION
+    name: acyclic_action_relationship
+  - type: FUNCTION
+    name: acyclic_action_resource_relationship
+  - type: ENTITY
+    name: versioned_action_request
+- version: '3'
+  description: |-
+    This also incorporates the modifications of Technical Corrigenda 1 and Technical Corrigenda 2.
+
+    The following EXPRESS schemas have been added:
+
+    * experience_schema;
+    * location_schema;
+    * qualifications_schema.
+  additions:
+  - type: FUNCTION
+    name: acyclic_versioned_action_request_relationship
+  - type: ENTITY
+    name: versioned_action_request_relationship
+- version: '4'
+  description: |-
+    The following entity types had been introduced to support external element references outside the local population of entity instances:
+
+    * component_path_shape_aspect;
+    * externally_defined_item_with_multiple_references;
+    * generic_product_definition_reference;
+    * product_definition_reference;
+    * product_definition_reference_with_local_representation.
+
+    The following entity types had been introduced to support the the characterization of objects:
+
+    * characterized_chain_based_item_within_representation;
+    * characterized_item_within_representation;
+    * characterized_product.
+
+    The following select types from the basic_attribute_schema had been converted into extensible selects and then extended in several other schemas:
+
+    * description_attribute_select;
+    * id_attribute_select;
+    * name_attribute_select;
+    * role_select.
+  additions:
+  - type: TYPE
+    name: acs_description_attribute_select
+  - type: TYPE
+    name: acs_id_attribute_select
+  modifications:
+  - type: ENTITY
+    name: versioned_action_request
+  - type: REFERENCE_FROM
+    name: basic_attribute_schema
+- version: '6'
+  description: ENTITY basic_attribute's description updated.
+  additions:
+  - type: ENTITY
+    name: action_directive_relationship
+  - type: ENTITY
+    name: directed_action_assignment
+  - type: FUNCTION
+    name: acyclic_action_directive_relationship
+  - type: TYPE
+    name: as_role_select
+  modifications:
+  - type: REFERENCE_FROM
+    name: basic_attribute_schema
+- version: '7'
+  description: WHERE 'WR1' expression changed and 'WR2' deleted
+  modifications:
+  - type: FUNCTION
+    name: acyclic_action_method_relationship

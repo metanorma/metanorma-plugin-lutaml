@@ -1,0 +1,13 @@
+{% if things.size > 0 %}
+{% assign section_title = schema_id | append: " function definitions" %}
+
+{% render "templates/resources/basic_title", thing_prefix: thing_prefix, anchor: "functions", title: section_title, depth: depth %}
+
+{% for thing in things %}
+{% assign function_nested_depth = depth | plus: 1 %}
+
+{% render "templates/resources/function", thing: thing, thing_prefix: thing_prefix, depth: function_nested_depth, schema: schema %}
+
+{% endfor %}
+
+{% endif %}

@@ -1,0 +1,26 @@
+
+=== General
+
+{{ thing.remarks }}
+
+{% assign schema_remark = thing.remarks %}
+{% comment %}
+This is purely for the bug at
+https://github.com/lutaml/expressir/issues/108
+
+Once that is fixed the following IF statement should be removed and just use {{ thing.remarks }}
+{% endcomment %}
+
+{% if schema_remark.size == 0 %}
+{% assign schema_remark = thing.remark_items | where: "id", thing.id | first %}
+{% endif %}
+
+{{ schema_remark.remarks }}
+
+{% render "templates/resources/boilerplates", object_type: "schema", id: thing.id %}
+
+{% render "templates/common_files/body_remarks", remark_items: thing.remark_items %}
+
+{% render "templates/common_files/source_code", schema: thing, all_schemas: all_schemas %}
+
+NOTE: See <<{{ thing.id }}_expg1>> for a graphical representation of this schema.

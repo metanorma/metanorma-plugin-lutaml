@@ -1,0 +1,41 @@
+{% capture root_thing_prefix %}{{schema.id}}{% endcapture %}
+
+[[{{root_thing_prefix}}]]
+[type="express"]
+== {{ schema.id }}
+
+{% comment %}
+Introductory content
+{% endcomment %}
+
+{% render "templates/resources/intro", thing: schema, schema_description: true, all_schemas: all_schemas %}
+
+{% render "templates/resources/fund_cons", schema: schema, thing_prefix: root_thing_prefix %}
+
+
+{% comment %}
+Schema definitions
+{% endcomment %}
+
+{% render "templates/resources/constants", schema: schema, schema_id: schema.id, things: schema.constants, thing_prefix: root_thing_prefix, depth: 2 %}
+
+{% render "templates/resources/types", schema: schema, schema_id: schema.id, things: schema.types, thing_prefix: root_thing_prefix, depth: 2 %}
+
+{% render "templates/resources/entities", schema: schema, schema_id: schema.id, things: schema.entities, thing_prefix: root_thing_prefix, depth: 2 %}
+
+{% render "templates/resources/subtype_constraints", schema: schema, schema_id: schema.id, things: schema.subtype_constraints, thing_prefix: root_thing_prefix, depth: 2 %}
+
+{% render "templates/resources/functions", schema: schema, schema_id: schema.id, things: schema.functions, thing_prefix: root_thing_prefix, depth: 2 %}
+
+{% render "templates/resources/procedures", schema: schema, schema_id: schema.id, things: schema.procedures, thing_prefix: root_thing_prefix, depth: 2 %}
+
+{% render "templates/resources/rules", schema: schema, schema_id: schema.id, things: schema.rules, thing_prefix: root_thing_prefix, depth: 2 %}
+
+[underline]#EXPRESS specification:#
+
+[source%unnumbered]
+--
+*)
+END_SCHEMA;  -- {{ schema.id }}
+(*
+--

@@ -1,0 +1,231 @@
+
+[[mapping]]
+=== Mapping specification
+
+In the following, "Application element" designates any entity data type defined
+in <<arm>>, any of its explicit attributes and any subtype constraint. "MIM
+element" designates any entity data type defined in <<mim_express>> or imported
+with a USE FROM statement, from another EXPRESS schema, any of its attributes
+and any subtype constraint defined in <<mim_express>> or imported with a USE
+FROM statement.
+
+This clause contains the mapping specification that defines how each application
+element of this document (see <<arm>>) maps to one or more MIM elements
+(see <<mim_express>>).
+
+The mapping for each application element is specified in a separate subclause
+below. The mapping specification of an attribute of an ARM entity is a subclause
+of the clause that contains the mapping specification of this entity. Each
+mapping specification subclause contains up to five elements.
+
+*Title:* The clause title contains:
+
+* the name of the considered ARM entity or subtype constraint, or
+
+* the name of the considered ARM entity attribute when this attribute refers to
+a type that is not an entity data type or a SELECT type that contains or may
+contain entity data types, or
+
+* a composite expression, `<attribute name>` to `<referred type>`, when this
+attribute refers to a type that is not an entity data type or a SELECT type that
+contains or may contain entity data types.
+
+*MIM element:* This section contains, depending on the considered application
+element:
+
+* the name of one or more MIM entity data types;
+
+* the name of a MIM entity attribute, presented with the syntax
+`<entity name>.<attribute name>`, when the considered ARM attribute refers to a
+type that is not an entity data type or a SELECT type that contains or may
+contain entity data types;
+
+* the term PATH, when the considered ARM entity attribute refers to an entity
+data type or to a SELECT type that contains or may contain entity data types;
+
+* the term IDENTICAL MAPPING, when both application objects involved in an
+application assertion map to the same instance of a MIM entity data type;
+
+* the term NO MAPPING EXTENSION PROVIDED, when the extension to an extensible
+SELECT TYPE has no impact;
+
+* the syntax `/SUPERTYPE(<supertype name>)/`, when the considered ARM entity is
+mapped as its supertype;
+
+* one or more constructs `/SUBTYPE(<subtype name>)/`, when the mapping of the
+considered ARM entity is the union of the mapping of its subtypes.
+
+When the mapping of an application element involves more than one MIM element,
+each of these MIM elements is presented on a separate line in the mapping
+specification, enclosed between parentheses or brackets.
+
+*Source:* This section contains:
+
+* the ISO standard number and part number in which the MIM element is defined,
+for those MIM elements that are defined in a common resource document;
+
+* the ISO standard number and part number of this document, for those
+MIM elements that are defined in the MIM schema of this part.
+
+This section is omitted when the keywords PATH or IDENTICAL MAPPING or NO
+MAPPING EXTENSION PROVIDED are used in the MIM element section.
+
+*Rules:* This section contains the name of one or more global rules that apply
+to the population of the MIM entity data types listed in the MIM element section
+or in the reference path. When no rule applies, this section is omitted.
+
+A reference to a global rule may be followed by a reference to the subclause in
+which the rule is defined.
+
+*Constraint:* This section contains the name of one or more subtype constraints
+that apply to the population of the MIM entity data types listed in the MIM
+element section or in the reference path. When no subtype constraint applies,
+this section is omitted.
+
+A reference to a subtype constraint may be followed by a reference to the
+subclause in which the subtype constraint is defined.
+
+*Reference path:* This section contains:
+
+* the reference path to its supertypes in the common resources, for each MIM
+element created within this document;
+
+* the specification of the relationships between MIM elements, when the mapping
+of an application element requires to relate instances of several MIM entity
+data types. In such a case, each line in the reference path documents the role
+of a MIM element relative to the referring MIM element or to the next referred
+MIM element.
+
+For the expression of reference paths and of the constraints between MIM
+elements, the following notational conventions apply:
+
+`[]`::
+enclosed section constrains multiple MIM elements or sections of the reference
+path are required to satisfy an information requirement;
+
+`()`::
+enclosed section constrains multiple MIM elements or sections of the reference
+path are identified as alternatives within the mapping to satisfy an information
+requirement;
+
+`{}`::
+enclosed section constrains the reference path to satisfy an information
+requirement;
+
+`<>`::
+enclosed section constrains at one or more required reference path;
+
+`||`::
+enclosed section constrains the supertype entity;
+
+`\->`::
+the attribute, whose name precedes the `\->` symbol, references the entity or
+select type whose name follows the `\->` symbol;
+
+`<&#x200c;-`::
+the entity or select type, whose name precedes the `<&#x200c;-` symbol, is referenced by
+the entity attribute whose name follows the `<&#x200c;-` symbol;
+
+`[i]`::
+the attribute, whose name precedes the `[i]` symbol, is an aggregate; any element
+of that aggregate is referred to;
+
+`[n]`::
+the attribute, whose name precedes the `[n]` symbol, is an ordered aggregate;
+member n of that aggregate is referred to;
+
+`\=>`::
+the entity, whose name precedes the `\=>` symbol, is a supertype of the entity
+whose name follows the `\=>` symbol;
+
+`<&#x200c;=`::
+the entity, whose name precedes the `<&#x200c;=` symbol, is a subtype of the entity whose
+name follows the `<&#x200c;=` symbol;
+
+`=`::
+the string, select, or enumeration type is constrained to a choice or value;
+
+`\`::
+the reference path expression continues on the next line;
+
+`*`::
+one or more instances of the relationship entity data type may be assembled
+in a relationship tree structure. The path between the relationship entity and
+the related entities, is enclosed with braces;
+
+`--`::
+the text following is a comment or introduces a clause reference;
+
+`*>`::
+the select or enumeration type, whose name precedes the `\*>` symbol, is
+extended into the select or enumeration type whose name follows the `*>` symbol;
+
+`<*`::
+the select or enumeration type, whose name precedes the `<*` symbol, is an
+extension of the select or enumeration type whose name follows the `<*` symbol;
+
+`!{}`::
+section enclosed by `{}` indicates a negative constraint placed on the mapping.
+
+The definition and use of mapping templates are not supported in the present
+version of the application modules. However, use of predefined templates
+/MAPPING_OF/, /SUBTYPE/, and /SUPERTYPE/ is supported.
+
+{% raw %}
+
+{% for schema in context.schemas %}
+{% assign schema = schema[0] %}
+{% break %}
+{% endfor %}
+
+{% for item in data.ae %}
+
+{% capture item_entity -%}
+<<{{ schema }}.{{ item.entity }},{{ item.entity }}>>
+{%- endcapture %}
+
+==== {{ item_entity }}
+
+MIM element:: {{ item.aimelt.content }}
+
+Source:: {{ item.source.content }}
+
+{% for subitem in item.aa %}
+
+{% assign subitem_attr_name = subitem.attribute %}
+{% if subitem_attr_name contains "RENAMED" %}
+{% assign subitem_attr_name = subitem_attr_name | split: "RENAMED" | last | strip %}
+{% else %}
+{% assign subitem_attr_name = subitem_attr_name | split: "." | last %}
+{% endif %}
+
+{% capture subitem_attr -%}
+<<{{ schema }}.{{ item.entity }}.{{ subitem_attr_name }},{{ subitem.attribute }}>>
+{%- endcapture %}
+
+{% capture subitem_assert -%}
+<<{{ schema }}.{{ item.entity }}.{{ subitem.assertion_to }},{{ subitem.assertion_to }}>>
+{%- endcapture %}
+
+===== {% unless subitem.assertion_to %} {{ subitem_attr }}{% else %}{{ item_entity }} to {{ subitem_assert }} (as {{ subitem_attr }}){% endunless %}
+
+MIM element:: {{ subitem.aimelt.content }}
+
+{% unless subitem.assertion_to %}
+Source:: {{ subitem.source.content }}
+{% else %}
+
+Reference path::
++
+[source%unnumbered]
+--
+{{ subitem.refpath.content }}
+--
+
+{% endunless %}
+
+{% endfor %}
+
+{% endfor %}
+
+{% endraw %}

@@ -1,0 +1,118 @@
+(*
+
+ISO 10303 TC184/SC4/WG12 N10234
+
+EXPRESS Source:
+ISO 10303-41 ed6 Fundamentals of product description and support - Language schema
+
+The following permission notice and disclaimer shall be included in all copies of this EXPRESS schema ("the Schema"),
+and derivations of the Schema:
+
+Copyright ISO 2019  All rights reserved
+Permission is hereby granted, free of charge in perpetuity, to any person obtaining a copy of the Schema,
+to use, copy, modify, merge and distribute free of charge, copies of the Schema for the purposes of developing,
+implementing, installing and using software based on the Schema, and to permit persons to whom the Schema is furnished to do so,
+subject to the following conditions:
+
+THE SCHEMA IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SCHEMA OR THE
+USE OR OTHER DEALINGS IN THE SCHEMA.
+
+In addition, any modified copy of the Schema shall include the following notice:
+
+THIS SCHEMA HAS BEEN MODIFIED FROM THE SCHEMA DEFINED IN
+ISO 10303-41 ed4 Fundamentals of product description and support - Language schema
+AND SHOULD NOT BE INTERPRETED AS COMPLYING WITH THAT STANDARD
+*)
+
+SCHEMA language_schema '{iso standard 10303 part(41) version(1) object(1) location-schema(13)}';
+
+REFERENCE FROM group_schema   -- ISO 10303-41
+  (group);
+
+
+ENTITY language
+	SUBTYPE OF (group);
+	WHERE
+		WR1: SELF\group.name <> '';
+	-- Informal proposition
+--- IP1: The name attribute of the language shall be an alpha-3 bibliographic code of ISO 639-2.
+--- IP2: If present, the description attribute shall identify a country with an alpha-2 code specified in ISO 3166-1.
+
+END_ENTITY;
+
+END_SCHEMA;
+
+(*"language_schema.__published_in"
+ISO 10303-41:2025 ED8
+*)
+
+(*"language_schema.__identifier"
+ISO/TC 184/SC 4/WG 12 N10234
+*)
+
+(*"language_schema.__status"
+IS
+*)
+
+(*"language_schema.__title"
+fundamentals_of_product_description_and_support
+*)
+
+
+(*"language_schema"
+The subject of the *language_schema* specifies the data structure for the representation of language support.
+*)
+(*"language_schema.__fund_cons"
+
+This specifies the representation of the language used in text attributes and the association of translations to these texts.
+
+*)
+(*"language_schema.__expressg"
+[[language_schema_expg1]]
+[.svgmap]
+====
+image::language_schemaexpg1.svg[]
+
+* <<express:group_schema>>; 1
+* <<express:language_schema>>; 2
+====
+
+*)
+(*"language_schema.__expressg"
+[[language_schema_expg2]]
+[.svgmap]
+====
+image::language_schemaexpg2.svg[]
+
+* <<express:group_schema.group>>; 1
+* <<express:language_schema.language>>; 2
+====
+*)
+
+(*"language_schema.language"
+A **language** is a type of <<express:group_schema.group,group>> that is a specification of the language in which an information is given. The group shall specify in its name a language code according to ISO 639-2, and, if present, in its description a country code according to ISO 3166-1.
+*)
+
+
+(*"language_schema.language.wr:WR1"
+The name attribute of the language shall be specified.
+*)
+
+
+(*"language_schema.language.wr:IP1"
+The name attribute of the language shall be an alpha-3 bibliographic code of ISO 639-2.
+*)
+
+
+(*"language_schema.language.wr:IP2"
+If present, the description attribute shall identify a country with an alpha-2 code specified in ISO 3166-1.
+*)
+
+
+(*"language_schema.__schema_file"
+data/resource_docs/fundamentals_of_product_description_and_support/resource.xml
+*)

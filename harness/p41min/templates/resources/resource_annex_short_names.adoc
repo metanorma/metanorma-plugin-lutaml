@@ -1,0 +1,10 @@
+
+[[annex_entity_names]]
+[appendix,obligation=normative]
+== Short names of entities
+
+Requirements on the use of the short names are found in the implementation
+methods included in ISO 10303. EXPRESS entity names and the equivalent short
+names are available from:
+
+http://standards.iso.org/iso/10303/tech/short_names/short-names.txt

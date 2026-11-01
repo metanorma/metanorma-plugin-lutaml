@@ -1,0 +1,34 @@
+[[annex_identifiers]]
+[appendix,obligation=normative]
+== Information object registration
+
+=== Document identification
+
+To provide for unambiguous identification of an information object in an open
+system, the object identifier
+
+{ iso standard {docnumber} part({partnumber}) version({edition}) }
+
+is assigned to this document. The meaning of this value shall be as specified in
+ISO 10303-1 which extends ISO/IEC 8824-1.
+
+=== Schema identification
+
+[lutaml_express, schemas, context, config_yaml=schemas.yaml]
+----
+{% for schema in ordered_schemas %}
+{% assign schemaname = schema.id %}
+
+==== {{ schemaname }} schema identification
+
+To provide for unambiguous identification of the schema specifications given in
+this application module in an open information system, the object identifier is
+assigned as follows:
+
+{{ schema.version.value }}
+
+is assigned to the {{ schemaname }} schema. The meaning of this value shall be
+as specified in ISO 10303-1 which extends ISO/IEC 8824-1.
+
+{% endfor %}
+----

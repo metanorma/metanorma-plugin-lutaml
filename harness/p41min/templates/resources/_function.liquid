@@ -1,0 +1,38 @@
+{% capture function_thing_prefix %}{{thing_prefix}}.{{thing.id}}{% endcapture %}
+
+{% render "templates/resources/basic_thing", depth: depth, thing_prefix: thing_prefix, thing: thing, schema: schema %}
+
+{% assign found = false %}
+
+{% if thing.parameters.size > 0 %}
+{% render "templates/resources/attribute_definitions", things: thing.parameters, object_type: "function", thing_prefix: function_thing_prefix %}
+
+{% assign found = true %}
+
+{% endif %}
+
+{% if thing.types.size > 0 %}
+{% render "templates/resources/attribute_definitions", things: thing.types, object_type: "function", found: found, thing_prefix: function_thing_prefix %}
+
+{% assign found = true %}
+
+{% endif %}
+
+{% if thing.constants.size > 0 %}
+{% render "templates/resources/attribute_definitions", things: thing.constants, object_type: "function", found: found, thing_prefix: function_thing_prefix %}
+
+{% assign found = true %}
+
+{% endif %}
+
+{% if thing.variables.size > 0 %}
+{% render "templates/resources/attribute_definitions", things: thing.variables, object_type: "function", found: found, thing_prefix: function_thing_prefix %}
+
+{% assign found = true %}
+
+{% endif %}
+
+{% if thing.remark_items.size > 0 %}
+{% render "templates/resources/attribute_definitions", things: thing.remark_items, object_type: "function", found: found, thing_prefix: function_thing_prefix %}
+
+{% endif %}

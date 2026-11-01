@@ -1,0 +1,65 @@
+[[introduction]]
+== Introduction
+
+include::../../../templates/introduction_10303.adoc[]
+
+include::../../../templates/resources/resource_introduction_subdivisions.adoc[]
+
+The generic product description resources provide an overall organization for the integrated resources that are documented in other parts of ISO 10303. They specify resource constructs that provide consistent representation of facts about products in different application-specific views.
+
+The generic management resources support the description of information that is used to manage and control product data. Together, the generic product description resources and the generic management resources are the foundations upon which application interpreted models, the normative conceptual schemas of application protocols, are built. Application interpreted models specialize selected generic management resources to elements of the integrated product description resources to satisfy the requirements that are specified in the application reference model.
+
+The support resources are a set of shared resource constructs that are used by the ISO 10303 integrated resources. They provide an underlying consistency across the resources of ISO 10303.
+
+include::../../../templates/introduction_express_conventions.adoc[]
+
+The relationships of the schemas in this document to other schemas that define the integrated resources of ISO 10303 are illustrated in Figure 1 using the EXPRESS-G notation. EXPRESS-G is defined in ISO 10303-11.
+
+The following schemas shown in Figure 1 are not found in this document, but are found as specified:
+
+
+* material_property_definition_schema is found in ISO 10303-45;
+
+* process_property_schema is found in ISO 10303-49;
+
+* representation_schema is found in ISO 10303-43.
+
+
+The schemas illustrated in Figure 1 are components of the integrated resources.
+
+
+.The schemas of this document
+[.svgmap]
+====
+
+image::schema_diagexpg1.svg[]
+
+* <<express:application_context_schema>>; 1
+* <<express:product_definition_schema>>; 2
+* <<express:product_property_definition_schema>>; 3
+* <<express:product_property_representation_schema>>; 4
+* <<express:material_property_definition_schema>>; 5
+* <<express:representation_schema>>; 6
+* <<express:process_property_schema>>; 7
+* <<express:date_time_schema>>; 8
+* <<express:document_schema>>; 9
+* <<express:effectivity_schema>>; 10
+* <<express:support_resource_schema>>; 11
+* <<express:external_reference_schema>>; 12
+* <<express:measure_schema>>; 13
+* <<express:basic_attribute_schema>>; 14
+* <<express:experience_schema>>; 15
+* <<express:qualifications_schema>>; 16
+* <<express:action_schema>>; 17
+* <<express:group_schema>>; 18
+* <<express:approval_schema>>; 19
+* <<express:person_organization_schema>>; 20
+* <<express:security_classification_schema>>; 21
+* <<express:contract_schema>>; 22
+* <<express:certification_schema>>; 23
+* <<express:location_schema>>; 24
+* <<express:uuid_attribute_schema>>; 25
+* <<express:management_resources_schema>>; 26
+====
+
+

@@ -1,0 +1,41 @@
+{% if source %}
+[underline]#EXPRESS specification:#
+
+[source%unnumbered]
+--
+*)
+{{ source }}
+(*
+--
+
+{% elsif schema and all_schemas %}
+
+{% capture empty_line %}
+
+{% endcapture %}
+
+[underline]#EXPRESS specification:#
+
+[source%unnumbered]
+--
+SCHEMA {{ schema.id -}};
+{{- empty_line -}}
+{%- for interface in schema.interfaces -%}
+{%- assign schema_name = interface.schema.id -%}
+{%- assign ref_schemas = all_schemas | where: "id", schema_name -%}
+{%- assign reference   = ref_schemas[0].remark_items | where: "id", "__published_in" -%}
+{%- assign reference   = reference[0].remarks[0] | replace_regex: ":.+$", "" -%}
+
+{%- if reference == "" -%}
+{%- assign reference = ref_schemas[0].version.value | replace_regex: "^.+?iso standard (\d+) part\((\d+)\) version.+","ISO \1-\2" -%}
+{%- endif -%}
+
+{%- if reference != "" -%}
+-- The {{ interface.schema.id }} is defined in {{ reference }}
+{{ interface.source }}
+{% endif -%}
+
+{% endfor %}
+--
+
+{% endif %}

@@ -1,0 +1,6 @@
+
+[[usage_info]]
+[appendix,obligation=informative]
+== Application module implementation and usage guide
+
+An Application module implementation and usage guide has not been provided.

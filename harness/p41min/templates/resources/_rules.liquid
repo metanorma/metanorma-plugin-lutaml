@@ -1,0 +1,14 @@
+{% if things.size > 0 %}
+
+{% assign section_title = schema_id | append: " rule definitions" %}
+
+{% render "templates/resources/basic_title", thing_prefix: thing_prefix, anchor: "rules", title: section_title, depth: depth %}
+
+{% for thing in things %}
+{% assign rule_nested_depth = depth | plus: 1 %}
+
+{% render "templates/resources/rule", thing: thing, thing_prefix: thing_prefix, depth: rule_nested_depth, schema: schema %}
+
+{% endfor %}
+
+{% endif %}

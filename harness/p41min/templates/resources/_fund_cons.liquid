@@ -1,0 +1,19 @@
+
+{% assign fund_cons_items = schema.remark_items | where: "id", "__fund_cons" %}
+
+{% if fund_cons_items.size > 0 %}
+[[{{thing_prefix}}_funds]]
+=== Fundamental concepts and assumptions
+
+{% for item in fund_cons_items %}
+{% if item.remarks.size > 0 %}
+{% for remark in item.remarks %}
+
+{{remark}}
+
+{% endfor %}
+{% endif %}
+
+{% endfor %}
+
+{% endif %}

@@ -1,0 +1,53 @@
+{% if things.size > 0 %}
+
+{% liquid
+assign subtitle = "Attribute definitions"
+
+if object_type == "function"
+assign subtitle = "Argument definitions"
+endif
+
+assign no_attributes = false
+for thing in things
+if thing.remarks.size > 0 and thing.id == "__note" or thing.id == "__example" or thing.id == "__figure"
+assign no_attributes = true
+break
+endif
+endfor
+
+assign remark_not_found = true
+for thing in things
+if thing.remarks.size > 0
+assign remark_not_found = false
+break
+endif
+endfor
+
+%}
+
+{% unless found or no_attributes or remark_not_found %}
+[underline]#{{ subtitle }}:#
+{% endunless %}
+
+{% for thing in things %}
+
+{% if thing.remarks.size > 0 and
+      thing.id != "__note" and
+      thing.id != "__example" and
+      thing.id != "__figure" %}
+{% unless thing.id == "return" or
+          thing.id == "RETURN" or
+          thing.id == "RETURNS" %}
+
+[[{{thing_prefix}}.{{thing.id}}]]
+[type=express]
+**{{ thing.id }}**: {{ thing.remarks }}
+
+{% endunless %}
+{% endif %}
+
+{% render "templates/common_files/body_remarks", remark_items: thing.remark_items %}
+
+{% endfor %}
+
+{% endif %}

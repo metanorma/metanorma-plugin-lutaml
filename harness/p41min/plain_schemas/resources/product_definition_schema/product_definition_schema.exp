@@ -1,0 +1,1494 @@
+(*
+ISO 10303 TC184/SC4/WG12 N10887
+
+EXPRESS Source:
+ISO 10303-41 ed7 Fundamentals of product description and support - Product definition schema
+
+The following permission notice and disclaimer shall be included in all copies of this EXPRESS schema ("the Schema"),
+and derivations of the Schema:
+
+Copyright ISO 2021  All rights reserved
+Permission is hereby granted, free of charge in perpetuity, to any person obtaining a copy of the Schema,
+to use, copy, modify, merge and distribute free of charge, copies of the Schema for the purposes of developing,
+implementing, installing and using software based on the Schema, and to permit persons to whom the Schema is furnished to do so,
+subject to the following conditions:
+
+THE SCHEMA IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SCHEMA OR THE
+USE OR OTHER DEALINGS IN THE SCHEMA.
+
+In addition, any modified copy of the Schema shall include the following notice:
+
+THIS SCHEMA HAS BEEN MODIFIED FROM THE SCHEMA DEFINED IN
+ISO 10303-41 ed7 Fundamentals of product description and support - Product definition schema
+AND SHOULD NOT BE INTERPRETED AS COMPLYING WITH THAT STANDARD
+*)
+
+SCHEMA product_definition_schema '{iso standard 10303 part(41) version(10) object(1) product-definition-schema(18)}';
+
+  REFERENCE FROM application_context_schema (   -- ISO 10303-41
+    product_context,
+    product_definition_context);
+  REFERENCE FROM basic_attribute_schema (   -- ISO 10303-41
+    get_id_value,
+    get_name_value,
+    id_attribute,
+    id_attribute_select,
+    name_attribute,
+    name_attribute_select);
+  REFERENCE FROM document_schema (   -- ISO 10303-41
+    document);
+  REFERENCE FROM effectivity_schema (   -- ISO 10303-41
+    effectivity);
+  REFERENCE FROM external_reference_schema (   -- ISO 10303-41
+    external_source);
+  REFERENCE FROM product_property_definition_schema (   -- ISO 10303-41
+    characterized_object);
+  REFERENCE FROM support_resource_schema (   -- ISO 10303-41
+    bag_to_set,
+    identifier,
+    label,
+    text);
+
+
+  TYPE product_definition_or_reference = EXTENSIBLE GENERIC_ENTITY SELECT (
+    product_definition,
+    generic_product_definition_reference);
+  END_TYPE;
+
+  TYPE pds_id_attribute_select = SELECT BASED_ON id_attribute_select WITH (
+    product_category);
+  END_TYPE;
+  TYPE pds_name_attribute_select = SELECT BASED_ON name_attribute_select WITH (
+    product_definition,
+    product_definition_substitute);
+  END_TYPE;
+
+  TYPE source = ENUMERATION OF (made, bought, not_known);
+  END_TYPE;
+
+  ENTITY alternative_solution_relationship
+  	SUBTYPE of (product_definition_formation_relationship);
+  	relation_type	: STRING;
+  WHERE
+	WR1: acyclic_alternative_solution_relationship(SELF, [SELF\product_definition_formation_relationship.related_product_definition_formation], 'PRODUCT_DEFINITION_SCHEMA.ALTERNATIVE_SOLUTION_RELATIONSHIP');
+  END_ENTITY;
+
+  ENTITY characterized_product
+    SUBTYPE OF (characterized_object, product);
+  END_ENTITY;
+
+  ENTITY generic_product_definition_reference
+    ABSTRACT SUPERTYPE OF ( ONEOF ( product_definition_reference, product_definition_reference_with_local_representation) );
+    source : external_source;
+  END_ENTITY;
+
+  ENTITY product;
+    id : identifier;
+    name : label;
+    description : OPTIONAL text;
+    frame_of_reference : SET [1:?] OF product_context;
+  END_ENTITY;
+
+  ENTITY product_category;
+    name : label;
+    description : OPTIONAL text;
+  DERIVE
+    id : identifier := get_id_value(SELF);
+  WHERE
+    WR1: SIZEOF(USEDIN(SELF, 'BASIC_ATTRIBUTE_SCHEMA.' + 'ID_ATTRIBUTE.IDENTIFIED_ITEM')) <= 1;
+  END_ENTITY;
+
+  ENTITY product_category_relationship;
+    name : label;
+    description : OPTIONAL text;
+    category : product_category;
+    sub_category : product_category;
+  WHERE
+    WR1: acyclic_product_category_relationship(SELF, [SELF.sub_category]);
+  END_ENTITY;
+
+  ENTITY product_definition;
+    id : identifier;
+    description : OPTIONAL text;
+    formation : product_definition_formation;
+    frame_of_reference : product_definition_context;
+  DERIVE
+    name : label := get_name_value(SELF);
+  WHERE
+    WR1: SIZEOF(USEDIN(SELF, 'BASIC_ATTRIBUTE_SCHEMA.' + 'NAME_ATTRIBUTE.NAMED_ITEM')) <= 1;
+  END_ENTITY;
+
+  ENTITY product_definition_context_association;
+    definition : product_definition;
+    frame_of_reference : product_definition_context;
+    role : product_definition_context_role;
+  END_ENTITY;
+
+  ENTITY product_definition_context_role;
+    name : label;
+    description : OPTIONAL text;
+  END_ENTITY;
+
+  ENTITY product_definition_effectivity
+    SUBTYPE OF (effectivity);
+    usage : product_definition_relationship;
+  WHERE
+    WR1: SIZEOF(USEDIN(SELF, 'MANAGEMENT_RESOURCES_SCHEMA.' + 'EFFECTIVITY_ASSIGNMENT.ASSIGNED_EFFECTIVITY')) = 0;
+  END_ENTITY;
+
+  ENTITY product_definition_formation;
+    id : identifier;
+    description : OPTIONAL text;
+    of_product : product;
+  UNIQUE
+    UR1: id, of_product;
+  END_ENTITY;
+
+ENTITY final_solution
+	SUBTYPE OF (product_definition_formation);
+	status			: STRING;
+ INVERSE
+	specification 	: SET [1:?] OF product_definition FOR formation;
+END_ENTITY;
+
+  ENTITY product_definition_formation_relationship;
+    id : identifier;
+    name : label;
+    description : OPTIONAL text;
+    relating_product_definition_formation : product_definition_formation;
+    related_product_definition_formation : product_definition_formation;
+  END_ENTITY;
+
+  ENTITY product_definition_formation_with_specified_source
+    SUBTYPE OF (product_definition_formation);
+    make_or_buy : source;
+  END_ENTITY;
+
+  ENTITY product_definition_relationship;
+    id : identifier;
+    name : label;
+    description : OPTIONAL text;
+    relating_product_definition : product_definition_or_reference;
+    related_product_definition : product_definition_or_reference;
+  END_ENTITY;
+
+  ENTITY product_definition_relationship_relationship;
+    id : identifier;
+    name : label;
+    description : OPTIONAL text;
+    relating : product_definition_relationship;
+    related : product_definition_relationship;
+  END_ENTITY;
+
+  ENTITY product_definition_reference
+    SUBTYPE OF (generic_product_definition_reference);
+    product_id : identifier;
+    product_definition_formation_id : identifier;
+    product_definition_id : identifier;
+    id_owning_organization_name : OPTIONAL label;
+  END_ENTITY;
+
+  ENTITY product_definition_reference_with_local_representation
+    SUBTYPE OF (generic_product_definition_reference, product_definition);
+  END_ENTITY;
+
+  ENTITY product_definition_substitute;
+    description : OPTIONAL text;
+    context_relationship : product_definition_relationship;
+    substitute_definition : product_definition;
+  DERIVE
+    name : label := get_name_value(SELF);
+  WHERE
+    WR1: context_relationship.related_product_definition :<>: substitute_definition;
+    WR2: SIZEOF(USEDIN(SELF, 'BASIC_ATTRIBUTE_SCHEMA.' + 'NAME_ATTRIBUTE.NAMED_ITEM')) <= 1;
+  END_ENTITY;
+
+  ENTITY product_definition_with_associated_documents
+    SUBTYPE OF (product_definition);
+    documentation_ids : SET [1:?] OF document;
+  END_ENTITY;
+
+  ENTITY product_related_product_category
+    SUBTYPE OF (product_category);
+    products : SET [1:?] OF product;
+  END_ENTITY;
+
+  ENTITY product_relationship;
+    id : identifier;
+    name : label;
+    description : OPTIONAL text;
+    relating_product : product;
+    related_product : product;
+  END_ENTITY;
+
+FUNCTION acyclic_alternative_solution_relationship (relation : alternative_solution_relationship; relatives : SET [1:?] OF product_definition_formation; specific_relation : STRING):BOOLEAN;
+    LOCAL
+      x : SET OF alternative_solution_relationship;
+    END_LOCAL;
+
+    IF relation.relating_product_definition_formation IN relatives THEN
+      RETURN (FALSE);
+    END_IF;
+    x := QUERY(asr <* bag_to_set(USEDIN(relation.relating_product_definition_formation, 'PRODUCT_DEFINITION_SCHEMA.' + 'PRODUCT_DEFINITION_FORMATION_RELATIONSHIP.' + 'RELATED_PRODUCT_DEFINITION_FORMATION')) | specific_relation IN TYPEOF(asr));
+    REPEAT i := 1 TO HIINDEX(x);
+      IF NOT acyclic_alternative_solution_relationship(x[i], relatives + relation.relating_product_definition_formation, specific_relation) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_REPEAT;
+    RETURN (TRUE);
+  END_FUNCTION;
+
+  FUNCTION acyclic_product_category_relationship (relation : product_category_relationship; children : SET OF product_category):BOOLEAN;
+    LOCAL
+      x : SET OF product_category_relationship;
+      local_children : SET OF product_category;
+    END_LOCAL;
+
+    REPEAT i := 1 TO HIINDEX(children);
+      IF relation.category :=: children[i] THEN
+        RETURN (FALSE);
+      END_IF;
+    END_REPEAT;
+    x := bag_to_set(USEDIN(relation.category, 'PRODUCT_DEFINITION_SCHEMA.' + 'PRODUCT_CATEGORY_RELATIONSHIP.SUB_CATEGORY'));
+    local_children := children + relation.category;
+    IF SIZEOF(x) > 0 THEN
+      REPEAT i := 1 TO HIINDEX(x);
+        IF NOT acyclic_product_category_relationship(x[i], local_children) THEN
+          RETURN (FALSE);
+        END_IF;
+      END_REPEAT;
+    END_IF;
+    RETURN (TRUE);
+  END_FUNCTION;
+
+  FUNCTION acyclic_product_definition_formation_relationship (relation : product_definition_formation_relationship; relatives : SET [1:?] OF product_definition_formation; specific_relation : STRING):BOOLEAN;
+    LOCAL
+      x : SET OF product_definition_formation_relationship;
+    END_LOCAL;
+
+    IF relation.relating_product_definition_formation IN relatives THEN
+      RETURN (FALSE);
+    END_IF;
+    x := QUERY(pdf <* bag_to_set(USEDIN(relation.relating_product_definition_formation, 'PRODUCT_DEFINITION_SCHEMA.' + 'PRODUCT_DEFINITION_FORMATION_RELATIONSHIP.' + 'RELATED_PRODUCT_DEFINITION_FORMATION')) | specific_relation IN TYPEOF(pdf));
+    REPEAT i := 1 TO HIINDEX(x);
+      IF NOT acyclic_product_definition_formation_relationship(x[i], relatives + relation.relating_product_definition_formation, specific_relation) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_REPEAT;
+    RETURN (TRUE);
+  END_FUNCTION;
+
+  FUNCTION acyclic_product_definition_relationship (relation : product_definition_relationship; relatives : SET [1:?] OF product_definition_or_reference; specific_relation : STRING):BOOLEAN;
+    LOCAL
+      x : SET OF product_definition_relationship;
+    END_LOCAL;
+
+    IF relation.relating_product_definition IN relatives THEN
+      RETURN (FALSE);
+    END_IF;
+    x := QUERY(pd <* bag_to_set(USEDIN(relation.relating_product_definition, 'PRODUCT_DEFINITION_SCHEMA.' + 'PRODUCT_DEFINITION_RELATIONSHIP.' + 'RELATED_PRODUCT_DEFINITION')) | specific_relation IN TYPEOF(pd));
+    REPEAT i := 1 TO HIINDEX(x);
+      IF NOT acyclic_product_definition_relationship(x[i], relatives + relation.relating_product_definition, specific_relation) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_REPEAT;
+    RETURN (TRUE);
+  END_FUNCTION;
+
+  FUNCTION acyclic_product_relationship (relation : product_relationship; relatives : SET [1:?] OF product; specific_relation : STRING):BOOLEAN;
+    LOCAL
+      x : SET OF product_relationship;
+    END_LOCAL;
+
+    IF relation.relating_product IN relatives THEN
+      RETURN (FALSE);
+    END_IF;
+    x := QUERY(prod <* bag_to_set(USEDIN(relation.relating_product, 'PRODUCT_DEFINITION_SCHEMA.' + 'PRODUCT_RELATIONSHIP.' + 'RELATED_PRODUCT')) | specific_relation IN TYPEOF(prod));
+    REPEAT i := 1 TO HIINDEX(x);
+      IF NOT acyclic_product_relationship(x[i], relatives + relation.relating_product, specific_relation) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_REPEAT;
+    RETURN (TRUE);
+  END_FUNCTION;
+
+  FUNCTION categories_of_product
+   (obj : product) : SET OF STRING;
+  LOCAL
+    category_assignments: BAG OF product_category;
+    categories: SET OF STRING:=[];
+  END_LOCAL;
+    category_assignments := USEDIN(obj, 'PRODUCT_DEFINITION_SCHEMA.' + 'PRODUCT_RELATED_PRODUCT_CATEGORY.PRODUCTS');
+    REPEAT i := LOINDEX(category_assignments) TO HIINDEX(category_assignments) BY 1;
+      categories := categories + category_assignments[i].name;
+    END_REPEAT;
+    RETURN(categories);
+  END_FUNCTION;
+
+  FUNCTION get_product_definitions (c_def_instance : product):SET OF product_definition;
+    LOCAL
+      pd_set : SET OF product_definition_formation := [];
+      pdr_set : SET OF product_definition := [];
+    END_LOCAL;
+
+    pd_set := bag_to_set(USEDIN(c_def_instance, 'PRODUCT_DEFINITION_SCHEMA.PRODUCT_DEFINITION_FORMATION.OF_PRODUCT'));
+    IF (SIZEOF(pd_set) < 1) THEN
+      RETURN (pdr_set);
+    END_IF;
+    REPEAT i := 1 TO HIINDEX(pd_set);
+      pdr_set := pdr_set + bag_to_set(USEDIN(pd_set[i], 'PRODUCT_DEFINITION_SCHEMA.PRODUCT_DEFINITION.FORMATION'));
+    END_REPEAT;
+    RETURN (pdr_set);
+  END_FUNCTION;
+
+END_SCHEMA;
+
+(*"product_definition_schema.__published_in"
+ISO 10303-41:2025 ED8
+*)
+
+(*"product_definition_schema.__identifier"
+ISO/TC 184/SC 4/WG 12 N10887
+*)
+
+(*"product_definition_schema.__supersedes"
+ISO/TC 184/SC 4/WG 12 N10467
+*)
+
+(*"product_definition_schema.__status"
+IS
+*)
+
+(*"product_definition_schema.__title"
+fundamentals_of_product_description_and_support
+*)
+
+
+(*"product_definition_schema"
+The subject of the *product_definition_schema* is the identification of products, the categorization of products, definitions of products, and the relationships among them. This schema provides for the generic aspects of product definition.
+
+[example]
+====
+The identification of products and definitions of products, the grouping of products according to classification schemes and the definition of various kinds of relationship between products are all examples of generic aspects of product definition.
+====
+
+*)
+(*"product_definition_schema.__fund_cons"
+
+The use of the entity data types of this schema to represent products is specified in the viewpoint as defined by the requirements of an annotated EXPRESS schema that uses or specializes this document. Every product need not be represented by an instance of the entity data type *product*. Some products may be represented by other constructs in the integrated resources.
+
+[example]
+====
+The constructs *product_definition_formation* and *product_definition*, defined in the *product_definition_schema* of this document, are examples of other entity data types that may represent a product.
+====
+
+[example]
+====
+The construct *action_resource*, defined in ISO 10303-49, is an example of an entity data type that may represent a product.
+====
+
+A single product may have multiple groups of definitions associated with it; each group is valid in a given application context.
+
+[example]
+====
+An application context may be the manufacture of ball-point pens. A particular design of ball-point pen has multiple versions. Each version is described through a group of product definitions. An older version has a solid cap whereas a more recent version has a hole in the cap to prevent people from choking if they swallow it. The characteristics of the two versions would be different from each other because the later version would have a hole in the cap whereas the earlier version would not. This schema could be used to define the ball-point pen with a solid cap as one product and the one with a hole in the cap as another. On the other hand it could also be used to define both pens as two versions of a single product. The approach taken would depend upon the requirements of the application context.
+====
+
+The definition of a product may include the properties that characterize it.
+
+[example]
+====
+An integrated circuit product will have a functional definition represented by a circuit schematic diagram and a physical definition represented by a circuit layout diagram.
+====
+
+Definitions of products may be related to each other in various ways. This document provides the resources needed to identify the relationships among products and to be able to characterize those relationships.
+
+[example]
+====
+The ball-point pen cap would be related in an assembly relationship to the ball-point pen itself and one of the caps could be substituted for the other in some circumstances.
+====
+
+There are two ways to represent the concept of real object:
+
+* a real object can be represented by an instance of *product* if the subject of an annotated Express schema is concerned with real objects or if it is needed to describe a real object at various life-cycle stages and in various configurations; in this case, if an real object is identified by a serial number, this serial number can be stored in the id attribute of the *product*;
+
+[example]
+====
+An airplane, in service during 30 years, may have different configurations during its life.
+====
+
+* a real object can be represented by an instance of *product_definition* if the subject of an annotated Express schema is primarily concerned with the design phase of products and if the concept of real object is considered as a particular stage in the design phase of a product; in this case, if a real object is identified by a serial number, this *serial_number* can be stored in the id attribute of the *product_definition*.
+
+[example]
+====
+A prototype may be considered as a particular definition of a product.
+====
+
+Product definition facts are independent of properties. The ways in which these facts may be combined are prescribed by the relationships that are defined in this schema. Each product definition fact can be interpreted in any application context; the ways in which these facts are to be interpreted are prescribed in annotated EXPRESS schemas that use or specialise the resources defined in this document.
+
+[NOTE]
+--
+An example of the way in which this schema may be used is given in annex F.1.
+--
+
+*)
+(*"product_definition_schema.__expressg"
+[[product_definition_schema_expg1]]
+[.svgmap]
+====
+image::product_definition_schemaexpg1.svg[]
+
+* <<express:basic_attribute_schema>>; 1
+* <<express:application_context_schema>>; 2
+* <<express:product_property_definition_schema>>; 3
+* <<express:product_definition_schema>>; 4
+* <<express:support_resource_schema>>; 5
+* <<express:document_schema>>; 6
+* <<express:effectivity_schema>>; 7
+* <<express:external_reference_schema>>; 8
+====
+
+*)
+(*"product_definition_schema.__expressg"
+[[product_definition_schema_expg2]]
+[.svgmap]
+====
+image::product_definition_schemaexpg2.svg[]
+
+* <<express:product_definition_schema.pds_id_attribute_select>>; 1
+* <<product_definition_schema_expg3>>; 2
+* <<product_definition_schema_expg3>>; 3
+* <<express:support_resource_schema.label>>; 4
+* <<express:support_resource_schema.identifier>>; 5
+* <<express:product_property_definition_schema.characterized_object>>; 6
+* <<express:support_resource_schema.identifier>>; 7
+* <<express:support_resource_schema.identifier>>; 8
+* <<express:support_resource_schema.text>>; 9
+* <<express:basic_attribute_schema.id_attribute_select>>; 10
+* <<express:support_resource_schema.text>>; 11
+* <<express:support_resource_schema.text>>; 12
+* <<express:support_resource_schema.text>>; 13
+* <<express:support_resource_schema.label>>; 14
+* <<express:support_resource_schema.label>>; 15
+* <<express:application_context_schema.product_context>>; 16
+* <<express:support_resource_schema.text>>; 17
+* <<express:support_resource_schema.identifier>>; 18
+* <<express:support_resource_schema.text>>; 19
+* <<express:support_resource_schema.label>>; 20
+* <<express:support_resource_schema.identifier>>; 21
+* <<express:support_resource_schema.label>>; 22
+* <<express:product_definition_schema.source>>; 23
+* <<express:product_definition_schema.alternative_solution_relationship>>; 24
+* <<express:product_definition_schema.product_definition_formation>>; 25
+* <<express:product_definition_schema.product_definition_formation_with_specified_source>>; 26
+* <<express:product_definition_schema.product_related_product_category>>; 27
+* <<express:product_definition_schema.product_category>>; 28
+* <<express:product_definition_schema.product>>; 29
+* <<express:product_definition_schema.product_relationship>>; 30
+* <<express:product_definition_schema.characterized_product>>; 31
+* <<express:product_definition_schema.product_category_relationship>>; 32
+* <<express:product_definition_schema.product_definition_formation_relationship>>; 33
+====
+
+*)
+(*"product_definition_schema.__expressg"
+[[product_definition_schema_expg3]]
+[.svgmap]
+====
+image::product_definition_schemaexpg3.svg[]
+
+* <<express:product_definition_schema.product_definition_or_reference>>; 1
+* <<express:product_definition_schema.pds_name_attribute_select>>; 2
+* <<product_definition_schema_expg2>>; 3
+* <<product_definition_schema_expg2>>; 4
+* <<express:support_resource_schema.text>>; 5
+* <<express:application_context_schema.product_definition_context>>; 6
+* <<express:effectivity_schema.effectivity>>; 7
+* <<express:support_resource_schema.identifier>>; 8
+* <<express:support_resource_schema.label>>; 9
+* <<express:support_resource_schema.label>>; 10
+* <<express:support_resource_schema.identifier>>; 11
+* <<express:support_resource_schema.label>>; 12
+* <<express:support_resource_schema.identifier>>; 13
+* <<express:support_resource_schema.label>>; 14
+* <<express:application_context_schema.product_definition_context>>; 15
+* <<express:support_resource_schema.text>>; 16
+* <<express:support_resource_schema.identifier>>; 17
+* <<express:support_resource_schema.text>>; 18
+* <<express:external_reference_schema.external_source>>; 19
+* <<express:support_resource_schema.text>>; 20
+* <<express:support_resource_schema.text>>; 21
+* <<express:document_schema.document>>; 22
+* <<express:support_resource_schema.label>>; 23
+* <<express:support_resource_schema.label>>; 24
+* <<express:basic_attribute_schema.name_attribute_select>>; 25
+* <<express:support_resource_schema.identifier>>; 26
+* <<express:support_resource_schema.identifier>>; 27
+* <<express:product_definition_schema.product_definition_relationship_relationship>>; 28
+* <<express:product_definition_schema.product_definition_reference_with_local_representation>>; 29
+* <<express:product_definition_schema.product_definition_with_associated_documents>>; 30
+* <<express:product_definition_schema.product_definition>>; 31
+* <<express:product_definition_schema.product_definition_context_association>>; 32
+* <<express:product_definition_schema.product_definition_reference>>; 33
+* <<express:product_definition_schema.generic_product_definition_reference>>; 34
+* <<express:product_definition_schema.product_definition_substitute>>; 35
+* <<express:product_definition_schema.final_solution>>; 36
+* <<express:product_definition_schema.product_definition_relationship>>; 37
+* <<express:product_definition_schema.product_definition_context_role>>; 38
+* <<express:product_definition_schema.product_definition_effectivity>>; 39
+====
+*)
+
+(*"product_definition_schema.characterized_product"
+A **characterized_product** is a type of <<express:product_property_definition_schema.characterized_object,characterized_object>> and a type of <<express:product_definition_schema.product,product>> for the purpose of characterizing a product.
+*)
+
+
+(*"product_definition_schema.characterized_product.__note"
+Properties that are assigned using *characterized_object* are outside version control, whereas properties added via *product_definition* are under version control.
+*)
+
+(*"product_definition_schema.source"
+The **source** type is a list of alternate choices that enables one to characterize whether a product is to be manufactured within an organization, bought, or the fact that this information is not known.
+*)
+
+
+(*"product_definition_schema.source.made"
+characterize a product is to be manufactured within an organization;
+*)
+
+
+(*"product_definition_schema.source.bought"
+characterize a product is to be bought;
+*)
+
+
+(*"product_definition_schema.source.not_known"
+information, whether a product is to be manufactured within an organization or bought, is not known.
+*)
+
+
+(*"product_definition_schema.alternative_solution_relationship"
+An **alternative_solution_relationship** is a <<express:product_definition_schema.product_definition_formation_relationship,product_definition_formation_relationship>> that specifies the type of the relationship.
+*)
+
+
+(*"product_definition_schema.alternative_solution_relationship.relation_type"
+the meaning of the relationship.
+*)
+
+
+(*"product_definition_schema.alternative_solution_relationship.wr:WR1"
+An **alternative_solution_relationship** shall not participate in its own definition.
+*)
+
+
+(*"product_definition_schema.product"
+A **product** is a representation of a product or a type of product
+
+A **product** depends on one or more instances of <<express:application_context_schema.product_context,product_context>> specifying a frame of reference that determines the validity of the information held about the product or class of products.
+*)
+
+(*"product_definition_schema.product.__example"
+The SS Titanic is a product that could be represented by *product*.
+*)
+(*"product_definition_schema.product.__example"
+Lifeboat is a class of products that could be represented by the entity data type *product*. Each lifeboat on the SS Titanic is a member of this class.
+*)
+(*"product_definition_schema.product.__example"
+The computer used to edit this document, the Eiffel Tower, and coal are examples of products existing in the real world.
+*)
+(*"product_definition_schema.product.__example"
+A company develops a new lawnmower, a product that will be realized through a manufacturing and assembly process.
+*)
+(*"product_definition_schema.product.__example"
+Heating, lighting, and Internet connectivity are examples of functions.
+*)
+(*"product_definition_schema.product.__example"
+A company may develop a generic engine that is described by a schematic drawing showing its main principles and components. This product may be used as the basis for a range of engines that share characteristics such as multi-valve and operating temperature. Then, when defining a new engine, designers create a specialization of this generic engine with specific characteristics such as cylinder volume and power.
+*)
+
+(*"product_definition_schema.product.__note"
+The term product is defined in ISO 10303-1.
+*)
+
+(*"product_definition_schema.product.__note"
+Products that this entity data type can represent include:
+
+
+
+* products existing in the real world;
+* products that may come into existence as a consequence of some realization process;
+* products that are functions;
+* products that require further detail so they may serve as the basis for other physically realizable products.
+*)
+
+(*"product_definition_schema.product.__note"
+The products or classes of products that are represented by *product* are specified in annotated EXPRESS schemas that use or specialize this entity data type.
+*)
+
+(*"product_definition_schema.product.wr:IP1"
+<<express:product_definition_schema.characterized_product,characterized_product>> shall be the only subtype of **product**.
+*)
+
+
+(*"product_definition_schema.product.id"
+the <<express:support_resource_schema.identifier,identifier>> that distinguishes the **product**.
+*)
+
+(*"product_definition_schema.product.id.__example"
+Part numbers, stock item numbers, and serial numbers are examples of product identifiers.
+*)
+
+(*"product_definition_schema.product.id.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_definition_schema.product.id.__note"
+The context in which id is used as a discriminating characteristic can be identified in an annotated Express schema that uses or specializes this entity, or by default, in an agreement of common understanding between partners sharing this information.
+*)
+
+(*"product_definition_schema.product.name"
+the <<express:support_resource_schema.label,label>> by which the **product** is known.
+*)
+
+(*"product_definition_schema.product.name.__example"
+'Widget' is an example of name.
+*)
+
+(*"product_definition_schema.product.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **product**. The value of the attribute need not be specified.
+*)
+
+
+(*"product_definition_schema.product.frame_of_reference"
+a set of <<express:application_context_schema.product_context,product_context>> entities that defines the contexts within which the data associated with the **product** is relevant.
+*)
+
+
+(*"product_definition_schema.product_category"
+A **product_category** is a classification that applies to products.
+*)
+
+(*"product_definition_schema.product_category.__example"
+In an application protocol whose context includes manufactured parts, 'mechanical part', 'electrical part', 'structural part', 'piping part', 'water pipe', and 'hot water pipe' are examples of types of product.
+*)
+
+(*"product_definition_schema.product_category.name"
+the <<express:support_resource_schema.label,label>> by which the **product_category** is known.
+*)
+
+
+(*"product_definition_schema.product_category.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **product_category**. The value of the attribute need not be specified.
+*)
+
+
+(*"product_definition_schema.product_category.id"
+the <<express:support_resource_schema.identifier,identifier>> that distinguishes the **product_category**.
+*)
+
+
+(*"product_definition_schema.product_category.id.__note"
+This attribute is an upwardly compatible addition to *product_category* as specified in ISO 10303-41:1994.
+*)
+
+(*"product_definition_schema.product_category.id.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_definition_schema.product_category.id.__note"
+The context in which id is used as a discriminating characteristic can be identified in an annotated Express schema that uses or specializes this entity, or by default, in an agreement of common understanding between partners sharing this information.
+*)
+
+(*"product_definition_schema.product_category.wr:WR1"
+Each **product_category** shall be the <<express:basic_attribute_schema.id_attribute.identified_item,identified_item>> in at most one <<express:basic_attribute_schema.id_attribute,id_attribute>>.
+*)
+
+
+(*"product_definition_schema.product_category.wr:WR1.__note"
+The <<express:basic_attribute_schema.id_attribute,id_attribute>> data type is defined in <<express:basic_attribute_schema,basic_attribute_schema>> of this document.
+*)
+
+(*"product_definition_schema.product_category.wr:WR1.__note"
+A template for constraining the population of the entity data types defined in the <<express:basic_attribute_schema,basic_attribute_schema>> is described in annex E.
+*)
+
+(*"product_definition_schema.product_category.wr:IP1"
+If a **product_category** participates in a <<express:product_definition_schema.product_category_relationship,product_category_relationship>> graph, the value of the name attribute shall not be identical to the name attribute within any of its parent **product_category** entity data types.
+*)
+
+
+(*"product_definition_schema.product_category_relationship"
+A **product_category_relationship** is a hierarchical relationship of one category with another and provides a description of their relationship. If a <<express:product_definition_schema.product,product>> belongs to a <<express:product_definition_schema.product_category,product_category>>, it also belongs to all of the parent categories.
+*)
+
+(*"product_definition_schema.product_category_relationship.__example"
+The two sub-level <<express:product_definition_schema.product_category,product_category>>s called 'cold water pipe' and 'hot water pipe' can be related to each other through the more generic <<express:product_definition_schema.product_category,product_category>> called 'piping part' by using two *product_category_relationships*, one *product_category_relationship* between 'piping part' and 'cold water pipe' and the other *product_category_relationship* between 'piping part' and 'hot water pipe'.
+*)
+(*"product_definition_schema.product_category_relationship.__example"
+A <<express:product_definition_schema.product_category,product_category>> called 'piping part' may be the parent category of sub-categories called 'cold water pipe' and 'hot water pipe'. The <<express:product_definition_schema.product_category,product_category>> called 'hot water pipe' may be a sub-category of another <<express:product_definition_schema.product_category,product_category>> called 'boiler output pipe'. This is an example of a <<express:product_definition_schema.product_category,product_category>> network because the <<express:product_definition_schema.product_category,product_category>> called 'hot water pipe' has two parents.
+*)
+
+(*"product_definition_schema.product_category_relationship.__note"
+The role of *product_category_relationship* can be defined in the annotated EXPRESS schemas that use or specialize this entity, or by default, in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_definition_schema.product_category_relationship.__note"
+Networks of instances of <<express:product_definition_schema.product_category,product_category>> may be defined using this entity.
+*)
+
+(*"product_definition_schema.product_category_relationship.__note"
+This entity, in conjunction with the <<express:product_definition_schema.product_category,product_category>> entity, is based on the relationship template that is described in annex E.3.
+*)
+
+(*"product_definition_schema.product_category_relationship.name"
+the <<express:support_resource_schema.label,label>> by which the **product_category_relationship** is known.
+*)
+
+
+(*"product_definition_schema.product_category_relationship.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **product_category_relationship**. The value of the attribute need not be specified.
+*)
+
+
+(*"product_definition_schema.product_category_relationship.category"
+the parent of the **sub_category**.
+*)
+
+(*"product_definition_schema.product_category_relationship.category.__example"
+In the previous example, 'piping part' would be the category for 'cold water pipe' and 'hot water pipe'.
+*)
+
+(*"product_definition_schema.product_category_relationship.sub_category"
+a child of the **category**.
+*)
+
+(*"product_definition_schema.product_category_relationship.sub_category.__example"
+In the previous example 'cold water pipe' would be the *sub_category* for 'piping part' in one case and 'hot water pipe' would be the *sub_category* in the other.
+*)
+
+(*"product_definition_schema.product_category_relationship.wr:WR1"
+A graph of <<express:product_definition_schema.product_category,product_category>> instances shall not be cyclic.
+*)
+
+
+(*"product_definition_schema.product_definition"
+A **product_definition** is a representation of an aspect of a product, or of a class of products, for an identified life cycle stage. The life cycle stage for which a **product_definition** exists may be further characterized by discipline, by usage, or by both.
+
+The **product_definition** entity data type may represent particular products that are the members of an identified class of products.
+
+The **product_definition** entity data type acts as an aggregator for information about the properties of products.
+
+The usage of a **product_definition** in another context is specified through its participation in a <<express:product_definition_schema.product_definition_relationship,product_definition_relationship>> as the <<express:product_definition_schema.product_definition_relationship.related_product_definition,related_product_definition>> in which the using context is specified by the **frame_of_reference** of the <<express:product_definition_schema.product_definition_relationship.relating_product_definition,relating_product_definition>>.
+
+If a **product_definition** is considered in multiple contexts, the <<express:product_definition_schema.product_definition_context_association,product_definition_context_association>> shall be used to specify a collection of <<express:application_context_schema.product_definition_context,product_definition_context>>s.
+*)
+
+(*"product_definition_schema.product_definition.__example"
+The design of the SS Titanic and the as-built description of the SS Titanic can be represented as two instances of *product_definition* for the product that represents the ship itself.
+*)
+(*"product_definition_schema.product_definition.__example"
+Each individual lifeboat on the SS Titanic can be represented by an instance of *product_definition*, in which the associated <<express:product_definition_schema.product,product>> represents the class of products whose members are the lifeboats.
+*)
+(*"product_definition_schema.product_definition.__example"
+The designed shape of an aeroplane can be identified by an instance of the <<express:product_property_definition_schema.product_definition_shape,product_definition_shape>> entity data type that is associated with the design *product_definition* of the aeroplane.
+*)
+
+(*"product_definition_schema.product_definition.__note"
+The *product_definition* entity type supports the representation of different views of a product for different purposes. Multiple views of the same product, or class of products, are represented by different instances of *product_definition* for the same <<express:product_definition_schema.product_definition_formation,product_definition_formation>>.
+*)
+
+(*"product_definition_schema.product_definition.__note"
+A *product_definition* can identify an occurrence of a product.
+*)
+
+(*"product_definition_schema.product_definition.id"
+the <<express:support_resource_schema.identifier,identifier>> that distinguishes the **product_definition**.
+*)
+
+
+(*"product_definition_schema.product_definition.id.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_definition_schema.product_definition.id.__note"
+The context in which id is used as a discriminating characteristic can be identified in an annotated Express schema that uses or specializes this entity, or by default, in an agreement of common understanding between partners sharing this information.
+*)
+
+(*"product_definition_schema.product_definition.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **product_definition**. The value of the attribute need not be specified.
+*)
+
+
+(*"product_definition_schema.product_definition.formation"
+the <<express:product_definition_schema.product_definition_formation,product_definition_formation>> to which the **product_definition** relates.
+*)
+
+
+(*"product_definition_schema.product_definition.frame_of_reference"
+the <<express:application_context_schema.product_definition_context,product_definition_context>> in which the **product_definition** is defined.
+*)
+
+
+(*"product_definition_schema.product_definition.name"
+the <<express:support_resource_schema.label,label>> by which the **product_definition** is known.
+*)
+
+
+(*"product_definition_schema.product_definition.name.__note"
+This attribute is an upwardly compatible addition to *product_definition* as specified in ISO 10303-41:1994.
+*)
+
+(*"product_definition_schema.product_definition.wr:WR1"
+Each **product_definition** shall be the <<express:basic_attribute_schema.name_attribute.named_item,named_item>> in at most one <<express:basic_attribute_schema.name_attribute,name_attribute>>.
+*)
+
+
+(*"product_definition_schema.product_definition.wr:WR1.__note"
+The <<express:basic_attribute_schema.name_attribute,name_attribute>> data type is defined in <<express:basic_attribute_schema,basic_attribute_schema>> of this document.
+*)
+
+(*"product_definition_schema.product_definition.wr:WR1.__note"
+A template for constraining the population of the entity data types defined in the <<express:basic_attribute_schema,basic_attribute_schema>> is described in annex E.
+*)
+
+(*"product_definition_schema.product_definition_context_association"
+A **product_definition_context_association** is an association of a <<express:application_context_schema.product_definition_context,product_definition_context>> with a <<express:product_definition_schema.product_definition,product_definition>>, and specifies the meaning of this association.
+*)
+
+(*"product_definition_schema.product_definition_context_association.__example"
+A <<express:product_definition_schema.product_definition,product_definition>>, initially defined in the context of 'mechanical design', and in which the representation of the shape of a product is defined, may also be relevant in the context of 'process-planning design'. For such a case, the *product_definition_context_association* would relate the <<express:product_definition_schema.product_definition,product_definition>> with the <<express:application_context_schema.product_definition_context,product_definition_context>> characterizing the context 'process-planning design' and the name of the role attribute would be 'other relevant context'.
+*)
+
+(*"product_definition_schema.product_definition_context_association.__note"
+A *product_definition_context_association* may be used to associate a using context to a <<express:product_definition_schema.product_definition,product_definition>>. The defining context is associated to the <<express:product_definition_schema.product_definition,product_definition>> using <<express:product_definition_schema.product_definition.frame_of_reference,frame_of_reference>>.
+*)
+
+(*"product_definition_schema.product_definition_context_association.definition"
+the reference to a <<express:product_definition_schema.product_definition,product_definition>> associated to a context.
+*)
+
+
+(*"product_definition_schema.product_definition_context_association.frame_of_reference"
+the <<express:application_context_schema.product_definition_context,product_definition_context>> that defines the stage in the product life cycle with which the <<express:product_definition_schema.product_definition,product_definition>> is to be associated.
+*)
+
+
+(*"product_definition_schema.product_definition_context_association.role"
+the <<express:product_definition_schema.product_definition_context_role,product_definition_context_role>> that specifies the purpose of the association of the context of this **frame_of_reference** attribute with the <<express:product_definition_schema.product_definition,product_definition>> of the **definition** attribute.
+*)
+
+
+(*"product_definition_schema.product_definition_context_association.role.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_definition_schema.product_definition_context_role"
+A **product_definition_context_role** is a specification of the purpose of a <<express:application_context_schema.product_definition_context,product_definition_context>>.
+*)
+
+
+(*"product_definition_schema.product_definition_context_role.name"
+the <<express:support_resource_schema.label,label>> by which the **product_definition_context_role** is known.
+*)
+
+
+(*"product_definition_schema.product_definition_context_role.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **product_definition_context_role**. The value of the attribute need not be specified.
+*)
+
+
+(*"product_definition_schema.product_definition_effectivity"
+A **product_definition_effectivity** is a type of <<express:effectivity_schema.effectivity,effectivity>>. A **product_definition_effectivity** is the identification of a valid use of a particular <<express:product_definition_schema.product_definition,product_definition>> in the context of its participation in a given <<express:product_definition_schema.product_definition_relationship,product_definition_relationship>>. The referenced <<express:product_definition_schema.product_definition,product_definition>> is the <<express:product_definition_schema.product_definition_relationship.related_product_definition,related_product_definition>> attribute of the <<express:product_definition_schema.product_definition_relationship,product_definition_relationship>>.
+*)
+
+
+(*"product_definition_schema.product_definition_effectivity.__note"
+Appropriate subtypes of <<express:product_definition_schema.product_definition_relationship,product_definition_relationship>> and further information about the way to describe assemblies are specified in ISO 10303-44.
+*)
+
+(*"product_definition_schema.product_definition_effectivity.usage"
+the <<express:product_definition_schema.product_definition_relationship,product_definition_relationship>> that defines the context of the <<express:effectivity_schema.effectivity,effectivity>>.
+*)
+
+
+(*"product_definition_schema.product_definition_effectivity.wr:WR1"
+A **product_definition_effectivity** shall not be referred to as <<express:management_resources_schema.effectivity_assignment.assigned_effectivity,assigned_effectivity>>.
+*)
+
+
+(*"product_definition_schema.product_definition_formation"
+A **product_definition_formation** is a collector of definitions of a product.
+*)
+
+(*"product_definition_schema.product_definition_formation.__example"
+An application interpreted model could use this entity to support the identification of different versions of a single <<express:product_definition_schema.product,product>>. Each version would be described by a group of instances of the entity data type <<express:product_definition_schema.product_definition,product_definition>> and each group, identified by a *product_definition_formation*, would be associated with the same <<express:product_definition_schema.product,product>>.
+*)
+
+(*"product_definition_schema.product_definition_formation.id"
+the <<express:support_resource_schema.identifier,identifier>> that distinguishes the **product_definition_formation**.
+*)
+
+(*"product_definition_schema.product_definition_formation.id.__example"
+Part version number is an example of a *product_definition_formation* identifier.
+*)
+
+(*"product_definition_schema.product_definition_formation.id.__note"
+The context in which id is used as a discriminating characteristic can be identified in an annotated Express schema that uses or specializes this entity, or by default, in an agreement of common understanding between partners sharing this information.
+*)
+
+(*"product_definition_schema.product_definition_formation.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **product_definition_formation**. The value of the attribute need not be specified.
+*)
+
+
+(*"product_definition_schema.product_definition_formation.description.__note"
+This attribute may be used to depict differences in the purpose and function of different formations of a single <<express:product_definition_schema.product,product>>.
+*)
+
+(*"product_definition_schema.product_definition_formation.of_product"
+the <<express:product_definition_schema.product,product>> to which the **product_definition_formation** belongs.
+*)
+
+
+(*"product_definition_schema.product_definition_formation.of_product.__note"
+A <<express:product_definition_schema.product,product>> is associated with one or more *product_definition_formation* instances through the implicit inverse of this relationship.
+*)
+
+(*"product_definition_schema.product_definition_formation.ur:UR1"
+The **id** of each **product_definition_formation** shall be unique within the collection of **product_definition_formations** that are related to the same product (through their attribute **of_product** {blank}).
+*)
+
+
+(*"product_definition_schema.final_solution"
+A **final_solution** is a type of <<express:product_definition_schema.product_definition_formation,product_definition_formation>> and is a set of additional sensual characteristics that can be applied to an occurrence that represents a neutral part in order to complete its definition.
+*)
+
+
+(*"product_definition_schema.final_solution.status"
+the text string that describes the level of completion between the neutral part and the final part.
+*)
+
+
+(*"product_definition_schema.final_solution.specification"
+the set of instances of the entity data type <<express:product_definition_schema.product_definition,product_definition>> that defines the various aspects of the **final_solution**.
+*)
+
+
+(*"product_definition_schema.product_definition_formation_relationship"
+A **product_definition_formation_relationship** is a relationship between two instances of the entity data type <<express:product_definition_schema.product_definition_formation,product_definition_formation>> and provides an identification and description of this relationship.
+*)
+
+
+(*"product_definition_schema.product_definition_formation_relationship.__note"
+A relationship may exist between instances of the entity data type <<express:product_definition_schema.product_definition_formation,product_definition_formation>> that relate to different instances of the entity data type <<express:product_definition_schema.product,product>> or between different formations of the same <<express:product_definition_schema.product,product>>.
+*)
+
+(*"product_definition_schema.product_definition_formation_relationship.__note"
+The role of *product_definition_formation_relationship* can be defined in the annotated EXPRESS schemas that use or specialize this entity, or by default, in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_definition_schema.product_definition_formation_relationship.__note"
+Relationships represented using this entity may be parent child relationship. Annotated EXPRESS schemas that use or specialize this entity specify whether or not the relationship is directed.
+*)
+
+(*"product_definition_schema.product_definition_formation_relationship.__note"
+This entity, together with the <<express:product_definition_schema.product_definition_formation,product_definition_formation>> entity, is based on the relationship template that is described in annex E.3.
+*)
+
+(*"product_definition_schema.product_definition_formation_relationship.id"
+the <<express:support_resource_schema.identifier,identifier>> that distinguishes the **product_definition_formation_relationship**.
+*)
+
+
+(*"product_definition_schema.product_definition_formation_relationship.id.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_definition_schema.product_definition_formation_relationship.id.__note"
+The context in which id is used as a discriminating characteristic can be identified in an annotated Express schema that uses or specializes this entity, or by default, in an agreement of common understanding between partners sharing this information.
+*)
+
+(*"product_definition_schema.product_definition_formation_relationship.name"
+the <<express:support_resource_schema.label,label>> by which the **product_definition_formation_relationship** is known.
+*)
+
+
+(*"product_definition_schema.product_definition_formation_relationship.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **product_definition_formation_relationship**. The value of the attribute need not be specified.
+*)
+
+
+(*"product_definition_schema.product_definition_formation_relationship.relating_product_definition_formation"
+one of the instances of <<express:product_definition_schema.product_definition_formation,product_definition_formation>> that is a part of the relationship.
+*)
+
+
+(*"product_definition_schema.product_definition_formation_relationship.relating_product_definition_formation.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_definition_schema.product_definition_formation_relationship.related_product_definition_formation"
+the other instance of <<express:product_definition_schema.product_definition_formation,product_definition_formation>> that is a part of the relationship. If one element of the relationship is dependent up on the other, this attribute shall be the dependent one.
+*)
+
+
+(*"product_definition_schema.product_definition_formation_relationship.related_product_definition_formation.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_definition_schema.product_definition_formation_with_specified_source"
+A **product_definition_formation_with_specified_source** is a type of <<express:product_definition_schema.product_definition_formation,product_definition_formation>> whose source is identified to be either manufactured within an organization, bought, or the fact that this information is not known.
+*)
+
+
+(*"product_definition_schema.product_definition_formation_with_specified_source.make_or_buy"
+the characterization of the source of the <<express:product_definition_schema.product_definition_formation,product_definition_formation>>.
+*)
+
+
+(*"product_definition_schema.generic_product_definition_reference"
+A **generic_product_definition_reference** is a reference to an externally defined <<express:product_definition_schema.product_definition,product_definition>> that may or may not have a local representation. A **generic_product_definition_reference** is either a <<express:product_definition_schema.product_definition_reference,product_definition_reference>> or a <<express:product_definition_schema.product_definition_reference_with_local_representation,product_definition_reference_with_local_representation>>.
+*)
+
+
+(*"product_definition_schema.generic_product_definition_reference.source"
+defines the location which contains the original definition of the <<express:product_definition_schema.product_definition,product_definition>>.
+*)
+
+
+(*"product_definition_schema.product_definition_reference"
+A **product_definition_reference** is a type of <<express:product_definition_schema.generic_product_definition_reference,generic_product_definition_reference>> that identifies the externally defined <<express:product_definition_schema.product_definition,product_definition>> by providing the key attributes necessary to unambiguously identify it and the associated <<express:product_definition_schema.product_definition_formation,product_definition_formation>>, <<express:product_definition_schema.product,product>> and organization that owns the product id.
+*)
+
+
+(*"product_definition_schema.product_definition_reference.product_id"
+specifies the identifier of the externally defined product, where the referenced <<express:product_definition_schema.product_definition,product_definition>> is assigned to one of its <<express:product_definition_schema.product_definition_formation,product_definition_formation>>.
+*)
+
+
+(*"product_definition_schema.product_definition_reference.product_definition_formation_id"
+specifies the identifier of the externally defined <<express:product_definition_schema.product_definition_formation,product_definition_formation>>.
+*)
+
+
+(*"product_definition_schema.product_definition_reference.product_definition_id"
+specifies the identifier of the externally defined <<express:product_definition_schema.product_definition,product_definition>>.
+*)
+
+
+(*"product_definition_schema.product_definition_reference.id_owning_organization_name"
+specifies the id owner of the externally defined product, realised by an applied <<express:management_resources_schema.organization_assignment,organization_assignment>> with the role 'id owner'.
+*)
+
+
+(*"product_definition_schema.product_definition_reference_with_local_representation"
+A **product_definition_reference_with_local_representation** is a type of <<express:product_definition_schema.generic_product_definition_reference,generic_product_definition_reference>> that represents an externally defined <<express:product_definition_schema.product_definition,product_definition>> by a local <<express:product_definition_schema.product_definition,product_definition>>.
+*)
+
+
+(*"product_definition_schema.product_definition_relationship"
+A **product_definition_relationship** is a relationship between two instances of the entity data type <<express:product_definition_schema.product_definition,product_definition>> or <<express:product_definition_schema.generic_product_definition_reference,generic_product_definition_reference>> and provides an identification and description of this relationship.
+*)
+
+(*"product_definition_schema.product_definition_relationship.__example"
+The relationships within a bill-of-materials structure are examples of *product_definition_relationship* entity data types that associate different <<express:product_definition_schema.product,product>>s. The relationship between a sketch and a detailed design is an example of a *product_definition_relationship* that associates different definitions of a single <<express:product_definition_schema.product,product>>.
+*)
+(*"product_definition_schema.product_definition_relationship.__example"
+The same component could be used more than once in the same assembly. Each usage of the component would be specified as an instance of the *product_definition_relationship* entity.
+*)
+
+(*"product_definition_schema.product_definition_relationship.__note"
+A relationship may exist between instances of the entity data type <<express:product_definition_schema.product_definition,product_definition>> that relate to different instances of the entity data type <<express:product_definition_schema.product,product>> or between different definitions of the same <<express:product_definition_schema.product,product>>.
+*)
+
+(*"product_definition_schema.product_definition_relationship.__note"
+A single <<express:product_definition_schema.product_definition,product_definition>> may be used more than once within the description of a <<express:product_definition_schema.product,product>>.
+*)
+
+(*"product_definition_schema.product_definition_relationship.__note"
+The role of *product_definition_relationship* can be defined in the annotated EXPRESS schemas that use or specialize this entity, or by default, in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_definition_schema.product_definition_relationship.__note"
+Relationships represented using this entity may be parent child relationship. Annotated EXPRESS schemas that use or specialize this entity specify whether or not the relationship is directed.
+*)
+
+(*"product_definition_schema.product_definition_relationship.__note"
+This entity, together with the <<express:product_definition_schema.product_definition,product_definition>> entity, is based on the relationship template that is described in annex E.3.
+*)
+
+(*"product_definition_schema.product_definition_relationship.id"
+the <<express:support_resource_schema.identifier,identifier>> that distinguishes the **product_definition_relationship**.
+*)
+
+
+(*"product_definition_schema.product_definition_relationship.id.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_definition_schema.product_definition_relationship.id.__note"
+The context in which id is used as a discriminating characteristic can be identified in an annotated Express schema that uses or specializes this entity, or by default, in an agreement of common understanding between partners sharing this information.
+*)
+
+(*"product_definition_schema.product_definition_relationship.name"
+the <<express:support_resource_schema.label,label>> by which the **product_definition_relationship** is known.
+*)
+
+
+(*"product_definition_schema.product_definition_relationship.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **product_definition_relationship**. The value of the attribute need not be specified.
+*)
+
+
+(*"product_definition_schema.product_definition_relationship.relating_product_definition"
+one of the instances of <<express:product_definition_schema.product_definition,product_definition>> that is a part of the relationship.
+*)
+
+
+(*"product_definition_schema.product_definition_relationship.relating_product_definition.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_definition_schema.product_definition_relationship.relating_product_definition.__note"
+In the context of an ISO 10303 application protocol, the *product_definition_relationship* is an assembly component relationship, the *relating_product_definition* may be the assembly.
+*)
+
+(*"product_definition_schema.product_definition_relationship.related_product_definition"
+the other instance of <<express:product_definition_schema.product_definition,product_definition>> that is a part of the relationship. If one element of the relationship is dependent upon the other, this attribute shall be the dependent one.
+*)
+
+
+(*"product_definition_schema.product_definition_relationship.related_product_definition.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_definition_schema.product_definition_relationship.related_product_definition.__note"
+In the context of an ISO 10303 application protocol, the *related_product_definition* may be the <<express:product_definition_schema.product_definition,product_definition>> that is an element of the assembly.
+*)
+
+(*"product_definition_schema.product_definition_relationship_relationship"
+A **product_definition_relationship_relationship** is a relationship between two instances of the entity data type <<express:product_definition_schema.product_definition_relationship,product_definition_relationship>> and provides an identification and description of this relationship.
+*)
+
+
+(*"product_definition_schema.product_definition_relationship_relationship.id"
+the <<express:support_resource_schema.identifier,identifier>> that distinguishes the **product_definition_relationship_relationship**.
+*)
+
+
+(*"product_definition_schema.product_definition_relationship_relationship.name"
+the <<express:support_resource_schema.label,label>> by which the **product_definition_relationship_relationship** is known.
+*)
+
+
+(*"product_definition_schema.product_definition_relationship_relationship.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **product_definition_relationship_relationship**. The value of the attribute need not be specified.
+*)
+
+
+(*"product_definition_schema.product_definition_relationship_relationship.relating"
+one of the instances of <<express:product_definition_schema.product_definition,product_definition>> that is a part of the relationship.
+*)
+
+
+(*"product_definition_schema.product_definition_relationship_relationship.related"
+the other instance of <<express:product_definition_schema.product_definition,product_definition>> that is a part of the relationship. If one element of the relationship is dependent upon the other, this attribute shall be the dependent one.
+*)
+
+
+(*"product_definition_schema.product_definition_substitute"
+A **product_definition_substitute** is an association of a <<express:product_definition_schema.product_definition,product_definition>> with a <<express:product_definition_schema.product_definition_relationship,product_definition_relationship>>. The association states the fact that the <<express:product_definition_schema.product_definition,product_definition>> may replace, in the context of the relationship, the <<express:product_definition_schema.product_definition,product_definition>> that is specified in the <<express:product_definition_schema.product_definition_relationship.related_product_definition,related_product_definition>> attribute of the <<express:product_definition_schema.product_definition_relationship,product_definition_relationship>>.
+*)
+
+(*"product_definition_schema.product_definition_substitute.__example"
+Two kinds of ball-point pens may be manufactured: a standard model and a deluxe model. Each model of the pen would be specified as a separate <<express:product_definition_schema.product_definition,product_definition>> related to a particular kind of nib: a standard nib and a deluxe nib, respectively. The fact that the deluxe nib and the standard nib are interchangeable only in the context of the standard model of ball-point pen is established with this construct.
+*)
+
+(*"product_definition_schema.product_definition_substitute.__note"
+If a <<express:product_definition_schema.product_definition_relationship,product_definition_relationship>> exists between a component part and its assembly, a *product_definition_substitute* could be used to capture an allowable substitute, that is, a different component part that may be used as a replacement in the same assembly.
+*)
+
+(*"product_definition_schema.product_definition_substitute.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **product_definition_substitute**. The value of the attribute need not be specified.
+*)
+
+
+(*"product_definition_schema.product_definition_substitute.context_relationship"
+the <<express:product_definition_schema.product_definition_relationship,product_definition_relationship>> that specifies the context in which the replacement may occur.
+*)
+
+(*"product_definition_schema.product_definition_substitute.context_relationship.__example"
+In the previous example, the <<express:product_definition_schema.product_definition_relationship.relating_product_definition,relating_product_definition>> of a <<express:product_definition_schema.product_definition_relationship,product_definition_relationship>> identified as a *context_relationship* would be the standard model of the ball-point pen and the <<express:product_definition_schema.product_definition_relationship.related_product_definition,related_product_definition>> would be the standard nib.
+*)
+
+(*"product_definition_schema.product_definition_substitute.substitute_definition"
+the <<express:product_definition_schema.product_definition,product_definition>> that acts as an allowed replacement for the <<express:product_definition_schema.product_definition_relationship.related_product_definition,related_product_definition>> of the **context_relationship**.
+*)
+
+(*"product_definition_schema.product_definition_substitute.substitute_definition.__example"
+In the previous example, this attribute would identify the deluxe nib .
+*)
+
+(*"product_definition_schema.product_definition_substitute.name"
+the <<express:support_resource_schema.label,label>> by which the **product_definition_substitute** is known.
+*)
+
+
+(*"product_definition_schema.product_definition_substitute.name.__note"
+This attribute is an upwardly compatible addition to <<express:product_definition_schema.product_definition,product_definition>> as specified in ISO 10303-41:1994.
+*)
+
+(*"product_definition_schema.product_definition_substitute.wr:WR1"
+A <<express:product_definition_schema.product_definition,product_definition>> shall not be defined as a substitute for itself.
+*)
+
+
+(*"product_definition_schema.product_definition_substitute.wr:WR2"
+Each **product_definition_substitute** shall be the <<express:basic_attribute_schema.name_attribute.named_item,named_item>> in at most one <<express:basic_attribute_schema.name_attribute,name_attribute>>.
+*)
+
+
+(*"product_definition_schema.product_definition_substitute.wr:WR2.__note"
+The <<express:basic_attribute_schema.name_attribute,name_attribute>> data type is defined in <<express:basic_attribute_schema,basic_attribute_schema>> of this document
+*)
+
+(*"product_definition_schema.product_definition_substitute.wr:WR2.__note"
+A template for constraining the population of the entity data types defined in the <<express:basic_attribute_schema,basic_attribute_schema>> is described in annex E.
+*)
+
+(*"product_definition_schema.product_definition_with_associated_documents"
+A **product_definition_with_associated_documents** is a type of <<express:product_definition_schema.product_definition,product_definition>> in which the associated documents participate in the definition of the product.
+*)
+
+
+(*"product_definition_schema.product_definition_with_associated_documents.documentation_ids"
+the set of instances of <<express:document_schema.document,document>> entity data type that are associated with the <<express:product_definition_schema.product_definition,product_definition>>.
+*)
+
+
+(*"product_definition_schema.product_related_product_category"
+A **product_related_product_category** is a type of <<express:product_definition_schema.product_category,product_category>> that identifies products that satisfy the type identified by the category.
+*)
+
+
+(*"product_definition_schema.product_related_product_category.products"
+a set of <<express:product_definition_schema.product,product>>s that belong to the **product_related_product_category**.
+*)
+
+
+(*"product_definition_schema.product_relationship"
+A **product_relationship** is a relationship between two instances of the entity data type <<express:product_definition_schema.product,product>> and provides an identification and description of their relationship.
+*)
+
+
+(*"product_definition_schema.product_relationship.__note"
+The role of *product_relationship* can be defined in the annotated EXPRESS schemas that use or specialize this entity, or by default, in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_definition_schema.product_relationship.__note"
+Relationships represented using this entity may be parent child relationship. Annotated EXPRESS schemas that use or specialize this entity specify whether or not the relationship is directed.
+*)
+
+(*"product_definition_schema.product_relationship.__note"
+This entity, together with the <<express:product_definition_schema.product,product>> entity, is based on the relationship template that is described in annex E.3.
+*)
+
+(*"product_definition_schema.product_relationship.id"
+the <<express:support_resource_schema.identifier,identifier>> that distinguishes the **product_relationship**.
+*)
+
+
+(*"product_definition_schema.product_relationship.id.__note"
+The context in which id is used as a discriminating characteristic can be identified in an annotated Express schema that uses or specializes this entity, or by default, in an agreement of common understanding between partners sharing this information.
+*)
+
+(*"product_definition_schema.product_relationship.name"
+the <<express:support_resource_schema.label,label>> by which the **product_relationship** is known.
+*)
+
+
+(*"product_definition_schema.product_relationship.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **product_relationship**. The value of the attribute need not be specified.
+*)
+
+
+(*"product_definition_schema.product_relationship.relating_product"
+one of the instances of <<express:product_definition_schema.product,product>> that is a part of the relationship.
+*)
+
+
+(*"product_definition_schema.product_relationship.relating_product.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_definition_schema.product_relationship.related_product"
+the other instance of <<express:product_definition_schema.product,product>> that is a part of the relationship. If one element of the relationship is dependent up on the other, this attribute shall be the dependent one.
+*)
+
+
+(*"product_definition_schema.product_relationship.related_product.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_definition_schema.acyclic_product_category_relationship"
+The **acyclic_product_category_relationship** function determines whether the graph of instances of the entity data type <<express:product_definition_schema.product_category,product_category>> that contains relation as one of its links contains a cycle. This function may be used to evaluate either a <<express:product_definition_schema.product_category_relationship,product_category_relationship>> or any of its subtypes. The function returns TRUE if no cycle has been detected. Otherwise it returns FALSE.
+*)
+
+
+(*"product_definition_schema.acyclic_product_category_relationship.__note"
+The algorithm of the function is explained in annex E.2.
+*)
+
+(*"product_definition_schema.acyclic_product_category_relationship.relation"
+(input) the candidate <<express:product_definition_schema.product_category_relationship,product_category_relationship>> to be checked.
+*)
+
+
+(*"product_definition_schema.acyclic_product_category_relationship.children"
+(input) the set of instances of the entity data type <<express:product_definition_schema.product_category,product_category>> that the function is searching for in the category field of the **relation** argument.
+*)
+
+
+(*"product_definition_schema.acyclic_product_definition_formation_relationship"
+The **acyclic_product_definition_formation_relationship** function determines whether the graph of instances of the entity data type <<express:product_definition_schema.product_definition_formation,product_definition_formation>> that contains relation as one of its links contains a cycle. This function may be used to evaluate either a <<express:product_definition_schema.product_definition_formation_relationship,product_definition_formation_relationship>> or any of its subtypes. The function returns TRUE if no cycle has been detected. Otherwise it returns FALSE.
+*)
+
+
+(*"product_definition_schema.acyclic_product_definition_formation_relationship.__note"
+The algorithm of the function is explained in annex E.2.
+*)
+
+(*"product_definition_schema.acyclic_product_definition_formation_relationship.__note"
+This function is not used in this schema. It is defined here because other ISO 10303 integrated resources and application protocols that use the <<express:product_definition_schema.product_definition_formation_relationship,product_definition_formation_relationship>> entity include rules that use this function.
+*)
+
+(*"product_definition_schema.acyclic_product_definition_formation_relationship.relation"
+(input) the candidate <<express:product_definition_schema.product_definition_formation_relationship,product_definition_formation_relationship>> to be checked.
+*)
+
+
+(*"product_definition_schema.acyclic_product_definition_formation_relationship.relatives"
+(input) the set of instances of the entity data type <<express:product_definition_schema.product_definition_formation,product_definition_formation>> that the function is searching for in the <<express:product_definition_schema.product_definition_formation_relationship.relating_product_definition_formation,relating_product_definition_formation>> parameter of the relation argument.
+*)
+
+
+(*"product_definition_schema.acyclic_product_definition_formation_relationship.specific_relation"
+(input) the fully qualified name of a subtype of the <<express:product_definition_schema.product_definition_formation_relationship,product_definition_formation_relationship>> entity.
+*)
+
+
+(*"product_definition_schema.acyclic_product_definition_relationship"
+The **acyclic_product_definition_relationship** function determines whether the graph of instances of the entity data type <<express:product_definition_schema.product_definition,product_definition>> that contains relation as one of its links contains a cycle. This function may be used to evaluate either a <<express:product_definition_schema.product_definition_relationship,product_definition_relationship>> or any of its subtypes. The function returns TRUE if no cycle has been detected. Otherwise it returns FALSE.
+*)
+
+
+(*"product_definition_schema.acyclic_product_definition_relationship.__note"
+The algorithm of the function is explained in annex E.2.
+*)
+
+(*"product_definition_schema.acyclic_product_definition_relationship.__note"
+This function is not used in this schema. It is defined here because other ISO 10303 integrated resources and application protocols that use the <<express:product_definition_schema.product_definition_relationship,product_definition_relationship>> entity include rules that use this function.
+*)
+
+(*"product_definition_schema.acyclic_product_definition_relationship.relation"
+(input) the candidate <<express:product_definition_schema.product_definition_relationship,product_definition_relationship>> to be checked.
+*)
+
+
+(*"product_definition_schema.acyclic_product_definition_relationship.relatives"
+(input) the set of instances of the entity data type <<express:product_definition_schema.product_definition,product_definition>> that the function is searching for in the <<express:product_definition_schema.product_definition_relationship.relating_product_definition,relating_product_definition>> parameter of the **relation** argument.
+*)
+
+
+(*"product_definition_schema.acyclic_product_definition_relationship.specific_relation"
+(input) the fully qualified name of a subtype of the <<express:product_definition_schema.product_definition_relationship,product_definition_relationship>> entity.
+*)
+
+
+(*"product_definition_schema.acyclic_product_relationship"
+The **acyclic_product_relationship** function determines whether the graph of instances of the entity data type <<express:product_definition_schema.product,product>> that contains relation as one of its links contains a cycle. This function may be used to evaluate either a <<express:product_definition_schema.product_relationship,product_relationship>> or any of its subtypes. The function returns TRUE if no cycle has been detected. Otherwise it returns FALSE.
+*)
+
+
+(*"product_definition_schema.acyclic_product_relationship.__note"
+The algorithm of the function is explained in annex E.2.
+*)
+
+(*"product_definition_schema.acyclic_product_relationship.__note"
+This function is not used in this schema. It is defined here because other ISO 10303 integrated resources and application protocols that use the <<express:product_definition_schema.product_relationship,product_relationship>> entity include rules that use this function.
+*)
+
+(*"product_definition_schema.acyclic_product_relationship.relation"
+(input) the candidate <<express:product_definition_schema.product_relationship,product_relationship>> to be checked.
+*)
+
+
+(*"product_definition_schema.acyclic_product_relationship.relatives"
+(input) the set of instances of the entity data type <<express:product_definition_schema.product,product>> that the function is searching for in the <<express:product_definition_schema.product_relationship.relating_product,relating_product>> parameter of the **relation** argument.
+*)
+
+
+(*"product_definition_schema.acyclic_product_relationship.specific_relation"
+(input) the fully qualified entity name of a type of <<express:product_definition_schema.product_relationship,product_relationship>> entity.
+*)
+
+
+(*"product_definition_schema.categories_of_product"
+The **categories_of_product** function returns the set of product category names associated with the argument. The function evaluates the bag of instances of <<express:product_definition_schema.product_category,product_category>> that are associated with the input <<express:product_definition_schema.product,product>> through an instance of <<express:product_definition_schema.product_related_product_category,product_related_product_category>>. The function returns the SET of STRING values stored in the <<express:product_definition_schema.product_category.name,name>> attribute of the instances of <<express:product_definition_schema.product_category,product_category>> in the bag.
+*)
+
+
+(*"product_definition_schema.categories_of_product.obj"
+the <<express:product_definition_schema.product,product>> whose categories are searched.
+*)
+
+
+(*"product_definition_schema.get_product_definitions"
+The **get_product_definitions** function returns for any instance of <<express:product_definition_schema.product,product>> the set of instances of <<express:product_definition_schema.product_definition,product_definition>> that refer to the product through an instance of <<express:product_definition_schema.product_definition_formation,product_definition_formation>>.
+*)
+
+
+(*"product_definition_schema.get_product_definitions.__note"
+This function is not used in this schema.
+*)
+
+(*"product_definition_schema.get_product_definitions.c_def_instance"
+the candidate <<express:product_definition_schema.product,product>> to be checked.
+*)
+
+
+(*"product_definition_schema.acyclic_alternative_solution_relationship"
+The **acyclic_alternative_solution_relationship** function determines whether the graph of instance of the entity data type <<express:product_definition_schema.product_definition_formation,product_definition_formation>> that contains relation as one of its links contains a cycle. This function may be used to evaluate either a <<express:product_definition_schema.alternative_solution_relationship,alternative_solution_relationship>> or any of its subtypes.
+
+The function returns TRUE if no cycle has been detected. Otherwise it returns FALSE.
+*)
+
+
+(*"product_definition_schema.acyclic_alternative_solution_relationship.__note"
+The algorithm of the function is explained in annex E.2.
+*)
+
+(*"product_definition_schema.acyclic_alternative_solution_relationship.relation"
+(input) the candidate <<express:product_definition_schema.alternative_solution_relationship,alternative_solution_relationship>> to be checked.
+*)
+
+
+(*"product_definition_schema.acyclic_alternative_solution_relationship.relatives"
+(input) the set of instances of the entity data type <<express:product_definition_schema.product_definition_formation,product_definition_formation>> for which the function is searching in the <<express:product_definition_schema.product_definition_formation_relationship.relating_product_definition_formation,relating_product_definition_formation>> parameter of the relation argument.
+*)
+
+
+(*"product_definition_schema.acyclic_alternative_solution_relationship.specific_relation"
+(input) the fully qualified name of a subtype of the <<express:product_definition_schema.alternative_solution_relationship,alternative_solution_relationship>> entity.
+*)
+
+
+(*"product_definition_schema.__schema_file"
+data/resource_docs/fundamentals_of_product_description_and_support/resource.xml
+*)

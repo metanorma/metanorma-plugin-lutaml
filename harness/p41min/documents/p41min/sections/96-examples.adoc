@@ -1,0 +1,878 @@
+[[annex_examples]]
+[appendix,obligation=informative]
+== Examples
+
+=== Use of the product_definition_schema
+
+This clause provides two examples of the use of the entity data type *product_definition* to characterize a version of a product.
+
+The first example considers the case in which a version of the product is defined in three distinct views, each associated with a particular life cycle stage: 'specification stage', 'design stage', and 'manufacturing design stage'.
+
+In this situation, there would be:
+
+
+* three instances of the entity data type **product_definition_context**: one per life cycle stage;
+
+* three instances of the entity data type *product_definition*. The *frame_of_reference* attribute of each instance of *product_definition* would refer to an instance of **product_definition_context**;
+
+* an instance of the entity data type *product_definition_formation*, referred to by the three above mentioned instances of *product_definition*;
+
+* an instance of the entity data type product, referred to by the instance of *product_definition_formation*.
+
+The second example considers the case where a version of the product is defined in a primary view and where it is later considered that this definition is also relevant for the other life cycle stages.
+
+In this situation, there would be:
+
+
+* three instances of the entity data type *product_definition_context*, one per life cycle stage;
+
+* one instance of the entity data type *product_definition*. The attribute *frame_of_reference* of this instance of *product_definition* would refer to an instance of **product_definition_context** associated with the primary context;
+
+* two instances of the entity data type *product_definition_context_association* relating the other instances of *product_definition_context* with the instance of *product_definition*;
+
+* an instance of the entity data type *product_definition_formation*, referred to by the instance of *product_definition*;
+
+* an instance of the entity data type *product*, referred to by the instance of *product_definition_formation*.
+
+[[annex_examples_f2]]
+=== Document as product
+
+This part of ISO 100303 provides resources that support the association of a reference to an external document with any product data. This association uses the entity data types *document_reference* and *document*.
+
+This document also provides resources that support the representation of a document in the case it is managed within the information system as a particular case of product.
+
+This clause explains how to use these resources to represent the information that characterize the document. It specifies how to identify the document, how to identify its versions and how to characterize its definitions.
+
+[NOTE]
+--
+Considering a document as a kind of product is a decision that may depend on the application domain and on the emphasis in this domain that is made on the documents versus that made on other kinds of parts. In mechanical products, documents such as operator's manuals are usually listed in the Bill of Materials of the products to be manufactured and delivered. In such a case, these documents may be tracked in the information systems as particular products.
+--
+
+The interpretation of 'Document as Product' uses basic product master identification for the fundamental requirements of document identification, versioning, and definition. The following entity data types should therefore be used:
+
+
+* *product*;
+
+* *product_definition_formation*;
+
+* *product_related_product_category*;
+
+* *product_definition*.
+
+==== Identification of a document
+
+The identification information, common to all the historical versions of a document, managed as a product, should be conveyed in an instance of the entity data type *product*. The document identifier should be conveyed in the attribute *product.id*.
+
+In order to characterize the fact that the instance of *product* actually identifies a document, this instance should be referred to by an instance of the entity data type *product_related_product_category* whose attribute name is assigned the value 'document'.
+
+[NOTE]
+--
+Further classifications of the document can be conveyed using appropriate instances of the entity data types **product_category** and *product_category_relationship*.
+--
+
+==== Identification of a version of a document
+
+The identification information of a version of the document should be conveyed in an instance of the entity data type *product_definition_formation*.
+
+==== Identification of a definition of document
+
+The identification information of a definition view of a version of the document should be conveyed in an instance of the entity data type *product_definition*.
+
+If the definition is digital, the attribute *product_definition.frame_of_reference* should refer to an instance of the entity data type *product_definition_context* whose attribute name has the value 'digital document definition'.
+
+If the definition is non-digital, the attribute *product_definition.frame_of_reference* should refer to an instance of the entity data type *product_definition_context* whose attribute name has the value 'physical document definition'.
+
+[example]
+====
+An example of where a definition might be non-digital might be a case where the physical aspects of a book are relevant.
+====
+
+==== Assembly structure of a document
+
+If a document is considered as a kind of product and if its composition needs to be represented, the resources provided in ISO 10303-44 to represent assembly structures should be used.
+
+For example, the decomposition of an encyclopedia in volumes can be represented using instances of the entity data type *next_assembly_usage_occurrence*.
+
+[NOTE]
+--
+The entity data type *next_assembly_usage_occurrence* can also be used to represent the fact that a document is a constituent of any other kind of product. For example, the driver's manual of a car may be identified as a constituent of the car using an instance of **next_assembly_usage_occurrence** that relates two instances of the entity data type *product_definition*, identifying definitions of the driver's manual and of the car respectively.
+--
+
+==== Association of documentation to other data
+
+If a document is considered as a kind of product and if the information it contains is used to document a product or an activity, the association of the definition, of the version or of the identification of the document with the product or activity data should only be dealt with using document specific resources, that is using the entity data types *document_reference*, *document_usage_constraint_assignment* or **product_definition_with_associated_documents**.
+
+[NOTE]
+--
+Consequently, in such a case, the association of document data with product data should not be dealt with using the entity data types *product_definition_relationship*, *product_definition_formation_relationship* or **product_relationship**.
+--
+
+==== Enabling use of document specific resources
+
+In order to enable the use of the document specific resources, as listed above, for a document considered as a kind of product, one needs to relate an instance of the entity data type *document* with an instance corresponding either to the identification of the document, to a version of the document or to a definition of the document. This association can be done using the entity data type *document_product_association*. For example, in order to state that an instance of the entity data type *document* identifies the same collection of information as a version of the corresponding product, an instance of **document_product_association** will relate the instance of document and the corresponding instance of **product_definition_formation**. The attribute document_product_association.name will have the value 'equivalence'.
+
+==== Properties of a document
+
+In this document, properties assigned to product data are conveyed using instances of the entity data type **property_definition**.
+
+If the properties are independent from the realization of the document, the instances of the entity data type **property_definition** can refer, through the attribute *property_definition.definition*, to an instance of **product_definition**.
+
+If properties that depend on the actual realization of the document are considered, a common subtype of **characterized_object** and of *document* should be created.
+
+For example, an annotated EXPRESS schema may define the entity data type *document_file* as below, in order to allow the characterization of the size of files. The file size will then be assigned to the documents, using appropriate instances of the entity data types *property_definition*, *property_definition_representation* and *representation*.
+
+**EXPRESS specification**
+
+
+
+[source]
+--
+ENTITY document_file
+SUBTYPE OF (document, characterized_object);
+END_ENTITY;
+--
+
+=== Use of the measure_schema
+
+The following examples show how the resources provided within this schema are intended to be used to represent measures and units.
+
+==== Use of derived_unit subtypes
+
+===== SI base unit definitions
+
+To support the discussion the following instance data is provided for SI base unit definitions.
+
+Base unit reference instances:
+
+
+
+[source]
+--
+#4  =(LENGTH_UNIT()              NAMED_UNIT(*)         SI_UNIT($,.METRE.));
+#14 =(MASS_UNIT()                NAMED_UNIT(*)     SI_UNIT(.KILO.,.GRAM.));
+#24 =(NAMED_UNIT(*)              SI_UNIT($, .SECOND.)         TIME_UNIT());
+#26 =(ELECTRIC_CURRENT_UNIT()    NAMED_UNIT(*)       SI_UNIT($, .AMPERE.));
+#426=(NAMED_UNIT(*) SI_UNIT($, .KELVIN.) THERMODYNAMIC_TEMPERATURE_UNIT());
+#427=(AMOUNT_OF_SUBSTANCE_UNIT() NAMED_UNIT(*)         SI_UNIT($, .MOLE.));
+#428=(LUMINOUS_INTENSITY_UNIT()  NAMED_UNIT(*)      SI_UNIT($, .CANDELA.));
+--
+
+
+
+[NOTE]
+--
+#14 instance is created to support definition of SI derived units and is the formal definition that the kilogram is the SI unit of mass.
+--
+
+===== SI derived units
+
+SI derived unit exchange should use the *derived_unit* and *unit_elements* referencing either a SI base unit or other SI derived units rather than relying directly on *dimensional_exponents*.
+
+[NOTE]
+--
+This document addresses the kilogram issue by isolating the application of .KILO. used to define a unit from the application of .KILO. used as a prefix in a measure value.
+--
+
+====== SI derived unit using user defined names
+
+The list of entries in *si_unit_name* in this document is not exhaustive. In the case that the name of a derived unit is not included in *si_unit_name* then an instance of *derived_unit* (that is not also an instance of **si_unit**) should be populated. In that case, the *derived_unit.name* attribute should be populated to identify the unit.
+
+====== SI derived unit using predefined names
+
+Some SI derived unit names are included in *si_unit_name*. An instance of the specific multiple inheritance subtype of *derived_unit* and *si_unit* should be populated when it is desired to exchange these types of SI units:
+
+
+* *absorbed_dose_unit*,
+
+* *radioactivity_unit*,
+
+* *capacitance_unit*,
+
+* *dose_equivalent_unit*,
+
+* *electric_charge_unit*,
+
+* *conductance_unit*,
+
+* *electric_potential_unit*,
+
+* *energy_unit*,
+
+* *magnetic_flux_density_unit*,
+
+* *force_unit*,
+
+* *frequency_unit*,
+
+* *illuminance_unit*,
+
+* *inductance_unit*,
+
+* *magnetic_flux_unit*,
+
+* *power_unit*,
+
+* *pressure_unit*,
+
+* *resistance_unit*.
+
+===== Derived units whose system of units is unspecified
+
+The following derived units have unspecified system of units in this document:
+
+
+* acceleration,
+
+* area,
+
+* velocity,
+
+* volume.
+
+
+
+[NOTE]
+--
+This document specifies the fact that the unit is a *derived_unit* and the *dimensional_exponents* values for the unit.
+--
+
+If all *derived_unit_element* instances reference SI units, then the derived unit is an SI derived unit.
+
+For the case that other units are exchanged, such as English Imperial, each of the *derived_unit_element* instances referenced by the *derived_unit* should be in the same system of units.
+
+===== Detailed examples of measure unit definitions
+
+====== Definition of SI units
+
+Definition of "newton":
+
+A Newton (N) is kg·m·s^-2^. Part41 provides the ability to explicitly state that force is derived, that the newton is a SI derived unit with a name.
+
+This document requires that a data population include kilogram as the mass unit when newton is defined so as to make the mathematical properties of the data set consistent with SI system of units.
+
+[NOTE]
+--
+If the *mass_unit* prefix is not provided, even though the newton is declared to be the unit, the numerical instance data declares the unit to be the dyne.
+--
+
+Recommended approach:
+
+
+
+[source]
+--
+/* establish system of units */
+#5=DERIVED_UNIT_ELEMENT(#4,1.0);
+#15=DERIVED_UNIT_ELEMENT(#14,1.0);
+#25=DERIVED_UNIT_ELEMENT(#24,-2.0);
+/* establish newton as SI force unit */
+#4161100=SI_FORCE_UNIT((#5,#15,#25),*,$,.NEWTON.);
+--
+
+Definition of "pascal":
+
+A Pascal (Pa) is 1 N·m^-2^.
+
+
+
+[source]
+--
+/* establish the multiplication by m^-2^. */
+#550005=DERIVED_UNIT_ELEMENT(#4,-2.0);
+/* establish a reference to a newton already defined */
+#5500025=DERIVED_UNIT_ELEMENT(#4161100,1.0);
+#4161200=SI_PRESSURE_UNIT((#550005,#5500025),*,$,.PASCAL.);
+--
+
+Definition of "joule":
+
+A Joule (J) is 1 N·m.
+
+
+
+[source]
+--
+/* establish the multiplication by m. */
+#650005=DERIVED_UNIT_ELEMENT(#4,1.0);
+/* establish a reference to a newton already defined */
+#6500025=DERIVED_UNIT_ELEMENT(#4161100,1.0);
+#4161300=SI_ENERGY_UNIT((#650005,#6500025),*,$,.JOULE.);
+--
+
+Definition of "watt":
+
+A Watt (W) is 1 J·s^-1^.
+
+
+
+[source]
+--
+/* establish the division by sec. */
+#750005=DERIVED_UNIT_ELEMENT(#4,-1.0);
+/* establish a reference to a joule already defined */
+#7500025=DERIVED_UNIT_ELEMENT(#4161300,1.0);
+#4161400=SI_POWER_UNIT((#750005,#7500025),*,$,.WATT.);
+--
+
+Definition of "coulomb":
+
+A Coulomb (C) is 1 A·s.
+
+
+
+[source]
+--
+/* establish system of units */
+#8500015=DERIVED_UNIT_ELEMENT(#24,1.0);
+#8500025=DERIVED_UNIT_ELEMENT(#26,1.0);
+/* establish coulomb as SI electric charge unit */
+#1001=SI_ELECTRIC_CHARGE_UNIT((#8500015,#8500025),*,$,.COULOMB.);
+--
+
+Definition of "volt":
+
+A Volt (V) is 1 W·A^-1^.
+
+
+
+[source]
+--
+/* establish the division by amp. */
+#950005=DERIVED_UNIT_ELEMENT(#26,-1.0);
+/* establish a reference to a watt already defined */
+#9500025=DERIVED_UNIT_ELEMENT(#4161400,1.0);
+#1002=SI_ELECTRIC_POTENTIAL_UNIT((#950005,#9500025),*,$,.VOLT.);
+--
+
+Definition of "farad":
+
+A Farad (F) is 1 C·V^-1^.
+
+
+
+[source]
+--
+/* establish a reference to a coulomb already defined. */
+#860005=DERIVED_UNIT_ELEMENT(#1001,1.0);
+/* establish a reference to a volt already defined */
+#8600025=DERIVED_UNIT_ELEMENT(#1002,-1.0);
+#4161500=SI_CAPACITANCE_UNIT((#860005,#8600025),*,$,.FARAD.);
+--
+
+Definition of "ohm":
+
+An Ohm (Ω) is 1 V·A^-1^.
+
+
+
+[source]
+--
+/* establish a reference to a volt already defined. */
+#870005=DERIVED_UNIT_ELEMENT(#1001,1.0);
+/* establish a reference to amp*/
+#8700025=DERIVED_UNIT_ELEMENT(#26,-1.0);
+#10099=SI_RESISTANCE_UNIT((#870005,#8700025),*,$,.OHM.);
+--
+
+Definition of "siemens":
+
+A Siemens (S) is 1 Ω^-1^.
+
+
+
+[source]
+--
+/* establish a reference to an ohm already defined. */
+#880005=DERIVED_UNIT_ELEMENT(#10099,-1.0);
+#100=SI_CONDUCTANCE_UNIT((#880005),*,$,.SIEMENS.);
+--
+
+Definition of "weber":
+
+A Weber (Wb) is 1 V·s.
+
+
+
+[source]
+--
+/* establish a reference to a volt already defined. */
+#890005=DERIVED_UNIT_ELEMENT(#1001,1.0);
+/* establish a reference to second*/
+#8900025=DERIVED_UNIT_ELEMENT(#24,1.0);
+#10023=SI_MAGNETIC_FLUX_UNIT((#890005,#8900025),*,$,.WEBER.);
+--
+
+Definition of "tesla":
+
+A Tesla (T) is 1 Wb·m^-2^.
+
+
+
+[source]
+--
+/* establish a reference to a weber already defined. */
+#900005=DERIVED_UNIT_ELEMENT(#10023,1.0);
+/* establish a reference to metre*/
+#9000025=DERIVED_UNIT_ELEMENT(#4,-2.0);
+#4161600=SI_MAGNETIC_FLUX_DENSITY_UNIT((#900005,#9000025),*,$,.TESLA.);
+--
+
+Definition of "henry":
+
+A Henry (H) is 1 Wb·A^-1^.
+
+
+
+[source]
+--
+/* establish a reference to a weber already defined. */
+#910005=DERIVED_UNIT_ELEMENT(#10023,1.0);
+/* establish a reference to ampere*/
+#9100025=DERIVED_UNIT_ELEMENT(#26,-1.0);
+#47000=SI_INDUCTANCE_UNIT((#910005,#9100025),*,$,.HENRY.);
+--
+
+====== Non SI unit definitions
+
+Well-known are the definition of length, area and volume. Examples included are square millimeters, cubic millimeters, inches, square inches and cubic inches.
+
+Definition of Square Millimeter:
+
+
+
+[source]
+--
+#613=DERIVED_UNIT_ELEMENT(#4,2.0);
+#614=AREA_UNIT((#613));
+#615=NAME_ATTRIBUTE('SQUARE MILLIMETRE',#614);
+--
+
+
+
+[NOTE]
+--
+In this example #614 defines an area unit of square millimeter. **Area_unit** is an instance of *derived_unit* but is not an instance of *si_unit* so *derived_unit.name* is populated.
+--
+
+Definition of Cubic Millimeter:
+
+
+
+[source]
+--
+#610=DERIVED_UNIT_ELEMENT(#4,3.0);
+#611=VOLUME_UNIT((#610));
+#612=NAME_ATTRIBUTE('CUBIC MILLIMETRE',#611);
+--
+
+
+
+[NOTE]
+--
+In this example #611 defines a volume unit of cubic millimeter. **Volume_unit** is an instance of *derived_unit* but is not an instance of *si_unit* so *derived_unit.name* is populated.
+--
+
+Definition of Inch:
+
+
+
+[source]
+--
+#71 =DIMENSIONAL_EXPONENTS(1.,0.,0.,0.,0.,0.,0.) ;--length
+#2944=(LENGTH_UNIT() NAMED_UNIT(*) SI_UNIT(.MILLI.,.METRE.));
+/* Because the unit is an si_unit, the dimensional exponents for #2944 are not exchanged but are calculated based on the enumeration values. */
+#2945=LENGTH_MEASURE_WITH_UNIT(LENGTH_MEASURE(2.54E1),#2944);
+#2946=(CONVERSION_BASED_UNIT('INCH',#2945) LENGTH_UNIT() NAMED_UNIT(#71));
+--
+
+
+
+[NOTE]
+--
+There is a (new) local rule on *conversion_based_unit* requiring the *dimensional_exponents* of a *conversion_based_unit* to be equal to the *dimensional_exponents* of the *unit_component attribute* of the *conversion_factor*. This example satisfies that rule because record #2946 references #71 directly and *dimensional_exponents* are derived by the receiver (if need be) for record #2944.
+--
+
+Definition of Square Inch:
+
+
+
+[source]
+--
+#6130=DERIVED_UNIT_ELEMENT(#2946,2.0);
+#6140=AREA_UNIT((#6130));
+#6150=NAME_ATTRIBUTE('SQUARE INCH',#6140);
+--
+
+
+
+[NOTE]
+--
+In this example #6140 defines an area unit of square inch. *Area_unit* is an instance of *derived_unit* but is not an instance of *si_unit* so *derived_unit.name* is populated.
+--
+
+Definition of Cubic Inch:
+
+
+
+[source]
+--
+#6100=DERIVED_UNIT_ELEMENT(#2946,3.0);
+#6110=VOLUME_UNIT((#6100));
+#6120=NAME_ATTRIBUTE('CUBIC INCH',#6110);
+--
+
+
+
+[NOTE]
+--
+In this example #6110 actually defines a volume unit of cubic inch. **Volume_unit** is an instance of *derived_unit* but is not an instance of *si_unit* so *derived_unit.name* is populated.
+--
+
+Definition of "pound force":
+
+Recommended approach using existing newton declaration (#4161100):
+
+
+
+[source]
+--
+/* conversion from newton to 'pound force' where 'pounds force is defined per the English Gravitational System.  */
+#111=DIMENSIONAL_EXPONENTS(1.,1.,-2.,0.,0.,0.,0.) ;--force
+#101=FORCE_MEASURE_WITH_UNIT(FORCE_MEASURE(4.4482216152605),# 4161100);
+#103=(CONVERSION_BASED_UNIT('pound force',#101) FORCE_UNIT() NAMED_UNIT(#111));
+--
+
+===== Example application of unit definitions to measure value
+
+
+
+[source]
+--
+#714=AREA_MEASURE_WITH_UNIT(AREA_MEASURE(150.0),#614);
+--
+
+In this example #714 describes the surface area of a small cube with 5mm sides.
+
+
+
+[source]
+--
+#711=VOLUME_MEASURE_WITH_UNIT(VOLUME_MEASURE(125.0),#611);
+--
+
+In this example #711 describes the volume of a small cube with 5mm sides.
+
+
+
+[source]
+--
+#7140=AREA_MEASURE_WITH_UNIT(AREA_MEASURE(150.0),#6140);
+--
+
+In this example #7140 describes the surface area of a small cube with 5in sides.
+
+
+
+[source]
+--
+#7110=VOLUME_MEASURE_WITH_UNIT(VOLUME_MEASURE(125.0),#6110);
+--
+
+In this example #7110 describes the volume of a small cube with 5in sides.
+
+
+
+[source]
+--
+#8000=FORCE_MEASURE_WITH_UNIT(FORCE_MEASURE(250.2),#103);
+--
+
+In this example #8000 describes the force of 250.2 pounds force produced by an engine.
+
+==== Currency conversion
+
+Consider the case in which an amount of money of 3.50 French Francs is to be expressed. In order to represent the unit French Franc, an instance of *context_dependent_unit* will be created. Its name attribute will have the value 'French Franc' and its dimensions attribute will refer to an instance of **dimensional_exponents** having the following attribute values:
+
+
+* *length_exponent* = 0.0;
+
+* *mass_exponent* = 0.0;
+
+* *time_exponent* = 0.0;
+
+* *electric_current_exponent* = 0.0;
+
+* *thermodynamic_temperature_exponent* = 0.0;
+
+* *amount_of_substance_exponent* = 0.0;
+
+* *luminous_intensity_exponent* = 0.0.
+
+Then, an instance of *measure_with_unit* will be created. Its *unit_component* attribute will refer to the instance depicted above and its *value_component* attribute will be of type *count_measure* and will have the value of 3.50.
+
+[NOTE]
+--
+A Euro may be specified relative to another currency using *conversion_based_unit*.
+--
+
+==== Context dependent unit
+
+In describing a parts list, consider the case in which three occurrences of a given item are to be expressed. In order to represent the unit 'occurrence of an item', an instance of *context_dependent_unit* will be created. Its name attribute will have the value 'parts' and its dimensions attribute will refer to an instance of **dimensional_exponents** having the following attribute values:
+
+
+* *length_exponent* = 0.0;
+
+* *mass_exponent* = 0.0;
+
+* *time_exponent* = 0.0;
+
+* *electric_current_exponent* = 0.0;
+
+* *thermodynamic_temperature_exponent* = 0.0;
+
+* *amount_of_substance_exponent* = 0.0;
+
+* *luminous_intensity_exponent* = 0.0.
+
+Then, an instance of *measure_with_unit* will be created. Its *unit_component* will refer to the instance depicted above and its *value_component* attribute will be of type *count_measure* and will have the value of 3.
+
+==== Unit conversion based on an algebraic expression
+
+This example presents how to represent a unit that is converted from another unit, using any algebraic expression. In the following, the unit that is converted is designated as the reference unit.
+
+[NOTE]
+--
+The case of a conversion expression that is a multiplication by a real coefficient can be dealt with using **conversion_based_unit**.
+--
+
+In order to provide the capability to represent, in an annotated EXPRESS schema, a unit that is defined by a conversion algebraic expression, this conversion expression is represented using resources defined in ISO 13584-20. The principle of the representation is to associate to each unit involved in the conversion expression the concept of variable as defined in ISO 13584-20 and to describe the algebraic expression that relate these variables.
+
+For example, if the reference unit is a *named_unit*, the following subtype will be created:
+
+**EXPRESS specification**
+
+
+
+[source]
+--
+ENTITY named_unit_variable
+SUBTYPE OF (named_unit, variable_semantics);
+INVERSE
+      associated_variable_environment: environment FOR semantics;
+END_ENTITY;
+--
+
+For the unit defined using the algebraic expression, the following subtype will be created:
+
+**EXPRESS specification**
+
+
+
+[source]
+--
+ENTITY expression_conversion_based_unit
+SUBTYPE OF (named_unit, variable_semantics);
+INVERSE
+      associated_variable_environment: environment FOR semantics;
+END_ENTITY;
+--
+
+The following instances present an instantiation scheme in which the unit Degree Fahrenheit is defined with respect to the unit Degree Celsius.
+
+[NOTE]
+--
+The mathematical formula relating both units is:
+T~f~ = 1.8*T~c~ +32
+
+--
+
+
+
+[NOTE]
+--
+The instances are expressed using the notation of ISO 10303-21 [2].
+--
+
+**EXPRESS specification**
+
+
+
+[source]
+--
+/* definition of the unit Degree Celsius */
+
+#70 = (NAMED_UNIT(*) NAMED_UNIT_VARIABLE() SI_UNIT($, .DEGREE_CELSIUS. )
+THERMODYNAMIC_TEMPERATURE_UNIT() VARIABLE_SEMANTICS());
+
+/* Because the unit is an si_unit, the dimensional exponents for #70 are not exchanged but are calculated based on the enumeration values. */
+
+#71 = DIMENSIONAL_EXPONENTS(0.,0.,0.,0.,1.,0.,0.) ;
+
+/* definition of the variable corresponding to T~c~ and association with the
+unit Degree Celsius */
+
+#97 = REAL_NUMERIC_VARIABLE ();
+#98 = ENVIRONMENT (#97, #70);
+
+/* Representation of the expression '1.8 * T~c~ + 32' */
+
+#1005 = MULT_EXPRESSION ((#1006, #97));
+#1006 = REAL_LITERAL (1.8);
+#1007 = REAL_LITERAL (32);
+#1008 = PLUS_EXPRESSION((#1005, #1007));
+
+/* definition of the unit Degree Fahrenheit */
+
+#170 = (EXPRESSION_CONVERSION_BASED_UNIT() NAMED_UNIT(#71)
+THERMODYNAMIC_TEMPERATURE_UNIT() VARIABLE_SEMANTICS()) ;
+
+/* definition of the variable corresponding to T~f~ and association with the
+unit Degree Fahrenheit */
+
+#197 = REAL_NUMERIC_VARIABLE ();
+#198 = ENVIRONMENT (#197, #170);
+
+/* expression to specify that T~f~ is equal to the plus_expression */
+
+#1010 = COMPARISON_EQUAL ((#197, #1008));
+--
+
+
+
+[NOTE]
+--
+If needed, the name of the unit Degree Fahrenheit can be represented using the entity **name_assignment**.
+--
+
+==== Use of area_unit and volume_unit
+
+The following excerpt illustrates how an area unit and/or a volume unit can be constructed from the data types defined in clause *Measure*. Entity instance #611 is an example of a volume unit named 'cubic millimetre', and entity instance #614 is an area unit named 'square millimetre'.
+
+[NOTE]
+--
+The instances are expressed using the notation of ISO 10303-21 [2].
+--
+
+
+
+[source]
+--
+#4=(LENGTH_UNIT() NAMED_UNIT(*) SI_UNIT(.MILLI.,.METRE.));
+#610=DERIVED_UNIT_ELEMENT(#4,3.0);
+#611=VOLUME_UNIT((#610));
+#612=NAME_ATTRIBUTE('CUBIC MILLIMETRE',#611);
+#613=DERIVED_UNIT_ELEMENT(#4,2.0);
+#614=AREA_UNIT((#613));
+#615=NAME_ATTRIBUTE('SQUARE MILLIMETRE',#614);
+#711=VOLUME_MEASURE_WITH_UNIT(VOLUME_MEASURE(125.0),#611);
+#714=AREA_MEASURE_WITH_UNIT(AREA_MEASURE(150.0),#614);
+--
+
+
+
+[NOTE]
+--
+In this example #611 actually defines a volume unit and #614 defines an area unit, these are used by #711 and #714 respectively to describe the volume and surface area of a small cube with 5mm sides.
+--
+
+==== Use of global_unit_assigned_context
+
+The following example set of instances defines the context of a 3D geometric representation ( #604), in which plane angles are expressed in radians, solid angles are expressed in steradians and lengths are expressed in millimetres.
+
+[NOTE]
+--
+The instances are expressed using the notation of ISO 10303-21 [2].
+--
+
+**EXPRESS specification**
+
+
+
+[source]
+--
+#3=(NAMED_UNIT(*)SI_UNIT($,.STERADIAN.)SOLID_ANGLE_UNIT());
+#4=(LENGTH_UNIT()NAMED_UNIT(*)SI_UNIT(.MILLI.,.METRE.));
+#5=(NAMED_UNIT(*)PLANE_ANGLE_UNIT()SI_UNIT($,.RADIAN.));
+
+#604=(GEOMETRIC_REPRESENTATION_CONTEXT(3)
+      GLOBAL_UNIT_ASSIGNED_CONTEXT( (#4,#5,#3))REPRESENTATION_CONTEXT('l-bracket','3D'));
+--
+
+=== Use of the person_organization_schema
+
+==== Address of a person in an organization
+
+In many cases, it will be desirable to associate and address with a person in the context of an organization. This address will usually be different from the home address of the person and may be different from the address of the organization itself. Such a requirement may be accomplished by a complex entity instance of a subtype whose supertypes are both **personal_address** and *organizational_address*.
+
+An annotated EXPRESS schema that uses this document can create the following subtype to address this requirement.
+
+**EXPRESS specification**
+
+
+
+[source]
+--
+ENTITY persons_in_organization_address
+SUBTYPE OF (personal_address, organizational_address)
+WHERE
+WR1:  SIZEOF(SELF\organizational_address.organizations)=1;
+WR2:  SIZEOF(QUERY(pers <* SELF\personal_address.people |
+      SIZEOF(pers_in_org <*
+      USEDIN(pers,
+ 'PERSON_ORGANIZATION_SCHEMA.PERSON_AND_ORGANIZATION.THE_PERSON')
+      | pers_in_org.the_organization IN
+      SELF\organizational_address.organizations) =0)) =0;
+END_ENTITY;
+--
+
+**Formal propositions**
+
+**WR1**: The address of only one organization shall be considered;
+
+**WR2**: The set of persons that are given an *address* and that are not related to the organization through an instance of *person_and_organization*, shall be empty.
+
+==== Use of person_assignment
+
+In some cases, it may be desirable to have more than one person associated with product data. For instance, one person may be the originator of the product data, and that data may subsequently be assigned to another person. In such cases, multiple instances of *person_assignment* may created, and the related *person_role* instances may be used to identify the originator and the successor.
+
+In the following example, it is assumed that an annotated EXPRESS schema that uses this document has created a subtype of *person_assignment* called *applied_person_assignment*.
+
+**EXPRESS specification**
+
+
+
+[source]
+--
+TYPE product_data_select = SELECT (applied_person_assignment, product,
+...);
+END_TYPE;
+
+ENTITY applied_person_assignment
+SUBTYPE OF person_assignment;
+  assigned_items: SET[1:?] of product_data_select;
+END_ENTITY;
+--
+
+The following set of instances record that Jim Smith was originally responsible for some product data; he was later replaced by Tom Jones.
+
+[NOTE]
+--
+The instances are expressed using the notation of ISO 10303-21 [2].
+--
+
+**EXPRESS specification**
+
+
+
+[source]
+--
+#1 = PERSON( '276 32 0402', 'Smith', 'Jim', '$' , '$', '$');
+#2 = PERSON( '347 30 2476', 'Jones', 'Tom', '$' , '$', '$');
+#10 = PERSON_ROLE( 'owner/originator', '$');
+#11 = PERSON_ROLE( 'successor', 'takes over from Jim Smith');
+#41 = (...some instance of product data);
+#42 = (...another instance of product data);
+#61 = APPLIED_PERSON_ASSIGNMENT( #1, #10, ( #41, # 42,...));
+#62 = APPLIED_PERSON_ASSIGNMENT( #2, #11, (#1));
+--
+

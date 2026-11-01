@@ -1,0 +1,154 @@
+(*
+ISO 10303 TC184/SC4/WG12 N8369
+
+EXPRESS Source:
+ISO 10303-41 ed4 Fundamentals of product description and support - Certification schema
+
+The following permission notice and disclaimer shall be included in all copies of this EXPRESS schema ("the Schema"),
+and derivations of the Schema:
+
+Copyright ISO 2014  All rights reserved
+Permission is hereby granted, free of charge in perpetuity, to any person obtaining a copy of the Schema,
+to use, copy, modify, merge and distribute free of charge, copies of the Schema for the purposes of developing,
+implementing, installing and using software based on the Schema, and to permit persons to whom the Schema is furnished to do so,
+subject to the following conditions:
+
+THE SCHEMA IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SCHEMA OR THE
+USE OR OTHER DEALINGS IN THE SCHEMA.
+
+In addition, any modified copy of the Schema shall include the following notice:
+
+THIS SCHEMA HAS BEEN MODIFIED FROM THE SCHEMA DEFINED IN
+ISO 10303-41 ed4 Fundamentals of product description and support - Certification schema
+AND SHOULD NOT BE INTERPRETED AS COMPLYING WITH THAT STANDARD
+*)
+
+SCHEMA certification_schema '{iso standard 10303 part(41) version(3) object(1) certification-schema(5)}';
+  REFERENCE FROM support_resource_schema (label, text);
+  ENTITY certification;
+    name : label;
+    purpose : text;
+    kind : certification_type;
+  END_ENTITY;
+
+  ENTITY certification_type;
+    description : label;
+  END_ENTITY;
+
+END_SCHEMA;
+
+(*"certification_schema.__published_in"
+ISO 10303-41:2025 ED8
+*)
+
+(*"certification_schema.__identifier"
+ISO/TC 184/SC 4/WG 12 N8369
+*)
+
+(*"certification_schema.__status"
+IS
+*)
+
+(*"certification_schema.__title"
+fundamentals_of_product_description_and_support
+*)
+
+
+(*"certification_schema"
+The subject of the *certification_schema* is the definition of certifications. A certification assures and validates product data.
+
+[example]
+====
+A material certificate states the chemical composition of one or more physical pieces of material, for example, purchased raw material. The presence of the material certificate removes the need to test the composition of the material; it allows the specified material composition to be accepted as fact without further investigation.
+====
+
+[example]
+====
+A certified supplier can supply goods that do not require checking.
+====
+
+*)
+(*"certification_schema.__fund_cons"
+
+Certification information can be attached to any aspect of product data.
+
+*)
+(*"certification_schema.__expressg"
+[[certification_schema_expg1]]
+[.svgmap]
+====
+image::certification_schemaexpg1.svg[]
+
+* <<express:certification_schema>>; 1
+* <<express:support_resource_schema>>; 2
+====
+
+*)
+(*"certification_schema.__expressg"
+[[certification_schema_expg2]]
+[.svgmap]
+====
+image::certification_schemaexpg2.svg[]
+
+* <<express:support_resource_schema.text>>; 1
+* <<express:support_resource_schema.label>>; 2
+* <<express:support_resource_schema.label>>; 3
+* <<express:certification_schema.certification>>; 4
+* <<express:certification_schema.certification_type>>; 5
+====
+*)
+
+(*"certification_schema.certification"
+A **certification** is an assertion of facts. A **certification** is an incompletely modeled concept and requires population of related entity data types to form a complete certification.
+*)
+
+
+(*"certification_schema.certification.__note"
+The role of *certification* can be defined in the annotated EXPRESS schemas that use or specialize this entity, or by default, in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"certification_schema.certification.name"
+the <<express:support_resource_schema.label,label>> by which the **certification** is known.
+*)
+
+
+(*"certification_schema.certification.purpose"
+an informal description of the reason why the **certification** is applied.
+*)
+
+(*"certification_schema.certification.purpose.__example"
+A purpose for material certification could be the fact that certain customers demand material certification for the products that are supplied to them.
+*)
+
+(*"certification_schema.certification.kind"
+the <<express:certification_schema.certification_type,certification_type>> that defines the class of **certification** that is applied.
+*)
+
+
+(*"certification_schema.certification_type"
+A **certification_type** is the kind of <<express:certification_schema.certification,certification>> granted.
+*)
+
+(*"certification_schema.certification_type.__example"
+Suppliers and manufacturers can be certified.
+*)
+
+(*"certification_schema.certification_type.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **certification_type**.
+*)
+
+(*"certification_schema.certification_type.description.__example"
+A certification type in an example supply chain is 'supplier'.
+*)
+
+(*"certification_schema.certification_type.description.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"certification_schema.__schema_file"
+data/resource_docs/fundamentals_of_product_description_and_support/resource.xml
+*)

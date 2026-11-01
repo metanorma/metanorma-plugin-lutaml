@@ -1,0 +1,69 @@
+[[annex_listings]]
+[appendix,obligation=informative]
+== Computer interpretable listings
+
+This annex references a listing of the EXPRESS entity names and corresponding
+short names as specified or referenced in this document. It also
+provides a listing of each EXPRESS schema specified in this document
+without comments nor other explanatory text. These listings are available in
+computer-interpretable form in <<table_listing>> and can be found at the
+following URLs:
+
+Short names: :: http://standards.iso.org/iso/10303/tech/short_names/short-names.txt
+EXPRESS: :: http://standards.iso.org/iso/10303/smrl/v11/tech/smrlv11.zip
+
+[lutaml_express, schemas, context, config_yaml=schemas.yaml]
+----
+[[table_listing]]
+[cols="a,a,a,a",options="header"]
+.ARM and MIM EXPRESS listings
+|===
+| Description | HTML file | ASCII file | Identifier
+
+{% for schema in ordered_schemas %}
+
+{% liquid
+assign schema_filename = schema.file | split: "/" | last
+case schema_filename
+when "arm.exp"
+  assign schema_type = "ARM short form EXPRESS"
+when "mim.exp"
+  assign schema_type = "MIM short form EXPRESS"
+when "arm_concatenated.exp"
+  assign schema_type = "ARM long form EXPRESS"
+when "mim_concatenated.exp"
+  assign schema_type = "MIM long form EXPRESS"
+else
+  assign schema_type = "hello!"
+endcase
+
+assign schemaname = schema.id | replace: "_", "-" | downcase
+%}
+
+| {{ schema_type }}
+| <<{{schemaname}}.html,HTML>>
+| <<{{schemaname}}.exp,EXPRESS>>
+|
+
+{% if schema.remark_items.size > 0 %}
+{% assign identifiers = schema.remark_items | where: "id", "__identifier" %}
+{% for identifier in identifiers %}
+{% if identifier.remarks.size > 0 %}
+{% for remark_identifier in identifier.remarks %}
+
+{{remark_identifier}}
+
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% endfor %}
+
+|===
+----
+
+
+NOTE: The information provided in computer-interpretable form at the above URLs
+is informative. The information that is contained in the body of this part of
+ISO 10303 is normative.

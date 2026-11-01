@@ -1,0 +1,27 @@
+
+{% assign schemaname = schema.id | append: "$" | remove: "_arm$" | remove: "$" | replace: "_", " " | capitalize %}
+
+This clause specifies the information requirements for the *{{schemaname}}*
+application module. The information requirements are specified as the
+Application Reference Model (ARM) of this application module.
+
+NOTE: A graphical representation of the information requirements is given in
+<<annex_arm_expg>>.
+
+NOTE: The mapping specification is specified in <<mapping>>. It shows how the
+information requirements are met by using common resources and constructs
+defined or imported in the MIM schema of this application module.
+
+This clause defines the information requirements to which implementations shall
+conform using the EXPRESS language as defined in ISO 10303-11.
+The following begins the *{{schema.id}}* schema and identifies the necessary
+external references.
+
+[underline]#EXPRESS specification:#
+
+[source%unnumbered]
+--
+*)
+SCHEMA {{ schema.id }};
+(*
+--

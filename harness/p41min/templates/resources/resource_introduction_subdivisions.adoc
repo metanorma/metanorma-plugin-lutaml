@@ -1,0 +1,14 @@
+
+[lutaml_express, schemas, context, config_yaml=schemas.yaml]
+----
+{% if ordered_schemas.size == 1 %}
+{% assign schema = ordered_schemas[0] %}
+This document specifies the {{ schema.id }}.
+{% else %}
+Major subdivisions of this document are:
+
+{% for schema in ordered_schemas %}
+* {{ schema.id }}{% if forloop.last == true %}.{% else %};{% endif %}
+{% endfor %}
+{% endif %}
+----

@@ -1,0 +1,23 @@
+[bibliography]
+== Normative references
+
+* [[[ref8601.2000,ISO 8601]]], _Data elements and interchange formats — Information interchange — Representation of dates and times_
+
+* [[[ref10303-1,ISO 10303-1]]], _Industrial automation systems and integration — Product data representation and exchange— Part 1: Overview and fundamental principles_
+
+* [[[bibitem_010303000002,ISO 10303-2]]], _Industrial automation systems and integration — Product data representation and exchange— Part 2: Vocabulary_
+
+* [[[ref10303-11.2004,ISO 10303-11]]], _Industrial automation systems and integration — Product data representation and exchange— Part 11: Description methods: The EXPRESS language reference manual_
+
+* [[[ref10303-42,ISO 10303-42]]], _Industrial automation systems and integration — Product data representation and exchange— Part 42: Integrated generic resource: Geometric and topological representation_
+
+* [[[ref10303-43,ISO 10303-43]]], _Industrial automation systems and integration — Product data representation and exchange— Part 43: Integrated generic resource: Representation structures_
+
+* [[[ref10303-44,ISO 10303-44]]], _Industrial automation systems and integration — Product data representation and exchange— Part 44: Integrated generic resource: Product structure configuration_
+
+* [[[ref10303-49,ISO 10303-49]]], _Industrial automation systems and integration — Product data representation and exchange— Part 49: Integrated generic resources: Process structure and properties_
+
+* [[[refISOIEC80000,ISO/IEC 80000(all parts)]]], _Quantities and units_
+
+* [[[ref9834-8,ISO/IEC 9834-8]]], _Information technology — Procedures for the operation of object identifier registration authorities— Part 8: Generation of universally unique identifiers (UUIDs) and their use in object identifiers_
+
