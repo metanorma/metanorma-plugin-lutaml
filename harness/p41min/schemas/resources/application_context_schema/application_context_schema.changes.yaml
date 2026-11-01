@@ -1,0 +1,80 @@
+---
+schema: application_context_schema
+change_edition:
+- version: '2'
+  description: |-
+    The definitions of the following EXPRESS entity data types were modified:
+
+    * action;
+    * action_directive;
+    * action_method;
+    * action_method_relationship;
+    * action_relationship;
+    * action_request_solution;
+    * action_request_status;
+    * action_resource;
+    * action_resource_relationship;
+    * action_resource_type;
+    * action_status;
+    * directed_action;
+    * executed_action;
+    * supported_item;
+    * versioned_action_request.
+  additions:
+  - type: ENTITY
+    name: application_context_relationship
+  modifications:
+  - type: ENTITY
+    name: application_context
+- version: '4'
+  description: |-
+    The following entity types had been introduced to support external element references outside the local population of entity instances:
+
+    * component_path_shape_aspect;
+    * externally_defined_item_with_multiple_references;
+    * generic_product_definition_reference;
+    * product_definition_reference;
+    * product_definition_reference_with_local_representation.
+
+    The following entity types had been introduced to support the the characterization of objects:
+
+    * characterized_chain_based_item_within_representation;
+    * characterized_item_within_representation;
+    * characterized_product.
+
+    The following select types from the basic_attribute_schema had been converted into extensible selects and then extended in several other schemas:
+
+    * description_attribute_select;
+    * id_attribute_select;
+    * name_attribute_select;
+    * role_select.
+  additions:
+  - type: TYPE
+    name: acs_description_attribute_select
+  - type: TYPE
+    name: acs_id_attribute_select
+  modifications:
+  - type: REFERENCE_FROM
+    name: basic_attribute_schema
+- version: '6'
+  description: ENTITY basic_attribute's description updated.
+  additions:
+  - type: REFERENCE_FROM
+    name: language_schema
+  - type: REFERENCE_FROM
+    name: management_resources_schema
+  - type: REFERENCE_FROM
+    name: person_organization_schema
+  - type: TYPE
+    name: exchange_identification_context_select
+  - type: ENTITY
+    name: dependent_product_definition_exchange_context
+  - type: ENTITY
+    name: identification_dependent_product_definition_exchange_context
+  - type: ENTITY
+    name: language_dependent_product_definition_exchange_context
+- version: '8'
+  description: Add uuid attribute schema.
+  modifications:
+  - type: ENTITY
+    name: dependent_product_definition_exchange_context

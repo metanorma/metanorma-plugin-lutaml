@@ -1,0 +1,1149 @@
+(*
+ISO 10303 TC184/SC4/WG12 N10886
+
+EXPRESS Source:
+ISO 10303-41 ed7 Fundamentals of product description and support - Product property definition schema
+
+The following permission notice and disclaimer shall be included in all copies of this EXPRESS schema ("the Schema"),
+and derivations of the Schema:
+
+Copyright ISO 2021  All rights reserved
+Permission is hereby granted, free of charge in perpetuity, to any person obtaining a copy of the Schema,
+to use, copy, modify, merge and distribute free of charge, copies of the Schema for the purposes of developing,
+implementing, installing and using software based on the Schema, and to permit persons to whom the Schema is furnished to do so,
+subject to the following conditions:
+
+THE SCHEMA IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SCHEMA OR THE
+USE OR OTHER DEALINGS IN THE SCHEMA.
+
+In addition, any modified copy of the Schema shall include the following notice:
+
+THIS SCHEMA HAS BEEN MODIFIED FROM THE SCHEMA DEFINED IN
+ISO 10303-41 ed7 Fundamentals of product description and support - Product property definition schema
+AND SHOULD NOT BE INTERPRETED AS COMPLYING WITH THAT STANDARD
+*)
+
+SCHEMA product_property_definition_schema '{iso standard 10303 part(41) version(10) object(1) product-property-definition-schema(19)}';
+
+  REFERENCE FROM basic_attribute_schema (   -- ISO 10303-41
+    get_id_value,
+    id_attribute,
+    id_attribute_select);
+  REFERENCE FROM process_property_schema (   -- ISO 10303-49
+    action_property,
+    resource_property);
+  REFERENCE FROM product_definition_schema (   -- ISO 10303-41
+    product_definition,
+    product_definition_relationship,
+    product_definition_relationship_relationship);
+  REFERENCE FROM product_property_representation_schema (   -- ISO 10303-41
+    item_identified_representation_usage);
+  REFERENCE FROM product_structure_schema (   -- ISO 10303-44
+    assembly_component_usage,
+    multi_level_reference_designator,
+    next_assembly_usage_occurrence,
+    product_definition_occurrence);
+      REFERENCE FROM shape_dimension_schema (   -- ISO 10303-47
+    dimensional_location,
+    dimensional_size);
+  REFERENCE FROM shape_tolerance_schema (   -- ISO 10303-47
+    geometric_tolerance);
+  REFERENCE FROM support_resource_schema (   -- ISO 10303-41
+    bag_to_set,
+    identifier,
+    label,
+    text);
+
+  TYPE characterized_definition = SELECT (
+    characterized_item,
+    characterized_object,
+    characterized_product_definition,
+    shape_definition);
+  END_TYPE;
+
+  TYPE characterized_item = SELECT (
+    item_identified_representation_usage,
+     dimensional_size,
+     geometric_tolerance);
+  END_TYPE;
+
+  TYPE ppds_id_attribute_select = SELECT BASED_ON id_attribute_select WITH (
+    property_definition,
+    shape_aspect,
+    shape_aspect_relationship);
+  END_TYPE;
+
+  TYPE characterized_product_definition = SELECT (
+    product_definition,
+    product_definition_occurrence,
+    product_definition_relationship,
+    product_definition_relationship_relationship);
+  END_TYPE;
+
+  TYPE derived_property_select = SELECT (
+  	property_definition,
+  	action_property,
+  	resource_property,
+  	dimensional_location,
+  	dimensional_size,
+  	geometric_tolerance);
+  END_TYPE;
+
+  TYPE shape_aspect_or_characterized_object = SELECT (shape_aspect, characterized_object);
+  END_TYPE;
+
+  TYPE shape_definition = SELECT (product_definition_shape, shape_aspect, shape_aspect_relationship);
+  END_TYPE;
+
+  TYPE internal_or_reflected_shape_aspect = SELECT (
+    shape_aspect,
+    identifier);
+  END_TYPE;
+
+  TYPE multi_or_next_assembly_usage_occurrence = SELECT (
+    multi_level_reference_designator,
+    next_assembly_usage_occurrence);
+  END_TYPE;
+
+  ENTITY characterized_object;
+    name : label;
+    description : OPTIONAL text;
+  END_ENTITY;
+
+  ENTITY characterized_object_relationship;
+    name : label;
+    description : OPTIONAL text;
+    relating_object : characterized_object;
+    related_object : characterized_object;
+  END_ENTITY;
+
+  ENTITY component_path_shape_aspect
+    SUBTYPE OF (shape_aspect);
+    location : multi_or_next_assembly_usage_occurrence;
+    component_shape_aspect : internal_or_reflected_shape_aspect;
+  UNIQUE
+    UR1 : location, component_shape_aspect;
+  END_ENTITY;
+
+  ENTITY constituent_shape_aspect
+    SUBTYPE OF (shape_aspect);
+    parent : shape_aspect;
+  DERIVE
+   SELF\shape_aspect.of_shape : product_definition_shape := get_product_definition_shape(SELF);
+  END_ENTITY;
+
+  ENTITY general_property;
+    id : identifier;
+    name : label;
+    description : OPTIONAL text;
+  END_ENTITY;
+
+  ENTITY general_property_association;
+    name : label;
+    description : OPTIONAL text;
+    base_definition : general_property;
+    derived_definition : derived_property_select;
+  WHERE
+    WR1: (SIZEOF(['SHAPE_DIMENSION_SCHEMA.DIMENSIONAL_LOCATION', 'SHAPE_DIMENSION_SCHEMA.DIMENSIONAL_SIZE', 'SHAPE_TOLERANCE_SCHEMA.GEOMETRIC_TOLERANCE'] *
+                TYPEOF(derived_definition)) > 0)
+         OR (SIZEOF(USEDIN(derived_definition, 'PRODUCT_PROPERTY_DEFINITION_SCHEMA.' + 'GENERAL_PROPERTY_ASSOCIATION.' + 'DERIVED_DEFINITION')) = 1);
+    WR2: (SIZEOF(['SHAPE_DIMENSION_SCHEMA.DIMENSIONAL_LOCATION', 'SHAPE_DIMENSION_SCHEMA.DIMENSIONAL_SIZE', 'SHAPE_TOLERANCE_SCHEMA.GEOMETRIC_TOLERANCE'] *
+                TYPEOF(derived_definition)) > 0)
+          OR (derived_definition.name = base_definition.name);
+  END_ENTITY;
+
+  ENTITY general_property_relationship;
+    name : label;
+    description : OPTIONAL text;
+    relating_property : general_property;
+    related_property : general_property;
+  END_ENTITY;
+
+  ENTITY product_definition_shape
+    SUBTYPE OF (property_definition);
+  UNIQUE
+    UR1: SELF\property_definition.definition;
+  WHERE
+    WR1: SIZEOF(['PRODUCT_PROPERTY_DEFINITION_SCHEMA.CHARACTERIZED_PRODUCT_DEFINITION', 'PRODUCT_PROPERTY_DEFINITION_SCHEMA.CHARACTERIZED_OBJECT'] * TYPEOF(SELF\property_definition.definition)) > 0;
+  END_ENTITY;
+
+  ENTITY property_definition;
+    name : label;
+    description : OPTIONAL text;
+    definition : characterized_definition;
+  DERIVE
+    id : identifier := get_id_value(SELF);
+  WHERE
+    WR1: SIZEOF(USEDIN(SELF, 'BASIC_ATTRIBUTE_SCHEMA.' + 'ID_ATTRIBUTE.IDENTIFIED_ITEM')) <= 1;
+  END_ENTITY;
+
+  ENTITY shape_aspect
+    SUPERTYPE OF (ONEOF (shape_aspect_occurrence, component_path_shape_aspect)
+                  ANDOR constituent_shape_aspect);
+    name : label;
+    description : OPTIONAL text;
+    of_shape : product_definition_shape;
+    product_definitional : LOGICAL;
+  DERIVE
+    id : identifier := get_id_value(SELF);
+  UNIQUE
+    UR1: id, of_shape;
+  WHERE
+    WR1: SIZEOF(USEDIN(SELF, 'BASIC_ATTRIBUTE_SCHEMA.' + 'ID_ATTRIBUTE.IDENTIFIED_ITEM')) <= 1;
+  END_ENTITY;
+
+  ENTITY shape_aspect_occurrence
+    SUBTYPE OF (shape_aspect);
+    definition : shape_aspect_or_characterized_object;
+  WHERE
+    WR1: acyclic_shape_aspect_occurrence(SELF,definition);
+  END_ENTITY;
+
+  ENTITY shape_aspect_relationship;
+    name : label;
+    description : OPTIONAL text;
+    relating_shape_aspect : shape_aspect;
+    related_shape_aspect : shape_aspect;
+  DERIVE
+    id : identifier := get_id_value(SELF);
+  WHERE
+    WR1: SIZEOF(USEDIN(SELF, 'BASIC_ATTRIBUTE_SCHEMA.' + 'ID_ATTRIBUTE.IDENTIFIED_ITEM')) <= 1;
+  END_ENTITY;
+
+  FUNCTION acyclic_characterized_object_relationship (relation : characterized_object_relationship; relatives : SET [1:?] OF characterized_object; specific_relation : STRING):BOOLEAN;
+    LOCAL
+      x : SET OF characterized_object_relationship;
+    END_LOCAL;
+
+    IF relation.relating_object IN relatives THEN
+      RETURN (FALSE);
+    END_IF;
+    x := QUERY(ca <* bag_to_set(USEDIN(relation.relating_object, 'PRODUCT_PROPERTY_DEFINITION_SCHEMA.' + 'CHARACTERIZED_OBJECT_RELATIONSHIP.' + 'RELATED_OBJECT')) | specific_relation IN TYPEOF(ca));
+    REPEAT i := 1 TO HIINDEX(x);
+      IF NOT acyclic_characterized_object_relationship(x[i], relatives + relation.relating_object, specific_relation) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_REPEAT;
+    RETURN (TRUE);
+  END_FUNCTION;
+
+  FUNCTION acyclic_general_property_relationship (relation : general_property_relationship; relatives : SET [1:?] OF general_property; specific_relation : STRING):BOOLEAN;
+    LOCAL
+      x : SET OF general_property_relationship;
+    END_LOCAL;
+
+    IF relation.relating_property IN relatives THEN
+      RETURN (FALSE);
+    END_IF;
+    x := QUERY(genp <* bag_to_set(USEDIN(relation.relating_property, 'PRODUCT_PROPERTY_DEFINITION_SCHEMA.' + 'GENERAL_PROPERTY_RELATIONSHIP.' + 'RELATED_PROPERTY')) | specific_relation IN TYPEOF(genp));
+    REPEAT i := 1 TO HIINDEX(x);
+      IF NOT acyclic_general_property_relationship(x[i], relatives + relation.relating_property, specific_relation) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_REPEAT;
+    RETURN (TRUE);
+  END_FUNCTION;
+
+  FUNCTION acyclic_shape_aspect_occurrence
+          (sao : shape_aspect_occurrence; definition : shape_aspect_or_characterized_object) : BOOLEAN;
+    IF NOT  (('PRODUCT_PROPERTY_DEFINITION_SCHEMA.SHAPE_ASPECT_OCCURRENCE') IN TYPEOF(definition)) THEN
+      RETURN  (TRUE);
+    END_IF;
+    IF  (definition :=: sao) THEN
+      RETURN  (FALSE);
+    ELSE RETURN(acyclic_shape_aspect_occurrence(sao, definition\shape_aspect_occurrence.definition));
+    END_IF;
+  END_FUNCTION;
+
+  FUNCTION acyclic_shape_aspect_relationship (relation : shape_aspect_relationship; relatives : SET [1:?] OF shape_aspect; specific_relation : STRING):BOOLEAN;
+    LOCAL
+      x : SET OF shape_aspect_relationship;
+    END_LOCAL;
+
+    IF relation.relating_shape_aspect IN relatives THEN
+      RETURN (FALSE);
+    END_IF;
+    x := QUERY(sa <* bag_to_set(USEDIN(relation.relating_shape_aspect, 'PRODUCT_PROPERTY_DEFINITION_SCHEMA.' + 'SHAPE_ASPECT_RELATIONSHIP.' + 'RELATED_SHAPE_ASPECT')) | specific_relation IN TYPEOF(sa));
+    REPEAT i := 1 TO HIINDEX(x);
+      IF NOT acyclic_shape_aspect_relationship(x[i], relatives + relation.relating_shape_aspect, specific_relation) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_REPEAT;
+    RETURN (TRUE);
+  END_FUNCTION;
+
+  FUNCTION get_product_definition_shape(current: constituent_shape_aspect) : product_definition_shape ;
+    REPEAT
+      WHILE ('PRODUCT_DEFINITION_SCHEMA.CONSTITUENT_SHAPE_ASPECT' IN TYPEOF(current.parent));
+  	  current := current.parent;
+    END_REPEAT;
+    RETURN (current.parent\shape_aspect.of_shape);
+  END_FUNCTION;
+
+  FUNCTION get_shape_aspects (c_def_instance : characterized_definition):SET OF shape_aspect;
+    LOCAL
+      pd_set : SET OF product_definition_shape := [];
+      pdr_set : SET OF shape_aspect := [];
+    END_LOCAL;
+
+    pd_set := bag_to_set(QUERY(pd <* USEDIN(c_def_instance, 'PRODUCT_PROPERTY_DEFINITION_SCHEMA.PROPERTY_DEFINITION.DEFINITION') | 'PRODUCT_PROPERTY_DEFINITION_SCHEMA.PRODUCT_DEFINITION_SHAPE' IN TYPEOF(pd)));
+    IF (SIZEOF(pd_set) < 1) THEN
+      RETURN (pdr_set);
+    END_IF;
+    REPEAT i := 1 TO HIINDEX(pd_set);
+      pdr_set := pdr_set + bag_to_set(USEDIN(pd_set[i], 'PRODUCT_PROPERTY_DEFINITION_SCHEMA.SHAPE_ASPECT.OF_SHAPE'));
+    END_REPEAT;
+    RETURN (pdr_set);
+  END_FUNCTION;
+
+END_SCHEMA;
+
+(*"product_property_definition_schema.__published_in"
+ISO 10303-41:2025 ED8
+*)
+
+(*"product_property_definition_schema.__identifier"
+ISO/TC 184/SC 4/WG 12 N10886
+*)
+
+(*"product_property_definition_schema.__supersedes"
+ISO/TC 184/SC 4/WG 12 N10467
+*)
+
+(*"product_property_definition_schema.__status"
+IS
+*)
+
+(*"product_property_definition_schema.__title"
+fundamentals_of_product_description_and_support
+*)
+
+
+(*"product_property_definition_schema"
+The subject of the *product_property_definition_schema* is the characteristics of an object.
+*)
+(*"product_property_definition_schema.__fund_cons"
+
+This schema provides resources for the identification of:
+
+* types of properties to be identified and described;
+* properties assigned to a *characterized_object*, a *product_definition*, a *product_definition_relationship* or a *shape_definition*.
+
+The meaning of each assigned property may be defined either by its association with an instance of the entity characterizing a type of property or by its name attribute.
+
+[example]
+====
+The definition of the surface finish of a shape is independent of the way in which the shape or the surface finish is represented.
+====
+
+[NOTE]
+--
+In the previous example, both the defined surface finish and the shape could have multiple representations.
+--
+
+Each characteristic may be associated with a single *characterized_object* or *product_definition* or with one *product_definition* in the context of another. Each characteristic is independent of the number or types of representations of that characteristic. Each characteristic may be associated with the shape of a product, an element of the shape of a product, or the relationship between elements of the shape of a product.
+
+This document distinguishes between the definition of a product and its possible usages. This document establishes the following assumptions:
+
+* the definition of a given object is characterized by a set of unique properties.
+
+[example]
+====
+A product cannot have two shapes simultaneously.
+====
+
+* any usage of the object is characterized by a set of unique properties.
+
+[example]
+====
+A product, like glue, may have different shapes depending on its usage.
+====
+
+* a property characterizes either the definition or one of the usages of an object.
+
+[example]
+====
+The appearance of chair x is a unique property of that chair. The colour designating that the chair is white is a single item in a representation for the appearance property of chair x. This colour is shareable among many representations for the properties of many different objects.
+====
+
+*)
+(*"product_property_definition_schema.__expressg"
+[[product_property_definition_schema_expg1]]
+[.svgmap]
+====
+image::product_property_definition_schemaexpg1.svg[]
+
+* <<express:shape_dimension_schema>>; 1
+* <<express:product_property_representation_schema>>; 2
+* <<express:product_structure_schema>>; 3
+* <<express:process_property_schema>>; 4
+* <<express:shape_tolerance_schema>>; 5
+* <<express:support_resource_schema>>; 6
+* <<express:basic_attribute_schema>>; 7
+* <<express:product_definition_schema>>; 8
+* <<express:product_property_definition_schema>>; 9
+====
+
+*)
+(*"product_property_definition_schema.__expressg"
+[[product_property_definition_schema_expg2]]
+[.svgmap]
+====
+image::product_property_definition_schemaexpg2.svg[]
+
+* <<express:product_property_definition_schema.characterized_definition>>; 1
+* <<express:product_property_definition_schema.shape_aspect_or_characterized_object>>; 2
+* <<express:product_property_definition_schema.characterized_item>>; 3
+* <<express:product_property_definition_schema.ppds_id_attribute_select>>; 4
+* <<express:product_property_definition_schema.characterized_product_definition>>; 5
+* <<express:product_property_definition_schema.multi_or_next_assembly_usage_occurrence>>; 6
+* <<express:product_property_definition_schema.derived_property_select>>; 7
+* <<express:product_property_definition_schema.internal_or_reflected_shape_aspect>>; 8
+* <<express:product_property_definition_schema.shape_definition>>; 9
+* <<express:product_definition_schema.product_definition_relationship>>; 10
+* <<express:support_resource_schema.label>>; 11
+* <<express:support_resource_schema.identifier>>; 12
+* <<express:support_resource_schema.identifier>>; 13
+* <<express:support_resource_schema.label>>; 14
+* <<express:product_structure_schema.next_assembly_usage_occurrence>>; 15
+* <<express:shape_tolerance_schema.geometric_tolerance>>; 16
+* <<express:support_resource_schema.text>>; 17
+* <<express:support_resource_schema.identifier>>; 18
+* <<express:support_resource_schema.label>>; 19
+* <<express:shape_dimension_schema.dimensional_size>>; 20
+* <<express:product_structure_schema.multi_level_reference_designator>>; 21
+* <<express:support_resource_schema.identifier>>; 22
+* <<express:process_property_schema.action_property>>; 23
+* <<express:product_definition_schema.product_definition>>; 24
+* <<express:support_resource_schema.text>>; 25
+* <<express:shape_tolerance_schema.geometric_tolerance>>; 26
+* <<express:support_resource_schema.label>>; 27
+* <<express:support_resource_schema.text>>; 28
+* <<express:product_definition_schema.product_definition_relationship_relationship>>; 29
+* <<express:product_structure_schema.product_definition_occurrence>>; 30
+* <<express:support_resource_schema.identifier>>; 31
+* <<express:shape_dimension_schema.dimensional_location>>; 32
+* <<express:support_resource_schema.text>>; 33
+* <<express:support_resource_schema.label>>; 34
+* <<express:process_property_schema.resource_property>>; 35
+* <<express:support_resource_schema.text>>; 36
+* <<express:support_resource_schema.text>>; 37
+* <<express:support_resource_schema.label>>; 38
+* <<express:shape_dimension_schema.dimensional_size>>; 39
+* <<express:support_resource_schema.text>>; 40
+* <<express:support_resource_schema.label>>; 41
+* <<express:basic_attribute_schema.id_attribute_select>>; 42
+* <<express:support_resource_schema.text>>; 43
+* <<express:support_resource_schema.label>>; 44
+* <<express:product_property_representation_schema.item_identified_representation_usage>>; 45
+* <<express:product_property_definition_schema.general_property_relationship>>; 46
+* <<express:product_property_definition_schema.property_definition>>; 47
+* <<express:product_property_definition_schema.characterized_object_relationship>>; 48
+* <<express:product_property_definition_schema.constituent_shape_aspect>>; 49
+* <<express:product_property_definition_schema.component_path_shape_aspect>>; 50
+* <<express:product_property_definition_schema.shape_aspect_relationship>>; 51
+* <<express:product_property_definition_schema.shape_aspect_occurrence>>; 52
+* <<express:product_property_definition_schema.characterized_object>>; 53
+* <<express:product_property_definition_schema.general_property_association>>; 54
+* <<express:product_property_definition_schema.product_definition_shape>>; 55
+* <<express:product_property_definition_schema.shape_aspect>>; 56
+* <<express:product_property_definition_schema.general_property>>; 57
+====
+*)
+
+(*"product_property_definition_schema.characterized_definition"
+The **characterized_definition** type allows for the designation of a <<express:product_property_definition_schema.characterized_object,characterized_object>>, a <<express:product_property_definition_schema.characterized_product_definition,characterized_product_definition>>, a <<express:product_property_definition_schema.characterized_item,characterized_item>> or a <<express:product_property_definition_schema.shape_definition,shape_definition>> to which properties may be assigned.
+*)
+
+
+(*"product_property_definition_schema.characterized_item"
+The **characterized_item** type allows for the designation of an <<express:product_property_representation_schema.item_identified_representation_usage,item_identified_representation_usage>>, a <<express:shape_dimension_schema.dimensional_size,dimensional_size>>, or a <<express:shape_tolerance_schema.geometric_tolerance,geometric_tolerance>> to which properties may be assigned.
+*)
+
+
+(*"product_property_definition_schema.characterized_product_definition"
+The **characterized_product_definition** type allows for the designation of a <<express:product_definition_schema.product_definition,product_definition>>, or a <<express:product_definition_schema.product_definition_relationship,product_definition_relationship>>, or a <<express:product_definition_schema.product_definition_relationship_relationship,product_definition_relationship_relationship>>, or a <<express:product_structure_schema.product_definition_occurrence,product_definition_occurrence>> to which properties may be assigned.
+
+Selection of a <<express:product_definition_schema.product_definition_relationship,product_definition_relationship>> means that the property is applied to the <<express:product_definition_schema.product_definition_relationship.related_product_definition,related_product_definition>> attribute in the context of its <<express:product_definition_schema.product_definition_relationship.relating_product_definition,relating_product_definition>> attribute. Selection of a <<express:product_definition_schema.product_definition_relationship_relationship,product_definition_relationship_relationship>> means that the property is applied to the <<express:product_definition_schema.product_definition_relationship_relationship.related,related>> attribute in the context of its <<express:product_definition_schema.product_definition_relationship_relationship.relating,relating>> attribute.
+*)
+
+(*"product_property_definition_schema.characterized_product_definition.__example"
+The shape of a gasket depends upon whether or not it is an element of an assembly and, if it is an element of an assembly, the shape depends upon the assembly in which it participates.
+*)
+
+(*"product_property_definition_schema.characterized_product_definition.__note"
+This enables properties of a given product that depend on the usages of this product to be described.
+*)
+
+(*"product_property_definition_schema.constituent_shape_aspect"
+A **constituent_shape_aspect** is a type of <<express:product_property_definition_schema.shape_aspect,shape_aspect>> that identifies a portion of a <<express:product_property_definition_schema.shape_aspect,shape_aspect>>.
+*)
+
+
+(*"product_property_definition_schema.constituent_shape_aspect.parent"
+the <<express:product_property_definition_schema.shape_aspect,shape_aspect>> of which this entity is an aspect.
+*)
+
+
+(*"product_property_definition_schema.constituent_shape_aspect.of_shape"
+the <<express:product_property_definition_schema.product_definition_shape,product_definition_shape>> of which this entity is an aspect.
+*)
+
+
+(*"product_property_definition_schema.derived_property_select"
+The **derived_property_select** type allows for the selection of an <<express:process_property_schema.action_property,action_property>>, a <<express:product_property_definition_schema.property_definition,property_definition>>, or a <<express:process_property_schema.resource_property,resource_property>>, or a <<express:shape_dimension_schema.dimensional_location,dimensional_location>>, or a <<express:shape_dimension_schema.dimensional_size,dimensional_size>>, or a <<express:shape_tolerance_schema.geometric_tolerance,geometric_tolerance>>.
+*)
+
+
+(*"product_property_definition_schema.shape_definition"
+The **shape_definition** type allows for the designation of a <<express:product_property_definition_schema.product_definition_shape,product_definition_shape>>, a <<express:product_property_definition_schema.shape_aspect,shape_aspect>>, or a <<express:product_property_definition_schema.shape_aspect_relationship,shape_aspect_relationship>>.
+
+References to a <<express:product_property_definition_schema.shape_aspect_relationship,shape_aspect_relationship>> are references to the relationship itself and not to one of the associated <<express:product_property_definition_schema.shape_aspect,shape_aspect>>.
+*)
+
+
+(*"product_property_definition_schema.characterized_object"
+A **characterized_object** is the identification of an item that has associated property information.
+*)
+
+(*"product_property_definition_schema.characterized_object.__example"
+If a product has a set of properties that are measured within a room or an atmosphere, the room or atmosphere may be described with instances of the entity data type *characterized_object*.
+*)
+
+(*"product_property_definition_schema.characterized_object.__note"
+A *characterized_object* is characterized by the properties which refer to it.
+*)
+
+(*"product_property_definition_schema.characterized_object.__note"
+The properties of a *characterized_object* may be used as an environmental condition under which the properties of a product are measured.
+*)
+
+(*"product_property_definition_schema.characterized_object.name"
+the <<express:support_resource_schema.label,label>> by which the **characterized_object** is known.
+*)
+
+
+(*"product_property_definition_schema.characterized_object.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **characterized_object**. The value of the attribute need not be specified.
+*)
+
+
+(*"product_property_definition_schema.characterized_object_relationship"
+A **characterized_object_relationship** is a relationship between two instances of the entity data type <<express:product_property_definition_schema.characterized_object,characterized_object>> and provides an identification and description of this relationship.
+*)
+
+
+(*"product_property_definition_schema.characterized_object_relationship.__note"
+The role of *characterized_object_relationship* can be defined in the annotated EXPRESS schemas that use or specialize this entity, or by default, in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_property_definition_schema.characterized_object_relationship.__note"
+Relationships represented using this entity may be parent child relationship. Annotated EXPRESS schemas that use or specialize this entity specify whether or not the relationship is directed.
+*)
+
+(*"product_property_definition_schema.characterized_object_relationship.__note"
+This entity, together with the <<express:product_property_definition_schema.characterized_object,characterized_object>> entity, is based on the relationship template that is described in annex E.3.
+*)
+
+(*"product_property_definition_schema.component_path_shape_aspect"
+A **component_path_shape_aspect** is a type of <<express:product_property_definition_schema.shape_aspect,shape_aspect>> that identifies a portion of a shape of an assembly by referencing a <<express:product_property_definition_schema.shape_aspect,shape_aspect>> that represents a portion of the shape of an occurrence of a part within this assembly. The referenced part and its <<express:product_property_definition_schema.shape_aspect,shape_aspect>> might be defined locally or externally.
+*)
+
+
+(*"product_property_definition_schema.component_path_shape_aspect.location"
+the occurrence of a part by its <<express:product_structure_schema.next_assembly_usage_occurrence,next_assembly_usage_occurrence>> or <<express:product_structure_schema.multi_level_reference_designator,multi_level_reference_designator>>.
+*)
+
+
+(*"product_property_definition_schema.component_path_shape_aspect.component_shape_aspect"
+the locally or externally defined <<express:product_property_definition_schema.shape_aspect,shape_aspect>>. In the case that it is externally defined, only the <<express:product_property_definition_schema.shape_aspect.id,id>> of the externally defined <<express:product_property_definition_schema.shape_aspect,shape_aspect>> is provided.
+*)
+
+
+(*"product_property_definition_schema.component_path_shape_aspect.ur:UR1"
+the combination of <<express:product_property_definition_schema.component_path_shape_aspect.location,location>> and <<express:product_property_definition_schema.component_path_shape_aspect.component_shape_aspect,component_shape_aspect>> shall be unique.
+*)
+
+
+(*"product_property_definition_schema.characterized_object_relationship.name"
+the <<express:support_resource_schema.label,label>> by which the **characterized_object_relationship** is known.
+*)
+
+
+(*"product_property_definition_schema.characterized_object_relationship.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **characterized_object_relationship**. The value of the attribute need not be specified.
+*)
+
+
+(*"product_property_definition_schema.characterized_object_relationship.relating_object"
+one of the instances of <<express:product_property_definition_schema.characterized_object,characterized_object>> that is a part of the relationship.
+*)
+
+
+(*"product_property_definition_schema.characterized_object_relationship.relating_object.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_property_definition_schema.characterized_object_relationship.related_object"
+the other instance of <<express:product_property_definition_schema.characterized_object,characterized_object>> that is a part of the relationship. If one element of the relationship is dependent upon the other, this attribute shall be the dependent one.
+*)
+
+
+(*"product_property_definition_schema.characterized_object_relationship.related_object.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_property_definition_schema.general_property"
+A **general_property** is an identification of a type of property.
+*)
+
+(*"product_property_definition_schema.general_property.__example"
+"Kinematic viscosity", defined in ISO 31, is an example of a *general_property*.
+*)
+
+(*"product_property_definition_schema.general_property.__note"
+An annotated Express schema can use this entity to identify a property selected in a library of properties.
+*)
+
+(*"product_property_definition_schema.general_property.__note"
+If needed, a *general_property* may be a member of a group.
+*)
+
+(*"product_property_definition_schema.general_property.id"
+the <<express:support_resource_schema.identifier,identifier>> that distinguishes the **general_property**.
+*)
+
+
+(*"product_property_definition_schema.general_property.id.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_property_definition_schema.general_property.id.__note"
+The context in which id is used as a discriminating characteristic can be identified in an annotated Express schema that uses or specializes this entity, or by default, in an agreement of common understanding between partners sharing this information.
+*)
+
+(*"product_property_definition_schema.general_property.name"
+the <<express:support_resource_schema.label,label>> by which the **general_property** is known.
+*)
+
+(*"product_property_definition_schema.general_property.name.__example"
+'Kinematic viscosity' is an example of name.
+*)
+
+(*"product_property_definition_schema.general_property.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **general_property**. The value of the attribute need not be specified.
+*)
+
+
+(*"product_property_definition_schema.general_property_association"
+A **general_property_association** is an association of an instance of one of the types listed in <<express:product_property_definition_schema.derived_property_select,derived_property_select>> with a <<express:product_property_definition_schema.general_property,general_property>>. The <<express:product_property_definition_schema.general_property,general_property>> serves as the reference definition for the considered property.
+*)
+
+(*"product_property_definition_schema.general_property_association.__example"
+In order to characterize the kinematic viscosity of a fluid, an instance of *general_property_association* would relate an instance of <<express:product_property_definition_schema.general_property,general_property>> that defines the concept of kinematic viscosity and an instance of <<express:product_property_definition_schema.property_definition,property_definition>> that defines the kinematic characteristics of an instance of <<express:product_definition_schema.product_definition,product_definition>> defining the fluid.
+*)
+
+(*"product_property_definition_schema.general_property_association.name"
+the <<express:support_resource_schema.label,label>> by which the **general_property_association** is known.
+*)
+
+
+(*"product_property_definition_schema.general_property_association.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **general_property_association**. The value of the attribute need not be specified.
+*)
+
+
+(*"product_property_definition_schema.general_property_association.base_definition"
+the <<express:product_property_definition_schema.general_property,general_property>> that provides the definition of the considered characteristic.
+*)
+
+
+(*"product_property_definition_schema.general_property_association.derived_definition"
+the <<express:product_property_definition_schema.derived_property_select,derived_property_select>>, for which the identification of the considered characteristic is provided by a <<express:product_property_definition_schema.general_property,general_property>>.
+*)
+
+
+(*"product_property_definition_schema.general_property_association.wr:WR1"
+In the case that the **derived_definition** is of type <<express:product_property_definition_schema.property_definition,property_definition>>, <<express:process_property_schema.action_property,action_property>> or <<express:process_property_schema.resource_property,resource_property>> it shall be referred to by at most one **general_property_association**.
+*)
+
+
+(*"product_property_definition_schema.general_property_association.wr:WR2"
+In the case that the **derived_definition** is of type <<express:product_property_definition_schema.property_definition,property_definition>>, <<express:process_property_schema.action_property,action_property>> or <<express:process_property_schema.resource_property,resource_property>> the attribute name of the **derived_definition** shall be the same as the attribute name of the **base_definition**.
+*)
+
+
+(*"product_property_definition_schema.general_property_relationship"
+A **general_property_relationship** is a relationship between two instances of the entity data type <<express:product_property_definition_schema.general_property,general_property>> and provides an identification and description of this relationship.
+*)
+
+
+(*"product_property_definition_schema.general_property_relationship.__note"
+This entity, together with the <<express:product_property_definition_schema.general_property,general_property>> entity, is based on the relationship template that is described in annex E.3
+*)
+
+(*"product_property_definition_schema.general_property_relationship.name"
+the <<express:support_resource_schema.label,label>> by which the **general_property_relationship** is known.
+*)
+
+
+(*"product_property_definition_schema.general_property_relationship.name.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_property_definition_schema.general_property_relationship.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **general_property_relationship**. The value of the attribute need not be specified.
+*)
+
+
+(*"product_property_definition_schema.general_property_relationship.relating_property"
+one of the instances of <<express:product_property_definition_schema.general_property,general_property>> that is a part of the relationship.
+*)
+
+
+(*"product_property_definition_schema.general_property_relationship.relating_property.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_property_definition_schema.general_property_relationship.related_property"
+the other instance of <<express:product_property_definition_schema.general_property,general_property>> that is a part of the relationship. If one element of the relationship is dependent upon the other this attribute shall be the dependent one.
+*)
+
+
+(*"product_property_definition_schema.general_property_relationship.related_property.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_property_definition_schema.product_definition_shape"
+A **product_definition_shape** is a type of <<express:product_property_definition_schema.property_definition,property_definition>>. It identifies the shape of an object. A **product_definition_shape** identifies the shape of a <<express:product_property_definition_schema.characterized_object,characterized_object>> or of one of the types reachable as <<express:product_property_definition_schema.characterized_product_definition,characterized_product_definition>>.
+*)
+
+(*"product_property_definition_schema.product_definition_shape.__example"
+A geometric representation of shape is not needed to assert facts such as, "a shape must fit within a 5 centimetre cube".
+*)
+
+(*"product_property_definition_schema.product_definition_shape.__note"
+A *product_definition_shape* need not be associated with any geometric representation.
+*)
+
+(*"product_property_definition_schema.product_definition_shape.__note"
+Early in the design of a product there may not be a specific idea about the shape of the product but there may be certain characteristics of the shape that are to be represented. Those product shape characteristics can be attached to the product shape using this entity.
+*)
+
+(*"product_property_definition_schema.product_definition_shape.ur:UR1"
+There shall not be two instances of **product_definition_shape** referring to the same item.
+*)
+
+
+(*"product_property_definition_schema.product_definition_shape.wr:WR1"
+The definition attribute shall not refer to a <<express:product_property_definition_schema.shape_definition,shape_definition>>.
+*)
+
+
+(*"product_property_definition_schema.property_definition"
+A **property_definition** is a property that characterizes a single object.
+*)
+
+
+(*"product_property_definition_schema.property_definition.__note"
+The type of the characterized item is one of the entity types that may be selected directly or indirectly with <<express:product_property_definition_schema.characterized_definition,characterized_definition>>.
+*)
+
+(*"product_property_definition_schema.property_definition.__note"
+The role of *property_definition* can be defined in the annotated EXPRESS schemas that use or specialize this entity, or by default, in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_property_definition_schema.property_definition.name"
+the <<express:support_resource_schema.label,label>> by which the **property_definition** is known.
+*)
+
+
+(*"product_property_definition_schema.property_definition.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **property_definition**. The value of the attribute need not be specified.
+*)
+
+
+(*"product_property_definition_schema.property_definition.definition"
+the item whose property is identified.
+*)
+
+
+(*"product_property_definition_schema.property_definition.id"
+the <<express:support_resource_schema.identifier,identifier>> that distinguishes the **property_definition**.
+*)
+
+
+(*"product_property_definition_schema.property_definition.id.__note"
+This attribute is an upwardly compatible addition to *property_definition* as specified in ISO 10303-41:1994.
+*)
+
+(*"product_property_definition_schema.property_definition.id.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_property_definition_schema.property_definition.id.__note"
+The context in which id is used as a discriminating characteristic can be identified in an annotated Express schema that uses or specializes this entity, or by default, in an agreement of common understanding between partners sharing this information.
+*)
+
+(*"product_property_definition_schema.property_definition.wr:WR1"
+Each **property_definition** shall be the <<express:basic_attribute_schema.id_attribute.identified_item,identified_item>> in at most one <<express:basic_attribute_schema.id_attribute,id_attribute>>.
+*)
+
+
+(*"product_property_definition_schema.property_definition.wr:WR1.__note"
+The <<express:basic_attribute_schema.id_attribute,id_attribute>> data type is defined in <<express:support_resource_schema,support_resource_schema>> of this document.
+*)
+
+(*"product_property_definition_schema.property_definition.wr:WR1.__note"
+A template for constraining the population of the entity data types defined in the <<express:support_resource_schema,support_resource_schema>> is described in annex E.
+*)
+
+(*"product_property_definition_schema.shape_aspect"
+A **shape_aspect** is an identified element of the shape of an object or is part of another **shape_aspect**.
+*)
+
+(*"product_property_definition_schema.shape_aspect.__example"
+Consider the <<express:product_property_definition_schema.product_definition_shape,product_definition_shape>> of a bolt. One might distinguish, as an element of this shape, the concept of the threaded portion of its shank. This portion of the shape could be specified using a *shape_aspect* entity so that other properties, such as surface finish, may be associated with it.
+*)
+
+(*"product_property_definition_schema.shape_aspect.__note"
+A *shape_aspect* that is part of another *shape_aspect* allows decomposition of a *shape_aspect*.
+*)
+
+(*"product_property_definition_schema.shape_aspect.name"
+the <<express:support_resource_schema.label,label>> by which the **shape_aspect** is known.
+*)
+
+
+(*"product_property_definition_schema.shape_aspect.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **shape_aspect**. The value of the attribute need not be specified.
+*)
+
+
+(*"product_property_definition_schema.shape_aspect.of_shape"
+the <<express:product_property_definition_schema.product_definition_shape,product_definition_shape>> of which this entity is an aspect.
+*)
+
+(*"product_property_definition_schema.shape_aspect.of_shape.__example"
+If the identified aspect is the threaded portion of a bolt's shank; this attribute would be the <<express:product_property_definition_schema.product_definition_shape,product_definition_shape>> of the bolt.
+*)
+
+(*"product_property_definition_schema.shape_aspect.product_definitional"
+an indication that the **shape_aspect** is on the physical boundary of the <<express:product_property_definition_schema.product_definition_shape,product_definition_shape>>. If the value of this attribute is TRUE, the **shape_aspect** being identified is on such a boundary. If the value is FALSE, the **shape_aspect** being identified is not on such a boundary. If the value is UNKNOWN, it is not known whether or not the **shape_aspect** being identified is on such a boundary.
+*)
+
+(*"product_property_definition_schema.shape_aspect.product_definitional.__example"
+If the identified *shape_aspect* is the threaded portion of a bolt's shank, the value of this attribute would be TRUE. If it is the centre-line, the value would be FALSE.
+*)
+
+(*"product_property_definition_schema.shape_aspect.id"
+the <<express:support_resource_schema.identifier,identifier>> that distinguishes the **shape_aspect**.
+*)
+
+
+(*"product_property_definition_schema.shape_aspect.id.__note"
+This attribute is an upwardly compatible addition to *shape_aspect* as specified in ISO 10303-41:1994.
+*)
+
+(*"product_property_definition_schema.shape_aspect.id.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_property_definition_schema.shape_aspect.id.__note"
+The context in which id is used as a discriminating characteristic can be identified in an annotated Express schema that uses or specializes this entity, or by default, in an agreement of common understanding between partners sharing this information.
+*)
+
+(*"product_property_definition_schema.shape_aspect.ur:UR1"
+In the case that an **id** is provided, it shall be unique within the referenced <<express:product_property_definition_schema.product_definition_shape,product_definition_shape>>.
+*)
+
+
+(*"product_property_definition_schema.shape_aspect.wr:WR1"
+Each **shape_aspect** shall be the <<express:basic_attribute_schema.id_attribute.identified_item,identified_item>> in at most one <<express:basic_attribute_schema.id_attribute,id_attribute>>.
+*)
+
+
+(*"product_property_definition_schema.shape_aspect.wr:WR1.__note"
+The <<express:basic_attribute_schema.id_attribute,id_attribute>> data type is defined in <<express:basic_attribute_schema,basic_attribute_schema>> of this document.
+*)
+
+(*"product_property_definition_schema.shape_aspect.wr:WR1.__note"
+A template for constraining the population of the entity data types defined in the <<express:basic_attribute_schema,basic_attribute_schema>> is described in annex E.
+*)
+
+(*"product_property_definition_schema.shape_aspect.wr:WR2"
+In the case that a **shape_aspect** is part of another **shape_aspect** the graph established by the attribute <<express:product_property_definition_schema.shape_aspect.of_shape,of_shape>> shall not be cyclic.
+*)
+
+
+(*"product_property_definition_schema.shape_aspect_occurrence"
+A **shape_aspect_occurrence** is a type of <<express:product_property_definition_schema.shape_aspect,shape_aspect>> that is defined by another <<express:product_property_definition_schema.shape_aspect,shape_aspect>> or a <<express:product_property_definition_schema.characterized_object,characterized_object>>.
+*)
+
+
+(*"product_property_definition_schema.shape_aspect_occurrence.definition"
+the <<express:product_property_definition_schema.shape_aspect,shape_aspect>> or <<express:product_property_definition_schema.characterized_object,characterized_object>> that is defining this **shape_aspect_occurrence**.
+*)
+
+
+(*"product_property_definition_schema.shape_aspect_occurrence.wr:WR1"
+In the case that a **shape_aspect_occurrence** is defined by another **shape_aspect_occurrence**, the graph established by the attribute <<express:product_property_definition_schema.shape_aspect_occurrence.definition,definition>> shall not be cyclic.
+*)
+
+
+(*"product_property_definition_schema.shape_aspect_relationship"
+A **shape_aspect_relationship** is a relationship between two instances of the entity data type <<express:product_property_definition_schema.shape_aspect,shape_aspect>> and provides an identification and description of their relationship.
+*)
+
+(*"product_property_definition_schema.shape_aspect_relationship.__example"
+A *shape_aspect_relationship* might relate two instances of the entity data type <<express:product_property_definition_schema.shape_aspect,shape_aspect>> whose representations are the equivalent surfaces of a mould and a moulded product. The shape of the mould is not spatially related to the moulded product.
+*)
+
+(*"product_property_definition_schema.shape_aspect_relationship.__note"
+The role of *shape_aspect_relationship* can be defined in the annotated EXPRESS schemas that use or specialize this entity, or by default, in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_property_definition_schema.shape_aspect_relationship.__note"
+If one <<express:product_property_definition_schema.shape_aspect,shape_aspect>> is part of another, this entity could be used to associate the two <<express:product_property_definition_schema.shape_aspect,shape_aspect>>s.
+*)
+
+(*"product_property_definition_schema.shape_aspect_relationship.__note"
+Each <<express:product_property_definition_schema.shape_aspect,shape_aspect>> entity may have different properties.
+*)
+
+(*"product_property_definition_schema.shape_aspect_relationship.__note"
+No actual physical relationship is established between related instances of the entity data type <<express:product_property_definition_schema.shape_aspect,shape_aspect>>.
+*)
+
+(*"product_property_definition_schema.shape_aspect_relationship.__note"
+Relationships represented using this entity may be parent child relationship. Annotated EXPRESS schemas that use or specialize this entity specify whether or not the relationship is directed.
+*)
+
+(*"product_property_definition_schema.shape_aspect_relationship.__note"
+This entity, together with the <<express:product_property_definition_schema.shape_aspect,shape_aspect>> entity, is based on the relationship template that is described in annex E.3.
+*)
+
+(*"product_property_definition_schema.shape_aspect_relationship.name"
+the <<express:support_resource_schema.label,label>> by which the **shape_aspect_relationship** is known.
+*)
+
+
+(*"product_property_definition_schema.shape_aspect_relationship.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **shape_aspect_relationship**. The value of the attribute need not be specified.
+*)
+
+
+(*"product_property_definition_schema.shape_aspect_relationship.relating_shape_aspect"
+one of the instances of <<express:product_property_definition_schema.shape_aspect,shape_aspect>> that is a part of the relationship.
+*)
+
+(*"product_property_definition_schema.shape_aspect_relationship.relating_shape_aspect.__example"
+A <<express:product_property_definition_schema.shape_aspect,shape_aspect>> with five faces would play the role of *relating_shape_aspect* in five instances of the entity data type *shape_aspect_relationship*: one per face.
+*)
+
+(*"product_property_definition_schema.shape_aspect_relationship.relating_shape_aspect.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_property_definition_schema.shape_aspect_relationship.related_shape_aspect"
+the other instance of <<express:product_property_definition_schema.shape_aspect,shape_aspect>> that is a part of the relationship. If one element of the relationship is dependent upon the other, this attribute shall be the dependent one.
+*)
+
+
+(*"product_property_definition_schema.shape_aspect_relationship.related_shape_aspect.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_property_definition_schema.shape_aspect_relationship.id"
+the <<express:support_resource_schema.identifier,identifier>> that distinguishes the **shape_aspect_relationship**.
+*)
+
+
+(*"product_property_definition_schema.shape_aspect_relationship.id.__note"
+This attribute is an upwardly compatible addition to *shape_aspect_relationship* as specified in ISO 10303-41:1994.
+*)
+
+(*"product_property_definition_schema.shape_aspect_relationship.id.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_property_definition_schema.shape_aspect_relationship.id.__note"
+The context in which id is used as a discriminating characteristic can be identified in an annotated Express schema that uses or specializes this entity, or by default, in an agreement of common understanding between partners sharing this information.
+*)
+
+(*"product_property_definition_schema.shape_aspect_relationship.wr:WR1"
+Each **shape_aspect_relationship** shall be the <<express:basic_attribute_schema.id_attribute.identified_item,identified_item>> in at most one <<express:basic_attribute_schema.id_attribute,id_attribute>>.
+*)
+
+
+(*"product_property_definition_schema.shape_aspect_relationship.wr:WR1.__note"
+The <<express:basic_attribute_schema.id_attribute,id_attribute>> data type is defined in <<express:basic_attribute_schema,basic_attribute_schema>> of this document.
+*)
+
+(*"product_property_definition_schema.shape_aspect_relationship.wr:WR1.__note"
+A template for constraining the population of the entity data types defined in the <<express:basic_attribute_schema,basic_attribute_schema>> is described in annex E.
+*)
+
+(*"product_property_definition_schema.acyclic_characterized_object_relationship"
+The **acyclic_characterized_object_relationship** function determines whether the graph of instances of the entity data type <<express:product_property_definition_schema.characterized_object,characterized_object>> that contains relation as one of its links contains a cycle. This function may be used to evaluate either a <<express:product_property_definition_schema.characterized_object_relationship,characterized_object_relationship>> or any of its subtypes.
+
+The function returns TRUE if no cycle has been detected. Otherwise it returns FALSE.
+*)
+
+
+(*"product_property_definition_schema.acyclic_characterized_object_relationship.__note"
+The algorithm of the function is explained in annex E.2.
+*)
+
+(*"product_property_definition_schema.acyclic_characterized_object_relationship.__note"
+This function is not used in this schema. It is defined here because other ISO 10303 integrated resources and application protocols that use the <<express:product_property_definition_schema.characterized_object_relationship,characterized_object_relationship>> entity include rules that use this function.
+*)
+
+(*"product_property_definition_schema.acyclic_characterized_object_relationship.relation"
+(input) the candidate <<express:product_property_definition_schema.characterized_object_relationship,characterized_object_relationship>> to be checked.
+*)
+
+
+(*"product_property_definition_schema.acyclic_characterized_object_relationship.relatives"
+(input) the set of instances of the entity data type <<express:product_property_definition_schema.characterized_object,characterized_object>> that the function is searching for in the <<express:product_property_definition_schema.characterized_object_relationship.relating_object,relating_object>> parameter of the **relation** argument.
+*)
+
+
+(*"product_property_definition_schema.acyclic_characterized_object_relationship.specific_relation"
+(input) the fully qualified entity name of a type of <<express:product_property_definition_schema.characterized_object_relationship,characterized_object_relationship>> entity.
+*)
+
+
+(*"product_property_definition_schema.acyclic_general_property_relationship"
+The **acyclic_general_property_relationship** function determines whether the graph of instances of the entity data type <<express:product_property_definition_schema.general_property,general_property>> that contains relation as one of its links contains a cycle. This function may be used to evaluate either a <<express:product_property_definition_schema.general_property_relationship,general_property_relationship>> or any of its subtypes.
+
+The function returns TRUE if no cycle has been detected. Otherwise it returns FALSE.
+*)
+
+
+(*"product_property_definition_schema.acyclic_general_property_relationship.__note"
+The algorithm of the function is explained in annex E.2.
+*)
+
+(*"product_property_definition_schema.acyclic_general_property_relationship.__note"
+This function is not used in this schema. It is defined here because other ISO 10303 integrated resources and application protocols that use the <<express:product_property_definition_schema.general_property_relationship,general_property_relationship>> entity include rules that use this function.
+*)
+
+(*"product_property_definition_schema.acyclic_general_property_relationship.relation"
+(input) the candidate <<express:product_property_definition_schema.general_property_relationship,general_property_relationship>> to be checked.
+*)
+
+
+(*"product_property_definition_schema.acyclic_general_property_relationship.relatives"
+(input) the set of instances of the entity data type <<express:product_property_definition_schema.general_property,general_property>> that the function is searching for in the <<express:product_property_definition_schema.general_property_relationship.relating_property,relating_property>> parameter of the **relation** argument.
+*)
+
+
+(*"product_property_definition_schema.acyclic_general_property_relationship.specific_relation"
+(input) the fully qualified entity name of a type of <<express:product_property_definition_schema.general_property_relationship,general_property_relationship>> entity.
+*)
+
+
+(*"product_property_definition_schema.acyclic_shape_aspect"
+The **acyclic_shape_aspect** function determines whether the graph of instances of the entity data type <<express:product_property_definition_schema.shape_aspect,shape_aspect>> that are linked by the attribute <<express:product_property_definition_schema.shape_aspect.of_shape,of_shape>> contains a cycle.
+
+The function returns TRUE if no cycle has been detected. Otherwise it returns FALSE.
+*)
+
+
+(*"product_property_definition_schema.acyclic_shape_aspect.__note"
+The algorithm of the function is explained in annex E.2.
+*)
+
+(*"product_property_definition_schema.acyclic_shape_aspect.sa"
+(input) the candidate <<express:product_property_definition_schema.shape_aspect,shape_aspect>> to be checked.
+*)
+
+
+(*"product_property_definition_schema.acyclic_shape_aspect.of_shape"
+(input) the candidate <<express:product_property_definition_schema.product_definition_shape_or_shape_aspect,product_definition_shape_or_shape_aspect>> to be checked.
+*)
+
+
+(*"product_property_definition_schema.acyclic_shape_aspect_occurrence"
+The **acyclic_shape_aspect_occurrence** function determines whether the graph of instances of the entity data type <<express:product_property_definition_schema.shape_aspect_occurrence,shape_aspect_occurrence>> that are linked by the attribute <<express:product_property_definition_schema.shape_aspect_occurrence.definition,definition>> contains a cycle.
+
+The function returns TRUE if no cycle has been detected. Otherwise it returns FALSE.
+*)
+
+
+(*"product_property_definition_schema.acyclic_shape_aspect_occurrence.__note"
+The algorithm of the function is explained in annex E.2.
+*)
+
+(*"product_property_definition_schema.acyclic_shape_aspect_occurrence.sao"
+(input) the candidate <<express:product_property_definition_schema.shape_aspect_occurrence,shape_aspect_occurrence>> to be checked.
+*)
+
+
+(*"product_property_definition_schema.acyclic_shape_aspect_occurrence.definition"
+(input) the candidate <<express:product_property_definition_schema.shape_aspect_or_characterized_object,shape_aspect_or_characterized_object>> to be checked.
+*)
+
+
+(*"product_property_definition_schema.acyclic_shape_aspect_relationship"
+The **acyclic_shape_aspect_relationship** function determines whether the graph of instances of the entity data type <<express:product_property_definition_schema.shape_aspect,shape_aspect>> that contains relation as one of its links contains a cycle. This function may be used to evaluate either a <<express:product_property_definition_schema.shape_aspect_relationship,shape_aspect_relationship>> or any of its subtypes.
+
+The function returns TRUE if no cycle has been detected. Otherwise it returns FALSE.
+*)
+
+
+(*"product_property_definition_schema.acyclic_shape_aspect_relationship.__note"
+The algorithm of the function is explained in annex E.2.
+*)
+
+(*"product_property_definition_schema.acyclic_shape_aspect_relationship.__note"
+This function is not used in this schema. It is defined here because other ISO 10303 integrated resources and application protocols that use the <<express:product_property_definition_schema.shape_aspect_relationship,shape_aspect_relationship>> entity include rules that use this function.
+*)
+
+(*"product_property_definition_schema.acyclic_shape_aspect_relationship.relation"
+(input) the candidate <<express:product_property_definition_schema.shape_aspect_relationship,shape_aspect_relationship>> to be checked.
+*)
+
+
+(*"product_property_definition_schema.acyclic_shape_aspect_relationship.relatives"
+(input) the set of instances of the entity data type <<express:product_property_definition_schema.shape_aspect,shape_aspect>> that the function is searching for in the <<express:product_property_definition_schema.shape_aspect_relationship.relating_shape_aspect,relating_shape_aspect>> parameter of the **relation** argument.
+*)
+
+
+(*"product_property_definition_schema.acyclic_shape_aspect_relationship.specific_relation"
+(input) the fully qualified name of a subtype of the <<express:product_property_definition_schema.shape_aspect_relationship,shape_aspect_relationship>> entity.
+*)
+
+
+(*"product_property_definition_schema.get_shape_aspects"
+The **get_shape_aspects** function returns for any instance of <<express:product_property_definition_schema.characterized_definition,characterized_definition>> the set of instances of <<express:product_property_definition_schema.shape_aspect,shape_aspect>> that refer to the instance of <<express:product_property_definition_schema.characterized_definition,characterized_definition>> through an instance of <<express:product_property_definition_schema.product_definition_shape,product_definition_shape>>.
+*)
+
+
+(*"product_property_definition_schema.get_shape_aspects.__note"
+This function is not used in this schema.
+*)
+
+(*"product_property_definition_schema.get_product_definition_shape"
+The **get_product_definition_shape** function returns the <<express:product_property_definition_schema.product_definition_shape,product_definition_shape>> of which the current <<express:product_property_definition_schema.constituent_shape_aspect,constituent_shape_aspect>> is an identified aspect.
+*)
+
+
+(*"product_property_definition_schema.get_product_definition_shape.current"
+(input) the <<express:product_property_definition_schema.constituent_shape_aspect,constituent_shape_aspect>> that is the basis for the function.
+*)
+
+
+(*"product_property_definition_schema.get_shape_aspects.c_def_instance"
+(input) the candidate <<express:product_property_definition_schema.characterized_definition,characterized_definition>> to be checked.
+*)
+
+
+(*"product_property_definition_schema.__schema_file"
+data/resource_docs/fundamentals_of_product_description_and_support/resource.xml
+*)

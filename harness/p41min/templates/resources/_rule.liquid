@@ -1,0 +1,30 @@
+{% capture rule_thing_prefix %}{{thing_prefix}}.{{thing.id}}{% endcapture %}
+
+{% assign rule_nested_depth = depth | plus: 1 %}
+
+{% render "templates/resources/basic_thing", depth: rule_nested_depth, thing_prefix: thing_prefix, thing: thing, schema: schema %}
+
+{% if thing.types.size > 0 %}
+{% render "templates/resources/attribute_definitions", things: thing.types, thing_prefix: rule_thing_prefix %}
+
+{% endif %}
+
+{% if thing.constants.size > 0 %}
+{% render "templates/resources/attribute_definitions", things: thing.constants, thing_prefix: rule_thing_prefix %}
+
+{% endif %}
+
+{% if thing.variables.size > 0 %}
+{% render "templates/resources/attribute_definitions", things: thing.variables, thing_prefix: rule_thing_prefix %}
+
+{% endif %}
+
+{% if thing.parameters.size > 0 %}
+{% render "templates/resources/attribute_definitions", things: thing.parameters, thing_prefix: rule_thing_prefix %}
+
+{% endif %}
+
+{% if thing.where_rules.size > 0 %}
+{% render "templates/resources/where_rules", things: thing.where_rules, thing_prefix: rule_thing_prefix %}
+
+{% endif %}

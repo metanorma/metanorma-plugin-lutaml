@@ -1,0 +1,76 @@
+[[scope]]
+== Scope
+
+=== General
+
+This document specifies the integrated generic resource constructs for fundamentals of product description and support.
+
+The schemas that are specified in this document are organized as follows:
+
+=== Generic product description resources
+
+This document specifies the resource constructs for the high level structure for the representation of products and their properties. It also specifies ISO 10303 integrated resources for the description of generic aspects of product usage, categorization of products and associations between products.
+
+The following are within scope in this document:
+
+
+* the identification of a product;
+
+* the categorization of a product;
+
+* the characterization of a product in one or more application contexts;
+
+* the definition of relationships among products;
+
+* the identification of the properties of a product or of a portion of a product;
+
+* the identification of a representation of a property; +
++
+[example]
+====
+A 3D geometric model or a table of numerical values are different representations of properties of a product.
+====
+
+
+* the description of the application context for which product data is defined.
+
+
+=== Generic management resources
+
+This part of ISO 1030 specifies the resource constructs to associate administrative data with product data.
+
+The following are within scope in this document:
+
+
+* the structure for associating product data with related administrative data.
+
+
+=== Support resources
+
+This document specifies the resource constructs for administrative data, physical quantities and their units, and basic data types.
+
+The identification and description of following are within scope in this document:
+
+
+* the identification of documents;
+
+* the actions, action requests, and the status of actions;
+
+* the certification, approvals, security classifications, and effectivities;
+
+* the contracts;
+
+* the people and organizations;
+
+* the specification of dates and times;
+
+* the provision of mechanisms for grouping items and referring to information that is defined outside an exchange;
+
+* the physical quantities and their units;
+
+* the provision of mechanisms to define values for id, name, description and role attributes;
+
+* the location of a person, organization, or product;
+
+* the experience, qualifications, and position in an organization of a person.
+

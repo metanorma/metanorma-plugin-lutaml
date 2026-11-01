@@ -1,0 +1,6 @@
+A list of all parts in the ISO 10303 series can be found on the
+http://standards.iso.org/iso/10303/tech/step_titles.htm[ISO website].
+
+Any feedback or questions on this document should be directed to the user's
+national standards body. A complete listing of these bodies can be found at
+https://www.iso.org/members.html[www.iso.org/members.html].

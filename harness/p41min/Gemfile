@@ -1,0 +1,15 @@
+source "https://rubygems.org"
+
+# Regression harness for metanorma-plugin-lutaml#329: the svgmap image
+# paths must resolve in collection builds. Pins mirror the verified
+# iso-10303 stack; the plugin rides the released line under test.
+# parsanol 1.3.120 removes the pre-1.3.113 `mode` grammar header alias,
+# which every released expressir embeds — excluded until the alias
+# returns or expressir ships `edition`-era grammars.
+gem "metanorma-cli", "1.18.0.pre.alpha.3"
+gem "stepmod-utils", "0.6.10.pre.alpha.1"
+gem "metanorma-plugin-lutaml", "~> 0.7.57"
+gem "lutaml-model", "~> 0.8.148"
+gem "relaton", "~> 3.0.1"
+gem "parsanol", "~> 1.3.115", "!= 1.3.120"
+gem "expressir", "2.4.45"

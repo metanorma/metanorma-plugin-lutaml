@@ -1,0 +1,14 @@
+<<scope>> defines the scope of the application module and summarizes the
+functionality and data covered. Clause 3 lists the words defined in this
+document and gives pointers to words defined elsewhere. The information
+requirements of the application are specified in <<arm>> using terminology
+appropriate to the application. A graphical representation of the information
+requirements, referred to as the application reference model, is given in
+<<annex_arm_expg>>. Resource constructs are interpreted to meet the information
+requirements. This interpretation produces the module interpreted model (MIM).
+This interpretation, given in <<mapping>>, shows the correspondence between the
+information requirements and the MIM. The short listing of the MIM specifies the
+interface to the resources and is given in <<mim_express>>. A graphical
+representation of the short listing of the MIM is given in <<annex_mim_expg>>.
+Publicly available computer interpretable listings that are associated with this
+document are identified in <<annex_listings>>.

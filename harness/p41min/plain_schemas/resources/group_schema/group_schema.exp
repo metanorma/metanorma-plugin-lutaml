@@ -1,0 +1,262 @@
+(*
+ISO 10303 TC184/SC4/WG12 N8369
+
+EXPRESS Source:
+ISO 10303-41 ed4 Fundamentals of product description and support - Group schema
+
+The following permission notice and disclaimer shall be included in all copies of this EXPRESS schema ("the Schema"),
+and derivations of the Schema:
+
+Copyright ISO 2014  All rights reserved
+Permission is hereby granted, free of charge in perpetuity, to any person obtaining a copy of the Schema,
+to use, copy, modify, merge and distribute free of charge, copies of the Schema for the purposes of developing,
+implementing, installing and using software based on the Schema, and to permit persons to whom the Schema is furnished to do so,
+subject to the following conditions:
+
+THE SCHEMA IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SCHEMA OR THE
+USE OR OTHER DEALINGS IN THE SCHEMA.
+
+In addition, any modified copy of the Schema shall include the following notice:
+
+THIS SCHEMA HAS BEEN MODIFIED FROM THE SCHEMA DEFINED IN
+ISO 10303-41 ed4 Fundamentals of product description and support - Group schema
+AND SHOULD NOT BE INTERPRETED AS COMPLYING WITH THAT STANDARD
+*)
+
+SCHEMA group_schema '{iso standard 10303 part(41) version(7) object(1) group-schema(12)}';
+
+  REFERENCE FROM support_resource_schema (
+    label,
+    bag_to_set,
+    identifier,
+    text);
+  REFERENCE FROM basic_attribute_schema (
+    get_id_value,
+    id_attribute,
+    id_attribute_select);
+
+  TYPE gs_id_attribute_select = SELECT BASED_ON id_attribute_select WITH (
+    group);
+  END_TYPE;
+
+  ENTITY group;
+    name : label;
+    description : OPTIONAL text;
+  DERIVE
+    id : identifier := get_id_value(SELF);
+  WHERE
+    WR1: SIZEOF(USEDIN(SELF, 'BASIC_ATTRIBUTE_SCHEMA.' + 'ID_ATTRIBUTE.IDENTIFIED_ITEM')) <= 1;
+  END_ENTITY;
+
+  ENTITY group_relationship;
+    name : label;
+    description : OPTIONAL text;
+    relating_group : group;
+    related_group : group;
+  END_ENTITY;
+
+  FUNCTION acyclic_group_relationship (relation : group_relationship; relatives : SET [1:?] OF group; specific_relation : STRING):BOOLEAN;
+    LOCAL
+      x : SET OF group_relationship;
+    END_LOCAL;
+
+    IF relation.relating_group IN relatives THEN
+      RETURN (FALSE);
+    END_IF;
+    x := QUERY(grp <* bag_to_set(USEDIN(relation.relating_group, 'GROUP_SCHEMA.' + 'GROUP_RELATIONSHIP.' + 'RELATED_GROUP')) | specific_relation IN TYPEOF(grp));
+    REPEAT i := 1 TO HIINDEX(x);
+      IF NOT acyclic_group_relationship(x[i], relatives + relation.relating_group, specific_relation) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_REPEAT;
+    RETURN (TRUE);
+  END_FUNCTION;
+
+END_SCHEMA;
+
+(*"group_schema.__published_in"
+ISO 10303-41:2025 ED8
+*)
+
+(*"group_schema.__identifier"
+ISO/TC 184/SC 4/WG 12 N8369
+*)
+
+(*"group_schema.__status"
+IS
+*)
+
+(*"group_schema.__title"
+fundamentals_of_product_description_and_support
+*)
+
+
+(*"group_schema"
+The subject of the *group_schema* is the definition of groups of items.
+*)
+(*"group_schema.__fund_cons"
+
+Groups are collections of product data that have a common identity. Any kinds of product data may be grouped together. The structure specified in this schema enables the common identity to be captured; it does not specify, or allow the specification of, the meaning of the common identity or the criteria for the common identity.
+
+*)
+(*"group_schema.__expressg"
+[[group_schema_expg1]]
+[.svgmap]
+====
+image::group_schemaexpg1.svg[]
+
+* <<express:support_resource_schema>>; 1
+* <<express:basic_attribute_schema>>; 2
+* <<express:group_schema>>; 3
+====
+
+*)
+(*"group_schema.__expressg"
+[[group_schema_expg2]]
+[.svgmap]
+====
+image::group_schemaexpg2.svg[]
+
+* <<express:group_schema.gs_id_attribute_select>>; 1
+* <<express:support_resource_schema.text>>; 2
+* <<express:support_resource_schema.text>>; 3
+* <<express:support_resource_schema.label>>; 4
+* <<express:support_resource_schema.label>>; 5
+* <<express:support_resource_schema.identifier>>; 6
+* <<express:basic_attribute_schema.id_attribute_select>>; 7
+* <<express:group_schema.group>>; 8
+* <<express:group_schema.group_relationship>>; 9
+====
+*)
+
+(*"group_schema.group"
+A **group** is an identification of a collection of elements.
+*)
+
+
+(*"group_schema.group.name"
+the <<express:support_resource_schema.label,label>> by which the **group** is known.
+*)
+
+
+(*"group_schema.group.name.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"group_schema.group.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **group**. The value of the attribute need not be specified.
+*)
+
+
+(*"group_schema.group.id"
+the <<express:support_resource_schema.identifier,identifier>> that distinguishes the **group**. The value of this attribute need not be specified.
+*)
+
+
+(*"group_schema.group.id.__note"
+This attribute is an upwardly compatible addition to group as specified in ISO 10303-41:1994.
+*)
+
+(*"group_schema.group.id.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"group_schema.group.id.__note"
+The context in which id is used as a discriminating characteristic can be identified in an annotated Express schema that uses or specializes this entity, or by default, in an agreement of common understanding between partners sharing this information.
+*)
+
+(*"group_schema.group.wr:WR1"
+Each **group** shall be the <<express:basic_attribute_schema.id_attribute.identified_item,identified_item>> in at most one <<express:basic_attribute_schema.id_attribute,id_attribute>>.
+*)
+
+
+(*"group_schema.group.wr:WR1.__note"
+The <<express:basic_attribute_schema.id_attribute,id_attribute>> data type is defined in <<express:basic_attribute_schema,basic_attribute_schema>> of this document.
+*)
+
+(*"group_schema.group.wr:WR1.__note"
+A template for constraining the population of the entity data types defined in the <<express:basic_attribute_schema,basic_attribute_schema>> is described in annex E.
+*)
+
+(*"group_schema.group_relationship"
+A **group_relationship** is a relationship between two instances of the entity data type <<express:group_schema.group,group>> with a description of their relationship.
+*)
+
+
+(*"group_schema.group_relationship.__note"
+The role of *group_relationship* can be defined in the annotated EXPRESS schemas that use or specialize this entity, or by default, in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"group_schema.group_relationship.__note"
+Relationships represented using this entity may be parent child relationship. Annotated EXPRESS schemas that use or specialize this entity specify whether or not the relationship is directed.
+*)
+
+(*"group_schema.group_relationship.__note"
+This entity, together with the <<express:group_schema.group,group>> entity, is based on the relationship template that is described in annex E.3.
+*)
+
+(*"group_schema.group_relationship.name"
+the <<express:support_resource_schema.label,label>> by which the **group_relationship** is known.
+*)
+
+
+(*"group_schema.group_relationship.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **group_relationship**. The value of the attribute need not be specified.
+*)
+
+
+(*"group_schema.group_relationship.relating_group"
+one of the instances of <<express:group_schema.group,group>> that is a part of the relationship.
+*)
+
+
+(*"group_schema.group_relationship.relating_group.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"group_schema.group_relationship.related_group"
+the other instance of <<express:group_schema.group,group>> that is a part of the relationship. If one element of the relationship is dependent upon the other, this attribute shall be the dependent one.
+*)
+
+
+(*"group_schema.group_relationship.related_group.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"group_schema.acyclic_group_relationship"
+The **acyclic_group_relationship** function determines whether the graph of instances of the entity data type <<express:group_schema.group,group>> that contains relation as one of its links contains a cycle. This function may be used to evaluate either a <<express:group_schema.group_relationship,group_relationship>> or any of its subtypes.
+
+The function returns TRUE if no cycle has been detected. Otherwise it returns FALSE.
+*)
+
+
+(*"group_schema.acyclic_group_relationship.__note"
+The algorithm of the function is explained in annex E.2.
+*)
+
+(*"group_schema.acyclic_group_relationship.__note"
+This function is not used in this schema. It is defined here because other ISO 10303 integrated resources and application protocols that use the <<express:group_schema.group_relationship,group_relationship>> entity include rules that use this function.
+*)
+
+(*"group_schema.acyclic_group_relationship.relation"
+(input) the candidate <<express:group_schema.group_relationship,group_relationship>> to be checked.
+*)
+
+
+(*"group_schema.acyclic_group_relationship.relatives"
+(input) the set of instances of the entity data type <<express:group_schema.group,group>> for which the function is searching in the <<express:group_schema.group_relationship.relating_group,relating_group>> parameter of the **relation** argument.
+*)
+
+
+(*"group_schema.acyclic_group_relationship.specific_relation"
+(input) the fully qualified name of a subtype of the <<express:group_schema.group_relationship,group_relationship>> entity.
+*)
+
+
+(*"group_schema.__schema_file"
+data/resource_docs/fundamentals_of_product_description_and_support/resource.xml
+*)

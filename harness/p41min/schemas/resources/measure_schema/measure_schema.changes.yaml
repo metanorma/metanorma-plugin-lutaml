@@ -1,0 +1,256 @@
+---
+schema: measure_schema
+change_edition:
+- version: '2'
+  description: |-
+    The definitions of the following EXPRESS entity data types were modified:
+
+    * action;
+    * action_directive;
+    * action_method;
+    * action_method_relationship;
+    * action_relationship;
+    * action_request_solution;
+    * action_request_status;
+    * action_resource;
+    * action_resource_relationship;
+    * action_resource_type;
+    * action_status;
+    * directed_action;
+    * executed_action;
+    * supported_item;
+    * versioned_action_request.
+  additions:
+  - type: TYPE
+    name: celsius_temperature_measure
+  - type: ENTITY
+    name: celsius_temperature_measure_with_unit
+  modifications:
+  - type: ENTITY
+    name: derived_unit
+  - type: FUNCTION
+    name: dimensions_for_si_unit
+  - type: ENTITY
+    name: si_unit
+- version: '3'
+  description: |-
+    This also incorporates the modifications of Technical Corrigenda 1 and Technical Corrigenda 2.
+
+    The following EXPRESS schemas have been added:
+
+    * experience_schema;
+    * location_schema;
+    * qualifications_schema.
+  additions:
+  - type: TYPE
+    name: absorbed_dose_measure
+  - type: TYPE
+    name: acceleration_measure
+  - type: TYPE
+    name: capacitance_measure
+  - type: TYPE
+    name: conductance_measure
+  - type: TYPE
+    name: dose_equivalent_measure
+  - type: TYPE
+    name: electric_charge_measure
+  - type: TYPE
+    name: electric_potential_measure
+  - type: TYPE
+    name: energy_measure
+  - type: TYPE
+    name: force_measure
+  - type: TYPE
+    name: frequency_measure
+  - type: TYPE
+    name: illuminance_measure
+  - type: TYPE
+    name: inductance_measure
+  - type: TYPE
+    name: luminous_flux_measure
+  - type: TYPE
+    name: magnetic_flux_density_measure
+  - type: TYPE
+    name: magnetic_flux_measure
+  - type: TYPE
+    name: non_negative_length_measure
+  - type: TYPE
+    name: power_measure
+  - type: TYPE
+    name: pressure_measure
+  - type: TYPE
+    name: radioactivity_measure
+  - type: TYPE
+    name: resistance_measure
+  - type: TYPE
+    name: velocity_measure
+  - type: ENTITY
+    name: absorbed_dose_measure_with_unit
+  - type: ENTITY
+    name: absorbed_dose_unit
+  - type: ENTITY
+    name: acceleration_measure_with_unit
+  - type: ENTITY
+    name: acceleration_unit
+  - type: ENTITY
+    name: capacitance_measure_with_unit
+  - type: ENTITY
+    name: capacitance_unit
+  - type: ENTITY
+    name: conductance_measure_with_unit
+  - type: ENTITY
+    name: conductance_unit
+  - type: ENTITY
+    name: dose_equivalent_measure_with_unit
+  - type: ENTITY
+    name: dose_equivalent_unit
+  - type: ENTITY
+    name: electric_charge_measure_with_unit
+  - type: ENTITY
+    name: electric_charge_unit
+  - type: ENTITY
+    name: electric_potential_measure_with_unit
+  - type: ENTITY
+    name: electric_potential_unit
+  - type: ENTITY
+    name: energy_measure_with_unit
+  - type: ENTITY
+    name: energy_unit
+  - type: ENTITY
+    name: force_measure_with_unit
+  - type: ENTITY
+    name: force_unit
+  - type: ENTITY
+    name: frequency_measure_with_unit
+  - type: ENTITY
+    name: frequency_unit
+  - type: ENTITY
+    name: illuminance_measure_with_unit
+  - type: ENTITY
+    name: illuminance_unit
+  - type: ENTITY
+    name: inductance_measure_with_unit
+  - type: ENTITY
+    name: inductance_unit
+  - type: ENTITY
+    name: luminous_flux_measure_with_unit
+  - type: ENTITY
+    name: luminous_flux_unit
+  - type: ENTITY
+    name: magnetic_flux_density_measure_with_unit
+  - type: ENTITY
+    name: magnetic_flux_density_unit
+  - type: ENTITY
+    name: magnetic_flux_measure_with_unit
+  - type: ENTITY
+    name: magnetic_flux_unit
+  - type: ENTITY
+    name: power_measure_with_unit
+  - type: ENTITY
+    name: power_unit
+  - type: ENTITY
+    name: pressure_measure_with_unit
+  - type: ENTITY
+    name: pressure_unit
+  - type: ENTITY
+    name: radioactivity_measure_with_unit
+  - type: ENTITY
+    name: radioactivity_unit
+  - type: ENTITY
+    name: resistance_measure_with_unit
+  - type: ENTITY
+    name: resistance_unit
+  - type: ENTITY
+    name: velocity_measure_with_unit
+  - type: ENTITY
+    name: velocity_unit
+  - type: ENTITY
+    name: si_absorbed_dose_unit
+  - type: ENTITY
+    name: si_capacitance_unit
+  - type: ENTITY
+    name: si_conductance_unit
+  - type: ENTITY
+    name: si_dose_equivalent_unit
+  - type: ENTITY
+    name: si_electric_charge_unit
+  - type: ENTITY
+    name: si_electric_potential_unit
+  - type: ENTITY
+    name: si_energy_unit
+  - type: ENTITY
+    name: si_force_unit
+  - type: ENTITY
+    name: si_frequency_unit
+  - type: ENTITY
+    name: si_illuminance_unit
+  - type: ENTITY
+    name: si_inductance_unit
+  - type: ENTITY
+    name: si_magnetic_flux_density_unit
+  - type: ENTITY
+    name: si_magnetic_flux_unit
+  - type: ENTITY
+    name: si_power_unit
+  - type: ENTITY
+    name: si_pressure_unit
+  - type: ENTITY
+    name: si_radioactivity_unit
+  - type: ENTITY
+    name: si_resistance_unit
+  modifications:
+  - type: TYPE
+    name: measure_value
+  - type: TYPE
+    name: positive_length_measure
+  - type: ENTITY
+    name: area_unit
+  - type: ENTITY
+    name: conversion_based_unit
+  - type: ENTITY
+    name: derived_unit
+  - type: ENTITY
+    name: measure_with_unit
+  - type: ENTITY
+    name: named_unit
+  - type: ENTITY
+    name: volume_unit
+  - type: FUNCTION
+    name: derive_dimensional_exponents
+  - type: FUNCTION
+    name: valid_units
+- version: '4'
+  description: |-
+    The following entity types had been introduced to support external element references outside the local population of entity instances:
+
+    * component_path_shape_aspect;
+    * externally_defined_item_with_multiple_references;
+    * generic_product_definition_reference;
+    * product_definition_reference;
+    * product_definition_reference_with_local_representation.
+
+    The following entity types had been introduced to support the the characterization of objects:
+
+    * characterized_chain_based_item_within_representation;
+    * characterized_item_within_representation;
+    * characterized_product.
+
+    The following select types from the basic_attribute_schema had been converted into extensible selects and then extended in several other schemas:
+
+    * description_attribute_select;
+    * id_attribute_select;
+    * name_attribute_select;
+    * role_select.
+  additions:
+  - type: TYPE
+    name: s_name_attribute_select
+  modifications:
+  - type: REFERENCE_FROM
+    name: basic_attribute_schema
+- version: '5'
+  description: The change corrected the EXPRESS layout to align to directives
+  additions:
+  - type: ENTITY
+    name: positive_length_measure_with_unit
+  - type: ENTITY
+    name: positive_plane_angle_measure_with_unit

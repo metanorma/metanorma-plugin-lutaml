@@ -1,0 +1,77 @@
+
+{% for diagram in diagrams %}
+{% assign current_name = diagram.path | split: "/schemas/" | last | replace_first: "/", "*" | split: "*" | last | split: "/" | first %}
+
+{% if forloop.index == 1 %}
+{% assign sizes = "" %}
+{% assign accumulator = 1 %}
+{% assign previous_schema = current_name %}
+{% endif %}
+
+{% if previous_schema == current_name and forloop.index != 1 %}
+{% assign accumulator = accumulator | plus: 1 %}
+{% endif %}
+
+{% if previous_schema != current_name  %}
+{% assign sizes = sizes | append: "," | append: accumulator %}
+{% assign accumulator = 1 %}
+{% assign previous_schema = current_name %}
+{% endif %}
+
+{% if forloop.index == diagrams.size %}
+{% assign sizes = sizes | append: "," | append: accumulator %}
+{% assign sizes = sizes | split: "," %}
+{% break %}
+{% endif %}
+
+{% endfor %}
+
+{% for diagram in diagrams %}
+{% assign figure_id = forloop.index %}
+{% assign current_name = diagram.path | split: "/schemas/" | last | replace_first: "/", "*" | split: "*" | last | split: "/" | first %}
+
+{% if forloop.index == 1 %}
+{% assign previous_name = current_name %}
+{% assign first_diagram = true %}
+{% assign diagram_id = 1 %}
+{% assign size_index = 1 %}
+{% endif %}
+
+{% if previous_name != current_name %}
+{% assign size_index = size_index | plus: 1 %}
+{% assign diagram_id = 1 %}
+{% assign previous_name = current_name %}
+{% assign first_diagram = true %}
+{% elsif forloop.index != 1%}
+{% assign diagram_id = diagram_id | plus: 1 %}
+{% endif %}
+
+{% if namespace == "arm" or namespace == "mim"%}
+
+{% if first_diagram  %}
+{% capture caption %}
+{{- namespace | upcase}} schema level EXPRESS-G diagram ({{diagram_id}} of {{ sizes[size_index] }})
+{% endcapture %}
+{% else %}
+{% capture caption %}
+{{- namespace | upcase}} entity level EXPRESS-G diagram ({{diagram_id}} of {{ sizes[size_index] }})
+{% endcapture %}
+{% endif %}
+
+{% else  %}
+
+{% capture caption -%}
+EXPRESS-G diagram of {{ current_name }} ({{diagram_id}} of {{ sizes[size_index] }})
+{%- endcapture %}
+{% endif %}
+
+{% if first_diagram %}
+[[expg.{{ previous_name }}{%- if namespace -%} {{ namespace |  | prepend: '_' }} {%- endif -%}]]&#x200c;
+{% assign first_diagram = false %}
+{% endif %}
+
+[[fig_expg_{{ figure_id }}{{ namespace }}]]
+.{{ caption }}
+image::{{ diagram.path }}[]
+
+{% endfor %}

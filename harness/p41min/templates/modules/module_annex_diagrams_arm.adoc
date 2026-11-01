@@ -1,0 +1,30 @@
+[[annex_arm_expg]]
+[appendix,obligation=informative]
+== ARM EXPRESS-G
+
+The following diagrams provide a graphical representation of the ARM EXPRESS short listing defined in <<arm>>. The diagrams are presented in EXPRESS-G.
+
+This annex contain two distinct representations of the Application Reference Model of this application module:
+
+* a schema level representation which depicts the import of the constructs
+defined in the ARM schema of other application modules, in the ARM schema of
+this application module, through USE FROM statements;
+
+
+* an entity level representation which presents the EXPRESS constructs defined
+in the ARM schema of this application module and the references to imported
+constructs that are specialized or referred to by the constructs of the ARM
+schema of this application module.
+
+[NOTE]
+--
+Both these representations are partial. The schema level representation does not present the ARM schema of modules that are indirectly imported. The entity level representation does not present the imported constructs that are not specialized or referred to by the constructs of the ARM schema of this application module.
+--
+
+The EXPRESS-G graphical notation is defined in ISO 10303-11.
+
+[data2text,diagrams=express-g-diagrams-arm.yaml]
+----
+{% assign namespace = "arm" %}
+include::../common_files/diagrams.liquid[]
+----

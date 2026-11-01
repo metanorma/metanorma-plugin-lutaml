@@ -1,0 +1,111 @@
+---
+schema: date_time_schema
+change_edition:
+- version: '2'
+  description: |-
+    The definitions of the following EXPRESS entity data types were modified:
+
+    * action;
+    * action_directive;
+    * action_method;
+    * action_method_relationship;
+    * action_relationship;
+    * action_request_solution;
+    * action_request_status;
+    * action_resource;
+    * action_resource_relationship;
+    * action_resource_type;
+    * action_status;
+    * directed_action;
+    * executed_action;
+    * supported_item;
+    * versioned_action_request.
+  additions:
+  - type: FUNCTION
+    name: acyclic_event_occurrence_relationship
+  - type: FUNCTION
+    name: acyclic_time_interval_relationship
+  - type: TYPE
+    name: date_time_or_event_occurrence
+  - type: ENTITY
+    name: event_occurrence
+  - type: ENTITY
+    name: event_occurrence_context_role
+  - type: ENTITY
+    name: event_occurrence_relationship
+  - type: ENTITY
+    name: event_occurrence_role
+  - type: ENTITY
+    name: relative_event_occurrence
+  - type: ENTITY
+    name: time_interval
+  - type: ENTITY
+    name: time_interval_relationship
+  - type: ENTITY
+    name: time_interval_role
+  - type: ENTITY
+    name: time_interval_with_bounds
+  modifications:
+  - type: TYPE
+    name: ahead_or_behind
+  - type: ENTITY
+    name: coordinated_universal_time_offset
+  - type: ENTITY
+    name: date_role
+  - type: ENTITY
+    name: date_time_role
+  - type: TYPE
+    name: day_in_month_number
+  - type: TYPE
+    name: day_in_year_number
+  - type: TYPE
+    name: second_in_minute
+  - type: ENTITY
+    name: time_role
+  - type: FUNCTION
+    name: valid_calendar_date
+  - type: ENTITY
+    name: week_of_year_and_day_date
+- version: '3'
+  description: |-
+    This also incorporates the modifications of Technical Corrigenda 1 and Technical Corrigenda 2.
+
+    The following EXPRESS schemas have been added:
+
+    * experience_schema;
+    * location_schema;
+    * qualifications_schema.
+  additions:
+  - type: ENTITY
+    name: year_month
+  modifications:
+  - type: ENTITY
+    name: date
+- version: '4'
+  description: |-
+    The following entity types had been introduced to support external element references outside the local population of entity instances:
+
+    * component_path_shape_aspect;
+    * externally_defined_item_with_multiple_references;
+    * generic_product_definition_reference;
+    * product_definition_reference;
+    * product_definition_reference_with_local_representation.
+
+    The following entity types had been introduced to support the the characterization of objects:
+
+    * characterized_chain_based_item_within_representation;
+    * characterized_item_within_representation;
+    * characterized_product.
+
+    The following select types from the basic_attribute_schema had been converted into extensible selects and then extended in several other schemas:
+
+    * description_attribute_select;
+    * id_attribute_select;
+    * name_attribute_select;
+    * role_select.
+  additions:
+  - type: TYPE
+    name: dts_description_attribute_select
+  modifications:
+  - type: REFERENCE_FROM
+    name: basic_attribute_schema

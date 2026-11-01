@@ -1,0 +1,48 @@
+
+{% if definitions.size > 0%}
+
+{% if depth %}
+{% assign xdepth = depth | plus: 1 %}
+{% if xdepth > 5 %}
+{% capture equalsigns %}====={% endcapture %}
+{% else %}
+{% capture equalsigns %}{% for count in (1..xdepth) %}={% endfor %}{% endcapture %}
+{% endif %}
+{% endif %}
+
+{% assign index_term_type = definition_type | split: " " | first | append: " object definition" %}
+
+{% comment %} EXPRESS-G diagrams draw entities and types only (#770);
+the icon also needs the schema to have diagrams at all — the annex
+anchor expg.<schema> exists only when an __expressg block is present
+(#751). has_expg is computed by the callers; when a caller does not
+pass it, keep the historical behavior. {% endcomment %}
+{% assign show_expg_icon = false %}
+{% if definition_type contains "entity" or definition_type contains "type" %}
+{% unless has_expg == false %}
+{% assign show_expg_icon = true %}
+{% endunless %}
+{% endif %}
+
+[type=express]
+{{ equalsigns }} {{ definition_type }} definitions
+
+{% render "templates/modules/boilerplates", fetch: definition_type %}
+
+{% for definition in definitions %}
+
+{% comment %} Encode heading, with xref to EXPRESS diagram {% endcomment %}
+[[{{ schema_id }}.{{ definition.id }}]]
+{{ equalsigns | append: "="}} {{ definition.id }}{% if show_expg_icon %} <<expg.{{ schema_id | downcase }},image:../templates/common_files/expg.gif[]>>{% endif %}((({{ definition.id }},{{ index_term_type }})))
+
+{{ definition.remarks }}
+
+{% render "templates/common_files/body_remarks", remark_items: definition.remark_items %}
+
+{% render "templates/common_files/source_code", source: definition.source %}
+
+{% render "templates/modules/attributes", definition: definition, schema_id: schema_id %}
+
+{% endfor %}
+
+{% endif %}

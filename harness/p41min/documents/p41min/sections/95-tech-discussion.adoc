@@ -1,0 +1,207 @@
+[[tech_discussion]]
+[appendix,obligation=informative]
+== Technical discussion
+
+=== Generic product description resource structure
+
+The generic product description resource is made up of schemas that reflect the different kinds of data that may be associated with a product. The *application_context_schema* allows for the description of the conditions under which a given instance of the generic product description resource was defined. The *product_definition_schema* supports the description of data that relates to a particular product. The *product_property_definition_schema* supports the description of the properties of this product, for example, its shape and material. The *product_property_representation_schema* specifies the ways in which a property of a product may be represented. The relationships between these schemas are shown in Figure 1.
+
+
+* Application context: a *product_definition* is defined in at least one application context and may be used in zero, one, or many application contexts. A single application context may be used to define zero, one, or more **product_definition**s.
+
+* Product property definition: a *product_definition* may have one or more property definitions associated with it;
+
+* Property representation: each property definition may be represented in one or more ways. The only property that is expanded in this edition of this part is shape.
+
+=== Function template for cycle detection
+
+==== acyclic_object_relationship
+
+The template described in this clause is used in various ISO 10303 integrated resources. It is a function that detects cyclic definitions.
+
+The *acyclic_object_relationship* function determines whether the graph of instances of the entity data type object that contains relation as one of its links contains a cycle. This function may be used to evaluate either a *object_relationship* or any of its subtypes.
+
+Let Z be a set of instances of the entity data type *object*. The initial content of Z is the content of the set provided by the parameter *relatives*. Let R be the instance of object referred to by the attribute *relation.relating_object*. The functions looks for the instances of *specific_relation* that refer to R through their attribute **object_relationship.related_object**. It adds to Z the set of instances of object that are referred to by these instances of *specific_relation* through their attribute *object_relationship.relating_object*.
+
+The function then recursively applies the same search for each new element of Z until each branch of the graph has been fully explored or until a cycle has been detected. The function detects a cycle and returns FALSE if, at any stage of the search, an instance proposed for addition to Z already exists in Z. Otherwise, it returns TRUE.
+
+[NOTE]
+--
+Calls to functions based on this template should be done as follows.
+--
+
+**WR1**: acyclic_object_relation (SELF, [SELF.related_object], '....' );
+
+**EXPRESS specification**
+
+[source]
+--
+FUNCTION acyclic_object_relationship
+	(relation		   : object_relationship;
+	 relatives	 	   : SET [1:?] OF object;
+	 specific_relation : STRING) : BOOLEAN;
+
+  LOCAL
+	x 			   : SET OF object_relationship;
+  END_LOCAL;
+
+  IF relation.relating_object IN relatives THEN
+	RETURN (FALSE);
+  END_IF; 			   -- IN is based in instance equality
+
+  x := QUERY (oor <* bag_to_set (USEDIN
+  	   (relation.relating_object,
+  	    'OBJECT_SCHEMA.' +
+  	    'OBJECT_RELATIONSHIP.' +
+  	    'RELATED_OBJECT')) |
+  	     specific_relation IN TYPEOF (oor));
+  REPEAT I := 1 TO HIINDEX(x); 			   -- pre-checked loop
+    IF NOT acyclic_object_relationship
+    	   (x[i],
+    	    relatives + relation.relating_object,
+    	    specific_relation) THEN
+      RETURN(FALSE);
+    END_IF;
+  END_REPEAT;
+
+  RETURN(TRUE);
+END_FUNCTION;
+--
+
+**Attribute definitions**
+
+**relation**: (input) the candidate object_relationship to be checked.
+
+[NOTE]
+--
+The instance of the *object_relationship* entity specified in the relation parameter of *acyclic_object_relationship* function is either an *object_relationship* entity or one of its subtypes.
+--
+
+**relatives**: (input) the set of instances of the entity data type object that defines the domain for the detection of cycles.
+
+**specific_relation**: (input) the fully qualified entity name of the entity data type object_relationship or of one of its subtypes.
+
+=== Relationship template
+
+==== object_relationship
+
+The template described in this clause is used in various ISO 10303 integrated resources. It supports the description of graphs of like objects.
+
+An *object_relationship* relates two objects with a description of their relationship.
+
+**EXPRESS specification**
+
+[source]
+--
+ENTITY object_relationship;
+  name		  : label;
+  description 	  : text;
+  relating_object : object;
+  related_object  : object;
+END_ENTITY;
+--
+
+**Attribute definitions**
+
+**name**: the *label* by which the *object_relationship* is known.
+
+**description**: the *text* that characterizes the *object_relationship*.
+
+**relating_object**: one of the instances of *object* that is a part of the relationship.
+
+[NOTE]
+--
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+--
+
+**related_object**: the other instance of *object* that is a part of the relationship. If one element of the relationship is dependent upon the other, this attribute shall be the dependent one.
+
+[NOTE]
+--
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+--
+
+=== Constraining entity instances of the basic_attribute_schema
+
+In order to constrain the population of instances of the *basic_attribute_schema*, the following rule may be used in EXPRESS schemas that use or specialize the constructs of this document. The rule *attribute_x_not_allowed* enforces the restriction that the attribute x of any instance of the entity data type **entity_type** not be present.
+
+[NOTE]
+--
+Such a rule can only be specified in cases in which the referenced attribute is optional.
+--
+
+**EXPRESS specification**
+
+[source]
+--
+RULE  attribute_x_not_allowed FOR (entity_type) ;
+WHERE
+	  wr1: SIZEOF (QUERY (ent <* entity_type | EXISTS (ent.x))) = 0;
+END_RULE;
+--
+
+=== Use of the generic management resource constructs
+
+The EXPRESS elements specified in the *management_resource_schema* are used to associate management type data with product data in specific application interpreted models. This clause describes the EXPRESS mechanism that is used to make these associations.
+
+The ABSTRACT SUPERTYPE statement from the EXPRESS language is used in the *management_resource_schema* to define template structures that are used to associate management type data with product data in an application interpreted model.
+
+The *approval_assignment* entity from the *management_resource_schema* defines a template structure that is used to associate approvals with product data.
+
+**EXPRESS specification**
+
+[source]
+--
+ENTITY approval_assignment
+  ABSTRACT SUPERTYPE;
+   assigned_approval : approval;
+  DERIVE
+     role            : object_role := get_role (SELF);
+WHERE
+   WR1 : SIZEOF (USEDIN (SELF, 'BASIC_ATTRIBUTE_SCHEMA.' +
+					 'ROLE_ASSOCIATION.ITEM_WITH_ROLE')) <= 1;
+END_ENTITY; -- approval_assignment
+--
+
+These template structures are used in application interpreted models in which the management type data is to be associated with product data, in the following way:
+
+
+* a SELECT type, and the necessary EXPRESS USE and REFERENCE statements, that defines the EXPRESS elements that are to have a particular kind of management type data associated with them is specified;
+
+* an entity, and the necessary EXPRESS USE and REFERENCE statements, that is a SUBTYPE of the required template structure and that has an attribute that is of the type of the SELECT type is specified.
+
+If approvals are assigned to drawing sheet revisions and drawing revisions, the following SELECT type would be defined:
+
+**EXPRESS specification**
+
+[source]
+--
+TYPE approval_item = SELECT
+     (drawing_sheet_revision,
+      drawing_revision );
+END_TYPE;
+--
+
+The following *applied_approval_assignment* entity could be used to associate *approval* with drawing sheet revisions and drawing revisions:
+
+**EXPRESS specification**
+
+[source]
+--
+ENTITY applied_approval_assignment
+    SUBTYPE OF (approval_assignment);
+    item : approval_item;
+END_ENTITY;
+--
+
+
+
+[NOTE]
+--
+In order to facilitate interoperability among application protocols, subtypes of the entity data type **xxx_assignment** are conventionally named *applied_xxx_assignment* in the application interpreted models.
+--
+
+In the *management_resource_schema* each abstract *xxx_assignment* entity has a *role* attribute. This attribute allows the characterization of the resource construct *xxx* with respect to the product data to which it will be assigned.
+
+For example, in particular instances of the entity data type *applied_contract_assignment*, the derived attribute *role* can refer to instances of the entity data type *object_role* with name 'does not apply', or 'is the binding agreement for the production of', in order to characterize the role of a contract with respect to a particular product.
+

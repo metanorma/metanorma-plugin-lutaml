@@ -1,0 +1,30 @@
+
+{% if schema.interfaces.size > 0  %}
+[[{{schema.id}}_note_1]]
+[NOTE]
+====
+The schemas referenced above are specified in the following document(s):
+
+{% for interface in schema.interfaces %}
+
+{% assign schema_name   = interface.schema.id %}
+{% assign ref_schemas   = all_schemas | where: "id", schema_name %}
+{% assign status        = ref_schemas[0].remark_items | where: "id", "__status" %}
+{% assign status        = status[0].remarks[0] %}
+{% assign reference     = ref_schemas[0].remark_items | where: "id", "__published_in" %}
+{% assign reference     = reference[0].remarks[0] | replace_regex: ":.+$", "" %}
+
+{% if reference == "" %}
+{% assign reference = ref_schemas[0].version.value | replace_regex: "^.+?iso standard (\d+) part\((\d+)\) version.+","ISO \1-\2" %}
+{% endif %}
+
+{% if status == "TS" %}
+{% assign status        = status | prepend: "/" | append: " " %}
+{% assign reference     = reference | replace: " ", status %}
+{% endif %}
+
+*{{ schema_name }}*:: {{ reference }}
+
+{% endfor %}
+====
+{% endif %}

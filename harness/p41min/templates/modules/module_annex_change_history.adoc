@@ -1,0 +1,342 @@
+
+[[annex_change_history]]
+[appendix,obligation=informative]
+== Change history
+
+[[change_history_general]]
+=== General
+
+This annex documents the history of technical modifications made to
+ISO/TS {docnumber}-{partnumber}.
+
+[data2text,context=schemas.yaml,changes_data=changes.yaml]
+----
+{% comment %} Determine file paths {% endcomment %}
+
+{% liquid
+assign path_prefix  = "../../schemas/modules/"
+assign schema_name  = context.schemas.first[1].path | remove: path_prefix | split: "/" | first
+assign changes_path = "changes.yaml"
+assign mapping_path = schema_name | prepend: path_prefix | append: "/mapping.changes.yaml" | remove: "../../"
+assign arm_path     = schema_name | prepend: path_prefix | append: "/arm.changes.yaml"     | remove: "../../"
+assign mim_path     = schema_name | prepend: path_prefix | append: "/mim.changes.yaml"     | remove: "../../"
+
+assign ordinal_numbers = "zero, " | append: "first, " | append: "second, " | append: "third, " | append: "fourth, " | append: "fifth, " | append: "sixth, " | append: "seventh, " | append: "eighth, " | append: "ninth, " | append: "tenth, " | append: "eleventh, " | append: "twelfth, " | append: "thirteenth, " | append: "fourteenth, " | append: "fifteenth, " | append: "sixteenth, " | append: "sixteenth, " | append: "seventeenth, " | append: "eighteenth, " | append: "nineteenth, " | append: "twentieth"
+
+assign ordinal_numbers = ordinal_numbers | split: ", "
+%}
+
+{% comment %} Determine max_version {% endcomment %}
+
+{% liquid
+assign max_version = 2
+
+if changes_data.change_edition
+assign max_changes_ver = changes_data.change_edition.last.version | plus: 0
+if max_changes_ver > max_version
+assign max_version = max_changes_ver
+endif
+endif
+
+assign arm_path_exist     = arm_path     | file_exist
+assign mim_path_exist     = mim_path     | file_exist
+assign mapping_path_exist = mapping_path | file_exist
+
+if arm_path_exist
+assign arm_data = arm_path | loadfile: "."
+assign max_arm_ver = arm_data.change_edition.last.version | plus: 0
+if max_arm_ver > max_version
+assign max_version = max_arm_ver
+endif
+endif
+
+if mim_path_exist
+assign mim_data = mim_path | loadfile: "."
+assign max_mim_ver = mim_data.change_edition.last.version | plus: 0
+if max_mim_ver > max_version
+assign max_version = max_mim_ver
+endif
+endif
+
+if mapping_path_exist
+assign mapping_data = mapping_path | loadfile: "."
+assign max_mapping_ver = mapping_data.change_edition.last.version | plus: 0
+if max_mapping_ver > max_version
+assign max_version = max_mapping_ver
+endif
+endif
+%}
+
+
+{% comment %} Generate changes {% endcomment %}
+
+{% for ver in (2..max_version) %}
+
+[[change_{{ver}}]]
+=== Changes made in edition {{ver}}
+
+[[summary_{{ver}}]]
+==== Summary of changes
+
+{% assign ver_before = ver | minus: 1 %}
+
+The {{ ordinal_numbers[ver] }} edition of this document incorporated the modifications to the {{ ordinal_numbers[ver_before] }} edition listed below.
+
+{% comment %} Changes from changes.yaml {% endcomment %}
+
+{% if max_changes_ver %}
+
+{% comment %} Convert version number to string {% endcomment %}
+{% assign ver_str = ver | append: "" %}
+
+{% comment %} Find version {% endcomment %}
+{% for ed in changes_data.change_edition %}
+{% if ed.version == ver_str %}
+{{ ed.description }}
+{% endif %}
+{% endfor %}
+
+{% endif %}
+
+{% comment %} Changes from ARM {% endcomment %}
+
+{% if max_arm_ver and arm_data != changes_data %}
+
+{% comment %} Convert version number to string {% endcomment %}
+{% assign ver_str = ver | append: "" %}
+
+{% for ed in arm_data.change_edition %}
+
+{% if ed.version == ver_str %}
+{% assign changes_arm_exist = true %}
+
+[[arm.changes{{ver}}]]
+==== Changes made to the ARM
+
+{% if ed.additions or ed.modifications or ed.deletions %}
+
+{% if ed.additions %}
+The following ARM EXPRESS declarations and interface specifications have been added:
+
+{% for change in ed.additions %}
+* {{change.type}} {{change.name}}; {%- if change.interfaced_item %}(interface from {{change.interfaced_items}}){% endif %}
+{%- if change.description %}
++
+--
+{{change.description}}
+--
+{% endif %}
+{% endfor %}
+
+{% endif %}
+
+{% if ed.modifications %}
+The following ARM EXPRESS declarations and interface specifications have been modified:
+
+{% for change in ed.modifications %}
+* {{change.type}} {{change.name}}; {%- if change.interfaced_item %}(interface from {{change.interfaced_items}}){% endif %}
+{%- if change.description %}
++
+--
+{{change.description}}
+--
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if ed.deletions %}
+The following ARM EXPRESS declarations and interface specifications have been deleted:
+
+{% for change in ed.deletions %}
+* {{change.type}} {{change.name}}; {%- if change.interfaced_item %}(interface from {{change.interfaced_items}}){% endif %}
+{%- if change.description %}
++
+--
+{{change.description}}
+--
+{% endif %}
+
+{% endfor %}
+{% endif %}
+
+{% elsif ed.description %}
+
+{{ ed.description }}
+
+{% endif %}
+{% endif %}
+
+{% endfor %}
+
+{% if changes_arm_exist and max_mapping_ver %}
+
+In addition, modifications have been made to the mapping specification, the MIM schema and the EXPRESS-G diagrams to reflect and be consistent with the modifications of the ARM.
+
+{% assign changes_arm_exist = false %}
+{% endif %}
+
+{% endif %}
+
+
+{% comment %} Changes from Mapping {% endcomment %}
+
+{% if max_mapping_ver %}
+
+{% assign ver_str = ver | append: "" %}
+
+{% for ed in mapping_data.change_edition %}
+
+{% comment %} Find version {% endcomment %}
+{% if ed.version == ver_str %}
+
+[[mapping.changes{{ver}}]]
+==== Changes made to the mapping
+
+{% if ed.changes[0].description  %}
+
+{{ ed.changes[0].description }}
+
+{% else %}
+
+The following changes have been made to the ARM to MIM mapping:
+
+{% for item in ed.changes %}
+* {{ item.change }}
+{% endfor %}
+
+{% endif %}
+
+{% endif %}
+{% endfor %}
+
+{% endif %}
+
+
+{% comment %} Changes from MIM {% endcomment %}
+
+{% if max_mim_ver %}
+{% assign ver_str = ver | append: "" %}
+
+{% for ed in mim_data.change_edition %}
+
+{% comment %} Find version {% endcomment %}
+{% if ed.version == ver_str %}
+{% if ed.additions or ed.modifications or ed.deletions %}
+
+[[mim.changes{{ver}}]]
+==== Changes made to the MIM
+
+{% if ed.additions %}
+The following MIM EXPRESS declarations and interface specifications have been added:
+
+{% for change in ed.additions %}
+* {{change.type}} {{change.name}}; {%- if change.interfaced_item %}(interface from {{change.interfaced_items}}){% endif %}
+{%- if change.description %}
++
+--
+{{change.description}}
+--
+{% endif %}
+{% endfor %}
+
+{% endif %}
+
+{% if ed.modifications %}
+The following MIM EXPRESS declarations and interface specifications have been modified:
+
+{% for change in ed.modifications %}
+* {{change.type}} {{change.name}}; {%- if change.interfaced_item %}(interface from {{change.interfaced_items}}){% endif %}
+{%- if change.description %}
++
+--
+{{change.description}}
+--
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if ed.deletions %}
+The following MIM EXPRESS declarations and interface specifications have been deleted:
+
+{% for change in ed.deletions %}
+* {{change.type}} {{change.name}}; {%- if change.interfaced_item %}(interface from {{change.interfaced_items}}){% endif %}
+{%- if change.description %}
++
+--
+{{change.description}}
+--
+{% endif %}
+
+{% endfor %}
+{% endif %}
+
+{% endif %}
+{% endif %}
+
+{% endfor %}
+
+{% endif %}
+
+{% endfor %}
+----
+
+////
+
+# Considerations on the design of this Change history template
+
+Changes are tracked from edition 2 forward. Every edition change is conformed by:
+
+- "General" changes from changes.yaml file located at document folder, if it exists.
+- ARM changes, if there are.
+- MIM changes, if there are.
+- Mapping changes, if there are.
+
+On every edition change, there is a "Summary of changes" sub-section, no matter what.
+
+
+## "General" changes from changes.yaml
+
+NOTE: It is said "General" changes to differentiate from the other type of changes (ARM, MIM, and Mapping).
+
+Changes specified in changes.yaml goes after "Summary of changes" first paragraph which is a boilerplate.
+
+Access to changes.yaml is done in the heading of `data2text` block.
+
+
+## ARM changes
+
+ARM changes must be included if `version` item contains: additions, modifications or deletions.
+
+If there are subsequent Mapping changes, this boilerplate should be added at the end:
+
+"In addition, modifications have been made to the mapping specification, the MIM schema and the EXPRESS-G diagrams to reflect and be consistent with the modifications of the ARM."
+
+
+## MIM changes
+
+MIM changes must be included if `version` item contains: additions, `modifications` or deletions.
+
+
+## Mapping changes
+
+If a `mapping.changes.yaml` file exist, changes should be added.
+
+If `changes` array contains more than one item named `change` this boilerplate should be added:
+
+"The following changes have been made to the ARM to MIM mapping:"
+
+* {{ change 1}}
+...
+* {{ change N }}
+
+If `changes` array contains only one item tagged as `description`. No boilerplate should be added.
+
+
+## Sample documents
+1047: contains only "general" changes (i.e. from `changes.yaml`)
+1061: contains ARM, MIM, Mapping, and "general" changes
+1064: contains ARM and Mapping changes
+1068: contains "general", ARM and MIM changes
+1707: contains ARM, MIM and Mapping changes
+
+////

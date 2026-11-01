@@ -1,0 +1,11 @@
+{% if things.size > 0 %}
+
+{% render "templates/resources/basic_title", thing_prefix: thing_prefix, anchor: "items", title: "Items", depth: depth %}
+
+{% for thing in things %}
+
+{% render "templates/resources/basic_thing", thing: thing, thing_prefix: thing_prefix, depth: depth | plus: 1, schema: schema %}
+
+{% endfor %}
+
+{% endif %}

@@ -1,0 +1,13 @@
+{% if things.size > 0 %}
+{% assign section_title = schema_id | append: " subtype constraint definitions" %}
+
+{% render "templates/resources/basic_title", thing_prefix: thing_prefix, anchor: "subtype_constraints", title: section_title, depth: depth %}
+
+{% assign sc_nested_depth = depth | plus: 1 %}
+{% for thing in things %}
+
+{% render "templates/resources/basic_thing", thing: thing, thing_prefix: thing_prefix, depth: sc_nested_depth, object_type: "subtype_constraint", schema: schema %}
+
+{% endfor %}
+
+{% endif %}

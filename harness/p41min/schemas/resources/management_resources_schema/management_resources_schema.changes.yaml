@@ -1,0 +1,189 @@
+---
+schema: management_resources_schema
+change_edition:
+- version: '2'
+  description: |-
+    The definitions of the following EXPRESS entity data types were modified:
+
+    * action;
+    * action_directive;
+    * action_method;
+    * action_method_relationship;
+    * action_relationship;
+    * action_request_solution;
+    * action_request_status;
+    * action_resource;
+    * action_resource_relationship;
+    * action_resource_type;
+    * action_status;
+    * directed_action;
+    * executed_action;
+    * supported_item;
+    * versioned_action_request.
+  additions:
+  - type: ENTITY
+    name: action_method_assignment
+  - type: ENTITY
+    name: action_method_role
+  - type: FUNCTION
+    name: acyclic_identification_assignment_relationship
+  - type: ENTITY
+    name: attribute_classification_assignment
+  - type: TYPE
+    name: attribute_type
+  - type: ENTITY
+    name: attribute_value_assignment
+  - type: ENTITY
+    name: attribute_value_role
+  - type: ENTITY
+    name: classification_assignment
+  - type: ENTITY
+    name: classification_role
+  - type: ENTITY
+    name: document_usage_constraint_assignment
+  - type: ENTITY
+    name: document_usage_role
+  - type: ENTITY
+    name: effectivity_context_role
+  - type: ENTITY
+    name: effectivity_context_assignment
+  - type: ENTITY
+    name: event_occurrence_assignment
+  - type: ENTITY
+    name: event_occurrence_context_assignment
+  - type: ENTITY
+    name: external_identification_assignment
+  - type: ENTITY
+    name: identification_assignment_relationship
+  - type: ENTITY
+    name: identification_assignment
+  - type: ENTITY
+    name: identification_role
+  - type: ENTITY
+    name: organizational_project_role
+  - type: ENTITY
+    name: organizational_project_assignment
+  - type: ENTITY
+    name: time_interval_assignment
+  modifications:
+  - type: ENTITY
+    name: action_assignment
+  - type: ENTITY
+    name: action_request_assignment
+  - type: ENTITY
+    name: approval_assignment
+  - type: ENTITY
+    name: certification_assignment
+  - type: ENTITY
+    name: contract_assignment
+  - type: ENTITY
+    name: document_reference
+  - type: ENTITY
+    name: effectivity_assignment
+  - type: ENTITY
+    name: external_referent_assignment
+  - type: ENTITY
+    name: group_assignment
+  - type: ENTITY
+    name: name_assignment
+  - type: ENTITY
+    name: security_classification_assignment
+- version: '3'
+  description: |-
+    This also incorporates the modifications of Technical Corrigenda 1 and Technical Corrigenda 2.
+
+    The following EXPRESS schemas have been added:
+
+    * experience_schema;
+    * location_schema;
+    * qualifications_schema.
+  additions:
+  - type: ENTITY
+    name: experience_assignment
+  - type: ENTITY
+    name: experience_role
+  - type: ENTITY
+    name: experience_type_assignment
+  - type: ENTITY
+    name: experience_type_role
+  - type: ENTITY
+    name: location_assignment
+  - type: ENTITY
+    name: location_representation_assignment
+  - type: ENTITY
+    name: location_representation_role
+  - type: ENTITY
+    name: location_role
+  - type: ENTITY
+    name: organization_type_assignment
+  - type: ENTITY
+    name: organization_type_role
+  - type: ENTITY
+    name: person_type_assignment
+  - type: ENTITY
+    name: person_type_definition_assignment
+  - type: ENTITY
+    name: person_type_definition_role
+  - type: ENTITY
+    name: person_type_role
+  - type: ENTITY
+    name: position_in_organization_assignment
+  - type: ENTITY
+    name: position_in_organization_role
+  - type: ENTITY
+    name: position_in_organization_type_assignment
+  - type: ENTITY
+    name: position_in_organization_type_role
+  - type: ENTITY
+    name: qualification_assignment
+  - type: ENTITY
+    name: qualification_role
+  - type: ENTITY
+    name: qualification_type_assignment
+  - type: ENTITY
+    name: qualification_type_role
+- version: '4'
+  description: |-
+    The following entity types had been introduced to support external element references outside the local population of entity instances:
+
+    * component_path_shape_aspect;
+    * externally_defined_item_with_multiple_references;
+    * generic_product_definition_reference;
+    * product_definition_reference;
+    * product_definition_reference_with_local_representation.
+
+    The following entity types had been introduced to support the the characterization of objects:
+
+    * characterized_chain_based_item_within_representation;
+    * characterized_item_within_representation;
+    * characterized_product.
+
+    The following select types from the basic_attribute_schema had been converted into extensible selects and then extended in several other schemas:
+
+    * description_attribute_select;
+    * id_attribute_select;
+    * name_attribute_select;
+    * role_select.
+  additions:
+  - type: TYPE
+    name: mrs_role_select
+  modifications:
+  - type: REFERENCE_FROM
+    name: basic_attribute_schema
+- version: '6'
+  description: ENTITY basic_attribute's description updated.
+  additions:
+  - type: TYPE
+    name: assignment_object_select
+  - type: ENTITY
+    name: assignment_object_relationship
+  - type: ENTITY
+    name: classification_assignment_relationship
+  - type: ENTITY
+    name: external_identification_assignment_relationship
+  - type: FUNCTION
+    name: acyclic_assignment_object_relationship
+  - type: FUNCTION
+    name: acyclic_classification_assignment_relationship
+  - type: FUNCTION
+    name: acyclic_external_identification_assignment_relationship

@@ -1,0 +1,15 @@
+
+{% render "templates/resources/basic_title", thing_prefix: thing_prefix, anchor: thing.id, title: thing.id, depth: depth, schema: schema, thing_id: thing.id %}
+
+{% if thing.remarks %}
+{{ thing.remarks }}
+{% else %}
+{% comment %}
+These boilerplates only apply to TYPE and SUBTYPE CONSTRAINT definitions
+{% endcomment %}
+{% render "templates/resources/boilerplates", definition: thing, object_type: object_type %}
+{% endif %}
+
+{% render "templates/common_files/body_remarks", remark_items: thing.remark_items %}
+
+{% render "templates/common_files/source_code", source: thing.source %}

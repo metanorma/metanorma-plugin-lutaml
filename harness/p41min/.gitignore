@@ -1,0 +1,10 @@
+# build outputs
+Gemfile.lock
+.bundle/
+site/
+documents/p41min/relaton/
+documents/p41min/document.*
+document.err.html
+relaton/
+schema_docs/*/doc_*.err.html
+schema_docs/*/doc_*.presentation.xml
