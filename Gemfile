@@ -37,3 +37,9 @@ gem "suma", github: "metanorma/suma", branch: "main"
 # standoc main (>= 3.5.1.pre.alpha.2) floors metanorma-document at
 # 0.5.2.pre.alpha.1 (SvgmapElement, metanorma-standoc#1303); main carries it
 gem "metanorma-document", github: "metanorma/metanorma-document", branch: "main"
+
+# svg_conform 0.2.5's rubygems object is stale on some CDN edges (the
+# re-pushed build carries a lens_core dependency that is not published);
+# 0.2.4 is the last clean release and rides moxml ~> 0.5 (= satisfied by
+# the 0.6 line). Lift when a clean 0.2.6 ships.
+gem "svg_conform", "0.2.4"
