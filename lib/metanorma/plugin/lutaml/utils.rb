@@ -76,11 +76,24 @@ module Metanorma
             ::Metanorma::Plugin::Lutaml::Liquid::LocalFileSystem
               .new(include_paths, ["%s.liquid", "_%s.liquid", "_%s.adoc"])
           rendered_string = liquid_template
-            .render(contexts,
+            .render(document_context(document, contexts),
                     strict_variables: false,
                     error_mode: :warn)
 
           [rendered_string, liquid_template.errors]
+        end
+
+        # Template helpers resolve files against the document's directory,
+        # not the process working directory (metanorma#627): expose the
+        # docfile's directory as +docfile_directory+ so templates can pass
+        # it to file-loading filters (loadfile et al). Caller assigns take
+        # precedence, so a template can override the variable.
+        def document_context(document, contexts)
+          docfile = document&.attributes&.[]("docfile")
+          return contexts unless docfile
+
+          base = { "docfile_directory" => File.dirname(docfile) }
+          contexts.is_a?(Hash) ? base.merge(contexts) : contexts
         end
 
         def create_liquid_environment
