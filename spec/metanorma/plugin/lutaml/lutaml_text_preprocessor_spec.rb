@@ -1,6 +1,14 @@
 require "spec_helper"
 
 RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
+  # Decorated image paths are emitted docfile-relative (#325): the specs
+  # convert with the docfile directory at the repository root, so the
+  # emitted form is the fixtures path relative to it.
+  def relative_fixtures_path(path)
+    Pathname.new(fixtures_path(path))
+      .relative_path_from(Pathname.new(Dir.pwd)).to_s
+  end
+
   describe "#process" do
     let(:example_file) { fixtures_path("test_relative_includes_svgmap.exp") }
 
@@ -182,7 +190,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             #{BLANK_HDR}<sections><clause id="_" inline-header="false" obligation="normative"><title id="_">annotated_3d_model_data_quality_criteria_schema</title>
             <p id="_">Mine text</p>
             <svgmap id="_"><figure id="_">
-            <image src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" id="_" mimetype="image/svg+xml" height="auto" width="auto"  filename="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}"></image>
+            <image src="#{relative_fixtures_path('measure_schemaexpg5.svg')}" id="_" mimetype="image/svg+xml" height="auto" width="auto"  filename="#{relative_fixtures_path('measure_schemaexpg5.svg')}"></image>
             </figure>
             <target href="1">
               <eref  bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
@@ -200,8 +208,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
             <svgmap id="_">
               <figure id="_">
                 <image
-                  src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}"
-                   filename="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}"
+                  src="#{relative_fixtures_path('measure_schemaexpg5.svg')}"
+                   filename="#{relative_fixtures_path('measure_schemaexpg5.svg')}"
                   id="_" mimetype="image/svg+xml" height="auto" width="auto"></image>
               </figure>
               <target href="1">
@@ -260,7 +268,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               <clause id="_" inline-header="false" obligation="normative"><title id="_">annotated_3d_model_data_quality_criteria_schema</title>
               <p id="_">Mine text</p>
               <p id="_">
-              <link target="#{fixtures_path('/downloads/report.pdf')}">Get Report</link>
+              <link target="#{relative_fixtures_path('/downloads/report.pdf')}">Get Report</link>
               </p>
               <p id="_">
               <link target="http://test.com/include1.csv"/>
@@ -269,7 +277,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
               one,two,three</p>
               <p id="_">header4,header5,header6
               four,five,six</p>
-              <p id="_">Unresolved directive in &lt;stdin&gt;&#8201;&#8212;&#8201;include::#{fixtures_path('test/include1.csv')}[]</p>
+              <p id="_">Unresolved directive in &lt;stdin&gt;&#8201;&#8212;&#8201;include::#{relative_fixtures_path('test/include1.csv')}[]</p>
               <p id="_">
               <link target="http://test.com/include1.csv"/>
               </p></clause>
@@ -322,13 +330,13 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 <clause id="_" inline-header="false" obligation="normative"><title id="_">annotated_3d_model_data_quality_criteria_schema</title>
                 <p id="_">My text</p>
                 <p id="_">
-                <link target="#{fixtures_path('/expressir_relative_paths/downloads/report.pdf')}">Get Report</link>
+                <link target="#{relative_fixtures_path('/expressir_relative_paths/downloads/report.pdf')}">Get Report</link>
                 </p>
                 <p id="_">
                 <link target="http://test.com/include1.csv"/>
                 </p>
-                <p id="_">Unresolved directive in &lt;stdin&gt;&#8201;&#8212;&#8201;include::#{fixtures_path('/expressir_relative_paths/include1.csv')}[]</p>
-                <p id="_">Unresolved directive in &lt;stdin&gt;&#8201;&#8212;&#8201;include::#{fixtures_path('expressir_relative_paths/test/include1.csv')}[]</p>
+                <p id="_">Unresolved directive in &lt;stdin&gt;&#8201;&#8212;&#8201;include::#{relative_fixtures_path('/expressir_relative_paths/include1.csv')}[]</p>
+                <p id="_">Unresolved directive in &lt;stdin&gt;&#8201;&#8212;&#8201;include::#{relative_fixtures_path('expressir_relative_paths/test/include1.csv')}[]</p>
                 <p id="_">
                 <link target="http://test.com/include1.csv"/>
                 </p></clause>
@@ -392,7 +400,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 <p id="_">Mine text</p>
                 <svgmap id="_">
                   <figure id="_">
-                    <image src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" id="_" mimetype="image/svg+xml"  filename="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}"
+                    <image src="#{relative_fixtures_path('measure_schemaexpg5.svg')}" id="_" mimetype="image/svg+xml"  filename="#{relative_fixtures_path('measure_schemaexpg5.svg')}"
                       height="auto" width="auto"></image>
                   </figure>
                   <target href="1">
@@ -729,7 +737,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 <p id="_">Mine text</p>
                 <svgmap id="_">
                    <figure id="_">
-                      <image id="_" src="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}" mimetype="image/svg+xml" height="auto" width="auto" filename="#{File.expand_path(fixtures_path('measure_schemaexpg5.svg'))}"/>
+                      <image id="_" src="#{relative_fixtures_path('measure_schemaexpg5.svg')}" mimetype="image/svg+xml" height="auto" width="auto" filename="#{relative_fixtures_path('measure_schemaexpg5.svg')}"/>
                    </figure>
                    <target href="1">
                       <eref bibitemid="express_measure_schema" citeas="">
@@ -753,7 +761,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 <p id="_">Mine text</p>
                 <svgmap id="_">
                    <figure id="_">
-                      <image id="_" src="#{File.expand_path(fixtures_path('expressir_index_1/measure_schemaexpg5.svg'))}" mimetype="image/svg+xml" height="auto" width="auto" filename="#{File.expand_path(fixtures_path('expressir_index_1/measure_schemaexpg5.svg'))}"/>
+                      <image id="_" src="#{relative_fixtures_path('expressir_index_1/measure_schemaexpg5.svg')}" mimetype="image/svg+xml" height="auto" width="auto" filename="#{relative_fixtures_path('expressir_index_1/measure_schemaexpg5.svg')}"/>
                    </figure>
                    <target href="1">
                       <eref bibitemid="express_measure_schema" citeas="">
