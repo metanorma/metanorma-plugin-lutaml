@@ -6,37 +6,24 @@ require_relative "../../../../lib/metanorma/plugin/lutaml/express_remarks_decora
 RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarksDecorator do
   subject(:result) { described_class.call(remark, options) }
 
-  let(:prefix) { File.expand_path("/project/schemas") }
+  # The prefix is docfile-relative, as produced by
+  # ExpressRemarkAdapter.relative_path_prefix; the decorator joins it as
+  # written. An emitted path must not carry the build directory (#325):
+  # two builds of the same tree in two directories produce byte-identical
+  # markup only when the paths stay relative to the docfile.
+  let(:prefix) { "../../schemas" }
   let(:options) { { "relative_path_prefix" => prefix } }
 
-  def expanded_path(filename)
-    File.expand_path(File.join(prefix, filename))
+  def prefixed_path(filename)
+    File.join(prefix, filename)
   end
 
   describe "prefixing relative paths" do
     context "with image:: macro" do
       let(:remark) { "image::diagram.svg[]" }
 
-      it "prefixes the path" do
-        expect(result).to eq("image::#{expanded_path('diagram.svg')}[]")
-      end
-    end
-
-    context "with a docfile-relative prefix" do
-      let(:prefix) { "../../schemas/resources/action_schema" }
-      let(:remark) { "image::diagram.svg[]" }
-      let(:options) do
-        { "relative_path_prefix" => prefix,
-          "relative_path_base" => File.expand_path("/project/documents/iso-1") }
-      end
-
-      it "resolves the path against the docfile directory, not the CWD" do
-        expect(result).to eq(
-          "image::#{File.expand_path(
-            File.join(prefix, 'diagram.svg'),
-            File.expand_path('/project/documents/iso-1'),
-          )}[]",
-        )
+      it "prefixes the path, keeping it docfile-relative" do
+        expect(result).to eq("image::#{prefixed_path('diagram.svg')}[]")
       end
     end
 
@@ -44,7 +31,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarksDecorator do
       let(:remark) { "image:photo.png[alt text]" }
 
       it "prefixes the path" do
-        expect(result).to eq("image:#{expanded_path('photo.png')}[alt text]")
+        expect(result).to eq("image:#{prefixed_path('photo.png')}[alt text]")
       end
     end
 
@@ -52,7 +39,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarksDecorator do
       let(:remark) { "link:details.html[Details]" }
 
       it "prefixes the path" do
-        expect(result).to eq("link:#{expanded_path('details.html')}[Details]")
+        expect(result).to eq("link:#{prefixed_path('details.html')}[Details]")
       end
     end
 
@@ -60,7 +47,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarksDecorator do
       let(:remark) { "include::snippet.adoc[]" }
 
       it "prefixes the path" do
-        expect(result).to eq("include::#{expanded_path('snippet.adoc')}[]")
+        expect(result).to eq("include::#{prefixed_path('snippet.adoc')}[]")
       end
     end
 
@@ -68,7 +55,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarksDecorator do
       let(:remark) { "video::demo.mp4[]" }
 
       it "prefixes the path" do
-        expect(result).to eq("video::#{expanded_path('demo.mp4')}[]")
+        expect(result).to eq("video::#{prefixed_path('demo.mp4')}[]")
       end
     end
 
@@ -76,7 +63,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarksDecorator do
       let(:remark) { "audio::sound.mp3[]" }
 
       it "prefixes the path" do
-        expect(result).to eq("audio::#{expanded_path('sound.mp3')}[]")
+        expect(result).to eq("audio::#{prefixed_path('sound.mp3')}[]")
       end
     end
 
@@ -85,7 +72,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarksDecorator do
 
       it "prefixes the path including subdirectory" do
         expect(result)
-          .to eq("image::#{expanded_path('images/action_schemaexpg1.xml')}[]")
+          .to eq("image::#{prefixed_path('images/action_schemaexpg1.xml')}[]")
       end
     end
   end
@@ -142,9 +129,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarksDecorator do
       it "only prefixes relative paths" do
         expect(result).to eq(
           "See the diagram below:\n" \
-          "image::#{expanded_path('local.svg')}[]\n" \
+          "image::#{prefixed_path('local.svg')}[]\n" \
           "image::http://example.com/remote.svg[]\n" \
-          "image::#{expanded_path('other.svg')}[]",
+          "image::#{prefixed_path('other.svg')}[]",
         )
       end
     end
@@ -157,10 +144,20 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarksDecorator do
       it "preserves non-macro lines unchanged" do
         expect(result).to eq(
           "This is a note.\n" \
-          "image::#{expanded_path('diagram.svg')}[]\n" \
+          "image::#{prefixed_path('diagram.svg')}[]\n" \
           "End of note.",
         )
       end
+    end
+  end
+
+  describe "idempotence across passes" do
+    let(:remark) { "image::diagram.svg[]" }
+
+    it "does not stack the prefix when already decorated" do
+      once = described_class.call(remark, options)
+      twice = described_class.call(once, options)
+      expect(twice).to eq(once)
     end
   end
 
