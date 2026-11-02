@@ -161,6 +161,14 @@ def fixtures_path(path)
   File.join(File.expand_path("./fixtures/lutaml", __dir__), path)
 end
 
+# Decorated image paths are emitted docfile-relative (#325): specs convert
+# with the docfile directory at the repository root, so the emitted form
+# is the fixtures path relative to it.
+def relative_fixtures_path(path)
+  Pathname.new(fixtures_path(path))
+    .relative_path_from(Pathname.new(Dir.pwd)).to_s
+end
+
 def datastruct_fixtures_path(path)
   File.join(
     File.expand_path("../spec/fixtures/lutaml/datastruct", __dir__), path
