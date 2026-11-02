@@ -42,4 +42,4 @@ gem "metanorma-document", github: "metanorma/metanorma-document", branch: "main"
 # re-pushed build carries a lens_core dependency that is not published);
 # 0.2.4 is the last clean release and rides moxml ~> 0.5 (= satisfied by
 # the 0.6 line). Lift when a clean 0.2.6 ships.
-gem "svg_conform", "0.2.4"
+gem "svg_conform", "~> 0.2.6"
