@@ -1,0 +1,598 @@
+(*
+ISO 10303 TC184/SC4/WG12 N11569
+
+EXPRESS Source:
+ISO 10303-41 ed8 Fundamentals of product description and support - Support resource schema
+
+The following permission notice and disclaimer shall be included in all copies of this EXPRESS schema ("the Schema"),
+and derivations of the Schema:
+
+Copyright ISO 2025  All rights reserved
+Permission is hereby granted, free of charge in perpetuity, to any person obtaining a copy of the Schema,
+to use, copy, modify, merge and distribute free of charge, copies of the Schema for the purposes of developing,
+implementing, installing and using software based on the Schema, and to permit persons to whom the Schema is furnished to do so,
+subject to the following conditions:
+
+THE SCHEMA IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SCHEMA OR THE
+USE OR OTHER DEALINGS IN THE SCHEMA.
+
+In addition, any modified copy of the Schema shall include the following notice:
+
+THIS SCHEMA HAS BEEN MODIFIED FROM THE SCHEMA DEFINED IN
+ISO 10303-41 ed8 Fundamentals of product description and support - Support resource schema
+AND SHOULD NOT BE INTERPRETED AS COMPLYING WITH THAT STANDARD
+*)
+
+SCHEMA uuid_attribute_schema '{iso standard 10303 part(41) version(1) object(1) uuid-attribute-schema(23)}';
+
+REFERENCE FROM basic_attribute_schema;
+
+REFERENCE FROM product_property_representation_schema
+               (shape_representation);
+
+REFERENCE FROM geometry_schema
+                (cartesian_point);
+
+REFERENCE FROM representation_schema
+               (using_representations);
+
+REFERENCE FROM support_resource_schema
+               (bag_to_set);
+
+  TYPE uuid = STRING (36) FIXED;
+  END_TYPE;
+
+  TYPE uuid_list_item = LIST [1:?] OF UNIQUE LIST [1:?] OF UNIQUE uuid_attribute_select;
+  END_TYPE;
+
+  TYPE uuid_set_item = SET [1:?] OF uuid_attribute_select;
+  END_TYPE;
+
+  TYPE uuid_set_or_list_attribute_select = SELECT
+    (uuid_list_item,
+     uuid_set_item);
+  END_TYPE;
+
+  TYPE uuid_attribute_select = EXTENSIBLE GENERIC_ENTITY SELECT
+    (id_attribute_select);
+  END_TYPE;
+
+  TYPE uuid_relationship_role = ENUMERATION OF
+    (supersedes,
+     merge,
+     split,
+     derive_from,
+     same_as,
+     similar_to);
+  END_TYPE;
+
+  ENTITY uuid_attribute
+    ABSTRACT
+    SUPERTYPE OF (ONEOF(v5_uuid_attribute, v4_uuid_attribute) ANDOR uuid_attribute_with_approximate_location);
+      identifier      : uuid;
+      identified_item : uuid_set_or_list_attribute_select;
+    UNIQUE
+      UR1 : identifier;
+  END_ENTITY;
+
+  ENTITY v4_uuid_attribute
+    SUBTYPE OF(uuid_attribute);
+    WHERE
+     WR1 : SELF\uuid_attribute.identifier[14] = '4';
+  END_ENTITY;
+
+  ENTITY v5_uuid_attribute
+    SUBTYPE OF(uuid_attribute);
+    WHERE
+     WR1 : SELF\uuid_attribute.identifier[14] = '5';
+  END_ENTITY;
+
+  ENTITY hash_based_v5_uuid_attribute
+    SUBTYPE OF(v5_uuid_attribute);
+      hash_function : STRING;
+    WHERE
+      WR1 : hash_function <> '';
+  END_ENTITY;
+
+  ENTITY uuid_attribute_with_approximate_location
+    SUBTYPE OF(uuid_attribute);
+      location_representation : shape_representation;
+      approximate_location    : cartesian_point;
+    WHERE
+      WR1 : location_representation IN using_representations(approximate_location);
+  END_ENTITY;
+
+  ENTITY uuid_context;
+      identifier         : uuid;
+      frame_of_reference : STRING;
+      target             : SET [1:?] OF uuid;
+    UNIQUE
+      UR1 : identifier;
+      UR2 : frame_of_reference, target;
+    WHERE
+      WR1 : frame_of_reference <> '';
+  END_ENTITY;
+
+  ENTITY uuid_provenance;
+      identifier : uuid;
+      content    : LIST [1:?] OF UNIQUE uuid_relationship;
+    UNIQUE
+      UR1 : identifier;
+  END_ENTITY;
+
+  ENTITY uuid_relationship;
+      identifier : uuid;
+      uuid_1     : uuid;
+      uuid_2     : uuid;
+      role       : uuid_relationship_role;
+    UNIQUE
+      UR1 : identifier;
+    WHERE
+     WR1: uuid_1 <> uuid_2;
+     WR2: uuid_1 <> identifier;
+     WR3: uuid_2 <> identifier;
+     WR4: acyclic_uuid_relationship(SELF, [uuid_2], 'UUID_ATTRIBUTE_SCHEMA.UUID_RELATIONSHIP');
+  END_ENTITY;
+
+ FUNCTION acyclic_uuid_relationship (relation : uuid_relationship; relatives : SET [1:?] OF uuid; specific_relation : STRING):BOOLEAN;
+    LOCAL
+      x : SET OF uuid_relationship;
+    END_LOCAL;
+
+    IF relation.uuid_1 IN relatives THEN
+      RETURN (FALSE);
+    END_IF;
+    x := QUERY(am <* bag_to_set(USEDIN(relation.uuid_1, 'UUID_ATTRIBUTE_SCHEMA.' + 'UUID_RELATIONSHIP.' + 'UUID_2')) | specific_relation IN TYPEOF(am));
+    REPEAT i := 1 TO HIINDEX(x);
+      IF NOT acyclic_uuid_relationship(x[i], relatives + relation.uuid_1, specific_relation) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_REPEAT;
+    RETURN (TRUE);
+  END_FUNCTION;
+
+END_SCHEMA;
+
+(*"uuid_attribute_schema.__published_in"
+ISO 10303-41:2025 ED8
+*)
+
+(*"uuid_attribute_schema.__identifier"
+ISO/TC 184/SC 4/WG 12 N11569
+*)
+
+(*"uuid_attribute_schema.__status"
+IS
+*)
+
+(*"uuid_attribute_schema.__title"
+fundamentals_of_product_description_and_support
+*)
+
+
+(*"uuid_attribute_schema"
+The subject of the *uuid_attribute_schema* is a description of universally unique identifiers that are compliant to ISO/IEC 9834-8 that can be applied to product data.
+*)
+(*"uuid_attribute_schema.__fund_cons"
+
+A universally unique identifier is a means that enables a processor to distinguish a data item from other data items, independent of the kind of data items involved. The term univerally unique is to be pragmatically interpreted by implementations, and consistent with the intended application.
+
+The format used to define universally unique identifiers is specified in this document and is compliant with ISO/IEC 9834-8. This document does not provide the capability to exchange a declaration of a namespace as defined in ISO/IEC 9834-8. This document does not provide the capability to exchange a declaration of a name as defined in ISO/IEC 9834-8.
+
+*)
+(*"uuid_attribute_schema.__expressg"
+[[uuid_attribute_schema_expg1]]
+[.svgmap]
+====
+image::uuid_attribute_schemaexpg1.svg[]
+
+* <<express:support_resource_schema>>; 1
+* <<express:uuid_attribute_schema>>; 2
+* <<express:representation_schema>>; 3
+* <<express:product_property_representation_schema>>; 4
+* <<express:basic_attribute_schema>>; 5
+* <<express:geometry_schema>>; 6
+====
+
+*)
+(*"uuid_attribute_schema.__expressg"
+[[uuid_attribute_schema_expg2]]
+[.svgmap]
+====
+image::uuid_attribute_schemaexpg2.svg[]
+
+* <<express:uuid_attribute_schema.uuid_attribute_select>>; 1
+* <<express:uuid_attribute_schema.uuid_set_or_list_attribute_select>>; 2
+* <<express:basic_attribute_schema.id_attribute_select>>; 3
+* <<express:geometry_schema.cartesian_point>>; 4
+* <<express:product_property_representation_schema.shape_representation>>; 5
+* <<express:uuid_attribute_schema.uuid_relationship_role>>; 6
+* <<express:uuid_attribute_schema.uuid_context>>; 7
+* <<express:uuid_attribute_schema.v5_uuid_attribute>>; 8
+* <<express:uuid_attribute_schema.v4_uuid_attribute>>; 9
+* <<express:uuid_attribute_schema.hash_based_v5_uuid_attribute>>; 10
+* <<express:uuid_attribute_schema.uuid_attribute>>; 11
+* <<express:uuid_attribute_schema.uuid_attribute_with_approximate_location>>; 12
+* <<express:uuid_attribute_schema.uuid_relationship>>; 13
+* <<express:uuid_attribute_schema.uuid_provenance>>; 14
+* <<express:uuid_attribute_schema.uuid_set_item>>; 15
+* <<express:uuid_attribute_schema.uuid_list_item>>; 16
+* <<express:uuid_attribute_schema.uuid>>; 17
+====
+*)
+
+(*"uuid_attribute_schema.uuid"
+A **uuid** (universally unique identifier) is a persistent identifier that is a string of 36 characters linked to a source system object or aggregated source system objects, that compose a single domain concept that allows tracking of information related to product requirements.
+*)
+
+
+(*"uuid_attribute_schema.uuid_list_item"
+A **uuid_list_item** is the specification of a array of <<express:uuid_attribute_schema.uuid_attribute_select,uuid_attribute_select>> entity instances that provides a capability to compose a list or single-rooted tree of those instances. The first element in the array is conceptually the root of the tree. There is no information in this structure that overrides the explicit product model defined elsewhere in this standard.
+*)
+
+
+(*"uuid_attribute_schema.uuid_set_item"
+A **uuid_set_item** is the specification of a set of <<express:uuid_attribute_schema.uuid_attribute_select,uuid_attribute_select>> entity instances that provides a grouping mechanism without sequential constraints. There is no information in this structure that overrides the explicit product model defined elsewhere in this standard.
+*)
+
+
+(*"uuid_attribute_schema.uuid_relationship_role"
+A **uuid_relationship_role** is an enumeration of permitted roles of the
+// uuid_relationship
+<<express:uuid_attribute_schema.uuid_relationship,uuid_relationship>>.
+
+Permitted roles are derive_from, merge, same_as, similar_to, split, and supersedes.
+*)
+
+
+(*"uuid_attribute_schema.uuid_relationship_role.supersedes"
+indicates that a data object assigned to a
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>> replaces another data object assigned to a second
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>>.
+*)
+
+
+(*"uuid_attribute_schema.uuid_relationship_role.merge"
+indicates that two data objects assigned to a
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>> are merged into one data object assigned to a third
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>>.
+*)
+
+
+(*"uuid_attribute_schema.uuid_relationship_role.derive_from"
+indicates that an element of product data identified by a
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>> was derived from another element of product data, each of which is identified by a
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>>.
+*)
+
+
+(*"uuid_attribute_schema.uuid_relationship_role.split"
+indicates that an element of product data identified by a
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>> was split into two elements of product data, each of which is identified by a
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>>.
+*)
+
+
+(*"uuid_attribute_schema.uuid_relationship_role.same_as"
+indicates that an element of product data identified by a
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>> is the same as another element of product data, each of which is identified by a
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>>.
+*)
+
+
+(*"uuid_attribute_schema.uuid_relationship_role.similar_to"
+indicates that an element of product data identified by a
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>> is similar to another element of product data, each of which is identified by a
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>>.
+*)
+
+
+(*"uuid_attribute_schema.uuid_attribute"
+A **uuid_attribute** associates a
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>> with a collection of product data items of type <<express:uuid_attribute_schema.uuid_attribute_select,uuid_attribute_select>>. In the case of an ordered collection, the first element in the collection is considered the root element but the identification is applied to the collection. In the case of an un-ordered collection, there is no root element implied.
+*)
+
+
+(*"uuid_attribute_schema.uuid_attribute.identifier"
+the
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>> that is in the role of identifier.
+*)
+
+
+(*"uuid_attribute_schema.uuid_attribute.identified_item"
+the elements of product data that are aggregated by the **uuid_attribute**.
+*)
+
+
+(*"uuid_attribute_schema.uuid_attribute.ur:UR1"
+specifies that no more than one **uuid_attribute** shall be associated with a specific value of
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>>.
+*)
+
+
+(*"uuid_attribute_schema.v4_uuid_attribute"
+A **v4_uuid_attribute** is a type of
+// uuid_attribute
+<<express:uuid_attribute_schema.uuid_attribute,uuid_attribute>> that complies with the requirements for
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>> instances that are re-generated independently of data conent at each system state save.
+*)
+
+
+(*"uuid_attribute_schema.v4_uuid_attribute.wr:WR1"
+The 14th character shall be the character 4.
+*)
+
+
+(*"uuid_attribute_schema.v5_uuid_attribute"
+A **v5_uuid_attribute** is a type of
+// uuid_attribute
+<<express:uuid_attribute_schema.uuid_attribute,uuid_attribute>> that conforms to version 5 of the relevant standard. Neither the namespace nor the name shall be provided in the data exchange set.
+*)
+
+
+(*"uuid_attribute_schema.v5_uuid_attribute.wr:WR1"
+The 14th character shall be the character 5.
+*)
+
+
+(*"uuid_attribute_schema.hash_based_v5_uuid_attribute"
+A **hash_based_v5_uuid_attribute** is a type of
+// v5_uuid_attribute
+<<express:uuid_attribute_schema.v5_uuid_attribute,v5_uuid_attribute>> that provides a
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>> that is a hash of the data items specified in the
+// identified_item
+<<express:uuid_attribute_schema.uuid_attribute.identified_item,identified_item>> aggregate attribute inherited from the
+// uuid_attribute
+<<express:uuid_attribute_schema.uuid_attribute,uuid_attribute>> supertype.
+*)
+
+
+(*"uuid_attribute_schema.hash_based_v5_uuid_attribute.hash_function"
+a string that represents the name of the **hash_function**.
+*)
+
+
+(*"uuid_attribute_schema.hash_based_v5_uuid_attribute.wr:WR1"
+The **hash_function** shall not be an empty string.
+*)
+
+
+(*"uuid_attribute_schema.uuid_attribute_with_approximate_location"
+A **uuid_attribute_with_approximate_location** is a type of
+// uuid_attribute
+<<express:uuid_attribute_schema.uuid_attribute,uuid_attribute>> that provides an approximate location in cartesian space of an item or items that has a
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>> assigned.
+*)
+
+
+(*"uuid_attribute_schema.uuid_attribute_with_approximate_location.location_representation"
+a
+// shape_representation
+<<express:product_property_representation_schema.shape_representation,shape_representation>> that includes the approximate location for the data items specified in the
+// identified_item
+<<express:uuid_attribute_schema.uuid_attribute.identified_item,identified_item>> attribute inherited from the
+// uuid_attribute
+<<express:uuid_attribute_schema.uuid_attribute,uuid_attribute>> supertype.
+*)
+
+
+(*"uuid_attribute_schema.uuid_attribute_with_approximate_location.approximate_location"
+a cartesian point that locates the item of interest.
+*)
+
+
+(*"uuid_attribute_schema.uuid_attribute_with_approximate_location.wr:WR1"
+The
+// location_representation
+<<express:uuid_attribute_schema.uuid_attribute_with_approximate_location.location_representation,location_representation>> shall reference the
+// approximate_location
+<<express:uuid_attribute_schema.uuid_attribute_with_approximate_location.approximate_location,approximate_location>> directly or indirectly.
+*)
+
+
+(*"uuid_attribute_schema.uuid_context"
+A **uuid_context** associates a context to a
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>> and is included to support the use case where the enterprise desires more granular context specifiers than that provided by the
+// product_definition_context
+<<express:application_context_schema.product_definition_context,product_definition_context>> ENTITY data type. The allowed values for the context are determined by exchange agreements between parties participating in the exchange. The
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>> instances for which a context is assigned is determined by exchange agreements between parties participating in the exchange.
+*)
+
+
+(*"uuid_attribute_schema.uuid_context.identifier"
+a
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>> that is in the role of **identifier** for the **uuid_context**.
+*)
+
+
+(*"uuid_attribute_schema.uuid_context.frame_of_reference"
+a string that provides the frame of reference for the **uuid_context**.
+*)
+
+
+(*"uuid_attribute_schema.uuid_context.target"
+an aggregate of
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>> instances for which the context is specified.
+*)
+
+
+(*"uuid_attribute_schema.uuid_context.ur:UR1"
+No more than one **uuid_context** shall be assigned to a particular
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>>.
+*)
+
+
+(*"uuid_attribute_schema.uuid_context.ur:UR2"
+No more than one **uuid_context** shall be assigned to a particular combination of **frame_of_reference** and **target**.
+*)
+
+
+(*"uuid_attribute_schema.uuid_context.wr:WR1"
+The **frame_of_reference** shall not be an empty string.
+*)
+
+
+(*"uuid_attribute_schema.uuid_provenance"
+A **uuid_provenance** is the specification of a sequence of
+// uuid_relationship
+<<express:uuid_attribute_schema.uuid_relationship,uuid_relationship>> entities in a simple list that provides a historical record of those relationships.
+*)
+
+
+(*"uuid_attribute_schema.uuid_provenance.identifier"
+a
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>> that is in the role of **identifier** for the **uuid_provenance**.
+*)
+
+
+(*"uuid_attribute_schema.uuid_provenance.content"
+a list of
+// uuid_relationship
+<<express:uuid_attribute_schema.uuid_relationship,uuid_relationship>> entities that provide the content for the **uuid_provenance**.
+*)
+
+
+(*"uuid_attribute_schema.uuid_provenance.ur:UR1"
+No more than one **uuid_provenance** shall be assigned to a particular
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>>.
+*)
+
+
+(*"uuid_attribute_schema.uuid_relationship"
+A **uuid_relationship** provides the capability to relate two
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>> instances for a purpose. A **uuid_relationship** provides the capability to build a graph of
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>> instances where the **uuid_relationship** is conceptually an edge and
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>> entities are conceptually vertices. A
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>> is provided as an identifier so that the **uuid_relationship** records may be referenced in a graph of
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>> instances.
+*)
+
+
+(*"uuid_attribute_schema.uuid_relationship.identifier"
+a
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>> in the role of identifier.
+*)
+
+
+(*"uuid_attribute_schema.uuid_relationship.uuid_1"
+a
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>> in the role of the first
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>>.
+*)
+
+
+(*"uuid_attribute_schema.uuid_relationship.uuid_2"
+a
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>> in the role of the second
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>>.
+*)
+
+
+(*"uuid_attribute_schema.uuid_relationship.role"
+a **uuid_relationship_role** enumerates the permitted roles associated with a **uuid_relationship**. The allowed roles are supersedes, merge, split, derive_from, same_as, and parent_child.
+*)
+
+
+(*"uuid_attribute_schema.uuid_relationship.ur:UR1"
+No more than one **uuid_relationship** shall be assigned to a particular
+// uuid
+<<express:uuid_attribute_schema.uuid,uuid>>.
+*)
+
+
+(*"uuid_attribute_schema.uuid_relationship.wr:WR1"
+**uuid_1** and **uiuid_2** shall not be equal.
+*)
+
+
+(*"uuid_attribute_schema.uuid_relationship.wr:WR2"
+**uuid_1** and identifier shall not be equal.
+*)
+
+
+(*"uuid_attribute_schema.uuid_relationship.wr:WR3"
+**uuid_2** and identifier shall not be equal.
+*)
+
+
+(*"uuid_attribute_schema.uuid_relationship.wr:WR4"
+The **uuid_relationship** shall be acyclic.
+*)
+
+
+(*"uuid_attribute_schema.acyclic_uuid_relationship"
+An **acyclic_uuid_relationship** function determines whether the graph of instance of the entity data type
+// uuid_relationship
+<<express:uuid_attribute_schema.uuid_relationship,uuid_relationship>> that contains relation as one of its links contains a cycle. This function may be used to evaluate either a
+// uuid_relationship
+<<express:uuid_attribute_schema.uuid_relationship,uuid_relationship>> or any of its subtypes. The function returns TRUE if no cycle has been detected. Otherwise it returns FALSE.
+*)
+
+
+(*"uuid_attribute_schema.acyclic_uuid_relationship.__note"
+The algorithm of the function is explained in annex E.2.
+*)
+
+(*"uuid_attribute_schema.acyclic_uuid_relationship.relation"
+(input) the candidate
+// uuid_relationship
+<<express:uuid_attribute_schema.uuid_relationship,uuid_relationship>> to be checked.
+*)
+
+
+(*"uuid_attribute_schema.acyclic_uuid_relationship.relatives"
+(input) the set of instances of the entity data type
+// uuid_relationship
+<<express:uuid_attribute_schema.uuid_relationship,uuid_relationship>> for which the function is searching in the relating parameter of the relation argument.
+*)
+
+
+(*"uuid_attribute_schema.acyclic_uuid_relationship.specific_relation"
+(input) the fully qualified name of a subtype of the
+// uuid_relationship
+<<express:uuid_attribute_schema.uuid_relationship,uuid_relationship>> entity.
+*)
+
+
+(*"uuid_attribute_schema.__schema_file"
+data/resource_docs/fundamentals_of_product_description_and_support/resource.xml
+*)

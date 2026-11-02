@@ -1,0 +1,16 @@
+
+
+// This content is to be included into the "Bibliography" section.
+// It won't be visible in output, but it is necessary to encode the cross referencing of the
+// schemas attachments in "Computer interpretable listings" section (usually Annex C).
+// See https://www.metanorma.org/author/topics/collections/cross-referencing/ for more information.
+
+[data2text,context=schemas.yaml]
+----
+{% for schema in context.schemas %}
+
+* [[[{{schema[0]}}.exp,repo:(current-metanorma-collection/{{schema[0]}}.exp)]]]
+* [[[{{schema[0]}}.html,repo:(current-metanorma-collection/{{schema[0]}}.html)]]]
+
+{% endfor %}
+----

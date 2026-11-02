@@ -1,0 +1,24 @@
+directives:
+  - documents-inline
+bibdata:
+  title:
+    - language: en
+      content: "p41min"
+  type: collection
+  docid:
+    type: iso
+    id: 10303-4100
+  edition: 1
+  copyright:
+    owner:
+      name: International Standards Organization
+      abbreviation: ISO
+    from: 2024
+manifest:
+  level: collection
+  title: ISO Collection
+  docref:
+    - level: document
+      title: Document
+      docref:
+        - fileref: documents/p41min/collection.yml

@@ -1,0 +1,17 @@
+[bibliography]
+== Bibliography
+
+* [[[ref8824-1,ISO/IEC 8824-1]]], _Information technology -- Abstract Syntax Notation One (ASN.1) -- Part 1: Specification of basic notation_
+
+* [[[ISO-IEC-10746-2,ISO/IEC 10746-2]]], _Information technology -- Open Distributed Processing -- Reference Model: Foundations_
+
+* [[[ISO_10303-21,ISO 10303-21]]], _Industrial automation systems and integration -- Product data representation and exchange -- Part 21: Implementation methods: Clear text encoding of the exchange structure_
+
+* [[[ISO_10303-22,ISO 10303-22]]], _Industrial automation systems and integration -- Product data representation and exchange -- Part 22: Implementation methods: Standard data access interface_
+
+* [[[IETF-RFC-1738,RFC 1738]]], _Uniform Resource Locators (URL)_ Available at: http://www.ietf.org/rfc/rfc1738.txt
+
+* [[[HTML,HTML]]], _Hyper Text Markup Language (HTML)_ Available at: http://www.w3.org/
+
+include::../../../templates/common_files/schemas_bibliographic_xrefs.adoc[]
+

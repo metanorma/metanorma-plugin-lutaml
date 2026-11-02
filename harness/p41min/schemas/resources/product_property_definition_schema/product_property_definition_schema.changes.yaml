@@ -1,0 +1,139 @@
+---
+schema: product_property_definition_schema
+change_edition:
+- version: '2'
+  description: |-
+    The definitions of the following EXPRESS entity data types were modified:
+
+    * action;
+    * action_directive;
+    * action_method;
+    * action_method_relationship;
+    * action_relationship;
+    * action_request_solution;
+    * action_request_status;
+    * action_resource;
+    * action_resource_relationship;
+    * action_resource_type;
+    * action_status;
+    * directed_action;
+    * executed_action;
+    * supported_item;
+    * versioned_action_request.
+  additions:
+  - type: FUNCTION
+    name: acyclic_characterized_object_relationship
+  - type: FUNCTION
+    name: acyclic_general_property_relationship
+  - type: ENTITY
+    name: characterized_object_relationship
+  - type: TYPE
+    name: derived_property_select
+  - type: ENTITY
+    name: general_property
+  - type: ENTITY
+    name: general_property_association
+  - type: ENTITY
+    name: general_property_relationship
+  - type: FUNCTION
+    name: get_shape_aspects
+  modifications:
+  - type: FUNCTION
+    name: acyclic_shape_aspect_relationship
+  - type: ENTITY
+    name: characterized_object
+  - type: ENTITY
+    name: product_definition_shape
+  - type: ENTITY
+    name: property_definition
+  - type: ENTITY
+    name: shape_aspect
+  - type: ENTITY
+    name: shape_aspect_relationship
+- version: '4'
+  description: |-
+    The following entity types had been introduced to support external element references outside the local population of entity instances:
+
+    * component_path_shape_aspect;
+    * externally_defined_item_with_multiple_references;
+    * generic_product_definition_reference;
+    * product_definition_reference;
+    * product_definition_reference_with_local_representation.
+
+    The following entity types had been introduced to support the the characterization of objects:
+
+    * characterized_chain_based_item_within_representation;
+    * characterized_item_within_representation;
+    * characterized_product.
+
+    The following select types from the basic_attribute_schema had been converted into extensible selects and then extended in several other schemas:
+
+    * description_attribute_select;
+    * id_attribute_select;
+    * name_attribute_select;
+    * role_select.
+  additions:
+  - type: REFERENCE_FROM
+    name: product_structure_schema
+  - type: TYPE
+    name: ppds_id_attribute_select
+  - type: TYPE
+    name: internal_or_reflected_shape_aspect
+  - type: TYPE
+    name: multi_or_next_assembly_usage_occurrence
+  - type: ENTITY
+    name: component_path_shape_aspect
+  modifications:
+  - type: REFERENCE_FROM
+    name: basic_attribute_schema
+  - type: ENTITY
+    name: shape_aspect
+- version: '5'
+  description: The change corrected the EXPRESS layout to align to directives
+  additions:
+  - type: REFERENCE_FROM
+    name: product_property_representation_schema
+  - type: REFERENCE_FROM
+    name: shape_dimension_schema
+  - type: REFERENCE_FROM
+    name: shape_tolerance_schema
+  - type: TYPE
+    name: characterized_item
+  - type: ENTITY
+    name: constituent_shape_aspect
+  - type: TYPE
+    name: shape_aspect_or_characterized_object
+  - type: ENTITY
+    name: shape_aspect_occurrence
+  - type: FUNCTION
+    name: acyclic_shape_aspect
+  - type: FUNCTION
+    name: acyclic_shape_aspect_occurrence
+  modifications:
+  - type: REFERENCE_FROM
+    name: product_definition_schema
+  - type: REFERENCE_FROM
+    name: product_structure_schema
+  - type: TYPE
+    name: characterized_definition
+  - type: TYPE
+    name: characterized_product_definition
+  - type: TYPE
+    name: derived_property_select
+  - type: ENTITY
+    name: general_property_association
+  - type: ENTITY
+    name: shape_aspect
+- version: '6'
+  description: ENTITY basic_attribute's description updated.
+- version: '7'
+  description: WHERE 'WR1' expression changed and 'WR2' deleted
+  additions:
+  - type: FUNCTION
+    name: get_product_definition_shape
+  modifications:
+  - type: ENTITY
+    name: constituent_shape_aspect
+  deletions:
+  - type: FUNCTION
+    name: get_root_shape_aspect

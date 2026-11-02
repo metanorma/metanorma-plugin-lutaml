@@ -1,0 +1,446 @@
+(*
+ISO 10303 TC184/SC4/WG12 N8369
+
+EXPRESS Source:
+ISO 10303-41 ed4 Fundamentals of product description and support - Document schema
+
+The following permission notice and disclaimer shall be included in all copies of this EXPRESS schema ("the Schema"),
+and derivations of the Schema:
+
+Copyright ISO 2014  All rights reserved
+Permission is hereby granted, free of charge in perpetuity, to any person obtaining a copy of the Schema,
+to use, copy, modify, merge and distribute free of charge, copies of the Schema for the purposes of developing,
+implementing, installing and using software based on the Schema, and to permit persons to whom the Schema is furnished to do so,
+subject to the following conditions:
+
+THE SCHEMA IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SCHEMA OR THE
+USE OR OTHER DEALINGS IN THE SCHEMA.
+
+In addition, any modified copy of the Schema shall include the following notice:
+
+THIS SCHEMA HAS BEEN MODIFIED FROM THE SCHEMA DEFINED IN
+ISO 10303-41 ed4 Fundamentals of product description and support - Document schema
+AND SHOULD NOT BE INTERPRETED AS COMPLYING WITH THAT STANDARD
+*)
+
+SCHEMA document_schema '{iso standard 10303 part(41) version(4) object(1) document-schema(8)}';
+  REFERENCE FROM product_definition_schema (product, product_definition, product_definition_formation);
+  REFERENCE FROM support_resource_schema (bag_to_set, identifier, label, text);
+  TYPE product_or_formation_or_definition = SELECT (product, product_definition_formation, product_definition);
+  END_TYPE;
+
+  ENTITY document;
+    id : identifier;
+    name : label;
+    description : OPTIONAL text;
+    kind : document_type;
+  INVERSE
+    representation_types : SET [0:?] OF document_representation_type FOR represented_document;
+  END_ENTITY;
+
+  ENTITY document_product_association;
+    name : label;
+    description : OPTIONAL text;
+    relating_document : document;
+    related_product : product_or_formation_or_definition;
+  END_ENTITY;
+
+  ENTITY document_relationship;
+    name : label;
+    description : OPTIONAL text;
+    relating_document : document;
+    related_document : document;
+  END_ENTITY;
+
+  ENTITY document_representation_type;
+    name : label;
+    represented_document : document;
+  END_ENTITY;
+
+  ENTITY document_type;
+    product_data_type : label;
+  END_ENTITY;
+
+  ENTITY document_usage_constraint;
+    source : document;
+    subject_element : label;
+    subject_element_value : text;
+  END_ENTITY;
+
+  ENTITY document_with_class
+    SUBTYPE OF (document);
+    class : identifier;
+  END_ENTITY;
+
+  FUNCTION acyclic_document_relationship (relation : document_relationship; relatives : SET [1:?] OF document; specific_relation : STRING):BOOLEAN;
+    LOCAL
+      x : SET OF document_relationship;
+    END_LOCAL;
+
+    IF relation.relating_document IN relatives THEN
+      RETURN (FALSE);
+    END_IF;
+    x := QUERY(doc <* bag_to_set(USEDIN(relation.relating_document, 'DOCUMENT_SCHEMA.' + 'DOCUMENT_RELATIONSHIP.' + 'RELATED_DOCUMENT')) | specific_relation IN TYPEOF(doc));
+    REPEAT i := 1 TO HIINDEX(x);
+      IF NOT acyclic_document_relationship(x[i], relatives + relation.relating_document, specific_relation) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_REPEAT;
+    RETURN (TRUE);
+  END_FUNCTION;
+
+END_SCHEMA;
+
+(*"document_schema.__published_in"
+ISO 10303-41:2025 ED8
+*)
+
+(*"document_schema.__identifier"
+ISO/TC 184/SC 4/WG 12 N8369
+*)
+
+(*"document_schema.__status"
+IS
+*)
+
+(*"document_schema.__title"
+fundamentals_of_product_description_and_support
+*)
+
+
+(*"document_schema"
+The subject of the *document_schema* is the citations of formal standards or documents that are outside the domain of this document. These resource constructs are used to reference additional information that is relevant to the description of the product.
+
+[example]
+====
+International, national, and organizational standards, catalogues, and tables of engineering data are examples of formal standards or documents.
+====
+
+*)
+(*"document_schema.__fund_cons"
+
+Product data can include citations of other information sources.
+
+[example]
+====
+Heat treatment processes documentation can be specified using the resource constructs that are defined in this schema.
+====
+
+*)
+(*"document_schema.__expressg"
+[[document_schema_expg1]]
+[.svgmap]
+====
+image::document_schemaexpg1.svg[]
+
+* <<express:document_schema>>; 1
+* <<express:product_definition_schema>>; 2
+* <<express:support_resource_schema>>; 3
+====
+
+*)
+(*"document_schema.__expressg"
+[[document_schema_expg2]]
+[.svgmap]
+====
+image::document_schemaexpg2.svg[]
+
+* <<express:document_schema.product_or_formation_or_definition>>; 1
+* <<express:support_resource_schema.text>>; 2
+* <<express:support_resource_schema.text>>; 3
+* <<express:support_resource_schema.label>>; 4
+* <<express:product_definition_schema.product_definition_formation>>; 5
+* <<express:support_resource_schema.label>>; 6
+* <<express:product_definition_schema.product>>; 7
+* <<express:support_resource_schema.identifier>>; 8
+* <<express:support_resource_schema.identifier>>; 9
+* <<express:support_resource_schema.label>>; 10
+* <<express:support_resource_schema.label>>; 11
+* <<express:support_resource_schema.label>>; 12
+* <<express:support_resource_schema.label>>; 13
+* <<express:support_resource_schema.text>>; 14
+* <<express:product_definition_schema.product_definition>>; 15
+* <<express:support_resource_schema.text>>; 16
+* <<express:document_schema.document_type>>; 17
+* <<express:document_schema.document_usage_constraint>>; 18
+* <<express:document_schema.document_product_association>>; 19
+* <<express:document_schema.document>>; 20
+* <<express:document_schema.document_representation_type>>; 21
+* <<express:document_schema.document_relationship>>; 22
+* <<express:document_schema.document_with_class>>; 23
+====
+*)
+
+(*"document_schema.product_or_formation_or_definition"
+The **product_or_formation_or_definition** type allows for the designation of a <<express:product_definition_schema.product,product>>, a <<express:product_definition_schema.product_definition,product_definition>>, or a <<express:product_definition_schema.product_definition_formation,product_definition_formation>>.
+*)
+
+
+(*"document_schema.document"
+A **document** is an identification of a collection of information.
+*)
+
+(*"document_schema.document.__example"
+JPEG and HTML files are examples of document.
+*)
+
+(*"document_schema.document.__note"
+The information collected need not be represented in a format conforming to any EXPRESS schema.
+*)
+
+(*"document_schema.document.__note"
+This document provides several resources to describe documents and to associate them with product data. <<annex_examples_f2>> provides an explanation about how to describe documents if they are to be considered products.
+*)
+
+(*"document_schema.document.id"
+the <<express:support_resource_schema.identifier,identifier>> that distinguishes the **document**.
+*)
+
+
+(*"document_schema.document.id.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"document_schema.document.id.__note"
+The context in which id is used as a discriminating characteristic can be identified in an annotated Express schema that uses or specializes this entity, or by default, in an agreement of common understanding between partners sharing this information.
+*)
+
+(*"document_schema.document.name"
+the <<express:support_resource_schema.label,label>> by which the **document** is known.
+*)
+
+(*"document_schema.document.name.__example"
+An example of the source of a *document* is "ISO".
+*)
+
+(*"document_schema.document.name.__note"
+The name may include the source of the *document*.
+*)
+
+(*"document_schema.document.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **document**. The value of the attribute need not be specified.
+*)
+
+
+(*"document_schema.document.kind"
+the <<express:document_schema.document_type,document_type>> that specifies the sort of data that the **document** describes.
+*)
+
+
+(*"document_schema.document.representation_types"
+the set of <<express:document_schema.document_representation_type,document_representation_type>> entities that specifies the way a **document** is represented.
+*)
+
+
+(*"document_schema.document_product_association"
+A **document_product_association** is an association between a <<express:document_schema.document,document>> and a <<express:product_definition_schema.product,product>>, between a <<express:document_schema.document,document>> and a <<express:product_definition_schema.product_definition_formation,product_definition_formation>>, or between a <<express:document_schema.document,document>> and a <<express:product_definition_schema.product_definition,product_definition>>.
+*)
+
+
+(*"document_schema.document_product_association.__note"
+The role of *document_product_association* can be defined in the annotated EXPRESS schemas that use or specialize this entity, or by default, in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"document_schema.document_product_association.__note"
+The *document_product_association* may establish an equivalence between the <<express:document_schema.document,document>> and the <<express:product_definition_schema.product_definition_formation,product_definition_formation>> or between the <<express:document_schema.document,document>> and the <<express:product_definition_schema.product,product>> of the <<express:document_schema.document,document>> and the <<express:product_definition_schema.product_definition,product_definition>>. This equivalence will provide a document with the versioning structure found in the <<express:product_definition_schema,product_definition_schema>>.
+*)
+
+(*"document_schema.document_product_association.name"
+the <<express:support_resource_schema.label,label>> by which the **document_product_association** is known.
+*)
+
+
+(*"document_schema.document_product_association.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **document_product_association**. The value of the attribute need not be specified.
+*)
+
+
+(*"document_schema.document_product_association.relating_document"
+the instance of <<express:document_schema.document,document>> that is part of the association.
+*)
+
+
+(*"document_schema.document_product_association.relating_document.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"document_schema.document_product_association.related_product"
+the instance of <<express:product_definition_schema.product,product>>, <<express:product_definition_schema.product_definition_formation,product_definition_formation>>, or <<express:product_definition_schema.product_definition,product_definition>> entity data type associated with an instance of <<express:document_schema.document,document>>.
+*)
+
+
+(*"document_schema.document_product_association.related_product.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"document_schema.document_relationship"
+A **document_relationship** is a relationship between two instances of the entity data type <<express:document_schema.document,document>> and provides a description of their relationship.
+*)
+
+
+(*"document_schema.document_relationship.__note"
+The role of *document_relationship* can be defined in the annotated EXPRESS schemas that use or specialize this entity, or by default, in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"document_schema.document_relationship.__note"
+Relationships represented using this entity may be parent child relationship. Annotated EXPRESS schemas that use or specialize this entity specify whether or not the relationship is directed.
+*)
+
+(*"document_schema.document_relationship.__note"
+This entity, together with the <<express:document_schema.document,document>> entity, is based on the relationship template that is described in annex E.3.
+*)
+
+(*"document_schema.document_relationship.name"
+the <<express:support_resource_schema.label,label>> by which the **document_relationship** is known.
+*)
+
+
+(*"document_schema.document_relationship.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **document_relationship**. The value of the attribute need not be specified.
+*)
+
+
+(*"document_schema.document_relationship.relating_document"
+one of the instances of <<express:document_schema.document,document>> that is a part of the relationship.
+*)
+
+
+(*"document_schema.document_relationship.relating_document.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"document_schema.document_relationship.related_document"
+the other instance of <<express:document_schema.document,document>> that is a part of the relationship. If one element of the relationship is dependent upon the other, this attribute shall be the dependent one.
+*)
+
+
+(*"document_schema.document_relationship.related_document.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"document_schema.document_representation_type"
+A **document_representation_type** is a specification of the way a <<express:document_schema.document,document>> is represented.
+*)
+
+
+(*"document_schema.document_representation_type.name"
+the <<express:support_resource_schema.label,label>> by which the **document_representation_type** is known.
+*)
+
+(*"document_schema.document_representation_type.name.__example"
+'Digital' and 'physical' are examples for the name.
+*)
+
+(*"document_schema.document_representation_type.represented_document"
+the <<express:document_schema.document,document>> for which the kinds of representation are specified.
+*)
+
+
+(*"document_schema.document_type"
+A **document_type** is the kind of data that a formal standard or document may provide information about.
+*)
+
+(*"document_schema.document_type.__example"
+'Material', 'surface finish', and 'heat treatment process' are all pieces of data that can be described implicitly, by reference to other documents (such as standards documents), rather than explicitly every time they are used.
+*)
+
+(*"document_schema.document_type.__note"
+The applicable values of *document_type* can be defined in the annotated EXPRESS schemas that use or specialize this entity, or by default, in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"document_schema.document_type.product_data_type"
+the name of the kind of data contained in a document.
+*)
+
+(*"document_schema.document_type.product_data_type.__example"
+'Material description' is an example of *product_data_type* that characterizes the information provided by a standards document for material.
+*)
+
+(*"document_schema.document_usage_constraint"
+A **document_usage_constraint** is an identification of a specific subject area or aspect from within a document and gives the relevant information or text that applies. The semantics of the reference can be found in the <<express:document_schema.document,document>> itself.
+*)
+
+
+(*"document_schema.document_usage_constraint.__note"
+This entity could be used to identify the clause of a document and the content or portions of the content in that clause that are relevant.
+*)
+
+(*"document_schema.document_usage_constraint.source"
+the <<express:document_schema.document,document>> in which the **subject_element** originates.
+*)
+
+
+(*"document_schema.document_usage_constraint.source.__note"
+The inverse of this relationship is used to define multiple elements of a <<express:document_schema.document,document>>.
+*)
+
+(*"document_schema.document_usage_constraint.subject_element"
+the name of an element of the **source**.
+*)
+
+
+(*"document_schema.document_usage_constraint.subject_element_value"
+the <<express:support_resource_schema.label,label>> that conveys a specific value of the **subject_element** present in the source
+*)
+
+(*"document_schema.document_usage_constraint.subject_element_value.__example"
+For references to a 'surface finish' source the *subject_element* may be a 'Clause 2.1 surface imperfection' and its associated *subject_element_value* may be 'no visible imperfections', 'no more than two imperfections that are more than 0.06 inch diameter within any given square inch of surface area', or 'no imperfections under 10 times magnification'.
+*)
+
+(*"document_schema.document_with_class"
+A **document_with_class** is a type of <<express:document_schema.document,document>> for which a classification is specified.
+*)
+
+(*"document_schema.document_with_class.__example"
+A surface finish document may be identified by various classes, class A, class B, and class C. Each class of surface finish specifies various allowances for imperfections in the surface finish. Class A may require no visible imperfections, class B may require no more than two imperfections that are more than 0.06 inch diameter within any given square inch of surface area, and class C may require no imperfections under 10 times magnification.
+*)
+
+(*"document_schema.document_with_class.class"
+the identification of the data classification to which the <<express:document_schema.document,document>> belongs.
+*)
+
+(*"document_schema.document_with_class.class.__example"
+The value of this attribute would be 'A', 'B' or 'C' in the previous example.
+*)
+
+(*"document_schema.document_with_class.class.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"document_schema.acyclic_document_relationship"
+The **acyclic_document_relationship** function determines whether the graph of instances of the entity data type <<express:document_schema.document,document>> that contains relation as one of its links contains a cycle. This function may be used to evaluate either a <<express:document_schema.document_relationship,document_relationship>> or any of its subtypes.
+
+The function returns TRUE if no cycle has been detected. Otherwise it returns FALSE.
+*)
+
+
+(*"document_schema.acyclic_document_relationship.__note"
+The algorithm of the function is explained in annex E.2.
+*)
+
+(*"document_schema.acyclic_document_relationship.__note"
+This function is not used in this schema. It is defined here because other ISO 10303 integrated resources and application protocols that use the <<express:document_schema.document_relationship,document_relationship>> entity include rules that use this function.
+*)
+
+(*"document_schema.acyclic_document_relationship.relation"
+(input) the candidate <<express:document_schema.document_relationship,document_relationship>> to be checked.
+*)
+
+
+(*"document_schema.acyclic_document_relationship.relatives"
+(input) the set of instances of the entity data type <<express:document_schema.document,document>> for which the function is searching in the <<express:document_schema.document_relationship.relating_document,relating_document>> parameter of the relation argument.
+*)
+
+
+(*"document_schema.acyclic_document_relationship.specific_relation"
+(input) the fully qualified name of a subtype of the <<express:document_schema.document_relationship,document_relationship>> entity.
+*)
+
+
+(*"document_schema.__schema_file"
+data/resource_docs/fundamentals_of_product_description_and_support/resource.xml
+*)

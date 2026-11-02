@@ -1,0 +1,12 @@
+{% if things.size > 0 %}
+{% render "templates/resources/basic_title", thing_prefix: thing_prefix, anchor: "procedures", title: "Procedures", depth: depth %}
+
+{% for thing in things %}
+{% assign procedures_depth = depth | plus: 1 %}
+{% capture procedures_thing_prefix %}{{thing_prefix}}.{{thing.id}}{% endcapture %}
+
+{% render "templates/resources/function", thing: thing, thing_prefix: procedures_thing_prefix, depth: procedures_depth, schema: schema %}
+
+{% endfor %}
+
+{% endif %}

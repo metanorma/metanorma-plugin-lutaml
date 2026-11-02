@@ -1,0 +1,25 @@
+---
+schema: qualifications_schema
+change_edition:
+- version: '3'
+  description: |-
+    This also incorporates the modifications of Technical Corrigenda 1 and Technical Corrigenda 2.
+
+    The following EXPRESS schemas have been added:
+
+    * experience_schema;
+    * location_schema;
+    * qualifications_schema.
+  additions:
+  - type: FUNCTION
+    name: acyclic_qualification_relationship
+  - type: FUNCTION
+    name: acyclic_qualification_type_relationship
+  - type: ENTITY
+    name: qualification
+  - type: ENTITY
+    name: qualification_relationship
+  - type: ENTITY
+    name: qualification_type
+  - type: ENTITY
+    name: qualification_type_relationship

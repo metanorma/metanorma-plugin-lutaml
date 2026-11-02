@@ -1,0 +1,979 @@
+(*
+ISO 10303 TC184/SC4/WG12 N10355
+
+EXPRESS Source:
+ISO 10303-41 ed7 Fundamentals of product description and support - Product property representation schema
+
+The following permission notice and disclaimer shall be included in all copies of this EXPRESS schema ("the Schema"),
+and derivations of the Schema:
+
+Copyright ISO 2021  All rights reserved
+Permission is hereby granted, free of charge in perpetuity, to any person obtaining a copy of the Schema,
+to use, copy, modify, merge and distribute free of charge, copies of the Schema for the purposes of developing,
+implementing, installing and using software based on the Schema, and to permit persons to whom the Schema is furnished to do so,
+subject to the following conditions:
+
+THE SCHEMA IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SCHEMA OR THE
+USE OR OTHER DEALINGS IN THE SCHEMA.
+
+In addition, any modified copy of the Schema shall include the following notice:
+
+THIS SCHEMA HAS BEEN MODIFIED FROM THE SCHEMA DEFINED IN
+ISO 10303-41 ed7 Fundamentals of product description and support - Product property representation schema
+AND SHOULD NOT BE INTERPRETED AS COMPLYING WITH THAT STANDARD
+*)
+
+SCHEMA product_property_representation_schema '{iso standard 10303 part(41) version(10) object(1) product-property-representation-schema(20)}';
+
+  REFERENCE FROM basic_attribute_schema (   -- ISO 10303-41
+    description_attribute,
+    description_attribute_select,
+    get_description_value,
+    get_name_value,
+    name_attribute,
+    name_attribute_select);
+  REFERENCE FROM material_property_definition_schema (   -- ISO 10303-45
+    property_definition_relationship);
+  REFERENCE FROM product_definition_schema (   -- ISO 10303-41
+    product_definition,
+    product_definition_relationship);
+  REFERENCE FROM product_property_definition_schema (   -- ISO 10303-41
+    characterized_object,
+    characterized_definition,
+    general_property,
+    product_definition_shape,
+    property_definition,
+    shape_aspect,
+    shape_aspect_relationship);
+  REFERENCE FROM product_structure_schema (  -- ISO 10303-44
+    product_definition_specified_occurrence);
+  REFERENCE FROM representation_schema (   -- ISO 10303-43
+    representation,
+    representation_item,
+    representation_relationship,
+    representation_reference,
+    using_representations,
+    mapped_item,
+    representation_context,
+    representation_map,
+    list_representation_item,
+    set_representation_item,
+    get_representations_for_items);
+  REFERENCE FROM support_resource_schema (   -- ISO 10303-41
+    bag_to_set,
+    label,
+    text);
+
+  TYPE pprs_description_attribute_select = SELECT BASED_ON description_attribute_select WITH (
+    context_dependent_shape_representation,
+    property_definition_representation);
+  END_TYPE;
+
+  TYPE pprs_name_attribute_select = SELECT BASED_ON name_attribute_select WITH (
+    context_dependent_shape_representation,
+    property_definition_representation);
+  END_TYPE;
+
+  TYPE chained_representation_link = SELECT (mapped_item, representation_context, representation_relationship);
+  END_TYPE;
+
+  TYPE represented_definition = SELECT (
+    general_property,
+    property_definition,
+    property_definition_relationship,
+    shape_aspect,
+    shape_aspect_relationship);
+  END_TYPE;
+
+  TYPE item_identified_representation_usage_definition = EXTENSIBLE GENERIC_ENTITY SELECT (
+    represented_definition);
+  END_TYPE;
+
+  TYPE item_identified_representation_usage_select = SELECT (
+    representation_item,
+    list_representation_item,
+    set_representation_item);
+  END_TYPE;
+
+  ENTITY chain_based_item_identified_representation_usage
+    SUBTYPE OF (item_identified_representation_usage);
+    nodes : LIST [2:?] OF UNIQUE representation;
+    undirected_link : LIST [1:?] OF chained_representation_link;
+  DERIVE
+    root : representation := nodes[1];
+    SELF\item_identified_representation_usage.used_representation RENAMED leaf : representation := nodes[HIINDEX(nodes)];
+    directed_link : LIST [1:?] OF representation_relationship := get_directed_link(nodes, undirected_link);
+  WHERE
+    WR1 : EXISTS(directed_link);
+  END_ENTITY;
+
+  ENTITY characterized_chain_based_item_within_representation
+    SUBTYPE OF (characterized_item_within_representation);
+    nodes : LIST[2:?] OF UNIQUE representation;
+    undirected_link : LIST[1:?] OF chained_representation_link;
+  DERIVE
+    root : representation := nodes[1];
+    SELF\characterized_item_within_representation.rep RENAMED leaf : representation := nodes[HIINDEX(nodes)];
+    directed_link : LIST[1:?] OF representation_relationship := get_directed_link(nodes, undirected_link);
+  WHERE
+    WR1 : EXISTS(directed_link);
+  END_ENTITY;
+
+  ENTITY characterized_item_within_representation
+    SUBTYPE OF (characterized_object);
+    item : representation_item;
+    rep : representation;
+  UNIQUE
+    UR1: item, rep;
+  WHERE
+    WR1: rep IN using_representations(item);
+  END_ENTITY;
+
+  ENTITY context_dependent_shape_representation;
+    representation_relation : shape_representation_relationship;
+    represented_product_relation : product_definition_shape;
+  DERIVE
+    description : text := get_description_value(SELF);
+    name : label := get_name_value(SELF);
+  WHERE
+    WR1: 'PRODUCT_DEFINITION_SCHEMA.PRODUCT_DEFINITION_RELATIONSHIP' IN TYPEOF(represented_product_relation\property_definition.definition);
+    WR2: SIZEOF(USEDIN(SELF, 'BASIC_ATTRIBUTE_SCHEMA.' + 'DESCRIPTION_ATTRIBUTE.DESCRIBED_ITEM')) <= 1;
+    WR3: SIZEOF(USEDIN(SELF, 'BASIC_ATTRIBUTE_SCHEMA.' + 'NAME_ATTRIBUTE.NAMED_ITEM')) <= 1;
+  END_ENTITY;
+
+  ENTITY item_identified_representation_usage;
+    name : label;
+    description : OPTIONAL text;
+    definition : item_identified_representation_usage_definition;
+    used_representation : representation;
+    identified_item : item_identified_representation_usage_select;
+  UNIQUE
+    UR1: used_representation, identified_item;
+    UR2: used_representation, definition;
+  WHERE
+    WR1: valid_identified_item_in_representation(identified_item, used_representation);
+  END_ENTITY;
+
+  ENTITY property_definition_representation;
+    definition : represented_definition;
+    used_representation : representation;
+  DERIVE
+    description : text := get_description_value(SELF);
+    name : label := get_name_value(SELF);
+  WHERE
+    WR1: SIZEOF(USEDIN(SELF, 'BASIC_ATTRIBUTE_SCHEMA.' + 'DESCRIPTION_ATTRIBUTE.DESCRIBED_ITEM')) <= 1;
+    WR2: SIZEOF(USEDIN(SELF, 'BASIC_ATTRIBUTE_SCHEMA.' + 'NAME_ATTRIBUTE.NAMED_ITEM')) <= 1;
+  END_ENTITY;
+
+  ENTITY shape_definition_representation
+    SUBTYPE OF (property_definition_representation);
+    SELF\property_definition_representation.definition : property_definition;
+    SELF\property_definition_representation.used_representation : shape_representation;
+  WHERE
+    WR1: ('PRODUCT_PROPERTY_DEFINITION_SCHEMA.PRODUCT_DEFINITION_SHAPE' IN TYPEOF(definition)) OR
+         ('PRODUCT_PROPERTY_DEFINITION_SCHEMA.SHAPE_DEFINITION' IN TYPEOF(definition\property_definition.definition));
+  END_ENTITY;
+
+  ENTITY shape_representation
+    SUBTYPE OF (representation);
+  END_ENTITY;
+
+ENTITY shape_representation_reference
+  SUBTYPE OF (representation_reference);
+END_ENTITY;
+
+  ENTITY shape_representation_relationship
+    SUBTYPE OF (representation_relationship);
+  WHERE
+    WR1: SIZEOF(['PRODUCT_PROPERTY_REPRESENTATION_SCHEMA.SHAPE_REPRESENTATION',
+                 'PRODUCT_PROPERTY_REPRESENTATION_SCHEMA.SHAPE_REPRESENTATION_REFERENCE'] *
+               (TYPEOF( SELF\representation_relationship.rep_1 ) +
+                TYPEOF( SELF\representation_relationship.rep_2 ) ) )
+               >= 1;
+  END_ENTITY;
+
+  ENTITY specified_occurrence_context_dependent_shape_representation
+    SUBTYPE OF (context_dependent_shape_representation);
+    sub_element : product_definition_specified_occurrence;
+  WHERE
+    WR1: 'PRODUCT_DEFINITION_SCHEMA.PRODUCT_DEFINITION_OCCURRENCE' IN TYPEOF(SELF.represented_product_relation.definition.related_product_definition);
+    WR2: sub_element IN represented_product_relation.definition.related_product_definition.descendant_occurrences;
+  END_ENTITY;
+
+  FUNCTION get_directed_link ( nodes : LIST OF representation;
+                            undirected_link  : LIST OF chained_representation_link) : LIST OF representation_relationship;
+  LOCAL
+   directed_link : LIST OF representation_relationship := [];
+  END_LOCAL;
+
+  IF (SIZEOF(nodes) <> SIZEOF(undirected_link) + 1) OR
+     (value_unique(nodes) = FALSE)
+  THEN
+   RETURN(?);
+  END_IF;
+
+  REPEAT i := 1 to SIZEOF(undirected_link);
+   CASE TRUE OF
+    ('REPRESENTATION_SCHEMA.REPRESENTATION_CONTEXT' IN TYPEOF(undirected_link[i])) :
+    BEGIN
+     IF ((nodes[i]\representation.context_of_items   :=: undirected_link[i]) AND
+         (nodes[i+1]\representation.context_of_items :=: undirected_link[i])) THEN
+       INSERT(directed_link, representation_relationship('','',nodes[i+1],nodes[i]), (i - 1));
+     ELSE
+       RETURN(?);
+     END_IF;
+    END;
+
+    ('REPRESENTATION_SCHEMA.REPRESENTATION_RELATIONSHIP' IN TYPEOF(undirected_link[i])) :
+    BEGIN
+     IF (((nodes[i]   :=: undirected_link[i]\representation_relationship.rep_1) AND
+          (nodes[i+1] :=: undirected_link[i]\representation_relationship.rep_2)) OR
+         ((nodes[i]   :=: undirected_link[i]\representation_relationship.rep_2) AND
+          (nodes[i+1] :=: undirected_link[i]\representation_relationship.rep_1))) THEN
+       INSERT(directed_link, representation_relationship('','',nodes[i+1],nodes[i]), (i - 1));
+     ELSE
+       RETURN(?);
+     END_IF;
+    END;
+
+    ('REPRESENTATION_SCHEMA.MAPPED_ITEM' IN TYPEOF(undirected_link[i])) :
+    BEGIN
+     IF ((nodes[i] IN using_representations(undirected_link[i])) AND
+         (nodes[i+1] :=: undirected_link[i]\mapped_item.mapping_source\representation_map.mapped_representation)) THEN
+       INSERT(directed_link, representation_relationship('','',nodes[i+1],nodes[i]), (i - 1));
+     ELSE
+       RETURN(?);
+     END_IF;
+    END;
+
+    OTHERWISE : RETURN(?);
+   END_CASE;
+  END_REPEAT;
+
+  IF (value_unique(directed_link) = FALSE)
+  THEN
+   RETURN(?);
+  END_IF;
+
+  RETURN(directed_link);
+  END_FUNCTION;
+
+  FUNCTION relatives_of_product_definitions (definition_set : SET OF product_definition; relation_subtype : STRING):SET OF product_definition;
+    FUNCTION local_relatives_of_product_definitions (definition_set : SET OF product_definition; total_definitions : SET OF product_definition; relation_subtype : STRING):SET OF product_definition;
+      LOCAL
+        local_def : SET OF product_definition := [];
+        local_pdr : SET OF product_definition_relationship := [];
+        local_total : SET OF product_definition := [];
+      END_LOCAL;
+
+      REPEAT i := 1 TO HIINDEX(definition_set);
+        local_pdr := local_pdr + bag_to_set(USEDIN(definition_set[i], relation_subtype + '.RELATING_PRODUCT_DEFINITION'));
+      END_REPEAT;
+      REPEAT i := 1 TO HIINDEX(local_pdr);
+        local_def := local_def + local_pdr[i].related_product_definition;
+      END_REPEAT;
+      IF (SIZEOF(local_def) - SIZEOF(total_definitions)) = 0 THEN
+        RETURN (local_def);
+      ELSE
+        local_total := total_definitions + local_def;
+        RETURN (local_def + (local_relatives_of_product_definitions(local_def - total_definitions, local_total, relation_subtype)));
+      END_IF;
+    END_FUNCTION;
+
+    RETURN (local_relatives_of_product_definitions(definition_set, definition_set, relation_subtype));
+  END_FUNCTION;
+
+  FUNCTION relatives_of_shape_representations (shape_representation_set : SET OF shape_representation):SET OF shape_representation;
+    FUNCTION local_relatives_of_shape_representations (shape_representation_set : SET OF shape_representation; total_reps : SET OF shape_representation):SET OF shape_representation;
+      LOCAL
+        local_shape_rep : SET OF shape_representation := [];
+        local_srr : SET OF shape_representation_relationship := [];
+        local_total : SET OF shape_representation := [];
+      END_LOCAL;
+
+      REPEAT i := 1 TO HIINDEX(shape_representation_set);
+        local_srr := local_srr + QUERY(rr <* bag_to_set(USEDIN(shape_representation_set[i], 'REPRESENTATION_SCHEMA.REPRESENTATION_RELATIONSHIP.REP_1')) | 'PRODUCT_PROPERTY_REPRESENTATION_SCHEMA.SHAPE_REPRESENTATION_RELATIONSHIP' IN TYPEOF(rr));
+      END_REPEAT;
+      REPEAT i := 1 TO HIINDEX(local_srr);
+        IF 'PRODUCT_PROPERTY_REPRESENTATION_SCHEMA.' + 'SHAPE_REPRESENTATION_RELATIONSHIP' IN TYPEOF(local_srr[i]) THEN
+          local_shape_rep := local_shape_rep + local_srr[i].rep_2;
+        END_IF;
+      END_REPEAT;
+      IF SIZEOF(local_shape_rep - total_reps) = 0 THEN
+        RETURN (shape_representation_set);
+      ELSE
+        local_total := total_reps + local_shape_rep;
+        RETURN (local_shape_rep + (local_relatives_of_shape_representations(local_shape_rep - total_reps, local_total)));
+      END_IF;
+    END_FUNCTION;
+
+    RETURN (local_relatives_of_shape_representations(shape_representation_set, shape_representation_set));
+  END_FUNCTION;
+
+  FUNCTION get_property_definition_representations (c_def_instance : characterized_definition):SET OF property_definition_representation;
+    LOCAL
+      pd_set : SET OF property_definition := [];
+      pdr_set : SET OF property_definition_representation := [];
+    END_LOCAL;
+
+    pd_set := bag_to_set(USEDIN(c_def_instance, 'PRODUCT_PROPERTY_DEFINITION_SCHEMA.PROPERTY_DEFINITION.DEFINITION'));
+    IF (SIZEOF(pd_set) < 1) THEN
+      RETURN (pdr_set);
+    END_IF;
+    REPEAT i := 1 TO HIINDEX(pd_set);
+      pdr_set := pdr_set + bag_to_set(USEDIN(pd_set[i], 'PRODUCT_PROPERTY_REPRESENTATION_SCHEMA.PROPERTY_DEFINITION_REPRESENTATION.DEFINITION'));
+    END_REPEAT;
+    RETURN (pdr_set);
+  END_FUNCTION;
+
+  FUNCTION valid_identified_item_in_representation (identified_item : item_identified_representation_usage_select; used_representation : representation) : BOOLEAN;
+    LOCAL
+      i : INTEGER := 1;
+    END_LOCAL;
+    IF 'REPRESENTATION_SCHEMA.REPRESENTATION_ITEM' IN TYPEOF(identified_item)
+    THEN
+      RETURN(used_representation IN using_representations(identified_item));
+    END_IF;
+    IF ('REPRESENTATION_SCHEMA.LIST_REPRESENTATION_ITEM' IN TYPEOF(identified_item)) OR
+       ('REPRESENTATION_SCHEMA.SET_REPRESENTATION_ITEM' IN TYPEOF(identified_item))
+    THEN
+      REPEAT WHILE (EXISTS(identified_item[i]));
+        IF NOT (used_representation IN using_representations(identified_item[i]))
+        THEN
+          RETURN(FALSE);
+        END_IF;
+        i := i + 1;
+      END_REPEAT;
+      RETURN(TRUE);
+    END_IF;
+    RETURN(?);
+  END_FUNCTION;
+
+END_SCHEMA;
+
+(*"product_property_representation_schema.__published_in"
+ISO 10303-41:2025 ED8
+*)
+
+(*"product_property_representation_schema.__identifier"
+ISO/TC 184/SC 4/WG 12 N10355
+*)
+
+(*"product_property_representation_schema.__supersedes"
+ISO/TC 184/SC 4/WG 12 N9685
+*)
+
+(*"product_property_representation_schema.__status"
+IS
+*)
+
+(*"product_property_representation_schema.__title"
+fundamentals_of_product_description_and_support
+*)
+
+
+(*"product_property_representation_schema"
+The subject of the *product_property_representation_schema* is the representation of properties.
+
+The requirements addressed by this schema are:
+
+* the ability to associate a representation with a *property_definition* that it represents;
+* the ability to identify a *representation* as representing a shape;
+* the ability to identify relationships between the representations of shapes and to state that the identified relationships are the representations of zero, one or more instances of the entity data type *product_definition*.
+
+*)
+(*"product_property_representation_schema.__fund_cons"
+
+The following assumptions apply to the *product_property_representation_schema*:
+
+* this document will include various types of representations ranging from simple collections of geometry to more elaborate collections of representations of different kinds of properties;
+* it is possible to have more than one representation of a single property;
+* a single representation may be used to represent a property of zero, one, or many instances of the entity data type *product_definition*;
+* any property of a *product_definition* is an identifiable concept independent of how, or even if, it is represented.
+
+[NOTE]
+--
+Representation schemas are defined in other parts of ISO 10303. This schema provides a structure within which these resources can be brought together to represent the properties of a product.
+--
+
+*)
+(*"product_property_representation_schema.__expressg"
+[[product_property_representation_schema_expg1]]
+[.svgmap]
+====
+image::product_property_representation_schemaexpg1.svg[]
+
+* <<express:representation_schema>>; 1
+* <<express:product_structure_schema>>; 2
+* <<express:support_resource_schema>>; 3
+* <<express:product_definition_schema>>; 4
+* <<express:basic_attribute_schema>>; 5
+* <<express:material_property_definition_schema>>; 6
+* <<express:product_property_definition_schema>>; 7
+* <<express:product_property_representation_schema>>; 8
+====
+
+*)
+(*"product_property_representation_schema.__expressg"
+[[product_property_representation_schema_expg2]]
+[.svgmap]
+====
+image::product_property_representation_schemaexpg2.svg[]
+
+* <<express:product_property_representation_schema.pprs_description_attribute_select>>; 1
+* <<express:product_property_representation_schema.represented_definition>>; 2
+* <<express:product_property_representation_schema.pprs_name_attribute_select>>; 3
+* <<express:product_property_representation_schema.item_identified_representation_usage_select>>; 4
+* <<express:product_property_representation_schema.item_identified_representation_usage_definition>>; 5
+* <<express:product_property_representation_schema.chained_representation_link>>; 6
+* <<express:representation_schema.representation_reference>>; 7
+* <<express:representation_schema.representation_relationship>>; 8
+* <<express:representation_schema.representation>>; 9
+* <<express:support_resource_schema.text>>; 10
+* <<express:basic_attribute_schema.description_attribute_select>>; 11
+* <<express:representation_schema.representation_item>>; 12
+* <<express:support_resource_schema.label>>; 13
+* <<express:product_property_definition_schema.product_definition_shape>>; 14
+* <<express:representation_schema.mapped_item>>; 15
+* <<express:product_property_definition_schema.property_definition>>; 16
+* <<express:representation_schema.representation_relationship>>; 17
+* <<express:product_property_definition_schema.general_property>>; 18
+* <<express:representation_schema.representation>>; 19
+* <<express:representation_schema.representation>>; 20
+* <<express:product_structure_schema.product_definition_specified_occurrence>>; 21
+* <<express:product_property_definition_schema.characterized_object>>; 22
+* <<express:support_resource_schema.text>>; 23
+* <<express:representation_schema.representation_context>>; 24
+* <<express:representation_schema.representation>>; 25
+* <<express:representation_schema.representation_relationship>>; 26
+* <<express:material_property_definition_schema.property_definition_relationship>>; 27
+* <<express:representation_schema.representation>>; 28
+* <<express:representation_schema.set_representation_item>>; 29
+* <<express:support_resource_schema.label>>; 30
+* <<express:product_property_definition_schema.property_definition>>; 31
+* <<express:support_resource_schema.text>>; 32
+* <<express:representation_schema.list_representation_item>>; 33
+* <<express:representation_schema.representation>>; 34
+* <<express:product_property_definition_schema.shape_aspect>>; 35
+* <<express:product_property_definition_schema.shape_aspect_relationship>>; 36
+* <<express:basic_attribute_schema.name_attribute_select>>; 37
+* <<express:support_resource_schema.label>>; 38
+* <<express:product_property_representation_schema.characterized_chain_based_item_within_representation>>; 39
+* <<express:product_property_representation_schema.specified_occurrence_context_dependent_shape_representation>>; 40
+* <<express:product_property_representation_schema.property_definition_representation>>; 41
+* <<express:product_property_representation_schema.characterized_item_within_representation>>; 42
+* <<express:product_property_representation_schema.shape_representation>>; 43
+* <<express:product_property_representation_schema.chain_based_item_identified_representation_usage>>; 44
+* <<express:product_property_representation_schema.shape_representation_reference>>; 45
+* <<express:product_property_representation_schema.item_identified_representation_usage>>; 46
+* <<express:product_property_representation_schema.context_dependent_shape_representation>>; 47
+* <<express:product_property_representation_schema.shape_definition_representation>>; 48
+* <<express:product_property_representation_schema.shape_representation_relationship>>; 49
+====
+*)
+
+(*"product_property_representation_schema.chained_representation_link"
+The **chained_representation_link** type allows for the designation of a <<express:representation_schema.mapped_item,mapped_item>>, a <<express:representation_schema.representation_context,representation_context>>, or a <<express:representation_schema.representation_relationship,representation_relationship>>.
+*)
+
+
+(*"product_property_representation_schema.represented_definition"
+The **represented_definition** type allows for the designation of a <<express:product_property_definition_schema.general_property,general_property>>, a <<express:product_property_definition_schema.property_definition,property_definition>>, a <<express:material_property_definition_schema.property_definition_relationship,property_definition_relationship>>, a <<express:product_property_definition_schema.shape_aspect,shape_aspect>>, or a <<express:product_property_definition_schema.shape_aspect_relationship,shape_aspect_relationship>>.
+*)
+
+
+(*"product_property_representation_schema.chain_based_item_identified_representation_usage"
+A **chain_based_item_identified_representation_usage** is a type of <<express:product_property_representation_schema.item_identified_representation_usage,item_identified_representation_usage>> that represents a chain of representations in a graph of representations, where the undirected links in the graph can be instances of entity data types <<express:representation_schema.representation_context,representation_context>>, <<express:representation_schema.representation_relationship,representation_relationship>>, or <<express:representation_schema.mapped_item,mapped_item>>. The directed links are derived from the nodes and undirected links and consist solely of instances of the entity data type <<express:representation_schema.representation_relationship,representation_relationship>>. The attribute <<express:representation_schema.representation_relationship.rep_2,rep_2>> of the derived instances is directed towards the root, while the attribute <<express:representation_schema.representation_relationship.rep_1,rep_1>> is directed towards the leaf.
+*)
+
+
+(*"product_property_representation_schema.chain_based_item_identified_representation_usage.nodes"
+the list of <<express:representation_schema.representation,representation>> in the chain.
+*)
+
+
+(*"product_property_representation_schema.chain_based_item_identified_representation_usage.undirected_link"
+the list of items that relate nodes in the chain.
+*)
+
+
+(*"product_property_representation_schema.chain_based_item_identified_representation_usage.undirected_link.__note"
+The items in the *undirected_link* are placed correctly relative to the nodes in the chain but are not guaranteed to have a consistent direction along the chain.
+*)
+
+(*"product_property_representation_schema.chain_based_item_identified_representation_usage.root"
+the node that is the initial terminus of the chain.
+*)
+
+
+(*"product_property_representation_schema.chain_based_item_identified_representation_usage.leaf"
+the node that is the final terminus of the chain.
+*)
+
+
+(*"product_property_representation_schema.chain_based_item_identified_representation_usage.directed_link"
+the list of <<express:representation_schema.representation_relationship,representation_relationship>> that are derived from the **undirected_link** and that are consistently directed from the root to the leaf.
+*)
+
+
+(*"product_property_representation_schema.chain_based_item_identified_representation_usage.wr:WR1"
+The <<express:product_property_representation_schema.chain_based_item_identified_representation_usage.directed_link,directed_link>> attribute shall be valid for the given set of <<express:product_property_representation_schema.chain_based_item_identified_representation_usage.nodes,nodes>> and <<express:product_property_representation_schema.chain_based_item_identified_representation_usage.undirected_link,undirected_link>>s.
+*)
+
+
+(*"product_property_representation_schema.chain_based_item_identified_representation_usage.wr:WR1.__note"
+the <<express:product_property_representation_schema.get_directed_link,get_directed_link>> function returns indeterminate if it cannot construct a valid list. The EXPRESS EXISTS function returns FALSE with an indeterminate input.
+*)
+
+(*"product_property_representation_schema.chain_based_item_identified_representation_usage.wr:WR2"
+The **root** shall be referenced by the attribute <<express:representation_schema.representation_relationship.rep_1,rep_1>> of the initial member of the <<express:product_property_representation_schema.chain_based_item_identified_representation_usage.directed_link,directed_link>>.
+*)
+
+
+(*"product_property_representation_schema.chain_based_item_identified_representation_usage.wr:WR3"
+The **leaf** shall be referenced by the attribute <<express:representation_schema.representation_relationship.rep_2,rep_2>> of the final member of the <<express:product_property_representation_schema.chain_based_item_identified_representation_usage.directed_link,directed_link>>.
+*)
+
+
+(*"product_property_representation_schema.chain_based_item_identified_representation_usage.wr:WR4"
+If the first element in <<express:product_property_representation_schema.chain_based_item_identified_representation_usage.undirected_link,undirected_link>> is a <<express:representation_schema.mapped_item,mapped_item>>, then it shall be used in the root representation.
+*)
+
+
+(*"product_property_representation_schema.characterized_chain_based_item_within_representation"
+A **characterized_chain_based_item_within_representation** is a type of <<express:product_property_representation_schema.characterized_item_within_representation,characterized_item_within_representation>> that represents a chain of representations in a graph of representations, where the undirected links in the graph can be instances of entity data types <<express:representation_schema.representation_context,representation_context>>, <<express:representation_schema.representation_relationship,representation_relationship>>, or <<express:representation_schema.mapped_item,mapped_item>>. The directed links are derived from the nodes and undirected links and consist solely of instances of the entity data type <<express:representation_schema.representation_relationship,representation_relationship>>. The attribute <<express:representation_schema.representation_relationship.rep_2,rep_2>> of the derived instances is directed towards the root, while the attribute <<express:representation_schema.representation_relationship.rep_1,rep_1>> is directed towards the leaf.
+*)
+
+
+(*"product_property_representation_schema.characterized_chain_based_item_within_representation.nodes"
+the list of <<express:representation_schema.representation,representation>> in the chain.
+*)
+
+
+(*"product_property_representation_schema.characterized_chain_based_item_within_representation.undirected_link"
+the list of items that relate nodes in the chain.
+*)
+
+
+(*"product_property_representation_schema.characterized_chain_based_item_within_representation.undirected_link.__note"
+The items in the *undirected_link* are placed correctly relative to the nodes in the chain but are not guaranteed to have a consistent direction along the chain.
+*)
+
+(*"product_property_representation_schema.characterized_chain_based_item_within_representation.root"
+the node that is the initial terminus of the chain.
+*)
+
+
+(*"product_property_representation_schema.characterized_chain_based_item_within_representation.leaf"
+the node that is the final terminus of the chain.
+*)
+
+
+(*"product_property_representation_schema.characterized_chain_based_item_within_representation.directed_link"
+the list of <<express:representation_schema.representation_relationship,representation_relationship>> that are derived from the **undirected_link** and that are consistently directed from the root to the leaf.
+*)
+
+
+(*"product_property_representation_schema.characterized_chain_based_item_within_representation.wr:WR1"
+The <<express:product_property_representation_schema.characterized_chain_based_item_within_representation.directed_link,directed_link>> attribute shall be valid for the given set of <<express:product_property_representation_schema.characterized_chain_based_item_within_representation.nodes,nodes>> and <<express:product_property_representation_schema.characterized_chain_based_item_within_representation.undirected_link,undirected_link>>s.
+*)
+
+
+(*"product_property_representation_schema.characterized_chain_based_item_within_representation.wr:WR1.__note"
+the <<express:product_property_representation_schema.get_directed_link,get_directed_link>> function returns indeterminate if it cannot construct a valid list. The EXPRESS EXISTS function returns FALSE with an indeterminate input.
+*)
+
+(*"product_property_representation_schema.characterized_chain_based_item_within_representation.wr:WR2"
+The **root** shall be referenced by the attribute <<express:representation_schema.representation_relationship.rep_1,rep_1>> of the initial member of the <<express:product_property_representation_schema.characterized_chain_based_item_within_representation.directed_link,directed_link>>.
+*)
+
+
+(*"product_property_representation_schema.characterized_chain_based_item_within_representation.wr:WR3"
+The **leaf** shall be referenced by the attribute <<express:representation_schema.representation_relationship.rep_2,rep_2>> of the final member of the <<express:product_property_representation_schema.characterized_chain_based_item_within_representation.directed_link,directed_link>>.
+*)
+
+
+(*"product_property_representation_schema.characterized_chain_based_item_within_representation.wr:WR4"
+If the first element in <<express:product_property_representation_schema.characterized_chain_based_item_within_representation.undirected_link,undirected_link>> is a <<express:representation_schema.mapped_item,mapped_item>>, then it shall be used in the root representation.
+*)
+
+
+(*"product_property_representation_schema.characterized_item_within_representation"
+A **characterized_item_within_representation** is a type of <<express:product_property_definition_schema.characterized_object,characterized_object>> that provides the characterization of a <<express:representation_schema.representation_item,representation_item>> within a specified <<express:representation_schema.representation,representation>>.
+*)
+
+
+(*"product_property_representation_schema.characterized_item_within_representation.item"
+the <<express:representation_schema.representation_item,representation_item>> that is characterised.
+*)
+
+
+(*"product_property_representation_schema.characterized_item_within_representation.rep"
+the <<express:representation_schema.representation,representation>> in which the characterization of the <<express:representation_schema.representation_item,representation_item>> applies.
+*)
+
+
+(*"product_property_representation_schema.characterized_item_within_representation.ur:UR1"
+A <<express:representation_schema.representation_item,representation_item>> within a <<express:representation_schema.representation,representation>> shall be characterised at most once.
+*)
+
+
+(*"product_property_representation_schema.characterized_item_within_representation.wr:WR1"
+The **item** shall be founded in the specified <<express:representation_schema.representation,representation>>.
+*)
+
+
+(*"product_property_representation_schema.context_dependent_shape_representation"
+A **context_dependent_shape_representation** is the association of a <<express:product_property_representation_schema.shape_representation_relationship,shape_representation_relationship>> with a <<express:product_definition_schema.product_definition_relationship,product_definition_relationship>>. The <<express:product_definition_schema.product_definition_relationship.relating_product_definition,relating_product_definition>> attribute of the <<express:product_definition_schema.product_definition_relationship,product_definition_relationship>> establishes the context for the <<express:product_property_representation_schema.shape_representation_relationship,shape_representation_relationship>>. The <<express:representation_schema.representation_relationship.rep_2,rep_2>> attribute of the <<express:product_property_representation_schema.shape_representation_relationship,shape_representation_relationship>> specifies a <<express:product_property_representation_schema.shape_representation,shape_representation>> that is associated with that context. The <<express:representation_schema.representation_relationship.rep_1,rep_1>> attribute of the <<express:product_property_representation_schema.shape_representation_relationship,shape_representation_relationship>> specifies a <<express:product_property_representation_schema.shape_representation,shape_representation>> that is associated with the <<express:product_definition_schema.product_definition_relationship.related_product_definition,related_product_definition>> attribute of the <<express:product_definition_schema.product_definition_relationship,product_definition_relationship>>. Assertions that the associated relations are definitional shall be specified in an annotated EXPRESS schema that uses or specializes this entity by including specializations or uses of the <<express:representation_schema.representation_relationship_with_transformation.transformation_operator,transformation_operator>> attribute of <<express:representation_schema.representation_relationship_with_transformation,representation_relationship_with_transformation>>.
+*)
+
+(*"product_property_representation_schema.context_dependent_shape_representation.__example"
+An application protocol specifies a transform between the (distorted) shape of a gasket in the context of an assembly and that assembly shape using an instance of *context_dependent_shape_representation*. Because of that declaration, *context_dependent_shape_representation* is definitional, and the target model when rendered in the CAD system will include the distorted gasket shape. There exists a separate set of relations that relate the (undistorted) gasket shape to the (distorted) gasket shape that are not declared in the *context_dependent_shape_representation* population.
+*)
+(*"product_property_representation_schema.context_dependent_shape_representation.__example"
+An application protocol declares that a *context_dependent_shape_representation* specifies a collection of associations between items in the <<express:product_property_representation_schema.shape_representation,shape_representation>> specified by the <<express:representation_schema.representation_relationship.rep_1,rep_1>> and <<express:representation_schema.representation_relationship.rep_2,rep_2>> attributes of the <<express:representation_schema.representation_relationship,representation_relationship>>. Because of that declaration, *context_dependent_shape_representation* is not definitional, and the target model (<<express:representation_schema.representation_relationship.rep_2,rep_2>> of the <<express:representation_schema.representation_relationship,representation_relationship>>) when rendered in the CAD system does not include the items in the source model (<<express:representation_schema.representation_relationship.rep_1,rep_1>> of the <<express:representation_schema.representation_relationship,representation_relationship>>). An external quality application evaluates the collection of associations and the target model for conformance to externally defined criteria.
+*)
+(*"product_property_representation_schema.context_dependent_shape_representation.__example"
+The position of a bolt's shape in a given assembly is definitional and therefore the *context_dependent_shape_representation* specifies a transform.
+*)
+(*"product_property_representation_schema.context_dependent_shape_representation.__example"
+A gasket's shape depends upon whether the gasket is participating in an assembly relationship and, if it is a part of an assembly, the product or products with which it is assembled.
+*)
+
+(*"product_property_representation_schema.context_dependent_shape_representation.__note"
+ISO 10303 defines a critical associativity between geometry and topology that is carefully defined and constrained to provide the reproducibility, reliability, robustness, and completeness necessary in industrial product modeling based on vetted mathematical foundations (i.e., see Section "Geometric model schema" of ISO 10303-42). ISO 10303 employs a methodology of building hybrid product structure (non-geometric) and (geometric) assembly model structures that associate a rigid body tensor transform to place geometric models of the parts in the geometric model of the assembly. Those hybrid structures decompose the relationship to the transform, and the transform itself, into separate EXPRESS constructs; however they are designed and integrated to function as a single model.
+*)
+
+(*"product_property_representation_schema.context_dependent_shape_representation.__note"
+An AP that chooses to create a specialization of <<express:representation_schema.representation_relationship_with_transformation,representation_relationship_with_transformation>> that is also a specialization of <<express:product_property_representation_schema.shape_representation_relationship,shape_representation_relationship>>, with the additional characteristic that the specialization specifies a <<express:representation_schema.set_representation_item,set_representation_item>> in the role of <<express:representation_schema.representation_relationship_with_transformation.transformation_operator,transformation_operator>>, changes the standard interpretation of *context_dependent_shape_representation* from being a specification of a tensor transformation to being a specification of an association. This association is not definitional and therefore will not bring the definition of the source into the target model. It should therefore be used with care taken by users and implementers to understand its particular construction, limitations, and conditions.
+*)
+
+(*"product_property_representation_schema.context_dependent_shape_representation.__note"
+The interpretation of whether a transform or an association is specified is found in ISO 10303-43 clause 4.2 because the interpretation depends on which types are in the role of the <<express:representation_schema.representation_relationship_with_transformation.transformation_operator,transformation_operator>> attribute of the <<express:representation_schema.representation_relationship_with_transformation,representation_relationship_with_transformation>>.
+*)
+
+(*"product_property_representation_schema.context_dependent_shape_representation.__note"
+Including a partial complex instance of the *representation_relation* with <<express:representation_schema.definitional_representation_relationship,definitional_representation_relationship>> when the same data population specifies an association results in invalid data.
+*)
+
+(*"product_property_representation_schema.context_dependent_shape_representation.__note"
+The role of *context_dependent_shape_representation* can be defined in the annotated EXPRESS schemas that use or specialize this entity, or by default, in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"product_property_representation_schema.context_dependent_shape_representation.__note"
+The gasket shape in EXAMPLE 1 uses a definitional *context_dependent_shape_representation* because the *context_dependent_shape_representation* specifies a transform.
+*)
+
+(*"product_property_representation_schema.context_dependent_shape_representation.representation_relation"
+a <<express:product_property_representation_schema.shape_representation_relationship,shape_representation_relationship>> that specifies the two associated <<express:product_property_representation_schema.shape_representation,shape_representation>>.
+*)
+
+
+(*"product_property_representation_schema.context_dependent_shape_representation.represented_product_relation"
+a <<express:product_property_definition_schema.product_definition_shape,product_definition_shape>> that identifies the <<express:product_definition_schema.product_definition_relationship,product_definition_relationship>> that establishes the product context for the shape relationship.
+*)
+
+
+(*"product_property_representation_schema.context_dependent_shape_representation.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **context_dependent_shape_representation**.
+*)
+
+
+(*"product_property_representation_schema.context_dependent_shape_representation.description.__note"
+This attribute is an upwardly compatible addition to *context_dependent_shape_representation* as specified in ISO 10303-41:1994.
+*)
+
+(*"product_property_representation_schema.context_dependent_shape_representation.name"
+the <<express:support_resource_schema.label,label>> by which the **context_dependent_shape_representation** is known.
+*)
+
+
+(*"product_property_representation_schema.context_dependent_shape_representation.name.__note"
+This attribute is an upwardly compatible addition to *context_dependent_shape_representation* as specified in ISO 10303-41:1994.
+*)
+
+(*"product_property_representation_schema.context_dependent_shape_representation.wr:WR1"
+The **represented_product_relation** shall identify the shape of a <<express:product_definition_schema.product_definition_relationship,product_definition_relationship>>.
+*)
+
+
+(*"product_property_representation_schema.context_dependent_shape_representation.wr:WR2"
+Each **context_dependent_shape_representation** shall be the <<express:basic_attribute_schema.description_attribute.described_item,described_item>> in at most one <<express:basic_attribute_schema.description_attribute,description_attribute>>.
+*)
+
+
+(*"product_property_representation_schema.context_dependent_shape_representation.wr:WR2.__note"
+The <<express:basic_attribute_schema.description_attribute,description_attribute>> data type is defined in the <<express:basic_attribute_schema,basic_attribute_schema>> of this document.
+*)
+
+(*"product_property_representation_schema.context_dependent_shape_representation.wr:WR3"
+Each **context_dependent_shape_representation** shall be the <<express:basic_attribute_schema.name_attribute.named_item,named_item>> in at most one <<express:basic_attribute_schema.name_attribute,name_attribute>>.
+*)
+
+
+(*"product_property_representation_schema.context_dependent_shape_representation.wr:WR3.__note"
+The <<express:basic_attribute_schema.name_attribute,name_attribute>> data type is defined in the <<express:basic_attribute_schema,basic_attribute_schema>> of this document.
+*)
+
+(*"product_property_representation_schema.context_dependent_shape_representation.wr:WR3.__note"
+A template for constraining the population of the entity data types defined in the <<express:basic_attribute_schema,basic_attribute_schema>> is described in annex E.
+*)
+
+(*"product_property_representation_schema.item_identified_representation_usage"
+An **item_identified_representation_usage** is an identification of a single or a set or a list of <<express:representation_schema.representation_item,representation_item>>(s) within a <<express:representation_schema.representation,representation>> as being the element(s) that describes a particular component or part of the property that is described by the <<express:representation_schema.representation,representation>>. More than one <<express:representation_schema.representation,representation>> may be bound to a product data item by members of **item_identified_representation_usage** and more than one member of <<express:representation_schema.representation_item,representation_item>>(s) may be bound to a product data item by members of **item_identified_representation_usage**. The same item of product data shall not be bound to more than one member of <<express:representation_schema.representation_item,representation_item>> within a member of <<express:representation_schema.representation,representation>>.
+*)
+
+(*"product_property_representation_schema.item_identified_representation_usage.__example"
+In an application protocol, an instance of representation describes the shape of a product. One element of the <<express:representation_schema.representation,representation>> - a curve - represents the boundary of a *shape_aspect*, a hole, in the product. *Item_identification_representation_usage* is used to state that the curve referenced by 'identified_item' is a representation item for the *shape_aspect* referenced by 'definition' and that the whole representation is referenced by 'used_representation' to indicate the structural context for the curve. *Geometric_representation_context* plays no role in this example.
+*)
+(*"product_property_representation_schema.item_identified_representation_usage.__example"
+In an application protocol, an instance of representation describes the shape of a product. One element of the <<express:representation_schema.representation,representation>> - a curve - represents the boundary of a *shape_aspect*, a hole, in the product. A member of *Item_identification_representation_usage* is used to state that the curve referenced by 'identified_item' is a representation item for the *shape_aspect#1* referenced by 'definition' and that the whole representation is referenced by 'used_representation' to indicate the structural context for the curve. A second member of *Item_identification_representation_usage* references a different curve in that same <<express:representation_schema.representation,representation>> and references the same *shape_aspect#1*. The data population is invalid because only one item within a representation can be bound to a *shape_aspect*.
+*)
+
+(*"product_property_representation_schema.item_identified_representation_usage.name"
+the <<express:support_resource_schema.label,label>> by which the **item_identified_representation_usage** is known.
+*)
+
+
+(*"product_property_representation_schema.item_identified_representation_usage.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **item_identified_representation_usage**. The value of the attribute need not be specified.
+*)
+
+
+(*"product_property_representation_schema.item_identified_representation_usage.definition"
+the <<express:product_property_definition_schema.general_property,general_property>>, <<express:product_property_definition_schema.property_definition,property_definition>>, <<express:material_property_definition_schema.property_definition_relationship,property_definition_relationship>>, <<express:product_property_definition_schema.shape_aspect,shape_aspect>>, or <<express:product_property_definition_schema.shape_aspect_relationship,shape_aspect_relationship>> that is represented.
+*)
+
+
+(*"product_property_representation_schema.item_identified_representation_usage.used_representation"
+the <<express:representation_schema.representation,representation>> that describes the property or aspect of which the definition is a part or component, and that contains the **identified_item** (directly or indirectly) as one of its items.
+*)
+
+
+(*"product_property_representation_schema.item_identified_representation_usage.identified_item"
+the <<express:representation_schema.representation_item,representation_item>> or <<express:representation_schema.list_representation_item,list_representation_item>> or <<express:representation_schema.set_representation_item,set_representation_item>> that describes the identified property or aspect.
+*)
+
+
+(*"product_property_representation_schema.item_identified_representation_usage.ur:UR1"
+The combination of the **used_representation** and the **identified_item** shall be unique.
+*)
+
+
+(*"product_property_representation_schema.item_identified_representation_usage.ur:UR2"
+The combination of the **used_representation** and the **definition** shall be unique.
+*)
+
+
+(*"product_property_representation_schema.item_identified_representation_usage.wr:WR1"
+The <<express:representation_schema.representation_item,representation_item>>(s) that is identified shall belong to the set of items of the <<express:representation_schema.representation,representation>> referred to by the attribute <<express:product_property_representation_schema.item_identified_representation_usage.used_representation,used_representation>>, or shall participate in the definition of those items.
+*)
+
+(*"product_property_representation_schema.property_definition_representation"
+A **property_definition_representation** is an association between a <<express:product_property_definition_schema.property_definition,property_definition>> and a representation of the property.
+*)
+
+
+(*"product_property_representation_schema.property_definition_representation.definition"
+the identification of the <<express:product_property_definition_schema.general_property,general_property>>, <<express:product_property_definition_schema.property_definition,property_definition>>, <<express:material_property_definition_schema.property_definition_relationship,property_definition_relationship>>, <<express:product_property_definition_schema.shape_aspect,shape_aspect>>, or <<express:product_property_definition_schema.shape_aspect_relationship,shape_aspect_relationship>> that is represented.
+*)
+
+
+(*"product_property_representation_schema.property_definition_representation.used_representation"
+the <<express:representation_schema.representation,representation>> of the property or aspect of the representation.
+*)
+
+
+(*"product_property_representation_schema.property_definition_representation.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **property_definition_representation**.
+*)
+
+
+(*"product_property_representation_schema.property_definition_representation.description.__note"
+This attribute is an upwardly compatible addition to *property_definition_representation* as specified in ISO 10303-41:1994.
+*)
+
+(*"product_property_representation_schema.property_definition_representation.name"
+the <<express:support_resource_schema.label,label>> by which the **property_definition_representation** is known.
+*)
+
+
+(*"product_property_representation_schema.property_definition_representation.name.__note"
+This attribute is an upwardly compatible addition to *property_definition_representation* as specified in ISO 10303-41:1994.
+*)
+
+(*"product_property_representation_schema.property_definition_representation.wr:WR1"
+Each **property_definition_representation** shall be the <<express:basic_attribute_schema.description_attribute.described_item,described_item>> in at most one <<express:basic_attribute_schema.description_attribute,description_attribute>>.
+*)
+
+
+(*"product_property_representation_schema.property_definition_representation.wr:WR1.__note"
+The <<express:basic_attribute_schema.description_attribute,description_attribute>> data type is defined in <<express:basic_attribute_schema,basic_attribute_schema>> of this document.
+*)
+
+(*"product_property_representation_schema.property_definition_representation.wr:WR2"
+Each **property_definition_representation** shall be the <<express:basic_attribute_schema.name_attribute.named_item,named_item>> in at most one <<express:basic_attribute_schema.name_attribute,name_attribute>>.
+*)
+
+
+(*"product_property_representation_schema.property_definition_representation.wr:WR2.__note"
+The <<express:basic_attribute_schema.name_attribute,name_attribute>> data type is defined in <<express:basic_attribute_schema,basic_attribute_schema>> of this document.
+*)
+
+(*"product_property_representation_schema.property_definition_representation.wr:WR2.__note"
+A template for constraining the population of the entity data types defined in the <<express:basic_attribute_schema,basic_attribute_schema>> is described in annex E.
+*)
+
+(*"product_property_representation_schema.shape_definition_representation"
+A **shape_definition_representation** is a type of <<express:product_property_representation_schema.property_definition_representation,property_definition_representation>>. A **shape_definition_representation** is the association of a <<express:product_property_representation_schema.shape_representation,shape_representation>> with a <<express:product_property_definition_schema.product_definition_shape,product_definition_shape>> or with a <<express:product_property_definition_schema.property_definition,property_definition>> characterizing a <<express:product_property_definition_schema.shape_definition,shape_definition>>.
+*)
+
+
+(*"product_property_representation_schema.shape_definition_representation.definition"
+an inherited attribute whose value shall be of type <<express:product_property_definition_schema.property_definition,property_definition>>
+*)
+
+
+(*"product_property_representation_schema.shape_definition_representation.used_representation"
+an inherited attribute whose value shall be of type <<express:product_property_representation_schema.shape_representation,shape_representation>>.
+*)
+
+
+(*"product_property_representation_schema.shape_definition_representation.wr:WR1"
+The inherited <<express:product_property_representation_schema.property_definition_representation.definition,definition>> attribute shall be a <<express:product_property_definition_schema.product_definition_shape,product_definition_shape>> or a <<express:product_property_definition_schema.property_definition,property_definition>> whose definition attribute is a <<express:product_property_definition_schema.shape_definition,shape_definition>>.
+*)
+
+
+(*"product_property_representation_schema.shape_definition_representation.wr:WR2"
+The inherited <<express:product_property_representation_schema.property_definition_representation.used_representation,used_representation>> attribute shall be a <<express:product_property_representation_schema.shape_representation,shape_representation>>.
+*)
+
+
+(*"product_property_representation_schema.shape_representation"
+A **shape_representation** is a type of <<express:representation_schema.representation,representation>> that represents a shape.
+*)
+
+
+(*"product_property_representation_schema.shape_representation_reference"
+A **shape_representation_reference** is a type of <<express:representation_schema.representation_reference,representation_reference>> in which the referenced data type is a <<express:product_property_representation_schema.shape_representation,shape_representation>>.
+*)
+
+
+(*"product_property_representation_schema.shape_representation_reference.wr:WR1"
+The referenced data type is a <<express:product_property_representation_schema.shape_representation,shape_representation>>.
+*)
+
+
+(*"product_property_representation_schema.shape_representation_relationship"
+A **shape_representation_relationship** is a type of <<express:representation_schema.representation_relationship,representation_relationship>> in which at least one of the instances of the entity data type <<express:representation_schema.representation,representation>> is a <<express:product_property_representation_schema.shape_representation,shape_representation>> or <<express:product_property_representation_schema.shape_representation_reference,shape_representation_reference>>.
+*)
+
+(*"product_property_representation_schema.shape_representation_relationship.__example"
+The <<express:representation_schema.representation,representation>> of the shape of a bolt may be related to the representation of a position if the bolt is a part of an assembly.
+*)
+
+(*"product_property_representation_schema.shape_representation_relationship.wr:WR1"
+At least one of the two representations in the **shape_representation_relationship** shall be a <<express:product_property_representation_schema.shape_representation,shape_representation>> or <<express:product_property_representation_schema.shape_representation_reference,shape_representation_reference>>.
+*)
+
+
+(*"product_property_representation_schema.specified_occurrence_context_dependent_shape_representation"
+A **specified_occurrence_context_dependent_shape_representation** is a type of <<express:product_property_representation_schema.context_dependent_shape_representation,context_dependent_shape_representation>> that established a relation for a hierarchical product structure using <<express:product_structure_schema.product_definition_specified_occurrence,product_definition_specified_occurrence>>.
+*)
+
+
+(*"product_property_representation_schema.specified_occurrence_context_dependent_shape_representation.sub_element"
+the <<express:product_structure_schema.product_definition_specified_occurrence,product_definition_specified_occurrence>> for which the association established by the inherited attributes **representation_relation** and **represented_product_relation** applies.
+*)
+
+
+(*"product_property_representation_schema.specified_occurrence_context_dependent_shape_representation.wr:WR1"
+The <<express:product_definition_schema.product_definition_relationship.related_product_definition,related_product_definition>> of the **represented_product_relation** shall be of type <<express:product_structure_schema.product_definition_occurrence,product_definition_occurrence>>.
+*)
+
+
+(*"product_property_representation_schema.specified_occurrence_context_dependent_shape_representation.wr:WR2"
+The **sub_element** shall be within the <<express:product_structure_schema.product_definition_occurrence.descendant_occurrences,descendant_occurrences>> of the <<express:product_structure_schema.product_definition_occurrence,product_definition_occurrence>> that is referenced by the <<express:product_definition_schema.product_definition_relationship.related_product_definition,related_product_definition>> of the **represented_product_relation**.
+*)
+
+
+(*"product_property_representation_schema.get_directed_link"
+The **get_directed_link** function returns for any list of <<express:representation_schema.representation,representation>> and associated list of <<express:product_property_representation_schema.chained_representation_link,chained_representation_link>> the resolved list of <<express:representation_schema.representation_relationship,representation_relationship>> when each member of **undirected_link** references the correct members of **nodes**. The **get_directed_link** function returns UNKNOWN when the input does not satisfy the correctness requirement.
+*)
+
+
+(*"product_property_representation_schema.get_directed_link.nodes"
+(input) the list of instances of the entity data type <<express:representation_schema.representation,representation>> to be used as a reference for constructing the <<express:product_property_representation_schema.chain_based_item_identified_representation_usage.directed_link,directed_link>>.
+*)
+
+
+(*"product_property_representation_schema.get_directed_link.undirected_link"
+(input) the list of instances of the entity data type <<express:representation_schema.mapped_item,mapped_item>>, <<express:representation_schema.representation_context,representation_context>>, or <<express:representation_schema.representation_relationship,representation_relationship>> that the function is comparing against the reference to establish the <<express:product_property_representation_schema.chain_based_item_identified_representation_usage.directed_link,directed_link>>.
+*)
+
+
+(*"product_property_representation_schema.relatives_of_product_definitions"
+The **relatives_of_product_definitions** function finds all of the instances of the <<express:product_definition_schema.product_definition,product_definition>> entity data type that are related to one or more elements of the **definition_set** argument. Only those relationships that are established by the subtype of the <<express:product_definition_schema.product_definition_relationship,product_definition_relationship>> entity given in the **relation_subtype** argument are considered by this function.
+*)
+
+
+(*"product_property_representation_schema.relatives_of_product_definitions.definition_set"
+(input) the set of instances of the entity data type <<express:product_definition_schema.product_definition,product_definition>> upon which operations are performed.
+*)
+
+
+(*"product_property_representation_schema.relatives_of_product_definitions.relation_subtype"
+the fully qualified name of an entity that is a subtype of the <<express:product_definition_schema.product_definition_relationship,product_definition_relationship>> entity.
+*)
+
+
+(*"product_property_representation_schema.relatives_of_shape_representations"
+The **relatives_of_shape_representations** function finds all of the instances of the <<express:product_property_representation_schema.shape_representation,shape_representation>> entity data type that are related to one or more elements of the **shape_representation_set** argument.
+*)
+
+
+(*"product_property_representation_schema.relatives_of_shape_representations.__note"
+This function is not used in this schema. It is defined here because other ISO 10303 integrated resources and application protocols that use the <<express:management_resources_schema.identification_assignment_relationship,identification_assignment_relationship>> entity include rules that use this function.
+*)
+
+(*"product_property_representation_schema.relatives_of_shape_representations.shape_representation_set"
+(input) the set of instances of the entity data type <<express:product_property_representation_schema.shape_representation,shape_representation>> to be operated on.
+*)
+
+
+(*"product_property_representation_schema.get_property_definition_representations"
+The **get_property_definition_representations** function returns for any <<express:product_property_definition_schema.characterized_definition,characterized_definition>> the set of <<express:product_property_representation_schema.property_definition_representation,property_definition_representation>> objects that refer to the <<express:product_property_definition_schema.characterized_definition,characterized_definition>> through a <<express:product_property_definition_schema.property_definition,property_definition>>.
+*)
+
+
+(*"product_property_representation_schema.get_property_definition_representations.c_def_instance"
+(input) the candidate <<express:product_property_definition_schema.characterized_definition,characterized_definition>> to be checked.
+*)
+
+
+(*"product_property_representation_schema.valid_identified_item_in_representation"
+The **valid_identified_item_in_representation** function checks two cases for validity.
+
+In the case that the **identified_item** is a single instance, the function checks whether that argument belongs to the set of items of the <<express:representation_schema.representation,representation>> given in the **used_representation** argument, or participates in the definition of an item in the **used_representation**. It returns FALSE if the condition is not met. Otherwise it returns TRUE.
+
+In the case that the **identified_item** is an aggregate, the function checks whether each member of the aggregate belongs to the set of items of the <<express:representation_schema.representation,representation>> given in the **used_representation** argument, or participates in the definition of an item in the **used_representation**. It returns FALSE if the condition is not met. Otherwise it returns TRUE.
+*)
+
+
+(*"product_property_representation_schema.valid_identified_item_in_representation.identified_item"
+(input) the candidate <<express:representation_schema.representation_item,representation_item>> or <<express:representation_schema.list_representation_item,list_representation_item>> or <<express:representation_schema.set_representation_item,set_representation_item>> to be checked.
+*)
+
+
+(*"product_property_representation_schema.valid_identified_item_in_representation.used_representation"
+(input) the instance of the entity data type <<express:representation_schema.representation,representation>> that the function is validating.
+*)
+
+
+(*"product_property_representation_schema.__schema_file"
+data/resource_docs/fundamentals_of_product_description_and_support/resource.xml
+*)

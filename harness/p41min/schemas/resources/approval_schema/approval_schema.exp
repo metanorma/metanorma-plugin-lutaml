@@ -1,0 +1,389 @@
+(*
+ISO 10303 TC184/SC4/WG12 N8369
+
+EXPRESS Source:
+ISO 10303-41 ed4 Fundamentals of product description and support - Approval schema
+
+The following permission notice and disclaimer shall be included in all copies of this EXPRESS schema ("the Schema"),
+and derivations of the Schema:
+
+Copyright ISO 2014  All rights reserved
+Permission is hereby granted, free of charge in perpetuity, to any person obtaining a copy of the Schema,
+to use, copy, modify, merge and distribute free of charge, copies of the Schema for the purposes of developing,
+implementing, installing and using software based on the Schema, and to permit persons to whom the Schema is furnished to do so,
+subject to the following conditions:
+
+THE SCHEMA IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SCHEMA OR THE
+USE OR OTHER DEALINGS IN THE SCHEMA.
+
+In addition, any modified copy of the Schema shall include the following notice:
+
+THIS SCHEMA HAS BEEN MODIFIED FROM THE SCHEMA DEFINED IN
+ISO 10303-41 ed4 Fundamentals of product description and support - Approval schema
+AND SHOULD NOT BE INTERPRETED AS COMPLYING WITH THAT STANDARD
+*)
+
+SCHEMA approval_schema '{iso standard 10303 part(41) version(7) object(1) approval-schema(3)}';
+  REFERENCE FROM basic_attribute_schema (
+    description_attribute,
+    description_attribute_select,
+    get_description_value,
+    get_role,
+    object_role,
+    role_association,
+    role_select);
+  REFERENCE FROM date_time_schema (
+    date_time_select);
+  REFERENCE FROM person_organization_schema (
+    person_organization_select);
+  REFERENCE FROM support_resource_schema (
+    bag_to_set,
+    label,
+    text);
+
+  TYPE apps_description_attribute_select = SELECT BASED_ON description_attribute_select WITH (
+    approval_role);
+  END_TYPE;
+
+  TYPE apps_role_select = SELECT BASED_ON role_select WITH (
+    approval_date_time);
+  END_TYPE;
+
+
+  ENTITY approval;
+    status : approval_status;
+    level : label;
+  END_ENTITY;
+
+  ENTITY approval_date_time;
+    date_time : date_time_select;
+    dated_approval : approval;
+  DERIVE
+    role : object_role := get_role(SELF);
+  WHERE
+    WR1: SIZEOF(USEDIN(SELF, 'BASIC_ATTRIBUTE_SCHEMA.' + 'ROLE_ASSOCIATION.ITEM_WITH_ROLE')) <= 1;
+  END_ENTITY;
+
+  ENTITY approval_person_organization;
+    person_organization : person_organization_select;
+    authorized_approval : approval;
+    role : approval_role;
+  END_ENTITY;
+
+  ENTITY approval_relationship;
+    name : label;
+    description : OPTIONAL text;
+    relating_approval : approval;
+    related_approval : approval;
+  END_ENTITY;
+
+  ENTITY approval_role;
+    role : label;
+  DERIVE
+    description : text := get_description_value(SELF);
+  WHERE
+    WR1: SIZEOF(USEDIN(SELF, 'BASIC_ATTRIBUTE_SCHEMA.' + 'DESCRIPTION_ATTRIBUTE.DESCRIBED_ITEM')) <= 1;
+  END_ENTITY;
+
+  ENTITY approval_status;
+    name : label;
+  END_ENTITY;
+
+  FUNCTION acyclic_approval_relationship (relation : approval_relationship; relatives : SET [1:?] OF approval; specific_relation : STRING):BOOLEAN;
+    LOCAL
+      x : SET OF approval_relationship;
+    END_LOCAL;
+
+    IF relation.relating_approval IN relatives THEN
+      RETURN (FALSE);
+    END_IF;
+    x := QUERY(app <* bag_to_set(USEDIN(relation.relating_approval, 'APPROVAL_SCHEMA.' + 'APPROVAL_RELATIONSHIP.' + 'RELATED_APPROVAL')) | specific_relation IN TYPEOF(app));
+    REPEAT i := 1 TO HIINDEX(x);
+      IF NOT acyclic_approval_relationship(x[i], relatives + relation.relating_approval, specific_relation) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_REPEAT;
+    RETURN (TRUE);
+  END_FUNCTION;
+
+END_SCHEMA;
+
+(*"approval_schema.__published_in"
+ISO 10303-41:2025 ED8
+*)
+
+(*"approval_schema.__identifier"
+ISO/TC 184/SC 4/WG 12 N8369
+*)
+
+(*"approval_schema.__status"
+IS
+*)
+
+(*"approval_schema.__title"
+fundamentals_of_product_description_and_support
+*)
+
+
+(*"approval_schema"
+The subject of the *approval_schema* is the description of authorization data. Approval information concerns the acceptance of product data.
+
+[example]
+====
+One version of a product may be approved for manufacture whilst another may still be undergoing design.
+====
+
+*)
+(*"approval_schema.__fund_cons"
+
+Approval information can be attached to any aspect of product data.
+
+*)
+(*"approval_schema.__expressg"
+[[approval_schema_expg1]]
+[.svgmap]
+====
+image::approval_schemaexpg1.svg[]
+
+* <<express:support_resource_schema>>; 1
+* <<express:person_organization_schema>>; 2
+* <<express:basic_attribute_schema>>; 3
+* <<express:approval_schema>>; 4
+* <<express:date_time_schema>>; 5
+====
+
+*)
+(*"approval_schema.__expressg"
+[[approval_schema_expg2]]
+[.svgmap]
+====
+image::approval_schemaexpg2.svg[]
+
+* <<express:approval_schema.apps_role_select>>; 1
+* <<express:approval_schema.apps_description_attribute_select>>; 2
+* <<express:support_resource_schema.text>>; 3
+* <<express:support_resource_schema.label>>; 4
+* <<express:support_resource_schema.label>>; 5
+* <<express:basic_attribute_schema.role_select>>; 6
+* <<express:support_resource_schema.text>>; 7
+* <<express:support_resource_schema.label>>; 8
+* <<express:support_resource_schema.label>>; 9
+* <<express:date_time_schema.date_time_select>>; 10
+* <<express:basic_attribute_schema.object_role>>; 11
+* <<express:basic_attribute_schema.description_attribute_select>>; 12
+* <<express:person_organization_schema.person_organization_select>>; 13
+* <<express:approval_schema.approval_role>>; 14
+* <<express:approval_schema.approval_relationship>>; 15
+* <<express:approval_schema.approval_status>>; 16
+* <<express:approval_schema.approval_person_organization>>; 17
+* <<express:approval_schema.approval>>; 18
+* <<express:approval_schema.approval_date_time>>; 19
+====
+*)
+
+(*"approval_schema.approval"
+An **approval** is a confirmation of the product data for its intended use. An **approval** is an incompletely modeled concept and requires population of related entity data types to form a complete approval.
+*)
+
+
+(*"approval_schema.approval.__note"
+The role of *approval* can be defined in the annotated EXPRESS schemas that use or specialize this entity, or by default, in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"approval_schema.approval.status"
+the type or level of **approval** in terms of its usage.
+*)
+
+(*"approval_schema.approval.status.__example"
+One possible status is 'released for production'; this explicitly identifies the approved usage. Another possible status is 'preliminary design completed'; this only implies the approved usage that will depend upon company-specific procedures.
+*)
+
+(*"approval_schema.approval.level"
+the <<express:support_resource_schema.label,label>> that provides a user interpretable designation for the level of completion of the approval.
+*)
+
+
+(*"approval_schema.approval_date_time"
+An **approval_date_time** is an association between an <<express:approval_schema.approval,approval>> and a date, time, or date and time.
+*)
+
+
+(*"approval_schema.approval_date_time.date_time"
+the moment when the **dated_approval** is given.
+*)
+
+
+(*"approval_schema.approval_date_time.dated_approval"
+the <<express:approval_schema.approval,approval>> with which the date or time is associated.
+*)
+
+
+(*"approval_schema.approval_date_time.role"
+the <<express:basic_attribute_schema.object_role,object_role>> that specifies the purpose of the association of the **approval_date_time** with product data.
+*)
+
+
+(*"approval_schema.approval_date_time.role.__note"
+This attribute is an upwardly compatible addition to *approval_date_time* as specified in ISO 10303-41:1994.
+*)
+
+(*"approval_schema.approval_date_time.wr:WR1"
+Each **approval_date_time** shall be the <<express:basic_attribute_schema.role_association.item_with_role,item_with_role>> in at most one <<express:basic_attribute_schema.role_association,role_association>>.
+*)
+
+
+(*"approval_schema.approval_date_time.wr:WR1.__note"
+A template for constraining the population of the entity data types defined in the <<express:basic_attribute_schema,basic_attribute_schema>> is described in annex E.
+*)
+
+(*"approval_schema.approval_person_organization"
+An **approval_person_organization** is an association between an <<express:approval_schema.approval,approval>> and a given person, organization or person in the context of an organization.
+*)
+
+
+(*"approval_schema.approval_person_organization.person_organization"
+the person or organization playing the given role.
+*)
+
+
+(*"approval_schema.approval_person_organization.authorized_approval"
+the <<express:approval_schema.approval,approval>> that is effected by the person or organization.
+*)
+
+
+(*"approval_schema.approval_person_organization.role"
+the <<express:approval_schema.approval_role,approval_role>> that specifies the purpose of the association of the <<express:approval_schema.approval,approval>> with a person or organization.
+*)
+
+
+(*"approval_schema.approval_relationship"
+An **approval_relationship** is a relationship between two instances of the entity data type <<express:approval_schema.approval,approval>> with a description of their relationship.
+*)
+
+
+(*"approval_schema.approval_relationship.__note"
+The role of *approval_relationship* can be defined in the annotated EXPRESS schemas that use or specialize this entity, or by default, in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"approval_schema.approval_relationship.__note"
+This entity, together with the <<express:approval_schema.approval,approval>> entity, is based on the relationship template that is described in annex E.3.
+*)
+
+(*"approval_schema.approval_relationship.name"
+the <<express:support_resource_schema.label,label>> by which the **approval_relationship** is known.
+*)
+
+
+(*"approval_schema.approval_relationship.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **approval_relationship**. The value of the attribute need not be specified.
+*)
+
+
+(*"approval_schema.approval_relationship.relating_approval"
+one of the instances of <<express:approval_schema.approval,approval>> that is a part of the relationship.
+*)
+
+
+(*"approval_schema.approval_relationship.relating_approval.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"approval_schema.approval_relationship.related_approval"
+the other instance of <<express:approval_schema.approval,approval>> that is a part of the relationship. If one element of the relationship is dependent upon the other, this attribute shall be the dependent one.
+*)
+
+
+(*"approval_schema.approval_relationship.related_approval.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"approval_schema.approval_role"
+An **approval_role** is a definition of a function. An **approval_role** is an incompletely modeled concept and requires population of related entity data types to form a complete confirmation.
+*)
+
+
+(*"approval_schema.approval_role.role"
+the <<express:support_resource_schema.label,label>> by which the **approval_role** is known.
+*)
+
+
+(*"approval_schema.approval_role.role.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"approval_schema.approval_role.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **approval_role**.
+*)
+
+
+(*"approval_schema.approval_role.description.__note"
+This attribute is an upwardly compatible addition to *approval_role* as specified in ISO 10303-41:1994.
+*)
+
+(*"approval_schema.approval_role.wr:WR1"
+Each **approval_role** shall be the <<express:basic_attribute_schema.description_attribute.described_item,described_item>> in at most one <<express:basic_attribute_schema.description_attribute,description_attribute>>.
+*)
+
+
+(*"approval_schema.approval_role.wr:WR1.__note"
+The <<express:basic_attribute_schema.description_attribute,description_attribute>> data type is defined in <<express:basic_attribute_schema,basic_attribute_schema>> of this document.
+*)
+
+(*"approval_schema.approval_role.wr:WR1.__note"
+A template for constraining the population of the entity data types defined in the <<express:basic_attribute_schema,basic_attribute_schema>> is described in annex E.
+*)
+
+(*"approval_schema.approval_status"
+An **approval_status** specifies the state of an <<express:approval_schema.approval,approval>>.
+*)
+
+(*"approval_schema.approval_status.__example"
+'Approved' and 'disapproved' are examples of *approval_status*.
+*)
+
+(*"approval_schema.approval_status.name"
+the <<express:support_resource_schema.label,label>> by which the **approval_status** is known.
+*)
+
+
+(*"approval_schema.approval_status.name.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"approval_schema.acyclic_approval_relationship"
+The **acyclic_approval_relationship** function determines whether the graph of instances of the entity data type <<express:approval_schema.approval,approval>> that contains relation as one of its links contains a cycle. This function may be used to evaluate either a <<express:approval_schema.approval_relationship,approval_relationship>> or any of its subtypes.
+
+The function returns TRUE if no cycle has been detected. Otherwise it returns FALSE.
+*)
+
+
+(*"approval_schema.acyclic_approval_relationship.__note"
+The algorithm of the function is explained in annex E.2.
+*)
+
+(*"approval_schema.acyclic_approval_relationship.__note"
+This function is not used in this schema. It is defined here because other ISO 10303 integrated resources and application protocols that use the <<express:approval_schema.approval_relationship,approval_relationship>> entity include rules that use this function.
+*)
+
+(*"approval_schema.acyclic_approval_relationship.relation"
+(input) the candidate <<express:approval_schema.approval_relationship,approval_relationship>> to be checked.
+*)
+
+
+(*"approval_schema.acyclic_approval_relationship.relatives"
+(input) the set of instances of the entity data type <<express:approval_schema.approval,approval>> for which the function is searching in the <<express:approval_schema.approval_relationship.relating_approval,relating_approval>> parameter of the relation argument.
+*)
+
+
+(*"approval_schema.acyclic_approval_relationship.specific_relation"
+(input) the fully qualified name of a subtype of the <<express:approval_schema.approval_relationship,approval_relationship>> entity.
+*)
+
+
+(*"approval_schema.__schema_file"
+data/resource_docs/fundamentals_of_product_description_and_support/resource.xml
+*)

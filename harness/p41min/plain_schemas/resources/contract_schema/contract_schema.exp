@@ -1,0 +1,250 @@
+(*
+ISO 10303 TC184/SC4/WG12 N8369
+
+EXPRESS Source:
+ISO 10303-41 ed4 Fundamentals of product description and support - Contract schema
+
+The following permission notice and disclaimer shall be included in all copies of this EXPRESS schema ("the Schema"),
+and derivations of the Schema:
+
+Copyright ISO 2014  All rights reserved
+Permission is hereby granted, free of charge in perpetuity, to any person obtaining a copy of the Schema,
+to use, copy, modify, merge and distribute free of charge, copies of the Schema for the purposes of developing,
+implementing, installing and using software based on the Schema, and to permit persons to whom the Schema is furnished to do so,
+subject to the following conditions:
+
+THE SCHEMA IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SCHEMA OR THE
+USE OR OTHER DEALINGS IN THE SCHEMA.
+
+In addition, any modified copy of the Schema shall include the following notice:
+
+THIS SCHEMA HAS BEEN MODIFIED FROM THE SCHEMA DEFINED IN
+ISO 10303-41 ed4 Fundamentals of product description and support - Contract schema
+AND SHOULD NOT BE INTERPRETED AS COMPLYING WITH THAT STANDARD
+*)
+
+SCHEMA contract_schema '{iso standard 10303 part(41) version(3) object(1) contract-schema(6)}';
+  REFERENCE FROM support_resource_schema (bag_to_set, identifier, label, text);
+  ENTITY contract;
+    name : label;
+    purpose : text;
+    kind : contract_type;
+  END_ENTITY;
+
+  ENTITY contract_relationship;
+    id : identifier;
+    name : label;
+    description : OPTIONAL text;
+    relating_contract : contract;
+    related_contract : contract;
+  END_ENTITY;
+
+  ENTITY contract_type;
+    description : label;
+  END_ENTITY;
+
+  FUNCTION acyclic_contract_relationship (relation : contract_relationship; relatives : SET [1:?] OF contract; specific_relation : STRING):BOOLEAN;
+    LOCAL
+      x : SET OF contract_relationship;
+    END_LOCAL;
+
+    IF relation.relating_contract IN relatives THEN
+      RETURN (FALSE);
+    END_IF;
+    x := QUERY(cont <* bag_to_set(USEDIN(relation.relating_contract, 'CONTRACT_SCHEMA.' + 'CONTRACT_RELATIONSHIP.' + 'RELATED_CONTRACT')) | specific_relation IN TYPEOF(cont));
+    REPEAT i := 1 TO HIINDEX(x);
+      IF NOT acyclic_contract_relationship(x[i], relatives + relation.relating_contract, specific_relation) THEN
+        RETURN (FALSE);
+      END_IF;
+    END_REPEAT;
+    RETURN (TRUE);
+  END_FUNCTION;
+
+END_SCHEMA;
+
+(*"contract_schema.__published_in"
+ISO 10303-41:2025 ED8
+*)
+
+(*"contract_schema.__identifier"
+ISO/TC 184/SC 4/WG 12 N8369
+*)
+
+(*"contract_schema.__status"
+IS
+*)
+
+(*"contract_schema.__title"
+fundamentals_of_product_description_and_support
+*)
+
+
+(*"contract_schema"
+The subject of the *contract_schema* is the description of contract agreements.
+*)
+(*"contract_schema.__fund_cons"
+
+Contract information may be attached to any aspect of a product data.
+
+*)
+(*"contract_schema.__expressg"
+[[contract_schema_expg1]]
+[.svgmap]
+====
+image::contract_schemaexpg1.svg[]
+
+* <<express:contract_schema>>; 1
+* <<express:support_resource_schema>>; 2
+====
+
+*)
+(*"contract_schema.__expressg"
+[[contract_schema_expg2]]
+[.svgmap]
+====
+image::contract_schemaexpg2.svg[]
+
+* <<express:support_resource_schema.label>>; 1
+* <<express:support_resource_schema.label>>; 2
+* <<express:support_resource_schema.label>>; 3
+* <<express:support_resource_schema.text>>; 4
+* <<express:support_resource_schema.identifier>>; 5
+* <<express:support_resource_schema.text>>; 6
+* <<express:contract_schema.contract_relationship>>; 7
+* <<express:contract_schema.contract_type>>; 8
+* <<express:contract_schema.contract>>; 9
+====
+*)
+
+(*"contract_schema.contract"
+A **contract** is a binding agreement. A **contract** is an incompletely modeled concept and requires population of related entity data types to form a complete contract.
+*)
+
+
+(*"contract_schema.contract.__note"
+Contracts may be enforceable by law.
+*)
+
+(*"contract_schema.contract.name"
+the <<express:support_resource_schema.label,label>> by which the **contract** is known.
+*)
+
+
+(*"contract_schema.contract.purpose"
+an informal description of the reason for the **contract**.
+*)
+
+
+(*"contract_schema.contract.kind"
+the **contract**'s type.
+*)
+
+
+(*"contract_schema.contract_relationship"
+A **contract_relationship** is a relationship between two instances of the entity data type <<express:contract_schema.contract,contract>>.
+*)
+
+
+(*"contract_schema.contract_relationship.__note"
+The role of *contract_relationship* can be defined in the annotated EXPRESS schemas that use or specialize this entity, or by default, in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"contract_schema.contract_relationship.__note"
+Relationships represented using this entity may be parent child relationship. Annotated EXPRESS schemas that use or specialize this entity specify whether or not the relationship is directed.
+*)
+
+(*"contract_schema.contract_relationship.__note"
+This entity, together with the <<express:contract_schema.contract,contract>> entity, is based on the relationship template that is described in annex E.3.
+*)
+
+(*"contract_schema.contract_relationship.id"
+the <<express:support_resource_schema.identifier,identifier>> that distinguishes the **contract_relationship**.
+*)
+
+
+(*"contract_schema.contract_relationship.id.__note"
+The context in which id is used as a discriminating characteristic can be identified in an annotated Express schema that uses or specializes this entity, or by default, in an agreement of common understanding between partners sharing this information.
+*)
+
+(*"contract_schema.contract_relationship.name"
+the <<express:support_resource_schema.label,label>> by which the **contract_relationship** is known.
+*)
+
+
+(*"contract_schema.contract_relationship.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **contract_relationship**. The value of the attribute need not be specified.
+*)
+
+
+(*"contract_schema.contract_relationship.relating_contract"
+one of the instances of <<express:contract_schema.contract,contract>> that is a part of the relationship.
+*)
+
+
+(*"contract_schema.contract_relationship.relating_contract.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"contract_schema.contract_relationship.related_contract"
+the other instance of <<express:contract_schema.contract,contract>> that is a part of the relationship. If one element of the relationship is dependent upon the other, this attribute shall be the dependent one.
+*)
+
+
+(*"contract_schema.contract_relationship.related_contract.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"contract_schema.contract_type"
+A **contract_type** is the kind of information that an instance of <<express:contract_schema.contract,contract>> conveys.
+*)
+
+(*"contract_schema.contract_type.__example"
+A contract for an organization that is supplying goods to another organization could be 'fixed' or 'cost plus'.
+*)
+
+(*"contract_schema.contract_type.description"
+the <<express:support_resource_schema.text,text>> that characterizes the **contract_type**. The value of the attribute need not be specified.
+*)
+
+
+(*"contract_schema.contract_type.description.__note"
+The meaning of this attribute can be defined in the annotated EXPRESS schemas that use or specialize this entity, or in an agreement of common understanding between the partners sharing this information.
+*)
+
+(*"contract_schema.acyclic_contract_relationship"
+The **acyclic_contract_relationship** function determines whether the graph of instances of the entity data type <<express:contract_schema.contract,contract>> that contains relation as one of its links contains a cycle. This function may be used to evaluate either a <<express:contract_schema.contract_relationship,contract_relationship>> or any of its subtypes.
+
+The function returns TRUE if no cycle has been detected. Otherwise it returns FALSE.
+*)
+
+
+(*"contract_schema.acyclic_contract_relationship.__note"
+The algorithm of the function is explained in annex E.2.
+*)
+
+(*"contract_schema.acyclic_contract_relationship.__note"
+This function is not used in this schema. It is defined here because other ISO 10303 integrated resources and application protocols that use the <<express:contract_schema.contract_relationship,contract_relationship>> entity include rules that use this function.
+*)
+
+(*"contract_schema.acyclic_contract_relationship.relation"
+(input) the candidate <<express:contract_schema.contract_relationship,contract_relationship>> to be checked.
+*)
+
+
+(*"contract_schema.acyclic_contract_relationship.relatives"
+(input) the set of instances of the entity data type <<express:contract_schema.contract,contract>> for which the function is searching in the <<express:contract_schema.contract_relationship.relating_contract,relating_contract>> parameter of the relation argument.
+*)
+
+
+(*"contract_schema.acyclic_contract_relationship.specific_relation"
+(input) the fully qualified entity name of a type of <<express:contract_schema.contract_relationship,contract_relationship>> entity.
+*)
+
+
+(*"contract_schema.__schema_file"
+data/resource_docs/fundamentals_of_product_description_and_support/resource.xml
+*)

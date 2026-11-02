@@ -1,0 +1,10 @@
+
+[[annex_short_names]]
+[appendix,obligation=normative]
+== MIM short names
+
+Requirements on the use of the short names are found in the implementation
+methods included in ISO 10303 series. EXPRESS entity names and the equivalent
+short names are available from:
+
+http://standards.iso.org/iso/10303/tech/short_names/short-names.txt

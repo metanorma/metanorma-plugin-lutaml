@@ -1,0 +1,10 @@
+---
+schema: language_schema
+change_edition:
+- version: '6'
+  description: ENTITY basic_attribute's description updated.
+  additions:
+  - type: REFERENCE_FROM
+    name: group_schema
+  - type: ENTITY
+    name: language

@@ -1,0 +1,144 @@
+---
+schema: product_property_representation_schema
+change_edition:
+- version: '2'
+  description: |-
+    The definitions of the following EXPRESS entity data types were modified:
+
+    * action;
+    * action_directive;
+    * action_method;
+    * action_method_relationship;
+    * action_relationship;
+    * action_request_solution;
+    * action_request_status;
+    * action_resource;
+    * action_resource_relationship;
+    * action_resource_type;
+    * action_status;
+    * directed_action;
+    * executed_action;
+    * supported_item;
+    * versioned_action_request.
+  additions:
+  - type: FUNCTION
+    name: get_property_definition_representations
+  - type: ENTITY
+    name: item_identified_representation_usage
+  - type: TYPE
+    name: represented_definition
+  modifications:
+  - type: ENTITY
+    name: context_dependent_shape_representation
+  - type: ENTITY
+    name: property_definition_representation
+  - type: FUNCTION
+    name: relatives_of_product_definitions
+  - type: FUNCTION
+    name: relatives_of_shape_representations
+  - type: ENTITY
+    name: shape_definition_representation
+- version: '3'
+  description: |-
+    This also incorporates the modifications of Technical Corrigenda 1 and Technical Corrigenda 2.
+
+    The following EXPRESS schemas have been added:
+
+    * experience_schema;
+    * location_schema;
+    * qualifications_schema.
+  additions:
+  - type: ENTITY
+    name: chain_based_item_identified_representation_usage
+  - type: TYPE
+    name: chained_representation_link
+  - type: FUNCTION
+    name: get_directed_link
+  modifications:
+  - type: REFERENCE_FROM
+    name: representation_schema
+  - type: FUNCTION
+    name: get_property_definition_representations
+    description: 'White-space removed from string literal expression: ''PRODUCT_PROPERTY_DEFINITION_SCHEMA.PROPERTY_DEFINITION.DEFINITION'''
+- version: '4'
+  description: |-
+    The following entity types had been introduced to support external element references outside the local population of entity instances:
+
+    * component_path_shape_aspect;
+    * externally_defined_item_with_multiple_references;
+    * generic_product_definition_reference;
+    * product_definition_reference;
+    * product_definition_reference_with_local_representation.
+
+    The following entity types had been introduced to support the the characterization of objects:
+
+    * characterized_chain_based_item_within_representation;
+    * characterized_item_within_representation;
+    * characterized_product.
+
+    The following select types from the basic_attribute_schema had been converted into extensible selects and then extended in several other schemas:
+
+    * description_attribute_select;
+    * id_attribute_select;
+    * name_attribute_select;
+    * role_select.
+  additions:
+  - type: TYPE
+    name: pprs_name_attribute_select
+  - type: TYPE
+    name: item_identified_representation_usage_definition
+  - type: TYPE
+    name: item_identified_representation_usage_select
+  - type: ENTITY
+    name: characterized_chain_based_item_within_representation
+  - type: ENTITY
+    name: characterized_item_within_representation
+  modifications:
+  - type: REFERENCE_FROM
+    name: basic_attribute_schema
+  - type: REFERENCE_FROM
+    name: product_property_definition_schema
+  - type: ENTITY
+    name: chain_based_item_identified_representation_usage
+  - type: ENTITY
+    name: item_identified_representation_usage
+  - type: ENTITY
+    name: representation_schema
+  - type: ENTITY
+    name: shape_definition_representation
+  - type: FUNCTION
+    name: get_directed_link
+- version: '5'
+  description: The change corrected the EXPRESS layout to align to directives
+  additions:
+  - type: ENTITY
+    name: shape_representation_reference
+  modifications:
+  - type: ENTITY
+    name: item_identified_representation_usage
+  - type: ENTITY
+    name: characterized_item_within_representation
+    description: The change corrected the EXPRESS layout to align to directives
+  - type: REFERENCE_FROM
+    name: representation_schema
+  - type: ENTITY
+    name: shape_representation_relationship
+- version: '6'
+  description: ENTITY basic_attribute's description updated.
+  additions:
+  - type: REFERENCE_FROM
+    name: product_structure_schema
+  - type: ENTITY
+    name: specified_occurrence_context_dependent_shape_representation
+- version: '7'
+  description: WHERE 'WR1' expression changed and 'WR2' deleted
+  additions:
+  - type: FUNCTION
+    name: valid_identified_item_in_representation
+  modifications:
+  - type: ENTITY
+    name: item_identified_representation_usage
+    description: WHERE 'WR1' expression changed and 'WR2' deleted
+  - type: ENTITY
+    name: context_dependent_shape_representation
+    description: EXPRESS definition layout and documentation updated

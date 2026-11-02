@@ -1,0 +1,43 @@
+{% if remark_items.size > 0 %}
+
+{% assign notes = remark_items | where: "id", "__note" %}
+{% for note in notes %}
+{% if note.remarks.size > 0 %}
+{% for remark_note in note.remarks %}
+
+[NOTE]
+--
+{{remark_note}}
+--
+
+{% endfor %}
+{% endif %}
+{% endfor %}
+
+{% assign examples = remark_items | where: "id", "__example" %}
+{% for example in examples %}
+{% if example.remarks.size > 0 %}
+{% for remark_example in example.remarks %}
+
+[example]
+====
+{{remark_example}}
+====
+
+{% endfor %}
+{% endif %}
+{% endfor %}
+
+
+{% assign figures = remark_items | where: "id", "__figure" %}
+{% for figure in figures %}
+{% if figure.remarks.size > 0 %}
+{% for remark_figure in figure.remarks %}
+
+{{ remark_figure }}
+
+{% endfor %}
+{% endif %}
+{% endfor %}
+
+{% endif %}

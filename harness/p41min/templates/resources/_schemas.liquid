@@ -1,0 +1,2 @@
+{% assign all_schemas = repo.schemas  %}
+{% render "templates/resources/schema" for ordered_schemas as schema, all_schemas: all_schemas %}

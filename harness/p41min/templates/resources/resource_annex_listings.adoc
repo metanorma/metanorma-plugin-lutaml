@@ -1,0 +1,34 @@
+[[annex_listings]]
+[appendix,obligation=informative]
+== Computer interpretable listings
+
+This annex references a listing of the EXPRESS entity names and corresponding
+short names as specified or referenced in this document. It also
+provides a listing of each EXPRESS schema specified in this document
+without comments or other explanatory text. These listings are available in
+computer-interpretable form in <<table_listing>> and can be found at the
+following URLs:
+
+Short names: http://standards.iso.org/iso/10303/tech/short_names/short-names.txt
+
+EXPRESS: http://standards.iso.org/iso/10303/smrl/v11/tech/smrlv11.zip
+
+[data2text,data=schemas.yaml]
+----
+[[table_listing]]
+[cols="a,a",options="header"]
+.EXPRESS listings
+|===
+| HTML file | ASCII file
+
+{% for schema_key_value in data.schemas %}
+| <<{{schema_key_value[0]}}.html>>
+| <<{{schema_key_value[0]}}.exp>>
+{% endfor %}
+
+|===
+----
+
+NOTE: The information provided in computer-interpretable form at the above URLs
+is informative. The information that is contained in the body of this part of
+ISO 10303 is normative.

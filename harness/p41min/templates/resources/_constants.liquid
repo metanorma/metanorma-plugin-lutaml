@@ -1,0 +1,22 @@
+{% if things.size > 0 %}
+
+{% assign section_title = schema_id | append: " constant definitions" %}
+{% render "templates/resources/basic_title", thing_prefix: thing_prefix, anchor: "constants", title: section_title, depth: depth %}
+
+{% render "templates/common_files/source_code", source: "CONSTANT;"%}
+
+{% assign cc_nested_depth = depth | plus: 1 %}
+{% for thing in things %}
+
+{% render "templates/resources/basic_thing", thing: thing, thing_prefix: thing_prefix, depth: cc_nested_depth, schema: schema %}
+
+{% endfor %}
+
+[source%unnumbered]
+--
+*)
+END_CONSTANT;
+(*
+--
+
+{% endif %}

@@ -1,0 +1,25 @@
+
+[[arm]]
+== Information requirements
+
+{% render "templates/modules/arm_required_am_arms", schema: schema, all_schemas: all_schemas  %}
+
+{% comment %} The ARM diagram annex is driven by the module's armexpg SVGs,
+not by __expressg remark items — module schemas carry none (#769), so the
+icon is gated on the schema-level annex anchor only. {% endcomment %}
+{% assign has_expg = true %}
+
+{% render "templates/modules/definitions", definition_type: "ARM type", definitions: schema.types, schema_id: schema.id, depth: 2, has_expg: has_expg %}
+
+{% render "templates/modules/definitions", definition_type: "ARM entity", definitions: schema.entities, schema_id: schema.id, depth: 2, has_expg: has_expg %}
+
+{% render "templates/modules/definitions", definition_type: "ARM subtype constraint", definitions: schema.subtype_constraints, schema_id: schema.id, depth: 2, has_expg: has_expg %}
+
+{% render "templates/modules/definitions", definition_type: "ARM function", definitions: schema.functions, schema_id: schema.id, depth: 2, has_expg: has_expg %}
+
+[source%unnumbered]
+--
+*)
+END_SCHEMA;  -- {{ schema.id }}
+(*
+--

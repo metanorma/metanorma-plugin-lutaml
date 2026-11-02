@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="3.5.3" schema-version="v2.3.0" flavor="iso">
+<bibdata type="standard"><contributor><role type="author"/><organization>
+<name>International Organization for Standardization</name>
+<abbreviation>ISO</abbreviation></organization></contributor><contributor><role type="authorizer"><description>Agency</description></role><organization>
+<name>International Organization for Standardization</name>
+<abbreviation>ISO</abbreviation></organization></contributor><contributor><role type="publisher"/><organization>
+<name>International Organization for Standardization</name>
+<abbreviation>ISO</abbreviation></organization></contributor><language>en</language><script>Latn</script><status><stage abbreviation="IS">60</stage><substage>60</substage></status><copyright><from>2026</from><owner><organization>
+<name>International Organization for Standardization</name>
+<abbreviation>ISO</abbreviation></organization></owner></copyright><ext><doctype>standard</doctype><flavor>iso</flavor><stagename abbreviation="IS">International Standard</stagename></ext></bibdata><metanorma-extension><semantic-metadata><stage-published>true</stage-published></semantic-metadata>
+<presentation-metadata><document-scheme>2024</document-scheme><toc-heading-levels>2</toc-heading-levels><html-toc-heading-levels>2</html-toc-heading-levels><doc-toc-heading-levels>3</doc-toc-heading-levels><pdf-toc-heading-levels>3</pdf-toc-heading-levels></presentation-metadata></metanorma-extension>
+<boilerplate><copyright-statement>
+
+<clause id="_3b0e6c15-db19-55ef-fce3-25e4fd645987" anchor="boilerplate-copyright-default" inline-header="false" obligation="normative">
+<title id="_129fe8d3-7b32-3da5-a270-59bb0ef8173e">COPYRIGHT PROTECTED DOCUMENT</title>
+<p id="_eec80c0b-5174-1b28-5406-965a2278541b" anchor="boilerplate-year">© <span class="std_publisher">ISO </span><span class="date">2026</span></p>
+
+<p id="_dcd0efd0-9c2b-bcfd-6dcd-ce36b8143916" anchor="boilerplate-message">All rights reserved. Unless otherwise specified, or required in the context of its implementation, no part of this publication may be reproduced or utilized otherwise in any form or by any means, electronic or mechanical, including photocopying, or posting on the internet or an intranet, without prior written permission. Permission can be requested from either ISO at the address below or ISO’s member body in the country of the requester.</p>
+
+<p id="_71c22afa-6b94-ad85-9f54-347ef903ebd8" anchor="boilerplate-address" align="left">ISO copyright office<br/> CP 401 • Ch. de Blandonnet 8<br/> CH-1214 Vernier, Geneva<br/> Phone: +41 22 749 01 11<br/> Email:  <link target="mailto:copyright@iso.org"/><br/> Website:  <link target="https://www.iso.org/">www.iso.org</link></p>
+
+<p id="_93a0bcfe-1edb-b952-e8f5-db8ed91f8e23" anchor="boilerplate-place">Published in Switzerland</p>
+</clause>
+</copyright-statement>
+</boilerplate><sections><clause id="_1651d097-c11c-3afd-7199-b8ebacb4c19e" anchor="action_schema" unnumbered="true" type="express" inline-header="false" obligation="normative">
+<title id="_703ff27d-f955-6270-01b7-44b770e4fa10">action_schema <bookmark id="_0e69f397-99f8-ffc9-643d-9f2c07d398ef" anchor="action_schema_funds"/><bookmark id="_4d9a738a-77d4-0961-e453-35e19da2ddf7" anchor="action_schema.types"/><bookmark id="_45739db1-a77f-8a07-e735-191e0c4a80b7" anchor="action_schema.as_description_attribute_select"/><bookmark id="_cd5ef17e-7b6c-6c5c-4212-c0529e522adb" anchor="action_schema.as_id_attribute_select"/><bookmark id="_e6d4d623-e81e-eb74-7b25-b2440eeaf210" anchor="action_schema.as_name_attribute_select"/><bookmark id="_a790cbe1-fb11-0041-85cc-6017312e7a74" anchor="action_schema.as_role_select"/><bookmark id="_4b15a57b-33e6-d89c-c79d-54c8a15cef37" anchor="action_schema.supported_item"/><bookmark id="_be3266d5-5835-13df-2c6b-d1083f22157f" anchor="action_schema.entities"/><bookmark id="_facddc31-c4f8-7723-5024-d765c2574c27" anchor="action_schema.action"/><bookmark id="_4acace1d-6388-2d62-1f3f-ca80d19f5cca" anchor="action.name"/><bookmark id="_81815fa2-ec60-aace-4bbb-38569684c882" anchor="action.description"/><bookmark id="_880b1a0d-4a1b-638d-76c4-f051d03bff05" anchor="action.chosen_method"/><bookmark id="_8d8fbeda-ff53-46ec-9347-ce29d1812416" anchor="action.id"/><bookmark id="_966c2628-f18c-2483-fc02-c57839cb428e" anchor="action_schema.action_directive"/><bookmark id="_60720058-acf5-60f8-6bbe-c971027c37f1" anchor="action_directive.name"/><bookmark id="_901d206c-c8f0-e170-19f3-2b13a32d6711" anchor="action_directive.description"/><bookmark id="_ba0aad6b-9e37-d481-1101-eef34837b859" anchor="action_directive.analysis"/><bookmark id="_1590a55d-3d48-b4d1-ecb6-a42c82adcd92" anchor="action_directive.comment"/><bookmark id="_d0a26fed-bbfe-1e61-2a27-b0d928bfea36" anchor="action_directive.requests"/><bookmark id="_5dd977da-ca08-d0ea-678f-3263d81bab75" anchor="action_schema.action_method"/><bookmark id="_3179b2b4-d8ae-56a4-9efa-7bbb0cefda00" anchor="action_method.name"/><bookmark id="_51b74658-3483-22ab-e3b6-cc467c1552f5" anchor="action_method.description"/><bookmark id="_185fa77e-2f31-45a7-74a4-6a5d4364f41c" anchor="action_method.consequence"/><bookmark id="_a3ecb6d7-f838-2d98-57d6-c892c6746c26" anchor="action_method.purpose"/><bookmark id="_b3d4708f-0607-d8e1-d4e1-35f571f8b75c" anchor="action_schema.action_method_relationship"/><bookmark id="_2b06d82e-2469-7c4e-b260-dc1d8aa2c9bf" anchor="action_method_relationship.name"/><bookmark id="_6e17c75d-faa9-2ff2-33df-cf67db84bdb1" anchor="action_method_relationship.description"/><bookmark id="_c4001c3c-0c5b-3340-44f7-4fa4149dfc1c" anchor="action_method_relationship.relating_method"/><bookmark id="_1506eeaf-ab50-ffc6-16b4-7cc80324b147" anchor="action_method_relationship.related_method"/><bookmark id="_74e968a2-70c0-0ac4-fc22-fe4c24f73722" anchor="action_schema.action_relationship"/><bookmark id="_6d901f82-764d-e682-cb9c-0f4ae89c3826" anchor="action_relationship.name"/><bookmark id="_e4a4a5f5-f8e0-ba9e-1baf-9ede84d94160" anchor="action_relationship.description"/><bookmark id="_5d39cc60-ab8d-48a1-3378-4756e6821720" anchor="action_relationship.relating_action"/><bookmark id="_7e17eb04-c3d3-37fa-cdb1-b8ca9880ab97" anchor="action_relationship.related_action"/><bookmark id="_2eab2526-0ff6-1ed2-bcd6-9ff2b600ec82" anchor="action_schema.action_request_solution"/><bookmark id="_accfe2f7-7a91-5303-405f-7259c9723459" anchor="action_request_solution.method"/><bookmark id="_9f6830af-030d-e156-c850-aa38b18727b2" anchor="action_request_solution.request"/><bookmark id="_a93fc983-24b5-fa13-f4e3-35d05e830f95" anchor="action_request_solution.description"/><bookmark id="_af078279-aa75-f43c-d15f-b7febc784e1d" anchor="action_request_solution.name"/><bookmark id="_d32c1ee0-653d-7376-c583-0a1ad87f9c36" anchor="action_schema.action_request_status"/><bookmark id="_d55fc2f3-4ed6-013d-55f8-dc961150de0d" anchor="action_request_status.status"/><bookmark id="_d289bb97-c942-44b3-47b6-1652bd107672" anchor="action_request_status.assigned_request"/><bookmark id="_794623e4-8dec-748a-d96b-a1ac14576d99" anchor="action_schema.action_resource"/><bookmark id="_4e9411dc-2f48-8b81-2762-bafb76922444" anchor="action_resource.name"/><bookmark id="_2867c061-7764-aa54-87cd-7305e62e5ec6" anchor="action_resource.description"/><bookmark id="_01d6569d-1910-d801-6c73-e573c85308d9" anchor="action_resource.usage"/><bookmark id="_4570decc-20a7-c775-ca5f-64648b290c46" anchor="action_resource.kind"/><bookmark id="_2afc3c52-e4e8-504b-0c5f-793ee466f4dd" anchor="action_schema.action_resource_relationship"/><bookmark id="_bfb22610-7120-e669-0c5b-adff76ddd99f" anchor="action_resource_relationship.name"/><bookmark id="_2ed67c2b-30a9-0e4f-b4bc-76ea7e444399" anchor="action_resource_relationship.description"/><bookmark id="_686ea687-f473-b485-64cc-8284c17bc51d" anchor="action_resource_relationship.relating_resource"/><bookmark id="_3850ff3b-bbb9-08e3-7a68-ae93cc08abc8" anchor="action_resource_relationship.related_resource"/><bookmark id="_7ccb1ce7-e771-a397-03f6-7ea1adeccccb" anchor="action_schema.action_resource_type"/><bookmark id="_26e889d4-872e-5fef-2974-6b95ce2214ee" anchor="action_resource_type.name"/><bookmark id="_710e1789-044a-1744-7878-bb716872492a" anchor="action_schema.action_status"/><bookmark id="_ff09fee5-5945-2f1f-50a0-fde8f6b8589a" anchor="action_status.status"/><bookmark id="_190d9fd7-0f13-e06f-34b9-25496b2ca461" anchor="action_status.assigned_action"/><bookmark id="_04771420-10e9-aa41-e38b-ad02a76d6fb4" anchor="action_schema.directed_action"/><bookmark id="_c40fb077-a275-1003-fbf9-badea1b74a2a" anchor="directed_action.directive"/><bookmark id="_264b4a9b-ff1c-1432-f2e9-a244a0530fd0" anchor="action_schema.directed_action_assignment"/><bookmark id="_8931789d-a21e-8be7-c1a0-7b49150a71a0" anchor="directed_action_assignment.assigned_directed_action"/><bookmark id="_370227e5-cad9-d660-471a-8cef665b8c8e" anchor="directed_action_assignment.role"/><bookmark id="_149b3236-f7cc-9738-abf5-a4cbc1b012a4" anchor="action_schema.executed_action"/><bookmark id="_6e84c637-d323-42ca-7bfc-45562e74d601" anchor="action_schema.versioned_action_request"/><bookmark id="_5dce3e93-e29d-3e4b-2b91-5e09e9182062" anchor="versioned_action_request.id"/><bookmark id="_f69e0796-dc3e-6d1d-d398-0305ca37ee28" anchor="versioned_action_request.version"/><bookmark id="_514947c8-6c0c-24ba-6a42-72acf9832e7d" anchor="versioned_action_request.purpose"/><bookmark id="_f3b0bb4f-a23b-ef95-5e5d-347ad5225d29" anchor="versioned_action_request.description"/><bookmark id="_67d4bd99-1b4e-ab53-ecaa-a72e47c0ca6b" anchor="action_schema.versioned_action_request_relationship"/><bookmark id="_a5d69850-ec2a-a285-9f51-94c73ee0c5f9" anchor="versioned_action_request_relationship.id"/><bookmark id="_b6f67999-fcac-e113-e9da-29640062608a" anchor="versioned_action_request_relationship.name"/><bookmark id="_4a2c134e-836f-1c09-9c4b-d3c42a9760ba" anchor="versioned_action_request_relationship.description"/><bookmark id="_9f6caa40-572f-4db5-d3d2-5e809fabd238" anchor="versioned_action_request_relationship.relating_versioned_action_request"/><bookmark id="_ef3c1374-ea4d-0052-5796-ce21c2b04056" anchor="versioned_action_request_relationship.related_versioned_action_request"/><bookmark id="_64cec8b0-ec24-3f6d-0ec8-fa1a3691e275" anchor="action_schema.action_directive_relationship"/><bookmark id="_eb7d58b9-cb16-4dc0-036a-3f8880416883" anchor="action_directive_relationship.name"/><bookmark id="_e559b65e-d44f-4915-e42a-60fda6d5b3fc" anchor="action_directive_relationship.description"/><bookmark id="_c4a3c7b1-316f-fee7-a9cf-9b4503febc91" anchor="action_directive_relationship.relating"/><bookmark id="_d69df44e-9b46-d9a9-95ff-84793ea84d8d" anchor="action_directive_relationship.related"/><bookmark id="_20587e27-ed55-3699-4983-d029367fc28d" anchor="action_directive_relationship.relation_type"/><bookmark id="_7a161660-3c46-50b7-2cc4-0ced2c8cc794" anchor="action_schema.functions"/><bookmark id="_3e07bed7-0133-2ac9-5d2e-2562b6ba491a" anchor="action_schema.acyclic_action_method_relationship"/><bookmark id="_347f3dc5-fbcb-663c-8bb8-32b2b069c971" anchor="acyclic_action_method_relationship.relation"/><bookmark id="_a819d5a1-2370-d447-6373-04664c06dacf" anchor="acyclic_action_method_relationship.relatives"/><bookmark id="_d6a2530d-3fc1-6334-a807-ac1ddbaf6c3d" anchor="acyclic_action_method_relationship.specific_relation"/><bookmark id="_54d51a31-f262-359c-c4ae-10eb369d27fe" anchor="acyclic_action_method_relationship.x"/><bookmark id="_ba424ec0-214f-8c04-5f20-b5e7d5ce97ae" anchor="action_schema.acyclic_action_relationship"/><bookmark id="_6d89869d-bdf9-9aea-ce2a-1b20128ba431" anchor="acyclic_action_relationship.relation"/><bookmark id="_a8a3ce1c-a8c4-821e-7ea7-5877ca5e2b1e" anchor="acyclic_action_relationship.relatives"/><bookmark id="_2a790d5e-961b-45bd-b983-e8fdb0f52dd7" anchor="acyclic_action_relationship.specific_relation"/><bookmark id="_c4390bf7-4a2a-21a0-5ba4-efc7fc17658f" anchor="acyclic_action_relationship.x"/><bookmark id="_18bdd2c9-dbfd-0c69-230b-08bf3ff20180" anchor="action_schema.acyclic_action_resource_relationship"/><bookmark id="_26d14442-4d1d-600c-05a4-9b96d2d8a61c" anchor="acyclic_action_resource_relationship.relation"/><bookmark id="_07c544ab-5d81-f225-648e-8a5a777768cc" anchor="acyclic_action_resource_relationship.relatives"/><bookmark id="_84131618-3bde-8cce-8911-d58a50dbb0db" anchor="acyclic_action_resource_relationship.specific_relation"/><bookmark id="_a022b546-2eed-4f07-dabc-447e3f257516" anchor="acyclic_action_resource_relationship.x"/><bookmark id="_5adf901c-b2fe-f4fc-5ae2-ef048a753f82" anchor="action_schema.acyclic_versioned_action_request_relationship"/><bookmark id="_ebe0a43d-8fe9-87c9-2f0a-8ed841136581" anchor="acyclic_versioned_action_request_relationship.relation"/><bookmark id="_635d542a-6c00-0dc1-8d29-c8717c953700" anchor="acyclic_versioned_action_request_relationship.relatives"/><bookmark id="_c4047fef-9d10-f152-1ddc-d01289e3baca" anchor="acyclic_versioned_action_request_relationship.specific_relation"/><bookmark id="_36c48ff8-b507-0a68-4cac-5ab2fcde8f11" anchor="acyclic_versioned_action_request_relationship.x"/><bookmark id="_3da78ad9-1899-5059-769c-ddf00f2f57f0" anchor="action_schema.acyclic_action_directive_relationship"/><bookmark id="_6dc1964d-9744-a220-2054-c16254493887" anchor="acyclic_action_directive_relationship.relation"/><bookmark id="_e3db9adb-007d-1de5-4566-309338a4790a" anchor="acyclic_action_directive_relationship.relatives"/><bookmark id="_e3574363-8e21-8633-08fb-431693c0a0ae" anchor="acyclic_action_directive_relationship.specific_relation"/><bookmark id="_3c7ac046-2fe6-8b36-0e49-680123dc9e4c" anchor="acyclic_action_directive_relationship.x"/></title>
+<sourcecode id="_40b5ac6b-2709-7104-876b-e811ad257738" unnumbered="true"><body>SCHEMA action_schema '{iso standard 10303 part(41) version(9) object(1) action-schema(1)}';
+
+REFERENCE FROM basic_attribute_schema -- ISO 10303-41
+  (description_attribute,
+   description_attribute_select,
+   get_description_value,
+   get_id_value,
+   get_name_value,
+   get_role,
+   id_attribute,
+   id_attribute_select,
+   name_attribute,
+   name_attribute_select,
+   object_role,
+   role_select,
+   role_association);
+
+REFERENCE FROM support_resource_schema -- ISO 10303-41
+  (bag_to_set,
+   identifier,
+   label,
+   text);
+
+TYPE as_description_attribute_select = SELECT BASED_ON description_attribute_select WITH
+  (<xref target="action_schema.action_request_solution"><display-text>action_request_solution</display-text></xref>);
+END_TYPE;
+
+TYPE as_id_attribute_select = SELECT BASED_ON id_attribute_select WITH
+  (<xref target="action_schema.action"><display-text>action</display-text></xref>);
+END_TYPE;
+
+TYPE as_name_attribute_select = SELECT BASED_ON name_attribute_select WITH
+  (<xref target="action_schema.action_request_solution"><display-text>action_request_solution</display-text></xref>);
+END_TYPE;
+
+TYPE as_role_select = SELECT BASED_ON role_select WITH
+  (<xref target="action_schema.directed_action_assignment"><display-text>directed_action_assignment</display-text></xref>);
+END_TYPE;
+
+TYPE supported_item = SELECT
+  (<xref target="action_schema.action_directive"><display-text>action_directive</display-text></xref>,
+   <xref target="action_schema.action"><display-text>action</display-text></xref>,
+   <xref target="action_schema.action_method"><display-text>action_method</display-text></xref>);
+END_TYPE;
+
+ENTITY action;
+  name : label;
+  description : OPTIONAL text;
+  chosen_method : <xref target="action_schema.action_method"><display-text>action_method</display-text></xref>;
+DERIVE
+  id : identifier := get_id_value(SELF);
+WHERE
+  WR1: SIZEOF(USEDIN(SELF, 'BASIC_ATTRIBUTE_SCHEMA.' + 'ID_ATTRIBUTE.IDENTIFIED_ITEM')) &lt;= 1;
+END_ENTITY;
+
+ENTITY action_directive;
+  name : label;
+  description : OPTIONAL text;
+  analysis : text;
+  comment : text;
+  requests : SET [1:?] OF <xref target="action_schema.versioned_action_request"><display-text>versioned_action_request</display-text></xref>;
+END_ENTITY;
+
+ENTITY action_method;
+  name : label;
+  description : OPTIONAL text;
+  consequence : text;
+  purpose : text;
+END_ENTITY;
+
+ENTITY action_method_relationship;
+  name : label;
+  description : OPTIONAL text;
+  relating_method : <xref target="action_schema.action_method"><display-text>action_method</display-text></xref>;
+  related_method : <xref target="action_schema.action_method"><display-text>action_method</display-text></xref>;
+END_ENTITY;
+
+ENTITY action_relationship;
+  name : label;
+  description : OPTIONAL text;
+  relating_action : <xref target="action_schema.action"><display-text>action</display-text></xref>;
+  related_action : <xref target="action_schema.action"><display-text>action</display-text></xref>;
+END_ENTITY;
+
+ENTITY action_request_solution;
+  method : <xref target="action_schema.action_method"><display-text>action_method</display-text></xref>;
+  request : <xref target="action_schema.versioned_action_request"><display-text>versioned_action_request</display-text></xref>;
+DERIVE
+  description : text := get_description_value(SELF);
+  name : label := get_name_value(SELF);
+WHERE
+  WR1: SIZEOF(USEDIN(SELF, 'BASIC_ATTRIBUTE_SCHEMA.' + 'DESCRIPTION_ATTRIBUTE.DESCRIBED_ITEM')) &lt;= 1;
+  WR2: SIZEOF(USEDIN(SELF, 'BASIC_ATTRIBUTE_SCHEMA.' + 'NAME_ATTRIBUTE.NAMED_ITEM')) &lt;= 1;
+END_ENTITY;
+
+ENTITY action_request_status;
+  status : label;
+  assigned_request : <xref target="action_schema.versioned_action_request"><display-text>versioned_action_request</display-text></xref>;
+END_ENTITY;
+
+ENTITY action_resource;
+  name : label;
+  description : OPTIONAL text;
+  usage : SET [1:?] OF <xref target="action_schema.supported_item"><display-text>supported_item</display-text></xref>;
+  kind : <xref target="action_schema.action_resource_type"><display-text>action_resource_type</display-text></xref>;
+END_ENTITY;
+
+ENTITY action_resource_relationship;
+  name : label;
+  description : OPTIONAL text;
+  relating_resource : <xref target="action_schema.action_resource"><display-text>action_resource</display-text></xref>;
+  related_resource : <xref target="action_schema.action_resource"><display-text>action_resource</display-text></xref>;
+END_ENTITY;
+
+ENTITY action_resource_type;
+  name : label;
+END_ENTITY;
+
+ENTITY action_status;
+  status : label;
+  assigned_action : <xref target="action_schema.executed_action"><display-text>executed_action</display-text></xref>;
+END_ENTITY;
+
+ENTITY directed_action
+  SUBTYPE OF (<xref target="action_schema.executed_action"><display-text>executed_action</display-text></xref>);
+  directive : <xref target="action_schema.action_directive"><display-text>action_directive</display-text></xref>;
+END_ENTITY;
+
+ENTITY directed_action_assignment
+  ABSTRACT SUPERTYPE;
+  assigned_directed_action : <xref target="action_schema.directed_action"><display-text>directed_action</display-text></xref>;
+DERIVE
+  role : object_role := get_role(SELF);
+WHERE
+  WR1: SIZEOF(USEDIN(SELF, 'BASIC_ATTRIBUTE_SCHEMA.' + 'ROLE_ASSOCIATION.ITEM_WITH_ROLE')) &lt;= 1;
+END_ENTITY;
+
+ENTITY executed_action
+  SUBTYPE OF (<xref target="action_schema.action"><display-text>action</display-text></xref>);
+END_ENTITY;
+
+ENTITY versioned_action_request;
+  id : identifier;
+  version : OPTIONAL label;
+  purpose : text;
+  description : OPTIONAL text;
+END_ENTITY;
+
+ENTITY versioned_action_request_relationship;
+  id : identifier;
+  name : label;
+  description : OPTIONAL text;
+  relating_versioned_action_request : <xref target="action_schema.versioned_action_request"><display-text>versioned_action_request</display-text></xref>;
+  related_versioned_action_request : <xref target="action_schema.versioned_action_request"><display-text>versioned_action_request</display-text></xref>;
+END_ENTITY;
+
+ENTITY action_directive_relationship;
+  name : label;
+  description : OPTIONAL STRING;
+  relating : <xref target="action_schema.action_directive"><display-text>action_directive</display-text></xref>;
+  related : <xref target="action_schema.action_directive"><display-text>action_directive</display-text></xref>;
+  relation_type : STRING;
+WHERE
+  WR1: <xref target="action_schema.acyclic_action_directive_relationship"><display-text>acyclic_action_directive_relationship</display-text></xref>(SELF, [<xref target="action_directive_relationship.related"><display-text>related</display-text></xref>], 'ACTION_SCHEMA.ACTION_DIRECTIVE_RELATIONSHIP');
+END_ENTITY;
+
+FUNCTION acyclic_action_method_relationship(relation : <xref target="action_schema.action_method_relationship"><display-text>action_method_relationship</display-text></xref>;
+                                            relatives : SET [1:?] OF <xref target="action_schema.action_method"><display-text>action_method</display-text></xref>;
+                                            specific_relation : STRING) : BOOLEAN;
+  LOCAL
+    x : SET OF <xref target="action_schema.action_method_relationship"><display-text>action_method_relationship</display-text></xref>;
+  END_LOCAL;
+  IF relation.relating_method IN <xref target="acyclic_action_method_relationship.relatives"><display-text>relatives</display-text></xref> THEN
+    RETURN (FALSE);
+  END_IF;
+  <xref target="acyclic_action_method_relationship.x"><display-text>x</display-text></xref> := QUERY(am &lt;* bag_to_set(USEDIN(relation.relating_method, ('ACTION_SCHEMA.' + 'ACTION_METHOD_RELATIONSHIP.') + 'RELATED_METHOD')) | <xref target="acyclic_action_method_relationship.specific_relation"><display-text>specific_relation</display-text></xref> IN TYPEOF(am));
+  REPEAT i := 1 TO HIINDEX(<xref target="acyclic_action_method_relationship.x"><display-text>x</display-text></xref>);
+    IF NOT <xref target="action_schema.acyclic_action_method_relationship"><display-text>acyclic_action_method_relationship</display-text></xref>(<xref target="acyclic_action_method_relationship.x"><display-text>x</display-text></xref>[i], <xref target="acyclic_action_method_relationship.relatives"><display-text>relatives</display-text></xref> + relation.relating_method, <xref target="acyclic_action_method_relationship.specific_relation"><display-text>specific_relation</display-text></xref>) THEN
+      RETURN (FALSE);
+    END_IF;
+  END_REPEAT;
+  RETURN (TRUE);
+END_FUNCTION;
+
+FUNCTION acyclic_action_relationship(relation : <xref target="action_schema.action_relationship"><display-text>action_relationship</display-text></xref>;
+                                     relatives : SET [1:?] OF <xref target="action_schema.action"><display-text>action</display-text></xref>;
+                                     specific_relation : STRING) : BOOLEAN;
+  LOCAL
+    x : SET OF <xref target="action_schema.action_relationship"><display-text>action_relationship</display-text></xref>;
+  END_LOCAL;
+  IF relation.relating_action IN <xref target="acyclic_action_relationship.relatives"><display-text>relatives</display-text></xref> THEN
+    RETURN (FALSE);
+  END_IF;
+  <xref target="acyclic_action_relationship.x"><display-text>x</display-text></xref> := QUERY(actn &lt;* bag_to_set(USEDIN(relation.relating_action, ('ACTION_SCHEMA.' + 'ACTION_RELATIONSHIP.') + 'RELATED_ACTION')) | <xref target="acyclic_action_relationship.specific_relation"><display-text>specific_relation</display-text></xref> IN TYPEOF(actn));
+  REPEAT i := 1 TO HIINDEX(<xref target="acyclic_action_relationship.x"><display-text>x</display-text></xref>);
+    IF NOT <xref target="action_schema.acyclic_action_relationship"><display-text>acyclic_action_relationship</display-text></xref>(<xref target="acyclic_action_relationship.x"><display-text>x</display-text></xref>[i], <xref target="acyclic_action_relationship.relatives"><display-text>relatives</display-text></xref> + relation.relating_action, <xref target="acyclic_action_relationship.specific_relation"><display-text>specific_relation</display-text></xref>) THEN
+      RETURN (FALSE);
+    END_IF;
+  END_REPEAT;
+  RETURN (TRUE);
+END_FUNCTION;
+
+FUNCTION acyclic_action_resource_relationship(relation : <xref target="action_schema.action_resource_relationship"><display-text>action_resource_relationship</display-text></xref>;
+                                              relatives : SET [1:?] OF <xref target="action_schema.action_resource"><display-text>action_resource</display-text></xref>;
+                                              specific_relation : STRING) : BOOLEAN;
+  LOCAL
+    x : SET OF <xref target="action_schema.action_resource_relationship"><display-text>action_resource_relationship</display-text></xref>;
+  END_LOCAL;
+  IF relation.relating_resource IN <xref target="acyclic_action_resource_relationship.relatives"><display-text>relatives</display-text></xref> THEN
+    RETURN (FALSE);
+  END_IF;
+  <xref target="acyclic_action_resource_relationship.x"><display-text>x</display-text></xref> := QUERY(ar &lt;* bag_to_set(USEDIN(relation.relating_resource, ('ACTION_SCHEMA.' + 'ACTION_RESOURCE_RELATIONSHIP.') + 'RELATED_RESOURCE')) | <xref target="acyclic_action_resource_relationship.specific_relation"><display-text>specific_relation</display-text></xref> IN TYPEOF(ar));
+  REPEAT i := 1 TO HIINDEX(<xref target="acyclic_action_resource_relationship.x"><display-text>x</display-text></xref>);
+    IF NOT <xref target="action_schema.acyclic_action_resource_relationship"><display-text>acyclic_action_resource_relationship</display-text></xref>(<xref target="acyclic_action_resource_relationship.x"><display-text>x</display-text></xref>[i], <xref target="acyclic_action_resource_relationship.relatives"><display-text>relatives</display-text></xref> + relation.relating_resource, <xref target="acyclic_action_resource_relationship.specific_relation"><display-text>specific_relation</display-text></xref>) THEN
+      RETURN (FALSE);
+    END_IF;
+  END_REPEAT;
+  RETURN (TRUE);
+END_FUNCTION;
+
+FUNCTION acyclic_versioned_action_request_relationship(relation : <xref target="action_schema.versioned_action_request_relationship"><display-text>versioned_action_request_relationship</display-text></xref>;
+                                                       relatives : SET OF <xref target="action_schema.versioned_action_request"><display-text>versioned_action_request</display-text></xref>;
+                                                       specific_relation : STRING) : BOOLEAN;
+  LOCAL
+    x : SET OF <xref target="action_schema.versioned_action_request_relationship"><display-text>versioned_action_request_relationship</display-text></xref>;
+  END_LOCAL;
+  IF relation.relating_versioned_action_request IN <xref target="acyclic_versioned_action_request_relationship.relatives"><display-text>relatives</display-text></xref> THEN
+    RETURN (FALSE);
+  END_IF;
+  <xref target="acyclic_versioned_action_request_relationship.x"><display-text>x</display-text></xref> := QUERY(varr &lt;* bag_to_set(USEDIN(relation.relating_versioned_action_request, ('ACTION_SCHEMA.' + 'VERSIONED_ACTION_REQUEST_RELATIONSHIP.') + 'RELATED_VERSIONED_ACTION_REQUEST')) | <xref target="acyclic_versioned_action_request_relationship.specific_relation"><display-text>specific_relation</display-text></xref> IN TYPEOF(varr));
+  REPEAT i := 1 TO HIINDEX(<xref target="acyclic_versioned_action_request_relationship.x"><display-text>x</display-text></xref>);
+    IF NOT <xref target="action_schema.acyclic_versioned_action_request_relationship"><display-text>acyclic_versioned_action_request_relationship</display-text></xref>(<xref target="acyclic_versioned_action_request_relationship.x"><display-text>x</display-text></xref>[i], <xref target="acyclic_versioned_action_request_relationship.relatives"><display-text>relatives</display-text></xref> + relation.relating_versioned_action_request, <xref target="acyclic_versioned_action_request_relationship.specific_relation"><display-text>specific_relation</display-text></xref>) THEN
+      RETURN (FALSE);
+    END_IF;
+  END_REPEAT;
+  RETURN (TRUE);
+END_FUNCTION;
+
+FUNCTION acyclic_action_directive_relationship(relation : <xref target="action_schema.action_directive_relationship"><display-text>action_directive_relationship</display-text></xref>;
+                                               relatives : SET [1:?] OF <xref target="action_schema.action_directive"><display-text>action_directive</display-text></xref>;
+                                               specific_relation : STRING) : BOOLEAN;
+  LOCAL
+    x : SET OF <xref target="action_schema.action_directive_relationship"><display-text>action_directive_relationship</display-text></xref>;
+  END_LOCAL;
+  IF relation.relating IN <xref target="acyclic_action_directive_relationship.relatives"><display-text>relatives</display-text></xref> THEN
+    RETURN (FALSE);
+  END_IF;
+  <xref target="acyclic_action_directive_relationship.x"><display-text>x</display-text></xref> := QUERY(adr &lt;* bag_to_set(USEDIN(relation.relating, ('ACTION_SCHEMA.' + 'ACTION_DIRECTIVE_RELATIONSHIP.') + 'RELATED')) | <xref target="acyclic_action_directive_relationship.specific_relation"><display-text>specific_relation</display-text></xref> IN TYPEOF(adr));
+  REPEAT i := 1 TO HIINDEX(<xref target="acyclic_action_directive_relationship.x"><display-text>x</display-text></xref>);
+    IF NOT <xref target="action_schema.acyclic_action_directive_relationship"><display-text>acyclic_action_directive_relationship</display-text></xref>(<xref target="acyclic_action_directive_relationship.x"><display-text>x</display-text></xref>[i], <xref target="acyclic_action_directive_relationship.relatives"><display-text>relatives</display-text></xref> + relation.relating, <xref target="acyclic_action_directive_relationship.specific_relation"><display-text>specific_relation</display-text></xref>) THEN
+      RETURN (FALSE);
+    END_IF;
+  END_REPEAT;
+  RETURN (TRUE);
+END_FUNCTION;
+
+END_SCHEMA;</body></sourcecode>
+
+</clause>
+</sections>
+</metanorma>

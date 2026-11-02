@@ -1,0 +1,173 @@
+directives:
+  - documents-inline
+bibdata:
+  title:
+    - language: en
+      content: "Industrial automation systems and integration -- Product data representation and exchange -- Integrated generic resource: Fundamentals of product description and support"
+    - language: fr
+      content: "Systèmes d'automatisation industrielle et intégration -- Représentation et échange de données de produits -- Ressources génériques intégrées: Principes de description et de support de produits"
+  type: collection
+  docid:
+    type: iso
+    id: 10303-41
+  edition: 8
+  copyright:
+    owner:
+      name: International Standards Organization
+      abbreviation: ISO
+    from: 2025
+manifest:
+  level: collection
+  title: ISO Collection
+  docref:
+    - level: document
+      title: Document
+      docref:
+        - fileref: document.adoc
+    - level: attachments
+      title: Attachments
+      docref:
+        - fileref: ../../plain_schemas/resources/action_schema/action_schema.exp
+          identifier: action_schema.exp
+          attachment: true
+        - fileref: ../../plain_schemas/resources/application_context_schema/application_context_schema.exp
+          identifier: application_context_schema.exp
+          attachment: true
+        - fileref: ../../plain_schemas/resources/approval_schema/approval_schema.exp
+          identifier: approval_schema.exp
+          attachment: true
+        - fileref: ../../plain_schemas/resources/basic_attribute_schema/basic_attribute_schema.exp
+          identifier: basic_attribute_schema.exp
+          attachment: true
+        - fileref: ../../plain_schemas/resources/certification_schema/certification_schema.exp
+          identifier: certification_schema.exp
+          attachment: true
+        - fileref: ../../plain_schemas/resources/contract_schema/contract_schema.exp
+          identifier: contract_schema.exp
+          attachment: true
+        - fileref: ../../plain_schemas/resources/date_time_schema/date_time_schema.exp
+          identifier: date_time_schema.exp
+          attachment: true
+        - fileref: ../../plain_schemas/resources/document_schema/document_schema.exp
+          identifier: document_schema.exp
+          attachment: true
+        - fileref: ../../plain_schemas/resources/effectivity_schema/effectivity_schema.exp
+          identifier: effectivity_schema.exp
+          attachment: true
+        - fileref: ../../plain_schemas/resources/experience_schema/experience_schema.exp
+          identifier: experience_schema.exp
+          attachment: true
+        - fileref: ../../plain_schemas/resources/external_reference_schema/external_reference_schema.exp
+          identifier: external_reference_schema.exp
+          attachment: true
+        - fileref: ../../plain_schemas/resources/group_schema/group_schema.exp
+          identifier: group_schema.exp
+          attachment: true
+        - fileref: ../../plain_schemas/resources/language_schema/language_schema.exp
+          identifier: language_schema.exp
+          attachment: true
+        - fileref: ../../plain_schemas/resources/location_schema/location_schema.exp
+          identifier: location_schema.exp
+          attachment: true
+        - fileref: ../../plain_schemas/resources/management_resources_schema/management_resources_schema.exp
+          identifier: management_resources_schema.exp
+          attachment: true
+        - fileref: ../../plain_schemas/resources/measure_schema/measure_schema.exp
+          identifier: measure_schema.exp
+          attachment: true
+        - fileref: ../../plain_schemas/resources/person_organization_schema/person_organization_schema.exp
+          identifier: person_organization_schema.exp
+          attachment: true
+        - fileref: ../../plain_schemas/resources/product_definition_schema/product_definition_schema.exp
+          identifier: product_definition_schema.exp
+          attachment: true
+        - fileref: ../../plain_schemas/resources/product_property_definition_schema/product_property_definition_schema.exp
+          identifier: product_property_definition_schema.exp
+          attachment: true
+        - fileref: ../../plain_schemas/resources/product_property_representation_schema/product_property_representation_schema.exp
+          identifier: product_property_representation_schema.exp
+          attachment: true
+        - fileref: ../../plain_schemas/resources/qualifications_schema/qualifications_schema.exp
+          identifier: qualifications_schema.exp
+          attachment: true
+        - fileref: ../../plain_schemas/resources/security_classification_schema/security_classification_schema.exp
+          identifier: security_classification_schema.exp
+          attachment: true
+        - fileref: ../../plain_schemas/resources/support_resource_schema/support_resource_schema.exp
+          identifier: support_resource_schema.exp
+          attachment: true
+        - fileref: ../../plain_schemas/resources/uuid_attribute_schema/uuid_attribute_schema.exp
+          identifier: uuid_attribute_schema.exp
+          attachment: true
+        - fileref: ../../schema_docs/action_schema/doc_action_schema.html
+          identifier: action_schema.html
+          attachment: true
+        - fileref: ../../schema_docs/application_context_schema/doc_application_context_schema.html
+          identifier: application_context_schema.html
+          attachment: true
+        - fileref: ../../schema_docs/approval_schema/doc_approval_schema.html
+          identifier: approval_schema.html
+          attachment: true
+        - fileref: ../../schema_docs/basic_attribute_schema/doc_basic_attribute_schema.html
+          identifier: basic_attribute_schema.html
+          attachment: true
+        - fileref: ../../schema_docs/certification_schema/doc_certification_schema.html
+          identifier: certification_schema.html
+          attachment: true
+        - fileref: ../../schema_docs/contract_schema/doc_contract_schema.html
+          identifier: contract_schema.html
+          attachment: true
+        - fileref: ../../schema_docs/date_time_schema/doc_date_time_schema.html
+          identifier: date_time_schema.html
+          attachment: true
+        - fileref: ../../schema_docs/document_schema/doc_document_schema.html
+          identifier: document_schema.html
+          attachment: true
+        - fileref: ../../schema_docs/effectivity_schema/doc_effectivity_schema.html
+          identifier: effectivity_schema.html
+          attachment: true
+        - fileref: ../../schema_docs/experience_schema/doc_experience_schema.html
+          identifier: experience_schema.html
+          attachment: true
+        - fileref: ../../schema_docs/external_reference_schema/doc_external_reference_schema.html
+          identifier: external_reference_schema.html
+          attachment: true
+        - fileref: ../../schema_docs/group_schema/doc_group_schema.html
+          identifier: group_schema.html
+          attachment: true
+        - fileref: ../../schema_docs/language_schema/doc_language_schema.html
+          identifier: language_schema.html
+          attachment: true
+        - fileref: ../../schema_docs/location_schema/doc_location_schema.html
+          identifier: location_schema.html
+          attachment: true
+        - fileref: ../../schema_docs/management_resources_schema/doc_management_resources_schema.html
+          identifier: management_resources_schema.html
+          attachment: true
+        - fileref: ../../schema_docs/measure_schema/doc_measure_schema.html
+          identifier: measure_schema.html
+          attachment: true
+        - fileref: ../../schema_docs/person_organization_schema/doc_person_organization_schema.html
+          identifier: person_organization_schema.html
+          attachment: true
+        - fileref: ../../schema_docs/product_definition_schema/doc_product_definition_schema.html
+          identifier: product_definition_schema.html
+          attachment: true
+        - fileref: ../../schema_docs/product_property_definition_schema/doc_product_property_definition_schema.html
+          identifier: product_property_definition_schema.html
+          attachment: true
+        - fileref: ../../schema_docs/product_property_representation_schema/doc_product_property_representation_schema.html
+          identifier: product_property_representation_schema.html
+          attachment: true
+        - fileref: ../../schema_docs/qualifications_schema/doc_qualifications_schema.html
+          identifier: qualifications_schema.html
+          attachment: true
+        - fileref: ../../schema_docs/security_classification_schema/doc_security_classification_schema.html
+          identifier: security_classification_schema.html
+          attachment: true
+        - fileref: ../../schema_docs/support_resource_schema/doc_support_resource_schema.html
+          identifier: support_resource_schema.html
+          attachment: true
+        - fileref: ../../schema_docs/uuid_attribute_schema/doc_uuid_attribute_schema.html
+          identifier: uuid_attribute_schema.html
+          attachment: true

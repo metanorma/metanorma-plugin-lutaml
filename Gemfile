@@ -25,9 +25,9 @@ gem "timecop"
 gem "vcr"
 gem "webmock"
 
-# moxml 0.5.174+ refuses leptris older than 1.9.386 and falls back to
-# nokogiri, which breaks require "metanorma-standoc". 1.9.394.0 ships
-# x64-mingw-ucrt binaries again, so the old Windows pin is no longer needed.
+# moxml requires leptris >= 1.9.386 (older bindings are rejected at
+# load: Moxml::AdapterError). 1.9.39x ships every platform again,
+# including x64-mingw-ucrt, so the old Windows-gap pin is gone.
 gem "leptris", ">= 1.9.386"
 
 # pre-release line pins (see metanorma release wave)
@@ -37,3 +37,9 @@ gem "suma", github: "metanorma/suma", branch: "main"
 # standoc main (>= 3.5.1.pre.alpha.2) floors metanorma-document at
 # 0.5.2.pre.alpha.1 (SvgmapElement, metanorma-standoc#1303); main carries it
 gem "metanorma-document", github: "metanorma/metanorma-document", branch: "main"
+
+# svg_conform 0.2.5's rubygems object is stale on some CDN edges (the
+# re-pushed build carries a lens_core dependency that is not published);
+# 0.2.4 is the last clean release and rides moxml ~> 0.5 (= satisfied by
+# the 0.6 line). Lift when a clean 0.2.6 ships.
+gem "svg_conform", "~> 0.2.6"

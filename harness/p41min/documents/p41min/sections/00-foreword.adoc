@@ -1,0 +1,10 @@
+.Foreword
+
+include::../../../templates/foreword_part_1.adoc[]
+
+This eighth edition cancels and replaces the seventh edition (ISO 10303-41:2024), which has been technically revised.
+
+A detailed description of the changes is provided in <<annex_change_history>>.
+
+include::../../../templates/foreword_part_2.adoc[]
+

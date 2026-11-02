@@ -1,0 +1,13 @@
+{% if things.size > 0 %}
+{% assign section_title = schema_id | append: " type definitions" %}
+
+{% render "templates/resources/basic_title", thing_prefix: thing_prefix, anchor: "types", title: section_title, depth: depth %}
+
+{% for thing in things %}
+{% assign type_nested_depth = depth | plus: 1 %}
+
+{% render "templates/resources/type", thing: thing, thing_prefix: thing_prefix, depth: type_nested_depth, schema: schema %}
+
+{% endfor %}
+
+{% endif %}

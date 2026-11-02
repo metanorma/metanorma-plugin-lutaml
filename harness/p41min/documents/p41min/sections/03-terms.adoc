@@ -1,0 +1,148 @@
+
+[[defns]]
+[heading="Terms and definitions"]
+== Terms, definitions and abbreviated terms
+
+[[sec_3.1.1]]
+[.nonterm]
+=== Terms defined in ISO 8601
+
+For the purposes of this document, the following terms defined in ISO 8601 apply:
+
+* calendar date;
+* calendar week;
+* calendar year;
+* common year;
+* coordinated universal time;
+* day;
+* Gregorian calendar;
+* hour;
+* leap year;
+* local time;
+* minute;
+* month;
+* ordinal day;
+* second;
+* week;
+* year.
+
+
+[[sec_3.1.2]]
+[heading="Terms and definitions"]
+[source=bibitem_010303000002]
+=== Other terms and definitions
+
+For the purposes of this document, the following terms and definitions apply:
+
+// TODO: Missing NOTE in ISO 10303-2
+[[sec_3.1.2.1]]
+==== agreement of common understanding
+
+result of discussions between the partners of product data exchange or sharing that ensures that all of them have the same understanding of the transferred or shared information
+
+[NOTE]
+--
+The agreement may be formalized in a document.
+--
+
+
+
+// TODO: Missing NOTE in ISO 10303-2
+[[sec_3.1.2.4]]
+==== class of products
+
+set of all products satisfying a type of product; the elements of the set are referred to as members of the class
+
+[NOTE]
+--
+A class need not have any members.
+--
+
+
+
+[NOTE]
+--
+The definition of the type will determine whether the size of the set varies with time.
+--
+
+
+
+[NOTE]
+--
+This definition was adapted from ISO/IEC 10746-2:1996 [1].
+--
+
+
+// TODO: Missing NOTE in ISO 10303-2
+[[sec_3.1.2.7]]
+==== management information
+
+Information required for proper control and handling of a specific product or item.
+
+[NOTE]
+--
+Management data may include information related to scheduling, roles, certifications, approvals, effectivity and life-cycle stages.
+--
+
+
+
+[example]
+====
+An inspection certification indicates that the product has passed inspection and is ready to move to the next step in the product life cycle.
+====
+
+
+[[sec_3.1.2.8]]
+==== path
+
+a sequence of nodes such that from each of itse nodes thre is an edge to the next node in the sequence; it has two terminal nodes (nodes that have degree 1), while all others (if any) have degree 2
+
+[NOTE]
+--
+The first and last nodes in the path are different. No nodes are referenced more than once by a link.
+--
+
+
+
+// TODO: Missing NOTE in ISO 10303-2
+[[sec_3.1.2.9]]
+==== real object
+
+object that exists or did exist in the real world and that can or could be uniquely identified
+
+[NOTE]
+--
+An individual object may result from a manufacturing process or it may exist independently of any human process.
+--
+
+
+
+[example]
+====
+The Moon is an individual object that is not the result of a human process.
+====
+
+
+// TODO: Missing EXAMPLE in ISO 10303-2
+[[sec_3.1.2.10]]
+==== type_of_product
+
+predicate characterizing a collection of products; a product is of the type, or satisfies the type, if the predicate holds for that product
+
+[example]
+====
+This definition was adapted from ISO/IEC 10746-2:1996 [1].
+====
+
+
+[[abbrv]]
+=== Abbreviated terms
+
+For the purposes of this document, the following abbreviated terms apply:
+
+URL:: uniform resource locator
+DAG:: Directed Acyclic Graph
+pos:: person organization schema
+SI:: International System of Units
+UUID:: Universally Unique Identifier
+

@@ -1,0 +1,58 @@
+
+{% case fetch %}
+{% when "ARM type" %}
+This subclause specifies the ARM types for this application module.
+The ARM types and definitions are specified below.
+
+{% when "ARM entity" %}
+This subclause specifies the ARM entities for this module. Each ARM application
+entity is an atomic element that embodies a unique application concept and contains
+attributes specifying the data elements of the entity. The ARM entities and definitions
+are specified below.
+
+{% when "ARM subtype constraint" %}
+This subclause specifies the ARM subtype constraints for this module.
+Each subtype constraint places constraints on the possible super-type / subtype instantiations.
+The ARM subtype constraints and definitions are specified below.
+
+{% when "ARM function" %}
+This subclause specifies the ARM function for this module. The ARM function and definition
+is specified below.
+
+{% when "short_listing_intro" %}
+This clause specifies the EXPRESS schema derived from the mapping table. It uses
+elements from the common resources or from other application modules and defines
+the EXPRESS constructs that are specific to this document.
+
+This clause constitutes the Module Interpreted Module (MIM) of the application
+module.
+
+This clause also specifies the modifications that apply to the constructs
+imported from the common resources.
+
+The following restrictions apply to the use, in this schema, of constructs
+defined in common resources or in application modules:
+
+* use of a supertype entity does not make applicable any of its specializations,
+unless the specialization is also imported in the MIM schema;
+
+* use of a SELECT type does not make applicable any of its listed types unless
+the listed type is also imported in the MIM schema.
+
+Short names of entities defined in this schema are described in <<annex_short_names>>.
+Unambiguous identification of this schema is defined in <<annex_identifiers>>.
+
+{% when "MIM type" %}
+This subclause specifies the MIM types for this application module. The MIM types and definitions are specified below.
+
+{% when "MIM entity" %}
+This subclause specifies the MIM entities for this module.
+The MIM entities and definitions are specified below.
+
+{% when "MIM function" %}
+This subclause specifies the MIM functions for this module. The MIM functions and definitions are
+specified below.
+
+{% when "MIM rule" %}
+This subclause specifies the MIM rules for this module. The MIM rules and definitions are specified below.
+{% endcase %}

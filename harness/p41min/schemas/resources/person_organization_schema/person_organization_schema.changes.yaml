@@ -1,0 +1,126 @@
+---
+schema: person_organization_schema
+change_edition:
+- version: '2'
+  description: |-
+    The definitions of the following EXPRESS entity data types were modified:
+
+    * action;
+    * action_directive;
+    * action_method;
+    * action_method_relationship;
+    * action_relationship;
+    * action_request_solution;
+    * action_request_status;
+    * action_resource;
+    * action_resource_relationship;
+    * action_resource_type;
+    * action_status;
+    * directed_action;
+    * executed_action;
+    * supported_item;
+    * versioned_action_request.
+  additions:
+  - type: FUNCTION
+    name: acyclic_organizational_project_relationship
+  - type: ENTITY
+    name: organizational_project_relationship
+  modifications:
+  - type: FUNCTION
+    name: acyclic_organization_relationship
+  - type: ENTITY
+    name: organization
+  - type: ENTITY
+    name: organization_relationship
+  - type: ENTITY
+    name: organization_role
+  - type: ENTITY
+    name: organizational_address
+  - type: ENTITY
+    name: organizational_project
+  - type: ENTITY
+    name: person
+  - type: ENTITY
+    name: person_and_organization
+  - type: ENTITY
+    name: person_and_organization_role
+  - type: ENTITY
+    name: person_role
+  - type: ENTITY
+    name: personal_address
+- version: '3'
+  description: |-
+    This also incorporates the modifications of Technical Corrigenda 1 and Technical Corrigenda 2.
+
+    The following EXPRESS schemas have been added:
+
+    * experience_schema;
+    * location_schema;
+    * qualifications_schema.
+  additions:
+  - type: FUNCTION
+    name: acyclic_organization_type_relationship
+  - type: FUNCTION
+    name: acyclic_person_type_definition_relationship
+  - type: FUNCTION
+    name: acyclic_position_in_organization_relationship
+  - type: ENTITY
+    name: organization_type
+  - type: ENTITY
+    name: organization_type_relationship
+  - type: ENTITY
+    name: person_type
+  - type: ENTITY
+    name: person_type_definition
+  - type: ENTITY
+    name: person_type_definition_formation
+  - type: ENTITY
+    name: person_type_definition_relationship
+  - type: ENTITY
+    name: position_in_organization
+  - type: ENTITY
+    name: position_in_organization_relationship
+  - type: ENTITY
+    name: position_in_organization_type
+- version: '4'
+  description: |-
+    The following entity types had been introduced to support external element references outside the local population of entity instances:
+
+    * component_path_shape_aspect;
+    * externally_defined_item_with_multiple_references;
+    * generic_product_definition_reference;
+    * product_definition_reference;
+    * product_definition_reference_with_local_representation.
+
+    The following entity types had been introduced to support the the characterization of objects:
+
+    * characterized_chain_based_item_within_representation;
+    * characterized_item_within_representation;
+    * characterized_product.
+
+    The following select types from the basic_attribute_schema had been converted into extensible selects and then extended in several other schemas:
+
+    * description_attribute_select;
+    * id_attribute_select;
+    * name_attribute_select;
+    * role_select.
+  additions:
+  - type: TYPE
+    name: pos_description_attribute_select
+  - type: TYPE
+    name: pos_id_attribute_select
+  - type: TYPE
+    name: pos_name_attribute_select
+  modifications:
+  - type: REFERENCE_FROM
+    name: basic_attribute_schema
+- version: '5'
+  description: The change corrected the EXPRESS layout to align to directives
+  additions:
+  - type: TYPE
+    name: pos_generic_attribute_select
+  - type: TYPE
+    name: pos_generic_attribute_list_select
+  modifications:
+  - type: REFERENCE_FROM
+    name: basic_attribute_schema

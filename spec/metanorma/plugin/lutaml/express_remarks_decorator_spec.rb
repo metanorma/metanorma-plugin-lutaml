@@ -22,6 +22,24 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarksDecorator do
       end
     end
 
+    context "with a docfile-relative prefix" do
+      let(:prefix) { "../../schemas/resources/action_schema" }
+      let(:remark) { "image::diagram.svg[]" }
+      let(:options) do
+        { "relative_path_prefix" => prefix,
+          "relative_path_base" => File.expand_path("/project/documents/iso-1") }
+      end
+
+      it "resolves the path against the docfile directory, not the CWD" do
+        expect(result).to eq(
+          "image::#{File.expand_path(
+            File.join(prefix, 'diagram.svg'),
+            File.expand_path('/project/documents/iso-1'),
+          )}[]",
+        )
+      end
+    end
+
     context "with image: inline macro" do
       let(:remark) { "image:photo.png[alt text]" }
 

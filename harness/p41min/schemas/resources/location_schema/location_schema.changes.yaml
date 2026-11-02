@@ -1,0 +1,19 @@
+---
+schema: location_schema
+change_edition:
+- version: '3'
+  description: |-
+    This also incorporates the modifications of Technical Corrigenda 1 and Technical Corrigenda 2.
+
+    The following EXPRESS schemas have been added:
+
+    * experience_schema;
+    * location_schema;
+    * qualifications_schema.
+  additions:
+  - type: FUNCTION
+    name: acyclic_location_relationship
+  - type: ENTITY
+    name: location
+  - type: ENTITY
+    name: location_relationship

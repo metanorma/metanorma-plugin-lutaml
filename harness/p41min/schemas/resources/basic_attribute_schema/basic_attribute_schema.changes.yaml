@@ -1,0 +1,130 @@
+---
+schema: basic_attribute_schema
+change_edition:
+- version: '2'
+  description: |-
+    The definitions of the following EXPRESS entity data types were modified:
+
+    * action;
+    * action_directive;
+    * action_method;
+    * action_method_relationship;
+    * action_relationship;
+    * action_request_solution;
+    * action_request_status;
+    * action_resource;
+    * action_resource_relationship;
+    * action_resource_type;
+    * action_status;
+    * directed_action;
+    * executed_action;
+    * supported_item;
+    * versioned_action_request.
+  additions:
+  - type: ENTITY
+    name: description_attribute
+  - type: TYPE
+    name: description_attribute_select
+  - type: FUNCTION
+    name: get_description_value
+  - type: FUNCTION
+    name: get_id_value
+  - type: FUNCTION
+    name: get_name_value
+  - type: FUNCTION
+    name: get_role
+  - type: ENTITY
+    name: id_attribute
+  - type: TYPE
+    name: id_attribute_select
+  - type: ENTITY
+    name: name_attribute
+  - type: TYPE
+    name: name_attribute_select
+  - type: ENTITY
+    name: object_role
+  - type: ENTITY
+    name: role_association
+  - type: TYPE
+    name: role_select
+- version: '4'
+  description: |-
+    The following entity types had been introduced to support external element references outside the local population of entity instances:
+
+    * component_path_shape_aspect;
+    * externally_defined_item_with_multiple_references;
+    * generic_product_definition_reference;
+    * product_definition_reference;
+    * product_definition_reference_with_local_representation.
+
+    The following entity types had been introduced to support the the characterization of objects:
+
+    * characterized_chain_based_item_within_representation;
+    * characterized_item_within_representation;
+    * characterized_product.
+
+    The following select types from the basic_attribute_schema had been converted into extensible selects and then extended in several other schemas:
+
+    * description_attribute_select;
+    * id_attribute_select;
+    * name_attribute_select;
+    * role_select.
+  modifications:
+  - type: REFERENCE_FROM
+    name: description_attribute_select
+  - type: REFERENCE_FROM
+    name: id_attribute_select
+  - type: REFERENCE_FROM
+    name: name_attribute_select
+  - type: REFERENCE_FROM
+    name: role_select
+  deletions:
+  - type: REFERENCE_FROM
+    name: action_schema
+  - type: REFERENCE_FROM
+    name: application_context_schema
+  - type: REFERENCE_FROM
+    name: approval_schema
+  - type: REFERENCE_FROM
+    name: configuration_management_schema
+  - type: REFERENCE_FROM
+    name: date_time_schema
+  - type: REFERENCE_FROM
+    name: effectivity_schema
+  - type: REFERENCE_FROM
+    name: external_reference_schema
+  - type: REFERENCE_FROM
+    name: management_resources_schema
+  - type: REFERENCE_FROM
+    name: measure_schema
+  - type: REFERENCE_FROM
+    name: person_organization_schema
+  - type: REFERENCE_FROM
+    name: product_definition_schema
+  - type: REFERENCE_FROM
+    name: product_property_definition_schema
+  - type: REFERENCE_FROM
+    name: product_property_representation_schema
+  - type: REFERENCE_FROM
+    name: group_schema
+  - type: REFERENCE_FROM
+    name: representation_schema
+- version: '5'
+  description: The change corrected the EXPRESS layout to align to directives
+  additions:
+  - type: ENTITY
+    name: aggregate_id_attribute
+  - type: FUNCTION
+    name: get_aggregate_id_value
+  - type: TYPE
+    name: generic_attribute_list_select
+  - type: TYPE
+    name: generic_attribute_select
+  - type: ENTITY
+    name: generic_attribute
+  - type: ENTITY
+    name: generic_attribute_assignment
+  - type: ENTITY
+    name: generic_attribute_list_assignment
+- version: '6'
+  description: ENTITY basic_attribute's description updated.
