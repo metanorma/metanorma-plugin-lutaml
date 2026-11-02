@@ -1,0 +1,227 @@
+== Usage with LutaML data files by lutaml_data
+
+=== General
+
+The `lutaml_data` block command loads data that is defined with LutaML models
+and makes it available to a Liquid template in the block.
+
+The data consists of two parts:
+
+* the *data definitions*: LutaML models, always written in a `.lml` file; and
+* the *data instances*: values of those models, written in `.lml`, `.yaml`,
+  `.yml` or `.json`.
+
+=== Defining a block
+
+Data definitions and data instances in separate files:
+
+[source,asciidoc]
+------
+[lutaml_data,{definition_file},{instance_file},{context_name},options={...}]
+----
+...Liquid template...
+----
+------
+
+Data definitions and data instances in the same `.lml` file:
+
+[source,asciidoc]
+------
+[lutaml_data,{definition_file},{context_name},options={...}]
+----
+...Liquid template...
+----
+------
+
+`definition_file`:: (required) Path to the `.lml` file that holds the LutaML
+models. Relative paths are resolved from the directory of the Metanorma
+document. When this is the only file given, the same file must also contain
+the instances.
+
+`instance_file`:: (optional) Path to the file that holds the data instances,
+with extension `.lml`, `.yaml`, `.yml` or `.json`. The `.lml` instance file
+usually starts with `require "<definition_file>"`.
+
+`context_name`:: (optional) The name under which the data is exposed to the
+Liquid template. Defaults to `lutaml_data`.
+
+`options`:: (optional) Rendering options, given either as a JSON object
+(`options={"include_path":"templates"}`) or as inline `key=value` pairs
+(`include_path=templates`). The supported option is `include_path`, a
+comma-separated list of directories searched by the Liquid `include` tag.
+
+NOTE: A segment is taken as the instance file when its extension is one of
+`.lml`, `.yaml`, `.yml` or `.json`; any other segment is taken as the context
+name.
+
+=== Data in the Liquid context
+
+The data is exposed under `context_name`, then the name of the instance.
+
+* For `.lml` instances, the key is the instance name (`instance S158Checks { ... }`
+  is `S158Checks`).
+* For `.yaml` and `.json` instances, the key is the model name given by the
+  required `type` entry (`type: Widgets` is `Widgets`). A file may hold one
+  object or a list of objects.
+
+Attributes are read by name (`check.dev_id`), collections are iterated with
+`for`, and enum values expose the attributes defined in the model
+(`check.classification.description`).
+
+=== Example
+
+Data definitions, `s102_models.lml`:
+
+[source]
+----
+models IhoS102Check {
+  enum CheckClassification {
+    critical_error {
+      description "Critical Error"
+    }
+    warning {
+      description "Warning"
+    }
+  }
+
+  class ValidationChecks {
+    attribute checks {
+      type ValidationCheck
+      cardinality 0..n
+    }
+  }
+
+  class ValidationCheck {
+    attribute dev_id {
+      type String
+      cardinality 1
+    }
+
+    attribute classification {
+      type CheckClassification
+      cardinality 1
+    }
+
+    attribute check_message {
+      type String
+      cardinality 1
+    }
+  }
+}
+----
+
+Data instances, `s102_checks.lml`:
+
+[source]
+----
+// s102_checks.lml
+require "s102_models.lml"
+instance S158Checks {
+  type ValidationChecks
+
+  checks = [
+    instance IhoS102Check::ValidationCheck {
+      dev_id = "S102_Dev1001"
+      classification = CheckClassification::critical_error
+      check_message = "No feature information group"
+    },
+
+    instance IhoS102Check::ValidationCheck {
+      dev_id = "S102_Dev1002"
+      classification = CheckClassification::warning
+      check_message = "Mandatory metadata attribute missing"
+    }
+  ]
+}
+----
+
+NOTE: In `.lml` files, comments start with `//`. A `#` comment is rejected by
+the instance parser.
+
+The Metanorma document:
+
+[source,asciidoc]
+------
+[lutaml_data,s102_models.lml,s102_checks.lml,lml]
+----
+{% for check in lml.S158Checks.checks %}
+=== S-102 Validation Check `{{ check.dev_id }}`
+
+classification: {{ check.classification.description }}
+
+check message: {{ check.check_message }}
+
+{% endfor %}
+----
+------
+
+renders as:
+
+[source,asciidoc]
+----
+=== S-102 Validation Check `S102_Dev1001`
+
+classification: Critical Error
+
+check message: No feature information group
+
+=== S-102 Validation Check `S102_Dev1002`
+
+classification: Warning
+
+check message: Mandatory metadata attribute missing
+----
+
+=== Instances in YAML or JSON
+
+The same data can be given as YAML (`s102_checks.yaml`):
+
+[source,yaml]
+----
+type: ValidationChecks
+checks:
+  - dev_id: S102_Dev1001
+    check_message: No feature information group
+----
+
+NOTE: Enum-typed attributes (such as `classification` above) cannot currently
+be set from YAML or JSON instances; loading fails. Use `.lml` instances for
+data that has enum values.
+
+The key in the template is the type name:
+
+[source,asciidoc]
+------
+[lutaml_data,s102_models.lml,s102_checks.yaml,lml]
+----
+{% for check in lml.ValidationChecks.checks %}
+{{ check.dev_id }}
+{% endfor %}
+----
+------
+
+=== Instances in the definition file
+
+If the instances are in the definition file, omit the instance file:
+
+[source,asciidoc]
+------
+[lutaml_data,widgets.lml,store]
+----
+{% for widget in store.AllWidgets.widgets %}
+{{ widget.id }}: {{ widget.name }}
+{% endfor %}
+----
+------
+
+=== Options
+
+Directories for Liquid `include` can be set with `options`:
+
+[source,asciidoc]
+------
+[lutaml_data,widgets.lml,store,options={"include_path":"templates"}]
+----
+{% include 'heading' %}
+----
+------

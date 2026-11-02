@@ -1,0 +1,21 @@
+// s102_checks.lml
+require "s102_models.lml"
+instance S158Checks {
+  type ValidationChecks
+
+  checks = [
+    instance IhoS102Check::ValidationCheck {
+      dev_id = "S102_Dev1001"
+      classification = CheckClassification::critical_error
+      check_message = "No feature information group"
+      check_description = "The root group does not have exactly one group member named Group_F"
+      check_solution = "Add feature information group"
+    },
+
+    instance IhoS102Check::ValidationCheck {
+      dev_id = "S102_Dev1002"
+      classification = CheckClassification::warning
+      check_message = "Mandatory metadata attribute missing"
+    }
+  ]
+}
