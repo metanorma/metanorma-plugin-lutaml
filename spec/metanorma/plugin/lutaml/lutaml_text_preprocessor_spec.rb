@@ -1,14 +1,6 @@
 require "spec_helper"
 
 RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
-  # Decorated image paths are emitted docfile-relative (#325): the specs
-  # convert with the docfile directory at the repository root, so the
-  # emitted form is the fixtures path relative to it.
-  def relative_fixtures_path(path)
-    Pathname.new(fixtures_path(path))
-      .relative_path_from(Pathname.new(Dir.pwd)).to_s
-  end
-
   describe "#process" do
     let(:example_file) { fixtures_path("test_relative_includes_svgmap.exp") }
 
