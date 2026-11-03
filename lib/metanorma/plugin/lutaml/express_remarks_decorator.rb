@@ -68,15 +68,19 @@ module Metanorma
           return line if path_prefix && line.include?(path_prefix)
 
           line.gsub(RELATIVE_PREFIX_MACRO_REGEXP) do |_match|
-            # The prefix is already docfile-relative (see
-            # ExpressRemarkAdapter.relative_path_prefix), so joining it
-            # keeps the emitted path relative to the docfile too. Expanding
-            # to an absolute path embedded the build directory in the
-            # output, making semantic XML, presentation XML and HTML differ
-            # between two builds of the same tree (#325). Resolution is the
-            # renderer's job: a relative target joined with imagesdir still
-            # resolves against the docfile at render time.
-            "#{$1}#{$2}#{File.join(path_prefix, $3.strip)}#{$4}"
+            # Expand against the docfile directory (passed by the adapter
+            # as relative_path_base), NOT the process CWD: a CWD expansion
+            # produced absolute image paths under whatever directory the
+            # build was launched from (e.g. <repo>/../../schemas/...).
+            # The absolute result is deliberate: relative targets are
+            # re-anchored by asciidoctor's imagesdir handling
+            # (images/../../schemas collapses a level), which made every
+            # decorated diagram unresolvable at render time.
+            full_path = File.expand_path(
+              File.join(path_prefix, $3.strip),
+              options["relative_path_base"] || Dir.pwd,
+            )
+            "#{$1}#{$2}#{full_path}#{$4}"
           end
         end
       end
