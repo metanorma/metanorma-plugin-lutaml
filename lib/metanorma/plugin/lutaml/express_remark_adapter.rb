@@ -24,13 +24,34 @@ module Metanorma
           # docfile resolves to the same schema file at render time and is
           # byte-identical across build directories; the decorator joins it
           # as written rather than expanding it.
+          #
+          # The render resolves image targets against the imagesdir joined
+          # onto the docfile directory, not the bare docfile: a target
+          # relative to the bare docfile is re-anchored through the
+          # imagesdir prefix and every decorated diagram misses by its
+          # depth (metanorma/iso-10303 smol-all FATAL: emitted
+          # `../schemas/…`, resolved as `images/../schemas/…`). Compute the
+          # prefix against the directory the render resolves from.
           # The docfile directory may be relative ("."): relative_path_from
           # refuses mixed prefixes, so both sides expand first
           Pathname.new(File.expand_path(resolved))
             .relative_path_from(
-              Pathname.new(File.expand_path(docfile_directory)),
+              Pathname.new(image_resolve_base(document, docfile_directory)),
             )
             .to_s
+        end
+
+        # The directory image targets resolve against: the docfile
+        # directory with the imagesdir joined on. A web or absolute
+        # imagesdir bypasses the join; the bare docfile directory is the
+        # closest approximation.
+        def self.image_resolve_base(document, docfile_directory)
+          base = File.expand_path(docfile_directory)
+          imagesdir = document.attributes["imagesdir"]
+          return base if imagesdir.nil? || imagesdir.empty?
+          return base if imagesdir.match?(%r{\A(?:[a-z]+:|/)})
+
+          File.expand_path(imagesdir, base)
         end
 
         def self.for(model)
