@@ -24,6 +24,8 @@ module Metanorma
                "metanorma/plugin/lutaml/express_remarks_decorator"
       autoload :ExpressRemarkAdapter,
                "metanorma/plugin/lutaml/express_remark_adapter"
+      autoload :ExpressRepositoryCache,
+               "metanorma/plugin/lutaml/express_repository_cache"
       autoload :FileNotFoundError,
                "metanorma/plugin/lutaml/file_not_found_error"
       autoload :Json2TextPreprocessor,

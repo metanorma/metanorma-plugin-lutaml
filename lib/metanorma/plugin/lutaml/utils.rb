@@ -200,7 +200,11 @@ module Metanorma
         end
 
         def load_express_repo_from_cache(path)
-          ::Expressir::Express::Cache.from_file(path)
+          ExpressRepositoryCache.fetch_or_store(
+            ExpressRepositoryCache.file_key(path),
+          ) do
+            ::Expressir::Express::Cache.from_file(path)
+          end
         end
 
         def save_express_repo_to_cache(path, repository, document)
@@ -225,14 +229,32 @@ module Metanorma
         # Compiled-set artifacts (EXSCS1) hydrate per file on first
         # touch: rendering one schema's page costs one hydration, not
         # the whole repository. The artifact already carries content
-        # digests, so the expressir Cache layer does not apply.
+        # digests, so the expressir Cache layer does not apply. The
+        # repository handle itself is shared per process, so a second
+        # document compile reuses the first one's hydrated files.
         def load_express_from_artifact(path)
-          Expressir::Express::LazyRepository.new(path.to_s)
+          ExpressRepositoryCache.fetch_or_store(
+            ExpressRepositoryCache.file_key(path),
+          ) do
+            Expressir::Express::LazyRepository.new(path.to_s)
+          end
         end
 
         def load_express_from_folder(folder)
-          file_paths = Dir["#{folder}/*.exp"]
-          ::Expressir::Express::Parser.from_files(file_paths)
+          parse_express_files(Dir["#{folder}/*.exp"])
+        end
+
+        # Parse a set of EXPRESS sources once per process: the parsed
+        # repository is shared through ExpressRepositoryCache, keyed by
+        # the sources' content digests, so the documents of a collection
+        # reuse the first compile's parse instead of each re-parsing the
+        # whole schema set (#341).
+        def parse_express_files(file_paths)
+          ExpressRepositoryCache.fetch_or_store(
+            ExpressRepositoryCache.source_key(file_paths),
+          ) do
+            ::Expressir::Express::Parser.from_files(file_paths)
+          end
         end
 
         # TODO: Refactor this using Suma::SchemaConfig
@@ -252,7 +274,7 @@ module Metanorma
             (schema_yaml_base_path + schema_path).cleanpath.to_s
           end
 
-          ::Expressir::Express::Parser.from_files(file_paths)
+          parse_express_files(file_paths)
         end
 
         def parse_document_express_indexes(document, input_lines) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
