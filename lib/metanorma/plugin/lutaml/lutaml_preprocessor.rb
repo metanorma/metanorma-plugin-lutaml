@@ -27,10 +27,16 @@ module Metanorma
         def load_lutaml_file(document, file_path, _options)
           full_path = Utils.relative_file_path(document, file_path)
 
-          file = File.new(full_path, encoding: "UTF-8")
           if full_path.end_with?(".exp")
-            ::Expressir::Express::Parser.from_file(file.path)
+            # Shared per process (ExpressRepositoryCache): a collection's
+            # documents re-parse the same schema file otherwise.
+            ExpressRepositoryCache.fetch_or_store(
+              ExpressRepositoryCache.source_key([full_path]),
+            ) do
+              ::Expressir::Express::Parser.from_file(full_path)
+            end
           else
+            file = File.new(full_path, encoding: "UTF-8")
             ::Lutaml::Lml::Parser.parse(file)
           end
         end
