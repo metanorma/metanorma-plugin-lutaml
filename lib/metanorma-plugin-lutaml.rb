@@ -85,3 +85,13 @@ autoload :GmlDictionaryDrop,
          "metanorma/plugin/lutaml/liquid_drops/gml_dictionary_drop"
 autoload :GmlDictionaryEntryDrop,
          "metanorma/plugin/lutaml/liquid_drops/gml_dictionary_entry_drop"
+
+# Eager: registers the collection renderer's reference-anchor resolver
+# for the EXPRESS vocabulary's hidden bibitems (a load-time side effect,
+# not a lazily-referenced class). Guarded for stacks without the
+# metanorma#658 renderer seam.
+if defined?(Metanorma::Collection::Renderer::Svg) &&
+    Metanorma::Collection::Renderer::Svg
+      .respond_to?(:register_reference_anchor_resolver)
+  require "metanorma/plugin/lutaml/express_hotspot_anchor"
+end
