@@ -12,7 +12,7 @@ module Metanorma
       # instead of falling to the reference list (metanorma#656 family;
       # the core renderer registers no resolvers of its own).
       module ExpressHotspotAnchor
-        Metanorma::Collection::Renderer::Svg
+        Metanorma::Collection::Renderer
           .register_reference_anchor_resolver do |bibitemid, lookup|
             next unless bibitemid.start_with?("express_")
 
