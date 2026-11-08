@@ -4,7 +4,7 @@ require "metanorma/plugin/lutaml"
 
 RSpec.describe Metanorma::Plugin::Lutaml::ExpressHotspotAnchor do
   let(:registry) do
-    Metanorma::Collection::Renderer::Svg.reference_anchor_resolvers
+    Metanorma::Collection::Renderer.reference_anchor_resolvers
   end
 
   # The registration happens at gem load; find this gem's resolver among
