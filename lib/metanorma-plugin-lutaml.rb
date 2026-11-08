@@ -90,8 +90,8 @@ autoload :GmlDictionaryEntryDrop,
 # for the EXPRESS vocabulary's hidden bibitems (a load-time side effect,
 # not a lazily-referenced class). Guarded for stacks without the
 # metanorma#658 renderer seam.
-if defined?(Metanorma::Collection::Renderer::Svg) &&
-    Metanorma::Collection::Renderer::Svg
+if defined?(Metanorma::Collection::Renderer) &&
+    Metanorma::Collection::Renderer
       .respond_to?(:register_reference_anchor_resolver)
   require "metanorma/plugin/lutaml/express_hotspot_anchor"
 end
