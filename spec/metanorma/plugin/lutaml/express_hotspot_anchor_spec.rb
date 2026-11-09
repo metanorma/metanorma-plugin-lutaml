@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
-require "metanorma/plugin/lutaml"
+# The registration is guarded on the renderer seam being defined: load
+# metanorma's renderer first, then the registration file (the entry-point
+# require ran earlier under spec_helper, before metanorma, when the guard
+# still skipped).
+require "metanorma/collection/renderer"
+require "metanorma/plugin/lutaml/express_hotspot_anchor"
 
 RSpec.describe Metanorma::Plugin::Lutaml::ExpressHotspotAnchor do
   let(:registry) do
