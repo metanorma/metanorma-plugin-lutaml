@@ -45,12 +45,12 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressHotspotAnchor do
   end
 
   it "strips the express_ prefix before the lookup" do
-    seen = nil
+    seen = []
     probe = registry.find do |r|
-      r.call("express_a.b", ->(base) { seen = base; nil })
+      r.call("express_a.b", ->(base) { seen << base; nil })
     end
-    probe.call("express_a.b", ->(base) { seen = base; nil })
-    expect(seen).to eq("a.b")
+    probe.call("express_a.b", ->(base) { seen << base; nil })
+    expect(seen.first).to eq("a.b")
   end
 
   it "resolves a bibitemid carrying the citing page's suffix chain" do
