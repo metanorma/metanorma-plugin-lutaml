@@ -4,13 +4,11 @@
 # metanorma's renderer first, then the registration file (the entry-point
 # require ran earlier under spec_helper, before metanorma, when the guard
 # still skipped).
-# The seam file moved across metanorma releases: 2.5.19 keeps it at
-# collection/collection.rb; the require fallback covers older layouts.
-begin
-  require "metanorma/collection/collection"
-rescue LoadError
-  require "metanorma/collection/renderer"
-end
+# The registration needs the renderer seam defined first: requiring the
+# metanorma umbrella defines Renderer and the registry; the entry-point
+# require in spec_helper ran before metanorma, when the guard still
+# skipped, so the registration file is loaded here directly.
+require "metanorma"
 require "metanorma/plugin/lutaml/express_hotspot_anchor"
 
 RSpec.describe Metanorma::Plugin::Lutaml::ExpressHotspotAnchor do
