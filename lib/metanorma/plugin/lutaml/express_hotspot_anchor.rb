@@ -26,8 +26,12 @@ module Metanorma
 
             name = bibitemid.sub(/\Aexpress_/, "")
             rec = lookup.call(name)
-            while rec.nil? && name.include?("_")
-              name = name.sub(/_[^_]+\z/, "")
+            # Cut at the LAST underscore: page-suffix chains carry doubled
+            # underscores ("..._Annex_D__informative__EXPRESS-G_diagrams"),
+            # and a trailing "_" defeats /_[^_]+\z/ entirely - the name
+            # would never shrink and the walk would never end (#346).
+            while rec.nil? && (idx = name.rindex("_"))
+              name = name[0...idx]
               rec = lookup.call(name)
             end
             rec

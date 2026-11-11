@@ -46,10 +46,14 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressHotspotAnchor do
 
   it "strips the express_ prefix before the lookup" do
     seen = []
-    probe = registry.find do |r|
-      r.call("express_a.b", ->(base) { seen << base; nil })
+    # Discriminate the express resolver by family: a truthy lookup makes
+    # exactly the express-family resolver answer (non-express resolvers
+    # decline the express_ prefix).
+    probe = registry.reverse.find do |r|
+      r.call("express_a.b", ->(_base) { :decl }) == :decl
     end
-    probe.call("express_a.b", ->(base) { seen << base; nil })
+    seen.clear
+    expect(probe.call("express_a.b", ->(base) { seen << base; :decl })).to eq(:decl)
     expect(seen.first).to eq("a.b")
   end
 
@@ -60,6 +64,32 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressHotspotAnchor do
     stamped = "express_geometry_schema.line_ISO_DIS_10303-108_2025_" \
               "ISO_DIS_10303-108_2025_Annex_D__informative__EXPRESS-G_diagrams"
     expect(resolver.call(stamped, lookup)).to eq(:decl_line)
+  end
+
+  it "terminates on the doubled-underscore annex chain (#346)" do
+    # The annex page chain carries "__": once the walk strips down to
+    # "..._Annex_D_", the old /_[^_]+\z/ cut stopped matching, the name
+    # never shrank again, and the walk spun forever (millions of
+    # identical lookups in the reinflate). The walk must end within a
+    # bounded number of lookups and bind the declaration via the
+    # unique front-prefix.
+    seen = 0
+    counting = ->(base) {
+      seen += 1
+      raise "runaway prefix walk: #{seen} lookups, at #{base.inspect}" if seen > 60
+
+      lookup.call(base)
+    }
+    annexed = "express_geometry_schema.line_ISO_10303-42_2025_" \
+              "ISO_10303-42_2025_Annex_D__informative"
+    expect(resolver.call(annexed, counting)).to eq(:decl_line)
+  end
+
+  it "terminates when the bibitemid ends in an underscore" do
+    # Same #346 shape one character earlier: a trailing "_" alone must
+    # not wedge the walk.
+    trailing = "express_geometry_schema.line_ISO_10303-42_2025_b_"
+    expect(resolver.call(trailing, lookup)).to eq(:decl_line)
   end
 
   it "returns nil for references outside the express family" do
