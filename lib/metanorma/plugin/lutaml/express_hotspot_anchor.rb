@@ -25,17 +25,29 @@ module Metanorma
             next unless bibitemid.start_with?("express_")
 
             name = bibitemid.sub(/\Aexpress_/, "")
-            rec = lookup.call(name)
-            # Cut at the LAST underscore: page-suffix chains carry doubled
-            # underscores ("..._Annex_D__informative__EXPRESS-G_diagrams"),
-            # and a trailing "_" defeats /_[^_]+\z/ entirely - the name
-            # would never shrink and the walk would never end (#346).
-            while rec.nil? && (idx = name.rindex("_"))
-              name = name[0...idx]
-              rec = lookup.call(name)
-            end
-            rec
+            schema_part, entity_full = name.include?(".") ? name.split(".", 2) : [nil, name]
+
+            # The entity name is fixed; only the page-stamp suffix chain
+            # after it is stripped. A stamp segment announces itself with
+            # an uppercase letter or a digit (ISO_DIS_10303-108_2025,
+            # Annex_D, EXPRESS-G_diagrams, iso10303-9002) - entity names
+            # are lowercase snake_case, so the trim can never migrate the
+            # asked entity onto a different declaration (#825: an
+            # undeclared line_segment must stay untargeted, not adopt
+            # line's record).
+            entity = stamp_trim(entity_full)
+            asked = [schema_part, entity_full].compact.join(".")
+            candidate = [schema_part, entity].compact.join(".")
+            lookup.call(asked) || lookup.call(candidate)
           end
+
+        # Drops the trailing stamp segments: everything from the first
+        # underscore-segment carrying an uppercase letter or a digit.
+        def self.stamp_trim(entity_full)
+          segments = entity_full.split("_")
+          kept = segments.take_while { |segment| segment !~ /[A-Z0-9]/ }
+          kept.empty? ? entity_full : kept.join("_")
+        end
       end
     end
   end

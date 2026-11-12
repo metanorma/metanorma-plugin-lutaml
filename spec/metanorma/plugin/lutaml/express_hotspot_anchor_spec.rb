@@ -92,6 +92,33 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressHotspotAnchor do
     expect(resolver.call(trailing, lookup)).to eq(:decl_line)
   end
 
+  it "never migrates an undeclared entity onto another declaration (#825)" do
+    # metanorma/iso-10303#825 case 7 of #346: line_segment is not
+    # declared anywhere; the old walk stripped INTO the entity name and
+    # adopted line's record. The trim stops at the stamp boundary (the
+    # first digit/capital segment), so an undeclared entity stays
+    # untargeted.
+    asked = "express_trial_geo_schema.line_segment_iso10303-9002"
+    expect(resolver.call(asked, lookup)).to be_nil
+  end
+
+  it "trims only the stamp chain, never the entity's own segments" do
+    # An entity whose own name carries a stamp-shaped tail segment
+    # (lowercase "9002"-style) keeps it when it is what the index holds:
+    # the full form is tried first and exact matches win.
+    idx2 = {
+      "geometry_schema.line_segment_9002" => :decl_segment_9002,
+    }
+    l2 = ->(base) {
+      idx2[base] || begin
+        c = idx2.keys.select { |k| k.start_with?("#{base}_") }
+        c.one? ? idx2[c.first] : nil
+      end
+    }
+    expect(resolver.call("express_geometry_schema.line_segment_9002", l2))
+      .to eq(:decl_segment_9002)
+  end
+
   it "returns nil for references outside the express family" do
     expect(resolver.call("iso_17301", ->(_b) { :hit })).to be_nil
   end
