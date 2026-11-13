@@ -1,0 +1,30 @@
+models SampleRegisters {
+  class RegisterEdition {
+    attribute register {
+      type String
+      cardinality 1
+    }
+
+    attribute as_of_issue {
+      type Integer
+      cardinality 1
+    }
+
+    attribute rows {
+      type RegisterRow
+      cardinality 0..n
+    }
+  }
+
+  class RegisterRow {
+    attribute key {
+      type String
+      cardinality 1
+    }
+
+    attribute name {
+      type String
+      cardinality 1
+    }
+  }
+}

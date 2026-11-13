@@ -225,3 +225,57 @@ Directories for Liquid `include` can be set with `options`:
 {% include 'heading' %}
 ----
 ------
+
+=== Data from a provider
+
+A Ruby gem can expose data to documents as a provider. The block names the
+provider and one of its queries instead of a definition file, and passes the
+query's keyword arguments under `arguments` in `options`:
+
+[source,asciidoc]
+------
+[lutaml_data,provider:ituob.edition,edition,options={"arguments":{"register":"e212-mnc","as_of":1170}}]
+----
+{{ edition.register }} as of issue {{ edition.as_of_issue }}
+{% for row in edition.items %}
+{{ row.mnc }} {{ row.network }}
+{% endfor %}
+----
+------
+
+The query's result reaches Liquid unconverted: lutaml-model objects answer
+`to_liquid` themselves, so the template reads the provider's typed
+attributes, in the order the provider returns them. The plugin never turns
+them into hashes.
+
+==== Writing a provider
+
+A provider gem ships
+`lib/metanorma/plugin/lutaml/data_providers/<name>.rb`, which registers a
+factory:
+
+[source,ruby]
+----
+Metanorma::Plugin::Lutaml::DataProviders.register("ituob") do
+  Ituob::Provider.new
+end
+----
+
+The plugin requires that file the first time a document names the provider,
+so the provider gem only has to be in the document's bundle. Provider names
+are lowercase letters, digits and underscores.
+
+The provider object lists the queries a document may call:
+
+[source,ruby]
+----
+def lutaml_data_queries
+  %i[edition history]
+end
+----
+
+Any other method, public or not, cannot be called from a document. A query
+takes keyword arguments (JSON keys become keywords, JSON numbers stay
+numbers) and returns lutaml-model objects or arrays of them. An unknown
+provider, an undeclared query or a wrong argument fails the block with an
+error.

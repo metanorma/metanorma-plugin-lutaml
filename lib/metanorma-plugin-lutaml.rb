@@ -18,6 +18,7 @@ module Metanorma
       autoload :CacheRegistry, "metanorma/plugin/lutaml/cache_registry"
       autoload :Config, "metanorma/plugin/lutaml/config"
       autoload :Content, "metanorma/plugin/lutaml/content"
+      autoload :DataProviders, "metanorma/plugin/lutaml/data_providers"
       autoload :Data2TextPreprocessor,
                "metanorma/plugin/lutaml/data2_text_preprocessor"
       autoload :ExpressRemarksDecorator,
