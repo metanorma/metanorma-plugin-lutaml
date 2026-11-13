@@ -57,6 +57,23 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkAdapter do
     expect(schema.remark_items.length).to eq(2)
   end
 
+  # expressir 2.4.59 (expressir#603) formats remark_items, so the promoted
+  # item would otherwise print inside the schema source, after the last
+  # declaration and under a doubled tag.
+  %i[formatted formatted_hyperlinked formatted_hyperlinked_adoc].each do |fmt|
+    it "keeps the promoted prose out of Schema##{fmt}" do
+      source = Expressir::Express::Parser.from_files([tempfile.path])
+        .schemas.first.public_send(fmt)
+
+      described_class.for(schema).decorate_remarks(
+        { "document" => nil, "relative_path_prefix" => Dir.tmpdir },
+      )
+
+      expect(schema.public_send(fmt)).to eq(source)
+      expect(schema.remark_items.first.id).to eq("schema_prose")
+    end
+  end
+
   it "does not promote twice" do
     options = { "document" => nil, "relative_path_prefix" => Dir.tmpdir }
     described_class.for(schema).decorate_remarks(options)

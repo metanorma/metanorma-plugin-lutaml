@@ -79,6 +79,9 @@ module Metanorma
           # by the schema path, the same way an entity-tagged remark names
           # its target. The prose stays in Schema#remarks too; templates
           # that already render it there keep working unchanged.
+          #
+          # Since expressir 2.4.59 (expressir#603) the formatters print
+          # remark_items, so the synthetic item is hidden from them.
           def promote_schema_prose
             return unless @model.is_a?(Expressir::Model::Declarations::Schema)
             return if @model.remarks.to_a.empty?
@@ -91,6 +94,24 @@ module Metanorma
               remarks: @model.remarks.dup,
             )
             @model.remark_items = [prose] + items
+            hide_from_source_formats(prose)
+          end
+
+          # Each format is still computed lazily and memoized by expressir;
+          # it just runs without the promoted item in remark_items.
+          def hide_from_source_formats(prose)
+            %i[
+              formatted formatted_hyperlinked formatted_hyperlinked_adoc
+            ].each do |name|
+              format = @model.method(name)
+              @model.define_singleton_method(name) do
+                items = remark_items
+                self.remark_items = items - [prose]
+                format.call
+              ensure
+                self.remark_items = items
+              end
+            end
           end
 
           def decorate_own_remarks(options)
