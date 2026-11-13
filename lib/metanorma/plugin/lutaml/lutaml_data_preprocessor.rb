@@ -22,9 +22,18 @@ module Metanorma
       #
       #   [lutaml_data,models.lml,store,options={"include_path":"templates"}]
       #
+      # Data from a registered provider (see DataProviders), with the
+      # query's keyword arguments under `arguments`:
+      #
+      #   [lutaml_data,provider:ituob.edition,edition,
+      #    options={"arguments":{"register":"e212-mnc","as_of":1170}}]
+      #
+      # (written on one line in a document)
+      #
       class LutamlDataPreprocessor < BasePreprocessor
         DATA_FILE_EXTENSIONS = %w[.lml .yaml .yml .json].freeze
         DEFAULT_CONTEXT_NAME = "lutaml_data"
+        PROVIDER_SOURCE = /\Aprovider:(?<name>[^.]+)\.(?<query>.+)\z/
 
         DATA_BLOCK_REGEX = %r{
           ^
@@ -62,7 +71,7 @@ module Metanorma
           end_mark = input_lines.next
           lines = extract_block_lines(input_lines, end_mark)
 
-          render_data_template(
+          render_block(
             document: document,
             lines: lines,
             definition_file: definition_file,
@@ -128,6 +137,42 @@ module Metanorma
         rescue StandardError => e
           log_block_failure(e)
           raise e
+        end
+
+        def render_block(document:, lines:, definition_file:, **rest)
+          provider = definition_file.match(PROVIDER_SOURCE)
+          unless provider
+            return render_data_template(document: document, lines: lines,
+                                        definition_file: definition_file,
+                                        **rest)
+          end
+
+          render_provider_template(document, lines, provider,
+                                   rest[:context_name], rest[:options])
+        end
+
+        def render_provider_template(document, lines, provider, # rubocop:disable Metrics/ParameterLists
+                                     context_name, options)
+          arguments, options = provider_arguments(options)
+          data = DataProviders.query(provider[:name], provider[:query],
+                                     arguments)
+          parsed_template = template(lines)
+          parsed_template.registers[:file_system] =
+            build_file_system(document, options)
+          [parsed_template.render(context_name => data)]
+        rescue StandardError => e
+          log_block_failure(e)
+          raise e
+        end
+
+        def provider_arguments(options)
+          arguments = options.fetch("arguments", {})
+          unless arguments.is_a?(Hash)
+            raise StandardError, "lutaml_data provider `arguments` must " \
+                                 "be a JSON object"
+          end
+
+          [arguments, options.except("arguments")]
         end
 
         def log_block_failure(error)

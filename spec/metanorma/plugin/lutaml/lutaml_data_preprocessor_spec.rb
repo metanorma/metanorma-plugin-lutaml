@@ -160,4 +160,43 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDataPreprocessor do
       )
     end
   end
+
+  describe "provider sources" do
+    let(:provider_input) do
+      <<~TEXT
+        = Document title
+        Author
+        :docfile: test.adoc
+        :nodoc:
+        :novalid:
+        :no-isobib:
+        :imagesdir: spec/assets
+
+        [lutaml_data,provider:sample_registers.edition,edition,options={"arguments":{"register":"demo","as_of":1170}}]
+        ----
+        Register {{ edition.register }} as of issue {{ edition.as_of_issue }}
+
+        {% for row in edition.rows %}
+        Row {{ forloop.index }}: {{ row.key }} {{ row.name }}
+        {% endfor %}
+        ----
+      TEXT
+    end
+
+    around { |example| with_fixture_provider_load_path { example.run } }
+
+    it "renders a provider query's lutaml-model objects in provider order" do
+      output = convert_to_xml(provider_input)
+      expect(output).to include("Register demo as of issue 1170")
+      expect(output.index("Row 1: 02 Beta"))
+        .to be < output.index("Row 2: 01 Alpha")
+    end
+
+    it "fails the block for a query the provider does not declare" do
+      input = provider_input.sub("sample_registers.edition",
+                                 "sample_registers.unlisted_query")
+      expect { convert_to_xml(input) }
+        .to raise_error(/has no query `unlisted_query`/)
+    end
+  end
 end
