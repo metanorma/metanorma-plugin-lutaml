@@ -228,4 +228,30 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarksDecorator do
       end
     end
   end
+
+  # A `+` glued to the macro's closing bracket renders as literal text in
+  # every asciidoctor context (iso-10303#862: the direction_vectors
+  # continuation) — strip it so the macro renders as its block.
+  describe "glued continuations" do
+    let(:remark) do
+      <<~REMARK
+        and the three direction vectors
+        +
+        image::direction_vectors.gif[]+
+      REMARK
+    end
+    let(:options) { {} }
+
+    it "strips the glued plus and keeps the macro" do
+      # the standalone `+` above the macro is paragraph-attached, so the
+      # dangling-continuation pass blanks it too: text, blank, block
+      expect(result)
+        .to eq("and the three direction vectors\n\nimage::direction_vectors.gif[]")
+    end
+
+    it "is idempotent under re-decoration" do
+      second = described_class.call(result, options)
+      expect(second).to eq(result)
+    end
+  end
 end
