@@ -24,6 +24,11 @@ module Metanorma
         # only when the preceding line is a list item.
         LONE_CONTINUATION_REGEXP = /^\+[[:space:]]*$/
 
+        # A `+` glued to a macro line's trailing `[]` (no whitespace): the
+        # form asciidoctor renders as literal text in every context.
+        GLUED_CONTINUATION_REGEXP = %r{
+          ^(?:link|image|video|audio|include):: .+ \[\][+][[:space:]]*$
+        }x
         LIST_ITEM_REGEXP = %r{
           ^(?:[-*]|\d+[.)]|[A-Za-z][.)])\s   # bullets and enumerations
           | \w[[:alnum:] _-]*::\s            # definition lists
@@ -48,6 +53,7 @@ module Metanorma
 
         def call
           result = normalise_dangling_continuations(remark)
+          result = normalise_glued_continuations(result)
           if options["relative_path_prefix"]
             result = update_relative_paths(result,
                                            options["relative_path_prefix"])
@@ -56,6 +62,21 @@ module Metanorma
         end
 
         private
+
+        # A `+` GLUED to a macro's closing bracket (`image::x.gif[]+`) is
+        # parsed by asciidoctor as literal text in EVERY context — list
+        # item or paragraph (TRThurman's trial, iso-10303#862: the
+        # kinematic_structure_schema `direction_vectors` continuation) —
+        # so it never performs the attachment the author wrote it for.
+        # Strip it: the macro renders as its block, and any intended
+        # continuation of the following text stays with the following
+        # text.
+        def normalise_glued_continuations(string)
+          strip = lambda do |line|
+            line.match?(GLUED_CONTINUATION_REGEXP) ? line[..-2] : line
+          end
+          string.split("\n").map(&strip).join("\n")
+        end
 
         # A lone `+` is asciidoctor's list-item continuation: it attaches
         # the next block only when the preceding line is a list item.
