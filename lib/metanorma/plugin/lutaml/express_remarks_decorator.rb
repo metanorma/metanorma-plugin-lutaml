@@ -18,6 +18,17 @@ module Metanorma
           $                                # End of line
         }x
 
+        MACRO_LINE_REGEXP = /^(link|image|video|audio|include)::/
+
+        # Asciidoctor's list-item continuation: attaches the next block
+        # only when the preceding line is a list item.
+        LONE_CONTINUATION_REGEXP = /^\+[[:space:]]*$/
+
+        LIST_ITEM_REGEXP = %r{
+          ^(?:[-*]|\d+[.)]|[A-Za-z][.)])\s   # bullets and enumerations
+          | \w[[:alnum:] _-]*::\s            # definition lists
+        }x
+
         attr_reader :remark, :options
 
         def self.call(remark, options)
@@ -36,7 +47,7 @@ module Metanorma
         end
 
         def call
-          result = remark
+          result = normalise_dangling_continuations(remark)
           if options["relative_path_prefix"]
             result = update_relative_paths(result,
                                            options["relative_path_prefix"])
@@ -46,17 +57,45 @@ module Metanorma
 
         private
 
-        def update_relative_paths(string, path_prefix)
-          string
-            .split("\n")
-            .map do |line|
-              if line.match?(RELATIVE_PREFIX_MACRO_REGEXP)
-                prefix_relative_paths(line, path_prefix)
-              else
-                line
-              end
-            end
+        # A lone `+` is asciidoctor's list-item continuation: it attaches
+        # the next block only when the preceding line is a list item.
+        # Authored after plain paragraphs (the corpus's `term - definition`
+        # style), it folds the following macro line into a literal text
+        # paragraph — printing the macro source with the decorator's
+        # expanded path inside it, which leaks the build directory into
+        # published text (iso-10303#862: kinematic_structure_schema's
+        # figure continuations). After a paragraph there is nothing to
+        # attach to, so the `+` becomes a blank line: the macro renders
+        # as the standalone block the author intended, directly after the
+        # text. Continuations after genuine list items keep their `+`.
+        def normalise_dangling_continuations(string)
+          lines = string.split("\n")
+          lines.each_with_index
+            .map do |line, idx|
+            dangling_continuation?(lines, idx) ? "" : line
+          end
             .join("\n")
+        end
+
+        def dangling_continuation?(lines, idx)
+          return false unless lines[idx].match?(LONE_CONTINUATION_REGEXP)
+          return false unless lines[idx + 1].to_s.match?(MACRO_LINE_REGEXP)
+
+          prev = idx.positive? && lines[idx - 1]
+          return false if prev&.match?(LIST_ITEM_REGEXP)
+
+          true
+        end
+
+        def update_relative_paths(string, path_prefix)
+          expand_line = lambda do |line|
+            if line.match?(RELATIVE_PREFIX_MACRO_REGEXP)
+              prefix_relative_paths(line, path_prefix)
+            else
+              line
+            end
+          end
+          string.split("\n").map(&expand_line).join("\n")
         end
 
         def prefix_relative_paths(line, path_prefix)
