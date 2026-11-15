@@ -172,4 +172,60 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarksDecorator do
       expect(result).to eq("image::diagram.svg[]")
     end
   end
+  describe "dangling list continuations" do
+    context "with a continuation-attached image after a plain paragraph" do
+      let(:remark) do
+        <<~REMARK
+          stem:[a_k] - the distance, given by
+          +
+          image::ak_positive_distance.gif[]
+        REMARK
+      end
+
+      it "blanks the continuation and keeps the image as a block" do
+        expect(result).to eq(
+          "stem:[a_k] - the distance, given by\n" \
+          "\n" \
+          "image::#{expanded_path('ak_positive_distance.gif')}[]",
+        )
+      end
+
+      it "is idempotent under re-decoration" do
+        second = described_class.call(result, options)
+        expect(second).to eq(result)
+      end
+    end
+
+    context "with a continuation after a genuine list item" do
+      let(:remark) do
+        <<~REMARK
+          - list entry
+          +
+          image::diagram.svg[]
+        REMARK
+      end
+
+      it "keeps the continuation" do
+        expect(result).to eq(
+          "- list entry\n" \
+          "+\n" \
+          "image::#{expanded_path('diagram.svg')}[]",
+        )
+      end
+    end
+
+    context "with a continuation before non-macro text" do
+      let(:remark) do
+        <<~REMARK
+          some paragraph
+          +
+          plain continuation text
+        REMARK
+      end
+
+      it "leaves the remark untouched" do
+        expect(result).to eq("some paragraph\n+\nplain continuation text")
+      end
+    end
+  end
 end
