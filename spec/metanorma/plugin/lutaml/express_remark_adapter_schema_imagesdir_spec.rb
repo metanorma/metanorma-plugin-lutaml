@@ -114,22 +114,25 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkAdapter do
       expect(schema.listing_imagesdir_restore).to be_nil
     end
 
-    it "sets a document-level imagesdir for a single-schema repository" do
+    # metanorma's figure absolutization joins document.imagesdir with
+    # svgmap-synthesized targets that are ALREADY docfile-relative, so a
+    # document-level value doubles the directory segments and fails the
+    # image-existence check (suma's dummy-collection build). The remark
+    # content resolves through the listing-scoped entries only.
+    it "leaves the document imagesdir unset for a single-schema repository" do
       decorate(repository, document)
 
-      expect(document.attributes["imagesdir"])
-        .to eq(File.expand_path(schema_directory))
+      expect(document.attributes["imagesdir"]).to be_nil
     end
 
-    it "sets a document-level imagesdir when the directory is shared" do
+    it "leaves the document imagesdir unset when the directory is shared" do
       other = write_schema(schema_directory, "schema_b")
       repository = Expressir::Express::Parser.from_files(
         [schema_file, other],
       )
       decorate(repository, document)
 
-      expect(document.attributes["imagesdir"])
-        .to eq(File.expand_path(schema_directory))
+      expect(document.attributes["imagesdir"]).to be_nil
     end
 
     it "does not set a document-level imagesdir across directories" do
