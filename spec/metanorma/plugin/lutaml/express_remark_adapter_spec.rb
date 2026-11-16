@@ -2,6 +2,7 @@
 
 require "spec_helper"
 require "expressir"
+require "expressir/express/parser"
 require "metanorma/plugin/lutaml/express_remark_adapter"
 
 RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkAdapter do
@@ -68,21 +69,18 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkAdapter do
   end
 
   describe "ModelAdapter#decorate_remarks" do
-    it "decorates remarks on the model" do
+    it "leaves remark text untouched (source fidelity)" do
       schema = Expressir::Model::Declarations::Schema.new(
         id: "test_schema",
         remarks: ["original remark"],
       )
-      allow(schema).to receive(:children).and_return([])
 
-      described_class.for(schema).decorate_remarks(
-        { "relative_path_prefix" => "/some/path" },
-      )
+      described_class.for(schema).decorate_remarks({})
 
       expect(schema.remarks).to eq(["original remark"])
     end
 
-    it "decorates remark_items on models that include HasRemarkItems" do
+    it "leaves the remark items of child models untouched" do
       entity = Expressir::Model::Declarations::Entity.new(
         id: "test_entity",
         remarks: [],
@@ -90,28 +88,118 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkAdapter do
       ri = Expressir::Model::Declarations::RemarkItem.new(
         remarks: ["original"],
       )
-      allow(entity).to receive_messages(remark_items: [ri], children: [])
+      allow(entity).to receive(:remark_items).and_return([ri])
 
-      described_class.for(entity).decorate_remarks(
-        { "remark_format" => "prefix" },
-      )
+      described_class.for(entity).decorate_remarks({})
 
-      expect(ri.remarks).not_to be_empty
+      expect(ri.remarks).to eq(["original"])
+    end
+  end
+
+  describe "source fidelity of decorated remarks" do
+    # Decoration used to rewrite remark text: absolute path expansion
+    # into image macros (leaking the build directory into published
+    # pages) and the 0.7.68/0.7.69 continuation passes, which blanked
+    # legitimate interior `+` lines of list chains. It now rewrites
+    # nothing; wrong `+` lines in sources are WG 12's to fix
+    # (filings TCSC410303-3232/3233).
+    let(:schema_directory) { Dir.mktmpdir }
+    let(:schema_file) { File.join(schema_directory, "chain_schema.exp") }
+
+    let(:schema) do
+      Expressir::Express::Parser.from_file(schema_file).schemas.first
     end
 
-    it "does not raise when a RemarkItem appears in children" do
-      schema = Expressir::Model::Declarations::Schema.new(
-        id: "test_schema",
-        remarks: [],
-      )
-      remark_item = Expressir::Model::Declarations::RemarkItem.new(
-        remarks: ["some remark"],
-      )
-      allow(schema).to receive(:children).and_return([remark_item])
+    def decorate
+      described_class.for(schema).decorate_remarks({})
+    end
 
-      expect do
-        described_class.for(schema).decorate_remarks({})
-      end.not_to raise_error
+    context "with Tom's trial continuation chain" do
+      # trial_continuation_chain.zip: a `. step one` item whose chain of
+      # three images and two text paragraphs is legitimate asciidoctor
+      # structure — the SRL corpus measured 11 interior `+` lines
+      # blanked inside two such chains (kinematic_structure_schema.exp
+      # lines 2405/2727), detaching 6 figures.
+      let(:chain) do
+        <<~REMARK
+          The method is:
+
+          . step one
+          +
+          image::first_image.gif[]
+          +
+          image::second_image.gif[]
+          +
+          text after the second image
+          +
+          image::third_image.gif[]
+          +
+          final text paragraph
+        REMARK
+      end
+
+      before do
+        File.write(schema_file, <<~EXP)
+          SCHEMA chain_schema;
+
+          (*"chain_schema"
+          #{chain}*)
+
+          ENTITY thing;
+            name : STRING;
+          END_ENTITY;
+
+          END_SCHEMA;
+        EXP
+      end
+
+      it "passes the chain through the decoration area unchanged" do
+        decorate
+        printed = schema.remarks.join
+
+        expect(printed).to include(chain.chomp)
+      end
+
+      it "does not alter the remark array" do
+        before = schema.remarks.dup
+        decorate
+
+        expect(schema.remarks).to eq(before)
+      end
+    end
+
+    context "with relative image macro targets" do
+      before do
+        File.write(schema_file, <<~EXP)
+          SCHEMA chain_schema;
+
+          (*"chain_schema"
+          The diagram:
+
+          image::diagram.gif[]
+
+          A linked document:
+
+          link::details.html[Details]
+          *)
+
+          ENTITY thing;
+            name : STRING;
+          END_ENTITY;
+
+          END_SCHEMA;
+        EXP
+      end
+
+      it "keeps the macro targets relative" do
+        decorate
+        printed = schema.remarks.join
+
+        expect(printed).to include("image::diagram.gif[]")
+        expect(printed).to include("link::details.html[Details]")
+        expect(printed).not_to include(Dir.tmpdir)
+        expect(printed).not_to include(schema_directory)
+      end
     end
   end
 end
