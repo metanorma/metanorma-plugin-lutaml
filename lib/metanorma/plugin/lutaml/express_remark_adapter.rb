@@ -164,33 +164,19 @@ module Metanorma
             @model.schemas.each do |schema|
               ExpressRemarkAdapter.for(schema).decorate_remarks(options)
             end
-            apply_document_imagesdir(options["document"])
           end
 
           private
 
-          # A per-schema document (one schema rendered per document —
-          # suma's SchemaTemplate::Document) takes a document-level
-          # imagesdir: every schema in the repository resolves its images
-          # against the same directory, so templates that print the raw
-          # formatted_hyperlinked_adoc keep working without path
-          # rewriting. An imagesdir the author (or an earlier block) set
-          # is respected; a multi-directory repository cannot take one
-          # document-level value — its schemas carry the attribute entries
-          # in their listing output instead.
-          def apply_document_imagesdir(document)
-            return unless document
-
-            dirs = @model.schemas.filter_map do |schema|
-              next unless schema.respond_to?(:listing_imagesdir)
-
-              schema.listing_imagesdir
-            end.uniq
-            return unless dirs.one?
-            return if document.attributes["imagesdir"]
-
-            document.attributes["imagesdir"] = dirs.first
-          end
+          # NO document-level imagesdir here: metanorma's figure
+          # absolutization joins document.attributes["imagesdir"] with
+          # svgmap-synthesized targets that are ALREADY docfile-relative
+          # (the express-g assembly writes `../../schemas/...`), doubling
+          # the directory segments and failing the image-existence check
+          # (suma's dummy-collection repro). The remark content is served
+          # by the listing-scoped attribute entries emitted around each
+          # source block, which only affect asciidoctor resolution inside
+          # the listing.
         end
 
         class CachedRepoAdapter < Base
