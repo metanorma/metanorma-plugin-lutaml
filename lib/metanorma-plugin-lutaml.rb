@@ -21,12 +21,12 @@ module Metanorma
       autoload :DataProviders, "metanorma/plugin/lutaml/data_providers"
       autoload :Data2TextPreprocessor,
                "metanorma/plugin/lutaml/data2_text_preprocessor"
-      autoload :ExpressRemarksDecorator,
-               "metanorma/plugin/lutaml/express_remarks_decorator"
       autoload :ExpressRemarkAdapter,
                "metanorma/plugin/lutaml/express_remark_adapter"
       autoload :ExpressRepositoryCache,
                "metanorma/plugin/lutaml/express_repository_cache"
+      autoload :ExpressSchemaListing,
+               "metanorma/plugin/lutaml/express_schema_listing"
       autoload :FileNotFoundError,
                "metanorma/plugin/lutaml/file_not_found_error"
       autoload :Json2TextPreprocessor,

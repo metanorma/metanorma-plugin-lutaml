@@ -3,13 +3,19 @@
 require "spec_helper"
 require "expressir"
 require "expressir/express/parser"
-require_relative "../../../../lib/metanorma/plugin/lutaml/express_remark_adapter"
+require "metanorma/plugin/lutaml/express_remark_adapter"
 
 RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkAdapter do
   # iso-10303#720: a bare (*"Schema_name" ...*) remark is the schema-level
   # prose. expressir models it in Schema#remarks, and renders that walk
   # remark_items dropped it from clause 4. The adapter promotes it to a
-  # leading RemarkItem keyed by the schema path.
+  # leading RemarkItem keyed by the schema path, keeps that item out of
+  # the three source formats (the templates depend on the promoted item;
+  # the hiding prevents double-printing under expressir >= 2.4.59 which
+  # formats remark_items), and then splices the prose into those formats
+  # in its standard position: right after the SCHEMA line, printed once
+  # and as written (TRThurman's source-fidelity requirement — 117 of the
+  # 125 SRL schemas carry schema-level prose that printed nowhere).
   let(:tempfile) do
     f = Tempfile.new(["schema_prose", ".exp"])
     f.write(<<~EXP)
@@ -38,6 +44,10 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkAdapter do
     Expressir::Express::Parser.from_files([tempfile.path]).schemas.first
   end
 
+  def decorate
+    described_class.for(schema).decorate_remarks({ "document" => nil })
+  end
+
   it "keeps the schema-level prose in Schema#remarks" do
     expect(schema.remarks.join).to include("vertices and the connections")
   end
@@ -47,9 +57,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkAdapter do
   end
 
   it "promotes the prose to a leading RemarkItem when decorated" do
-    described_class.for(schema).decorate_remarks(
-      { "document" => nil, "relative_path_prefix" => Dir.tmpdir },
-    )
+    decorate
 
     first = schema.remark_items.first
     expect(first.id).to eq("schema_prose")
@@ -57,29 +65,64 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkAdapter do
     expect(schema.remark_items.length).to eq(2)
   end
 
-  # expressir 2.4.59 (expressir#603) formats remark_items, so the promoted
-  # item would otherwise print inside the schema source, after the last
-  # declaration and under a doubled tag.
+  it "does not promote twice" do
+    decorate
+    count = schema.remark_items.length
+
+    decorate
+    expect(schema.remark_items.length).to eq(count)
+  end
+
   %i[formatted formatted_hyperlinked formatted_hyperlinked_adoc].each do |fmt|
-    it "keeps the promoted prose out of Schema##{fmt}" do
-      source = Expressir::Express::Parser.from_files([tempfile.path])
-        .schemas.first.public_send(fmt)
+    it "prints the prose exactly once in Schema##{fmt}" do
+      decorate
 
-      described_class.for(schema).decorate_remarks(
-        { "document" => nil, "relative_path_prefix" => Dir.tmpdir },
+      printed = schema.public_send(fmt)
+      expect(printed.scan('(*"schema_prose"').length).to eq(1)
+      expect(printed).to include("vertices and the connections")
+    end
+
+    it "splices the prose right after the SCHEMA line in Schema##{fmt}" do
+      decorate
+
+      expect(schema.public_send(fmt)).to match(
+        %r{\ASCHEMA schema_prose;\n\n\(\*"schema_prose"\nA mesh is defined},
       )
+    end
 
-      expect(schema.public_send(fmt)).to eq(source)
-      expect(schema.remark_items.first.id).to eq("schema_prose")
+    it "prints the prose block in the exact remark-item shape in #{fmt}" do
+      decorate
+
+      item = schema.remark_items.first
+      block = Expressir::Express::Formatter.format(item)
+
+      expect(schema.public_send(fmt)).to include(block)
+    end
+
+    it "is stable across repeated Schema##{fmt} calls" do
+      decorate
+
+      printed = schema.public_send(fmt)
+      expect(schema.public_send(fmt)).to eq(printed)
     end
   end
 
-  it "does not promote twice" do
-    options = { "document" => nil, "relative_path_prefix" => Dir.tmpdir }
-    described_class.for(schema).decorate_remarks(options)
-    count = schema.remark_items.length
+  it "leaves schemas without prose unspliced" do
+    plain = Tempfile.new(["schema_plain", ".exp"])
+    plain.write(<<~EXP)
+      SCHEMA schema_plain;
+      ENTITY thing;
+        name : STRING;
+      END_ENTITY;
+      END_SCHEMA;
+    EXP
+    plain.close
+    plain_schema =
+      Expressir::Express::Parser.from_files([plain.path]).schemas.first
 
-    described_class.for(schema).decorate_remarks(options)
-    expect(schema.remark_items.length).to eq(count)
+    described_class.for(plain_schema).decorate_remarks({ "document" => nil })
+
+    expect(plain_schema.formatted_hyperlinked_adoc)
+      .not_to include("(*")
   end
 end

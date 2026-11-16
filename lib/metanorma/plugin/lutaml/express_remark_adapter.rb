@@ -1,39 +1,28 @@
 # frozen_string_literal: true
 
 require "expressir"
-require "pathname"
 
 module Metanorma
   module Plugin
     module Lutaml
       module ExpressRemarkAdapter
-        def self.relative_path_prefix(options, model)
-          return if options.nil? || options["document"].nil?
+        # Resolves the directory of a schema's source file the way the
+        # document resolves any referenced path (the document's
+        # PathResolver#system_path against the docfile directory). The
+        # result is the schema's imagesdir: image macros in the schema's
+        # remarks then resolve as written and no build path enters the
+        # remark text (TRThurman's source-fidelity requirement: the
+        # 0.7.x path rewriting leaked /home/runner/... into 639 image
+        # macros and 3,470 remark headers across the SRL corpus).
+        def self.schema_imagesdir(options, model)
+          document = options && options["document"]
+          return unless document
+          return unless model.respond_to?(:file) && model.file
 
-          document = options["document"]
-          file_path = File.dirname(model.file)
-          docfile_directory = File.dirname(
-            document.attributes["docfile"] || ".",
+          document.path_resolver.system_path(
+            File.dirname(model.file),
+            File.dirname(document.attributes["docfile"] || "."),
           )
-          resolved = document.path_resolver
-            .system_path(file_path, docfile_directory)
-          # The decorator expands emitted paths against this base: relative
-          # prefixes alone get re-anchored by asciidoctor's imagesdir
-          # handling (images/../../schemas collapses a level), so the
-          # decoration must produce paths that resolve from the docfile.
-          options["relative_path_base"] =
-            File.expand_path(docfile_directory)
-          # The prefix lands inside emitted image macros, so it must not
-          # carry the absolute build path: two builds of the same tree in
-          # two directories produced different image/@src values
-          # (metanorma/metanorma-plugin-lutaml#325). A path relative to the
-          # docfile resolves to the same schema file at render time and is
-          # byte-identical across build directories.
-          # The docfile directory may be relative ("."): relative_path_from
-          # refuses mixed prefixes, so both sides expand first
-          Pathname.new(File.expand_path(resolved))
-            .relative_path_from(Pathname.new(File.expand_path(docfile_directory)))
-            .to_s
         end
 
         def self.for(model)
@@ -54,6 +43,44 @@ module Metanorma
           end
         end
 
+        # Prints one source format of a decorated schema: the format runs
+        # without the promoted prose item (so expressir >= 2.4.59, which
+        # formats remark_items, does not double-print it), and the prose
+        # block is then spliced into the printed source right after the
+        # SCHEMA line — its standard position. When the format's own print
+        # already carries the block (the print of remark_items depends on
+        # the expressir version), the output stands as printed: the prose
+        # shows exactly once either way.
+        class ProseSplicer
+          def initialize(schema, format, prose, block)
+            @schema = schema
+            @format = format
+            @prose = prose
+            @block = block
+            @schema_head = %r{
+              \ASCHEMA\s+#{Regexp.escape(schema.id.to_s)}[^\n;]*;[^\n]*
+            }x
+          end
+
+          def call
+            printed = format_without_prose
+            return printed if printed.include?(@block)
+            return printed unless printed.match?(@schema_head)
+
+            printed.sub(@schema_head) { |line| "#{line}\n\n#{@block}" }
+          end
+
+          private
+
+          def format_without_prose
+            items = @schema.remark_items
+            @schema.remark_items = items - [@prose]
+            @format.call.to_s
+          ensure
+            @schema.remark_items = items
+          end
+        end
+
         class Base
           def initialize(model)
             @model = model
@@ -65,9 +92,7 @@ module Metanorma
 
           def decorate_remarks(options)
             promote_schema_prose
-            decorate_own_remarks(options)
-            decorate_child_remark_items(options)
-            traverse_children(options)
+            stash_listing_imagesdir(options)
           end
 
           private
@@ -77,11 +102,13 @@ module Metanorma
           # renders that walk remark_items (every clause-4 template) drop
           # it (iso-10303#720). Promote it to a leading RemarkItem keyed
           # by the schema path, the same way an entity-tagged remark names
-          # its target. The prose stays in Schema#remarks too; templates
-          # that already render it there keep working unchanged.
+          # its target.
           #
           # Since expressir 2.4.59 (expressir#603) the formatters print
-          # remark_items, so the synthetic item is hidden from them.
+          # remark_items, so the synthetic item is hidden from them — and
+          # then spliced back into the printed source in its standard
+          # position (right after the SCHEMA line), so the source listing
+          # shows the prose exactly once, as written.
           def promote_schema_prose
             return unless @model.is_a?(Expressir::Model::Declarations::Schema)
             return if @model.remarks.to_a.empty?
@@ -100,58 +127,69 @@ module Metanorma
           # Each format is still computed lazily and memoized by expressir;
           # it just runs without the promoted item in remark_items.
           def hide_from_source_formats(prose)
-            %i[
-              formatted formatted_hyperlinked formatted_hyperlinked_adoc
-            ].each do |name|
-              format = @model.method(name)
-              @model.define_singleton_method(name) do
-                items = remark_items
-                self.remark_items = items - [prose]
-                format.call
-              ensure
-                self.remark_items = items
-              end
+            blocks = SOURCE_FORMATS.to_h do |name|
+              [name, SOURCE_FORMATTERS[name].format(prose)]
+            end
+            SOURCE_FORMATS.each do |name|
+              splice_prose_into_format(name, prose, blocks[name])
             end
           end
 
-          def decorate_own_remarks(options)
+          def splice_prose_into_format(name, prose, block)
+            format = @model.method(name)
+            splicer = ProseSplicer.new(@model, format, prose, block)
 
-            @model.remarks = ExpressRemarksDecorator.decorate_array(
-              @model.remarks, options
-            )
+            @model.define_singleton_method(name) { splicer.call }
           end
 
-          def decorate_child_remark_items(options)
-            return unless @model.is_a?(Expressir::Model::HasRemarkItems)
-
-            @model.remark_items&.each do |ri|
-              ri.remarks = ExpressRemarksDecorator.decorate_array(
-                ri.remarks, options
-              )
+          # The per-schema imagesdir for the listing's attribute entries
+          # (formatted_hyperlinked_adoc_listing), plus the document's
+          # imagesdir at decoration time so the listing can restore it
+          # after the schema's content. The values ride on the schema as
+          # singleton readers: the liquid drop has no access to the
+          # asciidoctor document.
+          def stash_listing_imagesdir(options)
+            document = options["document"]
+            dir = ExpressRemarkAdapter.schema_imagesdir(options, @model)
+            previous = document && document.attributes["imagesdir"]
+            @model.define_singleton_method(:listing_imagesdir) { dir }
+            @model.define_singleton_method(:listing_imagesdir_restore) do
+              previous
             end
-          end
-
-          def traverse_children(options)
-            @model.children&.each do |child|
-              next unless traversable?(child)
-
-              ExpressRemarkAdapter.for(child).decorate_remarks(options)
-            end
-          end
-
-          def traversable?(child)
-            child.is_a?(Expressir::Model::ModelElement) &&
-              !child.is_a?(Expressir::Model::Declarations::RemarkItem)
           end
         end
 
         class RepoAdapter < Base
           def decorate_remarks(options)
             @model.schemas.each do |schema|
-              options["relative_path_prefix"] =
-                ExpressRemarkAdapter.relative_path_prefix(options, schema)
               ExpressRemarkAdapter.for(schema).decorate_remarks(options)
             end
+            apply_document_imagesdir(options["document"])
+          end
+
+          private
+
+          # A per-schema document (one schema rendered per document —
+          # suma's SchemaTemplate::Document) takes a document-level
+          # imagesdir: every schema in the repository resolves its images
+          # against the same directory, so templates that print the raw
+          # formatted_hyperlinked_adoc keep working without path
+          # rewriting. An imagesdir the author (or an earlier block) set
+          # is respected; a multi-directory repository cannot take one
+          # document-level value — its schemas carry the attribute entries
+          # in their listing output instead.
+          def apply_document_imagesdir(document)
+            return unless document
+
+            dirs = @model.schemas.filter_map do |schema|
+              next unless schema.respond_to?(:listing_imagesdir)
+
+              schema.listing_imagesdir
+            end.uniq
+            return unless dirs.one?
+            return if document.attributes["imagesdir"]
+
+            document.attributes["imagesdir"] = dirs.first
           end
         end
 
@@ -174,6 +212,18 @@ module Metanorma
 
           def decorate_remarks(_options); end
         end
+
+        SOURCE_FORMATS = %i[
+          formatted formatted_hyperlinked formatted_hyperlinked_adoc
+        ].freeze
+
+        # The formatter family behind each source format, so the spliced
+        # prose prints the way its format prints references.
+        SOURCE_FORMATTERS = {
+          formatted: Expressir::Express::Formatter,
+          formatted_hyperlinked: Expressir::Express::SourceFormatter,
+          formatted_hyperlinked_adoc: Expressir::Express::AdocSourceFormatter,
+        }.freeze
       end
     end
   end

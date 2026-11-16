@@ -56,6 +56,10 @@ module Metanorma
           unwrapped = adapter.unwrap
           return unwrapped unless unwrapped
 
+          # Applied here, before the first template render of this
+          # repository: Liquid memoizes a drop class's invokable methods
+          # on first render, so the listing method must exist by then.
+          ExpressSchemaListing.apply
           adapter.decorate_remarks(options)
           unwrapped
         end
