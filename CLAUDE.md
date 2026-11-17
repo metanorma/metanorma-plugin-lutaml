@@ -80,3 +80,12 @@ Tests use `metanorma-standoc` as the backend. The spec helper registers all exte
 - `liquid` — template rendering engine
 - `asciidoctor` — document processing framework
 - `canon` — semantic XML comparison for test assertions
+
+## Release integrity (fleet contracts) — learned 2026-11-16
+
+These rules exist because 0.7.70/0.7.71 shipped breaking: FATAL image-not-found in every figure-bearing consumer build (issues #359/#360) and silently lost EXPRESS-G figures.
+
+1. **No release without the downstream consumer's integration suite green.** Before publishing, install THIS branch's gem into a suma bundle and run `rspec spec/suma/cli/build_integration_spec.rb` there (expect EXIT=0). The local rspec suite is necessary but never sufficient: its bundle can carry locally-installed unreleased gems, so a green local run proves nothing about the released pair.
+2. **Declare sibling dependencies with explicit floors.** Unconstrained deps resolve to breaking releases across the fleet (lutaml-lml floated to a parslet-based 0.1.5 with no `Parser.parse` — issue #361). Every gem this one requires at runtime gets `add_dependency` with a floor.
+3. **Renderer changes need positive content assertions.** Liquid renders missing methods as `nil` silently. Assert the rendered output CONTAINS the artifacts (figure blocks after the listing, imagesdir entries, `END_SCHEMA` inside the fence) — "no error" is not "content present".
+4. **A/B any remark/image-resolution change on a figure-bearing consumer document** before and after — the express-g staging consumes whatever the remark layer emits.
