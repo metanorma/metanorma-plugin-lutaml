@@ -55,6 +55,8 @@ module Metanorma
                "metanorma/plugin/lutaml/lutaml_gml_dictionary_block_macro"
       autoload :LutamlKlassTableBlockMacro,
                "metanorma/plugin/lutaml/lutaml_klass_table_block_macro"
+      autoload :LutamlJsonschemaPreprocessor,
+               "metanorma/plugin/lutaml/lutaml_jsonschema_preprocessor"
       autoload :LutamlPreprocessor,
                "metanorma/plugin/lutaml/lutaml_preprocessor"
       autoload :LutamlTableInlineMacro,

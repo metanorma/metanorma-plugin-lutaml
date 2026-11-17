@@ -12,9 +12,14 @@ module Metanorma
           LutamlXsdPreprocessor::CACHE
         end
 
+        def self.jsonschema_cache
+          LutamlJsonschemaPreprocessor::CACHE
+        end
+
         def self.clear_all
           xmi_cache.clear
           xsd_cache.clear
+          jsonschema_cache.clear
         end
       end
     end

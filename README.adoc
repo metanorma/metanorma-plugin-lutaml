@@ -17,6 +17,7 @@ within a Metanorma document:
 * LutaML GML Dictionary files (`*.xml`)
 * JSON or YAML files (`*.json|*.yml|*.yaml`)
 * XML Schema files (`*.xsd`)
+* JSON Schema files (`*.json`)
 
 == Installation
 
@@ -42,6 +43,8 @@ link:docs/usages/json_yaml.adoc[Usage with JSON or YAML files by data2text, yaml
 link:docs/usages/lutaml-data.adoc[Usage with LutaML data files by lutaml_data]
 
 link:docs/usages/lutaml-xsd.adoc[Usage with XML Schema files by lutaml_xsd]
+
+link:docs/usages/lutaml-jsonschema.adoc[Usage with JSON Schema files by lutaml_jsonschema]
 
 == Documentation
 
