@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Person",
+  "description": "A person known to the registry.",
+  "type": "object",
+  "required": ["name"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Full name of the person.",
+      "maxLength": 200
+    },
+    "age": {
+      "type": "integer",
+      "description": "Age in whole years.",
+      "minimum": 0
+    },
+    "role": {
+      "type": "string",
+      "enum": ["author", "editor"]
+    },
+    "address": { "$ref": "#/$defs/Address" }
+  },
+  "$defs": {
+    "Address": {
+      "type": "object",
+      "description": "Postal address of the person.",
+      "properties": {
+        "city": { "type": "string", "description": "City name." }
+      }
+    }
+  }
+}

@@ -1,0 +1,77 @@
+== Usage with JSON Schema
+
+=== Overview
+
+The `lutaml_jsonschema` macro parses *JSON Schema* files (draft-04 through
+2020-12) through `lutaml-jsonschema` and turns the annotations in the schema
+(`title`, `description`, `enum`, `pattern`, ranges and lengths) into document
+content.
+
+There are three forms:
+
+* `lutaml_jsonschema::<path>[]` renders a built-in reference section.
+* `lutaml_jsonschema::<path>[<context_name>, <template>]` renders a Liquid
+  template file.
+* `[lutaml_jsonschema,<path>,<context_name>]` renders the Liquid template
+  written inside the block.
+
+=== Built-in reference
+
+[source,adoc]
+-----
+lutaml_jsonschema::schemas/person.schema.json[]
+-----
+
+The output has one section per schema, titled with its `title`, followed by
+its `description` and a table of its properties (name, type, whether it is
+required, and a description with the constraints). Each entry under `$defs`
+(or `definitions`) gets its own subsection. A property whose type is a `$ref`
+links to the subsection of the definition it points to.
+
+Definition anchors take the form `def-<schema name>-<definition name>`, where
+the schema name is the file name without its `.json` extension, with dots
+replaced by hyphens. For example, `Address` in `person.schema.json` gets the
+anchor `def-person-schema-Address`. Several schemas can therefore be
+documented in the same document without anchor clashes.
+
+=== Liquid template file
+
+[source,adoc]
+-----
+lutaml_jsonschema::schemas/person.schema.json[schema, templates/person.liquid]
+-----
+
+* `<context_name>`: The name of the variable that holds the schema in the
+  template.
+* `<template>`: Path to the Liquid template, relative to the document.
+* `include_path=<dir1>,<dir2>`: Optional extra directories for Liquid
+  `{% include %}` and `{% render %}`.
+
+=== Liquid block
+
+[source,adoc]
+-----
+[lutaml_jsonschema,schemas/person.schema.json,schema]
+----
+== {{ schema.title }}
+
+{{ schema.description }}
+
+{% for entry in schema.property_entries %}
+* `{{ entry.name }}` ({{ entry.schema.type }}):
+  {{ entry.schema.description }}
+{% endfor %}
+----
+-----
+
+=== Liquid template context
+
+The context variable is the parsed `Lutaml::Jsonschema::Schema`. Commonly used
+fields:
+
+* `title`, `description`, `type`, `required`, `enum`, `pattern`, `minimum`,
+  `maximum`, `min_length`, `max_length`: The schema keywords of the same name.
+* `property_entries`: The properties, each with `name` and `schema` (the
+  property's own schema, with the same fields).
+* `definition_entries`: The `$defs` (or `definitions`) entries, each with
+  `name` and `schema`.

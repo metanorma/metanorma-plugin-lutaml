@@ -1,0 +1,7 @@
+== {{ schema.title }}
+
+{{ schema.description }}
+
+{% for entry in schema.property_entries %}
+* `{{ entry.name }}`: {{ entry.schema.description }}
+{% endfor %}

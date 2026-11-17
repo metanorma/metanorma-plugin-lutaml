@@ -34,6 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "expressir", "~> 2.3", ">= 2.3.5"
   spec.add_dependency "isodoc", ">= 3.5.0"
   spec.add_dependency "liquid", "~> 5"
+  spec.add_dependency "lutaml-jsonschema", "~> 0.1", ">= 0.1.29"
   spec.add_dependency "lutaml-lml"
   spec.add_dependency "lutaml-model", "~> 0.8.156"
   spec.add_dependency "lutaml-uml", ">= 0.5", "< 2"
