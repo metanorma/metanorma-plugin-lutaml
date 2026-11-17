@@ -1,0 +1,60 @@
+{%- assign item_attributes = item.attribute_elements -%}
+{%- assign used_by_items = item.used_by -%}
+{%- capture docs -%}
+{% for paragraph in item.annotation.documentation -%}
+{{ paragraph.content }}
+
+{% endfor -%}
+{%- endcapture -%}
+{%- assign docs = docs | strip -%}
+{%- capture used_by_list -%}
+{% for used_by in used_by_items -%}
+{%- capture used_by_kind -%}{% if used_by.element? %}element{% elsif used_by.attribute_group? %}attribute_group{% else %}type{% endif %}{%- endcapture %}
+* {{ used_by.name }}{% render "xsd_ref", name: used_by.name, kind: used_by_kind, schema: schema %}
+{% endfor -%}
+{%- endcapture -%}
+{%- assign used_by_list = used_by_list | strip -%}
+{%- capture attribute_list -%}
+{% for attribute in item_attributes -%}
+{% render "attribute", attribute: attribute %}
+
+{% endfor -%}
+{%- endcapture -%}
+{%- assign attribute_list = attribute_list | strip -%}
+
+[[xsd_attribute_group_{{ item.name }}]]
+=== `{{ item.name }}`
+
+==== Group
+
+{% if docs != "" %}
+{{ docs }}
+{% else %}
+No documentation supplied.
+{% endif %}
+
+{% if used_by_items.size > 0 %}
+This attribute group is used by:
+
+{{ used_by_list }}
+{% endif %}
+
+{% unless diagrams == false %}
+==== Structure diagram
+
+{% render "diagram", item: item, attributes: item_attributes, schema: schema %}
+{% endunless %}
+
+==== Attributes
+
+{% if item_attributes.size > 0 %}
+{{ attribute_list }}
+{% else %}
+No attributes defined.
+{% endif %}
+
+.XSD source of `{{ item.name }}`
+[source,xml]
+-----
+{{ item.to_formatted_xml }}
+-----

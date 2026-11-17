@@ -82,6 +82,65 @@ Type: *{{ element.type }}*
 ----
 -----
 
+=== Default template
+
+The plugin ships a default template that documents a whole schema: every
+global element, complex type and attribute group, with its annotations,
+attributes, content model, an XML example and a PlantUML structure diagram.
+
+To render it, use the direct syntax without a template:
+
+[source,adoc]
+-----
+lutaml_xsd::path/to/unitsml.xsd[schema]
+-----
+
+The direct syntax also takes a template file of your own:
+`lutaml_xsd::path/to/unitsml.xsd[schema, templates/schema.liquid]`.
+
+To skip the structure diagrams, for example when PlantUML is not
+installed, add `diagrams=false`:
+
+[source,adoc]
+-----
+lutaml_xsd::path/to/unitsml.xsd[schema, diagrams=false]
+-----
+
+The default templates are always on the template search path of a
+`lutaml_xsd` block, so the same output is available from the block syntax:
+
+[source,adoc]
+-----
+[lutaml_xsd,path/to/unitsml.xsd,schema]
+----
+{% render "xsd_schema", schema: schema, diagrams: false %}
+----
+-----
+
+You can also render single parts, such as `element`, `complex_type` or
+`attribute_group`, for one item:
+
+[source,adoc]
+-----
+[lutaml_xsd,path/to/unitsml.xsd,schema]
+----
+{% for item in schema.elements_sorted_by_name %}
+{% render "element", item: item, schema: schema %}
+{% endfor %}
+----
+-----
+
+The default output adds these anchors:
+
+* `xsd_<name>` for elements
+* `xsd_type_<name>` for complex types
+* `xsd_attribute_group_<name>` for attribute groups
+
+To change one part of the output, put a file with the same name, such as
+`_diagram.liquid` or `_element.adoc`, in the document directory or in a
+directory given with `include_path`. Files there take precedence over the
+default templates.
+
 === Use Cases
 
 * Generate documentation for XML schemas.
