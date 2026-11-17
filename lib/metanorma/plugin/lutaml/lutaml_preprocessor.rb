@@ -60,6 +60,7 @@ module Metanorma
           # repository: Liquid memoizes a drop class's invokable methods
           # on first render, so the listing method must exist by then.
           ExpressSchemaListing.apply
+          ExpressRemarkFigures.apply
           adapter.decorate_remarks(options)
           unwrapped
         end
