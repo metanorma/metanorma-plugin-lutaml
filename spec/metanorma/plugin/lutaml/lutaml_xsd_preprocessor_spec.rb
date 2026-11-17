@@ -402,6 +402,79 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlXsdPreprocessor do
       end
     end
 
+    context "with the bundled default template" do
+      let(:person_path) { fixtures_path("xsd_schemas/person.xsd") }
+      let(:rendered_xml) { xml_string_content(metanorma_convert(input)) }
+
+      shared_examples "a rendered default XSD document" do
+        it "renders every element, complex type and attribute group" do
+          %w[Elements Complex\ types Attribute\ groups].each do |title|
+            expect(rendered_xml).to match(%r{<title[^>]*>#{title}</title>})
+          end
+          %w[xsd_Person xsd_type_Person xsd_type_Address
+             xsd_attribute_group_CommonAttributes].each do |anchor|
+            expect(rendered_xml).to include(%(anchor="#{anchor}"))
+          end
+        end
+
+        it "renders the content model and attributes" do
+          %w[FirstName LastName PostalCode kind].each do |name|
+            expect(rendered_xml).to include(name)
+          end
+        end
+      end
+
+      context "with the direct syntax and no template" do
+        let(:input) do
+          <<~TEXT
+            = Document title
+
+            lutaml_xsd::#{person_path}[schema, diagrams=false]
+          TEXT
+        end
+
+        it_behaves_like "a rendered default XSD document"
+
+        it "omits the structure diagrams when diagrams=false" do
+          expect(rendered_xml).not_to include("Structure diagram")
+          expect(rendered_xml).not_to include("@startuml")
+        end
+      end
+
+      context "with the block syntax rendering xsd_schema" do
+        let(:input) do
+          <<~TEXT
+            = Document title
+
+            [lutaml_xsd,#{person_path},schema]
+            ----
+            {% render "xsd_schema", schema: schema, diagrams: false %}
+            ----
+          TEXT
+        end
+
+        it_behaves_like "a rendered default XSD document"
+      end
+
+      context "with a partial overridden through include_path" do
+        let(:input) do
+          <<~TEXT
+            = Document title
+
+            lutaml_xsd::#{person_path}[schema, include_path=#{fixtures_path('xsd_default_template_override')}]
+          TEXT
+        end
+
+        it_behaves_like "a rendered default XSD document"
+
+        it "renders diagrams by default, using the document's partial" do
+          expect(rendered_xml).to include("Structure diagram")
+          expect(rendered_xml).to include("DIAGRAM-STUB for Person")
+          expect(rendered_xml).not_to include("@startuml")
+        end
+      end
+    end
+
     def expect_equivalent_document(actual, expected)
       expect(normalize_metanorma_header(actual))
         .to(be_equivalent_to(normalize_metanorma_header(expected)))

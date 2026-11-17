@@ -1,0 +1,19 @@
+{%- comment -%}
+Cross-reference to a global schema component, rendered as " (<<anchor>>)".
+Renders nothing when `name` is not a global component of `kind`
+("element", "type" or "attribute_group"). Namespace prefixes are ignored.
+{%- endcomment -%}
+{%- if name -%}
+{%- assign ref_name = name | split: ":" | last -%}
+{%- if kind == "type" -%}
+{%- assign found = schema.complex_types_sorted_by_name | where: "name", ref_name | first -%}
+{%- assign prefix = "xsd_type_" -%}
+{%- elsif kind == "attribute_group" -%}
+{%- assign found = schema.attribute_groups_sorted_by_name | where: "name", ref_name | first -%}
+{%- assign prefix = "xsd_attribute_group_" -%}
+{%- else -%}
+{%- assign found = schema.elements_sorted_by_name | where: "name", ref_name | first -%}
+{%- assign prefix = "xsd_" -%}
+{%- endif -%}
+{%- if found %} (<<{{ prefix }}{{ ref_name }}>>){% endif -%}
+{%- endif -%}

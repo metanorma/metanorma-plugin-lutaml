@@ -1,0 +1,32 @@
+{%- comment -%}
+Default lutaml_xsd template: renders every global element, complex type and
+attribute group of the schema. Pass `diagrams: false` to omit the PlantUML
+structure diagrams.
+{%- endcomment -%}
+{%- assign elements = schema.elements_sorted_by_name -%}
+{%- assign complex_types = schema.complex_types_sorted_by_name -%}
+{%- assign attribute_groups = schema.attribute_groups_sorted_by_name -%}
+{%- if elements.size > 0 %}
+== Elements
+
+{% for item in elements %}
+{% render "element", item: item, schema: schema, diagrams: diagrams %}
+
+{% endfor %}
+{%- endif %}
+{%- if complex_types.size > 0 %}
+== Complex types
+
+{% for item in complex_types %}
+{% render "complex_type", item: item, schema: schema, diagrams: diagrams %}
+
+{% endfor %}
+{%- endif %}
+{%- if attribute_groups.size > 0 %}
+== Attribute groups
+
+{% for item in attribute_groups %}
+{% render "attribute_group", item: item, schema: schema, diagrams: diagrams %}
+
+{% endfor %}
+{%- endif %}
