@@ -25,8 +25,15 @@ module Metanorma
         FILE_SYSTEM_PATTERNS = ["%s.liquid", "_%s.liquid", "_%s.adoc"].freeze
 
         def process(document, reader)
-          input_lines = Asciidoctor::PreprocessorNoIfdefsReader
-            .new(document, reader.lines).readlines.to_enum
+          lines = Asciidoctor::PreprocessorNoIfdefsReader
+            .new(document, reader.lines).readlines
+
+          # Attribute entries apply at parse, after preprocessing, so the
+          # imagesdir the figure targets resolve against is read from the
+          # source lines here (ExpressRemarkFigures).
+          ExpressRemarkFigures.scan_source_imagesdir(document, lines)
+
+          input_lines = lines.to_enum
 
           express_indexes = Utils.parse_document_express_indexes(
             document, input_lines

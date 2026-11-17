@@ -156,6 +156,29 @@ module Metanorma
             @model.define_singleton_method(:listing_imagesdir_restore) do
               previous
             end
+            stash_figure_remarks(options, dir)
+          end
+
+          # Stashes the drop-facing figure resolver on the schema's
+          # remark items (ExpressRemarkFigures): templates rendering the
+          # remarks outside the source listing get their bare figure
+          # macros resolved through the schema's directory, while the
+          # listing keeps printing the model source as written.
+          def stash_figure_remarks(options, schema_directory)
+            document = options["document"]
+            return unless document && schema_directory
+            return unless @model.is_a?(Expressir::Model::Declarations::Schema)
+
+            resolver = ExpressRemarkFigures::TargetResolver.new(
+              document.attributes["docfile"],
+              ExpressRemarkFigures.effective_imagesdir(document),
+              schema_directory,
+            )
+            @model.remark_items.each do |item|
+              item.define_singleton_method(:expressg_figure_remarks) do
+                resolver.remarks(remarks)
+              end
+            end
           end
         end
 
@@ -170,13 +193,14 @@ module Metanorma
 
           # NO document-level imagesdir here: metanorma's figure
           # absolutization joins document.attributes["imagesdir"] with
-          # svgmap-synthesized targets that are ALREADY docfile-relative
-          # (the express-g assembly writes `../../schemas/...`), doubling
-          # the directory segments and failing the image-existence check
-          # (suma's dummy-collection repro). The remark content is served
-          # by the listing-scoped attribute entries emitted around each
-          # source block, which only affect asciidoctor resolution inside
-          # the listing.
+          # svgmap-synthesized targets that are ALREADY document-relative
+          # (the drop-facing remark figures compose their targets through
+          # the document's imagesdir directory, ExpressRemarkFigures),
+          # doubling the directory segments and failing the
+          # image-existence check (suma's dummy-collection repro). The
+          # remark content is served by the listing-scoped attribute
+          # entries emitted around each source block, which only affect
+          # asciidoctor resolution inside the listing.
         end
 
         class CachedRepoAdapter < Base

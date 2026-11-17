@@ -23,6 +23,8 @@ module Metanorma
                "metanorma/plugin/lutaml/data2_text_preprocessor"
       autoload :ExpressRemarkAdapter,
                "metanorma/plugin/lutaml/express_remark_adapter"
+      autoload :ExpressRemarkFigures,
+               "metanorma/plugin/lutaml/express_remark_figures"
       autoload :ExpressRepositoryCache,
                "metanorma/plugin/lutaml/express_repository_cache"
       autoload :ExpressSchemaListing,
