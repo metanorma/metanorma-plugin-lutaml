@@ -121,6 +121,19 @@ module Metanorma
               @object.remarks
             end
           end
+
+          # The bare rendering surface. Liquid stringifies a rendered drop
+          # through to_s, and Liquid::Drop#to_s is the drop's CLASS NAME,
+          # so every remark_items loop that prints the item verbatim
+          # ("{{ remark }}") printed the object dump instead of the remark
+          # text (issue #369). The text is the figure-resolved remarks --
+          # the same values the drop-facing `remarks` accessor returns,
+          # joined the way expressir's remark formatter joins them --
+          # while the model-level methods keep the source listing
+          # printing the macros as written.
+          def to_s
+            remarks.join("\n")
+          end
         end
 
         # Composes the drop-facing remark text for one decorated schema.
