@@ -133,6 +133,8 @@ module Metanorma
           # printing the macros as written.
           def to_s
             remarks.join("\n")
+              .gsub(/^[ \t]+(?=image::)/, "")
+              .gsub(/^(?!$)(image::)/) { "\n\n#{Regexp.last_match(1)}" }
           end
         end
 
