@@ -51,8 +51,11 @@ module Metanorma
         # An imagesdir attribute entry; the bang form unsets. The LAST
         # entry in the source is the one in force where the member
         # document's annexes render.
-        IMAGESDIR_ENTRY_REGEXP =
-          /\A:(!)?imagesdir:(?:[ \t]+(.*[^\t ]))?[ \t]*\z/
+        # Linear form: one dispatch space then the rest of the line;
+        # surrounding whitespace is stripped by the caller. An
+        # end-anchored [ \t]* after .* backtracks quadratically
+        # (CodeQL rb/polynomial-redos).
+        IMAGESDIR_ENTRY_REGEXP = /\A:(!)?imagesdir:(?:[ \t](.*))?\z/
 
         SOURCE_IMAGESDIR_ATTRIBUTE = "lutaml-source-imagesdir"
 
@@ -168,7 +171,9 @@ module Metanorma
             match = IMAGE_MACRO_REGEXP.match(line) or return line
             return line unless stage_figure(match[1])
 
-            "#{line[/\Aimage::/]}#{File.basename(match[1])}[]#{line[/\s*\z/]}"
+            trailing = line.length - line.rstrip.length
+            suffix = trailing.positive? ? line[-trailing, trailing] : ""
+            "#{line[/\Aimage::/]}#{File.basename(match[1])}[]#{suffix}"
           end
 
           def stage_figure(bare)
