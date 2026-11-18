@@ -92,7 +92,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkFigures do
       schema = decorated_schema
 
       expect(drop_facing_remarks(schema)).to include(
-        "image::../../schemas/gizmo/#{diagram_name}[]",
+        "image::images/#{diagram_name}[]",
       )
     end
 
@@ -101,8 +101,10 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkFigures do
       schema = decorated_schema
 
       expect(drop_facing_remarks(schema)).to include(
-        "image::../../../schemas/gizmo/#{diagram_name}[]",
+        "image::images/#{diagram_name}[]",
       )
+      expect(File.file?(File.join(docfile_directory, "images", diagram_name)))
+        .to be(true)
     end
 
     # The load-bearing property: asciidoctor joins an image target with
@@ -179,8 +181,10 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkFigures do
       schema = decorated_schema
 
       expect(drop_facing_remarks(schema)).to include(
-        "image::../../../schemas/gizmo/#{diagram_name}[]",
+        "image::images/#{diagram_name}[]",
       )
+      expect(File.file?(File.join(docfile_directory, "images", diagram_name)))
+        .to be(true)
     end
 
     it "prefers the source-set entry over the programmatic attribute" do
@@ -191,8 +195,10 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkFigures do
       schema = decorated_schema
 
       expect(drop_facing_remarks(schema)).to include(
-        "image::../../../schemas/gizmo/#{diagram_name}[]",
+        "image::images/#{diagram_name}[]",
       )
+      expect(File.file?(File.join(docfile_directory, "images", diagram_name)))
+        .to be(true)
     end
 
     it "anchors targets at the docfile on an explicit source unset" do
@@ -202,7 +208,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkFigures do
       schema = decorated_schema
 
       expect(drop_facing_remarks(schema)).to include(
-        "image::../../schemas/gizmo/#{diagram_name}[]",
+        "image::images/#{diagram_name}[]",
       )
     end
   end
