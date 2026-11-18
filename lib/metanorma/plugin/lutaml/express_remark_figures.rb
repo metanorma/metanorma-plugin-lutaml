@@ -126,12 +126,17 @@ module Metanorma
         # directory as the document resolves it,
         # ExpressRemarkAdapter.schema_imagesdir).
         class TargetResolver
+          # Asciidoctor's default imagesdir for a document that sets
+          # none: bare image targets resolve against "images" under the
+          # docfile directory.
+          DEFAULT_IMAGESDIR = "images".freeze
+
           def initialize(docfile, imagesdir, schema_directory)
             docdir = File.dirname(File.expand_path(docfile.to_s))
             @docdir = docdir
             @imagesdir_directory =
               if imagesdir.nil? || imagesdir.empty?
-                docdir
+                File.join(docdir, DEFAULT_IMAGESDIR)
               else
                 File.expand_path(imagesdir, docdir)
               end
@@ -149,17 +154,21 @@ module Metanorma
           private
 
           # The figure file is STAGED into the resolved imagesdir
-          # directory (where this document's image targets resolve) and
-          # the macro target is left EXACTLY AS WRITTEN. A ../-composed
-          # target escapes the imagesdir join and is dropped silently by
-          # asciidoctor's path handling (measured: the figure vanished
-          # from every output format, exit 0), and an absolute target
-          # leaks the build path (issue #359's original report). The
-          # staged copy is a build artifact; no path enters the output.
+          # directory — the one directory this document's image targets
+          # resolve against, since asciidoctor joins every target with
+          # the imagesdir (the author's value, or its own "images"
+          # default) before use — and the emitted target is the staged
+          # file's bare basename. A ../-composed target escapes the
+          # imagesdir join and is dropped silently by asciidoctor's path
+          # handling (measured: the figure vanished from every output
+          # format, exit 0), and an absolute target leaks the build path
+          # (issue #359's original report). The staged copy is a build
+          # artifact; no path enters the output.
           def rewrite_line(line)
             match = IMAGE_MACRO_REGEXP.match(line) or return line
-            stage_figure(match[1])
-            line
+            return line unless stage_figure(match[1])
+
+            "#{line[/\Aimage::/]}#{File.basename(match[1])}[]#{line[/\s*\z/]}"
           end
 
           def stage_figure(bare)
@@ -167,10 +176,11 @@ module Metanorma
             return unless File.file?(file)
 
             staged = File.join(@imagesdir_directory, File.basename(bare))
-            return if File.file?(staged)
+            return true if File.file?(staged)
 
             FileUtils.mkdir_p(@imagesdir_directory)
             FileUtils.cp(file, staged)
+            true
           end
         end
       end
