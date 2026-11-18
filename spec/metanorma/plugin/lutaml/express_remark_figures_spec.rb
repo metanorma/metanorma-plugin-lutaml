@@ -88,12 +88,24 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkFigures do
   end
 
   describe "drop-facing remark figures" do
-    it "resolves bare figure macros to the docfile-relative path" do
+    it "keeps bare figure macros as written and stages the figure into the default imagesdir" do
       schema = decorated_schema
 
       expect(drop_facing_remarks(schema)).to include(
-        "image::images/#{diagram_name}[]",
+        "image::#{diagram_name}[]",
       )
+      expect(File.file?(File.join(docfile_directory, "images", diagram_name)))
+        .to be(true)
+    end
+
+    # Decoration itself stages: templates that print the remark item
+    # verbatim ("{{ remark }}") never call the resolved accessor, so
+    # the staged copy must exist by the time decoration completes.
+    it "stages the figure eagerly, at decoration" do
+      decorated_schema
+
+      expect(File.file?(File.join(docfile_directory, "images", diagram_name)))
+        .to be(true)
     end
 
     it "composes targets through the document's imagesdir directory" do
@@ -101,7 +113,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkFigures do
       schema = decorated_schema
 
       expect(drop_facing_remarks(schema)).to include(
-        "image::images/#{diagram_name}[]",
+        "image::#{diagram_name}[]",
       )
       expect(File.file?(File.join(docfile_directory, "images", diagram_name)))
         .to be(true)
@@ -119,7 +131,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkFigures do
 
       resolved = Asciidoctor::PathResolver.new.web_path(bare, "images")
       expect(File.expand_path(resolved, docfile_directory))
-        .to eq(File.expand_path(File.join(schema_directory, diagram_name)))
+        .to eq(File.expand_path(File.join(docfile_directory, "images", diagram_name)))
     end
 
     it "keeps the printed source listing free of rewritten paths" do
@@ -181,7 +193,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkFigures do
       schema = decorated_schema
 
       expect(drop_facing_remarks(schema)).to include(
-        "image::images/#{diagram_name}[]",
+        "image::#{diagram_name}[]",
       )
       expect(File.file?(File.join(docfile_directory, "images", diagram_name)))
         .to be(true)
@@ -195,7 +207,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkFigures do
       schema = decorated_schema
 
       expect(drop_facing_remarks(schema)).to include(
-        "image::images/#{diagram_name}[]",
+        "image::#{diagram_name}[]",
       )
       expect(File.file?(File.join(docfile_directory, "images", diagram_name)))
         .to be(true)
@@ -208,7 +220,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkFigures do
       schema = decorated_schema
 
       expect(drop_facing_remarks(schema)).to include(
-        "image::images/#{diagram_name}[]",
+        "image::#{diagram_name}[]",
       )
     end
   end

@@ -163,7 +163,12 @@ module Metanorma
           # remark items (ExpressRemarkFigures): templates rendering the
           # remarks outside the source listing get their bare figure
           # macros resolved through the schema's directory, while the
-          # listing keeps printing the model source as written.
+          # listing keeps printing the model source as written. The
+          # staging runs EAGERLY, at decoration: templates that print the
+          # remark verbatim ("{{ remark }}") never call the resolved
+          # accessor, and the staged copy must exist either way for
+          # their bare targets to resolve against the document's
+          # imagesdir.
           def stash_figure_remarks(options, schema_directory)
             document = options["document"]
             return unless document && schema_directory
@@ -175,8 +180,9 @@ module Metanorma
               schema_directory,
             )
             @model.remark_items.each do |item|
+              resolved = resolver.remarks(item.remarks)
               item.define_singleton_method(:expressg_figure_remarks) do
-                resolver.remarks(remarks)
+                resolved
               end
             end
           end
