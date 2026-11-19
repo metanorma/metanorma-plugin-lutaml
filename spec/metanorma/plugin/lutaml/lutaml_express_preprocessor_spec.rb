@@ -379,7 +379,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                     <p id="_">Mine text</p>
                     <svgmap id="_">
                       <figure id="_">
-                        <image id="_" src="measure_schemaexpg5.svg" mimetype="image/svg+xml" height="auto" width="auto" filename="measure_schemaexpg5.svg"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"/>
                       </figure>
                       <target href="1">
                         <eref  bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
@@ -397,7 +397,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                     <p id="_">Mine text</p>
                     <svgmap id="_">
                       <figure id="_">
-                        <image id="_" src="measure_schemaexpg5.svg" mimetype="image/svg+xml" height="auto" width="auto"  filename="measure_schemaexpg5.svg"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"/>
                       </figure>
                       <target href="1">
                         <eref  bibitemid="express_measure_schema" citeas=""><display-text>measure_schema</display-text></eref>
