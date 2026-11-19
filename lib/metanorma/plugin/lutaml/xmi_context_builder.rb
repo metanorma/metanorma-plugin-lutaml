@@ -117,10 +117,25 @@ module Metanorma
 
         def add_model_anchor_context(context, root_package)
           packages = model_packages(root_package)
+          register_model_anchors(context, packages, root_package)
+          register_anchorable_ids(context, packages, root_package)
+        end
+
+        def register_model_anchors(context, packages, root_package)
           context["additional_context"]["model_anchors"] =
             model_reference_targets(packages)
               .merge(model_anchors(packages))
               .merge(model_stub_anchors(root_package))
+        end
+
+        # Real model entities AND stubs (#70): both are XMI-declared
+        # objects, so their links survive templates that do not render
+        # their sections. Only ids the XMI never defines (attribute
+        # types, association ends present solely as idrefs) degrade.
+        def register_anchorable_ids(context, packages, root_package)
+          stub_ids = model_stub_anchors(root_package).keys
+          context["additional_context"]["model_anchorable"] =
+            model_anchors(packages).keys | stub_ids
         end
 
         # Ids the XMI templates link to (attribute types, association ends),

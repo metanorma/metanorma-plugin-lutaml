@@ -41,6 +41,9 @@ module Metanorma
           XmiModelReference.register(
             document, additional_context["model_anchors"] || {}
           )
+          XmiModelReference.register_anchorable(
+            document, additional_context["model_anchorable"] || []
+          )
           render_result.split("\n")
         end
 
