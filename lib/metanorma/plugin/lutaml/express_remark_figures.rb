@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "digest"
 require "fileutils"
 require "pathname"
 
@@ -46,7 +47,10 @@ module Metanorma
         # A bare relative image macro: `image::name.svg[]`. Absolute
         # paths, URLs, data URIs, liquid references and macros carrying
         # an attribute list stay as written.
-        IMAGE_MACRO_REGEXP = /\Aimage::([^\/\s:{}][^:\s{}]*)\[\]\s*\z/
+        # An optional attribute list is allowed: the WG12 remark figures
+        # carry captions (`image::images/x.svg[EXPRESS-G diagram]`), and
+        # the empty-list-only form skipped them silently (#371).
+        IMAGE_MACRO_REGEXP = /\Aimage::([^\/\s:{}][^:\s{}]*)\[[^\]]*\]\s*\z/
 
         # An imagesdir attribute entry; the bang form unsets. The LAST
         # entry in the source is the one in force where the member
@@ -159,48 +163,83 @@ module Metanorma
                 File.expand_path(imagesdir, docdir)
               end
             @schema_directory = schema_directory
+            @errors = []
           end
 
           def remarks(texts)
             texts.map { |text| remark(text) }
           end
 
+          # The resolved text plus any figure-error lines emitted along
+          # the way (a missing figure surfaces as a visible error, never
+          # as a broken macro).
           def remark(text)
             text.each_line.map { |line| rewrite_line(line) }.join
+          end
+
+          def errors
+            @errors.dup
           end
 
           private
 
           # The figure file is STAGED into the resolved imagesdir
-          # directory — the one directory this document's image targets
-          # resolve against, since asciidoctor joins every target with
-          # the imagesdir (the author's value, or its own "images"
-          # default) before use — and the emitted target is the staged
-          # file's bare basename. A ../-composed target escapes the
-          # imagesdir join and is dropped silently by asciidoctor's path
-          # handling (measured: the figure vanished from every output
-          # format, exit 0), and an absolute target leaks the build path
-          # (issue #359's original report). The staged copy is a build
-          # artifact; no path enters the output.
+          # directory at the exact path the imagesdir join computes for
+          # its target — asciidoctor joins every image target with the
+          # imagesdir (the author's value, or its own "images" default)
+          # before use, so staging MIRRORS the target path under that
+          # directory and the emitted line stands exactly as written:
+          # the target is a static path whose composed location exists.
+          # No target rewriting, no imagesdir attribute entry
+          # (metanorma-plugin-lutaml#371). Only when that static spot is
+          # taken by a DIFFERENT figure (two schemas shipping a same-named
+          # file) does the line rewrite — to the unique staged path,
+          # still static.
           def rewrite_line(line)
             match = IMAGE_MACRO_REGEXP.match(line) or return line
-            return line unless stage_figure(match[1])
+            before = @errors.length
+            final = final_target(match[1])
+            return @errors[before..].join("\n") if final.nil? && @errors.length > before
+
+            return line if final == match[1]
 
             trailing = line.length - line.rstrip.length
             suffix = trailing.positive? ? line[-trailing, trailing] : ""
-            "#{line[/\Aimage::/]}#{File.basename(match[1])}[]#{suffix}"
+            "#{line[/\Aimage::/]}#{final}[]#{suffix}"
           end
 
-          def stage_figure(bare)
-            file = File.expand_path(bare, @schema_directory.to_s)
-            return unless File.file?(file)
+          def final_target(target)
+            file = File.expand_path(target, @schema_directory.to_s)
+            unless File.file?(file)
+              # A missing figure must NOT reach asciidoctor as a broken
+              # image macro — metanorma's image-existence check then
+              # FATALs the whole build (#371). Emit a visible, localized
+              # error line in its place: what was expected, where it was
+              # looked for.
+              @errors << (
+                "[EXPRESS-G figure error] '#{target}' not found beside " \
+                "the schema (looked in '#{@schema_directory}')"
+              )
+              return
+            end
 
-            staged = File.join(@imagesdir_directory, File.basename(bare))
-            return true if File.file?(staged)
+            staged = File.join(@imagesdir_directory, target)
+            if File.file?(staged)
+              return target if FileUtils.identical?(file, staged)
 
-            FileUtils.mkdir_p(@imagesdir_directory)
+              unique = File.join(@imagesdir_directory,
+                                 Digest::SHA256.hexdigest(file)[0, 12],
+                                 target)
+              return target if File.file?(unique)
+
+              FileUtils.mkdir_p(File.dirname(unique))
+              FileUtils.cp(file, unique)
+              return unique.sub("#{@imagesdir_directory}/", "")
+            end
+
+            FileUtils.mkdir_p(File.dirname(staged))
             FileUtils.cp(file, staged)
-            true
+            target
           end
         end
       end

@@ -92,7 +92,7 @@ module Metanorma
 
           def decorate_remarks(options)
             promote_schema_prose
-            stash_listing_imagesdir(options)
+            stash_figure_remarks(options)
           end
 
           private
@@ -142,35 +142,18 @@ module Metanorma
             @model.define_singleton_method(name) { splicer.call }
           end
 
-          # The per-schema imagesdir for the listing's attribute entries
-          # (formatted_hyperlinked_adoc_listing), plus the document's
-          # imagesdir at decoration time so the listing can restore it
-          # after the schema's content. The values ride on the schema as
-          # singleton readers: the liquid drop has no access to the
-          # asciidoctor document.
-          def stash_listing_imagesdir(options)
+          # Stages the schema's EXPRESS-G figures into the directory the
+          # document's image targets resolve against and rewrites the
+          # remark texts to the staged files' bare basenames — the
+          # plugin never sets, checks, or restores the document's
+          # imagesdir (metanorma-plugin-lutaml#371): every figure macro
+          # the templates print, inside the listing or out, carries a
+          # bare target that resolves as-is.
+          def stash_figure_remarks(options)
             document = options["document"]
-            dir = ExpressRemarkAdapter.schema_imagesdir(options, @model)
-            previous = document && document.attributes["imagesdir"]
-            @model.define_singleton_method(:listing_imagesdir) { dir }
-            @model.define_singleton_method(:listing_imagesdir_restore) do
-              previous
-            end
-            stash_figure_remarks(options, dir)
-          end
-
-          # Stashes the drop-facing figure resolver on the schema's
-          # remark items (ExpressRemarkFigures): templates rendering the
-          # remarks outside the source listing get their bare figure
-          # macros resolved through the schema's directory, while the
-          # listing keeps printing the model source as written. The
-          # staging runs EAGERLY, at decoration: templates that print the
-          # remark verbatim ("{{ remark }}") never call the resolved
-          # accessor, and the staged copy must exist either way for
-          # their bare targets to resolve against the document's
-          # imagesdir.
-          def stash_figure_remarks(options, schema_directory)
-            document = options["document"]
+            schema_directory = ExpressRemarkAdapter.schema_imagesdir(
+              options, @model
+            )
             return unless document && schema_directory
             return unless @model.is_a?(Expressir::Model::Declarations::Schema)
 
@@ -184,6 +167,9 @@ module Metanorma
               item.define_singleton_method(:expressg_figure_remarks) do
                 resolved
               end
+              # Resolve in place: the annex templates print `item.remarks`
+              # verbatim, outside the listing and outside any accessor.
+              item.remarks = resolved
             end
           end
         end
