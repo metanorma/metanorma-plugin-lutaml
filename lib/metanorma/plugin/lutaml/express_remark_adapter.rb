@@ -52,22 +52,29 @@ module Metanorma
         # the expressir version), the output stands as printed: the prose
         # shows exactly once either way.
         class ProseSplicer
-          def initialize(schema, format, prose, block)
+          def initialize(schema, format, prose, format_name)
             @schema = schema
             @format = format
             @prose = prose
-            @block = block
+            @format_name = format_name
             @schema_head = %r{
               \ASCHEMA\s+#{Regexp.escape(schema.id.to_s)}[^\n;]*;[^\n]*
             }x
           end
 
+          # The prose block is formatted at call time from the item's
+          # current remarks: re-decoration for another document rewrites
+          # the remarks (figure staging), and a process rendering several
+          # documents off one index must print each document's own
+          # resolution — a block captured at decoration time would print
+          # the first document's forever (#381).
           def call
+            block = SOURCE_FORMATTERS.fetch(@format_name).format(@prose)
             printed = format_without_prose
-            return printed if printed.include?(@block)
+            return printed if printed.include?(block)
             return printed unless printed.match?(@schema_head)
 
-            printed.sub(@schema_head) { |line| "#{line}\n\n#{@block}" }
+            printed.sub(@schema_head) { |line| "#{line}\n\n#{block}" }
           end
 
           private
@@ -91,8 +98,14 @@ module Metanorma
           end
 
           def decorate_remarks(options)
-            promote_schema_prose
+            prose = promote_schema_prose
             stash_figure_remarks(options)
+            # The spliced prose blocks are built here, after the figure
+            # rewrite, so they print the resolved targets — and rebuilt
+            # on every decoration, so a process rendering several
+            # documents off one index prints each document's own
+            # resolution rather than the first document's (#381).
+            hide_from_source_formats(prose) if prose
           end
 
           private
@@ -105,39 +118,39 @@ module Metanorma
           # its target.
           #
           # Since expressir 2.4.59 (expressir#603) the formatters print
-          # remark_items, so the synthetic item is hidden from them — and
-          # then spliced back into the printed source in its standard
-          # position (right after the SCHEMA line), so the source listing
-          # shows the prose exactly once, as written.
+          # remark_items, so the synthetic item is hidden from them — the
+          # caller splices it back into the printed source in its standard
+          # position (right after the SCHEMA line) once the figure rewrite
+          # has run, so the source listing shows the resolved prose
+          # exactly once.
           def promote_schema_prose
             return unless @model.is_a?(Expressir::Model::Declarations::Schema)
-            return if @model.remarks.to_a.empty?
 
             items = @model.remark_items.to_a
-            return if items.any? { |ri| ri.id == @model.id }
+            existing = items.find { |ri| ri.id == @model.id }
+            return existing if existing
+            return if @model.remarks.to_a.empty?
 
             prose = Expressir::Model::Declarations::RemarkItem.new(
               id: @model.id,
               remarks: @model.remarks.dup,
             )
             @model.remark_items = [prose] + items
-            hide_from_source_formats(prose)
+            prose
           end
 
           # Each format is still computed lazily and memoized by expressir;
-          # it just runs without the promoted item in remark_items.
+          # it just runs without the promoted item in remark_items. The
+          # prose block itself is formatted per render by the splicer.
           def hide_from_source_formats(prose)
-            blocks = SOURCE_FORMATS.to_h do |name|
-              [name, SOURCE_FORMATTERS[name].format(prose)]
-            end
             SOURCE_FORMATS.each do |name|
-              splice_prose_into_format(name, prose, blocks[name])
+              splice_prose_into_format(name, prose)
             end
           end
 
-          def splice_prose_into_format(name, prose, block)
+          def splice_prose_into_format(name, prose)
             format = @model.method(name)
-            splicer = ProseSplicer.new(@model, format, prose, block)
+            splicer = ProseSplicer.new(@model, format, prose, name)
 
             @model.define_singleton_method(name) { splicer.call }
           end
@@ -163,13 +176,74 @@ module Metanorma
               schema_directory,
             )
             @model.remark_items.each do |item|
-              resolved = resolver.remarks(item.remarks)
-              item.define_singleton_method(:expressg_figure_remarks) do
+              rewrite_item(item, resolver)
+            end
+            # Figures also ride remarks tagged to nested declarations — an
+            # entity- or attribute-tagged remark hangs off that element,
+            # not the schema (solid_shape_element_schema carries its
+            # L-section figure blocks on an attribute remark). And under
+            # expressir 2.4.70+ (the untagged-remarks rework) such owner
+            # remarks sit on the owner's `remarks` string array with
+            # `remark_items` EMPTY, so both channels must be rewritten:
+            # the corpus templates print `attribute.remarks` directly.
+            walk_remark_item_owners(Array(@model.children)) do |owner|
+              if owner.respond_to?(:remark_items)
+                owner.remark_items.each { |item| rewrite_item(item, resolver) }
+              end
+              next unless owner.respond_to?(:remarks) && owner.remarks.to_a.any?
+
+              resolved = resolver.remarks(owner.remarks)
+              owner.define_singleton_method(:expressg_figure_remarks) do
                 resolved
               end
-              # Resolve in place: the annex templates print `item.remarks`
-              # verbatim, outside the listing and outside any accessor.
-              item.remarks = resolved
+              owner.remarks = resolved
+            end
+            reset_format_memos
+          end
+
+          def rewrite_item(item, resolver)
+            resolved = resolver.remarks(item.remarks)
+            item.define_singleton_method(:expressg_figure_remarks) do
+              resolved
+            end
+            # Resolve in place: the annex templates print `item.remarks`
+            # verbatim, outside the listing and outside any accessor.
+            item.remarks = resolved
+          end
+
+          def walk_remark_item_owners(elements, &block)
+            elements.each do |element|
+              next unless element.is_a?(Expressir::Model::ModelElement)
+              # RemarkItems appear in their owner's children; they are
+              # leaves for this purpose — re-entering one would resolve
+              # its (already rewritten) remarks a second time.
+              next if element.is_a?(Expressir::Model::Declarations::RemarkItem)
+
+              has_items = element.respond_to?(:remark_items) && element.remark_items.to_a.any?
+              has_remarks = element.respond_to?(:remarks) && element.remarks.to_a.any?
+              block.call(element) if has_items || has_remarks
+              walk_remark_item_owners(Array(element.children), &block)
+            end
+          end
+
+          # expressir memoizes each printed source form in an ivar the
+          # first time it is formatted. The prose block is re-spliced per
+          # render, but the rest of the printed source — including the
+          # __expressg figure blocks — comes from that memo, so a process
+          # rendering several documents sharing one index must clear it
+          # on re-decoration or every document after the first prints the
+          # first document's figure targets (#381). expressir exposes no
+          # reset API; these are its memo ivars.
+          FORMAT_MEMO_IVARS = %i[
+            @formatted
+            @formatted_no_remarks
+            @formatted_hyperlinked
+            @formatted_hyperlinked_adoc
+          ].freeze
+
+          def reset_format_memos
+            FORMAT_MEMO_IVARS.each do |ivar|
+              @model.remove_instance_variable(ivar) if @model.instance_variable_defined?(ivar)
             end
           end
         end

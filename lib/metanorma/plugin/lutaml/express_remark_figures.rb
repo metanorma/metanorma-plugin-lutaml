@@ -50,7 +50,7 @@ module Metanorma
         # An optional attribute list is allowed: the WG12 remark figures
         # carry captions (`image::images/x.svg[EXPRESS-G diagram]`), and
         # the empty-list-only form skipped them silently (#371).
-        IMAGE_MACRO_REGEXP = /\Aimage::([^\/\s:{}][^:\s{}]*)\[[^\]]*\]\s*\z/
+        IMAGE_MACRO_REGEXP = /\Aimage::([^:\s{}]+)\[[^\]]*\]\s*\z/
 
         # An imagesdir attribute entry; the bang form unsets. The LAST
         # entry in the source is the one in force where the member
@@ -205,6 +205,9 @@ module Metanorma
           end
 
           def final_target(target)
+            return target if target.start_with?("/")
+            return flat_target(target) if target.include?("/")
+
             file = File.expand_path(target, @schema_directory.to_s)
             unless File.file?(file)
               # A missing figure must NOT reach asciidoctor as a broken
@@ -236,6 +239,43 @@ module Metanorma
             FileUtils.mkdir_p(File.dirname(staged))
             FileUtils.cp(file, staged)
             target
+          end
+
+          # A target carrying a path segment (as written in the schema
+          # source, e.g. `images/image-02.png`) is emitted FLAT: the
+          # staged spot must equal the imagesdir-join of the emitted
+          # target, and a subpath target would double under the join
+          # (`images/images/...`, #381). A basename collision with a
+          # different file disambiguates through a digest directory,
+          # whose emitted path is itself staged at its own join.
+          def flat_target(target)
+            file = File.expand_path(target, @schema_directory.to_s)
+            unless File.file?(file)
+              @errors << (
+                "[EXPRESS-G figure error] '#{target}' not found beside " \
+                "the schema (looked in '#{@schema_directory}')"
+              )
+              return
+            end
+
+            flat = File.basename(target)
+            staged = File.join(@imagesdir_directory, flat)
+            if File.file?(staged)
+              return flat if FileUtils.identical?(file, staged)
+
+              digest = Digest::SHA256.hexdigest(file)[0, 12]
+              unique = File.join(digest, flat)
+              staged_unique = File.join(@imagesdir_directory, unique)
+              return unique if File.file?(staged_unique)
+
+              FileUtils.mkdir_p(File.dirname(staged_unique))
+              FileUtils.cp(file, staged_unique)
+              return unique
+            end
+
+            FileUtils.mkdir_p(@imagesdir_directory)
+            FileUtils.cp(file, staged)
+            flat
           end
         end
       end
