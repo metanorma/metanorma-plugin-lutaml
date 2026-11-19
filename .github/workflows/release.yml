@@ -13,15 +13,25 @@ on:
         default: 'skip'
   repository_dispatch:
     types: [ do-release ]
+  # The publish leg: when the release PR (head branch release/v*) merges,
+  # metanorma/ci tags the merge commit and publishes (metanorma/ci#515).
+  # Ordinary PR closes are skipped inside the reusable.
+  pull_request:
+    types:
+      - closed
 
 jobs:
   release:
     uses: metanorma/ci/.github/workflows/rubygems-release.yml@main
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: write
     with:
       next_version: ${{ github.event.inputs.next_version }}
-      release_command: |
-        bundle install
-        bundle exec rake release
+      # release_command removed (metanorma/ci#515): the reusable's generic
+      # build+push handles the gem on both legs; bundler's git machinery
+      # cannot run on the publish leg's detached merge-commit checkout.
     secrets:
       rubygems-api-key: ${{ secrets.METANORMA_CI_RUBYGEMS_API_KEY }}
       pat_token: ${{ secrets.METANORMA_CI_PAT_TOKEN }}
