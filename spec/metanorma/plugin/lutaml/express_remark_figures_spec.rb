@@ -88,13 +88,20 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkFigures do
   end
 
   describe "drop-facing remark figures" do
-    it "keeps bare figure macros as written and stages the figure into the default imagesdir" do
+    # A document that sets no imagesdir resolves every bare image
+    # target against the docfile directory itself (asciidoctor's
+    # default imagesdir is empty), so the staged copy must sit next to
+    # the docfile -- the location the compile's image-existence check
+    # scans (metanorma-plugin-lutaml#371 follow-up: the suma-generated
+    # schema documents set no imagesdir, and a docdir/images staging
+    # left every figure macro unresolvable, FATALing the build).
+    it "keeps bare figure macros as written and stages the figure beside the docfile" do
       schema = decorated_schema
 
       expect(drop_facing_remarks(schema)).to include(
         "image::#{diagram_name}[]",
       )
-      expect(File.file?(File.join(docfile_directory, "images", diagram_name)))
+      expect(File.file?(File.join(docfile_directory, diagram_name)))
         .to be(true)
     end
 
@@ -104,7 +111,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkFigures do
     it "stages the figure eagerly, at decoration" do
       decorated_schema
 
-      expect(File.file?(File.join(docfile_directory, "images", diagram_name)))
+      expect(File.file?(File.join(docfile_directory, diagram_name)))
         .to be(true)
     end
 
@@ -132,6 +139,21 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkFigures do
       resolved = Asciidoctor::PathResolver.new.web_path(bare, "images")
       expect(File.expand_path(resolved, docfile_directory))
         .to eq(File.expand_path(File.join(docfile_directory, "images", diagram_name)))
+    end
+
+    # The no-imagesdir mirror of the roundtrip above: an empty default
+    # imagesdir leaves the bare target as-is, and the target then
+    # resolves against the docfile directory -- where the staging put
+    # the figure.
+    it "emits targets the default no-imagesdir resolution resolves back to the figure" do
+      schema = decorated_schema
+      macro = drop_facing_remarks(schema)
+        .each_line.find { |line| line.start_with?("image::") }
+      bare = macro[/\Aimage::(.*?)\[\]/, 1]
+
+      resolved = Asciidoctor::PathResolver.new.web_path(bare, "")
+      expect(File.expand_path(resolved, docfile_directory))
+        .to eq(File.expand_path(File.join(docfile_directory, diagram_name)))
     end
 
     it "keeps the printed source listing free of rewritten paths" do
@@ -223,6 +245,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkFigures do
       expect(drop_facing_remarks(schema)).to include(
         "image::#{diagram_name}[]",
       )
+      expect(File.file?(File.join(docfile_directory, diagram_name)))
+        .to be(true)
     end
   end
 
