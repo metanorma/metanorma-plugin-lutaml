@@ -148,20 +148,16 @@ module Metanorma
         # directory as the document resolves it,
         # ExpressRemarkAdapter.schema_imagesdir).
         class TargetResolver
-          # Asciidoctor's default imagesdir for a document that sets
-          # none: bare image targets resolve against "images" under the
-          # docfile directory.
-          DEFAULT_IMAGESDIR = "images".freeze
-
           def initialize(docfile, imagesdir, schema_directory)
             docdir = File.dirname(File.expand_path(docfile.to_s))
             @docdir = docdir
-            @imagesdir_directory =
-              if imagesdir.nil? || imagesdir.empty?
-                File.join(docdir, DEFAULT_IMAGESDIR)
-              else
-                File.expand_path(imagesdir, docdir)
-              end
+            # Asciidoctor's default imagesdir is empty: a document that
+            # sets none resolves every bare image target against the
+            # docfile directory itself, and an explicit `:!imagesdir:`
+            # unset behaves identically. `File.expand_path` with an empty
+            # base returns the docdir, so both cases stage at the exact
+            # spot the bare target resolves to.
+            @imagesdir_directory = File.expand_path(imagesdir.to_s, docdir)
             @schema_directory = schema_directory
             @errors = []
           end
