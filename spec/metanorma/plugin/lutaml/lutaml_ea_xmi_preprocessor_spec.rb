@@ -607,23 +607,21 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
                   ]
                   it_behaves_like "should contain xref objects", xref
 
-                  it "renders unrendered stub value types as text" do
-                    expect(subject).not_to have_tag(
+                  it "keeps stub value types linked (XMI-declared, #70)" do
+                    expect(subject).to have_tag(
                       "xref",
                       with: {
                         target: "section-" \
                                 "EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1",
                       },
                     )
-                    expect(subject).not_to have_tag(
+                    expect(subject).to have_tag(
                       "xref",
                       with: {
                         target: "section-" \
                                 "EAID_2D0C03FB_FF62_4979_A2EB_A40C043B097E",
                       },
                     )
-                    expect(subject).to include("CharacterString [1..1]")
-                    expect(subject).to include("TM_Position [0..1]")
                   end
                 end
               end
@@ -770,38 +768,41 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
           FileUtils.rm_f(config_file)
         end
 
-        it "does not create internal xrefs for unrendered targets" do
+        it "keeps xrefs for XMI-declared targets and degrades " \
+           "never-defined reference ids" do
+          # Model entities and stubs are XMI-declared objects (#70): their
+          # links survive even when unrendered — a collection-level
+          # document resolves them. Ids present solely as idrefs (attribute
+          # types, association ends the XMI never defines) degrade to text.
           expect(xml_output)
             .to(include("target=\"section-" \
                         "EAID_20B7542F_5EE7_44c6_8AC5_055508241A3B\""))
           expect(xml_output)
-            .not_to(include("target=\"section-" \
-                            "EAID_1D8715F2_4E4A_4f36_A414_1326B6DC1EDD\""))
+            .to(include("target=\"section-" \
+                        "EAID_1D8715F2_4E4A_4f36_A414_1326B6DC1EDD\""))
           expect(xml_output)
-            .to(include("<p id=\"_\">ADEOfAbstractAtomicTimeseries " \
-                        "[0..*]</p>"))
+            .to(include("target=\"section-" \
+                        "EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1\""))
           expect(xml_output)
             .not_to(include("target=\"section-" \
                             "EAID_42F7A9A2_01BF_402c_AF26_6E1BE1E8846A\""))
           expect(xml_output)
-            .not_to(include("target=\"section-" \
-                            "EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1\""))
-          expect(xml_output)
-            .to(include("<p id=\"_\">CharacterString [1..1]</p>"))
+            .not_to(include("<p id=\"_\">CharacterString [1..1]</p>"))
         end
 
         context "when a custom template emits direct model xrefs" do
           let(:template_path) { "spec/fixtures/lutaml/liquid_templates" }
 
-          it "still suppresses xrefs for unrendered targets" do
+          it "keeps custom-template xrefs to XMI-declared targets" do
+            # Stubs are XMI-declared objects (#70): a custom template's
+            # model link survives even though this render does not emit
+            # the target's section.
             expect(xml_output)
               .to(include("target=\"section-" \
                           "EAID_20B7542F_5EE7_44c6_8AC5_055508241A3B\""))
             expect(xml_output)
-              .not_to(include("target=\"section-" \
-                              "EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1\""))
-            expect(xml_output)
-              .to(include("<p id=\"_\">CharacterString [1..1]</p>"))
+              .to(include("target=\"section-" \
+                          "EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1\""))
           end
         end
 
