@@ -314,7 +314,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressSchemaListing do
       end
     end
 
-    context "with an EXPRESS-G figure and imagesdir entries stashed" do
+    context "with an EXPRESS-G figure and a document imagesdir" do
       let(:schema) do
         write_schema_file(<<~EXP)
           SCHEMA listing_schema;
@@ -335,31 +335,41 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressSchemaListing do
         decorated_schema(document: document)
       end
 
-      it "emits the figures inside the schema's imagesdir entries" do
-        lines = listing_of(schema).split("\n")
+      it "keeps the macro as written with no imagesdir entries" do
+        listing = listing_of(schema)
 
-        expect(lines[0])
-          .to eq(":imagesdir: #{File.expand_path(schema_directory)}")
-        expect(lines[-1]).to eq(":imagesdir: author-images")
-        expect(lines).to include("image::diag1.svg[]")
-        expect(lines.index("image::diag1.svg[]")).to be < lines.length - 2
+        expect(listing).not_to include(":imagesdir:")
+        expect(listing).to include("image::diag1.svg[]")
       end
 
-      it "resolves the figure image through the imagesdir entries" do
-        # A real schema page carries a section heading before the listing;
-        # a document cannot start on an attribute entry.
+      it "stages the figure into the document's imagesdir" do
+        Asciidoctor.convert(
+          "== listing_schema\n\n#{listing_of(schema)}",
+          header_footer: false, standalone: false,
+        )
+
+        expect(File.file?(
+          File.join(
+            File.dirname(document.attributes["docfile"]),
+            "author-images", "diag1.svg",
+          ),
+        )).to be(true)
+      end
+
+      it "renders the figure target as written" do
+        # A real schema page carries a section heading before the listing.
+        # The target stays the as-written static path; where it resolves
+        # is the DOCUMENT's own imagesdir decision (tested above).
         html = Asciidoctor.convert(
           "== listing_schema\n\n#{listing_of(schema)}",
           header_footer: false, standalone: false,
         )
 
-        expect(html).to include(
-          %(<img src="#{File.expand_path(schema_directory)}/diag1.svg"),
-        )
+        expect(html).to include(%(<img src="diag1.svg"))
       end
     end
 
-    context "with imagesdir values stashed by decoration" do
+    context "with a document imagesdir the listing must not touch" do
       let(:schema) do
         write_schema_file(<<~EXP)
           SCHEMA listing_schema;
@@ -372,14 +382,12 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressSchemaListing do
         decorated_schema(document: document)
       end
 
-      it "wraps the block in imagesdir attribute entries" do
-        lines = listing_of(schema).split("\n")
+      it "emits the pure block without attribute entries" do
+        listing = listing_of(schema)
 
-        expect(lines[0])
-          .to eq(":imagesdir: #{File.expand_path(schema_directory)}")
-        expect(lines[1]).to eq("")
-        expect(lines[-2]).to eq("")
-        expect(lines[-1]).to eq(":imagesdir: author-images")
+        expect(listing).not_to include(":imagesdir:")
+        expect(listing.split("\n")[0])
+          .to eq('[source%unnumbered,subs="+macros"]')
       end
     end
 

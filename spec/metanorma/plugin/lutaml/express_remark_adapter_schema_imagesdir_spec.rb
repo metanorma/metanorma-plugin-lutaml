@@ -91,34 +91,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkAdapter do
       described_class.for(repo).decorate_remarks({ "document" => document })
     end
 
-    it "stashes the schema's imagesdir on the decorated schema" do
-      schema = repository.schemas.first
-      decorate(repository, document)
-
-      expect(schema.listing_imagesdir)
-        .to eq(File.expand_path(schema_directory))
-    end
-
-    it "records the document's imagesdir for the restore entry" do
-      document.attributes["imagesdir"] = "images"
-      schema = repository.schemas.first
-      decorate(repository, document)
-
-      expect(schema.listing_imagesdir_restore).to eq("images")
-    end
-
-    it "records no restore value when the document carries none" do
-      schema = repository.schemas.first
-      decorate(repository, document)
-
-      expect(schema.listing_imagesdir_restore).to be_nil
-    end
-
-    # metanorma's figure absolutization joins document.imagesdir with
-    # svgmap-synthesized targets that are ALREADY docfile-relative, so a
-    # document-level value doubles the directory segments and fails the
-    # image-existence check (suma's dummy-collection build). The remark
-    # content resolves through the listing-scoped entries only.
+    # Decoration never touches the document's imagesdir (#371): the
+    # document-level value belongs to the author and outside tooling;
+    # the plugin stages figures itself and emits static targets.
     it "leaves the document imagesdir unset for a single-schema repository" do
       decorate(repository, document)
 
