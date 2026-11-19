@@ -148,14 +148,15 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkFigures do
       expect(item.remarks.join("\n")).to include("image::#{diagram_name}[]")
     end
 
-    it "leaves macros of figures missing under the schema as written" do
+    it "reports a missing figure in place instead of crashing the build" do
       schema_file
       FileUtils.rm(File.join(schema_directory, diagram_name))
       schema = decorated_schema
 
-      expect(drop_facing_remarks(schema)).to include(
-        "image::#{diagram_name}[]",
-      )
+      output = drop_facing_remarks(schema)
+      expect(output).not_to include("image::#{diagram_name}[]")
+      expect(output).to include("[EXPRESS-G figure error]")
+      expect(output).to include("'#{diagram_name}' not found beside the schema")
     end
 
     it "leaves absolute targets as written" do
