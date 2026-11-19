@@ -9,9 +9,10 @@ module Metanorma
       # whose fence is computed from the content so that no dash run
       # inside remark prose can close the listing early — 43 of the 125
       # SRL schema listings close early under the templates' hardcoded
-      # two-dash fence — the figure blocks re-emitted after it carry
-      # static targets staged by the adapter, with no build path in the
-      # remark text (TRThurman's source-fidelity requirements).
+      # two-dash fence — plus the imagesdir attribute entries that let
+      # the schema's relative image macros resolve as written, with no
+      # build path in the remark text (TRThurman's source-fidelity
+      # requirements).
       #
       # The schema's EXPRESS-G figure remark (`__expressg`, carrying the
       # svgmap figure blocks) is not source: it is extraction fodder.
@@ -20,10 +21,9 @@ module Metanorma
       # listings only rendered figures because their hardcoded fence
       # closed early, an accident the computed fence removed). The
       # listing therefore prints the EXPRESS source only, and the figure
-      # blocks are re-emitted after the fence as real adoc with bare
-      # basenames — the adapter stages the files and rewrites the
-      # remarks at decoration time, so no imagesdir attribute entry is
-      # ever emitted (metanorma/metanorma-plugin-lutaml#371).
+      # blocks are re-emitted after the fence as real adoc, still inside
+      # the schema's imagesdir attribute entries so the image macros
+      # resolve as written.
       module ExpressSchemaListing
         SOURCE_BLOCK_HEADING = '[source%unnumbered,subs="+macros"]'
         # A dash run of two or more at line start: only such a run can
@@ -114,11 +114,13 @@ module Metanorma
         end
 
         # Methods mixed into the schema's liquid drop class. The
-        # adapter stages the EXPRESS-G figures at decoration time, so
-        # the extracted figure blocks after the listing carry static,
-        # as-written targets — no attribute entries wrap the output
-        # (attribute entries could not be changed inside the listing
-        # anyway).
+        # decorated schema carries its imagesdir values as singleton
+        # readers (the drop has no access to the asciidoctor document);
+        # attribute entries are emitted immediately before and after the
+        # block, since attribute entries take effect sequentially and
+        # cannot be changed inside the listing itself. The extracted
+        # EXPRESS-G figures go after the block, still inside those
+        # entries, so their relative image macros resolve as written.
         module DropMethods
           def formatted_hyperlinked_adoc_listing
             source, figures = ExpressSchemaListing
@@ -126,25 +128,27 @@ module Metanorma
                 @object.formatted_hyperlinked_adoc.to_s,
               )
             fence = ExpressSchemaListing.fence(source)
-            # The figure macros are bare basenames — the adapter stages
-            # the files and rewrites the remarks at decoration time — so
-            # no imagesdir attribute entry wraps the output (#371): the
-            # document's imagesdir state is the template layer's alone.
-            [
-              listing_block(source, fence),
-              *figures,
-            ].reject(&:empty?).join("\n\n")
-          end
-
-          private
-
-          def listing_block(source, fence)
-            [
+            listing = [
               SOURCE_BLOCK_HEADING,
               fence,
               source,
               fence,
             ].join("\n")
+            with_imagesdir_entries(listing, figures)
+          end
+
+          private
+
+          def with_imagesdir_entries(listing, figures = [])
+            body = [listing, *figures].reject(&:empty?).join("\n\n")
+            return body unless @object.respond_to?(:listing_imagesdir)
+
+            dir = @object.listing_imagesdir
+            return body unless dir
+
+            restore = @object.listing_imagesdir_restore
+            closing = restore ? ":imagesdir: #{restore}" : ":!imagesdir:"
+            ":imagesdir: #{dir}\n\n#{body}\n\n#{closing}"
           end
         end
       end
