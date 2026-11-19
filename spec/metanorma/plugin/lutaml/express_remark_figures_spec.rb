@@ -95,7 +95,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkFigures do
     # scans (metanorma-plugin-lutaml#371 follow-up: the suma-generated
     # schema documents set no imagesdir, and a docdir/images staging
     # left every figure macro unresolvable, FATALing the build).
-    it "keeps bare figure macros as written and stages the figure beside the docfile" do
+    it "keeps bare figure macros as written and stages beside the docfile" do
       schema = decorated_schema
 
       expect(drop_facing_remarks(schema)).to include(
@@ -153,7 +153,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkFigures do
 
       resolved = Asciidoctor::PathResolver.new.web_path(bare, "")
       expect(File.expand_path(resolved, docfile_directory))
-        .to eq(File.expand_path(File.join(docfile_directory, diagram_name)))
+        .to eq(File.expand_path(
+                 File.join(docfile_directory, diagram_name),
+               ))
     end
 
     it "keeps the printed source listing free of rewritten paths" do
