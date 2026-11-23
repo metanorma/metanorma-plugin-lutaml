@@ -317,15 +317,22 @@ checks with exact revisions, bundle identity, logs and remaining gaps there.
 
 The packaged candidates pass local real-catalogue, preservation, suma and
 WMO-taste XML checks. The compiler recheck now passes all 49 examples after
-network access was restored. The canonical plugin default suite still has
-ten recorded baseline failures; no required gate is waived.
+network access was restored. The original canonical plugin default run
+recorded ten baseline failures. The consolidated
+compatibility prerequisite fixes the nine semantic failures; after network
+restoration, the combined candidate default suite passes 400 examples with no
+failures. Packaged suma build/reuse/reproducibility and WMO-taste XML also pass.
+No required remote gate is waived.
 
 Published drafts: [generic binding #390](https://github.com/metanorma/metanorma-plugin-lutaml/pull/390)
 at `6dd1726e7adcb3a15a00e2411245d27882d1ec12`, and
 [compiler dependency #1175](https://github.com/lutaml/lutaml-model/pull/1175)
 at `c21b2f8d4e91efe6937b6c4637a5102249b8a7e5`.
 Both target their repository's `grind/389-xml-data-binding`; final-head CI is
-running. `work/389-s100-example` is published for visibility; open its PR after
+running. [Compatibility prerequisite #391](https://github.com/metanorma/metanorma-plugin-lutaml/pull/391)
+is one bounded PR clearing the reproduced renderer gate, with 368 local default
+examples passing and its own canonical CI running.
+`work/389-s100-example` is published for visibility; open its PR after
 #390 integrates so its review contains only the example/acceptance slice.
 
 The actual downstream WMO corpus is still unpopulated: its remote master

@@ -137,8 +137,9 @@ task with a minimal reproducer, not a second implementation of the compiler.
 | C | Implemented; focused checks pass | 15 loader examples pass, including nested custom types, explicit location and isolation; strict XSD validation remains authoritative |
 | D | Implemented; candidate verified | Six real-corpus acceptance examples pass without shims; standalone semantic XML and WMO-taste XML smoke checks emit all 28 feature clauses |
 | E | Implemented; focused integration passes | Macro tests pass against the real generic loader in the combined focused run |
-| F | Drafts published; final-head CI running | Plugin #390 and model #1175 target grind bases. Candidate packages pass suma integration; canonical local default is 397 examples / 10 failures, all reproduced on unchanged main. Required checks remain a gate. |
+| F | Drafts published; final-head CI running | Plugin #390, model #1175 and compatibility #391 target grind bases. Combined candidate default passes 400/0; packaged suma and WMO-taste XML pass. Required final-head CI remains a gate. |
 | G | Published as model #1175; unreleased | Candidate `c21b2f8d4e91efe6937b6c4637a5102249b8a7e5`: all 49 compiler examples pass after network restoration; real-corpus checks pass against it |
+| H | Draft #391; local qualification complete | 368 default / 60 EXPRESS / 2 diagram examples pass; real figure document A/B preserves SVG bytes and closed listing; canonical CI pending |
 
 ### Current verification evidence
 
@@ -153,12 +154,11 @@ task with a minimal reproducer, not a second implementation of the compiler.
 - Changed Ruby files pass lint. One complete final implementation review covered
   plugin/dependency interactions; missing-marker and duplicate-clause assertion
   gaps were fixed, and the affected checks rerun.
-- The default suite is not green. The initial installed-gem run had 32 failures;
-  matching the development sources and using the supported `local-cache-only`
-  configuration reduces this to ten. All ten also fail on untouched main
-  `309a3c7` with the same dependency revisions and configuration: nine existing
-  renderer/formatter compatibility cases and one HTTP-dependent schema case.
-  This comparison establishes a baseline, not a waiver of required checks.
+- Original canonical default:397examples/10failures, all reproduced on the
+  unchanged baseline. Canonical generic PR CI confirms nine semantic failures;
+  the HTTP-only failure disappears with restored networking. Compatibility
+  #391 fixes all nine while retaining original goldens. Its local default suite
+  passes368/0; the combined candidate passes400/0. No CI failure is waived.
 - The suma build/reuse/reproducibility integration passes with the built
   candidate gems after selecting its declared Expressir minimum (2.4.80) and
   supported local-only bibliographic caching. It also passes in the consumer
@@ -176,7 +176,7 @@ task with a minimal reproducer, not a second implementation of the compiler.
 The parallel implementation batch and local real-corpus qualification are
 complete. The remaining critical path is F: obtain canonical final-head CI for the published
 bounded drafts,
-address the pre-existing baseline test gate with its owners.
+integrate the compatibility prerequisite after its canonical checks pass.
 Owner-controlled dependency release/floor selection follows those checks.
 External access and CI waiting prevent an unconditional delivery ETA. The
 original 30–48 hours is total engineering effort, not a required elapsed delay.
