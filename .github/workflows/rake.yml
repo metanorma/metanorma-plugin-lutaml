@@ -17,13 +17,18 @@ jobs:
   rake:
     uses: metanorma/ci/.github/workflows/generic-rake.yml@v1
     with:
-      # S-411 needs the unreleased ID/IDREF fix (lutaml/lutaml-model#1175).
-      # Qualify this integration candidate without changing the released floor.
-      # Remove this CI pin when the owner selects a containing release.
+      # Qualify both unreleased fixes; remove pins after owner-led releases.
+      # Reuse unchanged native code; Git installs skip it on Windows.
       before-setup-ruby: |
+        echo 'EXPRESSIR_CORE=0' >> "$GITHUB_ENV"
         cat > Gemfile.devel <<'RUBY'
         gem "lutaml-model", github: "lutaml/lutaml-model", ref: "c21b2f8d4e91efe6937b6c4637a5102249b8a7e5"
+        gem "expressir", github: "lutaml/expressir", ref: "2c2abc68305d0e455f501d0763bd864033fb0f1d"
         RUBY
+      after-setup-ruby: |
+        gem install expressir --version 2.4.82 --ignore-dependencies --no-document
+        ruby -rrubygems -e 's = Gem::Specification.find_all_by_name("expressir", "= 2.4.82").find { |g| g.platform != Gem::Platform::RUBY }; abort "Published native gem missing" unless s; File.write(ARGV.fetch(0), File.join(s.full_gem_path, "lib"))' "$RUNNER_TEMP/expressir-native-lib"
+        bundle exec ruby ci/prepare_expressir_native.rb "$RUNNER_TEMP/expressir-native-lib"
       setup-tools: graphviz
       submodules: true
       choco-cache: true
