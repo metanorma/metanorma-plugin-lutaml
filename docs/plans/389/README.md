@@ -349,10 +349,10 @@ before editing any file.
 
 The required Windows CI boundary also has a companion:
 [Expressir #740](https://github.com/lutaml/expressir/pull/740), at
-`2c2abc68305d0e455f501d0763bd864033fb0f1d`. Card I records its physical-byte
+`1133500a83c7a7c88c2aacaa24f7b9b176575e84`. Card I records its physical-byte
 source fix and positive native reproducer. Compatibility #391 now qualifies
 that exact Ruby source with the matching unchanged published native binary;
-its final CI head is `74dd37f9a892f37cd479b375ef13bebb55749360`.
+its final CI head is `48e1a0a3c8d677a80380d503fdfa59cb17c01d85`.
 Model #1175's runtime implementation remains c21; its CI head
 `32110b65c3ecd2e12331887aeefbc72461feddb4` restores the requested Windows
 Ghostscript setup. No new released minimum or dependency release is claimed.
