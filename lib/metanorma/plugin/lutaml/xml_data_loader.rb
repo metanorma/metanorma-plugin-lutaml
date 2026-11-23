@@ -5,6 +5,7 @@ require "lutaml/xml"
 require "nokogiri"
 require "securerandom"
 require "tmpdir"
+require_relative "xml_data_binding_guard"
 
 module Metanorma
   module Plugin
@@ -46,21 +47,52 @@ module Metanorma
           instance = read_xml(instances_path)
           validate_schema(schema, instance)
           documents = schema_documents(schema)
-          declaration = root_declaration(documents, instance.root)
-          unless declaration
-            raise Error,
-                  "No XSD declaration for #{instance.root.name}"
-          end
-          reject_unbindable(documents, declaration, instance)
+          declaration = root_declaration(documents, instance.root) ||
+            raise(Error, "No XSD declaration for #{instance.root.name}")
+          guard = XmlDataBindingGuard.new(documents, declaration,
+                                          instance.root.namespace&.href.to_s)
+          reject_unbindable(documents, guard, instance)
 
           Dir.mktmpdir("lutaml-xml-data") do |directory|
-            renamed = rename_shadowing_types(documents, directory)
+            renamed = private_schemas(documents, guard, directory)
             source, base = compile_source(schema, instance, declaration)
             base = renamed || base || location || File.dirname(definition_path)
             COMPILER_MUTEX.synchronize do
-              bind(source, instance, declaration, base)
+              with_group_classes(documents) do
+                bind(source, instance, declaration, base)
+              end
             end
           end
+        end
+
+        # The compiler defines each xs:group model as a top-level class and
+        # registers it by bare name in the default context. Left behind, the
+        # next load's same-named group would reopen it and inherit its
+        # attributes; an existing class of that name would be altered.
+        def with_group_classes(documents)
+          names = group_names(documents).uniq.map do |name|
+            ::Lutaml::Model::Utils.camel_case(name)
+          end
+          taken = names.find { |name| Object.const_defined?(name, false) }
+          raise Error, "Group #{taken} names an existing class" if taken
+
+          begin
+            yield
+          ensure
+            forget_group_classes(names)
+          end
+        end
+
+        def forget_group_classes(names)
+          context = ::Lutaml::Model::GlobalContext.default_context
+          names.each do |name|
+            next unless Object.const_defined?(name, false)
+
+            group = Object.const_get(name, false)
+            context.registry.types.delete_if { |_, type| type.equal?(group) }
+            Object.send(:remove_const, name)
+          end
+          ::Lutaml::Model::GlobalContext.resolver.clear_cache(context.id)
         end
 
         # A root from an imported namespace compiles from its own document,
@@ -139,76 +171,10 @@ module Metanorma
           declared.to_s
         end
 
-        def reject_unbindable(documents, declaration, instance)
-          reject_ambiguous_types(documents, declaration, instance)
+        def reject_unbindable(documents, guard, instance)
+          guard.check
           reject_open_content(documents)
           reject_dynamic_types(instance)
-        end
-
-        # The compiler keys types by local name, so one name in two namespaces
-        # reachable from the root cannot bind faithfully. Instance namespaces
-        # are not enough: unqualified elements hide their type's namespace.
-        def reject_ambiguous_types(documents, declaration, instance)
-          root_namespace = instance.root.namespace&.href.to_s
-          types = reachable_types(documents, declaration, root_namespace)
-          clashes = types.group_by(&:last).select { |_, keys| keys.size > 1 }
-          return if clashes.empty?
-
-          raise Error, "Types in several namespaces: #{clashes.keys.join(', ')}"
-        end
-
-        def reachable_types(documents, declaration, namespace)
-          index = component_index(documents)
-          reachable_components(index, declaration, namespace)
-            .filter_map do |kind, type_namespace, name|
-            [type_namespace, name] if kind == :type &&
-              type_namespace != XSD_NAMESPACE
-          end
-        end
-
-        def reachable_components(index, declaration, namespace)
-          seen = {}
-          pending = [[declaration, namespace]]
-          until pending.empty?
-            node, owner = pending.pop
-            fresh = component_references(node, owner).uniq
-              .reject { |key| seen.key?(key) }
-            fresh.each { |key| seen[key] = true }
-            pending.concat(fresh.flat_map { |key| index.fetch(key, []) })
-          end
-          seen.keys
-        end
-
-        def component_index(documents)
-          index = Hash.new { |hash, key| hash[key] = [] }
-          documents.each do |document, namespace|
-            global_types(document).each do |node|
-              index[[:type, namespace, node["name"]]] << [node, namespace]
-            end
-            components = document.xpath(GLOBAL_COMPONENTS, "xs" => XSD_NAMESPACE)
-            components.each do |node|
-              index[[node.name.to_sym, namespace, node["name"]]] <<
-                [node, namespace]
-            end
-          end
-          index
-        end
-
-        def component_references(node, owner)
-          node.xpath("descendant-or-self::xs:*", "xs" => XSD_NAMESPACE)
-            .flat_map do |item|
-            types = TYPE_REFERENCES.flat_map { |name| item[name].to_s.split }
-            keys = types.map { |ref| reference_key(item, :type, ref, owner) }
-            next keys unless item["ref"]
-
-            keys << reference_key(item, item.name.to_sym, item["ref"], owner)
-          end
-        end
-
-        def reference_key(node, kind, reference, owner)
-          local, prefix = reference.split(":", 2).reverse
-          key = prefix ? "xmlns:#{prefix}" : "xmlns"
-          [kind, node.namespaces[key] || owner, local]
         end
 
         # Generated models have no attribute for this content, so hydration
@@ -234,14 +200,6 @@ module Metanorma
                        "which cannot bind"
         end
 
-        def type_owners(documents)
-          documents.each_with_object({}) do |(document, namespace), owners|
-            global_types(document).each do |type|
-              owners[type["name"]] = [*owners[type["name"]], namespace].uniq
-            end
-          end
-        end
-
         def global_types(document)
           document.xpath(GLOBAL_TYPES, "xs" => XSD_NAMESPACE)
         end
@@ -249,9 +207,10 @@ module Metanorma
         # The compiler gives a schema type named like a built-in (Date) the
         # built-in's symbol, so it would replace xs:date. A private copy of
         # the validated schemas carries those types under another name.
-        def rename_shadowing_types(documents, directory)
+        def private_schemas(documents, guard, directory)
+          pruned = guard.prune
           shadowing = shadowing_types(documents)
-          return if shadowing.empty?
+          return if shadowing.empty? && !pruned
 
           parsed = documents.map(&:first)
           files = parsed.map(&:url).uniq.each_with_index.to_h do |url, index|
@@ -277,18 +236,27 @@ module Metanorma
           names = documents.flat_map do |document, _|
             global_types(document).map { |type| type["name"] }
           end
-          taken = names.map { |name| ::Lutaml::Model::Utils.snake_case(name) }
+          taken = (names + group_names(documents)).map do |name|
+            XmlDataBindingGuard.class_key(name)
+          end
           names.uniq.select do |name|
             reserved.include?(::Lutaml::Model::Utils.snake_case(name))
           end.to_h { |name| [name, unused_type_name(name, taken)] }
         end
 
+        def group_names(documents)
+          documents.flat_map do |document, _|
+            document.xpath("/xs:schema/xs:group", "xs" => XSD_NAMESPACE)
+              .map { |group| group["name"] }
+          end
+        end
+
         def unused_type_name(name, taken)
           candidate = "#{RENAMED_TYPE_PREFIX}#{name}"
-          while taken.include?(::Lutaml::Model::Utils.snake_case(candidate))
+          while taken.include?(XmlDataBindingGuard.class_key(candidate))
             candidate = "#{RENAMED_TYPE_PREFIX}#{candidate}"
           end
-          taken << ::Lutaml::Model::Utils.snake_case(candidate)
+          taken << XmlDataBindingGuard.class_key(candidate)
           candidate
         end
 
