@@ -176,9 +176,7 @@ task with a minimal reproducer, not a second implementation of the compiler.
   claimed.
 
 The parallel implementation batch and local real-corpus qualification are
-complete. The remaining critical path is F: obtain canonical final-head CI for the published
-bounded drafts,
-integrate the compatibility prerequisite after its canonical checks pass.
+complete. The remaining critical path is F: obtain final-head generic/model CI, integrate eligible PRs into grind, then open and qualify the bounded example PR.
 Owner-controlled dependency release/floor selection follows those checks.
 External access and CI waiting prevent an unconditional delivery ETA. The
 original 30–48 hours is total engineering effort, not a required elapsed delay.
