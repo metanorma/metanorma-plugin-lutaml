@@ -9,7 +9,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::XmlDataLoader do
   let(:schema_path) { File.join(fixtures_path("xml_data/s100"), "S100FC.xsd") }
   let(:xml_path) { File.join(fixtures_path("xml_data/s100"), "S411FC.xml") }
   let(:source) { Nokogiri::XML(File.read(xml_path)) }
-  let(:namespaces) { { "fc" => "http://www.iho.int/S100FC" } }
+  let(:namespaces) do
+    { "fc" => "http://www.iho.int/S100FC",
+      "base" => "http://www.iho.int/S100Base",
+      "ci" => "http://www.iho.int/S100CI" }
+  end
   let(:features) { source.xpath("//fc:featureType", namespaces) }
   let(:attributes) do
     source.xpath("//fc:simpleAttribute | //fc:complexAttribute", namespaces)
@@ -56,6 +60,63 @@ RSpec.describe Metanorma::Plugin::Lutaml::XmlDataLoader do
       node.at_xpath("fc:code", namespaces).text
     end
     expect(feature_codes.uniq.size).to eq(28)
+  end
+
+  # Keep typed and source traversal together to compare complete ownership.
+  # rubocop:disable-next RSpec/ExampleLength
+  it "preserves every binding's owner, reference and multiplicity" do
+    catalog = described_class.new.load(schema_path, xml_path).fetch("Catalog")
+    source_bounds = source.xpath(
+      "//fc:attributeBinding | //fc:subAttributeBinding", namespaces
+    ).map do |binding|
+      multiplicity = binding.at_xpath("fc:multiplicity", namespaces)
+      upper = multiplicity.at_xpath("base:upper", namespaces)
+      [binding.parent.at_xpath("fc:code", namespaces).text,
+       binding.at_xpath("fc:attribute/@ref", namespaces).value,
+       multiplicity.at_xpath("base:lower", namespaces).text,
+       upper.text, upper["infinite"]]
+    end
+    groups = [
+      [catalog.feature_types.feature_type, :attribute_binding],
+      [catalog.complex_attributes.flat_map(&:complex_attribute),
+       :sub_attribute_binding],
+    ]
+    loaded_bounds = groups.flat_map do |owners, field|
+      owners.flat_map do |owner|
+        owner.public_send(field).map do |binding|
+          multiplicity = binding.multiplicity
+          [owner.code, binding.attribute.ref, multiplicity.lower,
+           multiplicity.upper.content, multiplicity.upper.infinite]
+        end
+      end
+    end
+    expect(loaded_bounds).to match_array(source_bounds)
+  end
+
+  it "preserves the catalogue producer data" do
+    catalog = described_class.new.load(schema_path, xml_path).fetch("Catalog")
+    producer = catalog.catalog_info.producer
+    source_producer = source.at_xpath("/fc:Catalog/fc:catalogInfo/fc:producer",
+                                      namespaces)
+    expect(producer.individual_name).to eq(
+      source_producer.xpath("ci:individualName", namespaces).map(&:text),
+    )
+    expect(producer.organisation_name).to eq(
+      source_producer.xpath("ci:organisationName", namespaces).map(&:text),
+    )
+    expect(producer.role).to eq(
+      source_producer.at_xpath("ci:role", namespaces).text,
+    )
+  end
+
+  it "preserves the catalogue version date as a Date" do
+    catalog = described_class.new.load(schema_path, xml_path).fetch("Catalog")
+    source_date = Date.iso8601(source.at_xpath(
+      "/fc:Catalog/fc:catalogInfo/fc:versionDate", namespaces
+    ).text)
+    expect(source_date).to eq(Date.new(2014, 2, 13))
+    expect(catalog.catalog_info.version_date).to be_an_instance_of(Date)
+    expect(catalog.catalog_info.version_date).to eq(source_date)
   end
 
   # Keep source reference traversal together to assert clause ownership.
