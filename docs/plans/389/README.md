@@ -319,11 +319,11 @@ An isolated local installed-gem bundle resolves using Ruby 3.4.8. It is
 separate from the canonical Gemfile's git dependencies, so required CI and
 consumer evidence remain outstanding. Generic loader, macro and preservation
 tests pass. A separate candidate dependency corrects the reproduced ID/IDREF
-compiler defect; the real catalogue is being checked against that revision. Remote base push has
-failed DNS resolution; no remote branch or PR is claimed until a successful
-server response is verified.
+compiler defect; the real catalogue is being checked against that revision. Remote publication is blocked by the execution profile: network access is
+restricted and sandbox-exempt commands are disabled. No remote branch or PR
+is claimed until a successful server response is verified.
 
 Next actions: restore remote visibility and obtain canonical final-head CI;
-select a compatible suma/Expressir consumer bundle and rerun integration.
+coordinate the ten pre-existing default-suite failures that block the gate.
 The local candidate passes the real-catalogue example and WMO-taste XML smoke
 check. See the ownership table before editing any file.

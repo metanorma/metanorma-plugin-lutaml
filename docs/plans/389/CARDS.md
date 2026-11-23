@@ -136,7 +136,7 @@ task with a minimal reproducer, not a second implementation of the compiler.
 | C | Implemented; focused checks pass | 15 loader examples pass, including nested custom types, explicit location and isolation; strict XSD validation remains authoritative |
 | D | Implemented; candidate verified | Six real-corpus acceptance examples pass without shims; standalone semantic XML and WMO-taste XML smoke checks emit all 28 feature clauses |
 | E | Implemented; focused integration passes | Macro tests pass against the real generic loader in the combined focused run |
-| F | Blocked on remote qualification | Final affected feature/preservation run: 154 examples, zero failures. Default suite: 397 examples, 32 failures; the same 32 failures reproduce on untouched main. Suma integration is blocked before plugin rendering by an Expressir keyword mismatch. Canonical CI remains required. Local grind/work branches exist; remote push failed DNS resolution; no remote branch/PR claimed |
+| F | Remote qualification blocked by execution permissions | Candidate packages pass the suma build/reuse/reproducibility integration. With the declared development Git sources and supported task-local bibliographic caching, the default suite is 397 examples / 10 failures; all ten reproduce on untouched main. Remote publication/CI is unavailable under the current execution policy. |
 | G | Implemented; unpublished and unreleased | Compiler candidate `c21b2f8d4e91efe6937b6c4637a5102249b8a7e5`: four focused compiler examples pass, lint clean; real-corpus checks pass against it |
 
 ### Current verification evidence
@@ -152,13 +152,20 @@ task with a minimal reproducer, not a second implementation of the compiler.
 - Changed Ruby files pass lint. One complete final implementation review covered
   plugin/dependency interactions; missing-marker and duplicate-clause assertion
   gaps were fixed, and the affected checks rerun.
-- The default suite is not green: all 32 failing example IDs/titles reproduce
-  against main `309a3c7` in the same local installed-gem environment. They include
-  cache/network restrictions and existing EXPRESS/diagram output differences.
+- The default suite is not green. The initial installed-gem run had 32 failures;
+  matching the development sources and using the supported `local-cache-only`
+  configuration reduces this to ten. All ten also fail on untouched main
+  `309a3c7` with the same dependency revisions and configuration: nine existing
+  renderer/formatter compatibility cases and one HTTP-dependent schema case.
   This comparison establishes a baseline, not a waiver of required checks.
-- The suma build integration check fails before plugin rendering because the
-  installed Expressir rejects `keep_untagged_remarks`. Select its compatible
-  canonical dependency combination and rerun before delivery.
+- The suma build/reuse/reproducibility integration passes with the built
+  candidate gems after selecting its declared Expressir minimum (2.4.80) and
+  supported local-only bibliographic caching. It also passes in the consumer
+  development bundle with its declared Git sources. No assertions or production
+  code were changed to obtain this result.
+- The extended compiler suite has 42 passing examples and seven HTTP-dependent
+  examples blocked by network access; the same seven are blocked on the original
+  dependency main. The four focused compiler cases pass.
 - Remote branches/PRs and canonical final-head CI remain absent. No integration
   or main merge, release, issue closure or released minimum containing the
   compiler correction is claimed.
@@ -166,7 +173,7 @@ task with a minimal reproducer, not a second implementation of the compiler.
 The parallel implementation batch and local real-corpus qualification are
 complete. The remaining critical path is F: restore remote publishing, publish
 the bounded candidate PRs to their grind bases, obtain canonical final-head CI,
-resolve the consumer dependency combination and rerun its integration check.
+address the pre-existing baseline test gate with its owners.
 Owner-controlled dependency release/floor selection follows those checks.
 External access and CI waiting prevent an unconditional delivery ETA. The
 original 30–48 hours is total engineering effort, not a required elapsed delay.
