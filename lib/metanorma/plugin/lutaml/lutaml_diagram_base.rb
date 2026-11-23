@@ -5,6 +5,7 @@ require "asciidoctor"
 require "asciidoctor/reader"
 require "lutaml/uml"
 require "lutaml/lml"
+require "lutaml/graphviz"
 
 module Metanorma
   module Plugin
