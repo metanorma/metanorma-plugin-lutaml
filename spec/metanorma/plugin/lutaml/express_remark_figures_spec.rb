@@ -163,6 +163,13 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkFigures do
 
       expect(schema.formatted_hyperlinked_adoc)
         .to include("image::#{diagram_name}[]")
+
+      Metanorma::Plugin::Lutaml::ExpressSchemaListing.apply
+      listing = schema.to_liquid.formatted_hyperlinked_adoc_listing
+      expect(listing).to match(/END_SCHEMA;\n-+\n/)
+      expect(listing).to include("image::#{diagram_name}[]")
+      expect(listing.index("END_SCHEMA;"))
+        .to be < listing.index("image::#{diagram_name}[]")
     end
 
     it "keeps the model remarks untouched" do
