@@ -368,6 +368,11 @@ RUBYLIB=/path/to/patched-lutaml-model/lib bundle exec ruby -Ilib \
   spec/fixtures/lutaml/xml_data/s100/render.rb > /tmp/s411-catalogue.xml
 ----
 
+The integration CI writes a `Gemfile.devel` selecting that exact compiler commit
+before Bundler runs. This tests the unreleased candidate without changing the
+gem's released dependency floor. Remove the CI pin when a containing release is
+selected by the owner.
+
 `render.rb` registers the data preprocessor and converts the standalone document
 with the Metanorma `standoc` backend. The schema closure, XML, document and
 template remain separate source files; no pre-generated clause text is used.
