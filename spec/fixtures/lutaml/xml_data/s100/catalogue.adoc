@@ -1,0 +1,15 @@
+= S-411 Sea Ice Feature Catalogue
+:docnumber: S411-example
+:edition: 1
+:copyright-year: 2014
+:language: en
+:doctype: standard
+:novalid:
+:no-isobib:
+
+== Feature catalogue
+
+[lutaml_data,S100FC.xsd,S411FC.xml,fc]
+----
+{% include 'catalogue' %}
+----

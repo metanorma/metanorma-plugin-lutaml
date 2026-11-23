@@ -1,4 +1,4 @@
-== Usage with LutaML data files by lutaml_data
+== Usage with typed data files by lutaml_data
 
 === General
 
@@ -7,9 +7,9 @@ and makes it available to a Liquid template in the block.
 
 The data consists of two parts:
 
-* the *data definitions*: LutaML models, always written in a `.lml` file; and
+* the *data definitions*: LutaML models in a `.lml` file, or an XML Schema in a `.xsd` file; and
 * the *data instances*: values of those models, written in `.lml`, `.yaml`,
-  `.yml` or `.json`.
+  `.yml`, `.json` or `.xml` (with an XSD definition).
 
 === Defining a block
 
@@ -34,12 +34,12 @@ Data definitions and data instances in the same `.lml` file:
 ------
 
 `definition_file`:: (required) Path to the `.lml` file that holds the LutaML
-models. Relative paths are resolved from the directory of the Metanorma
-document. When this is the only file given, the same file must also contain
-the instances.
+models, or the `.xsd` file that defines XML instances. Relative paths are resolved from the directory of the Metanorma
+document. A lone `.lml` file must also contain the instances; an XSD
+definition always requires a separate XML instance file.
 
 `instance_file`:: (optional) Path to the file that holds the data instances,
-with extension `.lml`, `.yaml`, `.yml` or `.json`. The `.lml` instance file
+with extension `.lml`, `.yaml`, `.yml`, `.json` or `.xml`. The `.lml` instance file
 usually starts with `require "<definition_file>"`.
 
 `context_name`:: (optional) The name under which the data is exposed to the
@@ -51,7 +51,7 @@ Liquid template. Defaults to `lutaml_data`.
 comma-separated list of directories searched by the Liquid `include` tag.
 
 NOTE: A segment is taken as the instance file when its extension is one of
-`.lml`, `.yaml`, `.yml` or `.json`; any other segment is taken as the context
+`.lml`, `.yaml`, `.yml`, `.json` or `.xml`; any other segment is taken as the context
 name.
 
 === Data in the Liquid context
@@ -279,3 +279,104 @@ takes keyword arguments (JSON keys become keywords, JSON numbers stay
 numbers) and returns lutaml-model objects or arrays of them. An unknown
 provider, an undeclared query or a wrong argument fails the block with an
 error.
+
+=== XML instances defined by XSD
+
+An XML instance requires a separate XSD definition. Supply the schema first,
+then the XML file, followed by the optional context name:
+
+[source,asciidoc]
+------
+[lutaml_data,catalogue.xsd,catalogue.xml,fc]
+----
+{{ fc.Catalog.name }}
+----
+------
+
+Here `Catalog` is the XML root element's local name and `name` must be an
+attribute actually generated from that schema. The context defaults to
+`lutaml_data`, giving `lutaml_data.Catalog`. Values remain typed model objects;
+Liquid reads their generated attribute names and iterates their collections.
+Schema element names and generated Ruby attribute names may differ.
+
+Keep local `xs:import` and `xs:include` dependencies beside the schema, preserving
+the relative paths in `schemaLocation`. The `location` option supplies a base
+path for compiler import resolution. XML prefixes may differ from the schema's
+prefixes; the namespace URI identifies the root declaration.
+
+The loader validates XML against the XSD before compiling and hydrating the
+model. A missing file, malformed XML, wrong root,
+invalid schema value or unsupported compiler construct fails the block with
+both input paths in the diagnostic. XSD validation enforces the schema
+constraints, including enumeration values and occurrence limits. Successful
+schema validation alone does not establish that the compiler can load every
+imported type.
+
+==== S-411 2014 acceptance corpus
+
+The repository contains the original `S411FC.xml`, `S100FC.xsd` and its three
+imported schemas under `spec/fixtures/lutaml/xml_data/s100/`. The manifest records
+publication URLs and byte checksums. The XML catalogue declares version 1.0.0
+(2014-02-13), distributed with S-411 Edition 1.1.0 (June 2014).
+
+The standalone `catalogue.adoc` loads the schema/XML pair and includes the
+plain Liquid template beside it:
+
+[source,asciidoc]
+------
+[lutaml_data,S100FC.xsd,S411FC.xml,fc]
+----
+{% include 'catalogue' %}
+----
+------
+
+The template emits one clause per feature using
+`fc.Catalog.feature_types.feature_type`. Optional attribute containers are
+collections, including containers whose maximum occurrence is one:
+
+[source,liquid]
+----
+{% for group in fc.Catalog.simple_attributes %}
+{% for attribute in group.simple_attribute %}
+{{ attribute.name }}
+{% for value in attribute.listed_value %}
+{{ value.code }}: {{ value.label }} — {{ value.definition }}
+{% endfor %}
+{% endfor %}
+{% endfor %}
+----
+
+Feature `attribute_binding` entries refer to attribute definitions through
+`binding.attribute.ref`; match that reference to an attribute's `code`.
+Complex attributes contain `sub_attribute_binding` references which are resolved
+in the same way. The complete `catalogue.liquid` demonstrates both traversals.
+XSD integer values use their numeric representation: listed-value code `01`
+renders as `1`, while its string label remains `01`.
+
+This example is verified against an *unreleased lutaml-model compiler
+candidate based on 0.8.176* (commit
+`c21b2f8d4e91efe6937b6c4637a5102249b8a7e5`) which fixes the built-in
+`xs:ID` and `xs:IDREF` mappings. Released 0.8.176 cannot load this schema's generated
+`ItemIdentifier` class. No released minimum version containing the fix is
+claimed here. Select the patched dependency in your bundle; while testing an
+unreleased checkout, the equivalent explicit command from the plugin repository
+is:
+
+[source,shell]
+----
+RUBYLIB=/path/to/patched-lutaml-model/lib bundle exec ruby -Ilib \
+  spec/fixtures/lutaml/xml_data/s100/render.rb > /tmp/s411-catalogue.xml
+----
+
+`render.rb` registers the data preprocessor and converts the standalone document
+with the Metanorma `standoc` backend. The schema closure, XML, document and
+template remain separate source files; no pre-generated clause text is used.
+The acceptance spec checks all 28 feature identities, 57 attribute definitions,
+406 listed values and reference resolution independently from source XML, and
+requires positive clause content plus changed-input and repeated-load checks:
+
+[source,shell]
+----
+RUBYLIB=/path/to/patched-lutaml-model/lib bundle exec rspec \
+  spec/metanorma/plugin/lutaml/xml_data_s100_spec.rb
+----

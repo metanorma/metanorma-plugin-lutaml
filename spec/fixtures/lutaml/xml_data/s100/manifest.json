@@ -1,0 +1,83 @@
+{
+  "edition": "JCOMM S-411 Edition 1.1.0 (June 2014)",
+  "provenance": {
+    "schema_base_url": "https://www.bsis-ice.de/S411/Schemas/",
+    "product_specification_url": "https://www.bsis-ice.de/S411/Docs/S-411_Specification_1_1_0_June2014.pdf",
+    "publisher_as_named_in_product_specification": "International Hydrographic Bureau (IHO)",
+    "source_directory_listing": "https://www.bsis-ice.de/S411/Schemas/",
+    "license_note": "No separate license identified in the retrieved index or specification; retain the source publication context.",
+    "retrieved": "2026-11-23"
+  },
+  "catalogue": {
+    "file": "S411FC.xml",
+    "root_qname": "{http://www.iho.int/S100FC}Catalog",
+    "schema_locations": [
+      {
+        "namespace": "http://www.iho.int/S100FC",
+        "schema": "S100FC.xsd"
+      },
+      {
+        "namespace": "http://www.iho.int/S100CI",
+        "schema": "S100CI.xsd"
+      },
+      {
+        "namespace": "http://www.iho.int/S100Base",
+        "schema": "S100Base.xsd"
+      },
+      {
+        "namespace": "http://www.iho.int/S100FD",
+        "schema": "S100FD.xsd"
+      }
+    ]
+  },
+  "files": {
+    "S411FC.xml": {
+      "url": "https://www.bsis-ice.de/S411/Schemas/S411FC.xml",
+      "bytes": 178087,
+      "sha256": "91f67ae9ff0fc9631f34de73aa4e359524981463a37de846160006f6bb12c613",
+      "imports_includes_redefines": []
+    },
+    "S100FC.xsd": {
+      "url": "https://www.bsis-ice.de/S411/Schemas/S100FC.xsd",
+      "bytes": 23959,
+      "sha256": "aeabd84bb765ff21998a620ae902a8c4da145385300704639612e06a43e045bc",
+      "imports_includes_redefines": [
+        "S100Base.xsd",
+        "S100CI.xsd",
+        "S100FD.xsd"
+      ]
+    },
+    "S100Base.xsd": {
+      "url": "https://www.bsis-ice.de/S411/Schemas/S100Base.xsd",
+      "bytes": 3735,
+      "sha256": "5b43cdad8429479084e54035d73830786a24b59b65466cadbe2bd6e046a2e6ef",
+      "imports_includes_redefines": []
+    },
+    "S100CI.xsd": {
+      "url": "https://www.bsis-ice.de/S411/Schemas/S100CI.xsd",
+      "bytes": 6887,
+      "sha256": "60f430254000bdb4480b5a7a8fe3d76cecf6b16d9513e14c95205cfad1118d2c",
+      "imports_includes_redefines": []
+    },
+    "S100FD.xsd": {
+      "url": "https://www.bsis-ice.de/S411/Schemas/S100FD.xsd",
+      "bytes": 13584,
+      "sha256": "74853684c1e25c73cf1be44c19dd3ed0947c93cc7a1addc673841e032281923a",
+      "imports_includes_redefines": [
+        "S100Base.xsd",
+        "S100CI.xsd"
+      ]
+    }
+  },
+  "closure": {
+    "root": "S411FC.xml",
+    "resolved_files": [
+      "S411FC.xml",
+      "S100FC.xsd",
+      "S100Base.xsd",
+      "S100CI.xsd",
+      "S100FD.xsd"
+    ],
+    "unresolved_schema_locations": []
+  }
+}

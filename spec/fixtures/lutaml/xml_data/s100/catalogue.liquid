@@ -1,0 +1,64 @@
+{% for feature in fc.Catalog.feature_types.feature_type %}
+FEATURE {{ feature.code }}
+
+=== {{ feature.name }}
+{{ feature.definition }}
+{% for binding in feature.attribute_binding %}
+{% for simple_group in fc.Catalog.simple_attributes %}
+{% for attribute in simple_group.simple_attribute %}
+{% if attribute.code == binding.attribute.ref %}
+ATTRIBUTE {{ attribute.code }}
+{{ attribute.name }}
+{{ attribute.definition }}
+{% for value in attribute.listed_value %}
+VALUE {{ value.code }}|{{ value.label }}|{{ value.definition }}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% for complex_group in fc.Catalog.complex_attributes %}
+{% for complex in complex_group.complex_attribute %}
+{% if complex.code == binding.attribute.ref %}
+ATTRIBUTE {{ complex.code }}
+{{ complex.name }}
+{{ complex.definition }}
+{% for sub in complex.sub_attribute_binding %}
+{% for simple_group in fc.Catalog.simple_attributes %}
+{% for attribute in simple_group.simple_attribute %}
+{% if attribute.code == sub.attribute.ref %}
+ATTRIBUTE {{ attribute.code }}
+{{ attribute.name }}
+{{ attribute.definition }}
+{% for value in attribute.listed_value %}
+VALUE {{ value.code }}|{{ value.label }}|{{ value.definition }}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endfor %}
+END FEATURE
+{% endfor %}
+== Attribute index
+
+ATTRIBUTE INDEX
+{% for simple_group in fc.Catalog.simple_attributes %}
+{% for attribute in simple_group.simple_attribute %}
+ATTRIBUTE {{ attribute.code }}
+{{ attribute.name }}
+{{ attribute.definition }}
+{% for value in attribute.listed_value %}
+VALUE {{ value.code }}|{{ value.label }}|{{ value.definition }}
+{% endfor %}
+{% endfor %}
+{% endfor %}
+{% for complex_group in fc.Catalog.complex_attributes %}
+{% for attribute in complex_group.complex_attribute %}
+ATTRIBUTE {{ attribute.code }}
+{{ attribute.name }}
+{{ attribute.definition }}
+{% endfor %}
+{% endfor %}

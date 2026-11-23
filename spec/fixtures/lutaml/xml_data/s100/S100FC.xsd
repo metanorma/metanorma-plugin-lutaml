@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- S-100 Feature Catalogue Schema Version 0.9.4 from 17. June 2011  -->
+<!-- Add dataSetAttributes to the catalogue + change xpath in AttributesReferences -->
+<!-- Add numeric codes needed in ISO8211 encoding -->
+<!-- Modifying aliases -->
+<!-- Adding pattern for string codes -->
+<xs:schema targetNamespace="http://www.iho.int/S100FC" elementFormDefault="qualified" xmlns:fc="http://www.iho.int/S100FC" xmlns:mstns="http://tempuri.org/XMLSchema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:s100Base="http://www.iho.int/S100Base" xmlns:s100CI="http://www.iho.int/S100CI" xmlns:s100FD="http://www.iho.int/S100FD">
+  <xs:import namespace="http://www.iho.int/S100Base" schemaLocation="S100Base.xsd" />
+  <xs:import namespace="http://www.iho.int/S100CI" schemaLocation="S100CI.xsd" />
+  <xs:import namespace="http://www.iho.int/S100FD" schemaLocation="S100FD.xsd" />
+  
+  <!-- enumeration for role types -->
+  <xs:simpleType name="RoleType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="association" />
+      <xs:enumeration value="aggregation" />
+      <xs:enumeration value="composition" />
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <!-- enumeration of primitive types -->
+  <xs:simpleType name="PrimitiveType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="noGeometry"/>
+      <xs:enumeration value="point"/>
+      <xs:enumeration value="pointSet"/>
+      <xs:enumeration value="curve"/>
+      <xs:enumeration value="surface"/>
+      <xs:enumeration value="coverage"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <!-- camel case code starting with a lower case letter -->
+  
+  <!-- camel case code starting with an upper case letter -->
+  <xs:simpleType name="StringCode">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[A-Za-z][A-Za-z0-9_]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <!-- a 2 byte positive integer -->
+  <xs:simpleType name="IntegerCode">
+    <xs:restriction base="xs:positiveInteger">
+      <xs:maxExclusive value="65536" />
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <!-- A generic reference type -->
+  <xs:complexType name="Reference">
+    <xs:attribute name="ref" type="xs:string" use="required"></xs:attribute>
+  </xs:complexType>
+  
+  <!-- the source of a definition -->
+  <xs:complexType name="DefinitionSource">
+    <xs:sequence>
+      <xs:element name="source" type="s100CI:Citation" />
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required" />
+  </xs:complexType>
+  
+  <!-- a reference to a definition source -->
+  <xs:complexType name="DefinitionReference">
+    <xs:sequence>
+      <xs:element name="sourceIdentifier" type="xs:string" maxOccurs="1" minOccurs="1" />
+      <xs:element name="definitionSource" type="fc:Reference" minOccurs="1" maxOccurs="1"></xs:element>
+    </xs:sequence>
+    <!-- <xs:attribute name="definitionSource" type="xs:string" use="required" /> -->
+  </xs:complexType>
+  
+  <!-- meta information about the catalogue -->
+  <xs:complexType name="Alias">
+    <xs:sequence>
+      <xs:element name="value" type="xs:string">
+        
+      </xs:element>
+      <xs:element type="xs:string" name="context">
+        
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CatalogInfo">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string" maxOccurs="1" minOccurs="1" />
+      <xs:element name="scope" type="xs:string" maxOccurs="1" minOccurs="1" />
+      <xs:element name="fieldOfApplication" type="xs:string" maxOccurs="1" minOccurs="0" />
+      <xs:element name="versionNumber" type="xs:string" maxOccurs="1" minOccurs="1" />
+      <xs:element name="versionDate" type="xs:date" maxOccurs="1" minOccurs="1" />
+      <xs:element name="producer" type="s100CI:ResponsibleParty" maxOccurs="1" minOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+  
+  <!-- a list of positive integer values -->
+  <xs:complexType name="ValueList">
+    <xs:sequence>
+      <xs:element name="value" type="fc:IntegerCode" maxOccurs="unbounded" minOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+  
+  <!-- type for bindings to simple or complex attributes -->
+  <xs:complexType name="AttributeBinding">
+    <xs:sequence>
+      <xs:element name="multiplicity" type="s100Base:Multiplicity" maxOccurs="1" minOccurs="1" />
+      <xs:element name="permittedValues" type="fc:ValueList" maxOccurs="1" minOccurs="0" />
+      <xs:element name="attribute" type="fc:Reference" maxOccurs="1" minOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="sequential" type="xs:boolean" default="false" />
+  </xs:complexType>
+  
+  <!-- type for bindings to information types -->
+  <xs:complexType name="InformationBinding">
+    <xs:sequence>
+      <xs:element name="multiplicity" type="s100Base:Multiplicity" maxOccurs="1" minOccurs="1" />
+      <xs:element name="association" type="fc:Reference" maxOccurs="1" minOccurs="1"></xs:element>
+      <xs:element name="informationType" type="fc:Reference" maxOccurs="1" minOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="roleType" type="fc:RoleType" use="required"/>
+  </xs:complexType>
+  
+  <!-- type for bindings to feature types -->
+  <xs:complexType name="FeatureBinding">
+    <xs:sequence>
+      <xs:element name="multiplicity" type="s100Base:Multiplicity" maxOccurs="1" minOccurs="1" />
+      <xs:element name="association" type="fc:Reference" maxOccurs="1" minOccurs="1" />
+      <xs:element name="role" type="fc:Reference" maxOccurs="1" minOccurs="1" />
+      <xs:element name="featureType" type="fc:Reference" maxOccurs="1" minOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="roleType" type="fc:RoleType" use="required" />
+  </xs:complexType>
+  
+  <!-- base type for catalogue items with camelCase starting with lower case (attributes and roles)-->
+  <xs:complexType name="Item" abstract="true">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string" maxOccurs="1" minOccurs="1" />
+      <xs:element name="definition" type="xs:string" maxOccurs="1" minOccurs="1" />
+      <xs:element name="code" type="fc:StringCode" maxOccurs="1" minOccurs="1" />
+      <xs:element name="numericCode" type="fc:IntegerCode" minOccurs="0"/>
+      <xs:element name="remarks" type="xs:string" maxOccurs="unbounded" minOccurs="0" />
+      <xs:element name="alias" type="fc:Alias" maxOccurs="unbounded" minOccurs="0" />
+      <xs:element name="definitionReference" type="fc:DefinitionReference" maxOccurs="1" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>  
+  
+  <!-- base type for catalogue items with camelCase starting with upper case (feature types, information types and all associations)-->
+  
+  <!-- type for listed values of enumerated attributes -->
+  <xs:complexType name="ListedValue">
+    <xs:sequence>
+      <xs:element name="label" type="xs:string" maxOccurs="1" minOccurs="1" />
+      <xs:element name="definition" type="xs:string" maxOccurs="1" minOccurs="1" />
+      <xs:element name="code" type="fc:IntegerCode" maxOccurs="1" minOccurs="1" />
+      <xs:element name="remarks" type="xs:string" maxOccurs="unbounded" minOccurs="0" />
+      <xs:element name="alias" type="xs:string" maxOccurs="unbounded" minOccurs="0" />
+      <xs:element name="definitionReference" type="fc:DefinitionReference" maxOccurs="1" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  
+  <!-- type for a simple attribute -->
+  <xs:complexType name="SimpleAttribute">
+    <xs:complexContent>
+      <xs:extension base="fc:Item">
+        <xs:sequence>
+          <xs:element name="dataType" type="s100FD:AttributeDataType" maxOccurs="1" minOccurs="1" />
+          <xs:element name="uom" type="s100Base:UnitOfMeasure" maxOccurs="1" minOccurs="0" />
+          <xs:element name="quantitySpcification" type="s100FD:QuantitySpecification"  minOccurs="0"/>
+          <xs:element name="constraints" type="s100FD:AttributeConstraints" maxOccurs="1" minOccurs="0" />
+          <xs:element name="listedValue" type="fc:ListedValue" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <!-- type for a complex atttribute -->
+  <xs:complexType name="ComplexAttribute">
+    <xs:complexContent>
+      <xs:extension base="fc:Item">
+        <xs:sequence>
+          <xs:element name="subAttributeBinding" type="fc:AttributeBinding" minOccurs="1" maxOccurs="unbounded" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <!-- type for roles (same as Item but not abstract) -->
+  <xs:complexType name="Role">
+    <xs:complexContent>
+      <xs:extension base="fc:Item"></xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <!-- base type for named types -->
+  <xs:complexType name="NamedType" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="fc:Item">
+        <xs:sequence>
+          <xs:element name="superType" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="attributeBinding" type="fc:AttributeBinding" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute type="xs:boolean" name="isAbstract" default="false" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <!-- type for information associations -->
+  <xs:complexType name="InformationAssociation">
+    <xs:complexContent>
+      <xs:extension base="fc:NamedType">
+        <xs:sequence>
+          <xs:element name="role" type="fc:Reference" minOccurs="1" maxOccurs="1"></xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+    
+  <!-- type for feature associations -->
+  <xs:complexType name="FeatureAssociation">
+    <xs:complexContent>
+      <xs:extension base="fc:NamedType">
+        <xs:sequence>
+          <xs:element name="role" type="fc:Reference" minOccurs="2" maxOccurs="2"></xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <!-- base type for information types and feature types -->
+  <xs:complexType name="ObjectType" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="fc:NamedType">
+        <xs:sequence>
+          <xs:element name="informationBinding" type="fc:InformationBinding" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <!-- type for information types (some as Object type but not abstract) -->
+  <xs:complexType name="InformationType">
+    <xs:complexContent>
+      <xs:extension base="fc:ObjectType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <!-- type for feature types -->
+  <xs:complexType name="FeatureType">
+    <xs:complexContent>
+      <xs:extension base="fc:ObjectType">
+        <xs:sequence>
+          <xs:element name="featureUseType" type="s100FD:FeatureUseType"/>     
+          <xs:element name="featureBinding" type="fc:FeatureBinding" minOccurs="0" maxOccurs="unbounded" />
+          <xs:element name="permittedPrimitives" type="fc:PrimitiveType" minOccurs="1" maxOccurs="5" nillable="false"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <!-- list of definition sources -->
+  <xs:complexType name="DefinitionSources">
+    <xs:sequence>
+      <xs:element name="definitionSource" type="fc:DefinitionSource" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  
+  <!-- list of simple attributes (for each attribute the codes and name of the listed values must be unique-->
+  <xs:complexType name="SimpleAttributes">
+    <xs:sequence>
+      <xs:element name="simpleAttribute" type="fc:SimpleAttribute" minOccurs="1" maxOccurs="unbounded">
+        
+        <xs:unique name="ValueCodeUniqueness">
+          <xs:selector xpath="./fc:listedValue"></xs:selector>
+          <xs:field xpath="fc:code"></xs:field>
+        </xs:unique>
+        
+        <xs:unique name="ValueNameUniqueness">
+          <xs:selector xpath="./fc:listedValue"></xs:selector>
+          <xs:field xpath="fc:label"></xs:field>
+        </xs:unique>
+            
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <!-- list of complex attributes -->
+  <xs:complexType name="ComplexAttributes">
+    <xs:sequence>
+      <xs:element name="complexAttribute" type="fc:ComplexAttribute" minOccurs="1" maxOccurs="unbounded" >
+        <xs:unique name="SubAttributeCodeUniqueness">
+          <xs:selector xpath="./fc:subAttributeBinding/fc:attribute"></xs:selector>
+          <xs:field xpath="@ref"></xs:field>
+        </xs:unique>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <!-- list of roles -->
+  <xs:complexType name="Roles">
+    <xs:sequence>
+      <xs:element name="role" type="fc:Role" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  
+  <!-- list of information associations -->
+  <xs:complexType name="DataSetAttributes">
+    <xs:sequence>
+      <xs:element name="dataSetAttribute" type="fc:AttributeBinding" minOccurs="0" maxOccurs="unbounded">
+        
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InformationAssociations">
+    <xs:sequence>
+      <xs:element name="informationAssociation" type="fc:InformationAssociation" minOccurs="1" maxOccurs="unbounded" >
+        <xs:unique name="IA_AttributeCodeUniqueness">
+          <xs:selector xpath="./fc:attributeBinding/fc:attribute"></xs:selector>
+          <xs:field xpath="@ref"></xs:field>
+        </xs:unique>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <!-- list of feature associations -->
+  <xs:complexType name="FeatureAssociations">
+    <xs:sequence>
+      <xs:element name="featureAssociation" type="fc:FeatureAssociation" minOccurs="1" maxOccurs="unbounded" >
+        <xs:unique name="FA_AttributeCodeUniqueness">
+          <xs:selector xpath="./fc:attributeBinding/fc:attribute"></xs:selector>
+          <xs:field xpath="@ref"></xs:field>
+        </xs:unique>        
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <!-- list of information types -->
+  <xs:complexType name="InformationTypes">
+    <xs:sequence>
+      <xs:element name="informationType" type="fc:InformationType" minOccurs="1" maxOccurs="unbounded" >
+        <xs:unique name="IT_AttributeCodeUniqueness">
+          <xs:selector xpath="./fc:attributeBinding/fc:attribute"></xs:selector>
+          <xs:field xpath="@ref"></xs:field>
+        </xs:unique>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <!-- list of feature types -->
+  <xs:complexType name="FeatureTypes">
+    <xs:sequence>
+      <xs:element name="featureType" type="fc:FeatureType" minOccurs="1" maxOccurs="unbounded" >
+        <xs:unique name="FT_AttributeCodeUniqueness">
+          <xs:selector xpath="./fc:attributeBinding/fc:attribute"></xs:selector>
+          <xs:field xpath="@ref"></xs:field>
+        </xs:unique>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <!-- The catalogue -->
+  <xs:element name="Catalog">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="catalogInfo" type="fc:CatalogInfo" maxOccurs="1" minOccurs="1" />
+        <xs:element name="dataSetAttributes" type="fc:DataSetAttributes" maxOccurs="1" minOccurs="0"/>
+        <xs:element name="definitionSources" type="fc:DefinitionSources" minOccurs="0" maxOccurs="1" />
+        <xs:element name="simpleAttributes" type="fc:SimpleAttributes" minOccurs="0" maxOccurs="1" />
+        <xs:element name="complexAttributes" type="fc:ComplexAttributes" minOccurs="0" maxOccurs="1" />
+        <xs:element name="roles" type="fc:Roles" minOccurs="0" maxOccurs="1" />
+        <xs:element name="informationAssociations" type="fc:InformationAssociations" minOccurs="0" maxOccurs="1" />
+        <xs:element name="featureAssociations" type="fc:FeatureAssociations" minOccurs="0" maxOccurs="1" />
+        <xs:element name="informationTypes" type="fc:InformationTypes" minOccurs="0" maxOccurs="1" />
+        <xs:element name="featureTypes" type="fc:FeatureTypes" minOccurs="1" maxOccurs="1" />
+      </xs:sequence>
+    </xs:complexType>
+    
+    <!-- defining xs:keys and xs:keyrefs, to avoid limitations of xs:ID and xs:IDREF -->
+    
+    <!-- key for definition source ids -->
+    <xs:key name="DefinitionSourceKey">
+      <xs:selector xpath="./fc:definitionSources/fc:definitionSource"></xs:selector>
+      <xs:field xpath="@id"></xs:field>
+    </xs:key>
+    
+    <!-- reference for definition sources -->
+    <xs:keyref refer="fc:DefinitionSourceKey" name="DefinitionSourceReference">
+      <xs:selector xpath=".//fc:definitionReference/fc:definitionSource"></xs:selector>
+      <xs:field xpath="@ref"></xs:field>
+    </xs:keyref>
+    
+    <!-- key for simple and complex attributes, values must be unique  -->
+    <xs:key name="AttributeKey">
+      <xs:selector xpath="./fc:simpleAttributes/fc:simpleAttribute | ./fc:complexAttributes/fc:complexAttribute"></xs:selector>
+      <xs:field xpath="fc:code"></xs:field>
+    </xs:key>
+        
+     <!-- reference for attribute codes (each value must be a valid attribute key) -->
+    <xs:keyref refer="fc:AttributeKey" name="AttributeRef">
+      <xs:selector xpath=".//fc:attributeBinding/fc:attribute | .//fc:subAttributeBinding/fc:attribute | .//fc:dataSetAttribute/fc:attribute"></xs:selector>
+      <xs:field xpath="@ref"></xs:field>
+    </xs:keyref>
+    
+    <!-- uniqueness constraint for attribute codes (simple and complex attributes)  -->
+    <xs:unique name="AttributeNumericCodeUniqueness">
+      <xs:selector xpath="./fc:simpleAttributes/fc:simpleAttribute | ./fc:complexAttributes/fc:complexAttribute"></xs:selector>
+      <xs:field xpath="fc:numericCode"></xs:field>
+    </xs:unique>
+    
+    <!-- key for roles-->
+    <xs:key name="RoleKey">
+      <xs:selector xpath="./fc:roles/fc:role"></xs:selector>
+      <xs:field xpath="fc:code"></xs:field>
+    </xs:key>
+    
+    <!-- reference for roles: from information associations, feature associations, and feature bindings -->
+    <xs:keyref refer="fc:RoleKey" name="RoleReference">
+      <xs:selector xpath=".//fc:informationAssociation/fc:role | .//fc:featureAssociation/fc:role | .//fc:featureBinding/fc:role"></xs:selector>
+      <xs:field xpath="@ref"></xs:field>
+    </xs:keyref>
+    
+    <!-- uniqueness constraint for numeric codes of roles -->
+    <xs:unique name="RoleNumericCodeUniqueness">
+      <xs:selector xpath="./fc:roles/fc:role"></xs:selector>
+      <xs:field xpath="fc:numericCode"></xs:field>
+    </xs:unique>
+    
+    <!-- key for information associations -->
+    <xs:key name="InformationAssociationKey">
+      <xs:selector xpath="./fc:informationAssociations/fc:informationAssociation"></xs:selector>
+      <xs:field xpath="fc:code"></xs:field>
+    </xs:key>
+    
+    <!-- reference for information associations -->
+    <xs:keyref refer="fc:InformationAssociationKey" name="InformationAssociationReference">
+      <xs:selector xpath=".//fc:informationBinding/fc:association"></xs:selector>
+      <xs:field xpath="@ref"></xs:field>
+    </xs:keyref>
+    
+    <!-- uniqueness constraint for numeric codes of information associations -->
+    <xs:unique name="InformationAssociationNumericCodeUniqueness">
+      <xs:selector xpath="./fc:informationAssociations/fc:informationAssociation"></xs:selector>
+      <xs:field xpath="fc:numericCode"></xs:field>
+    </xs:unique>
+       
+    <!-- key for feature associations -->
+    <xs:key name="FeatureAssociationKey">
+      <xs:selector xpath="./fc:featureAssociations/fc:featureAssociation"></xs:selector>
+      <xs:field xpath="fc:code"></xs:field>
+    </xs:key>
+    
+    <!-- reference for feature associations -->
+    <xs:keyref refer="fc:FeatureAssociationKey" name="FeatureAssociationReference">
+      <xs:selector xpath=".//fc:featureBinding/fc:association"></xs:selector>
+      <xs:field xpath="@ref"></xs:field>
+    </xs:keyref>
+   
+    <!-- uniqueness constraint for numeric codes of feature associations -->
+    <xs:unique name="FeatureAssociationNumericCodeUniqueness">
+      <xs:selector xpath="./fc:featureAssociations/fc:featureAssociation"></xs:selector>
+      <xs:field xpath="fc:numericCode"></xs:field>
+    </xs:unique>
+    
+    <!-- key for information types -->
+    <xs:key name="InformationTypeKey">
+      <xs:selector xpath="./fc:informationTypes/fc:informationType"></xs:selector>
+      <xs:field xpath="fc:code"></xs:field>
+    </xs:key>
+    
+    <!-- reference for information types -->
+    <xs:keyref refer="fc:InformationTypeKey" name="InformationTypeReference">
+      <xs:selector xpath=".//fc:informationBinding/fc:informationType"></xs:selector>
+      <xs:field xpath="@ref"></xs:field>
+    </xs:keyref>
+    
+    <!-- uniqueness constraint for numeric codes of information types -->
+    <xs:unique name="InformationTypeNumericCodeUniqueness">
+      <xs:selector xpath="./fc:informationTypes/fc:informationType"></xs:selector>
+      <xs:field xpath="fc:numericCode"></xs:field>
+    </xs:unique>
+    
+    <!-- key for feature types -->
+    <xs:key name="FeatureTypeKey">
+      <xs:selector xpath="./fc:featureTypes/fc:featureType"></xs:selector>
+      <xs:field xpath="fc:code"></xs:field>
+    </xs:key>
+        
+    <!-- reference for feature type codes (each value must be a valid feature key -->
+    <xs:keyref refer="fc:FeatureTypeKey" name="FeatureRef">
+      <xs:selector xpath=".//fc:featureBinding/fc:featureType"></xs:selector>
+      <xs:field xpath="@ref"></xs:field>
+    </xs:keyref>
+    
+    <!-- uniqueness constraint for numeric codes of feature types -->
+    <xs:unique name="FeatureTypeNumericCodeUniqueness">
+      <xs:selector xpath="./fc:featureTypes/fc:featureType"></xs:selector>
+      <xs:field xpath="fc:numericCode"></xs:field>
+    </xs:unique>
+    
+    <!-- uniqueness constraints for names (case sensitive) -->
+    
+    <!-- uniqueness constraints for names of attributes -->
+    <xs:unique name="AttributeNameUniqueness">
+      <xs:selector xpath="./fc:simpleAttributes/fc:simpleAttribute | ./fc:complexAttributes/fc:complexAttribute"></xs:selector>
+      <xs:field xpath="fc:name"></xs:field>
+    </xs:unique>
+    
+   <!-- uniqueness constraint for roles -->
+    <xs:unique name="RoleNameUniqueness">
+      <xs:selector xpath="./fc:roles/fc:role"></xs:selector>
+      <xs:field xpath="fc:name"></xs:field>
+    </xs:unique>
+    
+    <!-- uniqueness constraint for information associations -->
+    <xs:unique name="InformationAssociationUniqueness">
+      <xs:selector xpath="./fc:informationAssociations/fc:informationAssociation"></xs:selector>
+      <xs:field xpath="fc:name"></xs:field>
+    </xs:unique>
+    
+    <!-- uniqueness constraint for feature associations -->
+    <xs:unique name="FeatureAssociationUniqueness">
+      <xs:selector xpath="./fc:featureAssociations/fc:featureAssociation"></xs:selector>
+      <xs:field xpath="fc:name"></xs:field>
+    </xs:unique>
+    
+    <!-- uniqueness constraint for information types -->
+    <xs:unique name="InformationTypeUniqueness">
+      <xs:selector xpath="./fc:informationTypes/fc:informationType"></xs:selector>
+      <xs:field xpath="fc:name"></xs:field>
+    </xs:unique>
+    
+    <!-- uniqueness constraint for feature types -->
+    <xs:unique name="FeatureTypeUniqueness">
+      <xs:selector xpath="./fc:featureTypes/fc:featureType"></xs:selector>
+      <xs:field xpath="fc:name"></xs:field>
+    </xs:unique>
+    
+  </xs:element>  <!-- Catalog -->
+    
+</xs:schema>

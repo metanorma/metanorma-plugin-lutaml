@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.iho.int/S100Base" elementFormDefault="qualified" xmlns="http://www.iho.int/S100Base" xmlns:mstns="http://www.iho.int/S100Base" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="UnlimitedInteger">
+    <xs:simpleContent>
+      <xs:extension base="xs:nonNegativeInteger">
+        <xs:attribute name="infinite" type="xs:boolean" default="false" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="Multiplicity">
+    <xs:sequence>
+      <xs:element name="lower" type="xs:nonNegativeInteger" />
+      <xs:element name="upper" type="UnlimitedInteger" nillable="true" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="IntervalType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="openInterval" />
+      <xs:enumeration value="geLtInterval" />
+      <xs:enumeration value="gtLeInterval" />
+      <xs:enumeration value="closedInterval" />
+      <xs:enumeration value="gtSemiInterval" />
+      <xs:enumeration value="geSemiInterval" />
+      <xs:enumeration value="ltSemiInterval" />
+      <xs:enumeration value="leSemiInterval" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="NumericRange">
+    <xs:sequence>
+      <xs:element name="lowerBound" type="xs:double" maxOccurs="1" minOccurs="0" />
+      <xs:element name="upperBound" type="xs:double" maxOccurs="1" minOccurs="0" />
+      <xs:element name="intervalType" type="IntervalType" maxOccurs="1" minOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Locale">
+    <xs:sequence>
+      <xs:element name="languageCode" type="LanguageCode" />
+      <xs:element name="countryCode" type="CountryCode" />
+      <xs:element name="characterSet" type="CharacterSet" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="LanguageCode">
+    <xs:restriction base="xs:string">
+      <xs:length value="2" />
+      <xs:pattern value="[a-z][a-z]" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CountryCode">
+    <xs:restriction base="xs:string">
+      <xs:length value="2" />
+      <xs:pattern value="[A-Z][A-Z]" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CharacterSet">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ucs2" />
+      <xs:enumeration value="ucs4" />
+      <xs:enumeration value="utf7" />
+      <xs:enumeration value="utf8" />
+      <xs:enumeration value="utf16" />
+      <xs:enumeration value="8859part1" />
+      <xs:enumeration value="8859part2" />
+      <xs:enumeration value="8859part3" />
+      <xs:enumeration value="8859part4" />
+      <xs:enumeration value="8859part5" />
+      <xs:enumeration value="8859part6" />
+      <xs:enumeration value="8859part7" />
+      <xs:enumeration value="8859part8" />
+      <xs:enumeration value="8859part9" />
+      <xs:enumeration value="8859part11" />
+      <xs:enumeration value="8859part14" />
+      <xs:enumeration value="8859part15" />
+      <xs:enumeration value="jis" />
+      <xs:enumeration value="shiftJIS" />
+      <xs:enumeration value="eucJP" />
+      <xs:enumeration value="usAscii" />
+      <xs:enumeration value="ebcdic" />
+      <xs:enumeration value="eucKR" />
+      <xs:enumeration value="big5" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="UnitOfMeasure">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="definition" minOccurs="0" type="xs:string"/>        
+      <xs:element name="symbol" minOccurs="0" type="xs:string"/>            
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -100,8 +100,9 @@ task with a minimal reproducer, not a second implementation of the compiler.
   Seed the base with the planning documents as its initial setup commit;
   keep them outside implementation diffs. Do not create a planning-only PR.
 - Prepare PR 2 from `work/389-s100-example` against the same base; stack it on
-  PR 1 locally if needed, and remove prerequisite commits from its diff after
-  PR 1 integrates. Keep the PR body explicit about its dependency meanwhile.
+  PR 1 locally and push its branch for visibility if needed. Open PR 2 after
+  PR 1 integrates so its diff contains only the catalogue/example slice.
+  Do not expose the combined implementation twice as overlapping review work.
 - Use the acceptance commands in the plan. Run background checks with captured
   status and logs; report the actual bundle/dependency revision and final SHA.
 - Merge ready card PRs only into the grind base after their final-head checks
@@ -132,16 +133,40 @@ task with a minimal reproducer, not a second implementation of the compiler.
 | --- | --- | --- |
 | A | Complete | Five-file closure acquired; source inventory: 28 features, 51 simple and 6 complex attributes, 406 listed values |
 | B | Generic route proven; upstream gap isolated | Authentic model 0.8.176 synthetic probe passes; real catalogue validates against XSD but compiler fails ID/IDREF generation |
-| C | Implemented; focused checks pass | 14 loader examples pass, including explicit location and isolation; changed-file lint clean |
-| D | Active; real rendering depends on G | Fixtures/provenance/oracle and worked-example acceptance |
+| C | Implemented; focused checks pass | 15 loader examples pass, including nested custom types, explicit location and isolation; strict XSD validation remains authoritative |
+| D | Implemented; candidate verified | Six real-corpus acceptance examples pass without shims; standalone semantic XML and WMO-taste XML smoke checks emit all 28 feature clauses |
 | E | Implemented; focused integration passes | Macro tests pass against the real generic loader in the combined focused run |
-| F | Active; publication blocked | Combined local focused run: 169 examples, 150 pass, 19 fail in existing XSD documentation cases due restricted bibliographic-cache writes/network access. No failure is waived; canonical CI remains required. Local grind/work branches exist; remote push failed DNS resolution; no remote branch/PR claimed |
-| G | Active | Minimal upstream ID/IDREF correction and no-shim real-catalogue re-probe |
+| F | Blocked on remote qualification | Final affected feature/preservation run: 154 examples, zero failures. Default suite: 397 examples, 32 failures; the same 32 failures reproduce on untouched main. Suma integration is blocked before plugin rendering by an Expressir keyword mismatch. Canonical CI remains required. Local grind/work branches exist; remote push failed DNS resolution; no remote branch/PR claimed |
+| G | Implemented; unpublished and unreleased | Compiler candidate `c21b2f8d4e91efe6937b6c4637a5102249b8a7e5`: four focused compiler examples pass, lint clean; real-corpus checks pass against it |
 
-The original 30–48 hours is total engineering effort, not a mandatory elapsed
-schedule. A/B/E begin concurrently; C follows the first viable B result; D
-begins after A and can overlap C/E; F integrates and runs scripted checks as
-outputs become ready. The first two-hour checkpoint replaces speculation with
-measured compiler, corpus, test and remote-readiness evidence. Until then,
-elapsed completion time remains conditional on the real inputs and any compiler
-gap. No day-based delivery date is asserted as a substitute for those results.
+### Current verification evidence
+
+- Candidate plugin and compiler: 154 affected feature/preservation examples,
+  zero failures; compiler regression/runtime specs: four examples, zero failures.
+- The real-corpus six-example set checks unchanged source bytes/schema closure,
+  all identities/references, correctly owned feature/attribute/enumerant content,
+  exact feature-clause multiplicity and changed-input isolation.
+- Standalone standoc XML and WMO-taste XML compile successfully. WMO smoke proof
+  includes all 28 feature clauses, IHO base flavor and the WMO publisher override.
+  HTML/PDF and the populated downstream corpus are not claimed as tested.
+- Changed Ruby files pass lint. One complete final implementation review covered
+  plugin/dependency interactions; missing-marker and duplicate-clause assertion
+  gaps were fixed, and the affected checks rerun.
+- The default suite is not green: all 32 failing example IDs/titles reproduce
+  against main `309a3c7` in the same local installed-gem environment. They include
+  cache/network restrictions and existing EXPRESS/diagram output differences.
+  This comparison establishes a baseline, not a waiver of required checks.
+- The suma build integration check fails before plugin rendering because the
+  installed Expressir rejects `keep_untagged_remarks`. Select its compatible
+  canonical dependency combination and rerun before delivery.
+- Remote branches/PRs and canonical final-head CI remain absent. No integration
+  or main merge, release, issue closure or released minimum containing the
+  compiler correction is claimed.
+
+The parallel implementation batch and local real-corpus qualification are
+complete. The remaining critical path is F: restore remote publishing, publish
+the bounded candidate PRs to their grind bases, obtain canonical final-head CI,
+resolve the consumer dependency combination and rerun its integration check.
+Owner-controlled dependency release/floor selection follows those checks.
+External access and CI waiting prevent an unconditional delivery ETA. The
+original 30–48 hours is total engineering effort, not a required elapsed delay.

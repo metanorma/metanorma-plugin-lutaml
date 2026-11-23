@@ -5,6 +5,11 @@
 The `lutaml_xsd` macro parses *XML Schema (XSD)* files through `lutaml-model`
 and exposes the parsed schema object to *Liquid* templates.
 
+To render data from an XML instance using an XSD definition, use
+link:lutaml-data.adoc[`lutaml_data` with an XSD/XML pair]. That command exposes
+typed instance values under the XML root name; `lutaml_xsd` exposes schema
+components for documenting the schema itself.
+
 === Syntax
 
 [source,adoc]

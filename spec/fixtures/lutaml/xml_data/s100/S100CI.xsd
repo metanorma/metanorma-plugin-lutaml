@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.iho.int/S100CI" elementFormDefault="qualified" xmlns="http://www.iho.int/S100CI" xmlns:mstns="http://tempuri.org/XMLSchema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="DateTypeCode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="creation" />
+      <xs:enumeration value="publication" />
+      <xs:enumeration value="revision" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="dateExt">
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="date" type="xs:date" />
+        <xs:element name="yearMonth" type="xs:gYearMonth" />
+        <xs:element name="year" type="xs:gYear" />
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Date">
+    <xs:sequence>
+      <xs:element name="date" type="dateExt" nillable="true" />
+      <xs:element name="dateType" type="DateTypeCode" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="PresentationFormCode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="documentDigital" />
+      <xs:enumeration value="documentHardcopy" />
+      <xs:enumeration value="imageDigital" />
+      <xs:enumeration value="mapDigital" />
+      <xs:enumeration value="mapHardcopy" />
+      <xs:enumeration value="modelDigital" />
+      <xs:enumeration value="modelHardcopy" />
+      <xs:enumeration value="profileDigital" />
+      <xs:enumeration value="profileHardcopy" />
+      <xs:enumeration value="tableDigital" />
+      <xs:enumeration value="tableHardcopy" />
+      <xs:enumeration value="videoDigital" />
+      <xs:enumeration value="videoHardcopy" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RoleCode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="resourceProvider" />
+      <xs:enumeration value="custodian" />
+      <xs:enumeration value="owner" />
+      <xs:enumeration value="user" />
+      <xs:enumeration value="distributer" />
+      <xs:enumeration value="originator" />
+      <xs:enumeration value="pointOfContact" />
+      <xs:enumeration value="principalInvestigator" />
+      <xs:enumeration value="processor" />
+      <xs:enumeration value="publisher" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OnlineFunctionCode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="download" />
+      <xs:enumeration value="information" />
+      <xs:enumeration value="offlineAccess" />
+      <xs:enumeration value="order" />
+      <xs:enumeration value="search" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="Series">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="issueIdentification" type="xs:string" maxOccurs="1" minOccurs="0" />
+      <xs:element name="page" type="xs:string" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Telephone">
+    <xs:sequence>
+      <xs:element name="voice" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="facsimile" type="xs:string" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Address">
+    <xs:sequence>
+      <xs:element name="deliveryPoint" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="city" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="administrativeArea" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="postalCode" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="country" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="electronicMailAddress" type="xs:string" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OnlineResource">
+    <xs:sequence>
+      <xs:element name="url" type="xs:string" maxOccurs="1" minOccurs="1" />
+      <xs:element name="protocol" type="xs:string" maxOccurs="1" minOccurs="0" />
+      <xs:element name="applicationProfile" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="function" type="OnlineFunctionCode" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Contact">
+    <xs:sequence>
+      <xs:element name="phone" type="Telephone" minOccurs="0" maxOccurs="1" />
+      <xs:element name="address" type="Address" minOccurs="0" maxOccurs="1" />
+      <xs:element name="onlineResource" type="OnlineResource" minOccurs="0" maxOccurs="1" />
+      <xs:element name="hoursOfService" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="contactInstructions" type="xs:string" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResponsibleParty">
+    <xs:sequence>
+      <xs:element name="individualName" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="organisationName" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="positionName" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="contactInfo" type="Contact" minOccurs="0" maxOccurs="1" />
+      <xs:element name="role" type="RoleCode" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Citation">
+    <xs:sequence>
+      <xs:element name="title" type="xs:string" />
+      <xs:element name="aternateTitle" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="date" type="Date" minOccurs="1" maxOccurs="unbounded" />
+      <xs:element name="edition" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="editionDate" type="dateExt" minOccurs="0" maxOccurs="1" />
+      <xs:element name="identifier" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="identifierType" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="citedResponsibleParty" type="ResponsibleParty" minOccurs="0" maxOccurs="1" />
+      <xs:element name="presentationForm" type="PresentationFormCode" minOccurs="0" maxOccurs="1" />
+      <xs:element name="series" type="Series" maxOccurs="1" minOccurs="0" />
+      <xs:element name="otherCitationDetails" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="collectiveTitle" type="xs:string" maxOccurs="1" minOccurs="0" />
+      <xs:element name="ISBN" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="ISSN" type="xs:string" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

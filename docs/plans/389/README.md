@@ -1,6 +1,7 @@
 # XML/XSD instance binding — implementation plan for #389
 
-Status: executing independent cards. Assessed 2026-11-23.
+Status: implemented and verified locally against a candidate dependency;
+remote qualification pending. Assessed 2026-11-23.
 
 [Execution cards](CARDS.md) · [Mandatory branch, PR and testing rules](RULES.md)
 
@@ -93,8 +94,8 @@ attribute in the probe; the implementation therefore uses strict Nokogiri
 XSD validation before typed hydration, with an explicit dependency floor.
 Duplicate generated-model validation is omitted because recursive validation
 drops private registry context; the source schema remains fully validated. This establishes
-an existing route, not S-100 compatibility. The actual catalogue has not yet
-passed full binding and rendering.
+an existing route, not S-100 compatibility. The real catalogue now passes typed binding, rendering and rebuild/isolation
+checks against the candidate dependency identified in the card board.
 The separate `lutaml-xsd` gem's `Lutaml::Xsd.parse` schema AST API is not a
 replacement for the compiler used by the admitted `lutaml-model` version.
 
@@ -104,11 +105,10 @@ contains only its README. The issue describes verified XML/schema inputs,
 but those files were unavailable in that revision. PR #2 is open and adds
 the reference PDF; its file list does not contain the catalogue/schema set.
 The original schema and XML have since been acquired from the 2014 distribution
-at `https://www.bsis-ice.de/S411/Schemas/`. Recursive dependency acquisition and
-an independent catalogue inventory are in progress. Full real-corpus binding
-and rendering remain unverified.
+at `https://www.bsis-ice.de/S411/Schemas/`. Recursive dependency acquisition and an independent catalogue inventory are complete. The card board records
+the verified real-corpus candidate and outstanding delivery checks.
 
-## Proposed public contract
+## Implemented candidate contract
 
 Extend the existing macro rather than registering another preprocessor:
 
@@ -119,7 +119,7 @@ Extend the existing macro rather than registering another preprocessor:
 ----
 ```
 
-This syntax is proposed, not yet implemented. Keep `lutaml_xsd` focused on
+The candidate implements this syntax. Keep `lutaml_xsd` focused on
 schema documentation. For the XML branch:
 
 - The definition is an explicit `.xsd` path and the instance is an explicit
@@ -131,7 +131,7 @@ schema documentation. For the XML branch:
   Confirm the compiler's base-path behavior with nested relative imports.
 - Preserve the current `context_name` default (`lutaml_data`), JSON/inline
   options, and `include_path` search behavior.
-- Proposed XML context shape: `fc.Catalog`, where `Catalog` is the XML root
+- XML context shape: `fc.Catalog`, where `Catalog` is the XML root
   local name and its value is a generated model/drop. Bind by the root's
   expanded QName (namespace URI plus local name), not its prefix spelling or
   an assumed Ruby class name. Reject a root absent from the schema. Map the
@@ -177,8 +177,8 @@ engineer owns integration. Entries are estimates, not time already spent.
 | T0 — inputs acquired; probes executed | Obtain and pin the exact 1.1.0 `S411FC.xml`, `S100FC.xsd`, and transitive imports/includes. Record source revision, provenance, namespace map and independently extracted feature/attribute/enumerant counts. Use proposed `spec/fixtures/lutaml/xml_data/s100/` for redistributable fixtures. Compile/load the schema, select the real root class, parse the instance and render a minimal plain-Liquid loop. Determine root mapping, references, generated names, validation coverage and registry lifecycle. Add a meaningful small reproducer for any gap. | Exact corpus distribution | 3–5 h |
 | T1 — generic binding implemented | Add proposed `lib/metanorma/plugin/lutaml/xml_data_loader.rb`, `XmlDataLoader#load` returning a string-keyed root wrapper containing typed instance data. Call the supported compiler, resolve the root QName/type, hydrate and validate the instance. Own generated module/register lifecycle; handle imports and actionable errors. Add proposed `spec/metanorma/plugin/lutaml/xml_data_loader_spec.rb` and small fixtures under proposed `spec/fixtures/lutaml/xml_data/`. | T0 proves a usable compiler route | 5–9 h |
 | T2 — implemented | Update `LutamlDataPreprocessor#data_file?`, `#parse_header`, and `#render_data_template` to dispatch the XSD/XML pair into the loader. Preserve `#render_block` provider handling and existing format loading. Add an autoload in `lib/metanorma-plugin-lutaml.rb`. Extend `spec/metanorma/plugin/lutaml/lutaml_data_preprocessor_spec.rb` for pair parsing, default/custom contexts, options/includes, paths and positive clause assertions. No standoc registration change should be necessary. | T1 loader return contract | 4–6 h |
-| T3 — in progress | In proposed `spec/metanorma/plugin/lutaml/xml_data_s100_spec.rb`, render the real S-411 catalogue through the normal Metanorma test pipeline. Assert every expected FeatureType clause and required nested attribute/enumerant content against the independent T0 inventory; test a deliberate value change and repeated documents. Add the executable example under proposed `spec/fixtures/lutaml/xml_data/s100/example.adoc` with a Liquid template as needed. Identify any corpus reference-resolution work here explicitly. | T0 inventory, T1 and T2 | 5–8 h |
-| T4 — drafted | Extend `docs/usages/lutaml-data.adoc` with syntax, context shape, imports, validation/error behavior, tested S-100 traversal and a self-contained worked example. Add a cross-link in `docs/usages/lutaml-xsd.adoc` explaining schema versus instance views; update `README.adoc`. Introduce a gemspec floor only if a concrete upstream fix requires it. | Public contract settled by T0–T3 | 3–4 h |
+| T3 — local acceptance verified | In proposed `spec/metanorma/plugin/lutaml/xml_data_s100_spec.rb`, render the real S-411 catalogue through the normal Metanorma test pipeline. Assert every expected FeatureType clause and required nested attribute/enumerant content against the independent T0 inventory; test a deliberate value change and repeated documents. Add the executable example under proposed `spec/fixtures/lutaml/xml_data/s100/catalogue.adoc` with a Liquid template as needed. Identify any corpus reference-resolution work here explicitly. | T0 inventory, T1 and T2 | 5–8 h |
+| T4 — implemented | Extend `docs/usages/lutaml-data.adoc` with syntax, context shape, imports, validation/error behavior, tested S-100 traversal and a self-contained worked example. Add a cross-link in `docs/usages/lutaml-xsd.adoc` explaining schema versus instance views; update `README.adoc`. Introduce a gemspec floor only if a concrete upstream fix requires it. | Public contract settled by T0–T3 | 3–4 h |
 | T5 — active; CI/publication pending | Run affected regression specs and changed-file lint; perform one final review of the whole change and fix findings. Obtain required CI for the final revision. Run the downstream suma integration suite against the branch gem, and demonstrate WMO consumer rendering with that exact dependency. Record revisions, commands, results and remaining acceptance. | T1–T4; available consumer bundle | 4–6 h |
 
 Base effort: **24–38 hours**. Separate bounded contingency: **6–10 hours**
@@ -197,9 +197,9 @@ The effort estimate is not an elapsed schedule. Execution now follows the
 parallel [cards](CARDS.md): corpus and compiler work overlap macro integration;
 loader implementation follows a usable compiler result; the worked example,
 documentation and scripted verification overlap as their inputs become ready.
-The first two-hour execution checkpoint reports observed progress, remaining
-critical path, remote visibility and blockers. Calendar-day forecasts from the
-serial planning assumption are superseded by that evidence-based checkpoint.
+The completed execution checkpoint and remaining critical path are recorded
+in the card board. Calendar-day forecasts from the serial planning assumption
+are superseded by the observed local results and external delivery blockers.
 
 ## Acceptance and runnable verification
 
@@ -323,6 +323,7 @@ compiler defect; the real catalogue is being checked against that revision. Remo
 failed DNS resolution; no remote branch or PR is claimed until a successful
 server response is verified.
 
-Next actions: finish the exact schema closure/inventory, implement the loader
-against the proven compiler contract, integrate macro tests and run the
-real-catalogue acceptance. See the ownership table before editing any file.
+Next actions: restore remote visibility and obtain canonical final-head CI;
+select a compatible suma/Expressir consumer bundle and rerun integration.
+The local candidate passes the real-catalogue example and WMO-taste XML smoke
+check. See the ownership table before editing any file.

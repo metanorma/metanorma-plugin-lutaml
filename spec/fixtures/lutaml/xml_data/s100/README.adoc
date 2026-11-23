@@ -1,0 +1,38 @@
+= S-411 2014 acceptance corpus
+
+These are the unmodified files published at
+https://www.bsis-ice.de/S411/Schemas/[the BSH S-411 schema distribution],
+associated with JCOMM S-411 Edition 1.1.0 (June 2014).
+The catalogue itself declares version 1.0.0 dated 2014-02-13; these are
+separate version identifiers. No newer catalogue has been substituted.
+
+`manifest.json` records source URLs, retrieval date, byte sizes, SHA-256
+checksums and the complete local schema closure. No separate licence was
+identified in the retrieved publication; publication alone does not establish
+a redistribution licence.
+
+The five source files total 226252 bytes. Keep their bytes unchanged.
+The spec independently reads the source XML using namespace-aware XPath;
+it does not use generated model output as its expected inventory.
+The inventory is 28 feature types, 51 simple attributes, 6 complex attributes,
+406 listed values, 131 feature attribute references and 12 complex attribute
+references. All references resolve to catalogue attribute codes.
+
+`catalogue.adoc` is a standalone Metanorma entry document;
+`catalogue.liquid` renders features, referenced attributes and listed values.
+`render.rb` registers the plugin preprocessor and streams the rendered Metanorma
+XML. From the plugin repository, with the patched dependency selected:
+
+[source,shell]
+----
+RUBYLIB=/path/to/patched-lutaml-model/lib bundle exec ruby -Ilib \
+  spec/fixtures/lutaml/xml_data/s100/render.rb > /tmp/s411-catalogue.xml
+----
+
+This example requires the unreleased lutaml-model compiler candidate based on
+0.8.176 (commit `c21b2f8d4e91efe6937b6c4637a5102249b8a7e5`)
+with corrected `xs:ID` and `xs:IDREF` mappings.
+Released 0.8.176 fails while loading the generated `ItemIdentifier` class.
+No released minimum version containing this fix is claimed.
+The acceptance spec asserts the complete feature and attribute inventory,
+reference traversal, listed values, standalone clauses and rebuilt XML values.

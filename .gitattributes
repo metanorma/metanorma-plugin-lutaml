@@ -1,0 +1,6 @@
+# Preserve the published S-411 corpus bytes and its original whitespace.
+spec/fixtures/lutaml/xml_data/s100/S100Base.xsd -text -whitespace
+spec/fixtures/lutaml/xml_data/s100/S100CI.xsd -text -whitespace
+spec/fixtures/lutaml/xml_data/s100/S100FC.xsd -text -whitespace
+spec/fixtures/lutaml/xml_data/s100/S100FD.xsd -text -whitespace
+spec/fixtures/lutaml/xml_data/s100/S411FC.xml -text -whitespace

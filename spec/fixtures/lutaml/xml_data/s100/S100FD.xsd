@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.iho.int/S100FD" elementFormDefault="qualified" xmlns="http://www.iho.int/S100FD" xmlns:mstns="http://www.iho.int/S100FD" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:s100Base="http://www.iho.int/S100Base" xmlns:s100CI="http://www.iho.int/S100CI">
+  <xs:import namespace="http://www.iho.int/S100Base" schemaLocation="S100Base.xsd" />
+  <xs:import namespace="http://www.iho.int/S100CI" schemaLocation="S100CI.xsd" />
+  <!--SCHEMA FOR S-100 COMPLIANT FEATURE CONCEPT DICTIONARIES-->
+  <!--DATE : 20080917-->
+  <!--AUTHOR : HOLGER BOTHIEN-->
+  <xs:simpleType name="ItemIdentifier">
+    <xs:restriction base="xs:ID">
+      <xs:minLength value="2" />
+      <xs:pattern value="_[0-9]*" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CamelCaseId">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:pattern value="[$A-Za-z][A-Za-z0-9_]*" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ItemStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="valid" />
+      <xs:enumeration value="superseded" />
+      <xs:enumeration value="retired" />
+      <xs:enumeration value="notValid" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AlphaCode">
+    <xs:restriction base="xs:string">
+      <xs:length value="6" />
+      <xs:pattern value="[a-zA-Z_$][0-9a-zA-Z_]{5}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AttributeDataType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="integer" />
+      <xs:enumeration value="real" />
+      <xs:enumeration value="enumeration" />
+      <xs:enumeration value="boolean" />
+      <xs:enumeration value="text" />
+      <xs:enumeration value="date" />
+      <xs:enumeration value="time" />
+      <xs:enumeration value="DateTime" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FeatureUseType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="geographic" />
+      <xs:enumeration value="aggregation" />
+      <xs:enumeration value="cartographic" />
+      <xs:enumeration value="meta" />
+      <xs:enumeration value="theme" />    
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="QuantitySpecification">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="angularVelocity" />
+      <xs:enumeration value="area" />
+      <xs:enumeration value="density" />
+      <xs:enumeration value="duration" />
+      <xs:enumeration value="frequency" />
+      <xs:enumeration value="length" />
+      <xs:enumeration value="mass" />
+      <xs:enumeration value="planeAngle" />
+      <xs:enumeration value="power" />
+      <xs:enumeration value="pressure" />
+      <xs:enumeration value="salinity" />
+      <xs:enumeration value="speed" />
+      <xs:enumeration value="temperature" />
+      <xs:enumeration value="volume" />
+      <xs:enumeration value="weight" />
+      <xs:enumeration value="otherQuantity" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SimilarityToSource">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="identical" />
+      <xs:enumeration value="restyled" />
+      <xs:enumeration value="contextAdded" />
+      <xs:enumeration value="generalization" />
+      <xs:enumeration value="specialization" />
+      <xs:enumeration value="unspecified" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Disposition">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="withdrawn"/>
+      <xs:enumeration value="accepted"/>
+      <xs:enumeration value="notAccepted"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DecisionStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="pending"/>
+      <xs:enumeration value="tentative"/>
+      <xs:enumeration value="final"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ProposalType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="addition"/>
+      <xs:enumeration value="clarification"/>
+      <xs:enumeration value="supersession"/>
+      <xs:enumeration value="retirement"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ReferenceDocument">
+    <xs:sequence>
+      <xs:element name="id" type="xs:ID" />
+      <xs:element name="citation" type="s100CI:Citation" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Reference">
+    <xs:sequence>
+      <xs:element name="sourceDocument" type="xs:IDREF" maxOccurs="1" minOccurs="1" />
+      <xs:element name="referenceIdentifier" type="xs:string" maxOccurs="unbounded" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DefinitionSource">
+    <xs:complexContent>
+      <xs:extension base="Reference">
+        <xs:sequence>
+          <xs:element name="similarity" type="SimilarityToSource" maxOccurs="1" minOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ManagmentInfo">
+    <xs:sequence>
+      <xs:element name="decisionStatus" type="DecisionStatus"/>
+      <xs:element name="proposalType" type="ProposalType"/>
+      <xs:element name="submittingOrganisation" type="xs:string"/>
+      <xs:element name="proposedChange" type="xs:string"/>
+      <xs:element name="justification" type="xs:string"/>
+      <xs:element name="dateProposed" type="xs:date"/>
+      <xs:element name="dateDisposed" type="xs:date"/>
+      <xs:element name="disposition" type="Disposition"/>
+      <xs:element name="decision" type="xs:string"/>
+      <xs:element name="controlBodyNotes" type="xs:string" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegisterItem" abstract="true">
+    <xs:sequence>
+      <xs:element name="camelCaseId" type="CamelCaseId" maxOccurs="1" minOccurs="1" />
+      <xs:element name="name" type="xs:string" maxOccurs="1" minOccurs="1" />
+      <xs:element name="definition" type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="remarks" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="itemStatus" type="ItemStatus" maxOccurs="1" minOccurs="1" />
+      <xs:element name="alias" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="dateAccepted" type="xs:date" minOccurs="1" maxOccurs="1" />
+      <xs:element name="dateAmended" type="xs:date" minOccurs="0" maxOccurs="1" />
+      <xs:element name="definitionSource" type="DefinitionSource" maxOccurs="1" minOccurs="0" />
+      <xs:element name="reference" type="Reference" maxOccurs="unbounded" minOccurs="0" />
+      <xs:element name="managmentInfo" type="ManagmentInfo" maxOccurs="unbounded" minOccurs="0">
+        
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="itemIdentifier" type="ItemIdentifier" use="required" />
+  </xs:complexType>
+  <xs:complexType name="FeatureType">
+    <xs:complexContent>
+      <xs:extension base="RegisterItem">
+        <xs:sequence>
+          <xs:element name="alphaCode" type="AlphaCode" maxOccurs="1" minOccurs="0" />
+          <xs:element name="featureUseType" type="FeatureUseType" maxOccurs="1" minOccurs="1" />
+          <xs:element name="distinction" type="CamelCaseId" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="InformationType">
+    <xs:complexContent>
+      <xs:extension base="RegisterItem">
+        <xs:sequence>
+          <xs:element name="alphaCode" type="AlphaCode" maxOccurs="1" minOccurs="0" />
+          <xs:element name="distinction" type="CamelCaseId" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AttributeConstraints">
+    <xs:sequence>
+      <xs:element name="stringLength" type="xs:positiveInteger" maxOccurs="1" minOccurs="0" />
+      <xs:element name="textPattern" type="xs:string" maxOccurs="1" minOccurs="0" />
+      <xs:element name="range" type="s100Base:NumericRange" maxOccurs="1" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AttributeType" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="RegisterItem">
+        <xs:sequence>
+          <xs:element name="alphaCode" type="AlphaCode" maxOccurs="1" minOccurs="0" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SimpleAttributeType">
+    <xs:complexContent>
+      <xs:extension base="AttributeType">
+        <xs:sequence>
+          <xs:element name="dataType" type="AttributeDataType" minOccurs="1" maxOccurs="1" />
+          <xs:element name="quantitySpecification" type="QuantitySpecification" maxOccurs="1" minOccurs="0" />
+          <xs:element name="constraints" type="AttributeConstraints" maxOccurs="1" minOccurs="0" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SubAttribute">
+    <xs:sequence>
+      <xs:element name="camelCaseId" type="CamelCaseId" maxOccurs="1" minOccurs="0" />
+      <xs:element name="cardinality" type="s100Base:Multiplicity" maxOccurs="1" minOccurs="1" />
+      <xs:element name="sequential" type="xs:boolean" maxOccurs="1" minOccurs="1" default="false" />
+    </xs:sequence>
+    <xs:attribute name="attribute" type="xs:IDREF" use="required" />
+  </xs:complexType>
+  <xs:complexType name="ComplexAttributeType">
+    <xs:complexContent>
+      <xs:extension base="AttributeType">
+        <xs:sequence>
+          <xs:element name="subAttribute" type="SubAttribute" minOccurs="1" maxOccurs="unbounded" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="EnumeratedValueType">
+    <xs:complexContent>
+      <xs:extension base="RegisterItem">
+        <xs:sequence>
+          <xs:element name="numericCode" type="xs:positiveInteger" maxOccurs="1" minOccurs="1" />
+          <xs:element name="associatedAttribute" type="CamelCaseId" maxOccurs="1" minOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RegisterInformation">
+    <xs:sequence>
+      <xs:element name="operatingLanguage" type="s100Base:Locale" />
+      <xs:element name="contentSummary" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="URI" type="s100CI:OnlineResource" minOccurs="1" maxOccurs="1" />
+      <xs:element name="dateOfLastChange" type="xs:date" maxOccurs="1" minOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required" />
+  </xs:complexType>
+  <xs:complexType name="ReferenceDocuments">
+    <xs:sequence>
+      <xs:element name="referenceDocument" type="ReferenceDocument" maxOccurs="unbounded" minOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FeatureTypes">
+    <xs:sequence>
+      <xs:element name="featureType" type="FeatureType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InformationTypes">
+    <xs:sequence>
+      <xs:element name="informationType" type="InformationType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SimpleAttributeTypes">
+    <xs:sequence>
+      <xs:element name="simpleAttributeType" type="SimpleAttributeType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ComplexAttributeTypes">
+    <xs:sequence>
+      <xs:element name="complexAttributeType" type="ComplexAttributeType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EnumeratedValueTypes">
+    <xs:sequence>
+      <xs:element name="enumeratedValueType" type="EnumeratedValueType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Register">
+    <xs:sequence>
+      <xs:element name="registerInformation" type="RegisterInformation" maxOccurs="1" minOccurs="1" />
+      <xs:element name="referenceDocuments" type="ReferenceDocuments" maxOccurs="1" minOccurs="0" />
+      <xs:element name="featureTypes" type="FeatureTypes" minOccurs="0" maxOccurs="1" />
+      <xs:element name="informationTypes" type="InformationTypes" minOccurs="0" maxOccurs="1" />
+      <xs:element name="simpleAttributeTypes" type="SimpleAttributeTypes" minOccurs="0" maxOccurs="1" />
+      <xs:element name="complexAttributeTypes" type="ComplexAttributeTypes" minOccurs="0" maxOccurs="1" />
+      <xs:element name="enumeratedValueTypes" type="EnumeratedValueTypes" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Query">
+    <xs:sequence>
+      <xs:element name="qDateTime" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="registry">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="query" minOccurs="0" maxOccurs="1" type="Query">
+        </xs:element>
+        <xs:element name="register" maxOccurs="unbounded" type="Register" minOccurs="0">
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
