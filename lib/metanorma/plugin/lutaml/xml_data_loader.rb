@@ -6,6 +6,7 @@ require "nokogiri"
 require "securerandom"
 require "tmpdir"
 require_relative "xml_data_binding_guard"
+require_relative "xml_data_value_check"
 
 module Metanorma
   module Plugin
@@ -343,19 +344,33 @@ module Metanorma
 
           # The complete XSD was validated before compilation. Generated-model
           # recursive validation does not preserve private register contexts.
-          klass.from_xml(single_namespace_xml(instance), register: register_id)
+          model = klass.from_xml(single_namespace_xml(instance),
+                                 register: register_id)
+          XmlDataValueCheck.new(instance).check(model)
+          model
         end
 
         # Compiled mappings carry one namespace, so validated elements from
         # imported namespaces move onto the root's before hydration.
         def single_namespace_xml(instance)
           copy = instance.dup
+          flatten_text(copy)
           namespace = copy.root.namespace
           copy.xpath("//*").each do |node|
             reject_unmappable(node, namespace)
             node.namespace = namespace if node.namespace
           end
           copy.to_xml
+        end
+
+        # A comment, processing instruction or CDATA section splits an
+        # element's text into nodes, and the binding keeps none of them.
+        # Serialising the copy joins the adjacent text.
+        def flatten_text(copy)
+          copy.xpath("//comment() | //processing-instruction()").each(&:remove)
+          copy.xpath("//text()").select(&:cdata?).each do |node|
+            node.replace(Nokogiri::XML::Text.new(node.content, copy))
+          end
         end
 
         def reject_unmappable(node, namespace)
