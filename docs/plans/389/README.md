@@ -1,7 +1,7 @@
 # XML/XSD instance binding — implementation plan for #389
 
 Status: implemented and verified locally against a candidate dependency;
-remote qualification pending. Assessed 2026-11-23.
+remote draft PRs published and final-head CI running. Assessed 2026-11-23.
 
 [Execution cards](CARDS.md) · [Mandatory branch, PR and testing rules](RULES.md)
 
@@ -315,15 +315,27 @@ The [card board](CARDS.md#current-board-and-forecast) is the execution progress
 record; it replaces the original serial milestone table. Update completed
 checks with exact revisions, bundle identity, logs and remaining gaps there.
 
-An isolated local installed-gem bundle resolves using Ruby 3.4.8. It is
-separate from the canonical Gemfile's git dependencies, so required CI and
-consumer evidence remain outstanding. Generic loader, macro and preservation
-tests pass. A separate candidate dependency corrects the reproduced ID/IDREF
-compiler defect; the real catalogue is being checked against that revision. Remote publication is blocked by the execution profile: network access is
-restricted and sandbox-exempt commands are disabled. No remote branch or PR
-is claimed until a successful server response is verified.
+The packaged candidates pass local real-catalogue, preservation, suma and
+WMO-taste XML checks. The compiler recheck now passes all 49 examples after
+network access was restored. The canonical plugin default suite still has
+ten recorded baseline failures; no required gate is waived.
 
-Next actions: restore remote visibility and obtain canonical final-head CI;
-coordinate the ten pre-existing default-suite failures that block the gate.
-The local candidate passes the real-catalogue example and WMO-taste XML smoke
-check. See the ownership table before editing any file.
+Published drafts: [generic binding #390](https://github.com/metanorma/metanorma-plugin-lutaml/pull/390)
+at `6dd1726e7adcb3a15a00e2411245d27882d1ec12`, and
+[compiler dependency #1175](https://github.com/lutaml/lutaml-model/pull/1175)
+at `c21b2f8d4e91efe6937b6c4637a5102249b8a7e5`.
+Both target their repository's `grind/389-xml-data-binding`; final-head CI is
+running. `work/389-s100-example` is published for visibility; open its PR after
+#390 integrates so its review contains only the example/acceptance slice.
+
+The actual downstream WMO corpus is still unpopulated: its remote master
+contains only `.gitignore` and `README.adoc`, and the only open PR adds reference
+documents. Therefore no `make render` / `make validate` result is claimed for
+that corpus. The passing WMO-taste XML smoke uses the original pinned catalogue
+and checks all 28 feature clauses; it is not a completed downstream corpus build.
+
+Next: inspect canonical CI results and address in-scope failures; integrate only
+eligible PRs into the grind bases, then qualify the example against the exact
+compiler candidate. Containing dependency release and downstream corpus
+population remain owner-controlled/external milestones. See the ownership table
+before editing any file.

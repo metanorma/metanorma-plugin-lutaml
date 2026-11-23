@@ -136,8 +136,8 @@ task with a minimal reproducer, not a second implementation of the compiler.
 | C | Implemented; focused checks pass | 15 loader examples pass, including nested custom types, explicit location and isolation; strict XSD validation remains authoritative |
 | D | Implemented; candidate verified | Six real-corpus acceptance examples pass without shims; standalone semantic XML and WMO-taste XML smoke checks emit all 28 feature clauses |
 | E | Implemented; focused integration passes | Macro tests pass against the real generic loader in the combined focused run |
-| F | Remote qualification blocked by execution permissions | Candidate packages pass the suma build/reuse/reproducibility integration. With the declared development Git sources and supported task-local bibliographic caching, the default suite is 397 examples / 10 failures; all ten reproduce on untouched main. Remote publication/CI is unavailable under the current execution policy. |
-| G | Implemented; unpublished and unreleased | Compiler candidate `c21b2f8d4e91efe6937b6c4637a5102249b8a7e5`: four focused compiler examples pass, lint clean; real-corpus checks pass against it |
+| F | Drafts published; final-head CI running | Plugin #390 and model #1175 target grind bases. Candidate packages pass suma integration; canonical local default is 397 examples / 10 failures, all reproduced on unchanged main. Required checks remain a gate. |
+| G | Published as model #1175; unreleased | Candidate `c21b2f8d4e91efe6937b6c4637a5102249b8a7e5`: all 49 compiler examples pass after network restoration; real-corpus checks pass against it |
 
 ### Current verification evidence
 
@@ -163,16 +163,18 @@ task with a minimal reproducer, not a second implementation of the compiler.
   supported local-only bibliographic caching. It also passes in the consumer
   development bundle with its declared Git sources. No assertions or production
   code were changed to obtain this result.
-- The extended compiler suite has 42 passing examples and seven HTTP-dependent
-  examples blocked by network access; the same seven are blocked on the original
-  dependency main. The four focused compiler cases pass.
-- Remote branches/PRs and canonical final-head CI remain absent. No integration
-  or main merge, release, issue closure or released minimum containing the
-  compiler correction is claimed.
+- The extended compiler suite now passes all 49 examples after network access
+  was restored; this includes the seven previously blocked HTTP cases.
+- Generic plugin #390 and compiler #1175 are published drafts targeting grind
+  bases; canonical final-head CI is running. No integration/main merge, release,
+  issue closure or released minimum containing the compiler fix is claimed.
+- The downstream WMO master still has no populated corpus or Makefile; only the
+  original-catalogue WMO-taste smoke is verified. No downstream corpus build is
+  claimed.
 
 The parallel implementation batch and local real-corpus qualification are
-complete. The remaining critical path is F: restore remote publishing, publish
-the bounded candidate PRs to their grind bases, obtain canonical final-head CI,
+complete. The remaining critical path is F: obtain canonical final-head CI for the published
+bounded drafts,
 address the pre-existing baseline test gate with its owners.
 Owner-controlled dependency release/floor selection follows those checks.
 External access and CI waiting prevent an unconditional delivery ETA. The
