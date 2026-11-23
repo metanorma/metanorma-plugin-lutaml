@@ -43,6 +43,24 @@ module Metanorma
           end
         end
 
+        # Keep the pre-split remarks surface used by existing templates and
+        # promoted prose. Placed comments retain their source-only placement.
+        def self.schema_remarks(schema)
+          remarks = schema.remarks.to_a
+          remarks + schema_tail_remarks(schema)
+            .reject { |text| remarks.include?(text) }
+        end
+
+        def self.schema_tail_remarks(schema)
+          return [] unless schema.respond_to?(:untagged_remarks)
+
+          Array(schema.untagged_remarks).filter_map do |remark|
+            next if remark.respond_to?(:placement) && remark.placement
+
+            remark.text if remark.tail?
+          end
+        end
+
         # Prints one source format of a decorated schema: the format runs
         # without the promoted prose item (so expressir >= 2.4.59, which
         # formats remark_items, does not double-print it), and the prose
@@ -81,10 +99,16 @@ module Metanorma
 
           def format_without_prose
             items = @schema.remark_items
+            remarks = @schema.remarks
             @schema.remark_items = items - [@prose]
+            # Recent Expressir formatters print the schema's own remarks
+            # independently of remark_items. Suppress both copies while
+            # formatting, then splice the promoted prose at the head.
+            @schema.remarks = []
             @format.call.to_s
           ensure
             @schema.remark_items = items
+            @schema.remarks = remarks
           end
         end
 
@@ -98,6 +122,7 @@ module Metanorma
           end
 
           def decorate_remarks(options)
+            expose_schema_tail_remarks
             prose = promote_schema_prose
             stash_figure_remarks(options)
             # The spliced prose blocks are built here, after the figure
@@ -109,6 +134,16 @@ module Metanorma
           end
 
           private
+
+          # Expressir now stores untagged END_SCHEMA comments separately.
+          # Preserve the legacy template-facing remarks array.
+          def expose_schema_tail_remarks
+            return unless @model.is_a?(Expressir::Model::Declarations::Schema)
+
+            @model.class.ensure_liquid_registered!
+            drop = @model.class.base_drop_class
+            drop.include(SchemaRemarks) unless drop.include?(SchemaRemarks)
+          end
 
           # A bare (*"Schema_name" ...*) remark is the schema-level prose:
           # expressir models it in Schema#remarks, not as a RemarkItem, so
@@ -129,11 +164,13 @@ module Metanorma
             items = @model.remark_items.to_a
             existing = items.find { |ri| ri.id == @model.id }
             return existing if existing
-            return if @model.remarks.to_a.empty?
+
+            remarks = ExpressRemarkAdapter.schema_remarks(@model)
+            return if remarks.empty?
 
             prose = Expressir::Model::Declarations::RemarkItem.new(
               id: @model.id,
-              remarks: @model.remarks.dup,
+              remarks: remarks,
             )
             @model.remark_items = [prose] + items
             prose
@@ -280,6 +317,12 @@ module Metanorma
         end
 
         class ModelAdapter < Base; end
+
+        module SchemaRemarks
+          def remarks
+            ExpressRemarkAdapter.schema_remarks(@object)
+          end
+        end
 
         class NullAdapter
           def initialize(_model); end
