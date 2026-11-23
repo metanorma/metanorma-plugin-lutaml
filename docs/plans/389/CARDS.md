@@ -32,6 +32,7 @@ here before dependent edits, and notify both owners.
 | F — integrated verification and remote delivery | Combined checks, final review, correct PR bases, final-head CI, suma/WMO proof, precise partial/completed status | Git branches/commits/PR operations; `docs/plans/389/`; any gemspec/dependency manifest change; shared runner scripts and test logs | A–E outputs as applicable | Both |
 | G — required upstream compiler correction | Generate usable models for XSD `xs:ID` and `xs:IDREF`, with a minimal reproducer and preservation tests | Separate `lutaml/lutaml-model` checkout: `lib/lutaml/model/schema/xml_compiler/supported_data_types.rb`, `lib/lutaml/model/schema/xml_compiler/spec_builder/simple_types.rb`, and a focused compiler regression spec | B's reproduced real-catalogue failure | Separate dependency PR, required for PR 2 |
 | H — compatibility prerequisite | Restore the nine existing renderer failures reproduced by canonical #390 CI, preserving positive content assertions | `express_remark_adapter.rb` and EXPRESS specs: focused worker; `lutaml_diagram_base.rb`, gemspec and diagram spec: integrator; Git/PR operations: integrator | Concrete failed CI on #390; independent of XML implementation | One consolidated prerequisite PR to grind |
+| I — native source-byte integrity | Preserve CRLF/UTF-8 source bytes paired with native parser offsets on Windows | Separate expressir checkout: parser.rb and generated-input regression; CI candidate/native setup belongs to integrator F | Reproduced #391 Windows source-slice failure | One upstream Expressir #740 companion to grind |
 
 No overlapping fixture directories: C uses `unit/`, E uses `macro/`, D uses
 `s100/`. Changes to shared `spec/spec_helper.rb` are integrator-owned and need a
@@ -192,3 +193,21 @@ including the extracted `lutaml-graphviz` renderer, without changing goldens or
 releasing packages. Require focused old-red/new-green checks, figure-bearing
 consumer preservation, default-suite and exact-head CI before grind integration.
 The generic XML PR follows that prerequisite; main remains owner-controlled.
+
+### I — correct the demonstrated Windows parser boundary
+
+Compatibility #391 resolves the nine original renderer failures, but Windows
+CI reveals one earlier parser failure (367examples/1failure): text-mode source
+reads shrink CRLF input after the native batch parser counted physical bytes.
+Expressir #740 changes only its three source reads to binary UTF-8 and preserves
+BOM handling. A real-native generated two-file regression reproduces the exact
+old exception, then verifies all100entities/file, Unicode and source ranges.
+Ten focused native/BOM/batch/span examples pass; no fixture/golden changes or
+nil guards hide the failure. Plugin CI pins the exact candidate and reuses the
+unchanged published2.4.82 native ABI, with source/native hashes and mandatory
+native BatchStream availability. No release/version bump is automated.
+
+The combined candidate with this dependency again passes400default examples
+and Suma build/reuse/reproducibility. Model #1175 also restores the Ghostscript
+setup its Windows tools-dependent jobs already requested; the shared tool action
+had retired it. Exact-head CI and all grind merge gates remain required.

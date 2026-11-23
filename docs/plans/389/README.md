@@ -346,3 +346,13 @@ eligible PRs into the grind bases, then qualify the example against the exact
 compiler candidate. Containing dependency release and downstream corpus
 population remain owner-controlled/external milestones. See the ownership table
 before editing any file.
+
+The required Windows CI boundary also has a companion:
+[Expressir #740](https://github.com/lutaml/expressir/pull/740), at
+`2c2abc68305d0e455f501d0763bd864033fb0f1d`. Card I records its physical-byte
+source fix and positive native reproducer. Compatibility #391 now qualifies
+that exact Ruby source with the matching unchanged published native binary;
+its final CI head is `74dd37f9a892f37cd479b375ef13bebb55749360`.
+Model #1175's runtime implementation remains c21; its CI head
+`32110b65c3ecd2e12331887aeefbc72461feddb4` restores the requested Windows
+Ghostscript setup. No new released minimum or dependency release is claimed.

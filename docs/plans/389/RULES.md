@@ -40,6 +40,9 @@ They take precedence over general automation defaults for this task.
    Canonical CI has also reproduced nine existing renderer failures; one
    consolidated compatibility prerequisite PR (card H) clears that required
    gate before XML integration. Do not split it into per-test PRs.
+   Its Windows qualification activated one Expressir source-byte companion
+   (#740), kept in that dependency repository with a real-native reproducer.
+   No parser shim, offset clamp or fixture exclusion substitutes for the fix.
 8. Aim for about **250–600 changed handwritten lines per PR**; inspect scope
    before exceeding **800** or about **12 handwritten code/test/doc files**.
    These are reviewability triggers, not reasons to omit tests or arbitrarily
