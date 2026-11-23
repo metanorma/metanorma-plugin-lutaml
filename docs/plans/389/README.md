@@ -325,13 +325,12 @@ failures. Packaged suma build/reuse/reproducibility and WMO-taste XML also pass.
 No required remote gate is waived.
 
 Published drafts: [generic binding #390](https://github.com/metanorma/metanorma-plugin-lutaml/pull/390)
-at `6dd1726e7adcb3a15a00e2411245d27882d1ec12`, and
+at `dc0f9e66aea8fd5c56998cb5f4066ad6554763b3`, and
 [compiler dependency #1175](https://github.com/lutaml/lutaml-model/pull/1175)
-at `c21b2f8d4e91efe6937b6c4637a5102249b8a7e5`.
+at `32110b65c3ecd2e12331887aeefbc72461feddb4` (runtime unchanged from tested c21).
 Both target their repository's `grind/389-xml-data-binding`; final-head CI is
 running. [Compatibility prerequisite #391](https://github.com/metanorma/metanorma-plugin-lutaml/pull/391)
-is one bounded PR clearing the reproduced renderer gate, with 368 local default
-examples passing and its own canonical CI running.
+passed canonical CI and merged only into plugin grind, alongside the separately qualified Expressir #740 prerequisite in its own grind. The generic PR now includes that tested base.
 `work/389-s100-example` is published for visibility; open its PR after
 #390 integrates so its review contains only the example/acceptance slice.
 

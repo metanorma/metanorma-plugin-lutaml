@@ -138,9 +138,10 @@ task with a minimal reproducer, not a second implementation of the compiler.
 | C | Implemented; focused checks pass | 15 loader examples pass, including nested custom types, explicit location and isolation; strict XSD validation remains authoritative |
 | D | Implemented; candidate verified | Six real-corpus acceptance examples pass without shims; standalone semantic XML and WMO-taste XML smoke checks emit all 28 feature clauses |
 | E | Implemented; focused integration passes | Macro tests pass against the real generic loader in the combined focused run |
-| F | Drafts published; final-head CI running | Plugin #390, model #1175 and compatibility #391 target grind bases. Combined candidate default passes 400/0; packaged suma and WMO-taste XML pass. Required final-head CI remains a gate. |
+| F | Integrating qualified prerequisites | Compatibility #391 and Expressir #740 merged only to their grind bases. Generic #390 dc0f9e6 final CI running; model #1175 final321 CI running. Example branch prepared; its PR follows generic integration. Combined400/0, packaged Suma and original-catalogue WMO smoke pass. |
 | G | Published as model #1175; unreleased | Candidate `c21b2f8d4e91efe6937b6c4637a5102249b8a7e5`: all 49 compiler examples pass after network restoration; real-corpus checks pass against it |
-| H | Draft #391; local qualification complete | 368 default / 60 EXPRESS / 2 diagram examples pass; real figure document A/B preserves SVG bytes and closed listing; canonical CI pending |
+| H | Merged to plugin grind | #391 final48e1 passed all six OS/Ruby CI jobs; mergeee658f2. Existing goldens and figure A/B preserved |
+| I | Merged to Expressir grind | #740 final113 passed all seven workflows including Windows; merge0e3a104. Raw spans preserved and logical remarks normalize to LF |
 
 ### Current verification evidence
 
@@ -150,7 +151,7 @@ task with a minimal reproducer, not a second implementation of the compiler.
   all identities/references, correctly owned feature/attribute/enumerant content,
   exact feature-clause multiplicity and changed-input isolation.
 - Standalone standoc XML and WMO-taste XML compile successfully. WMO smoke proof
-  includes all 28 feature clauses, IHO base flavor and the WMO publisher override.
+  includes all 28 feature clauses, IHO base configuration/registered processor and the WMO publisher override; serialized root_flavor remains generic.
   HTML/PDF and the populated downstream corpus are not claimed as tested.
 - Changed Ruby files pass lint. One complete final implementation review covered
   plugin/dependency interactions; missing-marker and duplicate-clause assertion
@@ -168,7 +169,7 @@ task with a minimal reproducer, not a second implementation of the compiler.
 - The extended compiler suite now passes all 49 examples after network access
   was restored; this includes the seven previously blocked HTTP cases.
 - Generic plugin #390 and compiler #1175 are published drafts targeting grind
-  bases; canonical final-head CI is running. No integration/main merge, release,
+  bases; canonical final-head CI is running. Prerequisite grind merges are recorded above; no main merge, release,
   issue closure or released minimum containing the compiler fix is claimed.
 - The downstream WMO master still has no populated corpus or Makefile; only the
   original-catalogue WMO-taste smoke is verified. No downstream corpus build is
@@ -211,3 +212,5 @@ The combined candidate with this dependency again passes400default examples
 and Suma build/reuse/reproducibility. Model #1175 also restores the Ghostscript
 setup its Windows tools-dependent jobs already requested; the shared tool action
 had retired it. Exact-head CI and all grind merge gates remain required.
+
+Final Windows qualification also normalizes logical remarks/header and retained formatter-wire comment fields to LF while preserving physical source bytes and spans. Final113 passes49affected parser/formatter examples,7final regression/parity examples and lint. A disposable physical-CRLF plugin checkout fails six cases before that semantic correction and passes all36after it. Actual final Windows CI now passes in both repositories. Final model321 changes CI setup only after tested compilerc21; its macOS runner-capacity retry and downstream jobs remain required gates.
