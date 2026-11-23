@@ -270,7 +270,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::XmlDataLoader do
     it "rejects a wildcard instead of dropping its content" do
       root = '<xs:complexType name="Open"><xs:sequence>' \
              '<xs:any processContents="lax" maxOccurs="unbounded"/>' \
-             '</xs:sequence></xs:complexType>' \
+             "</xs:sequence></xs:complexType>" \
              '<xs:element name="Catalog" type="a:Open"/>'
       expect do
         load_files(root, '<xs:element name="unused" type="xs:string"/>',
@@ -286,6 +286,80 @@ RSpec.describe Metanorma::Plugin::Lutaml::XmlDataLoader do
         load_files(root, '<xs:element name="unused" type="xs:string"/>',
                    '<a:Catalog xmlns:a="urn:a">text<a:em>x</a:em></a:Catalog>')
       end.to raise_error(described_class::Error, /wildcard or mixed content/)
+    end
+
+    it "keeps a renamed type apart from a type with the generated name" do
+      root = '<xs:complexType name="Date"><xs:sequence>' \
+             '<xs:element name="first" type="xs:string"/></xs:sequence>' \
+             '</xs:complexType><xs:complexType name="XmlDataTypeDate">' \
+             '<xs:sequence><xs:element name="second" type="xs:string"/>' \
+             '</xs:sequence></xs:complexType><xs:complexType name="Pair">' \
+             '<xs:sequence><xs:element name="one" type="a:Date"/>' \
+             '<xs:element name="two" type="a:XmlDataTypeDate"/></xs:sequence>' \
+             '</xs:complexType><xs:element name="Catalog" type="a:Pair"/>'
+      model = load_files(
+        root, '<xs:element name="unused" type="xs:string"/>',
+        '<a:Catalog xmlns:a="urn:a"><a:one><a:first>ONE</a:first></a:one>' \
+        "<a:two><a:second>TWO</a:second></a:two></a:Catalog>"
+      ).fetch("Catalog")
+      expect([model.one.first, model.two.second]).to eq(%w[ONE TWO])
+    end
+
+    it "rejects a type clash hidden behind unqualified elements" do
+      root = '<xs:complexType name="Detail"><xs:sequence>' \
+             '<xs:element name="local" type="xs:string" form="unqualified"/>' \
+             '</xs:sequence></xs:complexType><xs:complexType name="Pair">' \
+             '<xs:sequence><xs:element name="one" type="a:Detail"/>' \
+             '<xs:element name="two" type="b:Detail" form="unqualified"/>' \
+             "</xs:sequence></xs:complexType>" \
+             '<xs:element name="Catalog" type="a:Pair"/>'
+      other = '<xs:complexType name="Detail"><xs:sequence>' \
+              '<xs:element name="foreign" type="xs:string" form="unqualified"/>' \
+              "</xs:sequence></xs:complexType>"
+      instance = '<a:Catalog xmlns:a="urn:a"><a:one><local>ONE</local></a:one>' \
+                 "<two><foreign>TWO</foreign></two></a:Catalog>"
+      expect { load_files(root, other, instance) }
+        .to raise_error(described_class::Error, /several namespaces.*Detail/)
+    end
+
+    it "allows a type name repeated in a namespace the root never reaches" do
+      other = "#{holder}<xs:element name=\"unused\" type=\"b:Holder\"/>"
+      root = holder.sub("entry", "item") +
+             '<xs:element name="Catalog" type="a:Holder"/>'
+      model = load_files(
+        root, other, '<a:Catalog xmlns:a="urn:a"><a:item>x</a:item></a:Catalog>'
+      ).fetch("Catalog")
+      expect(model.item).to eq(%w[x])
+    end
+
+    it "rejects xsi:type instead of dropping derived content" do
+      root = '<xs:complexType name="Base"><xs:sequence>' \
+             '<xs:element name="label" type="xs:string"/></xs:sequence>' \
+             '</xs:complexType><xs:complexType name="Derived"><xs:complexContent>' \
+             '<xs:extension base="a:Base"><xs:sequence>' \
+             '<xs:element name="extra" type="xs:string"/></xs:sequence>' \
+             "</xs:extension></xs:complexContent></xs:complexType>" \
+             '<xs:element name="Catalog" type="a:Base"/>'
+      instance = '<a:Catalog xmlns:a="urn:a" xsi:type="a:Derived" ' \
+                 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' \
+                 "<a:label>kept</a:label><a:extra>x</a:extra></a:Catalog>"
+      expect do
+        load_files(root, '<xs:element name="unused" type="xs:string"/>',
+                   instance)
+      end.to raise_error(described_class::Error, /xsi:type/)
+    end
+
+    it "rejects a substitution group instead of dropping its members" do
+      root = '<xs:element name="head" type="xs:string" abstract="true"/>' \
+             '<xs:element name="member" type="xs:string" ' \
+             'substitutionGroup="a:head"/><xs:complexType name="List">' \
+             '<xs:sequence><xs:element ref="a:head" maxOccurs="unbounded"/>' \
+             "</xs:sequence></xs:complexType>" \
+             '<xs:element name="Catalog" type="a:List"/>'
+      expect do
+        load_files(root, '<xs:element name="unused" type="xs:string"/>',
+                   '<a:Catalog xmlns:a="urn:a"><a:member>x</a:member></a:Catalog>')
+      end.to raise_error(described_class::Error, /substitution/)
     end
 
     it "explains a root of a simple type" do

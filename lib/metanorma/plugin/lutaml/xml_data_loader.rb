@@ -19,7 +19,12 @@ module Metanorma
           "http://www.w3.org/2001/XMLSchema-instance",
           "http://www.w3.org/XML/1998/namespace",
         ].freeze
+        XSI_NAMESPACE = "http://www.w3.org/2001/XMLSchema-instance"
+        GLOBAL_COMPONENTS = "/xs:schema/xs:element | " \
+                            "/xs:schema/xs:attribute | /xs:schema/xs:group | " \
+                            "/xs:schema/xs:attributeGroup"
         OPEN_CONTENT = "//xs:any | //xs:anyAttribute | " \
+                       "//xs:element[@substitutionGroup] | " \
                        "//xs:*[@mixed='true' or @mixed='1']"
         TYPE_REFERENCES = %w[type base itemType memberTypes].freeze
         RENAMED_TYPE_PREFIX = "XmlDataType"
@@ -46,8 +51,7 @@ module Metanorma
             raise Error,
                   "No XSD declaration for #{instance.root.name}"
           end
-          reject_ambiguous_types(documents, instance)
-          reject_open_content(documents)
+          reject_unbindable(documents, declaration, instance)
 
           Dir.mktmpdir("lutaml-xml-data") do |directory|
             renamed = rename_shadowing_types(documents, directory)
@@ -135,15 +139,76 @@ module Metanorma
           declared.to_s
         end
 
+        def reject_unbindable(documents, declaration, instance)
+          reject_ambiguous_types(documents, declaration, instance)
+          reject_open_content(documents)
+          reject_dynamic_types(instance)
+        end
+
         # The compiler keys types by local name, so one name in two namespaces
-        # the instance uses cannot bind faithfully.
-        def reject_ambiguous_types(documents, instance)
-          used = instance.xpath("//*").map { |node| node.namespace&.href.to_s }
-          owners = type_owners(documents.select { |_, ns| used.include?(ns) })
-          clashes = owners.select { |_, namespaces| namespaces.size > 1 }.keys
+        # reachable from the root cannot bind faithfully. Instance namespaces
+        # are not enough: unqualified elements hide their type's namespace.
+        def reject_ambiguous_types(documents, declaration, instance)
+          root_namespace = instance.root.namespace&.href.to_s
+          types = reachable_types(documents, declaration, root_namespace)
+          clashes = types.group_by(&:last).select { |_, keys| keys.size > 1 }
           return if clashes.empty?
 
-          raise Error, "Types in several namespaces: #{clashes.join(', ')}"
+          raise Error, "Types in several namespaces: #{clashes.keys.join(', ')}"
+        end
+
+        def reachable_types(documents, declaration, namespace)
+          index = component_index(documents)
+          reachable_components(index, declaration, namespace)
+            .filter_map do |kind, type_namespace, name|
+            [type_namespace, name] if kind == :type &&
+              type_namespace != XSD_NAMESPACE
+          end
+        end
+
+        def reachable_components(index, declaration, namespace)
+          seen = {}
+          pending = [[declaration, namespace]]
+          until pending.empty?
+            node, owner = pending.pop
+            fresh = component_references(node, owner).uniq
+              .reject { |key| seen.key?(key) }
+            fresh.each { |key| seen[key] = true }
+            pending.concat(fresh.flat_map { |key| index.fetch(key, []) })
+          end
+          seen.keys
+        end
+
+        def component_index(documents)
+          index = Hash.new { |hash, key| hash[key] = [] }
+          documents.each do |document, namespace|
+            global_types(document).each do |node|
+              index[[:type, namespace, node["name"]]] << [node, namespace]
+            end
+            components = document.xpath(GLOBAL_COMPONENTS, "xs" => XSD_NAMESPACE)
+            components.each do |node|
+              index[[node.name.to_sym, namespace, node["name"]]] <<
+                [node, namespace]
+            end
+          end
+          index
+        end
+
+        def component_references(node, owner)
+          node.xpath("descendant-or-self::xs:*", "xs" => XSD_NAMESPACE)
+            .flat_map do |item|
+            types = TYPE_REFERENCES.flat_map { |name| item[name].to_s.split }
+            keys = types.map { |ref| reference_key(item, :type, ref, owner) }
+            next keys unless item["ref"]
+
+            keys << reference_key(item, item.name.to_sym, item["ref"], owner)
+          end
+        end
+
+        def reference_key(node, kind, reference, owner)
+          local, prefix = reference.split(":", 2).reverse
+          key = prefix ? "xmlns:#{prefix}" : "xmlns"
+          [kind, node.namespaces[key] || owner, local]
         end
 
         # Generated models have no attribute for this content, so hydration
@@ -154,8 +219,19 @@ module Metanorma
           end
           return unless document
 
-          raise Error, "Schema #{File.basename(document.url)} uses " \
-                       "wildcard or mixed content, which cannot bind"
+          raise Error, "Schema #{File.basename(document.url)} uses wildcard " \
+                       "or mixed content or substitution groups, which " \
+                       "cannot bind"
+        end
+
+        # Hydration follows the declared type, so a derived type's content
+        # would be dropped.
+        def reject_dynamic_types(instance)
+          node = instance.at_xpath("//@xsi:type", "xsi" => XSI_NAMESPACE)
+          return unless node
+
+          raise Error, "Element #{node.parent.name} uses xsi:type, " \
+                       "which cannot bind"
         end
 
         def type_owners(documents)
@@ -201,9 +277,19 @@ module Metanorma
           names = documents.flat_map do |document, _|
             global_types(document).map { |type| type["name"] }
           end
+          taken = names.map { |name| ::Lutaml::Model::Utils.snake_case(name) }
           names.uniq.select do |name|
             reserved.include?(::Lutaml::Model::Utils.snake_case(name))
+          end.to_h { |name| [name, unused_type_name(name, taken)] }
+        end
+
+        def unused_type_name(name, taken)
+          candidate = "#{RENAMED_TYPE_PREFIX}#{name}"
+          while taken.include?(::Lutaml::Model::Utils.snake_case(candidate))
+            candidate = "#{RENAMED_TYPE_PREFIX}#{candidate}"
           end
+          taken << ::Lutaml::Model::Utils.snake_case(candidate)
+          candidate
         end
 
         def built_in_symbols
@@ -216,9 +302,9 @@ module Metanorma
 
         def rename_types(document, shadowing)
           global_types(document).each do |type|
-            next unless shadowing.include?(type["name"])
+            next unless shadowing.key?(type["name"])
 
-            type["name"] = "#{RENAMED_TYPE_PREFIX}#{type['name']}"
+            type["name"] = shadowing.fetch(type["name"])
           end
           document.xpath("//xs:*", "xs" => XSD_NAMESPACE).each do |node|
             rename_references(node, shadowing)
@@ -239,9 +325,9 @@ module Metanorma
           local, prefix = reference.split(":", 2).reverse
           key = prefix ? "xmlns:#{prefix}" : "xmlns"
           return reference if node.namespaces[key] == XSD_NAMESPACE
-          return reference unless shadowing.include?(local)
+          return reference unless shadowing.key?(local)
 
-          [prefix, "#{RENAMED_TYPE_PREFIX}#{local}"].compact.join(":")
+          [prefix, shadowing.fetch(local)].compact.join(":")
         end
 
         def relocate_references(document, files)
