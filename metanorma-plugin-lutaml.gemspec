@@ -30,11 +30,12 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "asciidoctor"
   spec.add_dependency "coradoc", "~> 1.1.8"
-  # Ea::Xmi.load/load_graph (lutaml/ea#86): this gem's partial-load API.
+  # Ea::Xmi.load/load_graph (lutaml/ea#86): the partial-load API called here.
   spec.add_dependency "ea", ">= 0.6.41"
   spec.add_dependency "expressir", "~> 2.3", ">= 2.3.5"
   spec.add_dependency "isodoc", ">= 3.5.0"
   spec.add_dependency "liquid", "~> 5"
+  spec.add_dependency "lutaml-graphviz", ">= 0.1.0", "< 1"
   spec.add_dependency "lutaml-jsonschema", "~> 0.1", ">= 0.1.29"
   spec.add_dependency "lutaml-lml"
   spec.add_dependency "lutaml-model", "~> 0.8.156"

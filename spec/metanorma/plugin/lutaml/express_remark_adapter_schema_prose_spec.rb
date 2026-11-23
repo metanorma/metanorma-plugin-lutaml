@@ -125,4 +125,45 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkAdapter do
     expect(plain_schema.formatted_hyperlinked_adoc)
       .not_to include("(*")
   end
+
+  context "with separately stored END_SCHEMA tail comments" do
+    before do
+      schema.untagged_remarks = [
+        Expressir::Model::RemarkInfo.new(
+          text: "Closing description", format: "tail",
+        ),
+        Expressir::Model::RemarkInfo.new(
+          text: "Placed comment", format: "tail", placement: "inline",
+        ),
+      ]
+    end
+
+    it "preserves legacy Liquid prose without changing the model remarks" do
+      original = schema.remarks.dup
+      decorate
+
+      expect(schema.to_liquid.remarks).to eq(original + ["Closing description"])
+      expect(schema.remarks).to eq(original)
+    end
+
+    it "keeps the legacy promoted tail description and its source comment" do
+      decorate
+
+      printed = schema.formatted
+      expect(printed).to include('(*"schema_prose" Closing description *)')
+      expect(printed.index("Closing description"))
+        .to be < printed.index("ENTITY thing")
+      expect(printed).to include("END_SCHEMA; -- Closing description")
+      expect(schema.remarks.join).to include("vertices and the connections")
+    end
+
+    it "does not duplicate legacy prose on repeated decoration" do
+      decorate
+      decorate
+
+      expect(schema.to_liquid.remarks.count("Closing description")).to eq(1)
+      expect(schema.formatted.scan('(*"schema_prose" Closing description *)')
+        .length).to eq(1)
+    end
+  end
 end
