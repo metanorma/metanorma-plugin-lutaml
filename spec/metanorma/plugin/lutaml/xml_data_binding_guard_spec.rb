@@ -156,20 +156,147 @@ RSpec.describe Metanorma::Plugin::Lutaml::XmlDataBindingGuard do
         .to include("Types in several namespaces: Detail")
     end
 
-    it "rejects an element that declares a namespace, which is dropped" do
-      entry = '<xs:element name="entry" type="xs:string" xmlns="urn:a"/>'
-      body = catalog(sequence(leaf("first"), entry))
-      xml = data("<first>ONE</first><entry>SECRET</entry>")
-      expect(rejection(body, xml))
-        .to include("element entry declares a namespace")
+    {
+      "element" => lambda { |t|
+        [catalog(sequence(t.call(leaf("entry"))), ""),
+         data("<entry>E</entry>")]
+      },
+      "attribute" => lambda { |t|
+        [catalog(sequence(leaf("entry")),
+                 t.call('<xs:attribute name="code" type="xs:string"/>')),
+         data("<entry>E</entry>", ' code="C"')]
+      },
+      "attributeGroup" => lambda { |t|
+        [t.call('<xs:attributeGroup name="AG"><xs:attribute name="code" ' \
+                'type="xs:string"/></xs:attributeGroup>') +
+          catalog(sequence(leaf("entry")), '<xs:attributeGroup ref="a:AG"/>'),
+         data("<entry>E</entry>", ' code="C"')]
+      },
+      "complexType" => lambda { |t|
+        [t.call(named_type("T", leaf("one"))) +
+          catalog(sequence(leaf("entry", "a:T"))),
+         data("<entry><one>O</one></entry>")]
+      },
+      "simpleType" => lambda { |t|
+        [t.call('<xs:simpleType name="S"><xs:restriction base="xs:string"/>' \
+                "</xs:simpleType>") + catalog(sequence(leaf("entry", "a:S"))),
+         data("<entry>E</entry>")]
+      },
+      "complexContent" => lambda { |t|
+        derived = t.call('<xs:complexContent><xs:extension base="a:B">' \
+                         "#{sequence(leaf('two'))}</xs:extension>" \
+                         "</xs:complexContent>")
+        [[named_type("B", leaf("one")),
+          %(<xs:complexType name="D">#{derived}</xs:complexType>),
+          catalog(sequence(leaf("entry", "a:D")))].join,
+         data("<entry><one>O</one><two>T</two></entry>")]
+      },
+      "simpleContent" => lambda { |t|
+        content = t.call('<xs:simpleContent><xs:extension base="xs:string"/>' \
+                         "</xs:simpleContent>")
+        [[%(<xs:complexType name="D">#{content}</xs:complexType>),
+          catalog(sequence(leaf("entry", "a:D")))].join,
+         data("<entry>E</entry>")]
+      },
+      "extension" => lambda { |t|
+        extension = t.call('<xs:extension base="xs:string"/>')
+        [[%(<xs:complexType name="D"><xs:simpleContent>#{extension}) \
+          "</xs:simpleContent></xs:complexType>",
+          catalog(sequence(leaf("entry", "a:D")))].join,
+         data("<entry>E</entry>")]
+      },
+      "sequence" => lambda { |t|
+        [catalog(t.call(sequence(leaf("entry")))), data("<entry>E</entry>")]
+      },
+      "group" => lambda { |t|
+        [t.call(group("Pair", leaf("two"))) +
+          catalog(sequence('<xs:group ref="a:Pair"/>')),
+         data("<two>TWO</two>")]
+      },
+    }.each do |kind, build|
+      it "rejects a #{kind} that declares a namespace, which is dropped" do
+        declare = lambda do |xml|
+          xml.sub(/\A(<xs:#{kind}\b)/, '\1 xmlns:z="urn:z"')
+        end
+        body, xml = instance_exec(declare, &build)
+        expect(rejection(body, xml))
+          .to match(/Schema #{kind} .* declares a namespace/)
+      end
     end
 
-    it "rejects a group that declares a namespace, which is dropped" do
-      declared = '<xs:group name="Pair" xmlns:z="urn:z">' \
-                 "#{sequence(leaf('two'))}</xs:group>"
-      body = [declared, catalog(sequence('<xs:group ref="a:Pair"/>'))].join
-      expect(rejection(body, data("<two>TWO</two>")))
-        .to include("group Pair declares a namespace")
+    it "rejects a declaration name used from two namespaces" do
+      body = [%(<xs:import namespace="urn:b" schemaLocation="other.xsd"/>),
+              leaf("Detail"),
+              catalog(sequence('<xs:element ref="a:Detail"/>',
+                               '<xs:element ref="b:Detail"/>'))].join
+      xml = data('<Detail>ONE</Detail><Detail xmlns="urn:b">TWO</Detail>')
+      imported = imported_schema(leaf("Detail"))
+      expect(rejection(body, xml, imported: imported))
+        .to include("Declarations in several namespaces: Detail")
+    end
+
+    it "rejects xs:all, whose children would all be lost" do
+      body = catalog("<xs:all>#{leaf('a')}#{leaf('b')}</xs:all>")
+      expect(rejection(body, data("<b>B</b><a>A</a>")))
+        .to include("Schema uses xs:all, whose children cannot bind")
+    end
+
+    it "rejects a union of anonymous member types" do
+      union = '<xs:simpleType name="U"><xs:union><xs:simpleType>' \
+              '<xs:restriction base="xs:string">' \
+              '<xs:enumeration value="none"/></xs:restriction>' \
+              "</xs:simpleType></xs:union></xs:simpleType>"
+      body = union + catalog(sequence(leaf("v", "a:U")))
+      expect(rejection(body, data("<v>none</v>")))
+        .to include("Union with anonymous member types cannot bind")
+    end
+
+    it "rejects an anonymous union that a narrower named member joins" do
+      union = '<xs:simpleType name="U"><xs:union memberTypes="xs:integer">' \
+              '<xs:simpleType><xs:restriction base="xs:string">' \
+              '<xs:enumeration value="none"/></xs:restriction>' \
+              "</xs:simpleType></xs:union></xs:simpleType>"
+      body = union + catalog(sequence(leaf("v", "a:U")))
+      expect(rejection(body, data("<v>none</v>")))
+        .to include("Union with anonymous member types cannot bind")
+    end
+
+    it "rejects a redefined group" do
+      redefine = '<xs:redefine schemaLocation="other.xsd"><xs:group ' \
+                 'name="G"><xs:sequence><xs:group ref="a:G"/>' \
+                 "#{leaf('more')}</xs:sequence></xs:group></xs:redefine>"
+      body = redefine + catalog(sequence('<xs:group ref="a:G"/>'))
+      imported = imported_schema(group("G", leaf("base")),
+                                 namespace: ' targetNamespace="urn:a"')
+      expect(rejection(body, data("<base>B</base><more>M</more>"),
+                       imported: imported))
+        .to include("Schema redefines group G, so its members cannot bind")
+    end
+
+    it "rejects a redefined attribute group" do
+      redefine = '<xs:redefine schemaLocation="other.xsd"><xs:attributeGroup ' \
+                 'name="AG"><xs:attributeGroup ref="a:AG"/><xs:attribute ' \
+                 'name="y" type="xs:string"/></xs:attributeGroup>' \
+                 "</xs:redefine>"
+      body = redefine + catalog(sequence(leaf("p")),
+                                '<xs:attributeGroup ref="a:AG"/>')
+      imported = imported_schema(
+        '<xs:attributeGroup name="AG"><xs:attribute name="x" ' \
+        'type="xs:string"/></xs:attributeGroup>',
+        namespace: ' targetNamespace="urn:a"',
+      )
+      expect(rejection(body, data("<p>P</p>", ' x="X" y="Y"'),
+                       imported: imported))
+        .to include("Schema redefines attributeGroup AG")
+    end
+
+    it "rejects an attribute named content on a type with simple content" do
+      body = '<xs:element name="Catalog"><xs:complexType><xs:simpleContent>' \
+             '<xs:extension base="xs:string"><xs:attribute name="content" ' \
+             'type="xs:string"/></xs:extension></xs:simpleContent>' \
+             "</xs:complexType></xs:element>"
+      expect(rejection(body, data("TEXT", ' content="ATTR"')))
+        .to include("Attribute content collides with the value")
     end
 
     it "rejects a type derived from a complex type that has attributes" do
@@ -219,6 +346,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::XmlDataBindingGuard do
       end
       names = models.map { |model| model.class.attributes.keys }
       expect(names).to eq([[:one], [:two], [:one]])
+      values = models.zip(names).map { |model, (name)| model.public_send(name) }
+      expect(values).to eq(%w[VALUE VALUE VALUE])
       expect(Object.const_defined?(:Shared, false)).to be(false)
     end
 
@@ -233,18 +362,66 @@ RSpec.describe Metanorma::Plugin::Lutaml::XmlDataBindingGuard do
       expect(existing.instance_methods(false)).to be_empty
     end
 
-    it "binds nested anonymous types with distinct names" do
+    it "binds a same-named element with one anonymous type" do
       body = catalog(sequence(inline("a", leaf("item")),
                               inline("b", inline("item", leaf("deep")))))
       xml = data("<a><item>S</item></a><b><item><deep>D</deep></item></b>")
-      expect(load_schema(body, xml).b.item.deep).to eq("D")
+      model = load_schema(body, xml)
+      expect([model.a.item, model.b.item.deep]).to eq(%w[S D])
     end
 
     it "binds a namespace declared inside annotation content" do
-      note = '<xs:annotation><xs:documentation xmlns:h="urn:h">' \
-             "<h:b>note</h:b></xs:documentation></xs:annotation>"
+      note = '<xs:annotation><xs:appinfo><xs:element name="x" ' \
+             'type="xs:string" xmlns:h="urn:h"/></xs:appinfo></xs:annotation>'
       body = catalog(note + sequence(leaf("entry")))
       expect(load_schema(body, data("<entry>E</entry>")).entry).to eq("E")
+    end
+
+    it "binds a named union whose member types are all named" do
+      union = '<xs:simpleType name="U"><xs:union memberTypes="xs:integer ' \
+              'xs:string"/></xs:simpleType>'
+      body = union + catalog(sequence(leaf("v", "a:U")))
+      expect(load_schema(body, data("<v>none</v>")).v).to eq("none")
+    end
+
+    it "binds a union whose named member accepts any text" do
+      union = '<xs:simpleType name="U"><xs:union memberTypes="xs:token">' \
+              '<xs:simpleType><xs:restriction base="xs:token">' \
+              '<xs:enumeration value="ASCII"/></xs:restriction>' \
+              "</xs:simpleType></xs:union></xs:simpleType>"
+      body = union + catalog(sequence(leaf("v", "a:U")))
+      expect(load_schema(body, data("<v>ASCII</v>")).v).to eq("ASCII")
+    end
+
+    it "binds an unused xs:all and an unused anonymous union" do
+      unused = %(<xs:complexType name="Unused"><xs:all>#{leaf('a')}) \
+               '</xs:all></xs:complexType><xs:simpleType name="Loose">' \
+               "<xs:union><xs:simpleType><xs:restriction base=\"xs:string\"/>" \
+               "</xs:simpleType></xs:union></xs:simpleType>"
+      body = unused + catalog(sequence(leaf("entry")))
+      expect(load_schema(body, data("<entry>E</entry>")).entry).to eq("E")
+    end
+
+    it "binds an attribute named content beside element content" do
+      body = catalog(sequence(leaf("entry")),
+                     '<xs:attribute name="content" type="xs:string"/>')
+      model = load_schema(body, data("<entry>E</entry>", ' content="ATTR"'))
+      expect([model.entry, model.content]).to eq(%w[E ATTR])
+    end
+
+    it "binds a simple content attribute with another name" do
+      body = '<xs:element name="Catalog"><xs:complexType><xs:simpleContent>' \
+             '<xs:extension base="xs:string"><xs:attribute name="code" ' \
+             'type="xs:string"/></xs:extension></xs:simpleContent>' \
+             "</xs:complexType></xs:element>"
+      model = load_schema(body, data("TEXT", ' code="C"'))
+      expect([model.content, model.code]).to eq(%w[TEXT C])
+    end
+
+    it "binds a group that no redefine touches" do
+      body = group("G", leaf("base")) +
+        catalog(sequence('<xs:group ref="a:G"/>'))
+      expect(load_schema(body, data("<base>B</base>")).base).to eq("B")
     end
 
     it "binds a type derived from a complex type without attributes" do

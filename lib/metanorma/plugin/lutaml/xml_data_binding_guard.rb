@@ -22,6 +22,11 @@ module Metanorma
         ANONYMOUS_PREFIXES = { "complexType" => "CT",
                                "simpleType" => "ST" }.freeze
         # The parser drops these when they declare a namespace prefix.
+        # A union of these accepts any text, so the value survives even though
+        # the compiler ignores the union's anonymous members.
+        TEXT_TYPES = %w[string token].freeze
+        REDEFINED = "/xs:schema/xs:redefine/xs:group | " \
+                    "/xs:schema/xs:redefine/xs:attributeGroup"
         NAMESPACE_DROPPED = %w[element attribute attributeGroup complexType
                                simpleType complexContent simpleContent
                                extension sequence group].freeze
@@ -41,6 +46,10 @@ module Metanorma
           reject_member_clashes
           reject_declared_namespaces
           reject_derived_simple_content
+          reject_all_groups
+          reject_anonymous_unions
+          reject_redefined_groups
+          reject_content_attributes
         end
 
         # Removes global components the root never uses, so that an unused
@@ -91,6 +100,7 @@ module Metanorma
             fresh.each { |key| seen[key] = true }
             pending.concat(fresh.flat_map { |key| @index.fetch(key, []) })
           end
+          @referenced = seen
           seen.keys.select { |key| @index.key?(key) }
         end
 
@@ -274,6 +284,64 @@ module Metanorma
                            "xs:anyAttribute", "xs" => XSD).any? ||
             attributes_below?(reference_key(derivation, :type,
                                             derivation["base"], owner), seen)
+        end
+
+        # The compiler binds no element of an xs:all, so every child is lost.
+        def reject_all_groups
+          return if each_reachable("all").empty?
+
+          raise XmlDataLoader::Error,
+                "Schema uses xs:all, whose children cannot bind"
+        end
+
+        # The compiler skips a union's anonymous member types. The value
+        # is kept only when a named member already accepts any text.
+        def reject_anonymous_unions
+          each_reachable("union").each do |union, owner|
+            next if union.xpath("xs:simpleType", "xs" => XSD).empty?
+            next if text_member?(union, owner)
+
+            raise XmlDataLoader::Error,
+                  "Union with anonymous member types cannot bind its values"
+          end
+        end
+
+        def text_member?(union, owner)
+          union["memberTypes"].to_s.split.any? do |reference|
+            _, namespace, local = reference_key(union, :type, reference, owner)
+            namespace == XSD && TEXT_TYPES.include?(local)
+          end
+        end
+
+        # The loader does not follow xs:redefine, so the redefined group's
+        # members never reach the model.
+        def reject_redefined_groups
+          @documents.each do |document, namespace|
+            document.xpath(REDEFINED, "xs" => XSD).each do |node|
+              key = [node.name.to_sym, namespace, node["name"]]
+              next unless @referenced[key]
+
+              raise XmlDataLoader::Error,
+                    "Schema redefines #{node.name} #{node['name']}, so its " \
+                    "members cannot bind"
+            end
+          end
+        end
+
+        # An attribute named content takes the slot the value is bound to.
+        def reject_content_attributes
+          each_reachable("complexType").each do |type, owner|
+            next unless type.at_xpath("xs:simpleContent", "xs" => XSD)
+
+            clash = collect_members(type, owner, {}).find do |kind, _, name, _|
+              kind == "attribute" && snake(name) == "content"
+            end
+            next unless clash
+
+            raise XmlDataLoader::Error,
+                  "Attribute content collides with the value of a type " \
+                  "with simple content"
+          end
         end
 
         def snake(name)
