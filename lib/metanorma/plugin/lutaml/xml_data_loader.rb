@@ -346,7 +346,7 @@ module Metanorma
           # recursive validation does not preserve private register contexts.
           model = klass.from_xml(single_namespace_xml(instance),
                                  register: register_id)
-          XmlDataValueCheck.new(instance).check(model)
+          XmlDataValueCheck.new(instance, register: register_id).check(model)
           model
         end
 

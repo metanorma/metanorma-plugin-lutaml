@@ -103,4 +103,69 @@ RSpec.describe Metanorma::Plugin::Lutaml::XmlDataValueCheck do
       expect(value.to_time).to eq(Time.utc(2024, 2, 29, 8, 20, 30))
     end
   end
+
+  describe "schema defaults and unbound values" do
+    def load_root(members, attributes, body, root_attributes = "")
+      Dir.mktmpdir do |dir|
+        File.write(File.join(dir, "main.xsd"), <<~XSD)
+          <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="urn:a" elementFormDefault="qualified">
+            <xs:element name="Root"><xs:complexType>
+              <xs:sequence>#{members}</xs:sequence>#{attributes}
+            </xs:complexType></xs:element>
+          </xs:schema>
+        XSD
+        File.write(File.join(dir, "data.xml"),
+                   %(<a:Root xmlns:a="urn:a"#{root_attributes}>#{body}</a:Root>))
+        loader.load(File.join(dir, "main.xsd"), File.join(dir, "data.xml"))
+          .fetch("Root")
+      end
+    end
+
+    let(:text) { %(<xs:element name="v" type="xs:string"/>) }
+
+    it "keeps an absent attribute's schema default" do
+      attribute = %(<xs:attribute name="k" type="xs:integer" default="7"/>)
+      expect(load_root(text, attribute, "<a:v>1</a:v>").k).to eq(7)
+    end
+
+    it "keeps an absent element's schema default out of the comparison" do
+      members = %(<xs:element name="w" type="xs:string" minOccurs="0"
+        default="D"/>#{text})
+      expect(load_root(members, "", "<a:v>1</a:v>").v).to eq("1")
+    end
+
+    it "refuses an empty element that should take its default" do
+      members = %(<xs:element name="v" type="xs:string" default="D"/>)
+      expect { load_root(members, "", "<a:v/>") }
+        .to raise_error(error, /does not receive its schema default/)
+    end
+
+    [" true ", " false "].each do |literal|
+      it "refuses #{literal.inspect}, which would stay a truthy string" do
+        expect { load_value("xs:boolean", literal) }
+          .to raise_error(error, /does not bind as a boolean/)
+      end
+    end
+
+    it "reports a source whose name has no bound value at all" do
+      check = described_class.new(
+        Nokogiri::XML(%(<Root><v>1</v><lost>2</lost></Root>)),
+      )
+      model = Class.new(Lutaml::Model::Serializable) do
+        attribute :v, :string
+      end.new(v: "1")
+      expect { check.check(model) }
+        .to raise_error(error, /lost.*was not bound/)
+    end
+
+    it "pairs many repeated values in near linear time" do
+      members = %(<xs:element name="v" type="xs:string" maxOccurs="unbounded"/>)
+      body = Array.new(8_000) { |i| "<a:v>value#{i}</a:v>" }.join
+      started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+      expect(load_root(members, "", body).v.size).to eq(8_000)
+      expect(Process.clock_gettime(Process::CLOCK_MONOTONIC) - started)
+        .to be < 2
+    end
+  end
 end

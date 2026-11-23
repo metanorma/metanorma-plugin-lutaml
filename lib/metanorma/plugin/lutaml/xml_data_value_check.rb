@@ -2,6 +2,7 @@
 
 require "bigdecimal"
 require "date"
+require "set"
 require "lutaml/model"
 
 module Metanorma
@@ -92,7 +93,10 @@ module Metanorma
         end
         private_constant :Equivalence, :Source
 
-        def initialize(instance)
+        def initialize(instance,
+                       register: ::Lutaml::Model::Config.default_register)
+          @register = register
+          @empty_elements = Set.new
           @sources = Hash.new { |hash, key| hash[key] = [] }
           instance.xpath("//*").each { |node| collect_sources(node) }
         end
@@ -102,8 +106,10 @@ module Metanorma
           # Content is matched last: it shares source texts with named values.
           keys = values.keys.partition { |key| key != CONTENT }.flatten
           keys.each { |key| compare(key, values.fetch(key)) }
-          lost = keys.filter_map { |key| unused(key).first }.first
-          fail_with(nil, lost) if lost
+          @sources.each_value do |sources|
+            lost = sources.find { |source| !source.used }
+            fail_with(nil, lost) if lost
+          end
         end
 
         private
@@ -120,8 +126,14 @@ module Metanorma
 
             add_source(attribute.name, node.name, attribute.value)
           end
-          add_source(node.name, node.name, node.text, content: true) if
-            node.element_children.empty?
+          return unless node.element_children.empty?
+
+          add_source(node.name, node.name, node.text, content: true)
+          @empty_elements << key_for(node.name) if node.text.strip.empty?
+        end
+
+        def key_for(name)
+          ::Lutaml::Model::Utils.snake_case(name)
         end
 
         # A leaf element binds under its own name, or as the content of a
@@ -130,7 +142,7 @@ module Metanorma
           return if text.strip.empty?
 
           source = Source.new(element, text.strip, false)
-          @sources[::Lutaml::Model::Utils.snake_case(name)] << source
+          @sources[key_for(name)] << source
           @sources[CONTENT] << source if content
         end
 
@@ -139,34 +151,73 @@ module Metanorma
           when Array
             object.each { |item| collect_values(item, values, key) }
           when ::Lutaml::Model::Serializable
-            object.class.attributes.each_key do |name|
-              collect_values(object.public_send(name), values, name.to_s)
-            end
+            collect_members(object, values)
           else add_value(values, key, object)
           end
         end
 
+        # A member still at its schema default had no source text to compare.
+        def collect_members(object, values)
+          object.class.attributes.each do |name, attribute|
+            next if object.using_default?(name)
+
+            value = object.public_send(name)
+            reject_unbound_form(object, name, attribute, value)
+            collect_values(value, values, name.to_s)
+          end
+        end
+
+        def reject_unbound_form(object, name, attribute, value)
+          items = Array(value)
+          reject_lost_default(object, name, attribute, items)
+          return unless boolean?(attribute)
+
+          bad = items.find { |item| !item.nil? && item != true && item != false }
+          return if bad.nil?
+
+          raise XmlDataLoader::Error,
+                "Value #{bad.inspect} of #{name} does not bind as a boolean"
+        end
+
+        # XSD gives an empty element its declared default; the binding does not.
+        def reject_lost_default(object, name, attribute, items)
+          return unless @empty_elements.include?(name.to_s)
+          return unless attribute.default_set?(@register, object)
+          return unless items.empty? || items.any? { |item| blank?(item) }
+
+          raise XmlDataLoader::Error,
+                "Empty element #{name} does not receive its schema default"
+        end
+
+        def boolean?(attribute)
+          type = attribute.type(@register)
+          type.is_a?(Class) && type <= ::Lutaml::Model::Type::Boolean
+        end
+
+        def blank?(item)
+          item.nil? || (item.is_a?(String) && item.strip.empty?)
+        end
+
         def add_value(values, key, object)
-          blank = object.is_a?(String) && object.strip.empty?
-          values[key] << object unless blank
+          values[key] << object unless object.is_a?(String) && blank?(object)
         end
 
         def compare(key, values)
-          unmatched = values.compact.reject { |value| claim(key, value) }
+          sources = @sources.fetch(key, [])
+          sources.reject!(&:used)
+          unmatched = values.compact.reject { |value| claim(sources, value) }
           return if unmatched.empty?
 
-          fail_with(unmatched.first, unused(key).first)
+          fail_with(unmatched.first, sources.first)
         end
 
-        def claim(key, value)
-          source = unused(key).find do |item|
-            Equivalence.same?(value, item.text)
-          end
-          source&.used = true
-        end
+        # Values arrive in document order, so a match is usually the first
+        # remaining source and removing it keeps the whole pass near linear.
+        def claim(sources, value)
+          index = sources.index { |item| Equivalence.same?(value, item.text) }
+          return false unless index
 
-        def unused(key)
-          @sources.fetch(key, []).reject(&:used)
+          sources.delete_at(index).used = true
         end
 
         def fail_with(value, source)
