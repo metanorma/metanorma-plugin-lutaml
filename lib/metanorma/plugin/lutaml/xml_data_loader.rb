@@ -4,6 +4,7 @@ require "lutaml/model"
 require "lutaml/xml"
 require "nokogiri"
 require "securerandom"
+require "tmpdir"
 
 module Metanorma
   module Plugin
@@ -13,6 +14,20 @@ module Metanorma
         class Error < StandardError; end
 
         XSD_NAMESPACE = "http://www.w3.org/2001/XMLSchema"
+        GLOBAL_TYPES = "/xs:schema/xs:complexType | /xs:schema/xs:simpleType"
+        PRESERVED_ATTRIBUTE_NAMESPACES = [
+          "http://www.w3.org/2001/XMLSchema-instance",
+          "http://www.w3.org/XML/1998/namespace",
+        ].freeze
+        XSI_NAMESPACE = "http://www.w3.org/2001/XMLSchema-instance"
+        GLOBAL_COMPONENTS = "/xs:schema/xs:element | " \
+                            "/xs:schema/xs:attribute | /xs:schema/xs:group | " \
+                            "/xs:schema/xs:attributeGroup"
+        OPEN_CONTENT = "//xs:any | //xs:anyAttribute | " \
+                       "//xs:element[@substitutionGroup] | " \
+                       "//xs:*[@mixed='true' or @mixed='1']"
+        TYPE_REFERENCES = %w[type base itemType memberTypes].freeze
+        RENAMED_TYPE_PREFIX = "XmlDataType"
         COMPILER_MUTEX = Mutex.new
 
         def load(definition_path, instances_path, location: nil)
@@ -30,16 +45,33 @@ module Metanorma
           schema = read_xml(definition_path, location: location)
           instance = read_xml(instances_path)
           validate_schema(schema, instance)
-          declaration = root_declaration(schema, instance.root)
+          documents = schema_documents(schema)
+          declaration = root_declaration(documents, instance.root)
           unless declaration
             raise Error,
                   "No XSD declaration for #{instance.root.name}"
           end
+          reject_unbindable(documents, declaration, instance)
 
-          COMPILER_MUTEX.synchronize do
-            bind(schema, instance, declaration,
-                 location || File.dirname(definition_path))
+          Dir.mktmpdir("lutaml-xml-data") do |directory|
+            renamed = rename_shadowing_types(documents, directory)
+            source, base = compile_source(schema, instance, declaration)
+            base = renamed || base || location || File.dirname(definition_path)
+            COMPILER_MUTEX.synchronize do
+              bind(source, instance, declaration, base)
+            end
           end
+        end
+
+        # A root from an imported namespace compiles from its own document,
+        # because the compiler resolves equal type names by local name.
+        def compile_source(schema, instance, declaration)
+          root_namespace = instance.root.namespace&.href.to_s
+          target_namespace = schema.root["targetNamespace"].to_s
+          return [schema, nil] if root_namespace == target_namespace
+
+          document = declaration.document
+          [document, File.dirname(document.url)]
         end
 
         def read_xml(path, location: nil)
@@ -62,10 +94,9 @@ module Metanorma
 
         # This lookup binds the expanded element name, independently of the
         # instance's choice of namespace prefix. Compilation remains upstream.
-        def root_declaration(schema, root)
-          schema_documents(schema).each do |document|
-            next unless document.root["targetNamespace"].to_s ==
-              root.namespace&.href.to_s
+        def root_declaration(documents, root)
+          documents.each do |document, namespace|
+            next unless namespace == root.namespace&.href.to_s
 
             elements = document.xpath("/xs:schema/xs:element",
                                       "xs" => XSD_NAMESPACE)
@@ -77,20 +108,236 @@ module Metanorma
           nil
         end
 
-        def schema_documents(schema, visited = {})
-          return [] if visited[schema.url]
+        # Pairs each document with its effective namespace: a chameleon
+        # include has none of its own and inherits the including schema's.
+        def schema_documents(schema, namespace = nil, visited = {})
+          namespace ||= schema.root["targetNamespace"].to_s
+          return [] if visited[[schema.url, namespace]]
 
-          visited[schema.url] = true
+          visited[[schema.url, namespace]] = true
           references = schema.xpath(
             "/xs:schema/xs:import | /xs:schema/xs:include",
             "xs" => XSD_NAMESPACE,
           )
-          [schema] + references.flat_map do |reference|
+          [[schema, namespace]] + references.flat_map do |reference|
             next [] unless reference["schemaLocation"]
 
             path = File.expand_path(reference["schemaLocation"],
                                     File.dirname(schema.url))
-            schema_documents(read_xml(path), visited)
+            document = read_xml(path)
+            schema_documents(
+              document, effective_namespace(reference, document, namespace),
+              visited
+            )
+          end
+        end
+
+        def effective_namespace(reference, document, namespace)
+          declared = document.root["targetNamespace"]
+          return namespace if declared.nil? && reference.name == "include"
+
+          declared.to_s
+        end
+
+        def reject_unbindable(documents, declaration, instance)
+          reject_ambiguous_types(documents, declaration, instance)
+          reject_open_content(documents)
+          reject_dynamic_types(instance)
+        end
+
+        # The compiler keys types by local name, so one name in two namespaces
+        # reachable from the root cannot bind faithfully. Instance namespaces
+        # are not enough: unqualified elements hide their type's namespace.
+        def reject_ambiguous_types(documents, declaration, instance)
+          root_namespace = instance.root.namespace&.href.to_s
+          types = reachable_types(documents, declaration, root_namespace)
+          clashes = types.group_by(&:last).select { |_, keys| keys.size > 1 }
+          return if clashes.empty?
+
+          raise Error, "Types in several namespaces: #{clashes.keys.join(', ')}"
+        end
+
+        def reachable_types(documents, declaration, namespace)
+          index = component_index(documents)
+          reachable_components(index, declaration, namespace)
+            .filter_map do |kind, type_namespace, name|
+            [type_namespace, name] if kind == :type &&
+              type_namespace != XSD_NAMESPACE
+          end
+        end
+
+        def reachable_components(index, declaration, namespace)
+          seen = {}
+          pending = [[declaration, namespace]]
+          until pending.empty?
+            node, owner = pending.pop
+            fresh = component_references(node, owner).uniq
+              .reject { |key| seen.key?(key) }
+            fresh.each { |key| seen[key] = true }
+            pending.concat(fresh.flat_map { |key| index.fetch(key, []) })
+          end
+          seen.keys
+        end
+
+        def component_index(documents)
+          index = Hash.new { |hash, key| hash[key] = [] }
+          documents.each do |document, namespace|
+            global_types(document).each do |node|
+              index[[:type, namespace, node["name"]]] << [node, namespace]
+            end
+            components = document.xpath(GLOBAL_COMPONENTS, "xs" => XSD_NAMESPACE)
+            components.each do |node|
+              index[[node.name.to_sym, namespace, node["name"]]] <<
+                [node, namespace]
+            end
+          end
+          index
+        end
+
+        def component_references(node, owner)
+          node.xpath("descendant-or-self::xs:*", "xs" => XSD_NAMESPACE)
+            .flat_map do |item|
+            types = TYPE_REFERENCES.flat_map { |name| item[name].to_s.split }
+            keys = types.map { |ref| reference_key(item, :type, ref, owner) }
+            next keys unless item["ref"]
+
+            keys << reference_key(item, item.name.to_sym, item["ref"], owner)
+          end
+        end
+
+        def reference_key(node, kind, reference, owner)
+          local, prefix = reference.split(":", 2).reverse
+          key = prefix ? "xmlns:#{prefix}" : "xmlns"
+          [kind, node.namespaces[key] || owner, local]
+        end
+
+        # Generated models have no attribute for this content, so hydration
+        # would succeed while silently dropping it.
+        def reject_open_content(documents)
+          document, = documents.find do |parsed, _|
+            parsed.at_xpath(OPEN_CONTENT, "xs" => XSD_NAMESPACE)
+          end
+          return unless document
+
+          raise Error, "Schema #{File.basename(document.url)} uses wildcard " \
+                       "or mixed content or substitution groups, which " \
+                       "cannot bind"
+        end
+
+        # Hydration follows the declared type, so a derived type's content
+        # would be dropped.
+        def reject_dynamic_types(instance)
+          node = instance.at_xpath("//@xsi:type", "xsi" => XSI_NAMESPACE)
+          return unless node
+
+          raise Error, "Element #{node.parent.name} uses xsi:type, " \
+                       "which cannot bind"
+        end
+
+        def type_owners(documents)
+          documents.each_with_object({}) do |(document, namespace), owners|
+            global_types(document).each do |type|
+              owners[type["name"]] = [*owners[type["name"]], namespace].uniq
+            end
+          end
+        end
+
+        def global_types(document)
+          document.xpath(GLOBAL_TYPES, "xs" => XSD_NAMESPACE)
+        end
+
+        # The compiler gives a schema type named like a built-in (Date) the
+        # built-in's symbol, so it would replace xs:date. A private copy of
+        # the validated schemas carries those types under another name.
+        def rename_shadowing_types(documents, directory)
+          shadowing = shadowing_types(documents)
+          return if shadowing.empty?
+
+          parsed = documents.map(&:first)
+          files = parsed.map(&:url).uniq.each_with_index.to_h do |url, index|
+            [url, "schema-#{index}.xsd"]
+          end
+          parsed.each do |document|
+            rename_types(document, shadowing)
+            relocate_references(document, files)
+          end
+          write_schemas(parsed, files, directory)
+        end
+
+        def write_schemas(parsed, files, directory)
+          parsed.uniq(&:url).each do |document|
+            File.write(File.join(directory, files[document.url]),
+                       document.to_xml)
+          end
+          directory
+        end
+
+        def shadowing_types(documents)
+          reserved = built_in_symbols
+          names = documents.flat_map do |document, _|
+            global_types(document).map { |type| type["name"] }
+          end
+          taken = names.map { |name| ::Lutaml::Model::Utils.snake_case(name) }
+          names.uniq.select do |name|
+            reserved.include?(::Lutaml::Model::Utils.snake_case(name))
+          end.to_h { |name| [name, unused_type_name(name, taken)] }
+        end
+
+        def unused_type_name(name, taken)
+          candidate = "#{RENAMED_TYPE_PREFIX}#{name}"
+          while taken.include?(::Lutaml::Model::Utils.snake_case(candidate))
+            candidate = "#{RENAMED_TYPE_PREFIX}#{candidate}"
+          end
+          taken << ::Lutaml::Model::Utils.snake_case(candidate)
+          candidate
+        end
+
+        def built_in_symbols
+          table = ::Lutaml::Model::Schema::XmlCompiler::SupportedDataTypes
+          table.each.flat_map do |name, info|
+            symbol = ::Lutaml::Model::Utils.snake_case(name.to_s)
+            info[:skippable] ? [symbol, table.primitive_symbol(name)] : [symbol]
+          end
+        end
+
+        def rename_types(document, shadowing)
+          global_types(document).each do |type|
+            next unless shadowing.key?(type["name"])
+
+            type["name"] = shadowing.fetch(type["name"])
+          end
+          document.xpath("//xs:*", "xs" => XSD_NAMESPACE).each do |node|
+            rename_references(node, shadowing)
+          end
+        end
+
+        def rename_references(node, shadowing)
+          TYPE_REFERENCES.each do |attribute|
+            next unless node[attribute]
+
+            node[attribute] = node[attribute].split.map do |reference|
+              renamed_reference(node, reference, shadowing)
+            end.join(" ")
+          end
+        end
+
+        def renamed_reference(node, reference, shadowing)
+          local, prefix = reference.split(":", 2).reverse
+          key = prefix ? "xmlns:#{prefix}" : "xmlns"
+          return reference if node.namespaces[key] == XSD_NAMESPACE
+          return reference unless shadowing.key?(local)
+
+          [prefix, shadowing.fetch(local)].compact.join(":")
+        end
+
+        def relocate_references(document, files)
+          document.xpath("/xs:schema/xs:import | /xs:schema/xs:include",
+                         "xs" => XSD_NAMESPACE).each do |reference|
+            next unless reference["schemaLocation"]
+
+            path = File.expand_path(reference["schemaLocation"],
+                                    File.dirname(document.url))
+            reference["schemaLocation"] = files.fetch(path)
           end
         end
 
@@ -121,14 +368,52 @@ module Metanorma
 
         def hydrate(compiler, instance, declaration, module_name, register_id)
           klass = root_class(compiler, declaration, module_name)
-          unless klass.respond_to?(:from_xml)
+          unless klass.is_a?(Class) && klass < ::Lutaml::Model::Serializable
             raise Error,
                   "Root #{instance.root.name} does not compile to an XML model"
           end
 
           # The complete XSD was validated before compilation. Generated-model
           # recursive validation does not preserve private register contexts.
-          klass.from_xml(instance.to_xml, register: register_id)
+          klass.from_xml(single_namespace_xml(instance), register: register_id)
+        end
+
+        # Compiled mappings carry one namespace, so validated elements from
+        # imported namespaces move onto the root's before hydration.
+        def single_namespace_xml(instance)
+          copy = instance.dup
+          namespace = copy.root.namespace
+          copy.xpath("//*").each do |node|
+            reject_unmappable(node, namespace)
+            node.namespace = namespace if node.namespace
+          end
+          copy.to_xml
+        end
+
+        def reject_unmappable(node, namespace)
+          reject_mixed_children(node)
+          attribute = node.attribute_nodes.find do |item|
+            foreign_attribute?(item, namespace)
+          end
+          return unless attribute
+
+          raise Error, "Attribute #{attribute.name} is in an imported namespace"
+        end
+
+        def reject_mixed_children(node)
+          clash = node.element_children.group_by(&:name).find do |_, children|
+            children.map { |child| child.namespace&.href }.uniq.size > 1
+          end
+          return unless clash
+
+          raise Error, "Element #{clash.first} is in several namespaces"
+        end
+
+        def foreign_attribute?(attribute, namespace)
+          href = attribute.namespace&.href
+          return false if href.nil? || href == namespace&.href
+
+          !PRESERVED_ATTRIBUTE_NAMESPACES.include?(href)
         end
 
         def root_class(compiler, declaration, module_name)
@@ -136,6 +421,8 @@ module Metanorma
           name = compiler.builder.all_models.keys.find do |key|
             ::Lutaml::Model::Utils.snake_case(key) == type.to_s
           end
+          return unless name
+
           name = ::Lutaml::Model::Utils.camel_case(name)
           Object.const_get(module_name).const_get(name, false)
         end
