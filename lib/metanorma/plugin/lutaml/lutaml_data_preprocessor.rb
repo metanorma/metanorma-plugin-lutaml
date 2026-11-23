@@ -18,6 +18,10 @@ module Metanorma
       #
       #   [lutaml_data,<definitions.lml>,<context>]
       #
+      # XML instances bound through an XSD definition:
+      #
+      #   [lutaml_data,<definition.xsd>,<instances.xml>,<context>]
+      #
       # Options can be supplied as a JSON object:
       #
       #   [lutaml_data,models.lml,store,options={"include_path":"templates"}]
@@ -31,7 +35,7 @@ module Metanorma
       # (written on one line in a document)
       #
       class LutamlDataPreprocessor < BasePreprocessor
-        DATA_FILE_EXTENSIONS = %w[.lml .yaml .yml .json].freeze
+        DATA_FILE_EXTENSIONS = %w[.lml .yaml .yml .json .xml].freeze
         DEFAULT_CONTEXT_NAME = "lutaml_data"
         PROVIDER_SOURCE = /\Aprovider:(?<name>[^.]+)\.(?<query>.+)\z/
 
@@ -125,18 +129,39 @@ module Metanorma
         def render_data_template(document:, lines:, # rubocop:disable Metrics/ParameterLists
                                  definition_file:, instance_file:,
                                  context_name:, options:)
+          xml_binding = xml_binding?(definition_file, instance_file)
           definition_path, instances_path = resolve_data_paths(
             document, definition_file, instance_file
           )
-
-          compiler = ::Lutaml::Lml::ModelCompiler.new
-          compiler.compile(File.new(definition_path, encoding: "UTF-8"))
-          instances = load_instances(instances_path, compiler)
+          instances = if xml_binding
+                        XmlDataLoader.new.load(definition_path, instances_path,
+                                               location: options["location"])
+                      else
+                        load_model_instances(definition_path, instances_path)
+                      end
 
           [render_liquid(lines, document, options, context_name, instances)]
         rescue StandardError => e
           log_block_failure(e)
           raise e
+        end
+
+        def xml_binding?(definition_file, instance_file)
+          xsd = File.extname(definition_file) == ".xsd"
+          xml = instance_file && File.extname(instance_file) == ".xml"
+          if xsd && !xml
+            raise StandardError, "XSD definitions require an XML instance file"
+          elsif xml && !xsd
+            raise StandardError, "XML instances require an XSD definition file"
+          end
+
+          xsd
+        end
+
+        def load_model_instances(definition_path, instances_path)
+          compiler = ::Lutaml::Lml::ModelCompiler.new
+          compiler.compile(File.new(definition_path, encoding: "UTF-8"))
+          deep_stringify(load_instances(instances_path, compiler).to_h)
         end
 
         def render_block(document:, lines:, definition_file:, **rest)
@@ -187,7 +212,7 @@ module Metanorma
           parsed_template = template(lines)
           parsed_template.registers[:file_system] =
             build_file_system(document, options)
-          parsed_template.render(context_name => deep_stringify(instances.to_h))
+          parsed_template.render(context_name => instances)
         end
 
         # Liquid resolves variable lookups by string keys; the compiled

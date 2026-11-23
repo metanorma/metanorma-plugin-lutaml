@@ -1,0 +1,6 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="urn:base" xmlns:b="urn:base" elementFormDefault="qualified">
+  <xs:simpleType name="Status"><xs:restriction base="xs:string">
+    <xs:enumeration value="active"/><xs:enumeration value="retired"/>
+  </xs:restriction></xs:simpleType>
+</xs:schema>

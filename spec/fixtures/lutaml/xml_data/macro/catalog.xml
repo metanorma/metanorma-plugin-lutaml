@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Catalog>
+  <feature>
+    <name>Depth area</name>
+    <code>1</code>
+    <enumerant>Shallow</enumerant>
+    <enumerant>Deep</enumerant>
+  </feature>
+  <feature>
+    <name>Coastline</name>
+    <code>2</code>
+    <enumerant>Natural</enumerant>
+  </feature>
+</Catalog>

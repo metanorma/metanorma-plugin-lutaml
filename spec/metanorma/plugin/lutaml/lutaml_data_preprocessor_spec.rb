@@ -161,6 +161,113 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDataPreprocessor do
     end
   end
 
+  describe "XML data sources" do
+    let(:schema_path) { fixtures_path("xml_data/macro/catalog.xsd") }
+    let(:xml_path) { fixtures_path("xml_data/macro/catalog.xml") }
+    let(:xml_template) do
+      <<~LIQUID
+        {% for feature in fc.Catalog.feature %}
+        == Feature {{ feature.code }}: {{ feature.name }}
+
+        Values: {% for value in feature.enumerant %}{{ value }} {% endfor %}
+
+        {% endfor %}
+      LIQUID
+    end
+    let(:xml_input) do
+      input.sub(
+        "#{fixtures_path('lutaml_data/widget_models.lml')}," \
+        "#{fixtures_path('lutaml_data/data_widgets.lml')},store",
+        "#{schema_path},#{xml_path},fc",
+      ).sub(template, xml_template)
+    end
+
+    it "renders clauses and nested values from every typed XML feature" do
+      output = convert_to_xml(xml_input)
+      expect(output).to include("Feature 1: Depth area", "Values: Shallow Deep",
+                                "Feature 2: Coastline", "Values: Natural")
+      expect(Nokogiri::XML(output).xpath("//*[local-name()='clause']")
+        .map { |clause| clause.at("title")&.text })
+        .to include("Feature 1: Depth area", "Feature 2: Coastline")
+    end
+
+    it "uses the default context when only the two file paths are supplied" do
+      default_input = xml_input.sub(",fc]", "]")
+        .gsub("fc.Catalog", "lutaml_data.Catalog")
+      expect(convert_to_xml(default_input))
+        .to include("Feature 1: Depth area", "Feature 2: Coastline")
+    end
+
+    it "passes the explicit schema location to the XML loader" do
+      location = fixtures_path("xml_data/macro")
+      loader = Metanorma::Plugin::Lutaml::XmlDataLoader.new
+      allow(Metanorma::Plugin::Lutaml::XmlDataLoader).to receive(:new)
+        .and_return(loader)
+      allow(loader).to receive(:load)
+        .with(schema_path, xml_path, location: location)
+        .and_call_original
+      located_input = xml_input.sub(",fc]", ",fc,location=#{location}]")
+      expect(convert_to_xml(located_input)).to include("Feature 1: Depth area")
+      expect(loader).to have_received(:load)
+        .with(schema_path, xml_path, location: location)
+    end
+
+    ["inline", "JSON"].each do |style|
+      it "preserves #{style} include options for XML templates" do
+        path = fixtures_path("xml_data/macro")
+        json_options = { "include_path" => path }.to_json
+        options = if style == "inline"
+                    "include_path=#{path}"
+                  else
+                    "options=#{json_options}"
+                  end
+        include_template = <<~LIQUID
+          {% for feature in fc.Catalog.feature %}
+          {% include 'feature' %}
+
+          {% endfor %}
+        LIQUID
+        include_input = xml_input.sub(",fc]", ",fc,#{options}]")
+          .sub(xml_template, include_template)
+        expect(convert_to_xml(include_input))
+          .to include("Feature 1: Depth area [Shallow Deep ]",
+                      "Feature 2: Coastline [Natural ]")
+      end
+    end
+
+    it "reports a missing XML instance using the existing path error" do
+      missing_input = xml_input.sub(xml_path,
+                                    fixtures_path("xml_data/macro/missing.xml"))
+      expect { convert_to_xml(missing_input) }
+        .to raise_error(StandardError, /missing\.xml/)
+    end
+
+    [nil, "data_widgets.yaml", "data_widgets.json",
+     "data_widgets.lml"].each do |file|
+      it "rejects XSD definitions with #{file || 'no instance file'}" do
+        replacement = file ? ",#{fixtures_path("lutaml_data/#{file}")}" : ""
+        bad_input = xml_input.sub(",#{xml_path}", replacement)
+        allow(Metanorma::Util).to receive(:log)
+        allow(Lutaml::Lml::ModelCompiler).to receive(:new).and_call_original
+        expect { convert_to_xml(bad_input) }
+          .to raise_error(StandardError, /XSD definitions require an XML/)
+        expect(Lutaml::Lml::ModelCompiler).not_to have_received(:new)
+        expect(Metanorma::Util).to have_received(:log)
+          .with(/Failed to parse LutaML data block: XSD definitions require/,
+                :error)
+      end
+    end
+
+    it "rejects XML instances paired with LML definitions before compiling" do
+      bad_input = xml_input.sub(schema_path,
+                                fixtures_path("lutaml_data/widget_models.lml"))
+      allow(Lutaml::Lml::ModelCompiler).to receive(:new).and_call_original
+      expect { convert_to_xml(bad_input) }
+        .to raise_error(StandardError, /XML instances require an XSD/)
+      expect(Lutaml::Lml::ModelCompiler).not_to have_received(:new)
+    end
+  end
+
   describe "provider sources" do
     let(:provider_input) do
       <<~TEXT

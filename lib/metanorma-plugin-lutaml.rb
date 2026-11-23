@@ -80,6 +80,7 @@ module Metanorma
                "metanorma/plugin/lutaml/xmi_partial_load_registry"
       autoload :SourceExtractor, "metanorma/plugin/lutaml/source_extractor"
       autoload :Utils, "metanorma/plugin/lutaml/utils"
+      autoload :XmlDataLoader, "metanorma/plugin/lutaml/xml_data_loader"
       autoload :Yaml2TextPreprocessor,
                "metanorma/plugin/lutaml/yaml2_text_preprocessor"
     end
@@ -97,6 +98,6 @@ autoload :GmlDictionaryEntryDrop,
 # metanorma#658 renderer seam.
 if defined?(Metanorma::Collection::Renderer) &&
     Metanorma::Collection::Renderer
-      .respond_to?(:register_reference_anchor_resolver)
+        .respond_to?(:register_reference_anchor_resolver)
   require "metanorma/plugin/lutaml/express_hotspot_anchor"
 end

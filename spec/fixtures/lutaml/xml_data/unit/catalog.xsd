@@ -1,0 +1,16 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:fc="urn:fc" xmlns:b="urn:base" targetNamespace="urn:fc"
+  elementFormDefault="qualified">
+  <xs:import namespace="urn:base" schemaLocation="base.xsd"/>
+  <xs:complexType name="DetailType"><xs:sequence>
+    <xs:element name="label" type="xs:string"/>
+  </xs:sequence><xs:attribute name="code" type="xs:string" form="qualified"/></xs:complexType>
+  <xs:complexType name="CatalogType"><xs:sequence>
+    <xs:element name="entry" type="b:Status" minOccurs="1" maxOccurs="unbounded"/>
+  <xs:element name="detail" type="fc:DetailType" minOccurs="0" maxOccurs="2"/>
+  </xs:sequence><xs:attribute name="category" type="xs:string" use="required"/></xs:complexType>
+  <xs:element name="Catalog" type="fc:CatalogType"/>
+  <xs:element name="Inline"><xs:complexType><xs:sequence>
+    <xs:element name="label" type="xs:string"/>
+  </xs:sequence></xs:complexType></xs:element>
+</xs:schema>
