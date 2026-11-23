@@ -29,7 +29,7 @@ They take precedence over general automation defaults for this task.
    local commits or a queued command as remote visibility.
    The base's initial setup commit carries the plan/cards/rules; later feature
    changes arrive through the two implementation PRs.
-7. Use **two planned implementation PRs**: (1) complete generic typed XML
+7. Use **two planned XML implementation PRs**: (1) complete generic typed XML
    binding, macro integration and their tests; (2) real S-100 acceptance,
    worked example and documentation. Cards are ownership units, not one-PR
    requirements. Keep loading, its integration and essential regression tests
@@ -37,6 +37,9 @@ They take precedence over general automation defaults for this task.
    A reproduced compiler defect has activated one additional dependency PR in
    `lutaml-model`; it follows the same grind-base/main-merge boundary and is
    justified by the concrete catalogue failure, not by card count.
+   Canonical CI has also reproduced nine existing renderer failures; one
+   consolidated compatibility prerequisite PR (card H) clears that required
+   gate before XML integration. Do not split it into per-test PRs.
 8. Aim for about **250–600 changed handwritten lines per PR**; inspect scope
    before exceeding **800** or about **12 handwritten code/test/doc files**.
    These are reviewability triggers, not reasons to omit tests or arbitrarily

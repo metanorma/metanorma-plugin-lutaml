@@ -31,6 +31,7 @@ here before dependent edits, and notify both owners.
 | E — macro integration | Add XSD/XML pair support; preserve all old format/provider paths; contexts, includes, errors and real clause assertions | `lib/metanorma/plugin/lutaml/lutaml_data_preprocessor.rb`; `lib/metanorma-plugin-lutaml.rb`; `spec/metanorma/plugin/lutaml/lutaml_data_preprocessor_spec.rb`; `spec/fixtures/lutaml/xml_data/macro/` | Frozen interface above; C for final execution | 1 |
 | F — integrated verification and remote delivery | Combined checks, final review, correct PR bases, final-head CI, suma/WMO proof, precise partial/completed status | Git branches/commits/PR operations; `docs/plans/389/`; any gemspec/dependency manifest change; shared runner scripts and test logs | A–E outputs as applicable | Both |
 | G — required upstream compiler correction | Generate usable models for XSD `xs:ID` and `xs:IDREF`, with a minimal reproducer and preservation tests | Separate `lutaml/lutaml-model` checkout: `lib/lutaml/model/schema/xml_compiler/supported_data_types.rb`, `lib/lutaml/model/schema/xml_compiler/spec_builder/simple_types.rb`, and a focused compiler regression spec | B's reproduced real-catalogue failure | Separate dependency PR, required for PR 2 |
+| H — compatibility prerequisite | Restore the nine existing renderer failures reproduced by canonical #390 CI, preserving positive content assertions | `express_remark_adapter.rb` and EXPRESS specs: focused worker; `lutaml_diagram_base.rb`, gemspec and diagram spec: integrator; Git/PR operations: integrator | Concrete failed CI on #390; independent of XML implementation | One consolidated prerequisite PR to grind |
 
 No overlapping fixture directories: C uses `unit/`, E uses `macro/`, D uses
 `s100/`. Changes to shared `spec/spec_helper.rb` are integrator-owned and need a
@@ -179,3 +180,15 @@ address the pre-existing baseline test gate with its owners.
 Owner-controlled dependency release/floor selection follows those checks.
 External access and CI waiting prevent an unconditional delivery ETA. The
 original 30–48 hours is total engineering effort, not a required elapsed delay.
+
+### H — clear the reproduced baseline CI gate
+
+Canonical plugin #390 Ubuntu/Ruby 3.4 runs 391 examples with nine failures:
+three schema-prose formatter positions, three EXPRESS index outputs, one
+multiple-file prose output, and two missing diagram renders. These reproduce
+the previously recorded baseline failures; they cannot be waived for integration.
+One coherent compatibility PR restores the declared dependency combination,
+including the extracted `lutaml-graphviz` renderer, without changing goldens or
+releasing packages. Require focused old-red/new-green checks, figure-bearing
+consumer preservation, default-suite and exact-head CI before grind integration.
+The generic XML PR follows that prerequisite; main remains owner-controlled.
