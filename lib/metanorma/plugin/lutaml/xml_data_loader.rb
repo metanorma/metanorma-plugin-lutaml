@@ -4,6 +4,7 @@ require "lutaml/model"
 require "lutaml/xml"
 require "nokogiri"
 require "securerandom"
+require "uri"
 require "tmpdir"
 require_relative "xml_data_binding_guard"
 require_relative "xml_data_value_check"
@@ -16,20 +17,18 @@ module Metanorma
       class XmlDataLoader
         class Error < StandardError; end
 
-        XSD_NAMESPACE = "http://www.w3.org/2001/XMLSchema"
+        XSD_NAMESPACE = XmlDataBindingGuard::XSD
+        REFERENCES = "/xs:schema/xs:import | /xs:schema/xs:include"
         GLOBAL_TYPES = "/xs:schema/xs:complexType | /xs:schema/xs:simpleType"
         PRESERVED_ATTRIBUTE_NAMESPACES = [
-          "http://www.w3.org/2001/XMLSchema-instance",
+          XmlDataValueCheck::XSI_NAMESPACE,
           "http://www.w3.org/XML/1998/namespace",
         ].freeze
-        XSI_NAMESPACE = "http://www.w3.org/2001/XMLSchema-instance"
-        GLOBAL_COMPONENTS = "/xs:schema/xs:element | " \
-                            "/xs:schema/xs:attribute | /xs:schema/xs:group | " \
-                            "/xs:schema/xs:attributeGroup"
+        XSI_NAMESPACE = XmlDataValueCheck::XSI_NAMESPACE
         OPEN_CONTENT = "//xs:any | //xs:anyAttribute | " \
                        "//xs:element[@substitutionGroup] | " \
                        "//xs:*[@mixed='true' or @mixed='1']"
-        TYPE_REFERENCES = %w[type base itemType memberTypes].freeze
+        TYPE_REFERENCES = XmlDataBindingGuard::TYPE_REFERENCES
         RENAMED_TYPE_PREFIX = "XmlDataType"
         COMPILER_MUTEX = Mutex.new
 
@@ -187,13 +186,27 @@ module Metanorma
           [[schema, namespace]] + references.flat_map do |reference|
             next [] unless reference["schemaLocation"]
 
-            path = File.expand_path(reference["schemaLocation"],
-                                    File.dirname(schema.url))
-            document = read_xml(path)
+            document = read_xml(reference_path(reference, schema))
             schema_documents(
               document, effective_namespace(reference, document, namespace),
               visited
             )
+          end
+        end
+
+        # A schemaLocation is a URI reference: the file it opens is named
+        # by the decoded path, as the validator resolves it.
+        def reference_path(reference, document)
+          File.expand_path(URI::DEFAULT_PARSER.unescape(
+                             reference["schemaLocation"],
+                           ), File.dirname(document.url))
+        end
+
+        def encoded_location?(documents)
+          documents.any? do |document, _|
+            document.xpath(REFERENCES, "xs" => XSD_NAMESPACE).any? do |node|
+              node["schemaLocation"]&.include?("%")
+            end
           end
         end
 
@@ -243,8 +256,13 @@ module Metanorma
         def private_schemas(documents, guard, directory)
           pruned = guard.prune
           shadowing = shadowing_types(documents)
-          return if shadowing.empty? && !pruned
+          return unless pruned || shadowing.any? ||
+            encoded_location?(documents)
 
+          copy_schemas(documents, shadowing, directory)
+        end
+
+        def copy_schemas(documents, shadowing, directory)
           parsed = documents.map(&:first)
           files = parsed.map(&:url).uniq.each_with_index.to_h do |url, index|
             [url, "schema-#{index}.xsd"]
@@ -331,11 +349,14 @@ module Metanorma
 
         def renamed_reference(node, reference, shadowing)
           local, prefix = reference.split(":", 2).reverse
-          key = prefix ? "xmlns:#{prefix}" : "xmlns"
-          return reference if node.namespaces[key] == XSD_NAMESPACE
+          return reference if declared_namespace(node, prefix) == XSD_NAMESPACE
           return reference unless shadowing.key?(local)
 
           [prefix, shadowing.fetch(local)].compact.join(":")
+        end
+
+        def declared_namespace(node, prefix)
+          XmlDataBindingGuard.declared_namespace(node, prefix)
         end
 
         def relocate_references(document, files)
@@ -343,9 +364,8 @@ module Metanorma
                          "xs" => XSD_NAMESPACE).each do |reference|
             next unless reference["schemaLocation"]
 
-            path = File.expand_path(reference["schemaLocation"],
-                                    File.dirname(document.url))
-            reference["schemaLocation"] = files.fetch(path)
+            reference["schemaLocation"] =
+              files.fetch(reference_path(reference, document))
           end
         end
 

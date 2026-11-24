@@ -72,6 +72,11 @@ module Metanorma
           removed.any?
         end
 
+        # The namespace a prefix (nil for none) names where +node+ is.
+        def self.declared_namespace(node, prefix)
+          node.namespaces[prefix ? "xmlns:#{prefix}" : "xmlns"]
+        end
+
         def self.class_key(name)
           utils = ::Lutaml::Model::Utils
           utils.snake_case(utils.camel_case(name))
@@ -128,7 +133,7 @@ module Metanorma
         # namespace, except inside a chameleon include, which adopts one.
         def reference_key(node, kind, reference, owner)
           local, prefix = reference.split(":", 2).reverse
-          declared = node.namespaces[prefix ? "xmlns:#{prefix}" : "xmlns"]
+          declared = self.class.declared_namespace(node, prefix)
           [kind, declared || unqualified(node, owner), local]
         end
 
@@ -193,7 +198,9 @@ module Metanorma
         end
 
         def each_reachable(*names)
-          path = names.map { |name| "descendant-or-self::xs:#{name}" }.join("|")
+          path = names.map do |name|
+            "descendant-or-self::xs:#{name}[not(ancestor::xs:annotation)]"
+          end.join("|")
           roots = [[@declaration, @namespace], *reachable_nodes].uniq
           roots.flat_map do |node, owner|
             node.xpath(path, "xs" => XSD).map { |item| [item, owner] }
