@@ -133,13 +133,14 @@ module Metanorma
           definition_path, instances_path = resolve_data_paths(
             document, definition_file, instance_file
           )
-          instances = if xml_binding
-                        XmlDataLoader.new.load(definition_path, instances_path,
+          if xml_binding
+            instances = XmlDataLoader.new.load(definition_path, instances_path,
                                                location: options["location"])
-                      else
-                        load_model_instances(definition_path, instances_path)
-                      end
+            return [render_xml_liquid(lines, document, options, context_name,
+                                      instances)]
+          end
 
+          instances = load_model_instances(definition_path, instances_path)
           [render_liquid(lines, document, options, context_name, instances)]
         rescue StandardError => e
           log_block_failure(e)
@@ -213,6 +214,20 @@ module Metanorma
           parsed_template.registers[:file_system] =
             build_file_system(document, options)
           parsed_template.render(context_name => instances)
+        end
+
+        # A template that names a field the schema lacks, uses an unknown
+        # filter or tag, or prints a structure fails the block; the error
+        # text is never written into the document.
+        def render_xml_liquid(lines, document, options, context_name,
+                              instances)
+          parsed_template = ::Liquid::Template.parse(lines.join("\n"),
+                                                     error_mode: :strict)
+          parsed_template.registers[:file_system] =
+            build_file_system(document, options)
+          parsed_template.render!({ context_name => instances },
+                                  strict_variables: true,
+                                  strict_filters: true)
         end
 
         # Liquid resolves variable lookups by string keys; the compiled

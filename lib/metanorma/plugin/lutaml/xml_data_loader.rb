@@ -7,6 +7,7 @@ require "securerandom"
 require "tmpdir"
 require_relative "xml_data_binding_guard"
 require_relative "xml_data_value_check"
+require_relative "xml_data_view"
 
 module Metanorma
   module Plugin
@@ -342,12 +343,20 @@ module Metanorma
                   "Root #{instance.root.name} does not compile to an XML model"
           end
 
+          expose_to_liquid(module_name)
           # The complete XSD was validated before compilation. Generated-model
           # recursive validation does not preserve private register contexts.
           model = klass.from_xml(single_namespace_xml(instance),
                                  register: register_id)
           XmlDataValueCheck.new(instance, register: register_id).check(model)
           model
+        end
+
+        def expose_to_liquid(module_name)
+          container = Object.const_get(module_name)
+          container.constants.map { |name| container.const_get(name, false) }
+            .select { |type| type.is_a?(Class) && type < ::Lutaml::Model::Serializable }
+            .each { |type| type.prepend(XmlDataView::Model) }
         end
 
         # Compiled mappings carry one namespace, so validated elements from

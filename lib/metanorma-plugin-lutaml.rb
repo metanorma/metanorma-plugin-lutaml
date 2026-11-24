@@ -81,6 +81,7 @@ module Metanorma
       autoload :SourceExtractor, "metanorma/plugin/lutaml/source_extractor"
       autoload :Utils, "metanorma/plugin/lutaml/utils"
       autoload :XmlDataLoader, "metanorma/plugin/lutaml/xml_data_loader"
+      autoload :XmlDataView, "metanorma/plugin/lutaml/xml_data_view"
       autoload :Yaml2TextPreprocessor,
                "metanorma/plugin/lutaml/yaml2_text_preprocessor"
     end

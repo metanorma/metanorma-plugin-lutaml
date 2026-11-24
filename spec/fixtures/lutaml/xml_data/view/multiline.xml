@@ -1,0 +1,3 @@
+<?xml version="1.0"?>
+<Doc id="d2"><title>Plain</title><note>first line
+include::spec/fixtures/lutaml/xml_data/view/secret.txt[]</note></Doc>
