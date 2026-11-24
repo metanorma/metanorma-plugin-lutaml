@@ -37,7 +37,7 @@ module Metanorma
           definition_path = File.expand_path(definition_path)
           instances_path = File.expand_path(instances_path)
           load_files(definition_path, instances_path, location)
-        rescue StandardError => e
+        rescue StandardError, ScriptError => e
           raise Error, "XML data #{instances_path} with XSD " \
                        "#{definition_path}: #{e.message}"
         end
@@ -78,23 +78,54 @@ module Metanorma
           taken = names.find { |name| Object.const_defined?(name, false) }
           raise Error, "Group #{taken} names an existing class" if taken
 
+          registered = registry_entries(names)
           begin
             yield
           ensure
-            forget_group_classes(names)
+            forget_group_classes(names, registered)
           end
         end
 
-        def forget_group_classes(names)
-          context = ::Lutaml::Model::GlobalContext.default_context
-          names.each do |name|
-            next unless Object.const_defined?(name, false)
+        def registry_entries(names)
+          types = group_registry.types
+          names.to_h do |name|
+            key = registry_key(name)
+            [key, types.key?(key) ? types[key] : nil]
+          end
+        end
 
-            group = Object.const_get(name, false)
-            context.registry.types.delete_if { |_, type| type.equal?(group) }
+        def registry_key(name)
+          ::Lutaml::Model::Utils.snake_case(name).to_sym
+        end
+
+        def group_registry
+          ::Lutaml::Model::GlobalContext.default_context.registry
+        end
+
+        # Removes only what this load created: a constant that is still the
+        # class its registry entry names, and restores the entry the caller
+        # had registered under that name.
+        def forget_group_classes(names, registered)
+          types = group_registry.types
+          names.each do |name|
+            key = registry_key(name)
+            next unless created_group?(types[key], name, registered[key])
+
+            restore_entry(types, key, registered[key])
             Object.send(:remove_const, name)
           end
-          ::Lutaml::Model::GlobalContext.resolver.clear_cache(context.id)
+          ::Lutaml::Model::GlobalContext.resolver
+            .clear_cache(::Lutaml::Model::GlobalContext.default_context.id)
+        end
+
+        def created_group?(group, name, previous)
+          group.is_a?(Class) && !group.equal?(previous) &&
+            Object.const_defined?(name, false) &&
+            Object.const_get(name, false).equal?(group)
+        end
+
+        def restore_entry(types, key, previous)
+          previous ? types[key] = previous : types.delete(key)
         end
 
         # A root from an imported namespace compiles from its own document,
@@ -241,7 +272,7 @@ module Metanorma
           taken = (names + group_names(documents)).map do |name|
             XmlDataBindingGuard.class_key(name)
           end
-          names.uniq.select do |name|
+          (names + group_names(documents)).uniq.select do |name|
             reserved.include?(::Lutaml::Model::Utils.snake_case(name))
           end.to_h { |name| [name, unused_type_name(name, taken)] }
         end
@@ -262,16 +293,21 @@ module Metanorma
           candidate
         end
 
+        # Names the compiler would resolve to something other than the
+        # schema's own component: built-in data types and every type the
+        # default registry already holds (the XSD model's List, Key, Field).
         def built_in_symbols
           table = ::Lutaml::Model::Schema::XmlCompiler::SupportedDataTypes
-          table.each.flat_map do |name, info|
+          built_in = table.each.flat_map do |name, info|
             symbol = ::Lutaml::Model::Utils.snake_case(name.to_s)
             info[:skippable] ? [symbol, table.primitive_symbol(name)] : [symbol]
           end
+          built_in + group_registry.types.keys.map(&:to_s)
         end
 
         def rename_types(document, shadowing)
-          global_types(document).each do |type|
+          document.xpath("#{GLOBAL_TYPES} | /xs:schema/xs:group",
+                         "xs" => XSD_NAMESPACE).each do |type|
             next unless shadowing.key?(type["name"])
 
             type["name"] = shadowing.fetch(type["name"])
@@ -282,7 +318,9 @@ module Metanorma
         end
 
         def rename_references(node, shadowing)
-          TYPE_REFERENCES.each do |attribute|
+          attributes = TYPE_REFERENCES
+          attributes += ["ref"] if node.name == "group"
+          attributes.each do |attribute|
             next unless node[attribute]
 
             node[attribute] = node[attribute].split.map do |reference|

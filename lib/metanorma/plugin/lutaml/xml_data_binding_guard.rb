@@ -31,6 +31,11 @@ module Metanorma
                                simpleType complexContent simpleContent
                                extension sequence group].freeze
 
+        RESERVED_MEMBERS = (
+          Object.public_instance_methods.map(&:to_s) +
+          %w[initialize record_mutation value_set_for to_liquid]
+        ).to_set.freeze
+
         def initialize(documents, declaration, namespace)
           @documents = documents
           @declaration = declaration
@@ -50,6 +55,7 @@ module Metanorma
           reject_anonymous_unions
           reject_redefined_groups
           reject_content_attributes
+          reject_reserved_members
         end
 
         # Removes global components the root never uses, so that an unused
@@ -341,6 +347,21 @@ module Metanorma
             raise XmlDataLoader::Error,
                   "Attribute content collides with the value of a type " \
                   "with simple content"
+          end
+        end
+
+        # A member named like a method every object has would replace it on
+        # the generated model (hash, send, freeze, dup, initialize ...).
+        def reject_reserved_members
+          each_reachable("complexType").each do |type, owner|
+            clash = collect_members(type, owner, {}).find do |_, _, name, _|
+              RESERVED_MEMBERS.include?(snake(name))
+            end
+            next unless clash
+
+            raise XmlDataLoader::Error,
+                  "Member #{clash[2]} is named like a method of every " \
+                  "Ruby object, so it cannot bind"
           end
         end
 
