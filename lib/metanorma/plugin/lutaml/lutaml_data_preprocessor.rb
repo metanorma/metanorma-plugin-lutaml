@@ -246,7 +246,13 @@ module Metanorma
         def render_schema_data_template(document:, lines:,
                                         definition_path:, instances_path:,
                                         context_name:, options:)
-          require "lutaml/xml"
+          # The XSD reader ships inside lutaml-model
+          # (lib/lutaml/xml/schema/xsd.rb). Do NOT require the lutaml
+          # gem's glue here: its released 0.11.x still vendors a
+          # lutaml/model copy whose definitions would shadow the
+          # canonical gem's (the vendoring is being removed on the
+          # lutaml unvendor branch).
+          require "lutaml/model"
 
           ::Lutaml::Xml::Schema::Xsd # ensure the schema reader is loaded
 
