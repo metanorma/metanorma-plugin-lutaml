@@ -43,3 +43,9 @@ gem "metanorma-document", github: "metanorma/metanorma-document", branch: "main"
 # 0.2.4 is the last clean release and rides moxml ~> 0.5 (= satisfied by
 # the 0.6 line). Lift when a clean 0.2.6 ships.
 gem "svg_conform", "~> 0.2.6"
+
+# Stopgap: ea 0.6.149+ ships a bare `parser` reference (missing @) in
+# Ea::Xmi::LookupService#build_dependency_index, raising
+# `undefined local variable or method 'parser'` for every flow that
+# touches the dependency index. Unpin once the fix ships.
+gem "ea", "0.6.148"
