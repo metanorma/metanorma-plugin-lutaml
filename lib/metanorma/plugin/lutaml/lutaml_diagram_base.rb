@@ -5,6 +5,10 @@ require "asciidoctor"
 require "asciidoctor/reader"
 require "lutaml/uml"
 require "lutaml/lml"
+# lutaml 0.11.x split the Graphviz formatter out into the lutaml-graphviz
+# gem; requiring it registers Lutaml::Formatter::Graphviz back into
+# Lutaml::Formatter.all.
+require "lutaml/graphviz"
 
 module Metanorma
   module Plugin
