@@ -266,6 +266,7 @@ module Metanorma
             load_classes: true,
             module_namespace: module_namespace,
             namespace: target_namespace,
+            register_id: module_namespace,
             location: definition_path,
           )
 
