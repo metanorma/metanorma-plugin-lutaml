@@ -130,7 +130,7 @@ module Metanorma
         end
 
         def data_file?(segment)
-          DATA_FILE_EXTENSIONS.include?(File.extname(segment))
+          DATA_FILE_EXTENSIONS.include?(File.extname(segment).downcase)
         end
 
         def render_data_template(document:, lines:, # rubocop:disable Metrics/ParameterLists,Metrics/MethodLength
@@ -140,7 +140,7 @@ module Metanorma
             document, definition_file, instance_file
           )
 
-          if SCHEMA_EXTENSIONS.include?(File.extname(definition_path))
+          if SCHEMA_EXTENSIONS.include?(File.extname(definition_path).downcase)
             return render_schema_data_template(
               document: document, lines: lines,
               definition_path: definition_path,
@@ -310,7 +310,7 @@ module Metanorma
         end
 
         def load_instances(path, compiler)
-          case File.extname(path)
+          case File.extname(path).downcase
           when ".lml" then load_lml_instances(path, compiler)
           when ".json" then load_structured_instances(path, compiler,
                                                       :parse_json_data)
