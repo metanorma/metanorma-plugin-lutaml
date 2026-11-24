@@ -30,6 +30,7 @@ here before dependent edits, and notify both owners.
 | D — catalogue acceptance and docs | Every real feature clause and nested value accounted for; working example and reproducible docs | New `spec/metanorma/plugin/lutaml/xml_data_s100_spec.rb`; `spec/fixtures/lutaml/xml_data/s100/`; `docs/usages/lutaml-data.adoc`; `docs/usages/lutaml-xsd.adoc`; root `README.adoc` | A inventory; C and E for execution; docs outline can start independently | 2 |
 | E — macro integration | Add XSD/XML pair support; preserve all old format/provider paths; contexts, includes, errors and real clause assertions | `lib/metanorma/plugin/lutaml/lutaml_data_preprocessor.rb`; `lib/metanorma-plugin-lutaml.rb`; `spec/metanorma/plugin/lutaml/lutaml_data_preprocessor_spec.rb`; `spec/fixtures/lutaml/xml_data/macro/` | Frozen interface above; C for final execution | 1 |
 | F — integrated verification and remote delivery | Combined checks, final review, correct PR bases, final-head CI, suma/WMO proof, precise partial/completed status | Git branches/commits/PR operations; `docs/plans/389/`; any gemspec/dependency manifest change; shared runner scripts and test logs | A–E outputs as applicable | Both |
+| G — required upstream compiler correction | Generate usable models for XSD `xs:ID` and `xs:IDREF`, with a minimal reproducer and preservation tests | Separate `lutaml/lutaml-model` checkout: `lib/lutaml/model/schema/xml_compiler/supported_data_types.rb`, `lib/lutaml/model/schema/xml_compiler/spec_builder/simple_types.rb`, and a focused compiler regression spec | B's reproduced real-catalogue failure | Separate dependency PR, required for PR 2 |
 
 No overlapping fixture directories: C uses `unit/`, E uses `macro/`, D uses
 `s100/`. Changes to shared `spec/spec_helper.rb` are integrator-owned and need a
@@ -109,16 +110,33 @@ task with a minimal reproducer, not a second implementation of the compiler.
 - Done: a remotely visible tested base with C1–C5 evidence and an owner-ready
   main handoff. Automation never performs the main merge or release.
 
+### G — repair the demonstrated compiler dependency
+
+- Reproduce the generated `ItemIdentifier < ID` failure with a minimal schema.
+  The compiler's supported-type lookup recognizes lowercase `id` but the
+  schema declares `xs:ID`; `xs:IDREF` also needs an admitted supported mapping.
+- Correct that narrow mapping in `lutaml-model`, with tests that compile/load
+  model classes and hydrate ID/IDREF values. Preserve neighboring built-ins.
+- Keep the dependency patch separate from the plugin. Use an issue-specific
+  grind base in that repository too; no main merge or release by automation.
+- Re-run the exact catalogue probe against the candidate dependency, then
+  qualify the plugin with that revision. Record any additional proven gap
+  rather than adding silent plugin compiler workarounds.
+- Done: focused dependency checks and real-catalogue probe pass; a reviewed
+  dependency revision is available for integration. Normal dependency release
+  remains an external delivery milestone.
+
 ## Current board and forecast
 
 | Card | Status | Evidence / next step |
 | --- | --- | --- |
-| A | Active | Exact-corpus acquisition and independent inventory |
-| B | Active | Installed-runtime compiler probe |
-| C | Ready after B | Loader implementation and unit fixtures |
-| D | Waiting for A/C/E | Real-corpus acceptance; docs can start against frozen syntax |
-| E | Active | Macro dispatch and regression tests |
-| F | Active | Isolated local bundle resolved; local grind/work branches created; remote push failed DNS resolution; no remote branch/PR claimed |
+| A | Complete | Five-file closure acquired; source inventory: 28 features, 51 simple and 6 complex attributes, 406 listed values |
+| B | Generic route proven; upstream gap isolated | Authentic model 0.8.176 synthetic probe passes; real catalogue validates against XSD but compiler fails ID/IDREF generation |
+| C | Implemented; focused checks pass | 14 loader examples pass, including explicit location and isolation; changed-file lint clean |
+| D | Active; real rendering depends on G | Fixtures/provenance/oracle and worked-example acceptance |
+| E | Implemented; focused integration passes | Macro tests pass against the real generic loader in the combined focused run |
+| F | Active; publication blocked | Combined local focused run: 169 examples, 150 pass, 19 fail in existing XSD documentation cases due restricted bibliographic-cache writes/network access. No failure is waived; canonical CI remains required. Local grind/work branches exist; remote push failed DNS resolution; no remote branch/PR claimed |
+| G | Active | Minimal upstream ID/IDREF correction and no-shim real-catalogue re-probe |
 
 The original 30–48 hours is total engineering effort, not a mandatory elapsed
 schedule. A/B/E begin concurrently; C follows the first viable B result; D

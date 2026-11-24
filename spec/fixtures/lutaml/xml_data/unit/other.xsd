@@ -1,0 +1,3 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:o="urn:other" targetNamespace="urn:other" elementFormDefault="qualified">
+  <xs:element name="Catalog"><xs:complexType><xs:sequence><xs:element name="number" type="xs:integer"/></xs:sequence></xs:complexType></xs:element>
+</xs:schema>

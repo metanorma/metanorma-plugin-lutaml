@@ -34,6 +34,9 @@ They take precedence over general automation defaults for this task.
    worked example and documentation. Cards are ownership units, not one-PR
    requirements. Keep loading, its integration and essential regression tests
    together. No separate PR for each helper, fixture or documentation tweak.
+   A reproduced compiler defect has activated one additional dependency PR in
+   `lutaml-model`; it follows the same grind-base/main-merge boundary and is
+   justified by the concrete catalogue failure, not by card count.
 8. Aim for about **250–600 changed handwritten lines per PR**; inspect scope
    before exceeding **800** or about **12 handwritten code/test/doc files**.
    These are reviewability triggers, not reasons to omit tests or arbitrarily

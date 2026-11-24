@@ -89,8 +89,10 @@ An executable synthetic probe now confirms imported-schema compilation, named
 and anonymous root hydration, isolated modules and plain-Liquid iteration.
 The compiler requires explicit namespace mapping to avoid empty collections.
 Model validation catches minOccurs violations but misses a required XSD
-attribute in the probe; the implementation will therefore also use maintained
-Nokogiri XSD validation, with an explicit dependency floor. This establishes
+attribute in the probe; the implementation therefore uses strict Nokogiri
+XSD validation before typed hydration, with an explicit dependency floor.
+Duplicate generated-model validation is omitted because recursive validation
+drops private registry context; the source schema remains fully validated. This establishes
 an existing route, not S-100 compatibility. The actual catalogue has not yet
 passed full binding and rendering.
 The separate `lutaml-xsd` gem's `Lutaml::Xsd.parse` schema AST API is not a
@@ -172,12 +174,12 @@ engineer owns integration. Entries are estimates, not time already spent.
 
 | ID / status | Work, exact targets, and expected result | Dependency | Effort |
 | --- | --- | --- | --- |
-| T0 — pending inputs | Obtain and pin the exact 1.1.0 `S411FC.xml`, `S100FC.xsd`, and transitive imports/includes. Record source revision, provenance, namespace map and independently extracted feature/attribute/enumerant counts. Use proposed `spec/fixtures/lutaml/xml_data/s100/` for redistributable fixtures. Compile/load the schema, select the real root class, parse the instance and render a minimal plain-Liquid loop. Determine root mapping, references, generated names, validation coverage and registry lifecycle. Add a meaningful small reproducer for any gap. | Exact corpus distribution | 3–5 h |
-| T1 — pending | Add proposed `lib/metanorma/plugin/lutaml/xml_data_loader.rb`, `XmlDataLoader#load` returning a string-keyed root wrapper containing typed instance data. Call the supported compiler, resolve the root QName/type, hydrate and validate the instance. Own generated module/register lifecycle; handle imports and actionable errors. Add proposed `spec/metanorma/plugin/lutaml/xml_data_loader_spec.rb` and small fixtures under proposed `spec/fixtures/lutaml/xml_data/`. | T0 proves a usable compiler route | 5–9 h |
-| T2 — pending | Update `LutamlDataPreprocessor#data_file?`, `#parse_header`, and `#render_data_template` to dispatch the XSD/XML pair into the loader. Preserve `#render_block` provider handling and existing format loading. Add an autoload in `lib/metanorma-plugin-lutaml.rb`. Extend `spec/metanorma/plugin/lutaml/lutaml_data_preprocessor_spec.rb` for pair parsing, default/custom contexts, options/includes, paths and positive clause assertions. No standoc registration change should be necessary. | T1 loader return contract | 4–6 h |
-| T3 — pending | In proposed `spec/metanorma/plugin/lutaml/xml_data_s100_spec.rb`, render the real S-411 catalogue through the normal Metanorma test pipeline. Assert every expected FeatureType clause and required nested attribute/enumerant content against the independent T0 inventory; test a deliberate value change and repeated documents. Add the executable example under proposed `spec/fixtures/lutaml/xml_data/s100/example.adoc` with a Liquid template as needed. Identify any corpus reference-resolution work here explicitly. | T0 inventory, T1 and T2 | 5–8 h |
-| T4 — pending | Extend `docs/usages/lutaml-data.adoc` with syntax, context shape, imports, validation/error behavior, tested S-100 traversal and a self-contained worked example. Add a cross-link in `docs/usages/lutaml-xsd.adoc` explaining schema versus instance views; update `README.adoc`. Introduce a gemspec floor only if a concrete upstream fix requires it. | Public contract settled by T0–T3 | 3–4 h |
-| T5 — pending | Run affected regression specs and changed-file lint; perform one final review of the whole change and fix findings. Obtain required CI for the final revision. Run the downstream suma integration suite against the branch gem, and demonstrate WMO consumer rendering with that exact dependency. Record revisions, commands, results and remaining acceptance. | T1–T4; available consumer bundle | 4–6 h |
+| T0 — inputs acquired; probes executed | Obtain and pin the exact 1.1.0 `S411FC.xml`, `S100FC.xsd`, and transitive imports/includes. Record source revision, provenance, namespace map and independently extracted feature/attribute/enumerant counts. Use proposed `spec/fixtures/lutaml/xml_data/s100/` for redistributable fixtures. Compile/load the schema, select the real root class, parse the instance and render a minimal plain-Liquid loop. Determine root mapping, references, generated names, validation coverage and registry lifecycle. Add a meaningful small reproducer for any gap. | Exact corpus distribution | 3–5 h |
+| T1 — generic binding implemented | Add proposed `lib/metanorma/plugin/lutaml/xml_data_loader.rb`, `XmlDataLoader#load` returning a string-keyed root wrapper containing typed instance data. Call the supported compiler, resolve the root QName/type, hydrate and validate the instance. Own generated module/register lifecycle; handle imports and actionable errors. Add proposed `spec/metanorma/plugin/lutaml/xml_data_loader_spec.rb` and small fixtures under proposed `spec/fixtures/lutaml/xml_data/`. | T0 proves a usable compiler route | 5–9 h |
+| T2 — implemented | Update `LutamlDataPreprocessor#data_file?`, `#parse_header`, and `#render_data_template` to dispatch the XSD/XML pair into the loader. Preserve `#render_block` provider handling and existing format loading. Add an autoload in `lib/metanorma-plugin-lutaml.rb`. Extend `spec/metanorma/plugin/lutaml/lutaml_data_preprocessor_spec.rb` for pair parsing, default/custom contexts, options/includes, paths and positive clause assertions. No standoc registration change should be necessary. | T1 loader return contract | 4–6 h |
+| T3 — in progress | In proposed `spec/metanorma/plugin/lutaml/xml_data_s100_spec.rb`, render the real S-411 catalogue through the normal Metanorma test pipeline. Assert every expected FeatureType clause and required nested attribute/enumerant content against the independent T0 inventory; test a deliberate value change and repeated documents. Add the executable example under proposed `spec/fixtures/lutaml/xml_data/s100/example.adoc` with a Liquid template as needed. Identify any corpus reference-resolution work here explicitly. | T0 inventory, T1 and T2 | 5–8 h |
+| T4 — drafted | Extend `docs/usages/lutaml-data.adoc` with syntax, context shape, imports, validation/error behavior, tested S-100 traversal and a self-contained worked example. Add a cross-link in `docs/usages/lutaml-xsd.adoc` explaining schema versus instance views; update `README.adoc`. Introduce a gemspec floor only if a concrete upstream fix requires it. | Public contract settled by T0–T3 | 3–4 h |
+| T5 — active; CI/publication pending | Run affected regression specs and changed-file lint; perform one final review of the whole change and fix findings. Obtain required CI for the final revision. Run the downstream suma integration suite against the branch gem, and demonstrate WMO consumer rendering with that exact dependency. Record revisions, commands, results and remaining acceptance. | T1–T4; available consumer bundle | 4–6 h |
 
 Base effort: **24–38 hours**. Separate bounded contingency: **6–10 hours**
 for schema/import/registry fixes and integration diagnosis. Planning allowance:
@@ -313,10 +315,11 @@ The [card board](CARDS.md#current-board-and-forecast) is the execution progress
 record; it replaces the original serial milestone table. Update completed
 checks with exact revisions, bundle identity, logs and remaining gaps there.
 
-An isolated local installed-gem bundle now resolves using Ruby 3.4.8. It is
+An isolated local installed-gem bundle resolves using Ruby 3.4.8. It is
 separate from the canonical Gemfile's git dependencies, so required CI and
-consumer evidence remain outstanding. The runtime probe passes; macro error
-regressions pass, while full rendering awaits the loader. Remote base push has
+consumer evidence remain outstanding. Generic loader, macro and preservation
+tests pass. A separate candidate dependency corrects the reproduced ID/IDREF
+compiler defect; the real catalogue is being checked against that revision. Remote base push has
 failed DNS resolution; no remote branch or PR is claimed until a successful
 server response is verified.
 

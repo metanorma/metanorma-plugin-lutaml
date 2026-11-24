@@ -40,6 +40,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "lutaml-lml"
   spec.add_dependency "lutaml-model", "~> 0.8.156"
   spec.add_dependency "lutaml-uml", ">= 0.5", "< 2"
+  spec.add_dependency "nokogiri", "~> 1.13", ">= 1.13.10"
   spec.add_dependency "ogc-gml", "~> 1.1"
   spec.metadata["rubygems_mfa_required"] = "true"
 end
