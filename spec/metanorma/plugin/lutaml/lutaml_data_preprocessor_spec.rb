@@ -33,6 +33,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDataPreprocessor do
   it "renders LML data instances through the Liquid template" do
     output = convert_to_xml(input)
     expect(output).to include("W1: Gear (3.5) [metal heavy ]")
+      expect(output).to include("W2: Spring () []")
     expect(output).to include("W2: Spring () []")
   end
 
@@ -43,6 +44,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDataPreprocessor do
     ).gsub("store.AllWidgets", "store.Widgets")
     output = convert_to_xml(yaml_input)
     expect(output).to include("W1: Gear (3.5) [metal heavy ]")
+      expect(output).to include("W2: Spring () []")
     expect(output).to include("W2: Spring () []")
   end
 
@@ -54,6 +56,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDataPreprocessor do
     )
     output = convert_to_xml(same_file_input)
     expect(output).to include("W1: Gear (3.5) [metal heavy ]")
+      expect(output).to include("W2: Spring () []")
     expect(output).to include("W2: Spring () []")
   end
 
@@ -64,6 +67,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDataPreprocessor do
     ).gsub("store.AllWidgets", "store.Widgets")
     output = convert_to_xml(json_input)
     expect(output).to include("W1: Gear (3.5) [metal heavy ]")
+      expect(output).to include("W2: Spring () []")
     expect(output).to include("W2: Spring () []")
   end
 
@@ -110,6 +114,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDataPreprocessor do
     )
     output = convert_to_xml(default_context_input)
     expect(output).to include("W1: Gear (3.5) [metal heavy ]")
+      expect(output).to include("W2: Spring () []")
   end
 
   it "raises an error when the definition file is missing" do
@@ -199,4 +204,47 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDataPreprocessor do
         .to raise_error(/has no query `unlisted_query`/)
     end
   end
+  describe "XML Schema definitions with XML instance documents" do
+    let(:xsd_template) do
+      <<~LIQUID
+        {% for widget in store.CTWidgets.widget %}
+        {{ widget.id }}: {{ widget.name }} ({{ widget.mass }}) [{% for tag in widget.tag %}{{ tag }} {% endfor %}]
+        {% endfor %}
+      LIQUID
+    end
+
+    let(:xsd_input) do
+      <<~TEXT
+        = Document title
+        Author
+        :docfile: test.adoc
+        :nodoc:
+        :novalid:
+        :no-isobib:
+        :imagesdir: spec/assets
+
+        [lutaml_data,#{fixtures_path('lutaml_data/catalogue.xsd')},#{fixtures_path('lutaml_data/catalogue.xml')},store]
+        ----
+        #{xsd_template}
+        ----
+      TEXT
+    end
+
+    it "parses the instance against the schema and renders it" do
+      output = convert_to_xml(xsd_input)
+      expect(output).to include("W1: Gear (3.5) [metal heavy ]")
+      expect(output).to include("W2: Spring () []")
+      expect(output).to include("W2: Spring () []")
+    end
+
+    it "fails loudly when the instance file is missing" do
+      missing = xsd_input.gsub(
+        fixtures_path("lutaml_data/catalogue.xml"),
+        fixtures_path("lutaml_data/absent.xml"),
+      )
+      expect { convert_to_xml(missing) }
+        .to raise_error(/absent.xml|Unable to load/)
+    end
+  end
+
 end
