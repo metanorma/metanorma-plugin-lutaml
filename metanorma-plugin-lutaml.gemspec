@@ -29,8 +29,14 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 3.0.0" # rubocop:disable Gemspec/RequiredRubyVersion
 
   spec.add_dependency "asciidoctor"
-  spec.add_dependency "coradoc", "~> 1.1.8"
-  spec.add_dependency "ea", ">= 0.6.41" # Ea::Xmi.load/load_graph (lutaml/ea#86): the partial-load API this gem calls
+  spec.add_dependency "ceradoc", "~> 3.0"
+  spec.add_dependency "ceradoc-adoc", "~> 2.0"
+  spec.add_dependency "ceradoc-html", "~> 1.1"
+  # >= 0.6.157: first release with the Qea::Rules layer and the shipped
+  # ea/qea/rules/generalization.rb (0.6.149-0.6.156 are broken for the
+  # diagram/Liquid-drops path — lutaml/ea#234, #246). Ea::Xmi.load/load_graph
+  # (lutaml/ea#86): the partial-load API this gem calls.
+  spec.add_dependency "ea", "~> 0.6.157"
   spec.add_dependency "expressir", "~> 2.3", ">= 2.3.5"
   spec.add_dependency "isodoc", ">= 3.5.0"
   spec.add_dependency "liquid", "~> 5"
@@ -38,7 +44,9 @@ Gem::Specification.new do |spec|
   spec.add_dependency "lutaml-graphviz"
   spec.add_dependency "lutaml-lml"
   spec.add_dependency "lutaml-model", "~> 0.8.156"
-  spec.add_dependency "lutaml-uml", ">= 0.5", "< 2"
+  # >= 1.0.4: Lutaml::Uml::Value#initial (enum literal codes) — required by
+  # ea >= 0.6.151+ which writes initial values during XMI parsing.
+  spec.add_dependency "lutaml-uml", "~> 1.0", ">= 1.0.4"
   spec.add_dependency "ogc-gml", "~> 1.1"
   spec.metadata["rubygems_mfa_required"] = "true"
 end
