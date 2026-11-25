@@ -1,6 +1,4 @@
-require "ceradoc"
-require "ceradoc/html"
-require "ceradoc/asciidoc"
+require "coradoc"
 
 module Metanorma
   module Plugin
@@ -8,7 +6,7 @@ module Metanorma
       module Liquid
         module CustomFilters
           def html2adoc(input)
-            Ceradoc.convert(input, from: :html, to: :asciidoc)
+            Coradoc::Input::Html.convert(input)
           end
 
           def interpolate(input)
