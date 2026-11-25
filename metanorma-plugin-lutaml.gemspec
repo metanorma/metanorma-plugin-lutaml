@@ -31,9 +31,10 @@ Gem::Specification.new do |spec|
   spec.add_dependency "asciidoctor"
   # ceradoc-adoc >= 2.0.38 widened its parsanol floor to >= 1.3.123, < 2
   # (ceradoc#365), so the expressir 2.4.x chain co-resolves again.
-  spec.add_dependency "ceradoc", "~> 3.0"
-  spec.add_dependency "ceradoc-adoc", "~> 2.0"
-  spec.add_dependency "ceradoc-html", "~> 1.1"
+  # Floors at the published latest lines of the family.
+  spec.add_dependency "ceradoc", "~> 3.0.1"
+  spec.add_dependency "ceradoc-adoc", "~> 2.0.38"
+  spec.add_dependency "ceradoc-html", "~> 1.1.24"
   # >= 0.6.157: first release with the Qea::Rules layer and the shipped
   # ea/qea/rules/generalization.rb (0.6.149-0.6.156 are broken for the
   # diagram/Liquid-drops path — lutaml/ea#234, #246). Ea::Xmi.load/load_graph
