@@ -274,9 +274,6 @@ module Metanorma
         # XML instance document against them; liquid sees the parsed
         # model keyed by its root class name, matching the LML flow.
 
-
-
-
         def load_instances(path, compiler)
           case File.extname(path).downcase
           when ".lml" then load_lml_instances(path, compiler)

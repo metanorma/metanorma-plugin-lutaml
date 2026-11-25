@@ -314,7 +314,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDataPreprocessor do
   describe "XML Schema definitions with XML instance documents" do
     let(:xsd_template) do
       <<~LIQUID
-        {% for widget in store.CTWidgets.widget %}
+        {% for widget in store.widgets.widget %}
         {{ widget.id }}: {{ widget.name }} ({{ widget.mass }}) [{% for tag in widget.tag %}{{ tag }} {% endfor %}]
         {% endfor %}
       LIQUID
