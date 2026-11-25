@@ -33,7 +33,6 @@ gem "leptris", ">= 1.9.386"
 # pre-release line pins (see metanorma release wave)
 gem "isodoc", github: "metanorma/isodoc", branch: "main"
 gem "metanorma-standoc", github: "metanorma/metanorma-standoc", branch: "main"
-gem "suma", github: "metanorma/suma", branch: "main"
 # standoc main (>= 3.5.1.pre.alpha.2) floors metanorma-document at
 # 0.5.2.pre.alpha.1 (SvgmapElement, metanorma-standoc#1303); main carries it
 gem "metanorma-document", github: "metanorma/metanorma-document", branch: "main"

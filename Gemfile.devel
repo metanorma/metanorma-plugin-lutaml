@@ -3,4 +3,4 @@ gem "relaton", "~> 3.1.1"
 
 # lutaml-lml 0.1.5 adds Lutaml::Lml.parse + Formatter::Graphviz used by
 # the lutaml_diagram renderer; 0.1.1 (previously resolved) lacks them
-gem "lutaml-lml", ">= 0.1.5"
+gem "lutaml-lml", ">= 0.1.5", "< 0.3.7"
