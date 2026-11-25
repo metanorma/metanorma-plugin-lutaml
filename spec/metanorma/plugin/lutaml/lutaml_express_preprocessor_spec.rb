@@ -38,20 +38,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 <sourcecode id="_" unnumbered="true">
                 <body>SCHEMA Activity_method_assignment_arm;
 
-              (*"Activity_method_assignment_arm"
-              Mine text
-
-              [.svgmap]
-              ====
-              image::measure_schemaexpg5.svg[]
-
-              * &lt;&lt;express:measure_schema,measure_schema&gt;&gt;; 1
-              * &lt;&lt;express:measure_schemaexpg4,measure_schemaexpg4&gt;&gt;; 2
-              * &lt;&lt;express:measure_schema,measure_schema&gt;&gt;; 3
-              ====
-              *)
-              (*"Activity_method_assignment_arm" Activity_method_assignment_arm *)
-
               USE FROM Activity_method_arm; -- ISO/TS 10303-1049
 
               TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT;
@@ -70,6 +56,19 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 role : STRING;
               END_ENTITY;
 
+
+              (*"Activity_method_assignment_arm"
+              Mine text
+
+              [.svgmap]
+              ====
+              image::measure_schemaexpg5.svg[]
+
+              * &lt;&lt;express:measure_schema,measure_schema&gt;&gt;; 1
+              * &lt;&lt;express:measure_schemaexpg4,measure_schemaexpg4&gt;&gt;; 2
+              * &lt;&lt;express:measure_schema,measure_schema&gt;&gt;; 3
+              ====
+              *)
               END_SCHEMA; -- Activity_method_assignment_arm</body>
                   </sourcecode>
                 </clause>
@@ -122,20 +121,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                             <sourcecode id="_" unnumbered="true">
                             <body>SCHEMA Activity_method_assignment_arm;
 
-              (*"Activity_method_assignment_arm"
-              Mine text
-
-              [.svgmap]
-              ====
-              image::measure_schemaexpg5.svg[]
-
-              * &lt;&lt;express:measure_schema,measure_schema&gt;&gt;; 1
-              * &lt;&lt;express:measure_schemaexpg4,measure_schemaexpg4&gt;&gt;; 2
-              * &lt;&lt;express:measure_schema,measure_schema&gt;&gt;; 3
-              ====
-              *)
-              (*"Activity_method_assignment_arm" Activity_method_assignment_arm *)
-
               USE FROM Activity_method_arm; -- ISO/TS 10303-1049
 
               TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT;
@@ -154,6 +139,19 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 role : STRING;
               END_ENTITY;
 
+
+              (*"Activity_method_assignment_arm"
+              Mine text
+
+              [.svgmap]
+              ====
+              image::measure_schemaexpg5.svg[]
+
+              * &lt;&lt;express:measure_schema,measure_schema&gt;&gt;; 1
+              * &lt;&lt;express:measure_schemaexpg4,measure_schemaexpg4&gt;&gt;; 2
+              * &lt;&lt;express:measure_schema,measure_schema&gt;&gt;; 3
+              ====
+              *)
               END_SCHEMA; -- Activity_method_assignment_arm</body>
                            </sourcecode>
                          </clause>
@@ -284,20 +282,6 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 <sourcecode id="_" unnumbered="true">
                 <body>SCHEMA Activity_method_assignment_arm;
 
-              (*"Activity_method_assignment_arm"
-              Mine text
-
-              [.svgmap]
-              ====
-              image::measure_schemaexpg5.svg[]
-
-              * &lt;&lt;express:measure_schema,measure_schema&gt;&gt;; 1
-              * &lt;&lt;express:measure_schemaexpg4,measure_schemaexpg4&gt;&gt;; 2
-              * &lt;&lt;express:measure_schema,measure_schema&gt;&gt;; 3
-              ====
-              *)
-              (*"Activity_method_assignment_arm" Activity_method_assignment_arm *)
-
               USE FROM Activity_method_arm; -- ISO/TS 10303-1049
 
               TYPE activity_method_item = EXTENSIBLE GENERIC_ENTITY SELECT;
@@ -316,6 +300,19 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                 role : STRING;
               END_ENTITY;
 
+
+              (*"Activity_method_assignment_arm"
+              Mine text
+
+              [.svgmap]
+              ====
+              image::measure_schemaexpg5.svg[]
+
+              * &lt;&lt;express:measure_schema,measure_schema&gt;&gt;; 1
+              * &lt;&lt;express:measure_schemaexpg4,measure_schemaexpg4&gt;&gt;; 2
+              * &lt;&lt;express:measure_schema,measure_schema&gt;&gt;; 3
+              ====
+              *)
               END_SCHEMA; -- Activity_method_assignment_arm</body>
                   </sourcecode>
                 </clause>

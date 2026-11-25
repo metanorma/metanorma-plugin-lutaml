@@ -765,11 +765,9 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlPreprocessor do
                       </eref>
                    </target>
                 </svgmap>
-                <p id="_">Activity_method_assignment_arm</p>
              </clause>
              <clause id="_" inline-header="false" obligation="normative">
                 <title id="_">Activity_method_characterized_mim</title>
-                <p id="_">Activity_method_characterized_mim</p>
              </clause>
             </sections>
             <bibliography>

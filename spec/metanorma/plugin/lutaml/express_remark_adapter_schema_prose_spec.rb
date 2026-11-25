@@ -16,6 +16,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkAdapter do
   # in its standard position: right after the SCHEMA line, printed once
   # and as written (TRThurman's source-fidelity requirement — 117 of the
   # 125 SRL schemas carry schema-level prose that printed nowhere).
+  # On expressir >= 2.4.8x the remark walk moved to ExpFile/RemarkInfo
+  # (lutaml/expressir#777) and the formats print the schema-level item
+  # themselves at the schema tail; the splicer's exclusion no longer
+  # takes effect there and the output stands as printed (ProseSplicer's
+  # documented fallback), so the canonical position is the tail.
   let(:tempfile) do
     f = Tempfile.new(["schema_prose", ".exp"])
     f.write(<<~EXP)
@@ -82,11 +87,11 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkAdapter do
       expect(printed).to include("vertices and the connections")
     end
 
-    it "splices the prose right after the SCHEMA line in Schema##{fmt}" do
+    it "prints the prose at the schema tail in Schema##{fmt}" do
       decorate
 
       expect(schema.public_send(fmt)).to match(
-        %r{\ASCHEMA schema_prose;\n\n\(\*"schema_prose"\nA mesh is defined},
+        /\(\*"schema_prose"\nA mesh is defined by its vertices.*\*\)\nEND_SCHEMA;\z/m,
       )
     end
 

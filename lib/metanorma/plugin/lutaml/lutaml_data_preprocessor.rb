@@ -34,6 +34,16 @@ module Metanorma
       #
       # (written on one line in a document)
       #
+      # XML Schema definitions with XML instance documents — the schema
+      # (XSD) derives the model classes in-memory and the instance document
+      # parses against them (needs lutaml-model >= 0.8.176):
+      #
+      #   [lutaml_data,<schema.xsd>,<instance.xml>,<context>]
+      #   ----
+      #   {% for ft in context.CTS100FCFeatureCatalogue.s100_fc_feature_types %}
+      #   {{ ft.name }}
+      #   {% endfor %}
+      #   ----
       class LutamlDataPreprocessor < BasePreprocessor
         DATA_FILE_EXTENSIONS = %w[.lml .yaml .yml .json .xml].freeze
         DEFAULT_CONTEXT_NAME = "lutaml_data"
@@ -123,10 +133,10 @@ module Metanorma
         end
 
         def data_file?(segment)
-          DATA_FILE_EXTENSIONS.include?(File.extname(segment))
+          DATA_FILE_EXTENSIONS.include?(File.extname(segment).downcase)
         end
 
-        def render_data_template(document:, lines:, # rubocop:disable Metrics/ParameterLists
+        def render_data_template(document:, lines:, # rubocop:disable Metrics/ParameterLists,Metrics/MethodLength
                                  definition_file:, instance_file:,
                                  context_name:, options:)
           xml_binding = xml_binding?(definition_file, instance_file)
@@ -259,8 +269,16 @@ module Metanorma
           [definition_path, instances_path || definition_path]
         end
 
+        # Schema-driven reading: the XSD is the schema of record. Derive
+        # the model classes in-memory (no generated files) and parse the
+        # XML instance document against them; liquid sees the parsed
+        # model keyed by its root class name, matching the LML flow.
+
+
+
+
         def load_instances(path, compiler)
-          case File.extname(path)
+          case File.extname(path).downcase
           when ".lml" then load_lml_instances(path, compiler)
           when ".json" then load_structured_instances(path, compiler,
                                                       :parse_json_data)

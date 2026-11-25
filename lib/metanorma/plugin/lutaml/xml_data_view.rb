@@ -59,6 +59,9 @@ module Metanorma
           end
 
           def liquid_method_missing(name)
+            # A single optional element reads as a one-item list.
+            return name.zero? ? self : nil if name.is_a?(Integer)
+
             key = name.to_s.to_sym
             attribute = attributes[key]
             return super unless attribute
