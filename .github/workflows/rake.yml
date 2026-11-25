@@ -17,17 +17,6 @@ jobs:
   rake:
     uses: metanorma/ci/.github/workflows/generic-rake.yml@v1
     with:
-      # Temporary qualification of the Ruby-only CRLF/native-offset fix.
-      # Use the matching published binary; Git installs skip it on Windows.
-      before-setup-ruby: |
-        echo 'EXPRESSIR_CORE=0' >> "$GITHUB_ENV"
-        cat > Gemfile.devel <<'RUBY'
-        gem "expressir", github: "lutaml/expressir", ref: "1133500a83c7a7c88c2aacaa24f7b9b176575e84"
-        RUBY
-      after-setup-ruby: |
-        gem install expressir --version 2.4.82 --ignore-dependencies --no-document
-        ruby -rrubygems -e 's = Gem::Specification.find_all_by_name("expressir", "= 2.4.82").find { |g| g.platform != Gem::Platform::RUBY }; abort "Published native gem missing" unless s; File.write(ARGV.fetch(0), File.join(s.full_gem_path, "lib"))' "$RUNNER_TEMP/expressir-native-lib"
-        bundle exec ruby ci/prepare_expressir_native.rb "$RUNNER_TEMP/expressir-native-lib"
       setup-tools: graphviz
       submodules: true
       choco-cache: true
