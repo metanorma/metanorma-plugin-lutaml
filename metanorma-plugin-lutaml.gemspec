@@ -29,10 +29,14 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = Gem::Requirement.new(">= 3.3.0")
 
   spec.add_dependency "asciidoctor"
-  # ceradoc (coradoc's successor) is pending: ceradoc-adoc 2.0.37 pins
-  # parsanol ~> 1.3.123, which conflicts with suma's expressir >= 2.4.75
-  # chain (parsanol ~> 1.5.1) — unresolvable in this bundle.
-  spec.add_dependency "coradoc", "~> 1.1.8"
+  # The monorepo renamed coradoc → ceradoc (2026-11-25, retired coradoc
+  # 1.x): the html2adoc filter needs the hub plus the html input spoke
+  # and the asciidoc output spoke — the formats self-register on require.
+  # ceradoc-adoc >= 2.0.38 spans the parsanol line, so this family
+  # co-resolves with the expressir >= 2.4.75 chain (parsanol ~> 1.5.1).
+  spec.add_dependency "ceradoc", "~> 3.0.1"
+  spec.add_dependency "ceradoc-html", "~> 1.1.24"
+  spec.add_dependency "ceradoc-adoc", "~> 2.0.38"
   # >= 0.6.157: first release with the Qea::Rules layer and the shipped
   # ea/qea/rules/generalization.rb (0.6.149-0.6.156 are broken for the
   # diagram/Liquid-drops path — lutaml/ea#234, #246). Ea::Xmi.load/load_graph
