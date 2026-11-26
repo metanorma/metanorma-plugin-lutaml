@@ -63,37 +63,25 @@ RSpec.configure do |config|
   config.before(:suite) do
     require "lutaml/uml"
     require "ea/xmi"
+  end
 
-    cache = Metanorma::Plugin::Lutaml::CacheRegistry.xmi_cache
-    cache.clear
+  # Cross-group retention is the suite's memory ratchet (#396): the
+  # process-global caches (XMI parse graphs, Expressir repositories and
+  # their format memos, XSD/JSON-schema models) hold everything the
+  # first group parsed for the whole run. Flushing them at file
+  # boundaries keeps each family's footprint its own — a per-context
+  # flush would re-parse within heavily nested files — and the
+  # content-keyed caches re-parse on next touch, so correctness is
+  # unaffected.
+  spec_file = nil
+  config.before(:each) do |example|
+    file = example.file_path
+    next if file == spec_file
 
-    # Pre-warm large XMI fixtures only when running the full suite,
-    # not when running individual files that don't need XMI.
-    # RSpec.configuration.files_to_run contains the spec files being executed.
-    xmi_heavy_specs = %w[
-      lutaml_ea_xmi_preprocessor_spec
-      lutaml_klass_table_block_macro_spec
-      lutaml_xmi_uml_preprocessor_spec
-    ]
-    running_full_suite = xmi_heavy_specs.any? do |name|
-      RSpec.configuration.files_to_run
-        .any? { |f| File.basename(f, ".rb") == name }
-    end
-
-    next unless running_full_suite
-
-    fixtures_dir = File.expand_path("./fixtures/lutaml", __dir__)
-    [
-      File.join(
-        fixtures_dir,
-        "20240822_all_package_export_plus_new_tc211_gml.xmi",
-      ),
-      File.join(fixtures_dir, "plateau_all_packages_export.xmi"),
-    ].each do |path|
-      next unless File.exist?(path)
-
-      cache.fetch(path)
-    end
+    spec_file = file
+    Metanorma::Plugin::Lutaml::CacheRegistry.clear_all
+    Metanorma::Plugin::Lutaml::ExpressRepositoryCache.clear
+    GC.start(full_mark: true)
   end
 end
 
