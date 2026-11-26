@@ -195,7 +195,9 @@ module Metanorma
             match = IMAGE_MACRO_REGEXP.match(line) or return line
             before = @errors.length
             final = final_target(match[1])
-            return @errors[before..].join("\n") if final.nil? && @errors.length > before
+            if final.nil? && @errors.length > before
+              return @errors[before..].join("\n")
+            end
 
             return line if final == match[1]
 
@@ -210,15 +212,19 @@ module Metanorma
 
             file = File.expand_path(target, @schema_directory.to_s)
             unless File.file?(file)
+              # An already-resolved line fed back on a second pass
+              # (metanorma-plugin-lutaml#388) stands staged: pass it
+              # through unchanged instead of erroring.
+              return target if File.file?(File.join(@imagesdir_directory,
+                                                    target))
+
               # A missing figure must NOT reach asciidoctor as a broken
               # image macro — metanorma's image-existence check then
               # FATALs the whole build (#371). Emit a visible, localized
               # error line in its place: what was expected, where it was
               # looked for.
-              @errors << (
-                "[EXPRESS-G figure error] '#{target}' not found beside " \
-                "the schema (looked in '#{@schema_directory}')"
-              )
+              @errors << "[EXPRESS-G figure error] '#{target}' not found beside " \
+                         "the schema (looked in '#{@schema_directory}')"
               return
             end
 
@@ -227,7 +233,7 @@ module Metanorma
               return target if FileUtils.identical?(file, staged)
 
               unique = File.join(@imagesdir_directory,
-                                 Digest::SHA256.hexdigest(file)[0, 12],
+                                 Digest::SHA256.file(file).hexdigest[0, 12],
                                  target)
               return target if File.file?(unique)
 
@@ -251,10 +257,18 @@ module Metanorma
           def flat_target(target)
             file = File.expand_path(target, @schema_directory.to_s)
             unless File.file?(file)
-              @errors << (
-                "[EXPRESS-G figure error] '#{target}' not found beside " \
-                "the schema (looked in '#{@schema_directory}')"
-              )
+              # A second pass may feed this resolver its own output -
+              # the flat name, or the digest-qualified form (#388).
+              # Both stand staged after the first pass; pass them
+              # through unchanged.
+              flat = File.basename(target)
+              return flat if target == flat &&
+                File.file?(File.join(@imagesdir_directory, flat))
+              return target if File.file?(File.join(@imagesdir_directory,
+                                                    target))
+
+              @errors << "[EXPRESS-G figure error] '#{target}' not found beside " \
+                         "the schema (looked in '#{@schema_directory}')"
               return
             end
 
@@ -263,7 +277,7 @@ module Metanorma
             if File.file?(staged)
               return flat if FileUtils.identical?(file, staged)
 
-              digest = Digest::SHA256.hexdigest(file)[0, 12]
+              digest = Digest::SHA256.file(file).hexdigest[0, 12]
               unique = File.join(digest, flat)
               staged_unique = File.join(@imagesdir_directory, unique)
               return unique if File.file?(staged_unique)

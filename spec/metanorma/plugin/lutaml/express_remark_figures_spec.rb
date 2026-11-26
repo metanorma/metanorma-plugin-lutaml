@@ -138,7 +138,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkFigures do
 
       resolved = Asciidoctor::PathResolver.new.web_path(bare, "images")
       expect(File.expand_path(resolved, docfile_directory))
-        .to eq(File.expand_path(File.join(docfile_directory, "images", diagram_name)))
+        .to eq(File.expand_path(File.join(docfile_directory, "images",
+                                          diagram_name)))
     end
 
     # The no-imagesdir mirror of the roundtrip above: an empty default
@@ -287,5 +288,79 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkFigures do
       .find { |ri| ri.id == "__expressg" }
     item.remarks = [macro]
     decorated_schema
+  end
+
+  # TRThurman, metanorma-plugin-lutaml#388: figures kept in a folder of
+  # the schema (`image::images/x.svg[]`) vanish on the SECOND decoration
+  # pass over the same model - the first pass rewrote the remark to the
+  # flat resolved name, the second resolved that flat name beside the
+  # schema, missed, and printed the error line instead of the figure.
+  describe "folder figures survive a second decoration pass (#388)" do
+    let(:diagram_name) { "images/gizmo_armexpg1.svg" }
+
+    it "resolves identically on every pass" do
+      FileUtils.mkdir_p(File.dirname(File.join(schema_directory, diagram_name)))
+      schema_file
+
+      Metanorma::Plugin::Lutaml::ExpressRemarkAdapter.for(repository)
+        .decorate_remarks({ "document" => document })
+      Metanorma::Plugin::Lutaml::ExpressRemarkAdapter.for(repository)
+        .decorate_remarks({ "document" => document })
+
+      remarks = repository.schemas.first.remark_items
+        .flat_map(&:to_liquid).map(&:remarks).join("\n")
+      expect(remarks).not_to include("EXPRESS-G figure error")
+      expect(remarks).to include("image::gizmo_armexpg1.svg[]")
+      expect(File.file?(File.join(docfile_directory,
+                                  File.basename(diagram_name))))
+        .to be(true)
+    end
+  end
+
+  # The digest that disambiguates same-named figures keyed the file's
+  # PATH, so the same source tree staged under a different key from
+  # another build directory - and a rebuilt document lost its figure
+  # (#388, second way to the same loss).
+  describe "digest-keyed staging is content-addressed (#388)" do
+    let(:diagram_name) { "images/collide.svg" }
+
+    it "stages the same bytes under the same key from any directory" do
+      FileUtils.mkdir_p(File.dirname(File.join(schema_directory, diagram_name)))
+      schema_file
+      # Force the digest branch: a different file already holds the
+      # flat staged spot.
+      FileUtils.mkdir_p(docfile_directory)
+      File.write(File.join(docfile_directory, "collide.svg"),
+                 "STALE CONTENT")
+      Metanorma::Plugin::Lutaml::ExpressRemarkAdapter.for(repository)
+        .decorate_remarks({ "document" => document })
+      first_key = Dir[File.join(docfile_directory, "*", "collide.svg")]
+        .map { |f| f.split("/")[-2] }.first
+      expect(first_key).to be_a(String)
+
+      other_root = Dir.mktmpdir
+      other_docfile = File.join(other_root, "documents", "part")
+      other_schema_dir = File.join(other_root, "schemas", "gizmo")
+      FileUtils.mkdir_p([other_docfile, other_schema_dir,
+                         File.join(other_schema_dir, "images")])
+      File.write(File.join(other_docfile, "collide.svg"), "STALE CONTENT")
+      FileUtils.cp(File.join(schema_directory, diagram_name),
+                   File.join(other_schema_dir, diagram_name))
+      File.write(File.join(other_schema_dir, "gizmo_arm.exp"),
+                 File.read(File.join(schema_directory, "gizmo_arm.exp")))
+      other_document = document_class.new(
+        { "docfile" => File.join(other_docfile, "test.adoc") },
+        path_resolver,
+      )
+      other_repo = Expressir::Express::Parser.from_file(
+        File.join(other_schema_dir, "gizmo_arm.exp"),
+      )
+      Metanorma::Plugin::Lutaml::ExpressRemarkAdapter.for(other_repo)
+        .decorate_remarks({ "document" => other_document })
+
+      second_key = Dir[File.join(other_docfile, "*", "collide.svg")]
+        .map { |f| f.split("/")[-2] }.first
+      expect(second_key).to eq(first_key)
+    end
   end
 end
