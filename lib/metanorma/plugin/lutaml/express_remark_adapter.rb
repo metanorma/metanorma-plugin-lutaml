@@ -82,7 +82,7 @@ module Metanorma
           def format_without_prose
             items = @schema.remark_items
             @schema.remark_items = items - [@prose]
-            @format.call.to_s
+            @format.call(@schema).to_s
           ensure
             @schema.remark_items = items
           end
@@ -100,12 +100,16 @@ module Metanorma
           def decorate_remarks(options)
             prose = promote_schema_prose
             stash_figure_remarks(options)
-            # The spliced prose blocks are built here, after the figure
-            # rewrite, so they print the resolved targets — and rebuilt
-            # on every decoration, so a process rendering several
-            # documents off one index prints each document's own
-            # resolution rather than the first document's (#381).
-            hide_from_source_formats(prose) if prose
+            # The document faces are installed for every decorated schema:
+            # figures ride remark items regardless of whether schema-level
+            # prose exists, and expressir's own faces strip remarks since
+            # 2.4.89. The spliced prose blocks are built after the figure
+            # rewrite so they print the resolved targets — and rebuilt on
+            # every decoration, so a process rendering several documents
+            # off one index prints each document's own resolution rather
+            # than the first document's (#381).
+            install_document_faces
+            splice_schema_prose(prose) if prose
           end
 
           private
@@ -139,20 +143,44 @@ module Metanorma
             prose
           end
 
-          # Each format is still computed lazily and memoized by expressir;
-          # it just runs without the promoted item in remark_items. The
-          # prose block itself is formatted per render by the splicer.
-          def hide_from_source_formats(prose)
-            SOURCE_FORMATS.each do |name|
-              splice_prose_into_format(name, prose)
+          # The faces render per call. The plain face must reach the
+          # model's expressir memo through the CLASS method — binding
+          # `formatted` off the instance would resolve through the
+          # singleton these very definitions install and recurse — so
+          # it is bound from the class hierarchy instead.
+          def document_faces
+            class_formatted = @model.class
+              .instance_method(:formatted).bind(@model)
+            {
+              formatted: ->(_schema) { class_formatted.call },
+              formatted_hyperlinked: ->(schema) do
+                DocumentSourceFormatter.format(schema)
+              end,
+              formatted_hyperlinked_adoc: ->(schema) do
+                ExpressRemarkAdapter.hyperlinked_adoc(schema)
+              end,
+            }
+          end
+
+          # The faces are Schema-level (only Schema carries the formatted
+          # methods); child-model decorations install nothing.
+          def install_document_faces
+            return unless @model.is_a?(Expressir::Model::Declarations::Schema)
+
+            document_faces.each do |name, face|
+              @model.define_singleton_method(name) { face.call(self) }
             end
           end
 
-          def splice_prose_into_format(name, prose)
-            format = @model.method(name)
-            splicer = ProseSplicer.new(@model, format, prose, name)
-
-            @model.define_singleton_method(name) { splicer.call }
+          # The splicer reprints each face without the promoted prose
+          # item and splices the prose block back right after the
+          # SCHEMA line — its standard position — so the listing shows
+          # the resolved prose exactly once.
+          def splice_schema_prose(prose)
+            document_faces.each do |name, face|
+              splicer = ProseSplicer.new(@model, face, prose, name)
+              @model.define_singleton_method(name) { splicer.call }
+            end
           end
 
           # Stages the schema's EXPRESS-G figures into the directory the
@@ -289,16 +317,51 @@ module Metanorma
           def decorate_remarks(_options); end
         end
 
-        SOURCE_FORMATS = %i[
-          formatted formatted_hyperlinked formatted_hyperlinked_adoc
-        ].freeze
+        # Document faces for decorated schemas. expressir 2.4.89's
+        # prebuilt SourceFormatter/AdocSourceFormatter faces print
+        # without tagged description blocks (metanorma-cli#522,
+        # expressir#704) — their `initialize` hard-codes no_remarks and
+        # discards caller options. On a decorated schema the remark
+        # items are the document content: the __expressg figure blocks
+        # stage through them (#360/#371) and the schema prose prints
+        # through the splicer. These subclasses restore the
+        # remark-bearing form of the same faces — for the models this
+        # adapter decorates only; undecorated prints keep expressir's
+        # plain faces.
+        class DocumentSourceFormatter < Expressir::Express::Formatter
+          include Expressir::Express::HyperlinkFormatter
+
+          def owner_tagged_blocks?
+            false
+          end
+        end
+
+        class DocumentAdocSourceFormatter < Expressir::Express::Formatter
+          include Expressir::Express::AdocHyperlinkFormatter
+
+          def owner_tagged_blocks?
+            false
+          end
+        end
+
+        # The adoc face's post-formatting chain, mirroring
+        # Schema#formatted_hyperlinked_adoc.
+        def self.hyperlinked_adoc(schema)
+          mod = Expressir::Express::AdocHyperlinkFormatter
+          text = DocumentAdocSourceFormatter.format(schema)
+          mod.keep_opening_parentheses(
+            mod.keep_plus_signs(mod.neutralise_stem_macros(text)),
+          )
+        end
 
         # The formatter family behind each source format, so the spliced
-        # prose prints the way its format prints references.
+        # prose prints the way its format prints references. The
+        # hyperlinked faces are the document formatters above —
+        # expressir's prebuilt faces strip remarks since 2.4.89.
         SOURCE_FORMATTERS = {
           formatted: Expressir::Express::Formatter,
-          formatted_hyperlinked: Expressir::Express::SourceFormatter,
-          formatted_hyperlinked_adoc: Expressir::Express::AdocSourceFormatter,
+          formatted_hyperlinked: DocumentSourceFormatter,
+          formatted_hyperlinked_adoc: DocumentAdocSourceFormatter,
         }.freeze
       end
     end
