@@ -50,6 +50,7 @@ Gem::Specification.new do |spec|
   # >= 1.0.4: Lutaml::Uml::Value#initial (enum literal codes) — required by
   # ea >= 0.6.151+ which writes initial values during XMI parsing.
   spec.add_dependency "lutaml-uml", "~> 1.0", ">= 1.0.4"
+  spec.add_dependency "nokogiri", "~> 1.13", ">= 1.13.10"
   spec.add_dependency "ogc-gml", "~> 1.1"
   spec.metadata["rubygems_mfa_required"] = "true"
 end

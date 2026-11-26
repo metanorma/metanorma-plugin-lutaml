@@ -18,6 +18,10 @@ module Metanorma
       #
       #   [lutaml_data,<definitions.lml>,<context>]
       #
+      # XML instances bound through an XSD definition:
+      #
+      #   [lutaml_data,<definition.xsd>,<instances.xml>,<context>]
+      #
       # Options can be supplied as a JSON object:
       #
       #   [lutaml_data,models.lml,store,options={"include_path":"templates"}]
@@ -42,7 +46,6 @@ module Metanorma
       #   ----
       class LutamlDataPreprocessor < BasePreprocessor
         DATA_FILE_EXTENSIONS = %w[.lml .yaml .yml .json .xml].freeze
-        SCHEMA_EXTENSIONS = %w[.xsd].freeze
         DEFAULT_CONTEXT_NAME = "lutaml_data"
         PROVIDER_SOURCE = /\Aprovider:(?<name>[^.]+)\.(?<query>.+)\z/
 
@@ -136,27 +139,40 @@ module Metanorma
         def render_data_template(document:, lines:, # rubocop:disable Metrics/ParameterLists,Metrics/MethodLength
                                  definition_file:, instance_file:,
                                  context_name:, options:)
+          xml_binding = xml_binding?(definition_file, instance_file)
           definition_path, instances_path = resolve_data_paths(
             document, definition_file, instance_file
           )
-
-          if SCHEMA_EXTENSIONS.include?(File.extname(definition_path).downcase)
-            return render_schema_data_template(
-              document: document, lines: lines,
-              definition_path: definition_path,
-              instances_path: instances_path,
-              context_name: context_name, options: options,
-            )
+          if xml_binding
+            instances = XmlDataLoader.new.load(definition_path, instances_path,
+                                               location: options["location"])
+            return [render_xml_liquid(lines, document, options, context_name,
+                                      instances)]
           end
 
-          compiler = ::Lutaml::Lml::ModelCompiler.new
-          compiler.compile(File.new(definition_path, encoding: "UTF-8"))
-          instances = load_instances(instances_path, compiler)
-
+          instances = load_model_instances(definition_path, instances_path)
           [render_liquid(lines, document, options, context_name, instances)]
         rescue StandardError => e
           log_block_failure(e)
           raise e
+        end
+
+        def xml_binding?(definition_file, instance_file)
+          xsd = File.extname(definition_file) == ".xsd"
+          xml = instance_file && File.extname(instance_file) == ".xml"
+          if xsd && !xml
+            raise StandardError, "XSD definitions require an XML instance file"
+          elsif xml && !xsd
+            raise StandardError, "XML instances require an XSD definition file"
+          end
+
+          xsd
+        end
+
+        def load_model_instances(definition_path, instances_path)
+          compiler = ::Lutaml::Lml::ModelCompiler.new
+          compiler.compile(File.new(definition_path, encoding: "UTF-8"))
+          deep_stringify(load_instances(instances_path, compiler).to_h)
         end
 
         def render_block(document:, lines:, definition_file:, **rest)
@@ -207,7 +223,21 @@ module Metanorma
           parsed_template = template(lines)
           parsed_template.registers[:file_system] =
             build_file_system(document, options)
-          parsed_template.render(context_name => deep_stringify(instances.to_h))
+          parsed_template.render(context_name => instances)
+        end
+
+        # A template that names a field the schema lacks, uses an unknown
+        # filter or tag, or prints a structure fails the block; the error
+        # text is never written into the document.
+        def render_xml_liquid(lines, document, options, context_name,
+                              instances)
+          parsed_template = ::Liquid::Template.parse(lines.join("\n"),
+                                                     error_mode: :strict)
+          parsed_template.registers[:file_system] =
+            build_file_system(document, options)
+          parsed_template.render!({ context_name => instances },
+                                  strict_variables: true,
+                                  strict_filters: true)
         end
 
         # Liquid resolves variable lookups by string keys; the compiled
@@ -243,72 +273,6 @@ module Metanorma
         # the model classes in-memory (no generated files) and parse the
         # XML instance document against them; liquid sees the parsed
         # model keyed by its root class name, matching the LML flow.
-        def render_schema_data_template(document:, lines:,
-                                        definition_path:, instances_path:,
-                                        context_name:, options:)
-          # The XSD reader ships inside lutaml-model
-          # (lib/lutaml/xml/schema/xsd.rb). Do NOT require the lutaml
-          # gem's glue here: its released 0.11.x still vendors a
-          # lutaml/model copy whose definitions would shadow the
-          # canonical gem's (the vendoring is being removed on the
-          # lutaml unvendor branch).
-          require "lutaml/model"
-
-          ::Lutaml::Xml::Schema::Xsd # ensure the schema reader is loaded
-
-          schema_source = File.read(definition_path, encoding: "UTF-8")
-          module_namespace = schema_module_namespace(definition_path)
-          target_namespace = schema_target_namespace(definition_path,
-                                                     schema_source)
-
-          ::Lutaml::Model::Schema.from_xml(
-            schema_source,
-            load_classes: true,
-            module_namespace: module_namespace,
-            namespace: target_namespace,
-            register_id: module_namespace,
-            location: definition_path,
-          )
-
-          instances = load_xml_instances(instances_path, module_namespace)
-          [render_liquid(lines, document, options, context_name, instances)]
-        end
-
-        def schema_module_namespace(definition_path)
-          base = File.basename(definition_path, ".*")
-          "LutamlXml#{base.gsub(/[^A-Za-z0-9]/, "_").split("_")
-                          .reject(&:empty?).map(&:capitalize).join}"
-        end
-
-        def schema_target_namespace(definition_path, source)
-          schema = ::Lutaml::Xml::Schema::Xsd.parse(
-            source, location: definition_path
-          )
-          schema.target_namespace
-        end
-
-        def load_xml_instances(instances_path, module_namespace)
-          require "nokogiri"
-
-          instance_xml = File.read(instances_path, encoding: "UTF-8")
-          root_name = Nokogiri::XML(instance_xml).root.name
-
-          namespace = Object.const_get(module_namespace)
-          root_class = namespace.constants.filter_map do |const|
-            klass = namespace.const_get(const)
-            next unless klass.is_a?(Class) && klass < ::Lutaml::Model::Serializable
-
-            klass.mappings_for(:xml)&.root_element == root_name ? klass : nil
-          end.first
-
-          unless root_class
-            raise StandardError,
-                  "No derived model declares root element `#{root_name}` " \
-                  "for `#{instances_path}`"
-          end
-
-          [[demodulize(root_class.name), root_class.from_xml(instance_xml)]]
-        end
 
         def load_instances(path, compiler)
           case File.extname(path).downcase
