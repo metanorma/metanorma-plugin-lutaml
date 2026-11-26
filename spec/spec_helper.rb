@@ -1,5 +1,6 @@
 require "bundler/setup"
 require "asciidoctor"
+require "moxml"
 require_relative "../lib/metanorma-plugin-lutaml"
 require "rspec-html-matchers"
 
@@ -129,7 +130,15 @@ def remove_xml_whitespaces(xml)
 end
 
 def xml_string_content(xml)
-  strip_guid(Nokogiri::XML(xml).to_s)
+  require "moxml"
+  # Leptris serializes empty elements expanded (<xref ...></xref>);
+  # the suite's expectations carry the self-closing form asciidoctor
+  # emits, so the normalization canonicalizes adjacent open/close
+  # pairs (an empty element is the only legal adjacent pair).
+  strip_guid(
+    Moxml.parse(xml).to_xml
+      .gsub(%r{(<[A-Za-z][^>]*?)></[A-Za-z][^>]*>}, '\1/>'),
+  )
 end
 
 def metanorma_convert(input)

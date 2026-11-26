@@ -288,10 +288,10 @@ module Metanorma
         end
 
         def load_xml_instances(instances_path, module_namespace)
-          require "nokogiri"
+          require "moxml"
 
           instance_xml = File.read(instances_path, encoding: "UTF-8")
-          root_name = Nokogiri::XML(instance_xml).root.name
+          root_name = Moxml.parse(instance_xml).root.name
 
           namespace = Object.const_get(module_namespace)
           root_class = namespace.constants.filter_map do |const|

@@ -35,13 +35,13 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlJsonschemaPreprocessor do
     end
 
     it "renders a properties table and links $ref types to definitions" do
-      doc = Nokogiri::XML(rendered_xml)
-      doc.remove_namespaces!
+      doc = Moxml.parse(rendered_xml)
 
-      expect(doc.xpath("//table").size).to eq(2)
+      expect(doc.xpath("//*[local-name()='table']").size).to eq(2)
       expect(doc.at_xpath("//*[@anchor='def-person-schema-Address']"))
         .not_to be_nil
-      expect(doc.at_xpath("//xref[@target='def-person-schema-Address']"))
+      expect(doc.at_xpath("//*[local-name()='xref']" \
+                          "[@target='def-person-schema-Address']"))
         .not_to be_nil
     end
   end
