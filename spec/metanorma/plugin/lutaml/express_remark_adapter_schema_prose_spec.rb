@@ -87,25 +87,12 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkAdapter do
       expect(printed).to include("vertices and the connections")
     end
 
-    # Expressir 2.4.86+ prints the schema-level item at the tail in the
-    # plain formatted output and re-verts the hyperlinked formats to the
-    # historical position right after the SCHEMA line.
-    it "prints the prose at the schema tail in Schema#formatted" do
+    it "prints the prose at the schema tail in Schema##{fmt}" do
       decorate
 
-      expect(schema.formatted).to match(
+      expect(schema.public_send(fmt)).to match(
         /\(\*"schema_prose"\nA mesh is defined by its vertices.*\*\)\nEND_SCHEMA;\z/m,
       )
-    end
-
-    it "splices the prose after the SCHEMA line in the hyperlinked formats" do
-      decorate
-
-      %i[formatted_hyperlinked formatted_hyperlinked_adoc].each do |fmt|
-        expect(schema.public_send(fmt)).to match(
-          /\ASCHEMA schema_prose;\n\n\(\*"schema_prose"\nA mesh is defined/m,
-        )
-      end
     end
 
     it "prints the prose block in the exact remark-item shape in #{fmt}" do

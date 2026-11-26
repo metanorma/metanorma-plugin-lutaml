@@ -161,11 +161,8 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkFigures do
     it "keeps the printed source listing free of rewritten paths" do
       schema = decorated_schema
 
-      # expressir 2.4.86+ forces no_remarks on the flat hyperlinked
-      # adoc: the printed listing carries no figure macros at all —
-      # figures surface only through the drop-facing remark walk.
       expect(schema.formatted_hyperlinked_adoc)
-        .not_to include("image::")
+        .to include("image::#{diagram_name}[]")
     end
 
     it "keeps the model remarks untouched" do
