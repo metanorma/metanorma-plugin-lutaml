@@ -94,6 +94,21 @@ module Metanorma
             [stripped, figures.reject(&:empty?)]
           end
 
+          # expressir >= 2.4.86 forces no_remarks on the flat hyperlinked
+          # adoc, so the printed content carries no __expressg blocks to
+          # lift; the figure bodies then come from the schema's own
+          # remark item, which the decoration-time adapter staged and
+          # rewrote (anchor + svgmap + targets as emitted before).
+          def model_expressg_figures(schema)
+            item = schema.remark_items&.find { |ri| ri.id == "__expressg" }
+            return [] unless item
+
+            item.remarks.filter_map do |remark|
+              body = remark.to_s.strip
+              body.empty? ? nil : dedent(body)
+            end
+          end
+
           private
 
           def dedent(body)
@@ -125,6 +140,9 @@ module Metanorma
               .extract_expressg_figures(
                 @object.formatted_hyperlinked_adoc.to_s,
               )
+            if figures.empty?
+              figures = ExpressSchemaListing.model_expressg_figures(@object)
+            end
             fence = ExpressSchemaListing.fence(source)
             # The figure macros are bare basenames — the adapter stages
             # the files and rewrites the remarks at decoration time — so
