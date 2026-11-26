@@ -833,7 +833,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
           end
 
           it "keeps literal examples while using the external mapping" do
-            xml = Nokogiri::XML(metanorma_convert(input))
+            xml = Moxml.parse(metanorma_convert(input))
             literal = "<<section-" \
                       "EAID_0A614EA9_13B7_4ebe_85ED_AA187D27CBD1," \
                       "CharacterString>>"
@@ -855,7 +855,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
           end
 
           it "uses the configured external anchor" do
-            xml = Nokogiri::XML(metanorma_convert(input))
+            xml = Moxml.parse(metanorma_convert(input))
             xref = xml.at_xpath("//*[local-name()='xref']" \
                                 "[@target='_characterstring']")
             expect(xref).not_to be_nil
@@ -870,7 +870,7 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaXmiPreprocessor do
             end
 
             it "preserves the explicit mapping without a local definition" do
-              xml = Nokogiri::XML(metanorma_convert(input))
+              xml = Moxml.parse(metanorma_convert(input))
               target = external_classes.fetch("CharacterString")
               expect(xml.at_xpath("//*[local-name()='xref']" \
                                   "[@target='#{target}']"))

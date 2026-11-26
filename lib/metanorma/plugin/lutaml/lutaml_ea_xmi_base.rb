@@ -57,9 +57,14 @@ module Metanorma
               ea_extension_path, File.dirname(yaml_config_path)
             )
 
-            # unload the extension if it is already loaded
-            xmi_doc = Nokogiri::XML(File.read(ea_extension_full_path))
-            extension_id = Xmi::EaRoot.get_module_name(xmi_doc)
+            # unload the extension if it is already loaded — the module
+            # name mirrors Xmi::EaRoot#get_module_name_from_definition,
+            # read through moxml so this repo parses nothing with
+            # Nokogiri
+            xmi_doc = Moxml.parse(File.read(ea_extension_full_path))
+            profile_node = xmi_doc.at_xpath("//UMLProfile/Documentation")
+            extension_id = profile_node.attributes
+              .find { |attr| attr.name == "name" }.value.capitalize
             if Xmi::EaRoot.extension_loaded?(extension_id)
               Xmi::EaRoot.unload_extension(extension_id)
             end
