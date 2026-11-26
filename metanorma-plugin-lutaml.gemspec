@@ -39,14 +39,14 @@ Gem::Specification.new do |spec|
   # ea/qea/rules/generalization.rb (0.6.149-0.6.156 are broken for the
   # diagram/Liquid-drops path — lutaml/ea#234, #246). Ea::Xmi.load/load_graph
   # (lutaml/ea#86): the partial-load API this gem calls.
-  spec.add_dependency "ea", "~> 0.6.157"
+  spec.add_dependency "ea", "~> 0.6.160"
   spec.add_dependency "expressir", "~> 2.3", ">= 2.3.5"
   spec.add_dependency "isodoc", ">= 3.5.0"
   spec.add_dependency "liquid", "~> 5"
   spec.add_dependency "lutaml-jsonschema", "~> 0.1", ">= 0.1.29"
   spec.add_dependency "lutaml-graphviz"
   spec.add_dependency "lutaml-lml"
-  spec.add_dependency "lutaml-model", "~> 0.8.156"
+  spec.add_dependency "lutaml-model", "~> 0.8.159"
   # >= 1.0.4: Lutaml::Uml::Value#initial (enum literal codes) — required by
   # ea >= 0.6.151+ which writes initial values during XMI parsing.
   spec.add_dependency "lutaml-uml", "~> 1.0", ">= 1.0.4"
