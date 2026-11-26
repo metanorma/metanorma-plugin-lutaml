@@ -261,17 +261,43 @@ module Metanorma
           target_namespace = schema_target_namespace(definition_path,
                                                      schema_source)
 
-          ::Lutaml::Model::Schema.from_xml(
-            schema_source,
-            load_classes: true,
-            module_namespace: module_namespace,
-            namespace: target_namespace,
-            register_id: module_namespace,
-            location: definition_path,
-          )
+          derivation = lambda do
+            ::Lutaml::Model::Schema.from_xml(
+              schema_source,
+              load_classes: true,
+              module_namespace: module_namespace,
+              namespace: target_namespace,
+              register_id: module_namespace,
+              location: definition_path,
+            )
 
-          instances = load_xml_instances(instances_path, module_namespace)
+            load_xml_instances(instances_path, module_namespace)
+          end
+
+          # The derivation and instance parse must run under moxml: the
+          # metanorma stack pins lutaml-model's process-wide adapter to
+          # engines whose namespaced-child binding mishandles the
+          # cross-namespace children of XmlCompiler-derived models
+          # (lutaml-model#1212; metanorma pins :nokogiri from
+          # metanorma/collection/config/config.rb, uniword re-asserts
+          # :leptris). with_adapter is lutaml-model's thread-local
+          # per-operation override — it touches nothing outside this
+          # block, and the moxml engine ships as a lutaml-model
+          # dependency. Bundles whose lutaml-model adapter registry
+          # predates moxml (the umbrella lutaml gem's vendored model
+          # copy, lutaml#251) do not know the :moxml type; there the
+          # scoped override is skipped and the derivation runs under
+          # whatever the process pinned, as before.
+          instances = derive_with_namespaced_children_safe(&derivation)
           [render_liquid(lines, document, options, context_name, instances)]
+        end
+
+        def derive_with_namespaced_children_safe
+          ::Lutaml::Model::Config.with_adapter(xml: :moxml) { yield }
+        rescue StandardError => e
+          raise e unless e.message.include?("Unknown adapter")
+
+          yield
         end
 
         def schema_module_namespace(definition_path)

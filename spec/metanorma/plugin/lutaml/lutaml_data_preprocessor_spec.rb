@@ -245,6 +245,21 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlDataPreprocessor do
       expect { convert_to_xml(missing) }
         .to raise_error(/absent.xml|Unable to load/)
     end
+
+    it "derives under a metanorma-style adapter pin and leaves the pin" do
+      # metanorma pins lutaml-model's process-wide XML adapter to
+      # :nokogiri at require time; the derivation runs scoped to moxml
+      # through Config.with_adapter and the pin survives the macro.
+      ::Lutaml::Model::Config.configure do |config|
+        config.xml_adapter_type = :nokogiri
+      end
+
+      output = convert_to_xml(xsd_input)
+      expect(output).to include("W1: Gear (3.5) [metal heavy ]")
+
+      expect(::Lutaml::Model::Config.xml_adapter_type.to_s)
+        .to eq("nokogiri")
+    end
   end
 
 end
