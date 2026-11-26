@@ -74,7 +74,7 @@ RSpec.configure do |config|
   # content-keyed caches re-parse on next touch, so correctness is
   # unaffected.
   spec_file = nil
-  config.before(:each) do |example|
+  config.before do |example|
     file = example.file_path
     next if file == spec_file
 
