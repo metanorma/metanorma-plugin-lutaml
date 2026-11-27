@@ -120,7 +120,7 @@ yaml_config_path = nil)
           end
 
           ::Ea::Xmi::LiquidDrops::KlassDrop.new(
-            klass, guidance, parsed.drop_options
+            klass, guidance, guided_drop_options(parsed, guidance)
           )
         end
 
@@ -136,7 +136,7 @@ yaml_config_path = nil)
           end
 
           ::Ea::Xmi::LiquidDrops::DataTypeDrop.new(
-            datatype, guidance, parsed.drop_options
+            datatype, guidance, guided_drop_options(parsed, guidance)
           )
         end
 
@@ -153,6 +153,21 @@ yaml_config_path = nil)
           enum = parsed.xmi_id_index[raw_enum.id]
           ::Ea::Xmi::LiquidDrops::EnumDrop.new(
             enum, parsed.drop_options
+          )
+        end
+
+        # Loader.build_drop_options banks a guidance-less LookupService in
+        # the cached parse - guidance arrives per macro invocation, after
+        # the parse is banked - so the drop's init_guidance lookup branch
+        # indexes an empty guidance set and every attribute renders
+        # Used/Guidance empty (metanorma-plugin-lutaml#409). Rebuild the
+        # lookup with the invocation's guidance; the service memoizes its
+        # indexes lazily, so this is one small object per drop.
+        def guided_drop_options(parsed, guidance)
+          return parsed.drop_options unless guidance
+
+          parsed.drop_options.merge(
+            lookup: ::Ea::Xmi::LookupService.new(parsed.parser, guidance),
           )
         end
 
