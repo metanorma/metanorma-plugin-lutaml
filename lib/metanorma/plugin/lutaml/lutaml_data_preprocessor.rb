@@ -274,26 +274,23 @@ module Metanorma
             load_xml_instances(instances_path, module_namespace)
           end
 
-          # The derivation and instance parse must run under moxml: the
-          # metanorma stack pins lutaml-model's process-wide adapter to
-          # engines whose namespaced-child binding mishandles the
+          # The derivation and instance parse must run under the
+          # adapter lutaml-model itself declares as its default engine
+          # (:leptris): the metanorma stack pins the process-wide
+          # adapter to :nokogiri (ogc-gml, the collection config),
+          # whose namespaced-child binding mishandles the
           # cross-namespace children of XmlCompiler-derived models
-          # (lutaml-model#1212; metanorma pins :nokogiri from
-          # metanorma/collection/config/config.rb, uniword re-asserts
-          # :leptris). with_adapter is lutaml-model's thread-local
-          # per-operation override — it touches nothing outside this
-          # block, and the moxml engine ships as a lutaml-model
-          # dependency. Bundles whose lutaml-model adapter registry
-          # predates moxml (the umbrella lutaml gem's vendored model
-          # copy, lutaml#251) do not know the :moxml type; there the
-          # scoped override is skipped and the derivation runs under
-          # whatever the process pinned, as before.
-          instances = derive_with_namespaced_children_safe(&derivation)
+          # (lutaml-model#1212). with_adapter is lutaml-model's
+          # thread-local per-operation override — it touches nothing
+          # outside this block. Registries that predate the :leptris
+          # type reject the override; there the scope is skipped and
+          # the derivation runs under whatever the process pinned.
+          instances = derive_with_default_engine_safe(&derivation)
           [render_liquid(lines, document, options, context_name, instances)]
         end
 
-        def derive_with_namespaced_children_safe
-          ::Lutaml::Model::Config.with_adapter(xml: :moxml) { yield }
+        def derive_with_default_engine_safe
+          ::Lutaml::Model::Config.with_adapter(xml: :leptris) { yield }
         rescue StandardError => e
           raise e unless e.message.include?("Unknown adapter")
 
