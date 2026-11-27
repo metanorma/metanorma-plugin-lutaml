@@ -40,7 +40,7 @@ Gem::Specification.new do |spec|
   # diagram/Liquid-drops path — lutaml/ea#234, #246). Ea::Xmi.load/load_graph
   # (lutaml/ea#86): the partial-load API this gem calls.
   spec.add_dependency "ea", "~> 0.6.160"
-  spec.add_dependency "expressir", "~> 2.3", ">= 2.3.5"
+  spec.add_dependency "expressir", "~> 2.5.0"
   spec.add_dependency "isodoc", ">= 3.5.0"
   spec.add_dependency "liquid", "~> 5"
   spec.add_dependency "lutaml-graphviz"
