@@ -343,11 +343,27 @@ module Metanorma
         # remark-bearing form of the same faces — for the models this
         # adapter decorates only; undecorated prints keep expressir's
         # plain faces.
+        #
+        # The base face's round-trip form prints every remark item's
+        # raw tag (`(*"schema.entity.__note" text *)`), but keyed prose
+        # items print through the document's note machinery, not the
+        # listing — so the faces drop the keyed __note/__example items
+        # (metanorma-plugin-lutaml#429, the iso-10303 gate regression)
+        # and keep the keyed __figure blocks, which stage the
+        # EXPRESS-G figures.
+        KEYED_PROSE_ITEM = /__(?:note|example)\z/.freeze
+
         class DocumentSourceFormatter < Expressir::Express::Formatter
           include Expressir::Express::HyperlinkFormatter
 
           def owner_tagged_blocks?
             false
+          end
+
+          def format_remark_item(node)
+            return "" if node.id.to_s.match?(KEYED_PROSE_ITEM)
+
+            super
           end
         end
 
@@ -356,6 +372,12 @@ module Metanorma
 
           def owner_tagged_blocks?
             false
+          end
+
+          def format_remark_item(node)
+            return "" if node.id.to_s.match?(KEYED_PROSE_ITEM)
+
+            super
           end
         end
 
