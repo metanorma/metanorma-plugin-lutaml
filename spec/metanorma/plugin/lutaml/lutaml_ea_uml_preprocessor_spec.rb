@@ -9,6 +9,35 @@ RSpec.describe Metanorma::Plugin::Lutaml::LutamlEaUmlPreprocessor do
     context "when parsing simple EA XMI file" do
       let(:example_file) { fixtures_path("large_test.xmi") }
 
+      # The property-access form (metanorma-plugin-lutaml#414's probe
+      # template): dot-calls into the model drops must resolve the same
+      # fields the `| size` filter form resolves - a broken drop
+      # registration must not pass silently as blank output.
+      context "when fields are read through property access" do
+        let (:input) do
+          <<~TEXT
+            = Document title
+            Author
+            :nodoc:
+            :novalid:
+            :no-isobib:
+            :imagesdir: spec/assets
+
+            [lutaml_ea_uml,#{example_file}]
+            --
+            packages.size = {{ context.packages.size }}
+            {% for p in context.packages %}PKG name=[{{ p.name }}] classes={{ p.classes.size }}
+            {% endfor %}
+            --
+          TEXT
+        end
+
+        it "resolves fields through the drops" do
+          expect(output).to include("packages.size = 1")
+          expect(output).to include("PKG name=[Wrapper root package] classes=0")
+        end
+      end
+
       context "when there is no config file" do
         let (:input) do
           <<~TEXT
