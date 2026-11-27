@@ -37,7 +37,11 @@ module Metanorma
             end
           else
             file = File.new(full_path, encoding: "UTF-8")
-            ::Lutaml::Lml::Parser.parse(file)
+            # The lutaml monogem front door (lutaml-lml >= 0.3.8 shims it):
+            # Source.wrap reads the File's contents and carries its path for
+            # imports. The bare Parser.parse would grammar-parse the File's
+            # PATH STRING - its contract is an in-memory input.
+            ::Lutaml::Lml.parse(file)
           end
         end
 

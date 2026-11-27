@@ -43,9 +43,14 @@ Gem::Specification.new do |spec|
   spec.add_dependency "expressir", "~> 2.3", ">= 2.3.5"
   spec.add_dependency "isodoc", ">= 3.5.0"
   spec.add_dependency "liquid", "~> 5"
-  spec.add_dependency "lutaml-jsonschema", "~> 0.1", ">= 0.1.29"
   spec.add_dependency "lutaml-graphviz"
-  spec.add_dependency "lutaml-lml"
+  spec.add_dependency "lutaml-jsonschema", "~> 0.1", ">= 0.1.29"
+  # >= 0.3.8: floors away the parslet-era 0.1.5 (whose Lutaml::Lml::Parser
+  # has no class-level parse - metanorma-plugin-lutaml#361's silent
+  # resolver fallback) and 0.3.6's parsanol ~> 1.3.68 pin (which conflicts
+  # with the parsanol 1.5 fleet). 0.3.8 is a shim carrying the lutaml
+  # monogem dependency; the parser lives in lutaml >= 0.11.8.
+  spec.add_dependency "lutaml-lml", ">= 0.3.8"
   spec.add_dependency "lutaml-model", "~> 0.8.159"
   # >= 1.0.4: Lutaml::Uml::Value#initial (enum literal codes) — required by
   # ea >= 0.6.151+ which writes initial values during XMI parsing.
