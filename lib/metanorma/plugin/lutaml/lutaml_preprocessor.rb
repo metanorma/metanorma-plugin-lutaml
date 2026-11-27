@@ -36,6 +36,7 @@ module Metanorma
               ::Expressir::Express::Parser.from_file(full_path)
             end
           else
+            require "lutaml/lml"
             file = File.new(full_path, encoding: "UTF-8")
             # The lutaml monogem front door (lutaml-lml >= 0.3.8 shims it):
             # Source.wrap reads the File's contents and carries its path for

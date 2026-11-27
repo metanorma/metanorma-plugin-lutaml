@@ -66,6 +66,7 @@ module Metanorma
         end
 
         def load_lutaml_file(_document, file_path, _options)
+          require "lutaml/lml"
           ::Lutaml::Lml.parse_document(File.new(file_path, encoding: "UTF-8"))
         end
 
@@ -149,6 +150,7 @@ module Metanorma
             )
           end
 
+          require "lutaml/lml"
           compiler = ::Lutaml::Lml::ModelCompiler.new
           compiler.compile(File.new(definition_path, encoding: "UTF-8"))
           instances = load_instances(instances_path, compiler)
