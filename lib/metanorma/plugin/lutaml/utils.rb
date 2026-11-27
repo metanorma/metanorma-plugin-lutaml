@@ -271,13 +271,7 @@ module Metanorma
 
           file_paths = yaml_content["schemas"].map do |key, value|
             schema_path = Pathname.new(value["path"] || "#{key}.exp")
-            # Absolute, not cleanpath: an index yaml whose schema paths
-            # escape its own directory (../../schemas/...) keeps its ..
-            # segments under cleanpath, and the figure decoration's
-            # system_path then cannot resolve the schema directory - the
-            # FATAL-Image-not-found of metanorma-plugin-lutaml#377.
-            # expand_path resolves the real location at any depth.
-            File.expand_path(schema_yaml_base_path + schema_path).to_s
+            (schema_yaml_base_path + schema_path).cleanpath.to_s
           end
 
           parse_express_files(file_paths)
