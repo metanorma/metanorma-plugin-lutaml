@@ -277,13 +277,28 @@ module Metanorma
         end
 
         class RepoAdapter < Base
+          # Decorating a schema stages its EXPRESS-G figures into the
+          # document's image folder. A block that selects the schemas it
+          # covers (config_yaml) renders only those (ordered_schemas), so
+          # only those are decorated: decorating the whole index copied
+          # every figure of every indexed schema into the folder.
           def decorate_remarks(options)
+            selected = options["selected_schemas"]
             @model.schemas.each do |schema|
+              next if selected && !selected_schema?(schema, selected)
+
               ExpressRemarkAdapter.for(schema).decorate_remarks(options)
             end
           end
 
           private
+
+          # The match reorder_schemas uses for the rendered selection.
+          def selected_schema?(schema, selected)
+            selected.any? do |name|
+              schema.id == name || schema.file_basename == name
+            end
+          end
 
           # NO document-level imagesdir here: metanorma's figure
           # absolutization joins document.attributes["imagesdir"] with
