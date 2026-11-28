@@ -55,6 +55,11 @@ module Metanorma
           if slice
             xml = XmiPartialLoadRegistry.slice_string(slice)
             ::Ea::Xmi.load_graph(StringIO.new(xml))
+          elsif full_path.downcase.end_with?(".qea")
+            # Ea-native lazy rendering (#278): .qea sources feed the
+            # klass-table drops straight from the SQLite rows — no XMI
+            # graph materialization.
+            ::Ea::Qea::LazyDrops.parsed_graph(full_path)
           else
             ::Ea::Xmi.load_graph(full_path)
           end
