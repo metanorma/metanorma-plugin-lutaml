@@ -65,11 +65,31 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkFigures do
       * <<express:gizmo>>; 1
       ====
       *)
+
+      (*"gizmo_arm.thing.__expressg2"
+      A glued construct joins the prose:
+
+      image::#{glued_diagram_name}[]+
+      and the following prose continues.
+      *)
+
+      (*"gizmo_arm.thing.__expressg3"
+      Notation:
+
+      * distance
+      +
+      image::#{attached_diagram_name}[]
+      *)
       END_SCHEMA;
     EXP
     FileUtils.touch(File.join(schema_directory, diagram_name))
+    FileUtils.touch(File.join(schema_directory, glued_diagram_name))
+    FileUtils.touch(File.join(schema_directory, attached_diagram_name))
     file
   end
+
+  let(:glued_diagram_name) { "gizmo_armexpg2.svg" }
+  let(:attached_diagram_name) { "gizmo_armexpg3.svg" }
 
   let(:repository) { Expressir::Express::Parser.from_file(schema_file) }
 
@@ -84,7 +104,17 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkFigures do
   end
 
   def drop_facing_remarks(schema)
-    schema.remark_items.flat_map(&:to_liquid).map(&:remarks).join("\n")
+    items = Array(schema.remark_items) +
+      schema.entities.flat_map { |entity| Array(entity.remark_items) }
+    items.flat_map(&:to_liquid).map(&:remarks).join("\n")
+  end
+
+  def drop_string(schema, item_id)
+    items = Array(schema.remark_items) +
+      schema.entities.flat_map { |entity| Array(entity.remark_items) }
+    item = items.find { |ri| ri.id == item_id }
+    expect(item).not_to be_nil
+    item.to_liquid.to_s
   end
 
   describe "drop-facing remark figures" do
@@ -103,6 +133,30 @@ RSpec.describe Metanorma::Plugin::Lutaml::ExpressRemarkFigures do
       )
       expect(File.file?(File.join(docfile_directory, diagram_name)))
         .to be(true)
+    end
+
+    # The glued continuation form (iso-10303#862): the figure stages
+    # like any other and the construct re-emits as an image block plus
+    # a standalone continuation line - the form asciidoctor parses as
+    # an image joining the next line, never as literal macro text.
+    it "splits the glued continuation off the macro and stages it" do
+      schema = decorated_schema
+      remarks = drop_facing_remarks(schema)
+
+      expect(remarks).to include("image::#{glued_diagram_name}[]\n+\n")
+      expect(remarks).not_to include("[]+")
+      expect(File.file?(File.join(docfile_directory, glued_diagram_name)))
+        .to be(true)
+    end
+
+    # The bare-`+` attachment form (iso-10303#862): the blank-line
+    # separation keeps its distance from everything else but must not
+    # cut a directly-preceding continuation off its figure.
+    it "keeps a directly-preceding continuation attached to its figure" do
+      schema = decorated_schema
+
+      expect(drop_string(schema, "__expressg3"))
+        .to include("+\nimage::#{attached_diagram_name}[]")
     end
 
     # Decoration itself stages: templates that print the remark item
