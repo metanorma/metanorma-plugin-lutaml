@@ -10,6 +10,62 @@ The commands are prefixed as `lutaml_ea_*` to denote their specific use with
 Enterprise Architect XMI files.
 
 
+[[partial-xmi-loading]]
+=== Partial loading of XMI sources for the table macros
+
+The `lutaml_klass_table` and `lutaml_enum_table` commands load their XMI
+sources partially by default: only the subgraph reachable from the classes
+named by the document's table macros is parsed, instead of the whole export.
+
+Enterprise Architect exports of large models can reach ~100 MB, more than
+half of it diagram presentation data that no definition table reads, and
+fully materializing such an export costs 10+ GB of live objects, which is
+more than a standard build runner provides. With partial loading, each table
+macro parses only the slice of the source that its class needs. Nothing is
+written to disk.
+
+Sources smaller than 2 MB are whole-loaded: slicing them costs more than
+parsing them.
+
+A document can opt out of partial loading with the `lutaml-ea-xmi-load`
+document attribute:
+
+[source,adoc]
+----
+:lutaml-ea-xmi-load: whole
+----
+
+Without the attribute, partial loading engages. The `whole` value restores
+the load of the full source for the document.
+
+When a table macro's class cannot be resolved into any slice, the macro
+falls back to loading the whole source. For a source at or above the 2 MB
+threshold, this fallback emits a warning through the Asciidoctor logger that
+names the document, the class and the source path, because whole-loading a
+plateau-scale export can exhaust the memory of the build runner:
+
+[source,console]
+----
+WARN -- : [metanorma-plugin-lutaml] lutaml-ea-xmi-load is partial by default, but no slice was prepared for class "Ghost" (NoSuchPackageAnywhere::Ghost) in /path/to/example.xmi: document /path/to/document.adoc whole-loads the 98.0 MB source, the memory-death path on plateau-scale corpora. Check the macro's name and package options, or set :lutaml-ea-xmi-load: whole to acknowledge the whole load.
+----
+
+[example]
+.Opting out of partial loading for one document
+====
+[source,adoc]
+----
+= My specification
+Author
+:lutaml-ea-xmi-load: whole
+
+lutaml_klass_table::/path/to/example.xmi[name="NameOfClass"]
+----
+
+The `lutaml_klass_table` command loads the full `/path/to/example.xmi`
+source instead of the slice for `NameOfClass`.
+====
+
+
 === Document attribute `:lutaml-xmi-index:`
 
 This attribute allows specifying one or more XMI files to define names
@@ -196,6 +252,10 @@ The command accepts the options listed below:
 * `guidance="/path/to/my_guidance.yml"` specifies the path of
   the yaml file of the guidance. (Optional)
 
+NOTE: The XMI source is loaded partially by default; only the subgraph
+reachable from the class named by the macro is parsed. See
+<<partial-xmi-loading>>.
+
 The guidance file should be in the following format:
 
 [source,yaml]
@@ -265,6 +325,10 @@ The command accepts the options listed below:
   In the liquid template, you can access the data by using `context_name`.
   (e.g. `my_data` or `second_data` in the above example)
   The external data file should be in YAML/JSON format.
+
+NOTE: The XMI source is loaded partially by default; only the subgraph
+reachable from the enumeration named by the macro is parsed. See
+<<partial-xmi-loading>>.
 
 === Usage of `lutaml_ea_xmi` command
 

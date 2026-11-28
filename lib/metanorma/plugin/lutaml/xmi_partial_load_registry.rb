@@ -12,32 +12,44 @@ module Metanorma
       # EA exports of plateau scale reach ~100 MB, more than half of it
       # diagram presentation data, and fully materializing the Xmi tree
       # plus the Ea graph costs 10+ GB of live objects - more than a
-      # standard build runner has. With the `lutaml-ea-xmi-load` document
-      # attribute set to `partial`, every klass and enum table macro's
-      # (package, name) pair seeds a per-package reference closure; one
-      # streaming pass per source assembles the closures in memory and
-      # each macro parses only its own package's slice. Nothing is
-      # written to disk.
+      # standard build runner has. Partial loading is the default: every
+      # klass and enum table macro's (package, name) pair seeds a
+      # per-package reference closure; one streaming pass per source
+      # assembles the closures in memory and each macro parses only its
+      # own package's slice. Sources smaller than MIN_SOURCE_BYTES are
+      # whole-loaded - slicing them costs more than parsing them.
+      # Nothing is written to disk.
       #
-      # Without the attribute nothing is preloaded and behavior is
-      # byte-for-byte the whole-load path.
+      # A document opts out with the `lutaml-ea-xmi-load` document
+      # attribute set to `whole`; without any attribute the partial
+      # path engages, and with the opt-out the behavior is byte-for-byte
+      # the whole-load path.
+      #
+      # When a macro's (path, name) resolves to no slice in an engaged
+      # document and the source is large enough that whole-loading it is
+      # the memory-death path, a warning through the Asciidoctor logger
+      # names the document, the class and the source: a silent fallback
+      # here hides an out-of-memory behind an apparently successful
+      # build.
       module XmiPartialLoadRegistry
         MACRO_REGEXP = /lutaml_(?:klass|enum)_table::([^\[<]+)\[([^\]]*)\]/
         MIN_SOURCE_BYTES = 2 * 1024 * 1024
+        WHOLE_LOAD_REGEXP = /\A:lutaml-ea-xmi-load:\s*whole\s*$/
 
         class << self
           # Rewrites (xmi_path, name_path) to the partial-load form of
           # the macro's class: [path, bare name, slice token]. The
           # token is nil when no slice was prepared, in which case the
-          # macro whole-loads the source unchanged.
+          # macro whole-loads the source unchanged - warned about when
+          # the document is engaged and the source is large.
           def rewrite(xmi_path, name_path)
             return [xmi_path, name_path, nil] unless @registry
 
             entry = @registry[xmi_path]
-            return [xmi_path, name_path, nil] unless entry
+            return whole_load_fallback(xmi_path, name_path) unless entry
 
             group_key = entry[name_path] || entry[bare_name(name_path)]
-            return [xmi_path, name_path, nil] unless group_key
+            return whole_load_fallback(xmi_path, name_path) unless group_key
 
             [xmi_path, bare_name(name_path), [xmi_path, group_key]]
           end
@@ -57,17 +69,33 @@ module Metanorma
           def reset!
             @registry = nil
             @slices = nil
+            @docfile = nil
+            @whole_load_warned = []
           end
 
           def prepare(document, lines) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-            reset!
-            # header attributes are parsed after preprocessors run, so
-            # the opt-in is also detected in the raw lines
-            return unless enabled?(document, lines)
+            unless enabled?(document, lines)
+              # an explicit opt-out is a main-document decision; drop
+              # any slices a previous document left behind
+              reset!
+              return
+            end
 
             groups = collect_groups(document, lines)
-            return if groups.empty?
+            if groups.empty?
+              # standoc re-parses attribute snippets (asciidoc_sub titles
+              # and friends) as one-line documents mid-conversion; the
+              # global extension registry runs this preprocessor on those
+              # fragments too. They carry no table macros and must not
+              # wipe the slices prepared for the enclosing document, so
+              # only a macro-less main document - one carrying the
+              # docfile attribute - drops stale slices.
+              reset! if document.attributes["docfile"]
+              return
+            end
 
+            reset!
+            @docfile = document.attributes["docfile"]
             @registry = {}
             @slices = {}
             groups.each do |path, entries|
@@ -99,8 +127,51 @@ module Metanorma
           private
 
           def enabled?(document, lines)
-            document.attributes["lutaml-ea-xmi-load"] == "partial" ||
-              lines.any? { |l| l.match?(/\A:lutaml-ea-xmi-load:\s*partial\s*$/) }
+            return false if
+              document.attributes["lutaml-ea-xmi-load"] == "whole"
+            return false if lines.any? { |l| l.match?(WHOLE_LOAD_REGEXP) }
+
+            true
+          end
+
+          # The whole-load fallback triple, preceded by the loud
+          # warning on an engaged document with a large source:
+          # silently whole-loading a plateau-scale export is the
+          # build runner's out-of-memory.
+          def whole_load_fallback(xmi_path, name_path)
+            notify_whole_load_fallback(xmi_path, name_path)
+            [xmi_path, name_path, nil]
+          end
+
+          def notify_whole_load_fallback(xmi_path, name_path)
+            return unless whole_load_risk?(xmi_path)
+
+            warned = [xmi_path, name_path]
+            return if @whole_load_warned.include?(warned)
+
+            @whole_load_warned << warned
+            ::Asciidoctor::LoggerManager.logger.warn(
+              "[metanorma-plugin-lutaml] lutaml-ea-xmi-load is partial " \
+              "by default, but no slice was prepared for class " \
+              "\"#{bare_name(name_path)}\" (#{name_path}) in " \
+              "#{xmi_path}: #{document_label} whole-loads the " \
+              "#{megabytes(xmi_path)} MB source, the memory-death path " \
+              "on plateau-scale corpora. Check the macro's name and " \
+              "package options, or set :lutaml-ea-xmi-load: whole to " \
+              "acknowledge the whole load.",
+            )
+          end
+
+          def whole_load_risk?(xmi_path)
+            File.file?(xmi_path) && File.size(xmi_path) >= MIN_SOURCE_BYTES
+          end
+
+          def document_label
+            @docfile ? "document #{@docfile}" : "the document"
+          end
+
+          def megabytes(xmi_path)
+            (File.size(xmi_path).to_f / (1024 * 1024)).round(1)
           end
 
           # Slices are grouped per package, not per class: the tables

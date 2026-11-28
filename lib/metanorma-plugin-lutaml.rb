@@ -100,3 +100,9 @@ if defined?(Metanorma::Collection::Renderer) &&
       .respond_to?(:register_reference_anchor_resolver)
   require "metanorma/plugin/lutaml/express_hotspot_anchor"
 end
+
+# Eager: patches the loaded Ea::Xmi::Slicer in place (constant and
+# method overrides, a load-time side effect). Carries the primitive
+# types closure fix until a released ea ships it; the shim retires on
+# its own once the released slicer carries the fix.
+require "metanorma/plugin/lutaml/ea_xmi_slicer_compat"

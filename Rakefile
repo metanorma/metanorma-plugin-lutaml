@@ -15,6 +15,7 @@ XMI_SPEC_FILES = %w[
   spec/metanorma/plugin/lutaml/lutaml_enum_table_block_macro_spec.rb
   spec/metanorma/plugin/lutaml/lutaml_xmi_index_spec.rb
   spec/metanorma/plugin/lutaml/lutaml_xmi_uml_preprocessor_spec.rb
+  spec/metanorma/plugin/lutaml/xmi_partial_load_registry_spec.rb
 ].freeze
 
 # The diagram/GML/XSD/Liquid-rendering families each leave 25-70 MB of
