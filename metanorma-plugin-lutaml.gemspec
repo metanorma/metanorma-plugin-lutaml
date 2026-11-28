@@ -38,8 +38,10 @@ Gem::Specification.new do |spec|
   # >= 0.6.157: first release with the Qea::Rules layer and the shipped
   # ea/qea/rules/generalization.rb (0.6.149-0.6.156 are broken for the
   # diagram/Liquid-drops path — lutaml/ea#234, #246). Ea::Xmi.load/load_graph
-  # (lutaml/ea#86): the partial-load API this gem calls.
-  spec.add_dependency "ea", "~> 0.6.160"
+  # (lutaml/ea#86): the partial-load API this gem calls. >= 0.6.167: the
+  # .qea klass-table routing resolves Ea::Qea::LazyDrops.parsed_graph
+  # (lutaml/ea#278; 0.6.166 lacks it).
+  spec.add_dependency "ea", "~> 0.6.167"
   spec.add_dependency "expressir", "~> 2.5.0"
   spec.add_dependency "isodoc", ">= 3.5.0"
   spec.add_dependency "liquid", "~> 5"
