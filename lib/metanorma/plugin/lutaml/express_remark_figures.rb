@@ -45,12 +45,15 @@ module Metanorma
       # still surface loudly.
       module ExpressRemarkFigures
         # A bare relative image macro: `image::name.svg[]`. Absolute
-        # paths, URLs, data URIs, liquid references and macros carrying
-        # an attribute list stay as written.
+        # paths, URLs, data URIs and liquid references stay as written.
         # An optional attribute list is allowed: the WG12 remark figures
         # carry captions (`image::images/x.svg[EXPRESS-G diagram]`), and
-        # the empty-list-only form skipped them silently (#371).
-        IMAGE_MACRO_REGEXP = /\Aimage::([^:\s{}]+)\[[^\]]*\]\s*\z/
+        # the empty-list-only form skipped them silently (#371). The
+        # trailing-glued list-continuation form (`image::name.svg[]+`,
+        # iso-10303#862) matches too — its figure stages like any other
+        # and the line re-emits with the `+` on its own line, the form
+        # asciidoctor parses as an image block joining the next line.
+        IMAGE_MACRO_REGEXP = /\Aimage::([^:\s{}]+)\[[^\]]*\]\+?\s*\z/
 
         # An imagesdir attribute entry; the bang form unsets. The LAST
         # entry in the source is the one in force where the member
@@ -135,10 +138,27 @@ module Metanorma
           # joined the way expressir's remark formatter joins them --
           # while the model-level methods keep the source listing
           # printing the macros as written.
+          #
+          # The continuation forms normalize here too (iso-10303#862):
+          # WG 12 remark sources glue the asciidoctor list-continuation
+          # onto the macro line (`image::x.gif[]+`, joining the following
+          # prose) and precede macros with a bare `+` (attaching the
+          # figure to the item). Both are valid constructs when they
+          # reach asciidoctor intact, but the glued form parses as
+          # paragraph text and the blank-line separation below cuts a
+          # directly-preceding `+` off its figure - the four
+          # kinematic_structure_schema figure constructs printed as
+          # literal macro text. The glued `+` moves to its own line
+          # (image block, then the continuation joining the next line),
+          # and a `+` kept directly before its figure stays attached.
           def to_s
             remarks.join("\n")
               .gsub(/^[ \t]+(?=image::)/, "")
+              .gsub(/^image::([^:\s{}]+\[[^\]]*\])\+/) do
+                "#{Regexp.last_match(1)}\n+"
+              end
               .gsub(/^(?!$)(image::)/) { "\n\n#{Regexp.last_match(1)}" }
+              .gsub(/\+\n\n+(?=image::)/, "+\n")
           end
         end
 
@@ -199,7 +219,20 @@ module Metanorma
               return @errors[before..].join("\n")
             end
 
-            return line if final == match[1]
+            emit_rewrite(line, match[1], final)
+          end
+
+          # The rewritten line: a glued continuation re-emits with the
+          # `+` on its own line (the construct renders as an image
+          # joining the next line instead of literal paragraph text,
+          # #862); a line whose figure already stands staged keeps as
+          # written; anything else rewrites the target to the staged
+          # form.
+          def emit_rewrite(line, target, final)
+            return "#{line[/\Aimage::/]}#{final}[]\n+\n" if
+              line.match?(/\]\+\s*\z/)
+
+            return line if final == target
 
             trailing = line.length - line.rstrip.length
             suffix = trailing.positive? ? line[-trailing, trailing] : ""
