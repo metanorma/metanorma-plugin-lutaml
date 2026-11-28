@@ -7,9 +7,9 @@ module Metanorma
     module Lutaml
       module XmiCache
         # Bounded parse-once cache: every macro touching a source (the
-        # full file, or its package slice under lutaml-ea-xmi-load: partial)
-        # reuses the one parsed graph; the LRU bound keeps the retained
-        # graphs to a few live at once, which the section-ordered
+        # full file, or its package slice under the default partial
+        # XMI load) reuses the one parsed graph; the LRU bound keeps the
+        # retained graphs to a few live at once, which the section-ordered
         # macros of a document turn into near-perfect reuse.
         XMI_PARSE_CACHE = XmiParseCache.new(max_size: 4)
 
